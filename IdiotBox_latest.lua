@@ -5872,7 +5872,7 @@ hook.Add("HUDPaint", "Hook22", function()
 			surface.DrawCircle(ScrW()/2, ScrH()/1.8, 80 + me:GetVelocity():Length()/4, Color(gInt("Settings", "Crosshair Color", "Red:"), gInt("Settings", "Crosshair Color", "Green:"), gInt("Settings", "Crosshair Color", "Blue:"), gInt("Settings", "Others", "T Opacity:")))
 		end
 	end
-	if gBool("Aimbot", "Legitbot", "Enabled") and gBool("Visuals", "More", "Show FoV Circle") and not gBool("Aimbot", "Ragebot", "Enabled") then
+	if gBool("Aimbot", "Legitbot", "Enabled") and gBool("More", "More", "Show FoV Circle") and not gBool("Aimbot", "Ragebot", "Enabled") then
 		local center = Vector(ScrW() / 2, ScrH() / 2, 0)
 		local scale = Vector(((gInt("Aimbot", "Legitbot", "Aim FoV Value:"))*6.1), ((gInt("Aimbot", "Legitbot", "Aim FoV Value:"))*6.1), 0)
 		local segmentdist = 360 / (2 * math.pi * math.max(scale.x, scale.y) / 2)
