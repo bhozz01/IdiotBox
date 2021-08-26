@@ -142,29 +142,29 @@ local options = {
 		["Triggerbot"] = {
 				{
 					{"Triggerbot", 16, 20, 347, 211, 218}, 
-					{"Enabled", "Checkbox", false, 74}, 
-					{"Trigger Key:", "Selection", "None", {"None", "Mouse 2", "Mouse 3", "Mouse 4", "Mouse 5", "Left 'ALT' Key", "The 'E' Key", "The 'F' Key", "The 'G' Key", "The 'B' Key"}, 88}, 
-					{"Smooth Aim", "Checkbox", false, 74}, 
-					{"Alt Fire", "Checkbox", false, 74}, 
-					{"Auto Stop", "Checkbox", false, 74}, 
-					{"Auto Crouch", "Checkbox", false, 74}, 
-					{"Fire Delay:", "Slider", 0, 100, 88}, 
+					{"Enabled", "Checkbox", false, 78}, 
+					{"Trigger Key:", "Selection", "None", {"None", "Mouse 2", "Mouse 3", "Mouse 4", "Mouse 5", "Left 'ALT' Key", "The 'E' Key", "The 'F' Key", "The 'G' Key", "The 'B' Key"}, 92}, 
+					{"Smooth Aim", "Checkbox", false, 78}, 
+					{"Alt Fire", "Checkbox", false, 78}, 
+					{"Auto Stop", "Checkbox", false, 78}, 
+					{"Auto Crouch", "Checkbox", false, 78}, 
+					{"Fire Delay:", "Slider", 0, 100, 92}, 
                 }, 
 				{
 					{"Aim Options", 736, 20, 347, 361, 218}, 
-					{"Priority:", "Selection", "Body", {"Head", "Body"}, 88}, 
-					{"Ignore Team", "Checkbox", false, 74}, 
-					{"Ignore Friends", "Checkbox", false, 74}, 
-					{"Ignore Players", "Checkbox", false, 74}, 
-					{"Ignore Bots", "Checkbox", false, 74}, 
-					{"Ignore NPCs", "Checkbox", false, 74}, 
-					{"Ignore Admins", "Checkbox", false, 74}, 
-					{"Ignore Noclip", "Checkbox", false, 74}, 
-					{"Disable in Noclip", "Checkbox", false, 74}, 
-					{"Ignore Driving Players", "Checkbox", false, 74}, 
-					{"Ignore Transparent Players", "Checkbox", false, 74}, 
-					{"Ignore Overhealed Players", "Checkbox", false, 74}, 
-					{"Max Health:", "Slider", 500, 5000, 88}, 
+					{"Priority:", "Selection", "Body", {"Head", "Body"}, 92}, 
+					{"Ignore Team", "Checkbox", false, 78}, 
+					{"Ignore Friends", "Checkbox", false, 78}, 
+					{"Ignore Players", "Checkbox", false, 78}, 
+					{"Ignore Bots", "Checkbox", false, 78}, 
+					{"Ignore NPCs", "Checkbox", false, 78}, 
+					{"Ignore Admins", "Checkbox", false, 78}, 
+					{"Ignore Noclip", "Checkbox", false, 78}, 
+					{"Disable in Noclip", "Checkbox", false, 78}, 
+					{"Ignore Driving Players", "Checkbox", false, 78}, 
+					{"Ignore Transparent Players", "Checkbox", false, 78}, 
+					{"Ignore Overhealed Players", "Checkbox", false, 78}, 
+					{"Max Health:", "Slider", 500, 5000, 92}, 
                 }, 
 		}, 
 		["Hack vs. Hack"] = {
@@ -190,101 +190,101 @@ local options = {
                 }, 
 				{
 					{"Resolver", 736, 20, 347, 150, 218}, 
-					{"Enabled", "Checkbox", false, 74}, 
-					{"X-Axis:", "Selection", "Off", {"Off", "Down", "Up", "Center", "Invert", "Random", "Auto"}, 88}, 
-					{"Y-Axis:", "Selection", "Off", {"Off", "Left", "Right", "Invert", "Random", "Auto"}, 88}, 
-					{"Priority Targets Only", "Checkbox", false, 74}, 
-					{"Emote Resolver", "Checkbox", false, 74}, 
+					{"Enabled", "Checkbox", false, 78}, 
+					{"X-Axis:", "Selection", "Off", {"Off", "Down", "Up", "Center", "Invert", "Random", "Auto"}, 92}, 
+					{"Y-Axis:", "Selection", "Off", {"Off", "Left", "Right", "Invert", "Random", "Auto"}, 92}, 
+					{"Priority Targets Only", "Checkbox", false, 78}, 
+					{"Emote Resolver", "Checkbox", false, 78}, 
                 }, 
 				{
 					{"Fake Lag", 736, 184, 347, 109, 218}, 
-					{"Enabled", "Checkbox", false, 74}, 
-					{"Disable on Attack", "Checkbox", false, 74}, 
-					{"Lag Factor:", "Slider", 0, 14, 88}, 
+					{"Enabled", "Checkbox", false, 78}, 
+					{"Disable on Attack", "Checkbox", false, 78}, 
+					{"Lag Factor:", "Slider", 0, 14, 92}, 
                 }, 
 		}, 
         ["Visuals"] = {
                 {
 					{"Wallhack", 16, 20, 347, 598, 218}, 
-					{"Enabled", "Checkbox", false, 74}, 
-					{"Box", "Checkbox", false, 74}, 
-					{"Box Type:", "Selection", "2D Box", {"2D Box", "3D Box", "Edged Box"}, 88}, 
-					{"Chams", "Checkbox", false, 74}, 
-					{"Playermodel Chams", "Checkbox", false, 74}, 
-					{"Skeleton", "Checkbox", false, 74}, 
-					{"Glow", "Checkbox", false, 74}, 
-					{"Hitbox", "Checkbox", false, 74}, 
-					{"Vision Line", "Checkbox", false, 74}, 
-					{"Name", "Checkbox", false, 74}, 
-					{"Bystander Name", "Checkbox", false, 74}, 
-					{"Health Bar", "Checkbox", false, 74}, 
-					{"Health Value", "Checkbox", false, 74}, 
-					{"Armor Bar", "Checkbox", false, 74}, 
-					{"Armor Value", "Checkbox", false, 74}, 
-					{"Weapon", "Checkbox", false, 74}, 
-					{"Rank", "Checkbox", false, 74}, 
-					{"Distance", "Checkbox", false, 74}, 
-					{"Velocity", "Checkbox", false, 74}, 
-					{"Conditions", "Checkbox", false, 74}, 
-					{"Steam ID", "Checkbox", false, 74}, 
-					{"Ping", "Checkbox", false, 74}, 
-					{"DarkRP Money", "Checkbox", false, 74}, 
+					{"Enabled", "Checkbox", false, 78}, 
+					{"Box", "Checkbox", false, 78}, 
+					{"Box Type:", "Selection", "2D Box", {"2D Box", "3D Box", "Edged Box"}, 92}, 
+					{"Chams", "Checkbox", false, 78}, 
+					{"Playermodel Chams", "Checkbox", false, 78}, 
+					{"Skeleton", "Checkbox", false, 78}, 
+					{"Glow", "Checkbox", false, 78}, 
+					{"Hitbox", "Checkbox", false, 78}, 
+					{"Vision Line", "Checkbox", false, 78}, 
+					{"Name", "Checkbox", false, 78}, 
+					{"Bystander Name", "Checkbox", false, 78}, 
+					{"Health Bar", "Checkbox", false, 78}, 
+					{"Health Value", "Checkbox", false, 78}, 
+					{"Armor Bar", "Checkbox", false, 78}, 
+					{"Armor Value", "Checkbox", false, 78}, 
+					{"Weapon", "Checkbox", false, 78}, 
+					{"Rank", "Checkbox", false, 78}, 
+					{"Distance", "Checkbox", false, 78}, 
+					{"Velocity", "Checkbox", false, 78}, 
+					{"Conditions", "Checkbox", false, 78}, 
+					{"Steam ID", "Checkbox", false, 78}, 
+					{"Ping", "Checkbox", false, 78}, 
+					{"DarkRP Money", "Checkbox", false, 78}, 
                 }, 
                 {
 					{"Miscellaneous", 736, 20, 347, 530, 218}, 
-					{"Show Enemies Only", "Checkbox", false, 74}, 
-					{"Team Colors", "Checkbox", false, 74}, 
-					{"Spectators", "Checkbox", true, 74}, -- Enabled by default
-					{"Radar", "Checkbox", true, 74}, -- Enabled by default
-					{"Radar Distance:", "Slider", 50, 100, 88}, 
-					{"Custom Status", "Checkbox", true, 74}, -- Enabled by default
-					{"Players List", "Checkbox", true, 74}, -- Enabled by default
-					{"Show NPCs", "Checkbox", false, 74}, 
-					{"Show Entities", "Checkbox", false, 74}, 
-					{"Hide HUD", "Checkbox", false, 74}, 
-					{"Witness Finder", "Checkbox", false, 74}, 
-					{"Traitor Finder", "Checkbox", false, 74}, 
-					{"Murderer Finder", "Checkbox", false, 74}, 
-					{"Distance Limit", "Checkbox", false, 74}, 
-					{"Distance:", "Slider", 0, 5000, 88}, 
-					{"Dormant Check", "Checkbox", true, 74}, -- Enabled by default
-					{"Show FoV Circle", "Checkbox", false, 74}, 
-					{"Snap Lines", "Checkbox", false, 74}, 
-					{"Crosshair", "Checkbox", false, 74}, 
-					{"Crosshair Type:", "Selection", "Cross", {"Square", "Cross", "Swastika", "Aimware", "Box", "Circle", "Dot", "GTA IV"}, 88}, 
+					{"Show Enemies Only", "Checkbox", false, 78}, 
+					{"Team Colors", "Checkbox", false, 78}, 
+					{"Spectators", "Checkbox", true, 78}, -- Enabled by default
+					{"Radar", "Checkbox", true, 78}, -- Enabled by default
+					{"Radar Distance:", "Slider", 50, 100, 92}, 
+					{"Custom Status", "Checkbox", true, 78}, -- Enabled by default
+					{"Players List", "Checkbox", true, 78}, -- Enabled by default
+					{"Show NPCs", "Checkbox", false, 78}, 
+					{"Show Entities", "Checkbox", false, 78}, 
+					{"Hide HUD", "Checkbox", false, 78}, 
+					{"Witness Finder", "Checkbox", false, 78}, 
+					{"Traitor Finder", "Checkbox", false, 78}, 
+					{"Murderer Finder", "Checkbox", false, 78}, 
+					{"Distance Limit", "Checkbox", false, 78}, 
+					{"Distance:", "Slider", 0, 5000, 92}, 
+					{"Dormant Check:", "Selection", "Wallhack", {"None", "Wallhack", "Radar", "Both"}, 92}, 
+					{"Show FoV Circle", "Checkbox", false, 78}, 
+					{"Snap Lines", "Checkbox", false, 78}, 
+					{"Crosshair", "Checkbox", false, 78}, 
+					{"Crosshair Type:", "Selection", "Cross", {"Square", "Cross", "Swastika", "Aimware", "Box", "Circle", "Dot", "GTA IV"}, 92}, 
                 }, 
         }, 
 		["Utilities"] = {
 				{
 					{"General Utilities", 16, 20, 347, 124, 218}, 
-					{"Optimize Game", "Checkbox", true, 74}, -- Enabled by default
-					{"Anti-AFK", "Checkbox", false, 74}, 
-					{"Anti-Ads", "Checkbox", true, 74}, -- Enabled by default
-					{"Anti-Blind", "Checkbox", true, 74}, -- Enabled by default
+					{"Optimize Game", "Checkbox", true, 78}, -- Enabled by default
+					{"Anti-AFK", "Checkbox", false, 78}, 
+					{"Anti-Ads", "Checkbox", true, 78}, -- Enabled by default
+					{"Anti-Blind", "Checkbox", true, 78}, -- Enabled by default
                 }, 
 				{
 					{"Trouble in Terrorist Town Utilities", 16, 159, 347, 125, 218}, 
-					{"Hide Round Report", "Checkbox", true, 74}, -- Enabled by default
-					{"Panel Remover", "Checkbox", true, 74}, -- Enabled by default
-					{"Prop Kill", "Checkbox", false, 74}, 
-					{"Prop Kill Key:", "Selection", "The 'E' Key", {"Mouse 2", "Mouse 3", "Mouse 4", "Mouse 5", "Left 'ALT' Key", "The 'E' Key", "The 'F' Key", "The 'G' Key", "The 'B' Key"}, 88}, 
+					{"Hide Round Report", "Checkbox", true, 78}, -- Enabled by default
+					{"Panel Remover", "Checkbox", true, 78}, -- Enabled by default
+					{"Prop Kill", "Checkbox", false, 78}, 
+					{"Prop Kill Key:", "Selection", "The 'E' Key", {"Mouse 2", "Mouse 3", "Mouse 4", "Mouse 5", "Left 'ALT' Key", "The 'E' Key", "The 'F' Key", "The 'G' Key", "The 'B' Key"}, 92}, 
 				}, 
 				{
 					{"DarkRP Utilities", 16, 299, 347, 103, 218}, 
-					{"Suicide Near Arrest Batons", "Checkbox", true, 74}, -- Enabled by default
-					{"Transparent Props", "Checkbox", false, 74}, 
-					{"Transparency:", "Slider", 157, 255, 88}, 
+					{"Suicide Near Arrest Batons", "Checkbox", true, 78}, -- Enabled by default
+					{"Transparent Props", "Checkbox", false, 78}, 
+					{"Transparency:", "Slider", 157, 255, 92}, 
 				}, 
 				{
 					{"Murder Utilities", 16, 417, 347, 100, 218}, 
-					{"Hide End Round Board", "Checkbox", true, 74}, -- Enabled by default
-					{"Hide Footprints", "Checkbox", true, 74}, -- Enabled by default
-					{"No Black Screens", "Checkbox", true, 74}, -- Enabled by default
+					{"Hide End Round Board", "Checkbox", true, 78}, -- Enabled by default
+					{"Hide Footprints", "Checkbox", true, 78}, -- Enabled by default
+					{"No Black Screens", "Checkbox", true, 78}, -- Enabled by default
 				}, 
 				{
 					{"Panic Mode", 736, 20, 347, 75, 218}, 
-					{"Enabled", "Checkbox", false, 74}, 
-					{"Mode:", "Selection", "Disable All", {"Disable Ragebot", "Disable Legitbot", "Disable Anti-Aim", "Disable All", "Load Legithack"}, 88}, 
+					{"Enabled", "Checkbox", false, 78}, 
+					{"Mode:", "Selection", "Disable All", {"Disable Ragebot", "Disable Legitbot", "Disable Anti-Aim", "Disable All", "Load Legithack"}, 92}, 
                 }, 
 				{
           			{"IdiotBox Console Commands", 736, 110, 347, 121, 108}, 
@@ -298,26 +298,26 @@ local options = {
 		["Miscellaneous"] = {
 				{
 					{"Miscellaneous", 50, 20, 250, 200, 130}, 
-					{"Name Stealer", "Checkbox", false, 74}, 
-					{"Steal Type:", "Selection", "Normal", {"Normal", "DarkRP Name"}, 88}, 
-					{"Turn on Music", "Checkbox", false, 74}, 
-					{"Reset Sounds", "Checkbox", false, 74}, 
-					{"Hitsounds", "Checkbox", false, 74},
-					{"Flash Spam", "Checkbox", false, 74}, 
-					{"Use Spam", "Checkbox", false, 74}, 
+					{"Name Stealer", "Checkbox", false, 78}, 
+					{"Steal Type:", "Selection", "Normal", {"Normal", "DarkRP Name"}, 92}, 
+					{"Turn on Music", "Checkbox", false, 78}, 
+					{"Reset Sounds", "Checkbox", false, 78}, 
+					{"Hitsounds", "Checkbox", false, 78},
+					{"Flash Spam", "Checkbox", false, 78}, 
+					{"Use Spam", "Checkbox", false, 78}, 
                 }, 
 				{
 					{"Priority List", 50, 235, 250, 103, 130}, 
-					{"Enabled", "Checkbox", true, 74}, -- Enabled by default
-					{"List Spacing:", "Slider", 0, 10, 88}, 
-					{"Priority Targets Only", "Checkbox", false, 74}, 
+					{"Enabled", "Checkbox", true, 78}, -- Enabled by default
+					{"List Spacing:", "Slider", 0, 10, 92}, 
+					{"Priority Targets Only", "Checkbox", false, 78}, 
                 }, 
 				{
 					{"Taunting", 50, 353, 250, 128, 130}, 
-					{"Emotes", "Checkbox", false, 74}, 
-					{"Emote Type:", "Selection", "Random", {"Dance", "Sexy", "Wave", "Robot", "Bow", "Cheer", "Laugh", "Zombie", "Agree", "Disagree", "Forward", "Back", "Salute", "Pose", "Halt", "Group", "Random"}, 88}, 
-					{"Murder Taunts", "Checkbox", false, 74}, 
-					{"Taunt Type:", "Selection", "Random", {"Funny", "Help", "Scream", "Morose", "Random"}, 88}, 
+					{"Emotes", "Checkbox", false, 78}, 
+					{"Emote Type:", "Selection", "Random", {"Dance", "Sexy", "Wave", "Robot", "Bow", "Cheer", "Laugh", "Zombie", "Agree", "Disagree", "Forward", "Back", "Salute", "Pose", "Halt", "Group", "Random"}, 92}, 
+					{"Murder Taunts", "Checkbox", false, 78}, 
+					{"Taunt Type:", "Selection", "Random", {"Funny", "Help", "Scream", "Morose", "Random"}, 92}, 
                 }, 
 				{
                 	{"Chat", 312, 20, 233, 152, 92}, 
@@ -337,32 +337,32 @@ local options = {
                 }, 
 				{
 					{"Movement", 790, 20, 240, 182, 117}, 
-					{"Bunny Hop", "Checkbox", false, 74}, 
-					{"Auto Strafe", "Checkbox", false, 74}, 
-					{"Air Crouch", "Checkbox", false, 74}, 
-					{"Fake Crouch", "Checkbox", false, 74}, 
-					{"Circle Strafe", "Checkbox", false, 74}, 
-					{"Strafe Speed:", "Slider", 2, 6, 88}, 
+					{"Bunny Hop", "Checkbox", false, 78}, 
+					{"Auto Strafe", "Checkbox", false, 78}, 
+					{"Air Crouch", "Checkbox", false, 78}, 
+					{"Fake Crouch", "Checkbox", false, 78}, 
+					{"Circle Strafe", "Checkbox", false, 78}, 
+					{"Strafe Speed:", "Slider", 2, 6, 92}, 
                 }, 
 				{
 					{"Viewmodel", 790, 216, 240, 125, 117}, 
-					{"Viewmodel Chams", "Checkbox", false, 74}, 
-					{"Viewmodel Wireframe", "Checkbox", false, 74}, 
-					{"No Viewmodel", "Checkbox", false, 74}, 
-					{"No Hands", "Checkbox", false, 74}, 
+					{"Viewmodel Chams", "Checkbox", false, 78}, 
+					{"Viewmodel Wireframe", "Checkbox", false, 78}, 
+					{"No Viewmodel", "Checkbox", false, 78}, 
+					{"No Hands", "Checkbox", false, 78}, 
                 }, 
 				{
 					{"Textures", 790, 356, 240, 125, 117}, 
-					{"Transparent Walls", "Checkbox", false, 74}, 
-					{"No Sky", "Checkbox", false, 74}, 
-					{"Light Mode", "Checkbox", false, 74}, 
-					{"Dark Mode", "Checkbox", false, 74}, 
+					{"Transparent Walls", "Checkbox", false, 78}, 
+					{"No Sky", "Checkbox", false, 78}, 
+					{"Light Mode", "Checkbox", false, 78}, 
+					{"Dark Mode", "Checkbox", false, 78}, 
                 }, 
 				{
 					{"Free Roaming", 790, 496, 240, 105, 117}, 
-					{"Enabled", "Checkbox", false, 74}, 
-					{"Free Roaming Key:", "Selection", "The 'E' Key", {"Mouse 3", "Mouse 4", "Mouse 5", "Left 'ALT' Key", "The 'E' Key", "The 'F' Key", "The 'G' Key", "The 'B' Key"}, 88}, 
-					{"Free Roaming Speed:", "Slider", 30, 100, 88}, 
+					{"Enabled", "Checkbox", false, 78}, 
+					{"Free Roaming Key:", "Selection", "The 'E' Key", {"Mouse 3", "Mouse 4", "Mouse 5", "Left 'ALT' Key", "The 'E' Key", "The 'F' Key", "The 'G' Key", "The 'B' Key"}, 92}, 
+					{"Free Roaming Speed:", "Slider", 30, 100, 92}, 
                 }, 
 				{
 					{"Change Log - Patch v6.7.3 - Unknown 2021", 312, 187, 466, 294, 130}, 
@@ -1113,7 +1113,7 @@ local function DrawSaveButton(self, w, h)
 	surface.DrawText("Save Legithack")
 	if (bMouse && input.IsMouseDown(MOUSE_LEFT)) then
 		SaveConfig()
-		timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Legitbot Saved!") end)
+		timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Legit Configuration Saved!") end)
 		timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 	end
 end
@@ -1142,7 +1142,7 @@ local function DrawLoadButton(self, w, h)
 	surface.DrawText("Load Legithack")
 	if (bMouse && input.IsMouseDown(MOUSE_LEFT)) then
 		LoadConfig()
-		timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Legitbot Loaded!") end)
+		timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Legit Configuration Loaded!") end)
 		timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 	end
 end
@@ -1168,7 +1168,7 @@ local function DrawSaveButton2(self, w, h)
 	surface.DrawText("Save Ragehack")
 	if (bMouse && input.IsMouseDown(MOUSE_LEFT)) then
 		SaveConfig2()
-		timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Ragebot Saved!") end)
+		timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Rage Configuration Saved!") end)
 		timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 	end
 end
@@ -1194,7 +1194,7 @@ local function DrawLoadButton2(self, w, h)
 	surface.DrawText("Load Ragehack")
 	if (bMouse && input.IsMouseDown(MOUSE_LEFT)) then
 		LoadConfig2()
-		timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Ragebot Loaded!") end)
+		timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Rage Configuration Loaded!") end)
 		timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 	end
 end
@@ -3052,6 +3052,7 @@ local function ChangeLog()
 	print("- Added 'Random' to Emotes;")
 	print("- Added 'Murder Taunts' to Taunting;")
 	print("- Added 'Velocity' to Visuals;")
+	print("- Added 'Dormant Check' to Visuals;")
 	print("- Added 'Bystander Name' to Visuals;")
 	print("- Added 'NPCs' to Visuals;")
 	print("- Added 'Show FoV Circle' to Visuals;")
@@ -3779,7 +3780,7 @@ hook.Add("Think", "Hook8", function()
 	end
 	if (gBool("Utilities", "General Utilities", "Anti-Blind")) then
 		if (HookExist("HUDPaint", "ulx_blind")) then
-			MsgR(4.3, "IdiotBox successfully blocked a blindnig attempt.")
+			MsgR(4.3, "IdiotBox successfully blocked a blinding attempt.")
 			surface.PlaySound("buttons/lightswitch2.wav")
 			hook.Remove("HUDPaint", "ulx_blind")
         end
