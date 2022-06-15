@@ -946,8 +946,6 @@ local function UpdateVar(men, sub, lookup, new)
 	end
 end
 
-local folder = "IdiotBox"
-
 if not file.IsDir(folder, "DATA") then
 	file.CreateDir(folder)
 end
