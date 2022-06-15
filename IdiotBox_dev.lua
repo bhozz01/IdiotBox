@@ -92,62 +92,63 @@ surface.CreateFont("MiscFont3", {
 local options = {
         ["Aimbot"] = {
                 {
-					{"Ragebot", 16, 20, 347, 226, 160}, 
-					{"Enabled", "Checkbox", false, 0}, 
-					{"Aim Key:", "Toggle", 0, 135, 0}, 
-					{"Silent", "Checkbox", false, 0}, 
-					{"Auto Fire", "Checkbox", false, 0}, 
-					{"Alt Fire", "Checkbox", false, 0}, 
-					{"Auto Stop", "Checkbox", false, 0}, 
-					{"Auto Crouch", "Checkbox", false, 0}, 
-					{"Target Lock", "Checkbox", false, 0}, 
+					{"Ragebot", 16, 20, 347, 226, 218}, 
+					{"Enabled", "Checkbox", false, 78}, 
+					{"Aim Key:", "Toggle", 0, 92, 0}, 
+					{"Silent", "Checkbox", false, 78}, 
+					{"Auto Fire", "Checkbox", false, 78}, 
+					{"Alt Fire", "Checkbox", false, 78}, 
+					{"Auto Stop", "Checkbox", false, 78}, 
+					{"Auto Crouch", "Checkbox", false, 78}, 
+					{"Target Lock", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Legitbot", 16, 260, 347, 275, 160}, 
-					{"Enabled", "Checkbox", false, 0}, 
-					{"Aim Key:", "Toggle", 0, 135, 0}, 
-					{"Aim FoV Value:", "Slider", 25, 500, 135}, 
-					{"Aim Smoothness:", "Slider", 5, 50, 135}, 
-					{"Silent (For Anti-Aim)", "Checkbox", false, 0}, 
-					{"Auto Fire", "Checkbox", false, 0}, 
-					{"Alt Fire", "Checkbox", false, 0}, 
-					{"Auto Stop", "Checkbox", false, 0}, 
-					{"Auto Crouch", "Checkbox", false, 0}, 
-					{"Target Lock", "Checkbox", false, 0}, 
+					{"Legitbot", 16, 260, 347, 275, 218}, 
+					{"Enabled", "Checkbox", false, 78}, 
+					{"Aim Key:", "Toggle", 0, 92, 0}, 
+					{"Aim FoV Value:", "Slider", 25, 500, 92}, 
+					{"Aim Smoothness:", "Slider", 5, 50, 92}, 
+					{"Silent (For Anti-Aim)", "Checkbox", false, 78}, 
+					{"Auto Fire", "Checkbox", false, 78}, 
+					{"Alt Fire", "Checkbox", false, 78}, 
+					{"Auto Stop", "Checkbox", false, 78}, 
+					{"Auto Crouch", "Checkbox", false, 78}, 
+					{"Target Lock", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Aim Priorities", 376, 20, 347, 460, 160}, 
-					{"Disable in Noclip", "Checkbox", false, 0}, 
-					{"Target Entity Body", "Checkbox", false, 0}, 
-					{"Aim Priority:", "Selection", "Crosshair", {"Crosshair", "Distance", "Health", "Random"}, 135}, 
-					{"Players:", "Checkbox", true, 0}, -- Enabled by default
-					{"Team:", "Checkbox", true, 0}, -- Enabled by default
-					{"Friends:", "Checkbox", false, 0}, 
-					{"Bots:", "Checkbox", false, 0}, 
-					{"NPCs:", "Checkbox", false, 0}, 
-					{"Admins:", "Checkbox", false, 0}, 
-					{"Noclipping Players:", "Checkbox", false, 0}, 
-					{"Spectators:", "Checkbox", false, 0}, 
-					{"Driving Players:", "Checkbox", false, 0}, 
-					{"Transparent Players:", "Checkbox", false, 0}, 
-					{"Overhealed Players:", "Checkbox", false, 0}, 
-					{"Max Player Health:", "Slider", 500, 5000, 135}, 
-					{"Distance Limit", "Checkbox", false, 0}, 
-					{"Distance:", "Slider", 200, 5000, 135}, 
+					{"Aim Priorities", 376, 20, 347, 485, 218}, 
+					{"Projectile Prediction", "Checkbox", false, 78}, 
+					{"Disable in Noclip", "Checkbox", false, 78}, 
+					{"Target Entity Body", "Checkbox", false, 78}, 
+					{"Aim Priority:", "Selection", "Crosshair", {"Crosshair", "Distance", "Health", "Random"}, 92}, 
+					{"Players:", "Checkbox", true, 78}, -- Enabled by default
+					{"Team:", "Checkbox", true, 78}, -- Enabled by default
+					{"Friends:", "Checkbox", false, 78}, 
+					{"Bots:", "Checkbox", false, 78}, 
+					{"NPCs:", "Checkbox", false, 78}, 
+					{"Admins:", "Checkbox", false, 78}, 
+					{"Noclipping Players:", "Checkbox", false, 78}, 
+					{"Spectators:", "Checkbox", false, 78}, 
+					{"Driving Players:", "Checkbox", false, 78}, 
+					{"Transparent Players:", "Checkbox", false, 78}, 
+					{"Overhealed Players:", "Checkbox", false, 78}, 
+					{"Max Player Health:", "Slider", 500, 5000, 92}, 
+					{"Distance Limit", "Checkbox", false, 78}, 
+					{"Distance:", "Slider", 200, 5000, 92}, 
                 }, 
 				{
-					{"Miscellaneous", 736, 20, 347, 309, 153}, 
-					{"No Recoil", "Checkbox", false, 0}, 
-					{"No Spread", "Checkbox", false, 0}, 
-					{"Rapid Fire", "Checkbox", false, 0}, 
-					{"Rapid Alt Fire", "Checkbox", false, 0}, 
-					{"Wall Aim", "Checkbox", false, 0}, 
-					{"Auto Wallbang", "Checkbox", false, 0}, 
-					{"No Lerp", "Checkbox", false, 0}, 
-					{"Bullet Time", "Checkbox", false, 0}, 
-					{"Fire Delay:", "Slider", 0, 100, 135}, 
-					{"Auto Reload", "Checkbox", false, 0}, 
-                	{"Auto Reload at:", "Slider", 0, 99, 135}, 
+					{"Miscellaneous", 736, 20, 347, 309, 218}, 
+					{"No Recoil", "Checkbox", false, 78}, 
+					{"No Spread", "Checkbox", false, 78}, 
+					{"Rapid Fire", "Checkbox", false, 78}, 
+					{"Rapid Alt Fire", "Checkbox", false, 78}, 
+					{"Line of Sight Check", "Checkbox", false, 78}, 
+					{"Auto Wallbang", "Checkbox", false, 78}, 
+					{"No Lerp", "Checkbox", false, 78}, 
+					{"Bullet Time", "Checkbox", false, 78}, 
+					{"Fire Delay:", "Slider", 0, 100, 92}, 
+					{"Auto Reload", "Checkbox", false, 78}, 
+                	{"Auto Reload at:", "Slider", 0, 99, 92}, 
                 }, 
         }, 
 		["Triggerbot"] = {
@@ -181,21 +182,21 @@ local options = {
 		}, 
 		["Hack vs. Hack"] = {
 				{
-					{"Anti-Aim", 16, 20, 347, 450, 170}, 
-					{"Enabled", "Checkbox", false, 122}, 
-					{"Disable in Noclip", "Checkbox", true, 122}, -- Enabled by default
-					{"Disable with 'E' Key", "Checkbox", true, 122}, -- Enabled by default
-					{"Wall Detect", "Checkbox", false, 122}, 
-					{"View Lock", "Checkbox", false, 122}, 
-					{"Static", "Checkbox", false, 122}, 
-					{"Adaptive", "Checkbox", false, 122}, 
-					{"X-Axis:", "Selection", "Off", {"Off", "Emotion", "Down", "Up", "Center", "Jitter", "Fake-Down", "Fake-Up", "Semi-Jitter Down", "Semi-Jitter Up", "Spinbot"}, 136}, 
-					{"Y-Axis:", "Selection", "Off", {"Off", "Forwards", "Backwards", "Sideways", "Fake-Forwards", "Fake-Backwards", "Fake-Sideways", "Emotion", "Jitter", "Backwards Jitter", "Sideways Jitter", "Semi-Jitter", "Backwards Semi-Jitter", "Sideways Semi-Jitter", "Side Switch", "Spinbot"}, 136}, 
-					{"Switch Key:", "Toggle", 0, 136, 0}, 
-					{"Anti-Aim Direction:", "Selection", "Left", {"Left", "Right", "Manual Switching"}, 136}, 
-					{"Spinbot Speed:", "Slider", 0, 180, 136}, 
-					{"Emotion X-Axis:", "Slider", 0, 100, 136}, 
-					{"Emotion Y-Axis:", "Slider", 0, 100, 136}, 
+					{"Anti-Aim", 16, 20, 347, 450, 218}, 
+					{"Enabled", "Checkbox", false, 78}, 
+					{"Disable in Noclip", "Checkbox", true, 78}, -- Enabled by default
+					{"Disable with 'E' Key", "Checkbox", true, 78}, -- Enabled by default
+					{"Wall Detect", "Checkbox", false, 78}, 
+					{"View Lock", "Checkbox", false, 78}, 
+					{"Static", "Checkbox", false, 78}, 
+					{"Adaptive", "Checkbox", false, 78}, 
+					{"X-Axis:", "Selection", "Off", {"Off", "Down", "Up", "Center", "Fake-Down", "Fake-Up", "Jitter", "Semi-Jitter Down", "Semi-Jitter Up", "Emotion", "Spinbot"}, 92}, 
+					{"Y-Axis:", "Selection", "Off", {"Off", "Forwards", "Backwards", "Sideways", "Fake-Forwards", "Fake-Backwards", "Fake-Sideways", "Jitter", "Backwards Jitter", "Sideways Jitter", "Semi-Jitter", "Back Semi-Jitter", "Side Semi-Jitter", "Side Switch", "Emotion", "Spinbot"}, 92}, 
+					{"Anti-Aim Direction:", "Selection", "Left", {"Left", "Right", "Manual Switch"}, 92}, 
+					{"Switch Key:", "Toggle", 0, 92, 0}, 
+					{"Spinbot Speed:", "Slider", 0, 180, 92}, 
+					{"Emotion X-Axis:", "Slider", 0, 100, 92}, 
+					{"Emotion Y-Axis:", "Slider", 0, 100, 92}, 
 					{"", "Checkbox", false, 9999}, 
 					{"-------------------WHEN USING 'FREE ROAMING'---------------------", "Checkbox", false, 9999},
 					{"--------'ANTI-AIM' WILL AUTOMATICALLY TURN OFF---------", "Checkbox", false, 9999},
@@ -293,16 +294,33 @@ local options = {
 					{"No Black Screens", "Checkbox", true, 78}, -- Enabled by default
 				}, 
 				{
-					{"Panic Mode", 736, 20, 347, 75, 218}, 
+          			{"Configurations", 376, 20, 347, 160, 218}, 
+					{"Automatically Save", "Checkbox", false, 78}, 
+					{"Save Configuration", "Button", "", 92}, 
+					{"Load Configuration", "Button", "", 92}, 
+					{"Delete Configuration", "Button", "", 92}, 
+					{"Configuration:", "Selection", "Configuration #1", {"Configuration #1", "Configuration #2", "Configuration #3", "Configuration #4", "Configuration #5"}, 92}, 
+          		}, 
+				{
+          			{"Menus", 376, 290, 347, 80, 218}, 
+					{"Entity Menu", "Button", "", 92}, 
+					{"Plugin Loader", "Button", "", 92}, 
+          		}, 
+				{
+					{"Panic Mode", 376, 195, 347, 75, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
-					{"Mode:", "Selection", "Disable All", {"Disable Ragebot", "Disable Legitbot", "Disable Anti-Aim", "Disable All", "Load Legithack"}, 92}, 
+					{"Mode:", "Selection", "Disable All", {"Disable Ragebot", "Disable Legitbot", "Disable Anti-Aim", "Disable All"}, 92}, 
                 }, 
 				{
-          			{"IdiotBox Console Commands", 736, 110, 347, 121, 108}, 
-					{"Apply custom name", "Checkbox", false, 0}, 
+          			{"IdiotBox Console Commands", 736, 20, 347, 100, 218}, 
+					{"Apply custom name", "Checkbox", false, 78}, 
 					{"Run the 'idiot_openmenu' command to open the menu;", "Checkbox", false, 9999}, 
-          			{"Run the 'idiot_changename' command to set a custom name;", "Checkbox", false, 9999}, 
-					{"Run the 'idiot_changelog' command to view recent changes.", "Checkbox", false, 9999}, 
+          			{"Run the 'idiot_changename' command to set a custom name.", "Checkbox", false, 9999}, 
+          		}, 
+				{
+          			{"Others", 736, 135, 347, 80, 218}, 
+					{"Print Changelog", "Button", "", 92}, 
+					{"Unload Cheat", "Button", "", 92}, 
           		}, 
         }, 
 		["Miscellaneous"] = {
@@ -366,35 +384,35 @@ local options = {
 				{
                 	{"Chat", 736, 218, 347, 125, 218}, 
 					{"Log Kills in Chat", "Checkbox", false, 78}, 
-					{"Chat Spam:", "Selection", "Off", {"Off", "Advertising 1", "Advertising 2", "Advertising 3", "Nazi 1", "Nazi 2", "Nazi 3", "Arabic Spam", "Hebrew Spam", "Offensive Spam", "Insult Spam", "ULX Message Spam", "N-Word Spam", "N-WORD SPAM", "'H' Spam", "Clear Chat", "OOC Clear Chat"}, 92}, 
+					{"Chat Spam:", "Selection", "Off", {"Off", "Advertising 1", "Advertising 2", "Advertising 3", "Nazi 1", "Nazi 2", "Nazi 3", "Arabic Spam", "Hebrew Spam", "Offensive Spam", "Insult Spam", "Message Spam", "N-Word Spam", "N-WORD SPAM", "'H' Spam", "Clear Chat", "OOC Clear Chat"}, 92}, 
 					{"Kill Spam:", "Selection", "Off", {"Off", "Normal", "Insult", "Salty", "HvH", "IdiotBox HvH", "Votekick", "Voteban", "Killstreak", }, 92}, 
-					{"Reply Spam:", "Selection", "Off", {"Off", "shut up", "ok", "who", "nobody cares", "where", "lol stop spamming", "what", "yea", "lol", "english please", "lmao", "shit", "fuck", "Random", "Disconnect Spam", "Cheater Callout", "Copy Messages"}, 92}, 
+					{"Reply Spam:", "Selection", "Off", {"Off", "shut up", "ok", "who", "nobody cares", "where", "lol stop spam...", "what", "yea", "lol", "english please", "lmao", "shit", "fuck", "Random", "Disconnect Spam", "Cheater Callout", "Copy Messages"}, 92}, 
                 }, 
         }, 
 		["Settings"] = {
 				{
           			{"Main Text Color", 50, 20, 250, 105, 100}, 
           			{"Red:", "Slider", 0, 255, 88}, 
-					{"Green:", "Slider", 255, 255, 88}, 
-					{"Blue:", "Slider", 217, 255, 88}, 
+					{"Green:", "Slider", 205, 255, 88}, 
+					{"Blue:", "Slider", 255, 255, 88}, 
           		}, 
 				{
 					{"Menu Text Color", 311, 20, 205, 105, 70}, 
-					{"Red:", "Slider", 0, 255, 88}, 
-					{"Green:", "Slider", 235, 255, 88}, 
+					{"Red:", "Slider", 255, 255, 88}, 
+					{"Green:", "Slider", 255, 255, 88}, 
 					{"Blue:", "Slider", 255, 255, 88}, 
 				}, 
 				{
           			{"Background Menu Color", 525, 20, 245, 105, 100}, 
-          			{"Red:", "Slider", 27, 255, 88}, 
-					{"Green:", "Slider", 27, 255, 88}, 
-					{"Blue:", "Slider", 27, 255, 88}, 
+          			{"Red:", "Slider", 30, 255, 88}, 
+					{"Green:", "Slider", 30, 255, 88}, 
+					{"Blue:", "Slider", 45, 255, 88}, 
           		}, 
 				{
 					{"Border Color", 780, 20, 250, 105, 100}, 
 					{"Red:", "Slider", 0, 255, 88}, 
-					{"Green:", "Slider", 131, 255, 88}, 
-					{"Blue:", "Slider", 175, 255, 88}, 
+					{"Green:", "Slider", 155, 255, 88}, 
+					{"Blue:", "Slider", 255, 255, 88}, 
                 }, 
 				{
 					{"Team Visuals Color", 50, 145, 250, 105, 100}, 
@@ -453,26 +471,26 @@ local options = {
 				{
 					{"Others", 311, 390, 205, 157, 70}, 
 					{"T Opacity:", "Slider", 255, 255, 88}, 
-					{"B Opacity:", "Slider", 110, 255, 88}, 
+					{"B Opacity:", "Slider", 255, 255, 88}, 
 					{"BG Opacity:", "Slider", 255, 255, 88}, 
 					{"BG Darkness:", "Slider", 18, 25, 88}, 
-					{"Roundness:", "Slider", 47, 67, 88}, 
+					{"Roundness:", "Slider", 57, 67, 88}, 
                 }, 
 				{
 					{"Window Positions", 525, 390, 245, 157, 88}, 
 					{"Spectators X:", "Slider", 12, 2000, 121}, 
 					{"Spectators Y:", "Slider", 12, 2000, 121}, 
-					{"Radar X:", "Slider", 220, 2000, 121}, 
+					{"Radar X:", "Slider", 225, 2000, 121}, 
 					{"Radar Y:", "Slider", 12, 2000, 121}, 
-					{"Roundness:", "Slider", 15, 42, 121}, 
+					{"Roundness:", "Slider", 16, 42, 121}, 
                 }, 
 				{
 					{"List Positions", 780, 390, 250, 157, 88}, 
 					{"Custom Status X:", "Slider", 17, 2000, 121}, 
-					{"Custom Status Y:", "Slider", 240, 2000, 121}, 
+					{"Custom Status Y:", "Slider", 250, 2000, 121}, 
 					{"Players List X:", "Slider", 17, 2000, 121}, 
-					{"Players List Y:", "Slider", 415, 2000, 121}, 
-					{"Roundness:", "Slider", 7, 10, 121}, 
+					{"Players List Y:", "Slider", 430, 2000, 121}, 
+					{"Roundness:", "Slider", 8, 10, 121}, 
                 }, 
         }, 
 }
@@ -815,17 +833,29 @@ else
 	file.Write(folder.."/ignored.txt", "[]")
 end
 
-local function SaveConfig()
-	file.Write(folder.."/legithack.txt", util.TableToJSON(options))
+local function SaveConfig1()
+	file.Write(folder.."/config1.txt", util.TableToJSON(options))
 end
 
 local function SaveConfig2()
-	file.Write(folder.."/ragehack.txt", util.TableToJSON(options))
+	file.Write(folder.."/config2.txt", util.TableToJSON(options))
 end
 
-local function LoadConfig()
-	if file.Exists(folder.."/legithack.txt", "DATA") then
-	local tab = util.JSONToTable(file.Read(folder.."/legithack.txt", "DATA"))
+local function SaveConfig3()
+	file.Write(folder.."/config3.txt", util.TableToJSON(options))
+end
+
+local function SaveConfig4()
+	file.Write(folder.."/config4.txt", util.TableToJSON(options))
+end
+
+local function SaveConfig5()
+	file.Write(folder.."/config5.txt", util.TableToJSON(options))
+end
+
+local function LoadConfig1()
+	if file.Exists(folder.."/config1.txt", "DATA") then
+	local tab = util.JSONToTable(file.Read(folder.."/config1.txt", "DATA"))
 	local cursub
 		for k, v in next, tab do
 			if (not options[k]) then continue end
@@ -840,8 +870,56 @@ local function LoadConfig()
 end
 
 local function LoadConfig2()
-	if file.Exists(folder.."/ragehack.txt", "DATA") then
-	local tab = util.JSONToTable(file.Read(folder.."/ragehack.txt", "DATA"))
+	if file.Exists(folder.."/config2.txt", "DATA") then
+	local tab = util.JSONToTable(file.Read(folder.."/config2.txt", "DATA"))
+	local cursub
+		for k, v in next, tab do
+			if (not options[k]) then continue end
+			for men, subtab in next, v do
+				for key, val in next, subtab do
+					if (key == 1) then cursub = val[1] continue end
+					UpdateVar(k, cursub, val[1], val[3])
+				end
+			end
+		end
+	end
+end
+
+local function LoadConfig3()
+	if file.Exists(folder.."/config3.txt", "DATA") then
+	local tab = util.JSONToTable(file.Read(folder.."/config3.txt", "DATA"))
+	local cursub
+		for k, v in next, tab do
+			if (not options[k]) then continue end
+			for men, subtab in next, v do
+				for key, val in next, subtab do
+					if (key == 1) then cursub = val[1] continue end
+					UpdateVar(k, cursub, val[1], val[3])
+				end
+			end
+		end
+	end
+end
+
+local function LoadConfig4()
+	if file.Exists(folder.."/config4.txt", "DATA") then
+	local tab = util.JSONToTable(file.Read(folder.."/config4.txt", "DATA"))
+	local cursub
+		for k, v in next, tab do
+			if (not options[k]) then continue end
+			for men, subtab in next, v do
+				for key, val in next, subtab do
+					if (key == 1) then cursub = val[1] continue end
+					UpdateVar(k, cursub, val[1], val[3])
+				end
+			end
+		end
+	end
+end
+
+local function LoadConfig5()
+	if file.Exists(folder.."/config5.txt", "DATA") then
+	local tab = util.JSONToTable(file.Read(folder.."/config5.txt", "DATA"))
 	local cursub
 		for k, v in next, tab do
 			if (not options[k]) then continue end
@@ -876,8 +954,8 @@ local function DrawUpperText(w, h)
 	surface.SetTextColor(gInt("Settings", "Main Text Color", "Red:"), gInt("Settings", "Main Text Color", "Green:"), gInt("Settings", "Main Text Color", "Blue:"), 255)
 	surface.SetFont("IdiotFont")
 	surface.DrawText("IdiotBox v6.7.3")
-	surface.SetTextPos(486, 32 - th / 2)
-	surface.SetTextColor(gInt("Settings", "Main Text Color", "Red:"), gInt("Settings", "Main Text Color", "Green:"), gInt("Settings", "Main Text Color", "Blue:"), 47)
+	surface.SetTextPos(615, 18 - th / 2)
+	surface.SetTextColor(gInt("Settings", "Main Text Color", "Red:"), gInt("Settings", "Main Text Color", "Green:") - 124, gInt("Settings", "Main Text Color", "Blue:") - 42, 255)
 	surface.SetFont("IdiotFont2")
 	surface.DrawText("Latest patch: June XXth 2022")
 	surface.SetFont("MenuFont")
@@ -906,26 +984,26 @@ local function DrawOptions(self, w, h)
 	for k, v in next, order do
 		local bMouse = MouseInArea(mx + 5 + maxx, my + 31, mx + 5 + maxx + sizeper, my + 31 + 30)
 		if (visible[v]) then
-			local curcol = Color(gInt("Settings", "Main Text Color", "Red:"), gInt("Settings", "Main Text Color", "Green:"), gInt("Settings", "Main Text Color", "Blue:"), gInt("Settings", "Others", "T Opacity:"))
+			local curcol = Color(gInt("Settings", "Border Color", "Red:"), gInt("Settings", "Border Color", "Green:"), gInt("Settings", "Border Color", "Blue:"), gInt("Settings", "Others", "B Opacity:"))
 			for i = 0, 0 do
-					surface.SetDrawColor(curcol)
-					curcol.r, curcol.g, curcol.b = curcol.r + 3, curcol.g + 3, curcol.b + 3
-					surface.DrawLine(0.9 + maxx, 60 + i, 0.9 + maxx + sizeper, 60 + i)
+				surface.SetDrawColor(curcol)
+				curcol.r, curcol.g, curcol.b = curcol.r + 3, curcol.g + 3, curcol.b + 3
+				surface.DrawLine(0.9 + maxx, 60 + i, 0.9 + maxx + sizeper, 60 + i)
 			end
 			elseif (bMouse) then
-			local curcol = Color(gInt("Settings", "Main Text Color", "Red:"), gInt("Settings", "Main Text Color", "Green:"), gInt("Settings", "Main Text Color", "Blue:"), 100)
+			local curcol = Color(gInt("Settings", "Border Color", "Red:"), gInt("Settings", "Border Color", "Green:"), gInt("Settings", "Border Color", "Blue:"), gInt("Settings", "Others", "B Opacity:") - 100)
 			for i = 0, 0 do
-					surface.SetDrawColor(curcol)
-					curcol.r, curcol.g, curcol.b = curcol.r + 3, curcol.g + 3, curcol.b + 3
-					surface.DrawLine(0.9 + maxx, 60 + i, 0.9 + maxx + sizeper, 60 + i)
+				surface.SetDrawColor(curcol)
+				curcol.r, curcol.g, curcol.b = curcol.r + 3, curcol.g + 3, curcol.b + 3
+				surface.DrawLine(0.9 + maxx, 60 + i, 0.9 + maxx + sizeper, 60 + i)
 			end
 		end
 		if (bMouse and input.IsMouseDown(MOUSE_LEFT) and not mousedown and not visible[v]) then
-				local nb = visible[v]
-				for key, val in next, visible do
-						visible[key] = false
-				end
-				visible[v] = not nb
+			local nb = visible[v]
+			for key, val in next, visible do
+				visible[key] = false
+			end
+			visible[v] = not nb
 		end
 		surface.SetFont("MenuFont")
 		surface.SetTextColor(gInt("Settings", "Main Text Color", "Red:"), gInt("Settings", "Main Text Color", "Green:"), gInt("Settings", "Main Text Color", "Blue:"), 255)
@@ -941,23 +1019,26 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 	surface.SetTextColor(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), gInt("Settings", "Others", "T Opacity:"))
 	surface.SetTextPos(5 + posx + 15 + 5, 61 + posy + maxy)
 	local tw, th = surface.GetTextSize(var[1])
-	surface.DrawText(var[1])
 	surface.SetDrawColor(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), gInt("Settings", "Others", "T Opacity:"))
-	surface.DrawOutlinedRect(5 + posx + 15 + 5 + dist + var[4], 61 + posy + maxy + 2, 14, 14)
 	local mx, my = self:GetPos()
 	local bMouse = MouseInArea(mx + 5 + posx + 15 + 5, my + 61 + posy + maxy, mx + 5 + posx + 15 + 5 + dist + 14 + var[4], my + 61 + posy + maxy + 16)
-	if (bMouse) then
-		surface.DrawRect(5 + posx + 15 + 5 + dist + 2 + var[4], 61 + posy + maxy + 4, 10, 10)
+	if bMouse then
+		surface.SetTextColor(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), gInt("Settings", "Others", "T Opacity:") - 155)
+		surface.SetDrawColor(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), gInt("Settings", "Others", "T Opacity:") - 155)
+		if not input.IsMouseDown(MOUSE_LEFT) then
+			surface.DrawRect(5 + posx + 15 + 5 + dist + 2 + var[4], 61 + posy + maxy + 2, 10, 10)
+		end
 	end
-	if (var[3]) then
-		local curcol = Color(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), gInt("Settings", "Others", "T Opacity:"))
-		surface.SetDrawColor(curcol)
-		surface.DrawRect(5 + posx + 15 + 5 + dist + 2 + var[4], 61 + posy + maxy + 4, 10, 10)
-		surface.SetDrawColor(gInt("Settings", "Background Menu Color", "Red:"), gInt("Settings", "Background Menu Color", "Green:"), gInt("Settings", "Background Menu Color", "Blue:"), gInt("Settings", "Others", "BG Opacity:"))
-		surface.DrawOutlinedRect(5 + posx + 15 + 5 + dist + 2 + var[4], 61 + posy + maxy + 4, 10, 10)
+	surface.DrawText(var[1])
+	surface.DrawOutlinedRect( posx + 25 + dist + var[4], 61 + posy + maxy , 13, 13)
+	if var[3] then
+		surface.SetDrawColor(gInt("Settings", "Menu Text Color", "Red:") - 30, gInt("Settings", "Menu Text Color", "Green:") - 30, gInt("Settings", "Menu Text Color", "Blue:") - 30, 100)
+		surface.DrawRect(5 + posx + 15 + 5 + dist + 2 + var[4], 61 + posy + maxy + 2, 10, 10)
+		surface.SetDrawColor(gInt("Settings", "Menu Text Color", "Red:") - 10, gInt("Settings", "Menu Text Color", "Green:") - 10, gInt("Settings", "Menu Text Color", "Blue:") - 10, 100)
+		surface.DrawOutlinedRect(5 + posx + 15 + 5 + dist + 2 + var[4], 61 + posy + maxy + 2, 10, 10)
 	end
-	if (bMouse && input.IsMouseDown(MOUSE_LEFT) && !mousedown && !drawlast) then
-		var[3] = !var[3]
+	if bMouse and input.IsMouseDown(MOUSE_LEFT) and not mousedown and not drawlast then
+		var[3] = not var[3]
 	end
 end
 
@@ -976,10 +1057,10 @@ local function DrawSlider(self, w, h, var, maxy, posx, posy, dist)
 	surface.SetDrawColor(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), gInt("Settings", "Others", "T Opacity:"))
 	surface.DrawRect(3 + posx + 15 + 5 + dist + ww, 61 + posy + maxy + 9 - 5, 4, 12)
 	surface.SetDrawColor(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), gInt("Settings", "Others", "T Opacity:"))
-	local tw, th = surface.GetTextSize(curnum..".00")
+	local tw, th = surface.GetTextSize(curnum)
 	surface.DrawOutlinedRect(3 + posx + 15 + 5 + dist + ww, 61 + posy + maxy + 4, 4, 12)
 	surface.SetTextPos(5 + posx + 15 + 5 + dist + (size / 2) - tw / 2, 61 + posy + maxy + 16)
-	surface.DrawText(curnum..".00")
+	surface.DrawText(curnum)
 	local mx, my = self:GetPos()
 	local bMouse = MouseInArea(5 + posx + 15 + 5 + dist + mx, 61 + posy + maxy + 9 - 5 + my, 5 + posx + 15 + 5 + dist + mx + size, 61 + posy + maxy + 9 - 5 + my + 12)
 	if (bMouse && input.IsMouseDown(MOUSE_LEFT) && !drawlast && !candoslider) then
@@ -999,12 +1080,13 @@ local function DrawSelect(self, w, h, var, maxy, posx, posy, dist)
 	surface.SetTextPos(5 + posx + 15 + 5, 61 + posy + maxy)
 	local tw, th = surface.GetTextSize(var[1])
 	surface.DrawText(var[1])
-	surface.SetDrawColor(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), 150)
+	surface.SetDrawColor(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), gInt("Settings", "Others", "T Opacity:"))
 	surface.DrawOutlinedRect(25 + posx + dist, 61 + posy + maxy, size, 16)
 	local mx, my = self:GetPos()
 	local bMouse = MouseInArea(mx + 25 + posx + dist, my + 61 + posy + maxy, mx + 25 + posx + dist + size, my + 61 + posy + maxy + 16)
 	local check = dist..posy..posx..w..h..maxy
 	if (bMouse || notyetselected == check) then
+		surface.SetDrawColor(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), 150)
 		surface.DrawRect(25 + posx + dist + 2, 61 + posy + maxy + 2, size - 4, 12)
 	end
 	local tw, th = surface.GetTextSize(curopt)
@@ -1022,16 +1104,16 @@ local function DrawSelect(self, w, h, var, maxy, posx, posy, dist)
 					surface.SetDrawColor(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), 100)
 					surface.DrawRect(25 + posx + dist, 61 + posy + maxy + maxy2, size, 16)
 				end
-				local tw, th = surface.GetTextSize(v)
-				surface.SetTextPos(25 + posx + dist + 5, 61 + posy + maxy + 6 - th / 2 + 2 + maxy2)
-				surface.DrawText(v)
-				maxy2 = maxy2 + 16
 				if (bMouse2 && input.IsMouseDown(MOUSE_LEFT) && !mousedown) then
 					var[3] = v
 					notyetselected = nil
 					drawlast = nil
 					return
 				end
+				local tw, th = surface.GetTextSize(v)
+				surface.SetTextPos(25 + posx + dist + 5, 61 + posy + maxy + 6 - th / 2 + 2 + maxy2)
+				surface.DrawText(v)
+				maxy2 = maxy2 + 16
 			end
 			local bbMouse = MouseInArea(mx + 25 + posx + dist, my + 61 + posy + maxy, mx + 25 + posx + dist + size, my + 61 + posy + maxy + maxy2)
 			if (!bbMouse && input.IsMouseDown(MOUSE_LEFT) && !mousedown) then
@@ -1044,16 +1126,23 @@ local function DrawSelect(self, w, h, var, maxy, posx, posy, dist)
 end
 
 local function DrawToggle(self, w, h, var, maxy, posx, posy, dist)
-		surface.SetFont("MenuFont")
-       	surface.SetTextColor(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), gInt("Settings", "Others", "T Opacity:"))
-        surface.SetTextPos(5 + posx + 15 + 5, 61 + posy + maxy)
-        local tw, th = surface.GetTextSize(var[1])
-        surface.DrawText(var[1])
-       	local mx, my = self:GetPos()
-        local bMouse = MouseInArea(mx + 25 + posx + dist, my + 61 + posy + maxy, mx + 25 + posx + dist + 14 + var[4], my + 61 + posy + maxy + 16)
-        surface.SetDrawColor(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), 150)
-       	surface.DrawOutlinedRect(25 + posx + dist, 61 + posy + maxy, var[4], 16)
-       	if bMouse then
+	local text = var[1]
+	local size = var[4]
+	surface.SetFont("MenuFont")
+	surface.SetTextColor(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), gInt("Settings", "Others", "T Opacity:"))
+	surface.SetTextPos(5 + posx + 15 + 5, 61 + posy + maxy)
+	local tw, th = surface.GetTextSize(text)
+	surface.DrawText(var[1])
+	surface.SetDrawColor(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), gInt("Settings", "Others", "T Opacity:"))
+	surface.DrawOutlinedRect(25 + posx + dist, 61 + posy + maxy, size, 16)
+	local mx, my = self:GetPos()
+	local bMouse = MouseInArea(mx + 25 + posx + dist, my + 61 + posy + maxy, mx + 25 + posx + dist + 14 + var[4], my + 61 + posy + maxy + 16)
+	local check = dist..posy..posx..w..h..maxy
+	if bMouse or notyetselected == check then
+		surface.SetDrawColor(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), 150)
+		surface.DrawRect(25 + posx + dist + 2, 61 + posy + maxy + 2, size - 4, 12)
+	end
+      	if bMouse then
         	if input.IsMouseDown(MOUSE_LEFT) && var[5] ~= 2 then
                surface.SetDrawColor(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), 150)
                surface.DrawRect(25 + posx + dist + 2, 61 + posy + maxy + 2, var[4] - 4, 12)
@@ -1095,192 +1184,166 @@ local function DrawToggle(self, w, h, var, maxy, posx, posy, dist)
 	end
 end
 
-local function DrawUnloadButton(self, w, h)
-	local curcol = Color(gInt("Settings", "Background Menu Color", "Red:"), gInt("Settings", "Background Menu Color", "Green:"), gInt("Settings", "Background Menu Color", "Blue:"), gInt("Settings", "Others", "BG Opacity:"))
-	local mx, my = self:GetPos()
-	local bMouse = MouseInArea(mx + 910, my + h - 50, mx + 965, my + h - 50 + 30)
-	if (bMouse) then
-		curcol = Color(gInt("Settings", "Main Text Color", "Red:") + 60, gInt("Settings", "Main Text Color", "Green:") + 60, gInt("Settings", "Main Text Color", "Blue:") + 60, gInt("Settings", "Others", "T Opacity:"))
-	end
-	for i = 0, 0 do
-		surface.SetDrawColor(curcol)
-		surface.DrawLine(910, h - 50 + i, 1020, h - 50 + i)
-		for k, v in next, curcol do
-			curcol[k] = curcol[k] - 2
+local function Unload()
+	RunConsoleCommand("stopsound")
+	unloaded = true
+	hook.Remove("RenderScene", "Hook1")
+	hook.Remove("PostDrawViewModel", "Hook2")
+	hook.Remove("PreDrawEffects", "Hook3")
+	hook.Remove("HUDShouldDraw", "Hook4")
+	hook.Remove("Think", "Hook5")
+	hook.Remove("Think", "Hook6")
+	hook.Remove("Think", "Hook7")
+	hook.Remove("Think", "Hook8")
+	hook.Remove("PreDrawSkyBox", "Hook9")
+	hook.Remove("PreDrawViewModel", "Hook10")
+	hook.Remove("PreDrawPlayerHands", "Hook11")
+	hook.Remove("RenderScreenspaceEffects", "Hook12")
+	hook.Remove("DrawOverlay", "Hook13")
+	hook.Remove("player_hurt", "Hook14")
+	hook.Remove("entity_killed", "Hook15")
+	hook.Remove("Move", "Hook16")
+	hook.Remove("CreateMove", "Hook17")
+	hook.Remove("AdjustMouseSensitivity", "Hook18")
+	hook.Remove("ShouldDrawLocalPlayer", "Hook19")
+	hook.Remove("CalcView", "Hook20")
+	hook.Remove("player_disconnect", "Hook21")
+	hook.Remove("HUDPaint", "Hook22")
+	hook.Remove("PreDrawOpaqueRenderables", "Hook23")
+	hook.Remove("OnPlayerChat", "Hook24")
+		if gBool("Utilities", "Configurations", "Automatically Save") then
+			if gOption("Utilities", "Configurations", "Configuration:") == "Configuration #1" then
+				SaveConfig1()
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #2" then
+				SaveConfig2()
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #3" then
+				SaveConfig3()
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #4" then
+				SaveConfig4()
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #5" then
+				SaveConfig5()
+			end
 		end
-	end
-	surface.SetFont("MenuFont")
-	surface.SetTextColor(gInt("Settings", "Main Text Color", "Red:"), gInt("Settings", "Main Text Color", "Green:"), gInt("Settings", "Main Text Color", "Blue:"), 255)
-	local tw, th = surface.GetTextSize("Unload")
-	surface.SetTextPos(847 + 100 - tw / 2, h - 50 + 15 - th / 2)
-	surface.DrawText("Unload")
-	if bMouse and input.IsMouseDown(MOUSE_LEFT) then
-		unloaded = true
-		hook.Remove("RenderScene", "Hook0")
-		hook.Remove("ShutDown", "Hook1")
-		hook.Remove("PostDrawViewModel", "Hook2")
-		hook.Remove("PreDrawEffects", "Hook3")
-		hook.Remove("HUDShouldDraw", "Hook4")
-		hook.Remove("Think", "Hook5")
-		hook.Remove("Think", "Hook6")
-		hook.Remove("Think", "Hook7")
-		hook.Remove("Think", "Hook8")
-		hook.Remove("PreDrawSkyBox", "Hook9")
-		hook.Remove("PreDrawViewModel", "Hook10")
-		hook.Remove("PreDrawPlayerHands", "Hook11")
-		hook.Remove("RenderScreenspaceEffects", "Hook12")
-		hook.Remove("DrawOverlay", "Hook13")
-		hook.Remove("player_hurt", "Hook14")
-		hook.Remove("entity_killed", "Hook15")
-		hook.Remove("Move", "Hook16")
-		hook.Remove("CalcView", "Hook17")
-		hook.Remove("AdjustMouseSensitivity", "Hook18")
-		hook.Remove("ShouldDrawLocalPlayer", "Hook19")
-		hook.Remove("CreateMove", "Hook20")
-		hook.Remove("player_disconnect", "Hook21")
-		hook.Remove("HUDPaint2", "Hook22")
-		hook.Remove("PreDrawOpaqueRenderables", "Hook23")
-		hook.Remove("OnPlayerChat", "Hook24")
-		me:ConCommand("M9KGasEffect 1 cl_interp 0 cl_interp_ratio 2 cl_updaterate 30")
-		bSendPacket = true
-		_G.Loaded = false
-		timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Successfully unloaded the cheat.") end)
-		timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
-	end
+	me:ConCommand("M9KGasEffect 1 cl_interp 0 cl_interp_ratio 2 cl_updaterate 30")
+	bSendPacket = true
+	_G.Loaded = false
+	timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Successfully unloaded the cheat.") end)
+	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 end
 
-local function DrawSaveButton(self, w, h)
-	local curcol = Color(gInt("Settings", "Background Menu Color", "Red:"), gInt("Settings", "Background Menu Color", "Green:"), gInt("Settings", "Background Menu Color", "Blue:"), gInt("Settings", "Others", "BG Opacity:"))
-	local mx, my = self:GetPos()
-	local bMouse = MouseInArea(mx + 30, my + h - 50, mx + 30 + 115, my + h - 50 + 30)
-	if (bMouse) then
-		curcol = Color(gInt("Settings", "Main Text Color", "Red:") + 60, gInt("Settings", "Main Text Color", "Green:") + 60, gInt("Settings", "Main Text Color", "Blue:") + 60, gInt("Settings", "Others", "T Opacity:"))
-	end
-	for i = 0, 0 do
-		surface.SetDrawColor(curcol)
-		surface.DrawLine(30, h - 50 + i, 30 + 115, h - 50 + i)
-		for k, v in next, curcol do
-			curcol[k] = curcol[k] - 2
-		end
-	end
-	surface.SetFont("MenuFont")
-	surface.SetTextColor(gInt("Settings", "Main Text Color", "Red:"), gInt("Settings", "Main Text Color", "Green:"), gInt("Settings", "Main Text Color", "Blue:"), 255)
-	local tw, th = surface.GetTextSize("Save Legithack")
-	surface.SetTextPos(30 + 60 - tw / 2, h - 50 + 15 - th / 2)
-	surface.DrawText("Save Legithack")
-	if (bMouse && input.IsMouseDown(MOUSE_LEFT)) then
-		SaveConfig()
-		timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Legit Configuration Saved!") end)
-		timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
-	end
-end
-
-local function DrawLoadButton(self, w, h)
-	for k, v in pairs(player.GetAll()) do
-	if (gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Load Legithack" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me) then LoadConfig() end
-	end
-	local curcol = Color(gInt("Settings", "Background Menu Color", "Red:"), gInt("Settings", "Background Menu Color", "Green:"), gInt("Settings", "Background Menu Color", "Blue:"), gInt("Settings", "Others", "BG Opacity:"))
-	local mx, my = self:GetPos()
-	local bMouse = MouseInArea(mx + 160, my + h - 50, mx + 270, my + h - 50 + 30)
-	if (bMouse) then
-		curcol = Color(gInt("Settings", "Main Text Color", "Red:") + 60, gInt("Settings", "Main Text Color", "Green:") + 60, gInt("Settings", "Main Text Color", "Blue:") + 60, gInt("Settings", "Others", "T Opacity:"))
-	end
-	for i = 0, 0 do
-		surface.SetDrawColor(curcol)
-		surface.DrawLine(160, h - 50 + i, 270, h - 50 + i)
-		for k, v in next, curcol do
-			curcol[k] = curcol[k] - 2
-		end
-	end
-	surface.SetFont("MenuFont")
-	surface.SetTextColor(gInt("Settings", "Main Text Color", "Red:"), gInt("Settings", "Main Text Color", "Green:"), gInt("Settings", "Main Text Color", "Blue:"), 255)
-	local tw, th = surface.GetTextSize("Load Legithack")
-	surface.SetTextPos(117 + 100 - tw / 2, h - 50 + 15 - th / 2)
-	surface.DrawText("Load Legithack")
-	if (bMouse && input.IsMouseDown(MOUSE_LEFT)) then
-		LoadConfig()
-		timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Legit Configuration Loaded!") end)
-		timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
-	end
-end
-
-local function DrawSaveButton2(self, w, h)
-	local curcol = Color(gInt("Settings", "Background Menu Color", "Red:"), gInt("Settings", "Background Menu Color", "Green:"), gInt("Settings", "Background Menu Color", "Blue:"), gInt("Settings", "Others", "BG Opacity:"))
-	local mx, my = self:GetPos()
-	local bMouse = MouseInArea(mx + 300, my + h - 50, mx + 402, my + h - 50 + 30)
-	if (bMouse) then
-		curcol = Color(gInt("Settings", "Main Text Color", "Red:") + 60, gInt("Settings", "Main Text Color", "Green:") + 60, gInt("Settings", "Main Text Color", "Blue:") + 60, gInt("Settings", "Others", "T Opacity:"))
-	end
-	for i = 0, 0 do
-		surface.SetDrawColor(curcol)
-		surface.DrawLine(300, h - 50 + i, 402, h - 50 + i)
-		for k, v in next, curcol do
-			curcol[k] = curcol[k] - 2
-		end
-	end
-	surface.SetFont("MenuFont")
-	surface.SetTextColor(gInt("Settings", "Main Text Color", "Red:"), gInt("Settings", "Main Text Color", "Green:"), gInt("Settings", "Main Text Color", "Blue:"), 255)
-	local tw, th = surface.GetTextSize("Save Ragehack")
-	surface.SetTextPos(300 + 50 - tw / 2, h - 50 + 15 - th / 2)
-	surface.DrawText("Save Ragehack")
-	if (bMouse && input.IsMouseDown(MOUSE_LEFT)) then
-		SaveConfig2()
-		timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Rage Configuration Saved!") end)
-		timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
-	end
-end
-
-local function DrawLoadButton2(self, w, h)
-	local curcol = Color(gInt("Settings", "Background Menu Color", "Red:"), gInt("Settings", "Background Menu Color", "Green:"), gInt("Settings", "Background Menu Color", "Blue:"), gInt("Settings", "Others", "BG Opacity:"))
-	local mx, my = self:GetPos()
-	local bMouse = MouseInArea(mx + 418, my + h - 50, mx + 520, my + h - 50 + 30)
-	if (bMouse) then
-		curcol = Color(gInt("Settings", "Main Text Color", "Red:") + 60, gInt("Settings", "Main Text Color", "Green:") + 60, gInt("Settings", "Main Text Color", "Blue:") + 60, gInt("Settings", "Others", "T Opacity:"))
-	end
-	for i = 0, 0 do
-		surface.SetDrawColor(curcol)
-		surface.DrawLine(418, h - 50 + i, 520, h - 50 + i)
-		for k, v in next, curcol do
-			curcol[k] = curcol[k] - 2
-		end
-	end
-	surface.SetFont("MenuFont")
-	surface.SetTextColor(gInt("Settings", "Main Text Color", "Red:"), gInt("Settings", "Main Text Color", "Green:"), gInt("Settings", "Main Text Color", "Blue:"), 255)
-	local tw, th = surface.GetTextSize("Load Ragehack")
-	surface.SetTextPos(418 + 50 - tw / 2, h - 50 + 15 - th / 2)
-	surface.DrawText("Load Ragehack")
-	if (bMouse && input.IsMouseDown(MOUSE_LEFT)) then
-		LoadConfig2()
-		timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Rage Configuration Loaded!") end)
-		timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
-	end
-end
-
-LoadConfig()
-
-local function DrawCloseButton(self, w, h)
-	local curcol = Color(gInt("Settings", "Background Menu Color", "Red:"), gInt("Settings", "Background Menu Color", "Green:"), gInt("Settings", "Background Menu Color", "Blue:"), gInt("Settings", "Others", "BG Opacity:"))
-	local mx, my = self:GetPos()
-	local bMouse = MouseInArea(mx + 980, my + h - 50, mx + 1075, my + h - 50 + 30)
-	if (bMouse) then
-		curcol = Color(gInt("Settings", "Main Text Color", "Red:") + 60, gInt("Settings", "Main Text Color", "Green:") + 60, gInt("Settings", "Main Text Color", "Blue:") + 60, gInt("Settings", "Others", "T Opacity:"))
-	end
-	for i = 0, 0 do
-		surface.SetDrawColor(curcol)
-		surface.DrawLine(980, h - 50 + i, 1075, h - 50 + i)
-		for k, v in next, curcol do
-			curcol[k] = curcol[k] - 2
-		end
-	end
-	surface.SetFont("MenuFont")
-	surface.SetTextColor(gInt("Settings", "Main Text Color", "Red:"), gInt("Settings", "Main Text Color", "Green:"), gInt("Settings", "Main Text Color", "Blue:"), 255)
-	local tw, th = surface.GetTextSize("Close Menu")
-	surface.SetTextPos(930 + 100 - tw / 2, h - 50 + 15 - th / 2)
-	surface.DrawText("Close Menu")
-	if (bMouse && input.IsMouseDown(MOUSE_LEFT)) then
-		CloseMenu()
-		surface.PlaySound("buttons/lightswitch2.wav")
-	end
+local function ChangeLog()
+	print("===========================================================\n\n")
+	print("IdiotBox v6.7/ v6.7.1/ v6.7.2/ v6.7.3 bugfixes (in no particular order)")
+	print("")
+	print("Total bugfix count: ~50 bugs have been found and fixed in the v6.7/ v6.7.1/ v6.7.2/ v6.7.3 updates;")
+	print("\n")
+	print("- The 'readme.txt' file is finally up-to-date and only contains the important information;")
+	print("- Aim Smoothness will automatically disable itself if the Legitbot Silent aim is turned on;")
+	print("- Anti-Aim cannot be used with the Legitbot if Silent is turned on to prevent bad angle calculations;")
+	print("- Cheat menu/ game menus will no longer be covered by Visuals/ windows/ lists and others;")
+	print("- Chams and Playermodel Chams cannot be used at the same time anymore;")
+	print("- Reply Spam and Copy Messages cannot be used at the same time anymore to prevent weird function collisions;")
+	print("- Show Entities, Traitor Finder and Murderer Finder can only be used if Visuals is turned on;")
+	print("- Circle Strafe and Auto-Strafe cannot be used at the same time anymore to prevent weird function collisions;")
+	print("- Mirror cannot be used with Visuals to prevent weird rendering;")
+	print("- Added missing space between the Custom Status rank and username;")
+	print("- Fixed developers getting the notification that a developer is on the server;")
+	print("- Fixed dimension of the Armor Bar not matching the dimension of the Health Bar;")
+	print("- Fixed menu loading twice when opened with the 'idiot_openmenu' command and closed by pressing 'Insert', 'Home' or 'F11';")
+	print("- Fixed Bunny Hop and Circle Strafe breaking the movement when in water;")
+	print("- Fixed Entities not using the correct Visuals color;")
+	print("- Fixed Save/ Load/ Unload/ Close Menu buttons spamming the 'click' sound when holding them down;")
+	print("- Fixed Reply Spam and Copy Messages not ignoring friends;")
+	print("- Fixed being unable to rotate props or fly planes;")
+	print("- Fixed Kill Spam giving script errors when an NPC was killed;")
+	print("- Fixed Chat Spam and Kill Spam still using the old IdiotBox Alpha variables;")
+	print("- Fixed 3D Box and Hitbox still showing spectators or dead people or still showing people with Distance Limit or Show Enemies Only enabled;")
+	print("- Fixed Bunny Hop and Circle Strafe breaking Free Roaming;")
+	print("- Fixed Hitbox spamming the console with error messages;")
+	print("- Fixed Snap Lines still showing when Aimbot is not enabled;")
+	print("- Fixed toggle keys activating when browsing game menus/ browsing cheat menu/ typing;")
+	print("- Fixed menu Darkness not working when opening the menu with the console command;")
+	print("- FixedHide Round Report andPanel Remover not working correctly;")
+	print("- Fixed poorly placed checkboxes/ sliders/ selections;")
+	print("- Fixed Anti-Ads not working correctly;")
+	print("- Fixed Thirdperson showing in spectator mode;")
+	print("- Fixed FoV Circle not showing upon enabling;")
+	print("- Fixed skybox changing upon loading;")
+	print("- Fixed Anti-Aim breaking the Radar view angles;")
+	print("- Fixed Free Roaming not working with Anti-Aim;")
+	print("- Fixed Fire Delay not working correctly;")
+	print("- Fixed Prop Kill giving script errors when toggled;")
+	print("- Fixed Anti-Aim X-Axis Jitter, Semi-Jitter Down and Semi-Jitter Up breaking the Anti-Aim Y-Axis;")
+	print("- Fixed Triggerbot Smooth Aim slowing your mouse speed;")
+	print("- Fixed certain outlines and fonts not having their proper dimensions;")
+	print("- Fixed the Save/ Load/ Unload/ Close Menu buttons not having the correct color when hovering your mouse over them;")
+	print("- Fixed the menu not being large enough for certain outlines;")
+	print("- Fixed various Free Roaming bugs that allowed it to not work when certain features were enabled;")
+	print("- Fixed No Lerp and Dark Mode not resetting when disabled;")
+	print("- Fixed a few minor Aim Priorities bugs from both Aimbot and Triggerbot;")
+	print("- Reworked Free Roaming from scratch;")
+	print("- Reworked Anti-Screengrabber from scratch;")
+	print("- Reorganized certain out-of-place functions and menu options;")
+	print("- Rearranged menu options so that they no longer look messy;")
+	print("- Renamed certain misspelled or broken functions and menu options;")
+	print("- Removed local variables that had no use;")
+	print("- Removed unusable DarkRP names from the Name Changer;")
+	print("- Removed cloned hooks and combined them all into one for better performance;")
+	print("- Removed old broken 'file.Read' blocker that had no use;")
+	print("- Removed old and unused Fake Lag functions;")
+	print("- Removed 'aaa' module as 'IdiotBox_alpha1.lua' was replaced by 'IdiotBox_dev.lua' and had no use.")
+	print("\n")
+	print("IdiotBox v6.7/ v6.7.1/ v6.7.2/ v6.7.3 new features (in no particular order)")
+	print("")
+	print("Total feature count: ~50 features have been added in the v6.7/ v6.7.1/ v6.7.2/ v6.7.3 updates;")
+	print("\n")
+	print("- Added 'Plugin Loader' to Utilities;")
+	print("- Added 'Projectile Prediction' to Aimbot;")
+	print("- Added 'Emote Resolver' to Resolver;")
+	print("- Added 'Panic Mode' & NPC targeting to Aimbot and Triggerbot;")
+	print("- Added 'Priority List' to Miscellaneous;")
+	print("- Added 'Cheater Callout' and 'Copy Messages' to Reply Spam;")
+	print("- Added 'Border Color', 'Misc Visuals Color' and 'B Opacity' to Settings;")
+	print("- Added 'Fake-Forwards/ Backwards/ Sideways', 'Static' and 'Adaptive' to Anti-Aim;")
+	print("- Added 'Players List', 'Show Entities' and 'Conditions' to Visuals;")
+	print("- Added 'Optimize Game' and TTT/ Murder/ DarkRP specific features to Utilities;")
+	print("- Added 'Spectators' to Aim Priorities;")
+	print("- Added 'Players' to Aim Priorities;")
+	print("- Added 'Distance Limit' to Aimbot and Triggerbot;")
+	print("- Added custom key binds;")
+	print("- Added 'Free Roaming Key' to Free Roaming;")
+	print("- Added 'Free Roaming Speed' to Free Roaming;")
+	print("- Added 'Strafe Key' to Movement;")
+	print("- Added 'Disconnect Spam', 'lol', 'english please', 'lmao', 'shit' and 'fuck' to Reply Spam;")
+	print("- Added 'Arabic Spam' and 'Hebrew Spam' to Chat Spam;")
+	print("- Added 'Priority Targets Only' to Priority List;")
+	print("- Added 'Use Spam' to Miscellaneous;")
+	print("- Added 'Fake Crouch' to Movement;")
+	print("- Added 'Enable Spams' to Chat;")
+	print("- Added 'Random' to Emotes;")
+	print("- Added 'Murder Taunts' to Taunting;")
+	print("- Added 'Velocity' to Visuals;")
+	print("- Added 'Dormant Check' to Visuals;")
+	print("- Added 'Show Spectators' to Visuals;")
+	print("- Added 'Bystander Name' to Visuals;")
+	print("- Added 'NPCs' to Visuals;")
+	print("- Added more music to Sounds;")
+	print("- Renamed 'Hack vs. Hack' tab;")
+	print("- Reworked 'Ignores' from Aim Priorities;")
+	print("- Reworked 'Max Player Health' from Aim Priorities;")
+	print("- Reworked 'Resolver' from Hack vs. Hack;")
+	print("- Reworked 'Radar', 'Spectators' and 'Status' from Visuals;")
+	print("- Reworked user visibility of IdiotBox developers on servers;")
+	print("- Removed 'Shoutout' from Chat Spam;")
+	print("- Removed 'Drop Money' from Chat Spam;")
+	print("- Removed 'Screengrab Notifications' from Miscellaneous;")
+	print("- Changed the default menu colors, menu size and others;")
+	print("- Changed the config menu;")
+	print("- Changed the entity menu;")
+	print("- Changed the changelog;")
+	print("\n\n===========================================================")
+	timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Printed changelog to console!") end)
+	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 end
 
 local added = {}
@@ -1425,12 +1488,6 @@ local function EntityFinder()
 	finder.Paint = function(self, w, h)
 		draw.RoundedBox(gInt("Settings", "Others", "Roundness:"), 0, 0, w, h, Color(gInt("Settings", "Background Menu Color", "Red:"), gInt("Settings", "Background Menu Color", "Green:"), gInt("Settings", "Background Menu Color", "Blue:"), gInt("Settings", "Others", "BG Opacity:")))
 		DrawUpperText(w, h)
-		DrawUnloadButton(self, w, h)
-		DrawSaveButton(self, w, h)
-		DrawSaveButton2(self, w, h)
-		DrawLoadButton(self, w, h)
-		DrawLoadButton2(self, w, h)
-		DrawCloseButton(self, w, h)
 		draw.SimpleText("Search Entity:", "MenuFont", 192, 610, Color(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), gInt("Settings", "Others", "T Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 		draw.SimpleText("Add Entity:", "MenuFont", 642, 610, Color(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), gInt("Settings", "Others", "T Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 	end
@@ -1453,12 +1510,6 @@ local function EntityFinder()
 	for k, v in next, drawn_ents do
 		draw_list:AddLine(v)
 	end
-	function CloseMenu()
-		finder:Remove()
-		menuopen = false
-		candoslider = false
-		drawlast = nil
-	end
 	finder.Think = function()
 		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or unloaded == true) then
 			finder:Remove()
@@ -1470,29 +1521,169 @@ local function EntityFinder()
 	end
 end
 
-local function DrawEntitiesButton(self, w, h)
-	local curcol = Color(gInt("Settings", "Background Menu Color", "Red:"), gInt("Settings", "Background Menu Color", "Green:"), gInt("Settings", "Background Menu Color", "Blue:"), gInt("Settings", "Others", "BG Opacity:"))
-	local mx, my = self:GetPos()
-	local bMouse = MouseInArea(mx + 683, my + h - 50, mx + 785, my + h - 50 + 30)
-	if (bMouse) then
-		curcol = Color(gInt("Settings", "Main Text Color", "Red:") + 60, gInt("Settings", "Main Text Color", "Green:") + 60, gInt("Settings", "Main Text Color", "Blue:") + 60, gInt("Settings", "Others", "T Opacity:"))
+local function PluginLoader()
+	local plugin = vgui.Create("DFrame")
+	plugin:SetSize(1110, 742)
+	plugin:Center()
+	plugin:SetTitle("")
+	plugin:MakePopup()
+	plugin:ShowCloseButton(false)
+	local plugin_list = vgui.Create("DListView", plugin)
+	plugin_list:SetPos(150, 75)
+	plugin_list:SetSize(320, 500)
+	plugin_list:SetMultiSelect(false)
+	plugin_list:AddColumn("Available files ("..#file.Find("lua/*.lua","GAME", "nameasc")-1 ..")"):SetFixedWidth(320)
+	local plugin_load = vgui.Create("DButton", plugin)
+	plugin_load:SetText("Load")
+	plugin_load:SetPos(500, 75)
+	plugin_load:SetSize(100, 30)
+	plugin_load.DoClick = function()
+		chat.PlaySound()
+		if plugin_list:GetSelectedLine() ~= nil then
+			surface.PlaySound("buttons/button14.wav")
+			plugin:Remove()
+			menuopen = false
+			candoslider = false
+			drawlast = nil
+			MsgY(3, "Loaded "..plugin_list:GetLine(plugin_list:GetSelectedLine()):GetValue(1).." successfully.")
+			local d = vgui.Create('DHTML')
+			d:SetAllowLua(true)
+			return d:ConsoleMessage([[RUNLUA: ]]..file.Read("lua/"..plugin_list:GetLine(plugin_list:GetSelectedLine()):GetValue(1), "GAME"))
+		end 
 	end
-	for i = 0, 0 do
-		surface.SetDrawColor(curcol)
-		surface.DrawLine(683, h - 50 + i, 785, h - 50 + i)
-		for k, v in next, curcol do
-			curcol[k] = curcol[k] - 2
+	local plugin_refresh = vgui.Create("DButton", plugin )
+	plugin_refresh:SetText("Refresh")
+	plugin_refresh:SetPos(500, 115)
+	plugin_refresh:SetSize(100, 30)
+	plugin_refresh.DoClick = function()
+	chat.PlaySound()
+	plugin_list:Clear()
+		for k, v in pairs(file.Find("lua/*.lua", "GAME", "nameasc")) do 
+			plugin_list:AddLine(v)
 		end
 	end
+	for k, v in pairs(file.Find("lua/*.lua", "GAME", "nameasc")) do
+		plugin_list:AddLine(v)
+	end
+	plugin_list.Paint = function(self, w, h)
+		draw.RoundedBox(16, 0, 0, w, h, Color(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), gInt("Settings", "Others", "T Opacity:")))
+	end
+	plugin.Paint = function(self, w, h)
+		draw.RoundedBox(gInt("Settings", "Others", "Roundness:"), 0, 0, w, h, Color(gInt("Settings", "Background Menu Color", "Red:"), gInt("Settings", "Background Menu Color", "Green:"), gInt("Settings", "Background Menu Color", "Blue:"), gInt("Settings", "Others", "BG Opacity:")))
+		DrawUpperText(w, h)
+	end
+	plugin.Think = function()
+		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or unloaded == true) then
+			plugin:Remove()
+			menuopen = false
+			candoslider = false
+			drawlast = nil
+		end
+	end
+end
+
+local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
+	local text = var[1]
+	local size = var[4]
 	surface.SetFont("MenuFont")
-	surface.SetTextColor(gInt("Settings", "Main Text Color", "Red:"), gInt("Settings", "Main Text Color", "Green:"), gInt("Settings", "Main Text Color", "Blue:"), 255)
-	local tw, th = surface.GetTextSize("Entities Menu")
-	surface.SetTextPos(683 + 50 - tw / 2, h - 50 + 15 - th / 2)
-	surface.DrawText("Entities Menu")
-	if (bMouse && input.IsMouseDown(MOUSE_LEFT)) then
-		self:Remove()
-		EntityFinder()
-		timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
+	surface.SetTextColor(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), gInt("Settings", "Others", "T Opacity:"))
+	surface.SetDrawColor(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), gInt("Settings", "Others", "T Opacity:"))
+	surface.DrawOutlinedRect(posx - 193 + dist, 61 + posy + maxy, size + 219, 16)
+	local mx, my = self:GetPos()
+	local bMouse = MouseInArea(mx - 193 + posx + dist, my + 61 + posy + maxy, mx - 193 + posx + dist + size + 219, my + 61 + posy + maxy + 16)
+	local check = dist..posy..posx..w..h..maxy
+	if bMouse or notyetselected == check then
+		surface.SetDrawColor(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"), 150)
+		surface.DrawRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, size + 215, 12)
+	end
+	local tw, th = surface.GetTextSize(text)
+	surface.SetTextPos(posx - 193 + dist + 5, 61 + posy + maxy + 6 - th / 2 + 2)
+	surface.DrawText(text)
+	if bMouse and input.IsMouseDown(MOUSE_LEFT) and not drawlast and not mousedown or notyetselected == check then
+		if text == "Unload Cheat" then
+			self:Remove()
+			Unload()
+		elseif text == "Print Changelog" then
+			ChangeLog()
+		elseif text == "Save Configuration" then
+			if gOption("Utilities", "Configurations", "Configuration:") == "Configuration #1" then
+				SaveConfig1()
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #2" then
+				SaveConfig2()
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #3" then
+				SaveConfig3()
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #4" then
+				SaveConfig4()
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #5" then
+				SaveConfig5()
+			end
+			timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Configuration Saved!") end)
+			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
+		elseif text == "Load Configuration" then
+			if gOption("Utilities", "Configurations", "Configuration:") == "Configuration #1" then
+				LoadConfig1()
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #2" then
+				LoadConfig2()
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #3" then
+				LoadConfig3()
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #4" then
+				LoadConfig4()
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #5" then
+				LoadConfig5()
+			end
+			timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Configuration Loaded!") end)
+			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
+		elseif text == "Delete Configuration" then
+			if gOption("Utilities", "Configurations", "Configuration:") == "Configuration #1" then
+				file.Delete(folder.."/config_1.txt")
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #2" then
+				file.Delete(folder.."/config_2.txt")
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #3" then
+				file.Delete(folder.."/config_3.txt")
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #4" then
+				file.Delete(folder.."/config_4.txt")
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #5" then
+				file.Delete(folder.."/config_5.txt")
+			end
+			timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Configuration Deleted!") end)
+			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
+		elseif text == "Plugin Loader" then
+			self:Remove()
+			if gBool("Utilities", "Configurations", "Automatically Save") then
+				if gOption("Utilities", "Configurations", "Configuration:") == "Configuration #1" then
+					SaveConfig1()
+				elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #2" then
+					SaveConfig2()
+				elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #3" then
+					SaveConfig3()
+				elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #4" then
+					SaveConfig4()
+				elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #5" then
+					SaveConfig5()
+				end
+			end
+			PluginLoader()
+			timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Plugin Menu Loaded!") end)
+			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
+		elseif text == "Entity Menu" then
+				self:Remove()
+				if gBool("Utilities", "Configurations", "Automatically Save") then
+					if gOption("Utilities", "Configurations", "Configuration:") == "Configuration #1" then
+						SaveConfig1()
+					elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #2" then
+						SaveConfig2()
+					elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #3" then
+						SaveConfig3()
+					elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #4" then
+						SaveConfig4()
+					elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #5" then
+						SaveConfig5()
+					end
+				end
+			EntityFinder()
+			timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Entities Menu Loaded!") end)
+			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
+		end
 	end
 end
 
@@ -1503,6 +1694,9 @@ local function DrawSubSub(self, w, h, k, var)
 	surface.SetTextColor(gInt("Settings", "Border Color", "Red:"), gInt("Settings", "Border Color", "Green:"), gInt("Settings", "Border Color", "Blue:"), gInt("Settings", "Others", "B Opacity:"))
 	surface.SetFont("MenuFont")
 	local tw, th = surface.GetTextSize(opt)
+	surface.SetDrawColor(gInt("Settings", "Background Menu Color", "Red:") + 10, gInt("Settings", "Background Menu Color", "Green:") + 10, gInt("Settings", "Background Menu Color", "Blue:") + 10, gInt("Settings", "Others", "BG Opacity:"));
+	surface.DrawRect(5 + posx, startpos, sizex, sizey);
+	surface.SetDrawColor(gInt("Settings", "Border Color", "Red:"), gInt("Settings", "Border Color", "Green:"), gInt("Settings", "Border Color", "Blue:"), gInt("Settings", "Others", "B Opacity:"))
 	surface.DrawLine(5 + posx, startpos, 5 + posx + 15, startpos)
 	surface.SetTextPos(5 + posx + 15 + 5, startpos - th / 2)
 	surface.DrawLine(5 + posx + 15 + 5 + tw + 5, startpos, 5 + posx + sizex, startpos)
@@ -1521,6 +1715,8 @@ local function DrawSubSub(self, w, h, k, var)
 				DrawSelect(self, w, h, v, maxy, posx, posy, dist)
 			elseif(v[2] == "Toggle") then
 				DrawToggle(self, w, h, v, maxy, posx, posy, dist)
+			elseif v[2] == "Button" then
+				DrawButton(self, w, h, v, maxy, posx, posy, dist)
 			end
 		maxy = maxy + 25
 	end
@@ -1536,14 +1732,88 @@ local function DrawSub(self, w, h)
 end
 
 local menusongs = {
-	"https://dl.dropbox.com/s/wl4b4xf35uq58m4/El%20Huervo%20-%20Rust.mp3?dl=1", 
 	"https://dl.dropbox.com/s/0m22ytfia8qoy4m/Daisuke%20-%20El%20Huervo.mp3?dl=1", 
+	"https://dl.dropbox.com/s/0fdgaj0ry8uummf/Rust_%28getmp3.pro%29.mp3?dl=1", 
 	"https://dl.dropbox.com/s/vsz77wdjqy1xf83/HOME%20-%20Resonance.mp3?dl=1", 
-	"https://dl.dropbox.com/s/ovh8xt0nn6wjgjj/The%20Caretaker%20-%20It%27s%20just%20a%20burning%20memory%20%282016%29.mp3?dl=1",
-	"https://dl.dropbox.com/s/fllab6o3l51l0az/1932%20George%20Olsen%20-%20Lullaby%20Of%20The%20Leaves%20%28with%20vocal%20group%29.mp3?dl=1",
-	"https://dl.dropbox.com/s/8bg55iwowf2jtv8/cuckoid%20-%20ponyinajar.mp3?dl=1",
-	"https://dl.dropbox.com/s/qfl7mu39us5hzn4/Erectin_a_River_%28getmp3.pro%29.mp3?dl=1"
+	"https://dl.dropbox.com/s/ovh8xt0nn6wjgjj/The%20Caretaker%20-%20It%27s%20just%20a%20burning%20memory%20%282016%29.mp3?dl=1", 
+	"https://dl.dropbox.com/s/8bg55iwowf2jtv8/cuckoid%20-%20ponyinajar.mp3?dl=1", 
+	"https://dl.dropbox.com/s/0uly6phlgpoj4ss/1932_George_Olsen_-_Lullaby_Of_The_%28getmp3.pro%29.mp3?dl=1",
+	"https://dl.dropbox.com/s/qfl7mu39us5hzn4/Erectin_a_River_%28getmp3.pro%29.mp3?dl=1", 
+	"https://dl.dropbox.com/s/vhd3il20d8ephb4/DJ_Spizdil_-_malo_tebyaHardstyle_m_%28getmp3.pro%29.mp3?dl=1", 
+	"https://dl.dropbox.com/s/2vf1lx9cnd5g9pq/Maduk_-_Vermilion_%28getmp3.pro%29.mp3?dl=1", 
+	"https://dl.dropbox.com/s/wcoo6cov1iatcao/Metrik_-_Gravity_%28getmp3.pro%29.mp3?dl=1", 
+	"https://dl.dropbox.com/s/bqt4dcjoziezdjk/The_Caretaker_-_Libets_Delay_%28getmp3.pro%29.mp3?dl=1",
+	"https://dl.dropbox.com/s/xlk7wuel56bwrr3/T_Sugah_-_Green_Valleys_LAOS_%28getmp3.pro%29.mp3?dl=1"
 }
+
+local function MenuBorder() -- Probably a dumb way of doing this but still
+	local frame = vgui.Create("DFrame")
+	frame:SetSize(1116, 748)
+	frame:Center()
+	frame:SetTitle("")
+	frame:MakePopup()
+	frame:ShowCloseButton(false)
+	frame.Paint = function(self, w, h)
+	draw.RoundedBox(gInt("Settings", "Others", "Roundness:"), 0, 0, w, h, Color(gInt("Settings", "Border Color", "Red:"), gInt("Settings", "Border Color", "Green:"), gInt("Settings", "Border Color", "Blue:"), gInt("Settings", "Others", "B Opacity:")))
+	end
+	frame.Think = function()
+		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or unloaded == true) then
+		frame:Remove()
+		menuopen = false
+		end
+	end
+end
+
+local loaded1, loaded2, loaded3, loaded4, loaded5 = false
+
+local function AutoLoad()
+	if gOption("Utilities", "Configurations", "Configuration:") == "Configuration #1" then
+		if not loaded1 then
+			LoadConfig1()
+			loaded1 = true
+			loaded2 = false
+			loaded3 = false
+			loaded4 = false
+			loaded5 = false
+		end
+	elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #2" then
+		if not loaded2 then
+			LoadConfig2()
+			loaded2 = true
+			loaded1 = false
+			loaded3 = false
+			loaded4 = false
+			loaded5 = false
+		end
+	elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #3" then
+		if not loaded3 then
+			LoadConfig3()
+			loaded3 = true
+			loaded1 = false
+			loaded2 = false
+			loaded4 = false
+			loaded5 = false
+		end
+	elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #4" then
+		if not loaded4 then
+			LoadConfig4()
+			loaded4 = true
+			loaded1 = false
+			loaded2 = false
+			loaded3 = false
+			loaded5 = false
+		end
+	else
+		if not loaded5 then
+			LoadConfig5()
+			loaded5 = true
+			loaded1 = false
+			loaded2 = false
+			loaded3 = false
+			loaded4 = false
+		end
+	end
+end
 
 local function Menu()
 	local frame = vgui.Create("DFrame")
@@ -1564,31 +1834,18 @@ local function Menu()
 		RunConsoleCommand("stopsound")
 	end
 	frame.Paint = function(self, w, h)
-			if (candoslider and not mousedown and not drawlast and not input.IsMouseDown(MOUSE_LEFT)) then
-				candoslider = false
-			end
-			draw.RoundedBox(gInt("Settings", "Others", "Roundness:"), 0, 0, w, h, Color(gInt("Settings", "Background Menu Color", "Red:"), gInt("Settings", "Background Menu Color", "Green:"), gInt("Settings", "Background Menu Color", "Blue:"), gInt("Settings", "Others", "BG Opacity:")))
-			DrawUpperText(w, h)
-			DrawOptions(self, w, h)
-			DrawSub(self, w, h)
-			DrawUnloadButton(self, w, h)
-			DrawSaveButton(self, w, h)
-			DrawSaveButton2(self, w, h)
-			DrawLoadButton(self, w, h)
-			DrawLoadButton2(self, w, h)
-			DrawCloseButton(self, w, h)
-			DrawEntitiesButton(self, w, h)
-			if (drawlast) then
-					drawlast()
-					candoslider = true
-			end
-			mousedown = input.IsMouseDown(MOUSE_LEFT)
-	end
-	function CloseMenu()
-		frame:Remove()
-		menuopen = false
-		candoslider = false
-		drawlast = nil
+		if (candoslider and not mousedown and not drawlast and not input.IsMouseDown(MOUSE_LEFT)) then
+			candoslider = false
+		end
+		draw.RoundedBox(gInt("Settings", "Others", "Roundness:"), 0, 0, w, h, Color(gInt("Settings", "Background Menu Color", "Red:"), gInt("Settings", "Background Menu Color", "Green:"), gInt("Settings", "Background Menu Color", "Blue:"), gInt("Settings", "Others", "BG Opacity:")))
+		DrawUpperText(w, h)
+		DrawOptions(self, w, h)
+		DrawSub(self, w, h)
+		if (drawlast) then
+			drawlast()
+			candoslider = true
+		end
+		mousedown = input.IsMouseDown(MOUSE_LEFT)
 	end
 	frame.Think = function()
 		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or unloaded == true) then
@@ -1596,7 +1853,21 @@ local function Menu()
 			menuopen = false
 			candoslider = false
 			drawlast = nil
+		if gBool("Utilities", "Configurations", "Automatically Save") then
+			if gOption("Utilities", "Configurations", "Configuration:") == "Configuration #1" then
+				SaveConfig1()
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #2" then
+				SaveConfig2()
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #3" then
+				SaveConfig3()
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #4" then
+				SaveConfig4()
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #5" then
+				SaveConfig5()
+			end
 		end
+		end
+		AutoLoad()
 	end
 end
 
@@ -2118,6 +2389,7 @@ local function EntityName()
 end
 
 local function Logo()
+	draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Custom Status X:") - 1, gInt("Settings", "List Positions", "Custom Status Y:") - 25, 92, 24, Color(gInt("Settings", "Border Color", "Red:"), gInt("Settings", "Border Color", "Green:"), gInt("Settings", "Border Color", "Blue:"), gInt("Settings", "Others", "B Opacity:")))
 	draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Custom Status X:") + 1, gInt("Settings", "List Positions", "Custom Status Y:") - 23, 88, 20, Color(gInt("Settings", "Background Menu Color", "Red:"), gInt("Settings", "Background Menu Color", "Green:"), gInt("Settings", "Background Menu Color", "Blue:"), gInt("Settings", "Others", "BG Opacity:")))
 	draw.DrawText("Status", "MiscFont2", gInt("Settings", "List Positions", "Custom Status X:") + 45, gInt("Settings", "List Positions", "Custom Status Y:") - 22, Color(gInt("Settings", "Main Text Color", "Red:"), gInt("Settings", "Main Text Color", "Green:"), gInt("Settings", "Main Text Color", "Blue:"), gInt("Settings", "Others", "T Opacity:")), TEXT_ALIGN_CENTER)
 end
@@ -2200,6 +2472,7 @@ local function Spectator()
 	local color4 = (Color(0, 131, 125, gInt("Settings", "Others", "T Opacity:")))
 	local hudspecslength = 150
 	specscount = 0
+	draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Spectators X:") - 1, gInt("Settings", "Window Positions", "Spectators Y:") - 3, radarWidth + 6, radarHeight + 6, Color(gInt("Settings", "Border Color", "Red:"), gInt("Settings", "Border Color", "Green:"), gInt("Settings", "Border Color", "Blue:"), gInt("Settings", "Others", "B Opacity:")))
 	draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Spectators X:") + 2, gInt("Settings", "Window Positions", "Spectators Y:"), radarWidth, radarHeight, Color(gInt("Settings", "Background Menu Color", "Red:"), gInt("Settings", "Background Menu Color", "Green:"), gInt("Settings", "Background Menu Color", "Blue:"), gInt("Settings", "Others", "BG Opacity:")))
 	draw.SimpleText("Spectators", "MiscFont2", gInt("Settings", "Window Positions", "Spectators X:") + 102, gInt("Settings", "Window Positions", "Spectators Y:") + 11, color3, 1, 1)
 	for k, v in pairs(player.GetAll()) do
@@ -2240,6 +2513,7 @@ local radarX, radarY, radarWidth, radarHeight = 50, ScrH() / 3, 200, 200
 local function RadarDraw()
 	local col = Color(gInt("Settings", "Main Text Color", "Red:"), gInt("Settings", "Main Text Color", "Green:"), gInt("Settings", "Main Text Color", "Blue:"), gInt("Settings", "Others", "T Opacity:"))
 	local everything = ents.GetAll()
+	draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Radar X:") - 1, gInt("Settings", "Window Positions", "Radar Y:") - 3, radarWidth + 6, radarHeight + 6, Color(gInt("Settings", "Border Color", "Red:"), gInt("Settings", "Border Color", "Green:"), gInt("Settings", "Border Color", "Blue:"), gInt("Settings", "Others", "B Opacity:")))
 	draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Radar X:") + 2, gInt("Settings", "Window Positions", "Radar Y:"), radarWidth, radarHeight, Color(gInt("Settings", "Background Menu Color", "Red:"), gInt("Settings", "Background Menu Color", "Green:"), gInt("Settings", "Background Menu Color", "Blue:"), gInt("Settings", "Others", "BG Opacity:")))
 	draw.SimpleText("Radar", "MiscFont2", gInt("Settings", "Window Positions", "Radar X:") + 102, gInt("Settings", "Window Positions", "Radar Y:") + 11, col, 1, 1)
 	draw.NoTexture()
@@ -2268,6 +2542,7 @@ local function RadarDraw()
 end
 
 local function Logo2()
+	draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Players List X:") - 1, gInt("Settings", "List Positions", "Players List Y:") - 25, 92, 24, Color(gInt("Settings", "Border Color", "Red:"), gInt("Settings", "Border Color", "Green:"), gInt("Settings", "Border Color", "Blue:"), gInt("Settings", "Others", "B Opacity:")))
 	draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Players List X:") + 1, gInt("Settings", "List Positions", "Players List Y:") - 23, 88, 20, Color(gInt("Settings", "Background Menu Color", "Red:"), gInt("Settings", "Background Menu Color", "Green:"), gInt("Settings", "Background Menu Color", "Blue:"), gInt("Settings", "Others", "BG Opacity:")))
 	draw.DrawText("Players", "MiscFont2", gInt("Settings", "List Positions", "Players List X:") + 47, gInt("Settings", "List Positions", "Players List Y:") - 22, Color(gInt("Settings", "Main Text Color", "Red:"), gInt("Settings", "Main Text Color", "Green:"), gInt("Settings", "Main Text Color", "Blue:"), gInt("Settings", "Others", "T Opacity:")), TEXT_ALIGN_CENTER)
 end
@@ -3032,7 +3307,7 @@ local siegheilviktoria = {
 	local friendstatus = pm.GetFriendStatus(randply)
 	if (!randply:IsValid() || randply == me || (friendstatus == "friend") || (gBool("Miscellaneous", "Priority List", "Enabled") && table.HasValue(ignore_list, randply:UniqueID())) || (gBool("Miscellaneous", "Priority List", "Enabled") && gBool("Miscellaneous", "Priority List", "Priority Targets Only") && !table.HasValue(priority_list, randply:UniqueID()))) then return end
 		RunConsoleCommand("say", randply:Name()..insultspam[math.random(#insultspam)])
-	elseif (gOption("Miscellaneous", "Chat", "Chat Spam:") == "ULX Message Spam") then
+	elseif (gOption("Miscellaneous", "Chat", "Chat Spam:") == "Message Spam") then
 		local v = player.GetAll()[math.random(#player.GetAll())]
 		if (gBool("Miscellaneous", "Priority List", "Enabled") && table.HasValue(ignore_list, v:UniqueID())) || (gBool("Miscellaneous", "Priority List", "Enabled") && gBool("Miscellaneous", "Priority List", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then return end
 		if (v != me && v:GetFriendStatus() != "friend" && !pm.IsAdmin(v)) then
@@ -3040,121 +3315,6 @@ local siegheilviktoria = {
 		end
 	end
 end
-
-local function ChangeLog()
-	print("===========================================================\n\n")
-	print("IdiotBox v6.7/ v6.7.1/ v6.7.2/ v6.7.3 bugfixes (in no particular order)")
-	print("")
-	print("Total bugfix count: ~50 bugs have been found and fixed in the v6.7/ v6.7.1/ v6.7.2/ v6.7.3 updates;")
-	print("\n")
-	print("- The 'readme.txt' file is finally up-to-date and only contains the important information;")
-	print("- Aim Smoothness will automatically disable itself if the Legitbot Silent aim is turned on;")
-	print("- Anti-Aim cannot be used with the Legitbot if Silent is turned on to prevent bad angle calculations;")
-	print("- Cheat menu/ game menus will no longer be covered by Visuals/ windows/ lists and others;")
-	print("- Chams and Playermodel Chams cannot be used at the same time anymore;")
-	print("- Reply Spam and Copy Messages cannot be used at the same time anymore to prevent weird function collisions;")
-	print("- Show Entities, Traitor Finder and Murderer Finder can only be used if Visuals is turned on;")
-	print("- Circle Strafe and Auto-Strafe cannot be used at the same time anymore to prevent weird function collisions;")
-	print("- Mirror cannot be used with Visuals to prevent weird rendering;")
-	print("- Added missing space between the Custom Status rank and username;")
-	print("- Fixed developers getting the notification that a developer is on the server;")
-	print("- Fixed dimension of the Armor Bar not matching the dimension of the Health Bar;")
-	print("- Fixed menu loading twice when opened with the 'idiot_openmenu' command and closed by pressing 'Insert', 'Home' or 'F11';")
-	print("- Fixed Bunny Hop and Circle Strafe breaking the movement when in water;")
-	print("- Fixed Entities not using the correct Visuals color;")
-	print("- Fixed Save/ Load/ Unload/ Close Menu buttons spamming the 'click' sound when holding them down;")
-	print("- Fixed Reply Spam and Copy Messages not ignoring friends;")
-	print("- Fixed being unable to rotate props or fly planes;")
-	print("- Fixed Kill Spam giving script errors when an NPC was killed;")
-	print("- Fixed Chat Spam and Kill Spam still using the old IdiotBox Alpha variables;")
-	print("- Fixed 3D Box and Hitbox still showing spectators or dead people or still showing people with Distance Limit or Show Enemies Only enabled;")
-	print("- Fixed Bunny Hop and Circle Strafe breaking Free Roaming;")
-	print("- Fixed Hitbox spamming the console with error messages;")
-	print("- Fixed Snap Lines still showing when Aimbot is not enabled;")
-	print("- Fixed toggle keys activating when browsing game menus/ browsing cheat menu/ typing;")
-	print("- Fixed menu Darkness not working when opening the menu with the console command;")
-	print("- FixedHide Round Report andPanel Remover not working correctly;")
-	print("- Fixed poorly placed checkboxes/ sliders/ selections;")
-	print("- Fixed Anti-Ads not working correctly;")
-	print("- Fixed Thirdperson showing in spectator mode;")
-	print("- Fixed FoV Circle not showing upon enabling;")
-	print("- Fixed skybox changing upon loading;")
-	print("- Fixed Anti-Aim breaking the Radar view angles;")
-	print("- Fixed Free Roaming not working with Anti-Aim;")
-	print("- Fixed Fire Delay not working correctly;")
-	print("- Fixed Prop Kill giving script errors when toggled;")
-	print("- Fixed Anti-Aim X-Axis Jitter, Semi-Jitter Down and Semi-Jitter Up breaking the Anti-Aim Y-Axis;")
-	print("- Fixed Triggerbot Smooth Aim slowing your mouse speed;")
-	print("- Fixed certain outlines and fonts not having their proper dimensions;")
-	print("- Fixed the Save/ Load/ Unload/ Close Menu buttons not having the correct color when hovering your mouse over them;")
-	print("- Fixed the menu not being large enough for certain outlines;")
-	print("- Fixed various Free Roaming bugs that allowed it to not work when certain features were enabled;")
-	print("- Fixed No Lerp and Dark Mode not resetting when disabled;")
-	print("- Fixed a few minor Aim Priorities bugs from both Aimbot and Triggerbot;")
-	print("- Reworked Free Roaming from scratch;")
-	print("- Reworked Anti-Screengrabber from scratch;")
-	print("- Reorganized certain out-of-place functions and menu options;")
-	print("- Rearranged menu options so that they no longer look messy;")
-	print("- Renamed certain misspelled or broken functions and menu options;")
-	print("- Removed local variables that had no use;")
-	print("- Removed unusable DarkRP names from the Name Changer;")
-	print("- Removed cloned hooks and combined them all into one for better performance;")
-	print("- Removed old broken 'file.Read' blocker that had no use;")
-	print("- Removed old and unused Fake Lag functions;")
-	print("- Removed 'aaa' module as 'IdiotBox_alpha1.lua' was replaced by 'IdiotBox_dev.lua' and had no use.")
-	print("\n")
-	print("IdiotBox v6.7/ v6.7.1/ v6.7.2/ v6.7.3 new features (in no particular order)")
-	print("")
-	print("Total features count: ~50 features have been added in the v6.7/ v6.7.1/ v6.7.2/ v6.7.3 updates;")
-	print("\n")
-	print("- Added 'Emote Resolver' to Resolver;")
-	print("- Added 'Panic Mode' & NPC targeting to Aimbot and Triggerbot;")
-	print("- Added 'Priority List' to Miscellaneous;")
-	print("- Added 'Cheater Callout' and 'Copy Messages' to Reply Spam;")
-	print("- Added 'Border Color', 'Misc Visuals Color' and 'B Opacity' to Settings;")
-	print("- Added 'Fake-Forwards/ Backwards/ Sideways', 'Static' and 'Adaptive' to Anti-Aim;")
-	print("- Added 'Players List', 'Show Entities' and 'Conditions' to Visuals;")
-	print("- Added 'Optimize Game' and TTT/ Murder/ DarkRP specific features to Utilities;")
-	print("- Added 'Spectators' to Aim Priorities;")
-	print("- Added 'Players' to Aim Priorities;")
-	print("- Added 'Distance Limit' to Aimbot and Triggerbot;")
-	print("- Added custom key binds;")
-	print("- Added 'Free Roaming Key' to Free Roaming;")
-	print("- Added 'Free Roaming Speed' to Free Roaming;")
-	print("- Added 'Strafe Key' to Movement;")
-	print("- Added 'Disconnect Spam', 'lol', 'english please', 'lmao', 'shit' and 'fuck' to Reply Spam;")
-	print("- Added 'Arabic Spam' and 'Hebrew Spam' to Chat Spam;")
-	print("- Added 'Priority Targets Only' to Priority List;")
-	print("- Added 'Use Spam' to Miscellaneous;")
-	print("- Added 'Fake Crouch' to Movement;")
-	print("- Added 'Enable Spams' to Chat;")
-	print("- Added 'Random' to Emotes;")
-	print("- Added 'Murder Taunts' to Taunting;")
-	print("- Added 'Velocity' to Visuals;")
-	print("- Added 'Dormant Check' to Visuals;")
-	print("- Added 'Show Spectators' to Visuals;")
-	print("- Added 'Bystander Name' to Visuals;")
-	print("- Added 'NPCs' to Visuals;")
-	print("- Renamed 'Hack vs. Hack' tab;")
-	print("- Reworked 'Ignores' from Aim Priorities;")
-	print("- Reworked 'Max Player Health' from Aim Priorities;")
-	print("- Reworked 'Resolver' from Hack vs. Hack;")
-	print("- Reworked 'Radar', 'Spectators' and 'Status' from Visuals;")
-	print("- Reworked user visibility of IdiotBox developers on servers;")
-	print("- Removed 'Shoutout' from Chat Spam;")
-	print("- Removed 'Drop Money' from Chat Spam;")
-	print("- Removed 'Screengrab Notifications' from Miscellaneous;")
-	print("- Changed the default menu colors, menu size and others.")
-	print("\n\n===========================================================")
-end
-
-concommand.Add("idiot_changelog", ChangeLog)
-
-concommand.Add("idiot_openmenu", function()
-	menuopen = true
-	menukeydown = true
-	Menu()
-end)
 
 CreateClientConVar("idiot_changename", "www.IDIOTBOX.net | Get tapped!", true, false)
 
@@ -3376,6 +3536,7 @@ local function Think()
 	if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menuopen and not menukeydown) then
 		menuopen = true
 		menukeydown = true
+		MenuBorder()
 		Menu()
 	elseif (not (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menuopen) then
 		menukeydown = false
@@ -4299,6 +4460,8 @@ local function TriggerbotPriorities(v)
 	end
 end
 
+local aimignore
+
 local trace_walls = bit.bor(CONTENTS_TESTFOGVOLUME, CONTENTS_EMPTY, CONTENTS_MONSTER, CONTENTS_HITBOX)
 
 local NoPenetration = {[MAT_SLOSH] = true}
@@ -4308,7 +4471,7 @@ local PenMod = {[MAT_SAND] = 0.5, [MAT_DIRT] = 0.8, [MAT_METAL] = 1.1, [MAT_TILE
 local trace_normal = bit.bor(CONTENTS_SOLID, CONTENTS_OPAQUE, CONTENTS_MOVEABLE, CONTENTS_DEBRIS, CONTENTS_MONSTER, CONTENTS_HITBOX, 402653442, CONTENTS_WATER)
 
 local function FASAutowall(wep, startPos, aimPos, ply)
-	if not gBool("Aimbot", "Aim Priorities", "Auto Wallbang") then return end
+	if not gBool("Aimbot", "Miscellaneous", "Auto Wallbang") then return end
     local traces = {}
     local traceResults = {}
     local dir = (aimPos - startPos):GetNormalized()
@@ -4327,7 +4490,7 @@ local function FASAutowall(wep, startPos, aimPos, ply)
 end
 
 local function M9KAutowall(wep)
-	if not gBool("Aimbot", "Aim Priorities", "Auto Wallbang") then return end
+	if not gBool("Aimbot", "Miscellaneous", "Auto Wallbang") then return end
 	local wep = me:GetActiveWeapon()
     local trace = {
         endpos = aimPos, 
@@ -4337,8 +4500,6 @@ local function M9KAutowall(wep)
     }
     return wep:BulletPenetrate(10, nil, util.TraceLine(trace), DamageInfo())
 end
-
-local aimignore
 
 local function Valid(v)
 	local dist = gBool("Aimbot", "Aim Priorities", "Distance:")
@@ -4383,26 +4544,63 @@ local function Valid(v)
 		return false
 	end
 	end
-	if !gBool("Aimbot", "Miscellaneous", "Wall Aim") or gBool("Aimbot", "Miscellaneous", "Auto Wallbang") then
 	local tr = {
         start = em.EyePos(me), 
         endpos = GetPos(v), 
         mask = MASK_SHOT, 
         filter = {me, v}, 
     }
-    if (util.TraceLine(tr).Fraction == 1) then
+    if(util.TraceLine(tr).Fraction == 1) then
         return true
     elseif(wep and wep:IsValid() and wep.PenStr) then
         return FASAutowall(wep, tr.start, tr.endpos, v)
 	elseif (wep and wep:IsValid() and wep.BulletPenetrate) then
 		return M9KAutowall(wep, tr.start, tr.endpos, v)
     end
-	end
     return false
 end
 
-local function CrosshairAim()
-	dists = {}
+local function GetTarget()
+	local opt = gOption("Aimbot", "Aim Priorities", "Aim Priority:")
+	local sticky = gOption("Aimbot", "Ragebot", "Target Lock") or gOption("Aimbot", "Legitbot", "Target Lock")
+	if (opt == "Distance") then
+		if (sticky && Valid(aimtarget)) then return end
+		dists = {}
+		for k, v in next, ents.GetAll() do
+			if (!Valid(v)) then continue end
+			dists[#dists + 1] = {vm.Distance(em.GetPos(v), em.GetPos(me)), v}
+		end
+		table.sort(dists, function(a, b)
+			return(a[1] < b[1])
+		end)
+		aimtarget = dists[1] && dists[1][2] || nil
+	elseif (opt == "Health") then
+		if (sticky && Valid(aimtarget)) then return end
+		dists = {}
+		for k, v in next, ents.GetAll() do
+			if (!Valid(v)) then continue end
+			dists[#dists + 1] = {em.Health(v), v}
+		end
+		table.sort(dists, function(a, b)
+			return(a[1] < b[1])
+		end)
+		aimtarget = dists[1] && dists[1][2] || nil
+	elseif (opt == "Random") then
+		if (!sticky && Valid(aimtarget)) then return end
+		aimtarget = nil
+		local allplys = ents.GetAll()
+		local avaib = {}
+		for k, v in next, allplys do
+			avaib[math.random(100)] = v
+		end
+		for k, v in next, avaib do
+			if (Valid(v)) then
+				aimtarget = v
+			end
+		end
+	elseif (opt == "Crosshair") then
+		if (sticky && Valid(aimtarget)) then return end
+		dists = {}
 		local x, y = ScrW(), ScrH()
 		local AngA, AngB = 0
 		for k, v in next, ents.GetAll() do
@@ -4413,49 +4611,7 @@ local function CrosshairAim()
 		table.sort(dists, function(a, b)
 			return(a[1] < b[1])
 		end)
-	aimtarget = dists[1] && dists[1][2] || nil
-end
-
-local function GetTarget()
-	local opt = gOption("Aimbot", "Aim Priorities", "Aim Priority:")
-	local sticky = gOption("Aimbot", "Ragebot", "Target Lock") or gOption("Aimbot", "Legitbot", "Target Lock")
-	if (opt == "Distance") then
-		if (sticky && Valid(aimtarget)) then return end
-		dists = {}
-		for k, v in next, ents.GetAll() do
-				if (!Valid(v)) then continue end
-				dists[#dists + 1] = {vm.Distance(em.GetPos(v), em.GetPos(me)), v}
-		end
-		table.sort(dists, function(a, b)
-				return(a[1] < b[1])
-		end)
 		aimtarget = dists[1] && dists[1][2] || nil
-	elseif (opt == "Health") then
-		if (sticky && Valid(aimtarget)) then return end
-		dists = {}
-		for k, v in next, ents.GetAll() do
-				if (!Valid(v)) then continue end
-				dists[#dists + 1] = {em.Health(v), v}
-		end
-		table.sort(dists, function(a, b)
-				return(a[1] < b[1])
-		end)
-		aimtarget = dists[1] && dists[1][2] || nil
-	elseif (opt == "Random") then
-	if (!sticky && Valid(aimtarget)) then return end
-		aimtarget = nil
-		local allplys = ents.GetAll()
-		local avaib = {}
-		for k, v in next, allplys do
-				avaib[math.random(100)] = v
-		end
-		for k, v in next, avaib do
-				if (Valid(v)) then
-						aimtarget = v
-				end
-		end
-	elseif (opt == "Crosshair") then
-		CrosshairAim()
 	end
 end
 
@@ -4516,12 +4672,6 @@ local function AltFire(pCmd)
 	end
 end
 
-local function PredictPos(pos)
-	local myvel = LocalPlayer():GetVelocity()
-		local pos = pos - (myvel * engine.TickInterval())
-	return pos
-end
-
 local function SmoothAim(ang) 
 	if (gInt("Aimbot", "Legitbot", "Aim Smoothness:") > 0 && !gBool("Aimbot", "Legitbot", "Silent (For Anti-Aim)")) then
 		ang.y = math.NormalizeAngle(ang.y) 	
@@ -4535,6 +4685,71 @@ local function SmoothAim(ang)
 	end 
 end
 
+local function PredictPos(aimtarget)
+	if gBool("Aimbot", "Aim Priorities", "Projectile Prediction") then
+		if string.find(string.lower(wep:GetPrintName()), "crossbow") then
+			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 1100 then
+				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 1600) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
+			else
+				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 3215) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
+			end
+		elseif string.find(string.lower(wep:GetClass()), "m9k_rpg7") or string.find(string.lower(me:GetActiveWeapon():GetClass()), "m9k_m202") then
+			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 2600 then
+				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4500) + me:Ping() / 950) - Vector(0, 0, 25) - em.GetVelocity(me) / 50) - em.EyePos(me)
+			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 4000 then
+				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
+			else
+				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 90) - em.GetVelocity(me) / 50) - em.EyePos(me)
+			end
+		elseif string.find(string.lower(wep:GetClass()), "m9k_ex41") or string.find(string.lower(wep:GetClass()), "m9k_m79gl") then
+			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 1100 then
+				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2550) + me:Ping() / 950) - Vector(0, 0, 25) - em.GetVelocity(me) / 50) - em.EyePos(me)
+			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 4000 then
+				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2130) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 35) - em.GetVelocity(me) / 50) - em.EyePos(me)
+			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 7000 then
+				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2130) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 13) - em.GetVelocity(me) / 50) - em.EyePos(me)
+			else
+				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2670) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 6) - em.GetVelocity(me) / 50) - em.EyePos(me)
+			end
+		elseif string.find(string.lower(wep:GetClass()), "m9k_matador") then
+			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 2600 then
+				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 6500) + me:Ping() / 950) - Vector(0, 0, 25) - em.GetVelocity(me) / 50) - em.EyePos(me)
+			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 4000 then
+				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 6500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
+			else
+				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 6500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 90) - em.GetVelocity(me) / 50) - em.EyePos(me)
+			end
+		elseif string.find(string.lower(wep:GetClass()), "m9k_milkormgl") then
+			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 1100 then
+				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2500) + me:Ping() / 950) - Vector(0, 0, 25) - em.GetVelocity(me) / 50) - em.EyePos(me)
+			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 4000 then
+				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2000) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 43) - em.GetVelocity(me) / 50) - em.EyePos(me)
+			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 7000 then
+				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2460) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 38) - em.GetVelocity(me) / 50) - em.EyePos(me)
+			else
+				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2580) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 17.5) - em.GetVelocity(me) / 50) - em.EyePos(me)
+			end
+		elseif string.find(string.lower(wep:GetClass()), "m9k_m61_frag") then
+			return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 650) + me:Ping() / 950) - Vector(0, 0, 225) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4) - em.GetVelocity(me) / 50) - em.EyePos(me)
+		elseif string.find(string.lower(wep:GetClass()), "m9k_harpoon") then
+			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 1200 then
+				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2300) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 20) - em.GetVelocity(me) / 50) - em.EyePos(me)
+			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 1750 then
+				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2000) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 8) - em.GetVelocity(me) / 50) - em.EyePos(me)
+			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 2000 then
+				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 1500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 5) - em.GetVelocity(me) / 50) - em.EyePos(me)
+			else
+				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 900) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 3) - em.GetVelocity(me) / 50) - em.EyePos(me)
+			end
+		else
+			return GetPos(aimtarget) - em.EyePos(me)
+		end
+	end
+	if not gBool("Aimbot", "Aim Priorities", "Projectile Prediction") then
+		return GetPos(aimtarget) - em.EyePos(me)
+	end
+end
+
 local function Ragebot(pCmd)
 	for k, v in pairs(player.GetAll()) do
 	if (gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable Ragebot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || NoPhys() || NoCam()) then return end
@@ -4544,8 +4759,7 @@ local function Ragebot(pCmd)
 	aa = false
 	if (aimtarget && aimtarget:IsValid() && gKey("Aimbot", "Ragebot", "Aim Key:") && WeaponCanFire()) then
 		aa = true
-		local pos = GetPos(aimtarget) - em.EyePos(me)
-		PredictPos(pos)
+		local pos = PredictPos(aimtarget)
 		local ang = vm.Angle(PredictSpread(pCmd, vm.Angle(pos)))
 		NormalizeAngle(ang)
 		cm.SetViewAngles(pCmd, ang)
@@ -4575,9 +4789,7 @@ local function Legitbot(pCmd)
 	if (FovValue < 0) then
 	return end
 	if (FovValue > 0) then
-	CrosshairAim()
-	local pos = GetPos(aimtarget) - em.EyePos(me)
-		PredictPos(pos, aimtarget:GetVelocity())
+		local pos = PredictPos(aimtarget)
 		local ang = vm.Angle(PredictSpread(pCmd, vm.Angle(pos)))
 		NormalizeAngle(ang)
 		local CalcX = ang.x - fa.x
@@ -4808,11 +5020,11 @@ local function GetY()
 		oy = GetClosest() + math.random (25, - 25)
 	elseif (opt == "Semi-Jitter" && static) then
 		oy = 180 + math.random (25, - 25)
-	elseif (opt == "Backwards Semi-Jitter" && !adapt && !static) then
+	elseif (opt == "Back Semi-Jitter" && !adapt && !static) then
 		oy = fa.y - 180 + math.random (25, - 25)
-	elseif (opt == "Backwards Semi-Jitter" && adapt && !static) then
+	elseif (opt == "Back Semi-Jitter" && adapt && !static) then
 		oy = GetClosest() - 180 + math.random (25, - 25)
-	elseif (opt == "Backwards Semi-Jitter" && static) then
+	elseif (opt == "Back Semi-Jitter" && static) then
 		oy = 0 + math.random (25, - 25)
 	elseif (opt == "Spinbot") then
 		if left then
@@ -4854,7 +5066,7 @@ local function GetY()
 		else
 		oy = 270
 	end
-	elseif (opt == "Sideways Semi-Jitter" && !adapt && !static) then
+	elseif (opt == "Side Semi-Jitter" && !adapt && !static) then
         if left then
         oy = fa.y + 90 + math.random(0, 40)
         elseif right then
@@ -4864,7 +5076,7 @@ local function GetY()
 		else
 		oy = fa.y + 90 + math.random(0, 40) 
         end
-	elseif (opt == "Sideways Semi-Jitter" && adapt && !static) then
+	elseif (opt == "Side Semi-Jitter" && adapt && !static) then
         if left then
         oy = GetClosest() + 90 + math.random(0, 40)
         elseif right then
@@ -4874,7 +5086,7 @@ local function GetY()
 		else
 		oy = GetClosest() + 90 + math.random(0, 40) 
         end
-	elseif (opt == "Sideways Semi-Jitter" && static) then
+	elseif (opt == "Side Semi-Jitter" && static) then
         if left then
         oy = 270 + math.random(0, 40)
         elseif right then
@@ -5028,7 +5240,7 @@ local function AntiAim(pCmd)
 	end
 	local wep = pm.GetActiveWeapon(me)
 	if (gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP || me:Team() == TEAM_SPECTATOR || idiot.Triggering == true || (cm.CommandNumber(pCmd) == 0 && !gBool("Miscellaneous", "Point of View", "Thirdperson")) || cm.KeyDown(pCmd, 1) || gBool("Miscellaneous", "Point of View", "Custom FoV") && gBool("Miscellaneous", "Free Roaming", "Enabled") && gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") && !gBool("Miscellaneous", "Point of View", "Thirdperson") || me:WaterLevel() > 1 || input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable with 'E' Key") || em.GetMoveType(me) == MOVETYPE_LADDER || aa || me:Health() < 1 || !me:Alive() || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aimbot", "Legitbot", "Enabled") && !gBool("Aimbot", "Legitbot", "Silent (For Anti-Aim)") || gBool("Utilities", "Trouble in Terrorist Town Utilities", "Prop Kill") && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" && idiot.engine.ActiveGamemode() == "terrortown") then return end
-	if gOption("Hack vs. Hack", "Anti-Aim", "Anti-Aim Direction:") == "Manual Switching" then
+	if gOption("Hack vs. Hack", "Anti-Aim", "Anti-Aim Direction:") == "Manual Switch" then
 	if gKey("Hack vs. Hack", "Anti-Aim", "Switch Key:") and not manualpressed then
 	manualpressed = true
 	manual = not manual
@@ -5442,7 +5654,7 @@ hook.Add("HUDPaint2", "Hook22", function()
 				end
 			end
 			if BeingWitnessed == false then
-				WitnessColor = Color (gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"))
+				WitnessColor = Color (0, 255, 0)
 			else
 				WitnessColor = Color (255, 0, 0)
 			end
@@ -5535,7 +5747,7 @@ local randomresponse = {
 	"who", 
 	"nobody cares", 
 	"where", 
-	"lol stop spamming", 
+	"lol stop spam...", 
 	"what", 
 	"yea", 
 	"lol", 
@@ -5593,10 +5805,10 @@ hook.Add("OnPlayerChat", "Hook24", function(v, text, team)
 			RunConsoleCommand("say_team", "where")
 		elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "where") then
 			RunConsoleCommand("say", "where")
-		elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "lol stop spamming") then
-			RunConsoleCommand("say_team", "lol stop spamming")
-		elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "lol stop spamming") then
-			RunConsoleCommand("say", "lol stop spamming")
+		elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "lol stop spam...") then
+			RunConsoleCommand("say_team", "lol stop spam...")
+		elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "lol stop spam...") then
+			RunConsoleCommand("say", "lol stop spam...")
 		elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "what") then
 			RunConsoleCommand("say_team", "what")
 		elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "what") then
