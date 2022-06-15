@@ -5848,6 +5848,7 @@ if not file.Exists(folder.."/version.txt", "DATA") then
 		if file.Read(folder.."/version.txt", "DATA") ~= version then
 			Changelog()
 		chat.AddText(Color(0, 255, 0), "IdiotBox has been updated from v"..file.Read(folder.."/version.txt", "DATA").." to v"..version..". Changelog is printed in the console.")
+		surface.PlaySound("buttons/lightswitch2.wav")
 		file.Write(folder.."/version.txt", version)
 	end
 end
