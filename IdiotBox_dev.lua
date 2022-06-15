@@ -11,6 +11,8 @@
 --NOTE-- This script is nowhere near perfect - there's a lot of room for improvement. It started off as a very broken, random paste that I made for fun, then it somehow turned into one of the most popular cheats in Garry's Mod. We try to make IdiotBox a better cheat with each update that gets released, and so far, it seems to go pretty well - but we're nowhere near the end.
 
 
+local folder = "IdiotBox"
+local version = "6.7.2"
 
 local Detours = {}
 
@@ -49,7 +51,7 @@ surface.CreateFont("MenuFont", {
 	outline  = true, 
 })
 
-surface.CreateFont("IdiotFont", {
+surface.CreateFont("MainFont", {
 	font = "Tahoma", 
 	size = 16, 
 	weight = 1300, 
@@ -57,7 +59,7 @@ surface.CreateFont("IdiotFont", {
 	outline  = true, 
 })
 
-surface.CreateFont("IdiotFont2", {
+surface.CreateFont("MainFont2", {
 	font = "Tahoma", 
 	size = 11, 
 	weight = 640, 
@@ -803,8 +805,6 @@ local function UpdateVar(men, sub, lookup, new)
 	end
 end
 
-local folder = "IdiotBox"
-
 if not file.IsDir(folder, "DATA") then
 	file.CreateDir(folder)
 end
@@ -952,12 +952,12 @@ local function DrawUpperText(w, h)
 	local tw, th = surface.GetTextSize("")
 	surface.SetTextPos(512, 15 - th / 2)
 	surface.SetTextColor(gInt("Settings", "Main Text Color", "Red:"), gInt("Settings", "Main Text Color", "Green:"), gInt("Settings", "Main Text Color", "Blue:"), 255)
-	surface.SetFont("IdiotFont")
+	surface.SetFont("MainFont")
 	surface.DrawText("IdiotBox v6.7.3")
 	surface.SetTextPos(615, 18 - th / 2)
-	surface.SetTextColor(gInt("Settings", "Main Text Color", "Red:"), gInt("Settings", "Main Text Color", "Green:") - 124, gInt("Settings", "Main Text Color", "Blue:") - 42, 255)
-	surface.SetFont("IdiotFont2")
-	surface.DrawText("Latest patch: June XXth 2022")
+	surface.SetTextColor(gInt("Settings", "Main Text Color", "Red:"), gInt("Settings", "Main Text Color", "Green:") - 50, gInt("Settings", "Main Text Color", "Blue:") - 25, 175)
+	surface.SetFont("MainFont2")
+	surface.DrawText("Latest patch: June Unknown 2022")
 	surface.SetFont("MenuFont")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -1231,7 +1231,7 @@ local function Unload()
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 end
 
-local function ChangeLog()
+local function Changelog()
 	print("===========================================================\n\n")
 	print("IdiotBox v6.7/ v6.7.1/ v6.7.2/ v6.7.3 bugfixes (in no particular order)")
 	print("")
@@ -1604,7 +1604,7 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 			self:Remove()
 			Unload()
 		elseif text == "Print Changelog" then
-			ChangeLog()
+			Changelog()
 		elseif text == "Save Configuration" then
 			if gOption("Utilities", "Configurations", "Configuration:") == "Configuration #1" then
 				SaveConfig1()
@@ -5842,7 +5842,17 @@ hook.Add("OnPlayerChat", "Hook24", function(v, text, team)
 	end
 end)
 
-MsgG(5.3, "Welcome, "..me:Nick()..". Press 'INSERT' or run the 'idiot_openmenu' command to toggle.")
+if not file.Exists(folder.."/version.txt", "DATA") then
+		file.Write(folder.."/version.txt", version)
+	else
+		if file.Read(folder.."/version.txt", "DATA") ~= version then
+			Changelog()
+		chat.AddText(Color(255, 255, 0), "IdiotBox has been updated from version"..file.Read(folder.."/version.txt", "DATA").." to version"..version..". Changelog is printed in the console.")
+		file.Write(folder.."/version.txt", version)
+	end
+end
+
+MsgG(5.3, "Welcome, "..me:Nick()..". Press 'Insert', 'F11' or 'Home', or run the 'idiot_openmenu' command to toggle.")
 surface.PlaySound("buttons/lightswitch2.wav")
 
 if ac != true then 
