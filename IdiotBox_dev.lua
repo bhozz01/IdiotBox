@@ -12,7 +12,7 @@
 
 
 local folder = "IdiotBox"
-local version = "6.7.2"
+local version = "6.7.3"
 
 local Detours = {}
 
