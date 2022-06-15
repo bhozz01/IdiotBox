@@ -6031,14 +6031,7 @@ hook.Add("OnPlayerChat", "Hook24", function(v, text, team)
 end)
 		
 if not file.Exists(folder.."/version.txt", "DATA") then
-		file.Write(folder.."/version.txt", version)
-	else
-		if file.Read(folder.."/version.txt", "DATA") ~= version then
-			Changelog()
-		chat.AddText(Color(0, 255, 0), "IdiotBox has been updated from v"..file.Read(folder.."/version.txt", "DATA").." to v"..version.."! Changelog is printed in the console.")
-		surface.PlaySound("buttons/lightswitch2.wav")
-		file.Write(folder.."/version.txt", version)
-	end
+	file.Write(folder.."/version.txt", version)
 end
 
 MsgG(5.3, "Welcome, "..me:Nick()..". Press 'INSERT' or run the 'ib_openmenu' command to toggle.")
