@@ -12,11 +12,6 @@
 
 
 
-local folder = "IdiotBox"
-local version = "6.7.3"
-
-local maintextcol, menutextcol, bgmenucol, bordercol, teamvisualscol, enemyvisualscol, friendvisualscol, entitiesvisualscol, miscvisualscol, teamchamscol, enemychamscol, crosshaircol, viewmodelcol = Color(0, 205, 255), Color(255, 255, 255), Color(30, 30, 45), Color(0, 155, 255), Color(255, 255, 255), Color(255, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 235, 255), Color(0, 235, 255)
-
 local Detours = {}
 
 local ProtectedFiles = {
@@ -299,7 +294,7 @@ local options = {
 					{"No Black Screens", "Checkbox", true, 78}, -- Enabled by default
 				}, 
 				{
-          			{"Configurations", 376, 20, 347, 160, 218}, 
+          			{"Configurations", 376, 20, 347, 150, 218}, 
 					{"Automatically Save", "Checkbox", false, 78}, 
 					{"Save Configuration", "Button", "", 92}, 
 					{"Load Configuration", "Button", "", 92}, 
@@ -307,23 +302,23 @@ local options = {
 					{"Configuration:", "Selection", "Configuration #1", {"Configuration #1", "Configuration #2", "Configuration #3", "Configuration #4", "Configuration #5"}, 92}, 
           		}, 
 				{
-          			{"Menus", 376, 290, 347, 80, 218}, 
-					{"Entity Menu", "Button", "", 92}, 
-					{"Plugin Loader", "Button", "", 92}, 
+          			{"IdiotBox Console Commands", 376, 185, 347, 100, 218}, 
+					{"Run the 'idiot_openmenu' command to open the menu;", "Checkbox", false, 9999}, 
+          			{"Run the 'idiot_changename' command to set a custom name.", "Checkbox", false, 9999}, 
+					{"Apply custom name", "Checkbox", false, 78}, 
           		}, 
 				{
-					{"Panic Mode", 376, 195, 347, 75, 218}, 
+					{"Panic Mode", 376, 300, 347, 75, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Mode:", "Selection", "Disable All", {"Disable Ragebot", "Disable Legitbot", "Disable Anti-Aim", "Disable All"}, 92}, 
                 }, 
 				{
-          			{"IdiotBox Console Commands", 736, 20, 347, 100, 218}, 
-					{"Apply custom name", "Checkbox", false, 78}, 
-					{"Run the 'idiot_openmenu' command to open the menu;", "Checkbox", false, 9999}, 
-          			{"Run the 'idiot_changename' command to set a custom name.", "Checkbox", false, 9999}, 
+          			{"Menus", 736, 20, 347, 80, 218}, 
+					{"Entity Menu", "Button", "", 92}, 
+					{"Plugin Loader", "Button", "", 92}, 
           		}, 
 				{
-          			{"Others", 736, 135, 347, 80, 218}, 
+          			{"Others", 736, 115, 347, 80, 218}, 
 					{"Print Changelog", "Button", "", 92}, 
 					{"Unload Cheat", "Button", "", 92}, 
           		}, 
@@ -366,8 +361,8 @@ local options = {
                 }, 
 				{
 					{"Viewmodel", 376, 188, 347, 125, 218}, 
-					{"Viewmodel Chams", "Checkbox", false, 78}, 
-					{"Viewmodel Wireframe", "Checkbox", false, 78}, 
+					{"Viewmodel Chams:", "Selection", "Off", {"Off", "Normal", "Rainbow"}, 92}, 
+					{"Viewmodel Wireframe:", "Selection", "Off", {"Off", "Normal", "Rainbow"}, 92}, 
 					{"No Viewmodel", "Checkbox", false, 78}, 
 					{"No Hands", "Checkbox", false, 78}, 
                 }, 
@@ -387,7 +382,7 @@ local options = {
 					{"Fake Crouch", "Checkbox", false, 78}, 
                 }, 
 				{
-                	{"Chat", 736, 218, 347, 125, 218}, 
+                	{"Chat", 736, 215, 347, 125, 218}, 
 					{"Log Kills in Chat", "Checkbox", false, 78}, 
 					{"Chat Spam:", "Selection", "Off", {"Off", "Advertising 1", "Advertising 2", "Advertising 3", "Nazi 1", "Nazi 2", "Nazi 3", "Arabic Spam", "Hebrew Spam", "Offensive Spam", "Insult Spam", "Message Spam", "N-Word Spam", "N-WORD SPAM", "'H' Spam", "Clear Chat", "OOC Clear Chat"}, 92}, 
 					{"Kill Spam:", "Selection", "Off", {"Off", "Normal", "Insult", "Salty", "HvH", "IdiotBox HvH", "Votekick", "Voteban", "Killstreak", }, 92}, 
@@ -396,85 +391,85 @@ local options = {
         }, 
 		["Settings"] = {
 				{
-          			{"Main Text Color", 50, 20, 250, 105, 100}, 
+          			{"Main Text Color", 60, 20, 250, 105, 100}, 
           			{"Red:", "Slider", 0, 255, 88}, 
 					{"Green:", "Slider", 205, 255, 88}, 
 					{"Blue:", "Slider", 255, 255, 88}, 
           		}, 
 				{
-					{"Menu Text Color", 311, 20, 205, 105, 70}, 
+					{"Menu Text Color", 321, 20, 205, 105, 70}, 
 					{"Red:", "Slider", 255, 255, 88}, 
 					{"Green:", "Slider", 255, 255, 88}, 
 					{"Blue:", "Slider", 255, 255, 88}, 
 				}, 
 				{
-          			{"Background Menu Color", 525, 20, 245, 105, 100}, 
+          			{"Background Menu Color", 535, 20, 245, 105, 100}, 
           			{"Red:", "Slider", 30, 255, 88}, 
 					{"Green:", "Slider", 30, 255, 88}, 
 					{"Blue:", "Slider", 45, 255, 88}, 
           		}, 
 				{
-					{"Border Color", 780, 20, 250, 105, 100}, 
+					{"Border Color", 790, 20, 250, 105, 100}, 
 					{"Red:", "Slider", 0, 255, 88}, 
 					{"Green:", "Slider", 155, 255, 88}, 
 					{"Blue:", "Slider", 255, 255, 88}, 
                 }, 
 				{
-					{"Team Visuals Color", 50, 145, 250, 105, 100}, 
+					{"Team Visuals Color", 60, 140, 250, 105, 100}, 
 					{"Red:", "Slider", 255, 255, 88}, 
 					{"Green:", "Slider", 255, 255, 88}, 
 					{"Blue:", "Slider", 255, 255, 88}, 
                 }, 
 				{
-					{"Enemy Visuals Color", 311, 145, 205, 105, 70}, 
+					{"Enemy Visuals Color", 321, 140, 205, 105, 70}, 
 					{"Red:", "Slider", 255, 255, 75}, 
 					{"Green:", "Slider", 255, 255, 75}, 
 					{"Blue:", "Slider", 255, 255, 75}, 
                 }, 
 				{
-					{"Friend Visuals Color", 525, 145, 245, 105, 100}, 
+					{"Friend Visuals Color", 535, 140, 245, 105, 100}, 
 					{"Red:", "Slider", 0, 255, 88}, 
 					{"Green:", "Slider", 255, 255, 88}, 
 					{"Blue:", "Slider", 255, 255, 88}, 
                 }, 
 				{
-					{"Entities Visuals Color", 780, 145, 250, 105, 100}, 
+					{"Entities Visuals Color", 790, 140, 250, 105, 100}, 
 					{"Red:", "Slider", 0, 255, 88}, 
 					{"Green:", "Slider", 255, 255, 88}, 
 					{"Blue:", "Slider", 255, 255, 88}, 
                 }, 
 				{
-					{"Misc Visuals Color", 50, 270, 250, 105, 100}, 
+					{"Misc Visuals Color", 60, 260, 250, 105, 100}, 
 					{"Red:", "Slider", 0, 255, 75}, 
 					{"Green:", "Slider", 255, 255, 75}, 
 					{"Blue:", "Slider", 255, 255, 75}, 
                 }, 
 				{
-					{"Team Chams Color", 311, 270, 205, 105, 70}, 
+					{"Team Chams Color", 321, 260, 205, 105, 70}, 
 					{"Red:", "Slider", 0, 255, 75}, 
 					{"Green:", "Slider", 255, 255, 75}, 
 					{"Blue:", "Slider", 255, 255, 75}, 
                 }, 
 				{
-					{"Enemy Chams Color", 525, 270, 245, 105, 100}, 
+					{"Enemy Chams Color", 535, 260, 245, 105, 100}, 
 					{"Red:", "Slider", 0, 255, 75}, 
 					{"Green:", "Slider", 255, 255, 75}, 
 					{"Blue:", "Slider", 255, 255, 75}, 
                 }, 
 				{
-					{"Crosshair Color", 780, 270, 250, 105, 100}, 
+					{"Crosshair Color", 790, 260, 250, 105, 100}, 
 					{"Red:", "Slider", 0, 255, 88}, 
 					{"Green:", "Slider", 235, 255, 88}, 
 					{"Blue:", "Slider", 255, 255, 88}, 
                 }, 
 				{
-					{"Viewmodel Color", 50, 390, 250, 105, 100}, 
+					{"Viewmodel Color", 60, 380, 250, 105, 100}, 
 					{"Red:", "Slider", 0, 255, 88}, 
 					{"Green:", "Slider", 235, 255, 88}, 
 					{"Blue:", "Slider", 255, 255, 88}, 
                 }, 
 				{
-					{"Others", 311, 390, 205, 157, 70}, 
+					{"Others", 321, 380, 205, 157, 70}, 
 					{"T Opacity:", "Slider", 255, 255, 88}, 
 					{"B Opacity:", "Slider", 255, 255, 88}, 
 					{"BG Opacity:", "Slider", 255, 255, 88}, 
@@ -482,7 +477,7 @@ local options = {
 					{"Roundness:", "Slider", 57, 67, 88}, 
                 }, 
 				{
-					{"Window Positions", 525, 390, 245, 157, 88}, 
+					{"Window Positions", 535, 380, 245, 157, 88}, 
 					{"Spectators X:", "Slider", 12, 2000, 121}, 
 					{"Spectators Y:", "Slider", 12, 2000, 121}, 
 					{"Radar X:", "Slider", 225, 2000, 121}, 
@@ -490,7 +485,7 @@ local options = {
 					{"Roundness:", "Slider", 16, 42, 121}, 
                 }, 
 				{
-					{"List Positions", 780, 390, 250, 157, 88}, 
+					{"List Positions", 790, 380, 250, 157, 88}, 
 					{"Custom Status X:", "Slider", 17, 2000, 121}, 
 					{"Custom Status Y:", "Slider", 250, 2000, 121}, 
 					{"Players List X:", "Slider", 17, 2000, 121}, 
@@ -563,6 +558,8 @@ local function gKey(men, sub, lookup)
 		end
 	end
 end
+
+local maintextcol, menutextcol, bgmenucol, bordercol, teamvisualscol, enemyvisualscol, friendvisualscol, entitiesvisualscol, miscvisualscol, teamchamscol, enemychamscol, crosshaircol, viewmodelcol = Color(0, 205, 255), Color(255, 255, 255), Color(30, 30, 45), Color(0, 155, 255), Color(255, 255, 255), Color(255, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 235, 255), Color(0, 235, 255)
 
 local windowopen = false
 
@@ -803,6 +800,10 @@ local function UpdateVar(men, sub, lookup, new)
 		end
 	end
 end
+
+local folder = "IdiotBox"
+
+local version = "6.7.3"
 
 if not file.IsDir(folder, "DATA") then
 	file.CreateDir(folder)
@@ -1263,7 +1264,7 @@ local function Changelog()
 	print("- Fixed Snap Lines still showing when Aimbot is not enabled;")
 	print("- Fixed toggle keys activating when browsing game menus/ browsing cheat menu/ typing;")
 	print("- Fixed menu Darkness not working when opening the menu with the console command;")
-	print("- FixedHide Round Report andPanel Remover not working correctly;")
+	print("- Fixed Hide Round Report and Panel Remover not working correctly;")
 	print("- Fixed poorly placed checkboxes/ sliders/ selections;")
 	print("- Fixed Anti-Ads not working correctly;")
 	print("- Fixed Thirdperson showing in spectator mode;")
@@ -1281,8 +1282,9 @@ local function Changelog()
 	print("- Fixed various Free Roaming bugs that allowed it to not work when certain features were enabled;")
 	print("- Fixed No Lerp and Dark Mode not resetting when disabled;")
 	print("- Fixed a few minor Aim Priorities bugs from both Aimbot and Triggerbot;")
-	print("- Reworked Free Roaming from scratch;")
+	print("- Reworked script for better performance;")
 	print("- Reworked Anti-Screengrabber from scratch;")
+	print("- Reworked user visibility of IdiotBox developers on servers;")
 	print("- Reorganized certain out-of-place functions and menu options;")
 	print("- Rearranged menu options so that they no longer look messy;")
 	print("- Renamed certain misspelled or broken functions and menu options;")
@@ -1299,6 +1301,7 @@ local function Changelog()
 	print("\n")
 	print("- Added 'Plugin Loader' to Utilities;")
 	print("- Added 'Projectile Prediction' to Aimbot;")
+	print("- Added 'Line of Sight Check' to Aimbot;")
 	print("- Added 'Emote Resolver' to Resolver;")
 	print("- Added 'Panic Mode' & NPC targeting to Aimbot and Triggerbot;")
 	print("- Added 'Priority List' to Miscellaneous;")
@@ -1320,6 +1323,7 @@ local function Changelog()
 	print("- Added 'Use Spam' to Miscellaneous;")
 	print("- Added 'Fake Crouch' to Movement;")
 	print("- Added 'Enable Spams' to Chat;")
+	print("- Added 'Rainbow' viewmodels to Viewmodel;")
 	print("- Added 'Random' to Emotes;")
 	print("- Added 'Murder Taunts' to Taunting;")
 	print("- Added 'Velocity' to Visuals;")
@@ -1328,19 +1332,20 @@ local function Changelog()
 	print("- Added 'Bystander Name' to Visuals;")
 	print("- Added 'NPCs' to Visuals;")
 	print("- Added more music to Sounds;")
-	print("- Renamed 'Hack vs. Hack' tab;")
+	print("- Reworked 'Auto Wallbang' from Aimbot;")
 	print("- Reworked 'Ignores' from Aim Priorities;")
 	print("- Reworked 'Max Player Health' from Aim Priorities;")
 	print("- Reworked 'Resolver' from Hack vs. Hack;")
 	print("- Reworked 'Radar', 'Spectators' and 'Status' from Visuals;")
-	print("- Reworked user visibility of IdiotBox developers on servers;")
+	print("- Reworked 'Free Roaming' from Miscellaneous;")
+	print("- Renamed 'Hack vs. Hack' tab;")
 	print("- Removed 'Shoutout' from Chat Spam;")
 	print("- Removed 'Drop Money' from Chat Spam;")
 	print("- Removed 'Screengrab Notifications' from Miscellaneous;")
 	print("- Changed the default menu colors, menu size and others;")
 	print("- Changed the config menu;")
 	print("- Changed the entity menu;")
-	print("- Changed the changelog;")
+	print("- Changed the changelog.")
 	print("\n\n===========================================================")
 	timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Printed changelog to console!") end)
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
@@ -2802,7 +2807,7 @@ hook.Add("HUDShouldDraw", "Hook4", function(name)
 end)
 	
 local function TraitorFinder()
-	for k, v in pairs(ents.FindByClass("weapon_ttt_c4")) do
+	for k, v in pairs(ents.FindByClass("weapon_ttt_*")) do
 	local pos = em.GetPos(v) + Vector(1, 0, - 6)
 	local pos2 = pos + Vector(0, 0, 70)
 	local pos = vm.ToScreen(pos)
@@ -2812,103 +2817,7 @@ local function TraitorFinder()
 	local h = h /  1.8
 	local Ent = v
 	local Dist = math.floor(Ent:GetPos():Distance(me:GetShootPos()) / 40)
-	draw.DrawText("Traitor C4", "MiscFont", pos.x + w / 50, pos.y + h  / 11, Color(255, 0, 100), 1)
-	end
-	for k, v in pairs(ents.FindByClass("weapon_ttt_knife")) do
-	local pos = em.GetPos(v) + Vector(1, 0, - 6)
-	local pos2 = pos + Vector(0, 0, 70)
-	local pos = vm.ToScreen(pos)
-	local pos2 = vm.ToScreen(pos2)
-	local h = pos.y - pos2.y
-	local w = h / 1.3
-	local h = h /  1.8
-	local Ent = v
-	local Dist = math.floor(Ent:GetPos():Distance(me:GetShootPos()) / 40)
-	draw.DrawText("Traitor Knife", "MiscFont", pos.x + w / 50, pos.y + h  / 11, Color(255, 0, 100), 1)
-	end
-	for k, v in pairs(ents.FindByClass("weapon_ttt_phammer")) do
-	local pos = em.GetPos(v) + Vector(1, 0, - 6)
-	local pos2 = pos + Vector(0, 0, 70)
-	local pos = vm.ToScreen(pos)
-	local pos2 = vm.ToScreen(pos2)
-	local h = pos.y - pos2.y
-	local w = h / 1.3
-	local h = h /  1.8
-	local Ent = v
-	local Dist = math.floor(Ent:GetPos():Distance(me:GetShootPos()) / 40)
-	draw.DrawText("Traitor Poltergeist", "MiscFont", pos.x + w / 50, pos.y + h  / 11, Color(255, 0, 100), 1)
-	end
-	for k, v in pairs(ents.FindByClass("weapon_ttt_sipistol")) do
-	local pos = em.GetPos(v) + Vector(1, 0, - 6)
-	local pos2 = pos + Vector(0, 0, 70)
-	local pos = vm.ToScreen(pos)
-	local pos2 = vm.ToScreen(pos2)
-	local h = pos.y - pos2.y
-	local w = h / 1.3
-	local h = h /  1.8
-	local Ent = v
-	local Dist = math.floor(Ent:GetPos():Distance(me:GetShootPos()) / 40)
-	draw.DrawText("Traitor Silenced Pistol", "MiscFont", pos.x + w / 50, pos.y + h  / 11, Color(255, 0, 100), 1)
-	end
-	for k, v in pairs(ents.FindByClass("weapon_ttt_pain_station")) do
-	local pos = em.GetPos(v) + Vector(1, 0, - 6)
-	local pos2 = pos + Vector(0, 0, 70)
-	local pos = vm.ToScreen(pos)
-	local pos2 = vm.ToScreen(pos2)
-	local h = pos.y - pos2.y
-	local w = h / 1.3
-	local h = h /  1.8
-	local Ent = v
-	local Dist = math.floor(Ent:GetPos():Distance(me:GetShootPos()) / 40)
-	draw.DrawText("Traitor Pain Station", "MiscFont", pos.x + w / 50, pos.y + h  / 11, Color(255, 0, 100), 1)
-	end
-	for k, v in pairs(ents.FindByClass("weapon_ttt_flaregun")) do
-	local pos = em.GetPos(v) + Vector(1, 0, - 6)
-	local pos2 = pos + Vector(0, 0, 70)
-	local pos = vm.ToScreen(pos)
-	local pos2 = vm.ToScreen(pos2)
-	local h = pos.y - pos2.y
-	local w = h / 1.3
-	local h = h /  1.8
-	local Ent = v
-	local Dist = math.floor(Ent:GetPos():Distance(me:GetShootPos()) / 40)
-	draw.DrawText("Traitor Flaregun", "MiscFont", pos.x + w / 50, pos.y + h  / 11, Color(255, 0, 100), 1)
-	end
-	for k, v in pairs(ents.FindByClass("weapon_ttt_push")) do
-	local pos = em.GetPos(v) + Vector(1, 0, - 6)
-	local pos2 = pos + Vector(0, 0, 70)
-	local pos = vm.ToScreen(pos)
-	local pos2 = vm.ToScreen(pos2)
-	local h = pos.y - pos2.y
-	local w = h / 1.3
-	local h = h /  1.8
-	local Ent = v
-	local Dist = math.floor(Ent:GetPos():Distance(me:GetShootPos()) / 40)
-	draw.DrawText("Traitor Newton Launcher", "MiscFont", pos.x + w / 50, pos.y + h  / 11, Color(255, 0, 100), 1)
-	end
-	for k, v in pairs(ents.FindByClass("weapon_ttt_radio")) do
-	local pos = em.GetPos(v) + Vector(1, 0, - 6)
-	local pos2 = pos + Vector(0, 0, 70)
-	local pos = vm.ToScreen(pos)
-	local pos2 = vm.ToScreen(pos2)
-	local h = pos.y - pos2.y
-	local w = h / 1.3
-	local h = h /  1.8
-	local Ent = v
-	local Dist = math.floor(Ent:GetPos():Distance(me:GetShootPos()) / 40)
-	draw.DrawText("Traitor Radio", "MiscFont", pos.x + w / 50, pos.y + h  / 11, Color(255, 0, 100), 1)
-	end
-	for k, v in pairs(ents.FindByClass("weapon_ttt_teleport")) do
-	local pos = em.GetPos(v) + Vector(1, 0, - 6)
-	local pos2 = pos + Vector(0, 0, 70)
-	local pos = vm.ToScreen(pos)
-	local pos2 = vm.ToScreen(pos2)
-	local h = pos.y - pos2.y
-	local w = h / 1.3
-	local h = h /  1.8
-	local Ent = v
-	local Dist = math.floor(Ent:GetPos():Distance(me:GetShootPos()) / 40)
-	draw.DrawText("Traitor Teleport", "MiscFont", pos.x + w / 50, pos.y + h  / 11, Color(255, 0, 100), 1)
+	draw.DrawText("Traitor Weapon", "MiscFont", pos.x + w / 50, pos.y + h  / 11, Color(255, 0, 100), 1)
 	end
 	for k, v in pairs(ents.FindByClass("(Disguise)")) do
 	local pos = em.GetPos(v) + Vector(1, 0, - 6)
@@ -3833,15 +3742,27 @@ end)
 
 hook.Add("PreDrawViewModel", "Hook10", function()
 	if (gBool("Miscellaneous", "Point of View", "Thirdperson")) then return end
+	local rainbow = {}
+    rainbow.r = math.sin(CurTime() * 4) * 127 + 128
+    rainbow.g = math.sin(CurTime() * 4 + 2) * 127 + 128
+    rainbow.b = math.sin(CurTime() * 4 + 4) * 127 + 128
 	local WepMat1 = Material("models/wireframe")
-	if (gBool("Miscellaneous", "Viewmodel", "Viewmodel Wireframe")) then
+	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Wireframe:") == "Normal") then
 	render.MaterialOverride(WepMat1)
 	render.SetColorModulation(viewmodelcol.r / 255, viewmodelcol.g / 255, viewmodelcol.b / 255)
 	end
+	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Wireframe:") == "Rainbow") then
+	render.MaterialOverride(WepMat1)
+	render.SetColorModulation(rainbow.r / 255, rainbow.g / 255, rainbow.b / 255)
+	end
 	local WepMat2 = Material("models/debug/debugwhite")
-	if (gBool("Miscellaneous", "Viewmodel", "Viewmodel Chams")) then
+	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Chams:") == "Normal") then
 	render.MaterialOverride(WepMat2)
 	render.SetColorModulation(viewmodelcol.r / 255, viewmodelcol.g / 255, viewmodelcol.b / 255)
+	end
+	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Chams:") == "Rainbow") then
+	render.MaterialOverride(WepMat2)
+	render.SetColorModulation(rainbow.r / 255, rainbow.g / 255, rainbow.b / 255)
 	end
 	if (gBool("Miscellaneous", "Viewmodel", "No Viewmodel") or gBool("Miscellaneous", "Point of View", "Thirdperson")) then
 	return true
