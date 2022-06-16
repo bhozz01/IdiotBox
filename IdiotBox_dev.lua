@@ -116,7 +116,8 @@ local options = {
 					{"Target Lock", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Aim Priorities", 376, 20, 347, 485, 218}, 
+					{"Aim Priorities", 376, 20, 347, 515, 218}, 
+					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Projectile Prediction", "Checkbox", false, 78}, 
 					{"Disable in Noclip", "Checkbox", false, 78}, 
 					{"Hitbox:", "Selection", "Head", {"Head", "Body"}, 92}, 
@@ -165,7 +166,8 @@ local options = {
 					{"Fire Delay:", "Slider", 0, 100, 92}, 
                 }, 
 				{
-					{"Aim Priorities", 736, 20, 347, 324, 218}, 
+					{"Aim Priorities", 736, 20, 347, 347, 218}, 
+					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Disable in Noclip", "Checkbox", false, 78}, 
 					{"Hitbox:", "Selection", "Body", {"Head", "Body"}, 92}, 
 					{"Players:", "Checkbox", true, 78}, -- Enabled by default
@@ -204,9 +206,9 @@ local options = {
 				{
 					{"Resolver", 736, 20, 347, 150, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
+					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"X-Axis:", "Selection", "Off", {"Off", "Down", "Up", "Center", "Invert", "Random", "Auto"}, 92}, 
 					{"Y-Axis:", "Selection", "Off", {"Off", "Left", "Right", "Invert", "Random", "Auto"}, 92}, 
-					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Emote Resolver", "Checkbox", false, 78}, 
                 }, 
 				{
@@ -218,7 +220,7 @@ local options = {
 		}, 
         ["Visuals"] = {
                 {
-					{"Wallhack", 16, 20, 347, 573, 218}, 
+					{"Wallhack", 16, 20, 347, 580, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Box:", "Selection", "Off", {"Off", "2D Box", "3D Box", "Edged Box"}, 92}, 
 					{"Chams", "Checkbox", false, 78}, 
@@ -243,7 +245,9 @@ local options = {
 					{"DarkRP Money", "Checkbox", false, 78}, 
                 }, 
                 {
-					{"Miscellaneous", 736, 20, 347, 532, 218}, 
+					{"Miscellaneous", 736, 20, 347, 580, 218}, 
+					{"Priority Targets Only", "Checkbox", false, 78}, 
+					{"Hide Ignored Targets", "Checkbox", false, 78}, 
 					{"Show Enemies Only", "Checkbox", false, 78}, 
 					{"Show Spectators", "Checkbox", false, 78}, 
 					{"Team Colors", "Checkbox", false, 78}, 
@@ -328,24 +332,23 @@ local options = {
 					{"Miscellaneous", 16, 20, 347, 155, 218}, 
 					{"Flash Spam", "Checkbox", false, 78}, 
 					{"Use Spam", "Checkbox", false, 78}, 
-					{"Name Stealer:", "Selection", "Off", {"Off", "Normal", "DarkRP Name"}, 92}, 
+					{"Name Stealer:", "Selection", "Off", {"Off", "Normal", "Priority Targets", "DarkRP Name"}, 92}, 
 					{"Emotes:", "Selection", "Off", {"Off", "Dance", "Sexy", "Wave", "Robot", "Bow", "Cheer", "Laugh", "Zombie", "Agree", "Disagree", "Forward", "Back", "Salute", "Pose", "Halt", "Group", "Random"}, 92}, 
 					{"Murder Taunts:", "Selection", "Off", {"Off", "Funny", "Help", "Scream", "Morose", "Random"}, 92}, 
                 }, 
 				{
-					{"Priority List", 16, 188, 347, 103, 218}, 
+					{"Priority List", 16, 188, 347, 83, 218}, 
 					{"Enabled", "Checkbox", true, 78}, -- Enabled by default
 					{"List Spacing:", "Slider", 0, 10, 92}, 
-					{"Priority Targets Only", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Sounds", 16, 305, 347, 103, 218}, 
+					{"Sounds", 16, 285, 347, 103, 218}, 
 					{"Turn on Music", "Checkbox", true, 78}, -- Enabled by default
 					{"Reset Sounds", "Checkbox", false, 78}, 
 					{"Hitsounds", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Textures", 16, 423, 347, 130, 218}, 
+					{"Textures", 16, 403, 347, 130, 218}, 
 					{"Transparent Walls", "Checkbox", false, 78}, 
 					{"No Sky", "Checkbox", false, 78}, 
 					{"Light Mode", "Checkbox", false, 78}, 
@@ -382,8 +385,9 @@ local options = {
 					{"Fake Crouch", "Checkbox", false, 78}, 
                 }, 
 				{
-                	{"Chat", 736, 215, 347, 125, 218}, 
+                	{"Chat", 736, 215, 347, 145, 218}, 
 					{"Log Kills in Chat", "Checkbox", false, 78}, 
+					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Chat Spam:", "Selection", "Off", {"Off", "Advertising 1", "Advertising 2", "Advertising 3", "Nazi 1", "Nazi 2", "Nazi 3", "Arabic Spam", "Hebrew Spam", "Offensive Spam", "Insult Spam", "Message Spam", "N-Word Spam", "N-WORD SPAM", "'H' Spam", "Clear Chat", "OOC Clear Chat"}, 92}, 
 					{"Kill Spam:", "Selection", "Off", {"Off", "Normal", "Insult", "Salty", "HvH", "IdiotBox HvH", "Votekick", "Voteban", "Killstreak", }, 92}, 
 					{"Reply Spam:", "Selection", "Off", {"Off", "shut up", "ok", "who", "nobody cares", "where", "lol stop spam...", "what", "yea", "lol", "english please", "lmao", "shit", "fuck", "Random", "Disconnect Spam", "Cheater Callout", "Copy Messages"}, 92}, 
@@ -759,6 +763,8 @@ idiot.uucka 	 = function(me) return me:SteamID64() == "76561198337685853" end --
 idiot.cal1nxd  	 = function(me) return me:SteamID64() == "76561198342806825" end -- Created #TEAMNIGGER with me and the dude above, also second real-life friend of mine to get IdiotBox;
 idiot.russian  	 = function(me) return me:SteamID64() == "76561198867917491" end -- He suggested many of the IdiotBox v6.7 features and helped me make and test them;
 idiot.nigga	 	 = function(me) return me:SteamID64() == "76561198163891865" end -- Helped me with a few smaller features;
+idiot.paradox	 = function(me) return me:SteamID64() == "76561198347829667" end -- Helped me during my braindead paster moments;
+idiot.scott		 = function(me) return me:SteamID64() == "76561198178555742" end -- IdiotBox veteran, and I can't thank this man enough;
 idiot.drygo   	 = function(me) return me:SteamID64() == "76561198171361607" end -- IdiotBox veteran, though I lost contact with him, unfortunately;
 idiot.persix	 = function(me) return me:SteamID64() == "76561198198405171" end -- IdiotBox veteran, but I am still in contact with him, fortunately;
 idiot.ohhstyle 	 = function(me) return me:SteamID64() == "76561197969016117" end -- IdiotBox veteran, the first ever person to make a video on IdiotBox but I lost contact with him as well;
@@ -773,15 +779,15 @@ idiot.johnrg	 = function(me) return me:SteamID64() == "76561198212367369" end --
 
 local function DeveloperCheck()
 	for k, v in pairs(player.GetAll()) do
-	if (idiot.phizz(v) or idiot.phizz2(v)) and not v.Confirmed then
+	if idiot.phizz(v) or idiot.phizz2(v) and not v.Confirmed then
 	if idiot.phizz(me) or idiot.phizz2(me) then continue end
 		timer.Create("ChatPrint", 11.4, 1, function() MsgRGB(6.9, "The creator of IdiotBox, "..v:Nick()..", is on the server!") end)
 		timer.Create("PlaySound", 11.4, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		RunConsoleCommand("say", "I'm here to chew ass and kick bubblegum, and I'm all out of ass!")
 		v.Confirmed = true
 		end
-	if (idiot.uucka(v) or idiot.cal1nxd(v) or idiot.russian(v) or idiot.nigga(v) or idiot.drygo(v) or idiot.persix(v) or idiot.ohhstyle(v) or idiot.tryhard(v) or idiot.derpos(v) or idiot.sdunken(v) or idiot.zergo(v) or idiot.mrsquid(v) or idiot.johnrg(v)) and not v.Confirmed then
-	if idiot.uucka(me) or idiot.cal1nxd(me) or idiot.russian(me) or idiot.nigga(me) or idiot.drygo(me) or idiot.persix(me) or idiot.ohhstyle(me) or idiot.tryhard(me) or idiot.derpos(me) or idiot.sdunken(me) or idiot.zergo(me) or idiot.mrsquid(me) or idiot.johnrg(me) then continue end
+	if idiot.uucka(v) or idiot.cal1nxd(v) or idiot.russian(v) or idiot.nigga(v) or idiot.paradox(v) or idiot.scott(v) or idiot.drygo(v) or idiot.persix(v) or idiot.ohhstyle(v) or idiot.tryhard(v) or idiot.derpos(v) or idiot.sdunken(v) or idiot.zergo(v) or idiot.mrsquid(v) or idiot.johnrg(v) and not v.Confirmed then
+	if idiot.uucka(me) or idiot.cal1nxd(me) or idiot.russian(me) or idiot.nigga(me) or idiot.paradox(me) or idiot.scott(me) or idiot.drygo(me) or idiot.persix(me) or idiot.ohhstyle(me) or idiot.tryhard(me) or idiot.derpos(me) or idiot.sdunken(me) or idiot.zergo(me) or idiot.mrsquid(me) or idiot.johnrg(me) then continue end
 		timer.Create("ChatPrint", 11.4, 1, function() MsgRGB(6.9, "A developer of IdiotBox, "..v:Nick()..", is on the server!") end)
 		timer.Create("PlaySound", 11.4, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		RunConsoleCommand("say", "I'm here to chew ass and kick bubblegum, and I'm all out of ass!")
@@ -1957,8 +1963,8 @@ local function KillSpam(data)
 	if not killer:IsValid() or not killed:IsValid() or not killer:IsPlayer() or not killed:IsPlayer() then return end
 	if gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, killed:UniqueID()) then return end
 	if gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, killer:UniqueID()) then return end
-	if gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Priority List", "Priority Targets Only") and (killed ~= me and killer == me and not table.HasValue(priority_list, killed:UniqueID())) then return end
-	if gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Priority List", "Priority Targets Only") and (killed == me and killer ~= me and not table.HasValue(priority_list, killer:UniqueID())) then return end
+	if gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and (killed ~= me and killer == me and not table.HasValue(priority_list, killed:UniqueID())) then return end
+	if gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and (killed == me and killer ~= me and not table.HasValue(priority_list, killer:UniqueID())) then return end
 
 local playerphrases = {
 	"Owned", 
@@ -3223,11 +3229,11 @@ local siegheilviktoria = {
 	elseif (gOption("Miscellaneous", "Chat", "Chat Spam:") == "Insult Spam") then
 	local randply = player.GetAll()[math.random(#player.GetAll())]
 	local friendstatus = pm.GetFriendStatus(randply)
-	if (!randply:IsValid() || randply == me || (friendstatus == "friend") || (gBool("Miscellaneous", "Priority List", "Enabled") && table.HasValue(ignore_list, randply:UniqueID())) || (gBool("Miscellaneous", "Priority List", "Enabled") && gBool("Miscellaneous", "Priority List", "Priority Targets Only") && !table.HasValue(priority_list, randply:UniqueID()))) then return end
+	if (!randply:IsValid() || randply == me || (friendstatus == "friend") || (gBool("Miscellaneous", "Priority List", "Enabled") && table.HasValue(ignore_list, randply:UniqueID())) || (gBool("Miscellaneous", "Priority List", "Enabled") && gBool("Miscellaneous", "Chat", "Priority Targets Only") && !table.HasValue(priority_list, randply:UniqueID()))) then return end
 		RunConsoleCommand("say", randply:Name()..insultspam[math.random(#insultspam)])
 	elseif (gOption("Miscellaneous", "Chat", "Chat Spam:") == "Message Spam") then
 		local v = player.GetAll()[math.random(#player.GetAll())]
-		if (gBool("Miscellaneous", "Priority List", "Enabled") && table.HasValue(ignore_list, v:UniqueID())) || (gBool("Miscellaneous", "Priority List", "Enabled") && gBool("Miscellaneous", "Priority List", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then return end
+		if (gBool("Miscellaneous", "Priority List", "Enabled") && table.HasValue(ignore_list, v:UniqueID())) || (gBool("Miscellaneous", "Priority List", "Enabled") && gBool("Miscellaneous", "Chat", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then return end
 		if (v != me && v:GetFriendStatus() != "friend" && !pm.IsAdmin(v)) then
 			LocalPlayer():ConCommand("ulx psay \""..v:Nick().."\" "..messagespam[math.random(#messagespam)])
 		end
@@ -3524,12 +3530,12 @@ local function Think()
 	if (gBool("Miscellaneous", "Miscellaneous", "Use Spam") and input.IsKeyDown(KEY_E)) then
 		RunConsoleCommand("idiot_usespam")
 	end
-	if gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Normal" then
+	if gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Normal" or gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Priority Targets" then
 	local randply = player.GetAll()[math.random(#player.GetAll())]
 	local friendstatus = pm.GetFriendStatus(randply)
 	hook.Remove("Think", "Hook6")
 	hook.Add("Think", "Hook5", function()
-		if (!randply:IsValid() || randply == me || friendstatus == "friend" || (gBool("Miscellaneous", "Priority List", "Enabled") && table.HasValue(ignore_list, randply:UniqueID())) || (gBool("Miscellaneous", "Priority List", "Enabled") && gBool("Miscellaneous", "Priority List", "Priority Targets Only") && !table.HasValue(priority_list, randply:UniqueID()))) then return end
+	if (!randply:IsValid() || randply == me || friendstatus == "friend" || (gBool("Miscellaneous", "Priority List", "Enabled") && table.HasValue(ignore_list, randply:UniqueID())) || (gBool("Miscellaneous", "Priority List", "Enabled") && gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Priority Targets" && !table.HasValue(priority_list, randply:UniqueID()))) then return end
 		IdiotBox.ChangeName(randply:Name().." ")
 	end)
 	elseif !gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "DarkRP Name" then
@@ -3819,6 +3825,9 @@ local function Visuals(v)
 	local teamcol = idiot.dev(v) && HSVToColor(RealTime() * 45 % 360, 1, 1) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
 	local teamocol = gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
 	local hh = 0
+	if (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
+		return false
+	end
 	if gOption("Visuals", "Wallhack", "Box:") == "2D Box" then
 		local friendstatus = pm.GetFriendStatus(v)
 		if (friendstatus == "friend") && !idiot.dev(v) then
@@ -3937,7 +3946,7 @@ local function Visuals(v)
 			if idiot.phizz(v) or idiot.phizz2(v) then
 				draw.SimpleText("IdiotBox Creator", "VisualsFont", pos.x, pos.y - h - 26 - 13, HSVToColor(RealTime() * 45 % 360, 1, 1), 1, 1)
 			end
-			if idiot.uucka(v) or idiot.cal1nxd(v) or idiot.russian(v) or idiot.nigga(v) or idiot.drygo(v) or idiot.persix(v) or idiot.ohhstyle(v) or idiot.tryhard(v) or idiot.derpos(v) or idiot.sdunken(v) or idiot.zergo(v) or idiot.mrsquid(v) or idiot.johnrg(v) then
+			if idiot.uucka(v) or idiot.cal1nxd(v) or idiot.russian(v) or idiot.nigga(v) or idiot.paradox(v) or idiot.scott(v) or idiot.drygo(v) or idiot.persix(v) or idiot.ohhstyle(v) or idiot.tryhard(v) or idiot.derpos(v) or idiot.sdunken(v) or idiot.zergo(v) or idiot.mrsquid(v) or idiot.johnrg(v) then
 				draw.SimpleText("IdiotBox Developer", "VisualsFont", pos.x, pos.y - h - 26 - 13, HSVToColor(RealTime() * 45 % 360, 1, 1), 1, 1)
 			end
 		end
@@ -3945,7 +3954,7 @@ local function Visuals(v)
 			if idiot.phizz(v) or idiot.phizz2(v) then
 				draw.SimpleText("IdiotBox Creator", "VisualsFont", pos.x, pos.y - h - 13 - 13, HSVToColor(RealTime() * 45 % 360, 1, 1), 1, 1)
 			end
-			if idiot.uucka(v) or idiot.cal1nxd(v) or idiot.russian(v) or idiot.nigga(v) or idiot.drygo(v) or idiot.persix(v) or idiot.ohhstyle(v) or idiot.tryhard(v) or idiot.derpos(v) or idiot.sdunken(v) or idiot.zergo(v) or idiot.mrsquid(v) or idiot.johnrg(v) then
+			if idiot.uucka(v) or idiot.cal1nxd(v) or idiot.russian(v) or idiot.nigga(v) or idiot.paradox(v) or idiot.scott(v) or idiot.drygo(v) or idiot.persix(v) or idiot.ohhstyle(v) or idiot.tryhard(v) or idiot.derpos(v) or idiot.sdunken(v) or idiot.zergo(v) or idiot.mrsquid(v) or idiot.johnrg(v) then
 				draw.SimpleText("IdiotBox Developer", "VisualsFont", pos.x, pos.y - h - 13 - 13, HSVToColor(RealTime() * 45 % 360, 1, 1), 1, 1)
 			end
 		end
@@ -4431,7 +4440,7 @@ local function Valid(v)
 	if !gBool("Aimbot", "Aim Priorities", "Spectators:") then
 		if v:Team() == TEAM_SPECTATOR then return false end
 	end
-	if (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Priority List", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
+	if (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Aimbot", "Aim Priorities", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
 		return false
 	end
 	end
@@ -4584,57 +4593,57 @@ local function PredictPos(aimtarget)
 	if gBool("Aimbot", "Aim Priorities", "Projectile Prediction") then
 		if string.find(string.lower(wep:GetPrintName()), "crossbow") then
 			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 1100 then
-				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 1600) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (AimPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 1600) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			else
-				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 3215) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (AimPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 3215) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			end
 		elseif string.find(string.lower(wep:GetClass()), "m9k_rpg7") or string.find(string.lower(me:GetActiveWeapon():GetClass()), "m9k_m202") then
 			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 2600 then
-				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4500) + me:Ping() / 950) - Vector(0, 0, 25) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (AimPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4500) + me:Ping() / 950) - Vector(0, 0, 25) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 4000 then
-				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (AimPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			else
-				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 90) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (AimPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 90) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			end
 		elseif string.find(string.lower(wep:GetClass()), "m9k_ex41") or string.find(string.lower(wep:GetClass()), "m9k_m79gl") then
 			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 1100 then
-				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2550) + me:Ping() / 950) - Vector(0, 0, 25) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (AimPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2550) + me:Ping() / 950) - Vector(0, 0, 25) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 4000 then
-				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2130) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 35) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (AimPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2130) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 35) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 7000 then
-				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2130) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 13) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (AimPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2130) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 13) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			else
-				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2670) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 6) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (AimPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2670) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 6) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			end
 		elseif string.find(string.lower(wep:GetClass()), "m9k_matador") then
 			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 2600 then
-				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 6500) + me:Ping() / 950) - Vector(0, 0, 25) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (AimPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 6500) + me:Ping() / 950) - Vector(0, 0, 25) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 4000 then
-				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 6500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (AimPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 6500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			else
-				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 6500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 90) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (AimPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 6500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 90) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			end
 		elseif string.find(string.lower(wep:GetClass()), "m9k_milkormgl") then
 			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 1100 then
-				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2500) + me:Ping() / 950) - Vector(0, 0, 25) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (AimPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2500) + me:Ping() / 950) - Vector(0, 0, 25) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 4000 then
-				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2000) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 43) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (AimPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2000) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 43) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 7000 then
-				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2460) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 38) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (AimPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2460) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 38) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			else
-				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2580) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 17.5) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (AimPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2580) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 17.5) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			end
 		elseif string.find(string.lower(wep:GetClass()), "m9k_m61_frag") then
-			return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 650) + me:Ping() / 950) - Vector(0, 0, 225) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4) - em.GetVelocity(me) / 50) - em.EyePos(me)
+			return (AimPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 650) + me:Ping() / 950) - Vector(0, 0, 225) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4) - em.GetVelocity(me) / 50) - em.EyePos(me)
 		elseif string.find(string.lower(wep:GetClass()), "m9k_harpoon") then
 			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 1200 then
-				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2300) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 20) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (AimPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2300) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 20) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 1750 then
-				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2000) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 8) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (AimPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2000) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 8) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 2000 then
-				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 1500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 5) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (AimPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 1500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 5) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			else
-				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 900) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 3) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (AimPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 900) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 3) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			end
 		else
 			return AimPos(aimtarget) - em.EyePos(me)
@@ -4763,7 +4772,7 @@ local function Triggerbot(pCmd)
 	if !gBool("Triggerbot", "Aim Priorities", "Spectators:") then
 	if pm.Team(v) == TEAM_SPECTATOR then return false end
 	end
-	if (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Priority List", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
+	if (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Triggerbot", "Aim Priorities", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
 	return false
 	end
 	end
@@ -5651,7 +5660,7 @@ local randomresponse = {
 }
 
 hook.Add("OnPlayerChat", "Hook24", function(v, text, team)
-	if v == me or not v:IsValid() or (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Priority List", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
+	if v == me or not v:IsValid() or (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
 		return false
 	end
 	if gOption("Miscellaneous", "Chat", "Reply Spam:") == "Cheater Callout" and player ~= me and pm.GetFriendStatus(v) ~= "friend" then
