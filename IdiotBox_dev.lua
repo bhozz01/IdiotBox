@@ -1844,7 +1844,7 @@ local function Menu()
 	frame:ShowCloseButton(false)
 	if (gBool("Miscellaneous", "Sounds", "Turn on Music")) then
 		RunConsoleCommand("stopsound")
-	idiot.sound.PlayURL(menusongs[math.random(#menusongs)], "mono", function(station)
+		idiot.sound.PlayURL(menusongs[math.random(#menusongs)], "mono", function(station)
 		if (idiot.IsValid(station)) then
 			station:Play()
 			end
@@ -2153,7 +2153,7 @@ local owned = {
 	"try not to die next time, "..killed:Nick().."!", 
 	"!votekick "..killed:Nick().." "..reason[math.random(#reason)], 
 	"!voteban "..killed:Nick().." 9999 "..reason[math.random(#reason)], 
-	"!vote "..killed:Nick().."..."..randomoption[math.random(#randomoption)].." "..randomoption[math.random(#randomoption)].." "..randomoption[math.random(#randomoption)], 
+	"!vote "..killed:Nick().." "..randomoption[math.random(#randomoption)].." "..randomoption[math.random(#randomoption)].." "..randomoption[math.random(#randomoption)], 
 }
 
 local votekick = {
