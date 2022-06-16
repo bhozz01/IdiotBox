@@ -1692,7 +1692,7 @@ local function DrawSubSub(self, w, h, k, var)
 	local opt, posx, posy, sizex, sizey, dist = var[1][1], var[1][2], var[1][3], var[1][4], var[1][5], var[1][6]
 	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:"))
 	local startpos = 61 + posy
-	surface.SetTextColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:"))
+	surface.SetTextColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "T Opacity:"))
 	surface.SetFont("MenuFont")
 	local tw, th = surface.GetTextSize(opt)
 	surface.SetDrawColor(bgmenucol.r + 10, bgmenucol.g + 10, bgmenucol.b + 10, gInt("Settings", "Others", "BG Opacity:"));
