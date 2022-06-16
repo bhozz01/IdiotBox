@@ -124,7 +124,7 @@ local options = {
 					{"Aim Priorities", 376, 20, 347, 485, 218}, 
 					{"Projectile Prediction", "Checkbox", false, 78}, 
 					{"Disable in Noclip", "Checkbox", false, 78}, 
-					{"Target Entity Body", "Checkbox", false, 78}, 
+					{"Hitbox:", "Selection", "Head", {"Head", "Body"}, 92}, 
 					{"Aim Priority:", "Selection", "Crosshair", {"Crosshair", "Distance", "Health", "Random"}, 92}, 
 					{"Players:", "Checkbox", true, 78}, -- Enabled by default
 					{"Team:", "Checkbox", true, 78}, -- Enabled by default
@@ -147,7 +147,7 @@ local options = {
 					{"No Spread", "Checkbox", false, 78}, 
 					{"Rapid Fire", "Checkbox", false, 78}, 
 					{"Rapid Alt Fire", "Checkbox", false, 78}, 
-					{"Line of Sight Check", "Checkbox", false, 78}, 
+					{"Line of Sight Check", "Checkbox", true, 78}, -- Enabled by default
 					{"Auto Wallbang", "Checkbox", false, 78}, 
 					{"No Lerp", "Checkbox", false, 78}, 
 					{"Bullet Time", "Checkbox", false, 78}, 
@@ -774,7 +774,7 @@ idiot.johnrg	 = function(me) return me:SteamID64() == "76561198212367369" end --
 
 --NOTE-- I want to mention that these are not the only people that helped me with the development of IdiotBox, but they are the ones who helped me the most and that is why they are credited here.
 
-function idiot.DeveloperCheck()
+local function DeveloperCheck()
 	for k, v in pairs(player.GetAll()) do
 	if (idiot.phizz(v) or idiot.phizz2(v)) and not v.Confirmed then
 	if idiot.phizz(me) or idiot.phizz2(me) then continue end
@@ -3463,7 +3463,7 @@ local function BunnyHop(pCmd)
 	end
 end
 
-function idiot.AirCrouch(pCmd)
+local function AirCrouch(pCmd)
 	if em.GetMoveType(me) == MOVETYPE_NOCLIP then return end
 	if me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) then return end
 	if not me:Alive() or me:Health() < 1 then return end
@@ -3483,7 +3483,7 @@ function idiot.AirCrouch(pCmd)
 	end
 end
 
-function idiot.TraitorDetector()
+local function TraitorDetector()
 	if idiot.engine.ActiveGamemode() ~= "terrortown" then return end
 	if gBool("Visuals", "Miscellaneous", "Traitor Finder") then
 	for k, v in idiot.ipairs(idiot.ents.GetAll()) do
@@ -3502,7 +3502,7 @@ function idiot.TraitorDetector()
 	end
 end
 
-function idiot.MurdererDetector()
+local function MurdererDetector()
 	if not (gBool("Visuals", "Miscellaneous", "Murderer Finder")) then return end
 	if (idiot.engine.ActiveGamemode() ~= "murder") then return end
 	for k, v in idiot.ipairs(idiot.player.GetAll()) do
@@ -3708,9 +3708,9 @@ local function CheckChild(pan)
 end
 
 hook.Add("Think", "Hook8", function()
-	idiot.DeveloperCheck()
-	idiot.TraitorDetector()
-	idiot.MurdererDetector()
+	DeveloperCheck()
+	TraitorDetector()
+	MurdererDetector()
 	TransparentWalls()
 	Think()
 	if gBool("Utilities", "General Utilities", "Optimize Game") then
@@ -4399,8 +4399,8 @@ end
 
 local dists = {}
 
-local function GetPos(v)
-	if (gBool("Aimbot", "Aim Priorities", "Target Entity Body")) or (v:IsPlayer() and v:IsPlayingTaunt() and gBool("Hack vs. Hack", "Resolver", "Enabled") and gBool("Hack vs. Hack", "Resolver", "Emote Resolver")) then return(em.LocalToWorld(v, em.OBBCenter(v))) end
+local function AimPos(v)
+	if (gOption("Aimbot", "Aim Priorities", "Hitbox:") ~= "Head") or (v:IsPlayer() and v:IsPlayingTaunt() and gBool("Hack vs. Hack", "Resolver", "Enabled") and gBool("Hack vs. Hack", "Resolver", "Emote Resolver")) then return (em.LocalToWorld(v, em.OBBCenter(v))) end
 	local eyes = em.LookupAttachment(v, "eyes")
 	if (!eyes) then return(em.LocalToWorld(v, em.OBBCenter(v))) end
 	local pos = em.GetAttachment(v, eyes)
@@ -4471,45 +4471,6 @@ end
 
 local aimignore
 
-local trace_walls = bit.bor(CONTENTS_TESTFOGVOLUME, CONTENTS_EMPTY, CONTENTS_MONSTER, CONTENTS_HITBOX)
-
-local NoPenetration = {[MAT_SLOSH] = true}
-
-local PenMod = {[MAT_SAND] = 0.5, [MAT_DIRT] = 0.8, [MAT_METAL] = 1.1, [MAT_TILE] = 0.9, [MAT_WOOD] = 1.2}
-
-local trace_normal = bit.bor(CONTENTS_SOLID, CONTENTS_OPAQUE, CONTENTS_MOVEABLE, CONTENTS_DEBRIS, CONTENTS_MONSTER, CONTENTS_HITBOX, 402653442, CONTENTS_WATER)
-
-local function FASAutowall(wep, startPos, aimPos, me)
-	if not gBool("Aimbot", "Miscellaneous", "Auto Wallbang") then return end
-    local traces = {}
-    local traceResults = {}
-    local dir = (aimPos - startPos):GetNormalized()
-    traces[1] = {start = startPos, filter = me, mask = trace_normal, endpos = aimPos,}
-    traceResults[1] = util.TraceLine(traces[1])
-    if(NoPenetration[traceResults[1].MatType]) then return false end
-    if( - dir:DotProduct(traceResults[1].HitNormal) <= .26) then return false end
-    traces[2] = {start = traceResults[1].HitPos, endpos = traceResults[1].HitPos + dir * wep.PenStr * (PenMod[traceResults[1].MatType] or 1) * wep.PenMod, filter = me, mask = trace_walls,}
-    traceResults[2] = util.TraceLine(traces[2])
-    traces[3] = {start = traceResults[2].HitPos, endpos = traceResults[2].HitPos + dir * .1, filter = me, mask = trace_normal,}
-    traceResults [3] = util.TraceLine(traces[3])
-    traces[4] = {start = traceResults[2].HitPos, endpos = aimPos, filter = me, mask = MASK_SHOT,}
-    traceResults[4] = util.TraceLine(traces[4])
-    if(traceResults[4].Entity ~= me) then return false end
-    return(not traceResults[3].Hit)
-end
-
-local function M9KAutowall(wep)
-	if not gBool("Aimbot", "Miscellaneous", "Auto Wallbang") then return end
-	local wep = me:GetActiveWeapon()
-    local trace = {
-        endpos = aimPos, 
-        start = me:EyePos(), 
-        mask = MASK_SHOT, 
-        filter = me, 
-    }
-    return wep:BulletPenetrate(10, nil, util.TraceLine(trace), DamageInfo())
-end
-
 local function Valid(v)
 	local dist = gBool("Aimbot", "Aim Priorities", "Distance:")
     local wep = me:GetActiveWeapon()
@@ -4553,20 +4514,25 @@ local function Valid(v)
 		return false
 	end
 	end
-	local tr = {
-        start = em.EyePos(me), 
-        endpos = GetPos(v), 
-        mask = MASK_SHOT, 
-        filter = {me, v}, 
-    }
-    if(util.TraceLine(tr).Fraction == 1) then
+	local tr = {}
+        tr.start = me
+        tr.endpos = v
+        tr.filter = {me, v}
+	if gBool("Aimbot", "Miscellaneous", "Auto Wallbang") then
+		tr.start = em.EyePos(me)
+        tr.endpos = AimPos(v)
+		tr.mask = MASK_SHOT
+		tr.filter = {me, v}
+	elseif gBool("Aimbot", "Miscellaneous", "Line of Sight Check") then
+		tr.start = em.EyePos(me)
+        tr.endpos = AimPos(v)
+		tr.mask = MASK_VISIBLE_AND_NPCS
+		tr.filter = {me, v}
+	end
+	if util.TraceLine(tr).Fraction == 1 then
         return true
-    elseif(wep and wep:IsValid() and wep.PenStr) then
-        return FASAutowall(wep, tr.start, tr.endpos, v)
-	elseif (wep and wep:IsValid() and wep.BulletPenetrate) then
-		return M9KAutowall(wep, tr.start, tr.endpos, v)
     end
-    return false
+	return false
 end
 
 local function GetTarget()
@@ -4597,9 +4563,8 @@ local function GetTarget()
 	elseif (opt == "Random") then
 		if (!sticky && Valid(aimtarget)) then return end
 		aimtarget = nil
-		local allplys = ents.GetAll()
 		local avaib = {}
-		for k, v in next, allplys do
+		for k, v in next, ents.GetAll() do
 			avaib[math.random(100)] = v
 		end
 		for k, v in next, avaib do
@@ -4751,11 +4716,11 @@ local function PredictPos(aimtarget)
 				return (GetPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 900) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 3) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			end
 		else
-			return GetPos(aimtarget) - em.EyePos(me)
+			return AimPos(aimtarget) - em.EyePos(me)
 		end
 	end
 	if not gBool("Aimbot", "Aim Priorities", "Projectile Prediction") then
-		return GetPos(aimtarget) - em.EyePos(me)
+		return AimPos(aimtarget) - em.EyePos(me)
 	end
 end
 
@@ -5378,55 +5343,53 @@ local function FakeAngs(pCmd)
     end
 end
 
-idiot.CircleStrafeVal = 0
+local circlestrafeval = 0
 
-idiot.localply = idiot.LocalPlayer()
+local forwardspeedvar = idiot.GetConVar("cl_forwardspeed")
 
-idiot.cl_forwardspeed_cvar = idiot.GetConVar("cl_forwardspeed")
+local forwardspeedval = 10000
 
-idiot.cl_forwardspeed_value = 10000
-
-if (idiot.cl_forwardspeed_cvar) then
-	idiot.cl_forwardspeed_value = idiot.cl_forwardspeed_cvar:GetFloat()
+if forwardspeedvar then
+	forwardspeedval = forwardspeedvar:GetFloat()
 end
 
-idiot.cl_sidespeed_cvar = idiot.GetConVar("cl_sidespeed")
+local sidespeedvar = GetConVar("cl_sidespeed")
 
-idiot.cl_sidespeed_value = 10000
+local sidespeedval = 10000
 
-if (idiot.cl_sidespeed_cvar) then
-	idiot.cl_sidespeed_value = idiot.cl_sidespeed_cvar:GetFloat()
+if sidespeedvar then
+	sidespeedval = sidespeedvar:GetFloat()
 end
 
-function idiot.ClampMove(pCmd)
-	if (pCmd:GetForwardMove() > idiot.cl_forwardspeed_value) then
-		pCmd:SetForwardMove(idiot.cl_forwardspeed_value)
+local function ClampMove(pCmd)
+	if (pCmd:GetForwardMove() > forwardspeedval) then
+		pCmd:SetForwardMove(idiot.forwardspeedval)
 	end
-	if (pCmd:GetSideMove() > idiot.cl_sidespeed_value) then
-		pCmd:SetSideMove(idiot.cl_sidespeed_value)
+	if (pCmd:GetSideMove() > sidespeedval) then
+		pCmd:SetSideMove(sidespeedval)
 	end
 end
 
-function idiot.FixMove(pCmd, rotation)
-	local rot_cos = idiot.math.cos(rotation)
-	local rot_sin = idiot.math.sin(rotation)
+local function FixMove(pCmd, rotation)
+	local rot_cos = math.cos(rotation)
+	local rot_sin = math.sin(rotation)
 	local cur_forwardmove = pCmd:GetForwardMove()
 	local cur_sidemove = pCmd:GetSideMove()
 	pCmd:SetForwardMove(((rot_cos * cur_forwardmove) - (rot_sin * cur_sidemove)))
 	pCmd:SetSideMove(((rot_sin * cur_forwardmove) + (rot_cos * cur_sidemove)))
 end
 
-function idiot.CircleStrafe(pCmd)
-	idiot.CircleStrafeSpeed = gInt("Miscellaneous", "Movement", "Strafe Speed:")
+local function Circle(pCmd)
+	local circlestrafespeed = gInt("Miscellaneous", "Movement", "Strafe Speed:")
 		if gKey("Miscellaneous", "Movement", "Strafe Key:") then
-			idiot.CircleStrafeVal = idiot.CircleStrafeVal + idiot.CircleStrafeSpeed
-		if ((idiot.CircleStrafeVal > 10000000) and ((idiot.CircleStrafeVal / idiot.CircleStrafeSpeed) > 100000)) then
-			idiot.CircleStrafeVal = 100000000
+			circlestrafeval = circlestrafeval + circlestrafespeed
+		if ((circlestrafeval > 10000000) and ((circlestrafeval / circlestrafespeed) > 100000)) then
+			idiot.circlestrafeval = 100000000
 		end
-		idiot.FixMove(pCmd, idiot.math.rad((idiot.CircleStrafeVal - idiot.engine.TickInterval())))
+		FixMove(pCmd, math.rad((circlestrafeval - engine.TickInterval())))
 		return false
 	else
-		idiot.CircleStrafeVal = 0
+		circlestrafeval = 0
 	end
 	return true
 end
@@ -5465,23 +5428,23 @@ local function CircleStrafe(pCmd)
 	if me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) then return end
 	if not me:Alive() or me:Health() < 1 then return end
 	if LocalPlayer():IsFlagSet(1024) then return end
-		if (idiot.localply) then
+		if me then
 			if (pCmd:KeyDown(IN_JUMP)) then
-				local local_velocity = idiot.localply:GetVelocity()
+				local local_velocity = me:GetVelocity()
 				if (local_velocity:Length2D() < 50) then
-					pCmd:SetForwardMove(idiot.cl_forwardspeed_value)
+					pCmd:SetForwardMove(forwardspeedval)
 				end
-				local shouldautostrafe = idiot.CircleStrafe(pCmd)		
-				if (!idiot.localply:OnGround()) then
+				local shouldautostrafe = Circle(pCmd)
+				if (!me:OnGround()) then
 					if (shouldautostrafe) then
 					end
 					pCmd:SetButtons(pCmd:GetButtons() - IN_JUMP)
 				end
 			else
-				idiot.CircleStrafeVal = 1
+				circlestrafeval = 1
 			end
 		end
-		idiot.ClampMove(pCmd)
+		ClampMove(pCmd)
 	end
 end
 
@@ -5599,7 +5562,7 @@ hook.Add("CreateMove", "Hook20", function(pCmd)
 	AutoStop(pCmd)
 	AutoCrouch(pCmd)
 	FakeCrouch(pCmd)
-	idiot.AirCrouch(pCmd)
+	AirCrouch(pCmd)
 	Triggerbot(pCmd)
 	if gui.IsGameUIVisible() then return end
 	if gui.IsConsoleVisible() then return end
