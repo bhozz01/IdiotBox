@@ -777,7 +777,7 @@ idiot.johnrg	 = function(me) return me:SteamID64() == "76561198212367369" end --
 
 --NOTE-- I want to mention that these are not the only people that helped me with the development of IdiotBox, but they are the ones who helped me the most and that is why they are credited here.
 
-local function DeveloperCheck()
+function idiot.DeveloperCheck()
 	for k, v in pairs(player.GetAll()) do
 	if idiot.phizz(v) or idiot.phizz2(v) and not v.Confirmed then
 	if idiot.phizz(me) or idiot.phizz2(me) then continue end
@@ -3623,7 +3623,7 @@ local function CheckChild(pan)
 end
 
 hook.Add("Think", "Hook8", function()
-	DeveloperCheck()
+	idiot.DeveloperCheck()
 	TraitorDetector()
 	MurdererDetector()
 	TransparentWalls()
