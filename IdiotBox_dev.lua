@@ -3389,6 +3389,9 @@ local chamsmat2 = CreateMaterial("@", "VertexLitGeneric", {
 local function Chams(v)
 	local col = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetChamsColor(v)
 	local wep = v:GetActiveWeapon()
+	if (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
+		return false
+	end
 	if gOption("Visuals", "Wallhack", "Chams:") == "Playermodel" then
 	if wep:IsValid() then
 	cam.Start3D()
