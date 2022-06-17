@@ -756,7 +756,7 @@ idiot.dickwrap.Predict = nil
 
 idiot.TickCount = 0
 
-idiot.dev		 = function(me) return me:SteamID64() == "76561198087554278" or me:SteamID64() == "76561198285601724" or me:SteamID64() == "76561198087554278" or me:SteamID64() == "76561198285601724" or me:SteamID64() == "76561198212367369" or me:SteamID64() == "76561198079861949" or me:SteamID64() == "76561198111148439" or me:SteamID64() == "76561198385396760" or me:SteamID64() == "76561198260469514" or me:SteamID64() == "76561197969016117" or me:SteamID64() == "76561198198405171" or me:SteamID64() == "76561198171361607" or me:SteamID64() == "76561198337685853" or me:SteamID64() == "76561198342806825" or me:SteamID64() == "76561198867917491" or me:SteamID64() == "76561198163891865" or me:SteamID64() == "76561198099338999" end
+idiot.dev		 = function(me) return me:SteamID64() == "76561198087554278" or me:SteamID64() == "76561198285601724" or me:SteamID64() == "76561198087554278" or or me:SteamID64() == "76561198347829667" or me:SteamID64() == "76561198178555742" or me:SteamID64() == "76561198285601724" or me:SteamID64() == "76561198212367369" or me:SteamID64() == "76561198079861949" or me:SteamID64() == "76561198111148439" or me:SteamID64() == "76561198385396760" or me:SteamID64() == "76561198260469514" or me:SteamID64() == "76561197969016117" or me:SteamID64() == "76561197961075243" or me:SteamID64() == "76561198171361607" or me:SteamID64() == "76561198337685853" or me:SteamID64() == "76561198342806825" or me:SteamID64() == "76561198867917491" or me:SteamID64() == "76561198163891865" or me:SteamID64() == "76561198099338999" end
 idiot.phizz 	 = function(me) return me:SteamID64() == "76561198087554278" end -- Well, me;
 idiot.phizz2 	 = function(me) return me:SteamID64() == "76561198285601724" end -- Again, me but on my alt account;
 idiot.uucka 	 = function(me) return me:SteamID64() == "76561198337685853" end -- The first ever real-life friend of mine to get IdiotBox;
@@ -777,7 +777,7 @@ idiot.johnrg	 = function(me) return me:SteamID64() == "76561198212367369" end --
 
 --NOTE-- I want to mention that these are not the only people that helped me with the development of IdiotBox, but they are the ones who helped me the most and that is why they are credited here.
 
-function idiot.DeveloperCheck()
+local function DeveloperCheck()
 	for k, v in pairs(player.GetAll()) do
 	if idiot.phizz(v) or idiot.phizz2(v) and not v.Confirmed then
 	if idiot.phizz(me) or idiot.phizz2(me) then continue end
@@ -3623,7 +3623,7 @@ local function CheckChild(pan)
 end
 
 hook.Add("Think", "Hook8", function()
-	idiot.DeveloperCheck()
+	DeveloperCheck()
 	TraitorDetector()
 	MurdererDetector()
 	TransparentWalls()
