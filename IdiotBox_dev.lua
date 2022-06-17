@@ -4590,7 +4590,7 @@ local function SmoothAim(ang)
 end
 
 local function PredictPos(aimtarget)
-	local wep = pm.GetActiveWeapon(me)
+	local wep = me:GetActiveWeapon()
 	if gBool("Aimbot", "Aim Priorities", "Projectile Prediction") then
 		if string.find(string.lower(wep:GetPrintName()), "crossbow") then
 			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 1100 then
