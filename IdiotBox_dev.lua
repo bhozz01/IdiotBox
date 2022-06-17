@@ -766,7 +766,7 @@ idiot.nigga	 	 = function(me) return me:SteamID64() == "76561198163891865" end -
 idiot.paradox	 = function(me) return me:SteamID64() == "76561198347829667" end -- Helped me during my braindead paster moments;
 idiot.scott		 = function(me) return me:SteamID64() == "76561198178555742" end -- IdiotBox veteran, and I can't thank this man enough;
 idiot.drygo   	 = function(me) return me:SteamID64() == "76561198171361607" end -- IdiotBox veteran, though I lost contact with him, unfortunately;
-idiot.persix	 = function(me) return me:SteamID64() == "76561198198405171" end -- IdiotBox veteran, but I am still in contact with him, fortunately;
+idiot.persix	 = function(me) return me:SteamID64() == "76561197961075243" end -- IdiotBox veteran, but I am still in contact with him, fortunately;
 idiot.ohhstyle 	 = function(me) return me:SteamID64() == "76561197969016117" end -- IdiotBox veteran, the first ever person to make a video on IdiotBox but I lost contact with him as well;
 idiot.tryhard	 = function(me) return me:SteamID64() == "76561198099338999" end -- IdiotBox veteran, very chill dude that I forgot to credit;
 idiot.derpos	 = function(me) return me:SteamID64() == "76561198260469514" end -- IdiotBox veteran, had lots of fun back in the day;
@@ -1569,9 +1569,9 @@ local function PluginLoader()
 			plugin_list:AddLine(v)
 		end
 	end
-	for k, v in pairs(file.Find("lua/*.lua", "GAME", "nameasc")) do
-		plugin_list:AddLine(v)
-	end
+		for k, v in pairs(file.Find("lua/*.lua", "GAME", "nameasc")) do
+			plugin_list:AddLine(v)
+		end
 	plugin_list.Paint = function(self, w, h)
 		draw.RoundedBox(16, 0, 0, w, h, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:")))
 	end
