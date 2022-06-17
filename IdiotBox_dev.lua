@@ -792,7 +792,6 @@ local function UpdateVar(men, sub, lookup, new)
 end
 
 local folder = "IdiotBox"
-
 local version = "6.7.3"
 
 if not file.IsDir(folder, "DATA") then
