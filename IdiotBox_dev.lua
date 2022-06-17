@@ -220,7 +220,7 @@ local options = {
 		}, 
         ["Visuals"] = {
                 {
-					{"Wallhack", 16, 20, 347, 580, 218}, 
+					{"Wallhack", 16, 20, 347, 550, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Box:", "Selection", "Off", {"Off", "2D Box", "3D Box", "Edged Box"}, 92}, 
 					{"Chams:", "Selection", "Off", {"Off", "Normal", "Playermodel"}, 92}, 
@@ -244,7 +244,7 @@ local options = {
 					{"DarkRP Money", "Checkbox", false, 78}, 
                 }, 
                 {
-					{"Miscellaneous", 736, 20, 347, 580, 218}, 
+					{"Miscellaneous", 736, 20, 347, 585, 218}, 
 					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Hide Ignored Targets", "Checkbox", false, 78}, 
 					{"Show Enemies Only", "Checkbox", false, 78}, 
@@ -973,14 +973,14 @@ local function DrawOptions(self, w, h)
 	for k, v in next, order do
 		local bMouse = MouseInArea(mx + 5 + maxx, my + 31, mx + 5 + maxx + sizeper, my + 31 + 30)
 		if (visible[v]) then
-			local curcol = Color(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:"))
+			local curcol = Color(bordercol.r, bordercol.g, bordercol.b, 255)
 			for i = 0, 0 do
 				surface.SetDrawColor(curcol)
 				curcol.r, curcol.g, curcol.b = curcol.r + 3, curcol.g + 3, curcol.b + 3
 				surface.DrawLine(0.9 + maxx, 60 + i, 0.9 + maxx + sizeper, 60 + i)
 			end
 			elseif (bMouse) then
-			local curcol = Color(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:") - 100)
+			local curcol = Color(bordercol.r, bordercol.g, bordercol.b, 155)
 			for i = 0, 0 do
 				surface.SetDrawColor(curcol)
 				curcol.r, curcol.g, curcol.b = curcol.r + 3, curcol.g + 3, curcol.b + 3
