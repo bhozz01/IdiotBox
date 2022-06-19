@@ -116,7 +116,7 @@ local options = {
 					{"Target Lock", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Aim Priorities", 376, 20, 347, 515, 218}, 
+					{"Aim Priorities", 376, 20, 347, 535, 218}, 
 					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Projectile Prediction", "Checkbox", false, 78}, 
 					{"Disable in Noclip", "Checkbox", false, 78}, 
@@ -128,8 +128,9 @@ local options = {
 					{"Bots:", "Checkbox", false, 78}, 
 					{"NPCs:", "Checkbox", false, 78}, 
 					{"Admins:", "Checkbox", false, 78}, 
-					{"Noclipping Players:", "Checkbox", false, 78}, 
 					{"Spectators:", "Checkbox", false, 78}, 
+					{"Frozen Players:", "Checkbox", false, 78}, 
+					{"Noclipping Players:", "Checkbox", false, 78}, 
 					{"Driving Players:", "Checkbox", false, 78}, 
 					{"Transparent Players:", "Checkbox", false, 78}, 
 					{"Overhealed Players:", "Checkbox", false, 78}, 
@@ -166,7 +167,7 @@ local options = {
 					{"Fire Delay:", "Slider", 0, 100, 92}, 
                 }, 
 				{
-					{"Aim Priorities", 736, 20, 347, 347, 218}, 
+					{"Aim Priorities", 736, 20, 347, 370, 218}, 
 					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Disable in Noclip", "Checkbox", false, 78}, 
 					{"Hitbox:", "Selection", "Body", {"Head", "Body"}, 92}, 
@@ -176,8 +177,9 @@ local options = {
 					{"Bots:", "Checkbox", false, 78}, 
 					{"NPCs:", "Checkbox", false, 78}, 
 					{"Admins:", "Checkbox", false, 78}, 
-					{"Noclipping Players:", "Checkbox", false, 78}, 
 					{"Spectators:", "Checkbox", false, 78}, 
+					{"Frozen Players:", "Checkbox", false, 78}, 
+					{"Noclipping Players:", "Checkbox", false, 78}, 
 					{"Driving Players:", "Checkbox", false, 78}, 
 					{"Transparent Players:", "Checkbox", false, 78}, 
                 }, 
@@ -278,20 +280,20 @@ local options = {
 					{"Anti-Blind", "Checkbox", true, 78}, -- Enabled by default
                 }, 
 				{
-					{"Trouble in Terrorist Town Utilities", 16, 159, 347, 125, 218}, 
+					{"Trouble in Terrorist Town Utilities", 16, 157, 347, 125, 218}, 
 					{"Hide Round Report", "Checkbox", true, 78}, -- Enabled by default
 					{"Panel Remover", "Checkbox", true, 78}, -- Enabled by default
 					{"Prop Kill", "Checkbox", false, 78}, 
 					{"Prop Kill Key:", "Toggle", 0, 92, 0}, 
 				}, 
 				{
-					{"DarkRP Utilities", 16, 299, 347, 103, 218}, 
+					{"DarkRP Utilities", 16, 296, 347, 103, 218}, 
 					{"Suicide Near Arrest Batons", "Checkbox", true, 78}, -- Enabled by default
 					{"Transparent Props", "Checkbox", false, 78}, 
 					{"Transparency:", "Slider", 157, 255, 92}, 
 				}, 
 				{
-					{"Murder Utilities", 16, 417, 347, 100, 218}, 
+					{"Murder Utilities", 16, 413, 347, 100, 218}, 
 					{"Hide End Round Board", "Checkbox", true, 78}, -- Enabled by default
 					{"Hide Footprints", "Checkbox", true, 78}, -- Enabled by default
 					{"No Black Screens", "Checkbox", true, 78}, -- Enabled by default
@@ -305,13 +307,13 @@ local options = {
 					{"Configuration:", "Selection", "Configuration #1", {"Configuration #1", "Configuration #2", "Configuration #3", "Configuration #4", "Configuration #5"}, 92}, 
           		}, 
 				{
-          			{"IdiotBox Console Commands", 376, 185, 347, 100, 218}, 
+          			{"IdiotBox Console Commands", 376, 183, 347, 100, 218}, 
 					{"Run the 'idiot_openmenu' command to open the menu;", "Checkbox", false, 9999}, 
           			{"Run the 'idiot_changename' command to set a custom name.", "Checkbox", false, 9999}, 
 					{"Apply custom name", "Checkbox", false, 78}, 
           		}, 
 				{
-					{"Panic Mode", 376, 300, 347, 75, 218}, 
+					{"Panic Mode", 376, 296, 347, 75, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Mode:", "Selection", "Disable All", {"Disable Ragebot", "Disable Legitbot", "Disable Anti-Aim", "Disable All"}, 92}, 
                 }, 
@@ -321,14 +323,14 @@ local options = {
 					{"Plugin Loader", "Button", "", 92}, 
           		}, 
 				{
-          			{"Others", 736, 115, 347, 80, 218}, 
+          			{"Others", 736, 113, 347, 80, 218}, 
 					{"Print Changelog", "Button", "", 92}, 
 					{"Unload Cheat", "Button", "", 92}, 
           		}, 
         }, 
 		["Miscellaneous"] = {
 				{
-					{"Miscellaneous", 16, 20, 347, 155, 218}, 
+					{"Miscellaneous", 16, 20, 347, 150, 218}, 
 					{"Flash Spam", "Checkbox", false, 78}, 
 					{"Use Spam", "Checkbox", false, 78}, 
 					{"Name Stealer:", "Selection", "Off", {"Off", "Normal", "Priority Targets", "DarkRP Name"}, 92}, 
@@ -336,25 +338,25 @@ local options = {
 					{"Murder Taunts:", "Selection", "Off", {"Off", "Funny", "Help", "Scream", "Morose", "Random"}, 92}, 
                 }, 
 				{
-					{"Priority List", 16, 188, 347, 83, 218}, 
+					{"Priority List", 16, 183, 347, 83, 218}, 
 					{"Enabled", "Checkbox", true, 78}, -- Enabled by default
 					{"List Spacing:", "Slider", 0, 10, 92}, 
                 }, 
 				{
-					{"Sounds", 16, 285, 347, 103, 218}, 
+					{"Sounds", 16, 280, 347, 95, 218}, 
 					{"Turn on Music", "Checkbox", true, 78}, -- Enabled by default
 					{"Reset Sounds", "Checkbox", false, 78}, 
 					{"Hitsounds", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Textures", 16, 403, 347, 130, 218}, 
+					{"Textures", 16, 390, 347, 120, 218}, 
 					{"Transparent Walls", "Checkbox", false, 78}, 
 					{"No Sky", "Checkbox", false, 78}, 
 					{"Light Mode", "Checkbox", false, 78}, 
 					{"Dark Mode", "Checkbox", false, 78}, 
                 }, 
 				{
-                	{"Point of View", 376, 20, 347, 155, 218}, 
+                	{"Point of View", 376, 20, 347, 150, 218}, 
 					{"Custom FoV", "Checkbox", false, 78}, 
 					{"FoV Range:", "Slider", 110, 360, 92}, 
 					{"Thirdperson", "Checkbox", false, 78}, 
@@ -362,29 +364,30 @@ local options = {
 					{"Mirror", "Checkbox", false, 78}, 			
                 }, 
 				{
-					{"Viewmodel", 376, 188, 347, 125, 218}, 
+					{"Viewmodel", 376, 183, 347, 120, 218}, 
 					{"Viewmodel Chams:", "Selection", "Off", {"Off", "Normal", "Rainbow"}, 92}, 
 					{"Viewmodel Wireframe:", "Selection", "Off", {"Off", "Normal", "Rainbow"}, 92}, 
 					{"No Viewmodel", "Checkbox", false, 78}, 
 					{"No Hands", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Free Roaming", 376, 326, 347, 105, 218}, 
+					{"Free Roaming", 376, 316, 347, 105, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Free Roaming Key:", "Toggle", 0, 92, 0}, 
 					{"Free Roaming Speed:", "Slider", 30, 100, 92}, 
                 }, 
 				{
-					{"Movement", 736, 20, 347, 182, 218}, 
+					{"Movement", 736, 20, 347, 192, 218}, 
 					{"Bunny Hop", "Checkbox", false, 78}, 
-					{"Auto-Strafe:", "Selection", "Off", {"Off", "Side to Side", "Circle Strafe"}, 92}, 
+					{"Auto-Strafe:", "Selection", "Off", {"Off", "Legit", "Rage", "Directional"}, 92}, 
 					{"Strafe Key:", "Toggle", 0, 92, 0}, 
+					{"Circle Strafe", "Checkbox", false, 78}, 
 					{"Strafe Speed:", "Slider", 2, 6, 92}, 
 					{"Air Crouch", "Checkbox", false, 78}, 
 					{"Fake Crouch", "Checkbox", false, 78}, 
                 }, 
 				{
-                	{"Chat", 736, 215, 347, 155, 218}, 
+                	{"Chat", 736, 225, 347, 150, 218}, 
 					{"Log Kills in Chat", "Checkbox", false, 78}, 
 					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Chat Spam:", "Selection", "Off", {"Off", "Advertising 1", "Advertising 2", "Advertising 3", "Nazi 1", "Nazi 2", "Nazi 3", "Arabic Spam", "Hebrew Spam", "Offensive Spam", "Insult Spam", "Message Spam", "N-Word Spam", "N-WORD SPAM", "'H' Spam", "Clear Chat", "OOC Clear Chat"}, 92}, 
@@ -1132,7 +1135,7 @@ local function DrawToggle(self, w, h, var, maxy, posx, posy, dist)
 		surface.DrawRect(25 + posx + dist + 2, 61 + posy + maxy + 2, size - 4, 12)
 	end
       	if bMouse then
-        	if input.IsMouseDown(MOUSE_LEFT) && var[5] ~= 2 then
+        	if input.IsMouseDown(MOUSE_LEFT) && !drawlast && !mousedown && var[5] ~= 2 || notyetselected == check then
                surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, 150)
                surface.DrawRect(25 + posx + dist + 2, 61 + posy + maxy + 2, var[4] - 4, 12)
                var[5] = 1
@@ -1147,7 +1150,7 @@ local function DrawToggle(self, w, h, var, maxy, posx, posy, dist)
         	if !input.IsKeyDown(KEY_BACKSPACE) && !input.IsKeyDown(KEY_ESCAPE) then
         	for i = 1, 159 do
         		if !input.IsKeyDown(KEY_BACKSPACE) && !input.IsKeyDown(KEY_ESCAPE) then
-        			if input.IsKeyDown(i) || input.IsMouseDown(i) then
+        			if (input.IsKeyDown(i) || input.IsMouseDown(i)) && !(input.IsKeyDown(KEY_CAPSLOCK) || input.IsKeyDown(KEY_CAPSLOCKTOGGLE)) then
         				var[3] = i
         				var[5] = 0
         			end
@@ -1168,7 +1171,7 @@ local function DrawToggle(self, w, h, var, maxy, posx, posy, dist)
 		elseif var[5] == 0 && !input.GetKeyName(var[3]) then
 			surface.DrawText("None")
 		elseif var[5] ~= 0 then
-			surface.DrawText("...")
+			surface.DrawText("Press Any Key...")
 		end
 	end
 end
@@ -1234,7 +1237,6 @@ local function Changelog()
 	print("- Chams and Playermodel Chams cannot be used at the same time anymore;")
 	print("- Reply Spam and Copy Messages cannot be used at the same time anymore to prevent weird function collisions;")
 	print("- Show Entities, Traitor Finder and Murderer Finder can only be used if Visuals is turned on;")
-	print("- Circle Strafe and Auto-Strafe cannot be used at the same time anymore to prevent weird function collisions;")
 	print("- Mirror cannot be used with Visuals to prevent weird rendering;")
 	print("- Added missing space between the Custom Status rank and username;")
 	print("- Fixed developers getting the notification that a developer is on the server;")
@@ -1320,6 +1322,7 @@ local function Changelog()
 	print("- Added 'Show Spectators' to Visuals;")
 	print("- Added 'Bystander Name' to Visuals;")
 	print("- Added 'NPCs' to Visuals;")
+	print("- Added 'Frozen Players' to Aim Priorities;")
 	print("- Added more music to Sounds;")
 	print("- Reworked 'Auto Wallbang' from Aimbot;")
 	print("- Reworked 'Ignores' from Aim Priorities;")
@@ -1727,12 +1730,13 @@ local menusongs = {
 	"https://dl.dropbox.com/s/vsz77wdjqy1xf83/HOME%20-%20Resonance.mp3?dl=1", 
 	"https://dl.dropbox.com/s/ovh8xt0nn6wjgjj/The%20Caretaker%20-%20It%27s%20just%20a%20burning%20memory%20%282016%29.mp3?dl=1", 
 	"https://dl.dropbox.com/s/8bg55iwowf2jtv8/cuckoid%20-%20ponyinajar.mp3?dl=1", 
-	"https://dl.dropbox.com/s/0uly6phlgpoj4ss/1932_George_Olsen_-_Lullaby_Of_The_%28getmp3.pro%29.mp3?dl=1",
+	"https://dl.dropbox.com/s/0uly6phlgpoj4ss/1932_George_Olsen_-_Lullaby_Of_The_%28getmp3.pro%29.mp3?dl=1", 
 	"https://dl.dropbox.com/s/qfl7mu39us5hzn4/Erectin_a_River_%28getmp3.pro%29.mp3?dl=1", 
 	"https://dl.dropbox.com/s/vhd3il20d8ephb4/DJ_Spizdil_-_malo_tebyaHardstyle_m_%28getmp3.pro%29.mp3?dl=1", 
 	"https://dl.dropbox.com/s/2vf1lx9cnd5g9pq/Maduk_-_Vermilion_%28getmp3.pro%29.mp3?dl=1", 
 	"https://dl.dropbox.com/s/wcoo6cov1iatcao/Metrik_-_Gravity_%28getmp3.pro%29.mp3?dl=1", 
-	"https://dl.dropbox.com/s/bqt4dcjoziezdjk/The_Caretaker_-_Libets_Delay_%28getmp3.pro%29.mp3?dl=1",
+	"https://dl.dropbox.com/s/bqt4dcjoziezdjk/The_Caretaker_-_Libets_Delay_%28getmp3.pro%29.mp3?dl=1", 
+	"https://dl.dropbox.com/s/12ztoyw2rc2q0z0/HOME_-_Hold_%28getmp3.pro%29.mp3?dl=1", 
 	"https://dl.dropbox.com/s/xlk7wuel56bwrr3/T_Sugah_-_Green_Valleys_LAOS_%28getmp3.pro%29.mp3?dl=1"
 }
 
@@ -1875,7 +1879,7 @@ local function Menu()
 end
 
 local function NoCam()
-	if gBool("Hack vs. Hack", "Anti-Aim", "Enabled") or gBool("Miscellaneous", "Point of View", "Thirdperson") or not me:Alive() then
+	if gBool("Hack vs. Hack", "Anti-Aim", "Enabled") or gBool("Miscellaneous", "Point of View", "Thirdperson") or not me:Alive() or me:Health() < 1 then
 		return false
 	end
 	if me:GetActiveWeapon():IsValid() and me:GetActiveWeapon():GetClass() == "gmod_camera" then
@@ -1886,7 +1890,7 @@ local function NoCam()
 end
 
 local function NoPhys()
-	if gBool("Hack vs. Hack", "Anti-Aim", "Enabled") or gBool("Miscellaneous", "Point of View", "Thirdperson") or not me:Alive() then
+	if gBool("Hack vs. Hack", "Anti-Aim", "Enabled") or gBool("Miscellaneous", "Point of View", "Thirdperson") or not me:Alive() or me:Health() < 1 then
 		return false
 	end
 	if me:GetActiveWeapon():IsValid() and me:GetActiveWeapon():GetClass() == "weapon_physgun" then
@@ -1902,7 +1906,7 @@ local function RapidFire(pCmd)
 	if (gBool("Aimbot", "Miscellaneous", "Rapid Fire")) then
 	local wep = pm.GetActiveWeapon(me)
 		if pm.KeyDown(me, IN_ATTACK) then
-			if (em.Health(me) > 0) then
+			if (me:Alive() or em.Health(me) > 0) then
 				if not NoPhys() and not NoCam() then
 					if toggler == 0 then
 						cm.SetButtons(pCmd, bit.bor(cm.GetButtons(pCmd), IN_ATTACK))
@@ -1923,7 +1927,7 @@ local function RapidAltFire(pCmd)
 	if (gBool("Aimbot", "Miscellaneous", "Rapid Alt Fire")) then
 	local wep = pm.GetActiveWeapon(me)
 		if pm.KeyDown(me, IN_ATTACK) then
-			if (em.Health(me) > 0) then
+			if (me:Alive() or em.Health(me) > 0) then
 				if not NoPhys() and not NoCam() then
 					if toggler == 0 then
 						cm.SetButtons(pCmd, bit.bor(cm.GetButtons(pCmd), IN_ATTACK2))
@@ -2271,7 +2275,7 @@ local comebackowned = {
 
 if (gOption("Miscellaneous", "Chat", "Kill Spam:") == "Normal") then
 	if (killed == me and killer ~= me) then
-		if not me:Alive() then return end
+		if not me:Alive() or me:Health() < 1 then return end
 			RunConsoleCommand("say", string.format(excuses[math.random(#excuses)], killed:Nick()))
 		end
 		if (!em.IsValid(killer) || !em.IsValid(killed) || killer != me || killer == killed || !killed:IsPlayer()) then
@@ -2662,7 +2666,7 @@ end
 local function Crosshair()
 	if menuopen then return end
 	if me:Team() == TEAM_SPECTATOR and not ((gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) and gBool("Visuals", "Miscellaneous", "Show Spectators")) then return end
-	if not me:Alive() then return end
+	if not me:Alive() or me:Health() < 1 then return end
 	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Square") then
 	local x1, y1 = ScrW() * 0.5, ScrH() * 0.5
 		surface.SetDrawColor(0, 0, 0)
@@ -3442,27 +3446,252 @@ local function TransparentWalls()
     end
 end
 
-local function BunnyHop(pCmd)
-	if (not gBool("Miscellaneous", "Movement", "Bunny Hop") or em.GetMoveType(me) == MOVETYPE_NOCLIP or LocalPlayer():IsFlagSet(1024) or (me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:"))) or not me:Alive() or gBool("Miscellaneous", "Point of View", "Custom FoV") && gBool("Miscellaneous", "Free Roaming", "Enabled") && gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") && !gBool("Miscellaneous", "Point of View", "Thirdperson")) then return end
-	if (!me:IsOnGround() && pCmd:KeyDown(IN_JUMP)) then
-		pCmd:RemoveKey(IN_JUMP)
-		if gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Side to Side" then
-			if (pCmd:GetMouseX() > 1 || pCmd:GetMouseX() < - 1) then
-				pCmd:SetSideMove(pCmd:GetMouseX() > 1 && 10000 || - 10000)
-			else
-				pCmd:SetForwardMove(10000 / me:GetVelocity():Length2D())
-				pCmd:SetSideMove((pCmd:CommandNumber() % 2 == 0) && - 10000 || 10000)
-			end
+local circlestrafeval = 0
+
+local forwardspeedvar = idiot.GetConVar("cl_forwardspeed")
+
+local forwardspeedval = 10000
+
+if forwardspeedvar then
+	forwardspeedval = forwardspeedvar:GetFloat()
+end
+
+local sidespeedvar = GetConVar("cl_sidespeed")
+
+local sidespeedval = 10000
+
+if sidespeedvar then
+	sidespeedval = sidespeedvar:GetFloat()
+end
+
+local function ClampMove(pCmd)
+	if (pCmd:GetForwardMove() > forwardspeedval) then
+		pCmd:SetForwardMove(forwardspeedval)
+	end
+	if (pCmd:GetSideMove() > sidespeedval) then
+		pCmd:SetSideMove(sidespeedval)
+	end
+end
+
+local function FixMove(pCmd, rotation)
+	local rot_cos = math.cos(rotation)
+	local rot_sin = math.sin(rotation)
+	local cur_forwardmove = pCmd:GetForwardMove()
+	local cur_sidemove = pCmd:GetSideMove()
+	pCmd:SetForwardMove(((rot_cos * cur_forwardmove) - (rot_sin * cur_sidemove)))
+	pCmd:SetSideMove(((rot_sin * cur_forwardmove) + (rot_cos * cur_sidemove)))
+end
+
+local function Circle(pCmd)
+	local circlestrafespeed = gInt("Miscellaneous", "Movement", "Strafe Speed:")
+		if gKey("Miscellaneous", "Movement", "Strafe Key:") then
+			circlestrafeval = circlestrafeval + circlestrafespeed
+		if ((circlestrafeval > 10000000) and ((circlestrafeval / circlestrafespeed) > 100000)) then
+			idiot.circlestrafeval = 100000000
 		end
-	elseif pCmd:KeyDown(IN_JUMP) && gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Side to Side" then
+		FixMove(pCmd, math.rad((circlestrafeval - engine.TickInterval())))
+		return false
+	else
+		circlestrafeval = 0
+	end
+	return true
+end
+
+local timeHoldingSpaceOnGround = 0
+
+local function BunnyHop(pCmd)
+	if me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) then return end
+	if gOption("Miscellaneous", "Movement", "Auto-Strafe:") ~= "Off" then return end
+	if not me:Alive() or me:Health() < 1 then return end
+	if gBool("Miscellaneous", "Movement", "Bunny Hop") then 
+    local badmovetypes = {
+        [MOVETYPE_NOCLIP] = true,
+        [MOVETYPE_LADDER] = true,
+    }
+    if(badmovetypes[LocalPlayer():GetMoveType()]) then return end
+    if(LocalPlayer():IsOnGround()) then
+        if(timeHoldingSpaceOnGround > 1) then
+            timeHoldingSpaceOnGround = 0
+            pCmd:RemoveKey(IN_JUMP)
+        end
+        if(pCmd:KeyDown(IN_JUMP)) then
+            timeHoldingSpaceOnGround = timeHoldingSpaceOnGround + 1
+        end
+        return
+    end
+    local in_water = LocalPlayer():WaterLevel() >= 2
+    if(in_water) then return end
+    pCmd:RemoveKey(IN_JUMP)
+	end
+end
+
+local function LegitStrafe(pCmd)
+	if(!me:IsOnGround() && pCmd:KeyDown(IN_JUMP)) then
+		pCmd:RemoveKey(IN_JUMP)
+    if (pCmd:GetMouseX() > 0) then
+        pCmd:SetSideMove(10000)
+    elseif (pCmd:GetMouseX() < 0) then
+        pCmd:SetSideMove(-10000)
+    else
+        pCmd:SetSideMove(0)
+    end
+	end
+end
+
+local function RageStrafe(pCmd)
+	if(!me:IsOnGround() && pCmd:KeyDown(IN_JUMP)) then
+		pCmd:RemoveKey(IN_JUMP)
+    if (pCmd:GetMouseX() > 1 || pCmd:GetMouseX() < - 1) then
+		pCmd:SetSideMove(pCmd:GetMouseX() > 1 && 10000 || - 10000)
+	else
+		pCmd:SetForwardMove(10000 / me:GetVelocity():Length2D())
+		pCmd:SetSideMove((pCmd:CommandNumber() % 2 == 0) && - 10000 || 10000)
+	end
+	elseif pCmd:KeyDown(IN_JUMP) then
 		pCmd:SetForwardMove(10000)
+	end
+end
+
+local function CircleStrafe(pCmd)
+	if em.GetMoveType(me) == MOVETYPE_NOCLIP then return end
+	if me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) then return end
+	if not me:Alive() or me:Health() < 1 then return end
+	if LocalPlayer():IsFlagSet(1024) then return end
+	if gBool("Miscellaneous", "Movement", "Circle Strafe") then
+		if (me) then
+		if (pCmd:KeyDown(IN_JUMP)) then
+		local local_velocity = me:GetVelocity()
+		if (local_velocity:Length2D() < 50) then
+			pCmd:SetForwardMove(forwardspeedval)
+		end
+		local shouldautostrafe = Circle(pCmd)
+		if (!me:OnGround()) then
+			if (shouldautostrafe) then
+			end
+			pCmd:SetButtons(pCmd:GetButtons() - IN_JUMP)
+		end
+	else
+		circlestrafeval = 1
+		end
+	end
+		ClampMove(pCmd)
+	end
+end
+
+local old_yaw = 0.0
+
+local FixMovement
+
+local function DirectionalStrafe(pCmd)
+	if !FixMovement then FixMovement = cm.GetViewAngles(pCmd) end
+	FixMovement = FixMovement + Angle(cm.GetMouseY(pCmd) * GetConVarNumber("m_pitch"), cm.GetMouseX(pCmd) * -GetConVarNumber("m_yaw"))
+	FixMovement.x = math.Clamp(FixMovement.x, -89, 89)
+    FixMovement.y = math.NormalizeAngle(FixMovement.y)
+    FixMovement.z = 0
+		if(!me:IsOnGround() && pCmd:KeyDown(IN_JUMP)) then
+			pCmd:RemoveKey(IN_JUMP)
+        local get_velocity_degree = function(velocity)
+            local tmp = math.deg(math.atan(30.0 / velocity))     
+            if (tmp > 90.0) then
+                return 90.0
+            elseif (tmp < 0.0) then
+                return 0.0
+            else
+                return tmp
+            end
+        end
+        local M_RADPI = 57.295779513082
+        local side_speed = 10000
+        local velocity = LocalPlayer():GetVelocity()
+        velocity.z = 0.0
+        local forwardmove = pCmd:GetForwardMove()
+        local sidemove = pCmd:GetSideMove()
+        if (!forwardmove || !sidemove) then
+            return
+        end
+        local flip = pCmd:TickCount() % 2 == 0
+        local turn_direction_modifier = flip && 1.0 || -1.0
+        local viewangles = Angle(FixMovement.x, FixMovement.y, FixMovement.z)
+        if (forwardmove || sidemove) then
+            pCmd:SetForwardMove(0)
+            pCmd:SetSideMove(0)
+            local turn_angle = math.atan2(-sidemove, forwardmove)
+            viewangles.y = viewangles.y + (turn_angle * M_RADPI)
+        elseif (forwardmove) then
+            cmd:SetForwardMove(0)
+        end
+        local strafe_angle = math.deg(math.atan(15 / velocity:Length2D()))
+        if (strafe_angle > 90) then
+            strafe_angle = 90
+        elseif (strafe_angle < 0) then
+            strafe_angle = 0
+        end
+        local temp = Vector(0, viewangles.y - old_yaw, 0)
+        temp.y = math.NormalizeAngle(temp.y)
+        local yaw_delta = temp.y
+        old_yaw = viewangles.y
+        local abs_yaw_delta = math.abs(yaw_delta)
+        if (abs_yaw_delta <= strafe_angle || abs_yaw_delta >= 30) then
+            local velocity_angles = velocity:Angle()
+            temp = Vector(0, viewangles.y - velocity_angles.y, 0)
+            temp.y = math.NormalizeAngle(temp.y)
+            local velocityangle_yawdelta = temp.y
+            local velocity_degree = get_velocity_degree(velocity:Length2D() * 128)
+            if (velocityangle_yawdelta <= velocity_degree || velocity:Length2D() <= 15) then
+                if (-velocity_degree <= velocityangle_yawdelta || velocity:Length2D() <= 15) then
+                    viewangles.y = viewangles.y + (strafe_angle * turn_direction_modifier)
+                    pCmd:SetSideMove(side_speed * turn_direction_modifier)
+                else
+                    viewangles.y = velocity_angles.y - velocity_degree
+                    pCmd:SetSideMove(side_speed)
+                end
+            else
+                viewangles.y = velocity_angles.y + velocity_degree
+                pCmd:SetSideMove(-side_speed)
+            end
+        elseif (yaw_delta > 0) then
+            pCmd:SetSideMove(-side_speed)
+        elseif (yaw_delta < 0) then
+            pCmd:SetSideMove(side_speed)
+        end
+        local move = Vector(pCmd:GetForwardMove(), pCmd:GetSideMove(), 0)
+        local speed = move:Length()
+        local angles_move = move:Angle()
+		local normalized_x = math.modf(FixMovement.x + 180, 360) - 180
+        local normalized_y = math.modf(FixMovement.y + 180, 360) - 180
+        local yaw = math.rad(normalized_y - viewangles.y + angles_move.y)
+        if (normalized_x >= 90 || normalized_x <= -90 || FixMovement.x >= 90 && FixMovement.x <= 200 || FixMovement.x <= -90 && FixMovement.x <= 200) then
+            pCmd:SetForwardMove(-math.cos(yaw) * speed)
+        else
+            pCmd:SetForwardMove(math.cos(yaw) * speed)
+        end
+	pCmd:SetSideMove(math.sin(yaw) * speed)
+	end
+end
+
+local function AutoStrafe(pCmd)
+    if me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) then return end
+	if not me:Alive() or me:Health() < 1 then return end
+	if gBool("Miscellaneous", "Movement", "Bunny Hop") and gOption("Miscellaneous", "Movement", "Auto-Strafe:") ~= "Off" then
+    local badmovetypes = {
+        [MOVETYPE_NOCLIP] = true,
+        [MOVETYPE_LADDER] = true,
+    }
+    if(badmovetypes[LocalPlayer():GetMoveType()]) then return end
+    if(gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Legit") then
+        LegitStrafe(pCmd)
+    elseif(gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Rage") then
+        RageStrafe(pCmd)
+	elseif(gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Directional") then
+        DirectionalStrafe(pCmd)
+    end
 	end
 end
 
 local function AirCrouch(pCmd)
 	if em.GetMoveType(me) == MOVETYPE_NOCLIP then return end
 	if me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) then return end
-	if not me:Alive() then return end
+	if not me:Alive() or me:Health() < 1 then return end
 	if LocalPlayer():IsFlagSet(1024) then return end
 	if gBool("Miscellaneous", "Movement", "Air Crouch") then
 	local pos = me:GetPos()
@@ -3743,7 +3972,7 @@ hook.Add("Think", "Hook8", function()
 			blackscreen = true
 		end
 	end
-	if idiot.engine.ActiveGamemode() == "murder" and me:Alive() then
+	if idiot.engine.ActiveGamemode() == "murder" and (me:Alive() or me:Health() > 0) then
 		if gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Funny" then
 			RunConsoleCommand("mu_taunt", "funny")
 		elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Funny" == "Help" then
@@ -3756,7 +3985,7 @@ hook.Add("Think", "Hook8", function()
 			RunConsoleCommand("mu_taunt", tauntspam[math.random(#tauntspam)])
 		end
 	end
-	if gBool("Utilities", "DarkRP Utilities", "Suicide Near Arrest Batons") and idiot.engine.ActiveGamemode() == "darkrp" and me:Alive() then
+	if gBool("Utilities", "DarkRP Utilities", "Suicide Near Arrest Batons") and idiot.engine.ActiveGamemode() == "darkrp" and (me:Alive() or me:Health() > 0) then
 		for k, v in next, player.GetAll() do
 			if not v:IsValid() or v:Health() < 1 or v:IsDormant() or v == me then continue end
 			if gBool("Aimbot", "Aim Priorities", "Ignore Friends") and v:GetFriendStatus() == "friend" then continue end
@@ -3845,7 +4074,7 @@ end)
 local function AutoReload(pCmd)
 	local wep = me:GetActiveWeapon()
 	if (not gBool("Aimbot", "Miscellaneous", "Auto Reload")) then return end
-	if (me:Alive() and idiot.IsValid(wep)) then
+	if (me:Alive() or me:Health() > 0) and idiot.IsValid(wep) then
 		if (wep:Clip1() <= (gInt("Aimbot", "Miscellaneous", "Auto Reload at:")) and wep:GetMaxClip1() > 0 and idiot.CurTime() > wep:GetNextPrimaryFire()) then
 			pCmd:SetButtons(pCmd:GetButtons() + IN_RELOAD)
 		end
@@ -4335,14 +4564,14 @@ hook.Add("DrawOverlay", "Hook13", function()
 	if me:IsTyping() then return end
 	if menuopen then return end
 	if me:Team() == TEAM_SPECTATOR and not ((gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) and gBool("Visuals", "Miscellaneous", "Show Spectators")) then return end
-	if not me:Alive() then return end
+	if not me:Alive() or me:Health() < 1 then return end
 	if (gBool("Triggerbot", "Triggerbot", "Enabled")) then return end
 	if (gBool("Aimbot", "Ragebot", "Enabled") && gBool("Aimbot", "Legitbot", "Enabled")) then return end
 	for k, v in pairs(player.GetAll()) do
 	if (gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable Ragebot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable Legitbot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me) then return end
 	end
 	if (aimtarget and em.IsValid(aimtarget) and not NoPhys() and not NoCam() and gBool("Visuals", "Miscellaneous", "Snap Lines") and (gBool("Aimbot", "Ragebot", "Enabled") or gBool("Aimbot", "Legitbot", "Enabled"))) then
-		if em.Health(me) > 0 then
+		if me:Alive() or em.Health(me) > 0 then
 			local col = Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:"))
 			local pos = vm.ToScreen(em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)))
 			surface.SetDrawColor(col)
@@ -4481,6 +4710,12 @@ local function Valid(v)
 	end
 	if !gBool("Aimbot", "Aim Priorities", "Noclipping Players:") then
 		if em.GetMoveType(v) == MOVETYPE_NOCLIP then return false end
+	end
+	if !gBool("Aimbot", "Aim Priorities", "Frozen Players:") then
+		if pm.IsFrozen(v) then return false end
+	end
+	if !gBool("Aimbot", "Aim Priorities", "God Mode Players:") then
+		if pm.HasGodMode(v) then return false end
 	end
 	if !gBool("Aimbot", "Aim Priorities", "Overhealed Players:") then
 		if v:Health() > maxhealth then return false end
@@ -4652,7 +4887,7 @@ local function PredictPos(aimtarget)
 			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 4000 then
 				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			else
-				return (AimPos(aimtarget) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 90) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 90) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			end
 		elseif string.find(string.lower(wep:GetClass()), "m9k_ex41") or string.find(string.lower(wep:GetClass()), "m9k_m79gl") then
 			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 1100 then
@@ -4813,6 +5048,9 @@ local function Triggerbot(pCmd)
     if !gBool("Triggerbot", "Aim Priorities", "Admins:") then
     if pm.IsAdmin(v) then return false end
     end
+	if !gBool("Triggerbot", "Aim Priorities", "Frozen Players:") then
+	if pm.IsFrozen(v) then return false end
+	end
     if !gBool("Triggerbot", "Aim Priorities", "Driving Players:") then
 	if pm.InVehicle(v) then return false end
 	end
@@ -5196,7 +5434,7 @@ local function AntiAim(pCmd)
 	if (gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable Anti-Aim" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me) then return end
 	end
 	local wep = pm.GetActiveWeapon(me)
-	if (gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP || me:Team() == TEAM_SPECTATOR || idiot.Triggering == true || (cm.CommandNumber(pCmd) == 0 && !gBool("Miscellaneous", "Point of View", "Thirdperson")) || cm.KeyDown(pCmd, 1) || gBool("Miscellaneous", "Point of View", "Custom FoV") && gBool("Miscellaneous", "Free Roaming", "Enabled") && gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") && !gBool("Miscellaneous", "Point of View", "Thirdperson") || me:WaterLevel() > 1 || input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable with 'E' Key") || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aimbot", "Legitbot", "Enabled") && !gBool("Aimbot", "Legitbot", "Silent (For Anti-Aim)") || gBool("Utilities", "Trouble in Terrorist Town Utilities", "Prop Kill") && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" && idiot.engine.ActiveGamemode() == "terrortown") then return end
+	if (gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP || me:Team() == TEAM_SPECTATOR || idiot.Triggering == true || (cm.CommandNumber(pCmd) == 0 && !gBool("Miscellaneous", "Point of View", "Thirdperson")) || cm.KeyDown(pCmd, 1) || gBool("Miscellaneous", "Point of View", "Custom FoV") && gBool("Miscellaneous", "Free Roaming", "Enabled") && gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") && !gBool("Miscellaneous", "Point of View", "Thirdperson") || me:WaterLevel() > 1 || input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable with 'E' Key") || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aimbot", "Legitbot", "Enabled") && !gBool("Aimbot", "Legitbot", "Silent (For Anti-Aim)") || gBool("Utilities", "Trouble in Terrorist Town Utilities", "Prop Kill") && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" && idiot.engine.ActiveGamemode() == "terrortown") then return end
 	if gOption("Hack vs. Hack", "Anti-Aim", "Anti-Aim Direction:") == "Manual Switch" then
 	if gKey("Hack vs. Hack", "Anti-Aim", "Switch Key:") and not manualpressed then
 	manualpressed = true
@@ -5261,7 +5499,7 @@ local function PropKill(pCmd)
 	if me:IsTyping() then return end
 	if menuopen then return end
 	if me:Team() == TEAM_SPECTATOR then return end
-	if not me:Alive() then return end
+	if not me:Alive() or me:Health() < 1 then return end
 	if (cm.CommandNumber(pCmd) == 0 && !gBool("Miscellaneous", "Point of View", "Thirdperson")) then
 		return
 	elseif (cm.CommandNumber(pCmd) == 0 && gBool("Miscellaneous", "Point of View", "Thirdperson")) then
@@ -5332,64 +5570,13 @@ local function FakeAngs(pCmd)
     end
 end
 
-local circlestrafeval = 0
-
-local forwardspeedvar = idiot.GetConVar("cl_forwardspeed")
-
-local forwardspeedval = 10000
-
-if forwardspeedvar then
-	forwardspeedval = forwardspeedvar:GetFloat()
-end
-
-local sidespeedvar = GetConVar("cl_sidespeed")
-
-local sidespeedval = 10000
-
-if sidespeedvar then
-	sidespeedval = sidespeedvar:GetFloat()
-end
-
-local function ClampMove(pCmd)
-	if (pCmd:GetForwardMove() > forwardspeedval) then
-		pCmd:SetForwardMove(idiot.forwardspeedval)
-	end
-	if (pCmd:GetSideMove() > sidespeedval) then
-		pCmd:SetSideMove(sidespeedval)
-	end
-end
-
-local function FixMove(pCmd, rotation)
-	local rot_cos = math.cos(rotation)
-	local rot_sin = math.sin(rotation)
-	local cur_forwardmove = pCmd:GetForwardMove()
-	local cur_sidemove = pCmd:GetSideMove()
-	pCmd:SetForwardMove(((rot_cos * cur_forwardmove) - (rot_sin * cur_sidemove)))
-	pCmd:SetSideMove(((rot_sin * cur_forwardmove) + (rot_cos * cur_sidemove)))
-end
-
-local function Circle(pCmd)
-	local circlestrafespeed = gInt("Miscellaneous", "Movement", "Strafe Speed:")
-		if gKey("Miscellaneous", "Movement", "Strafe Key:") then
-			circlestrafeval = circlestrafeval + circlestrafespeed
-		if ((circlestrafeval > 10000000) and ((circlestrafeval / circlestrafespeed) > 100000)) then
-			idiot.circlestrafeval = 100000000
-		end
-		FixMove(pCmd, math.rad((circlestrafeval - engine.TickInterval())))
-		return false
-	else
-		circlestrafeval = 0
-	end
-	return true
-end
-
 local crouched = 0
 
 local function FakeCrouch(pCmd)
 	if gBool("Miscellaneous", "Movement", "Fake Crouch") then
 	if em.GetMoveType(me) == MOVETYPE_NOCLIP then return end
 	if me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) then return end
-	if not me:Alive() then return end
+	if not me:Alive() or me:Health() < 1 then return end
 	if LocalPlayer():IsFlagSet(1024) then return end
 		if me:KeyDown(IN_DUCK) then
 			if crouched <= 5 then
@@ -5409,38 +5596,11 @@ local function FakeCrouch(pCmd)
 	end
 end
 
-local function CircleStrafe(pCmd)
-	if gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Circle Strafe" then
-	if gBool("Miscellaneous", "Point of View", "Custom FoV") && gBool("Miscellaneous", "Free Roaming", "Enabled") && gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") && !gBool("Miscellaneous", "Point of View", "Thirdperson") then return end
-	if em.GetMoveType(me) == MOVETYPE_NOCLIP then return end
-	if me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) then return end
-	if not me:Alive() then return end
-	if LocalPlayer():IsFlagSet(1024) then return end
-		if me then
-			if (pCmd:KeyDown(IN_JUMP)) then
-				local local_velocity = me:GetVelocity()
-				if (local_velocity:Length2D() < 50) then
-					pCmd:SetForwardMove(forwardspeedval)
-				end
-				local shouldautostrafe = Circle(pCmd)
-				if (!me:OnGround()) then
-					if (shouldautostrafe) then
-					end
-					pCmd:SetButtons(pCmd:GetButtons() - IN_JUMP)
-				end
-			else
-				circlestrafeval = 1
-			end
-		end
-		ClampMove(pCmd)
-	end
-end
-
 local roampos, roamang, roamon, roamx, roamy, roamduck, roamjump = LocalPlayer():EyePos(), LocalPlayer():GetAngles(), false, 0, 0, false, false
 
 hook.Add("CalcView", "Hook17", function(me, pos, ang, fov)
 	local view = {}
-		if gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:"))) and (me:Alive()) then
+		if gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:"))) and (me:Alive() or me:Health() > 0) then
 			local speed = gInt("Miscellaneous", "Free Roaming", "Free Roaming Speed:") / 5
 			local mouseang = Angle(roamy, roamx, 0)
 			if LocalPlayer():KeyDown(IN_SPEED) then
@@ -5474,7 +5634,7 @@ hook.Add("CalcView", "Hook17", function(me, pos, ang, fov)
 			view.angles = angles
 			view.fov = gInt("Miscellaneous", "Point of View", "FoV Range:")
 		end
-		if gBool("Aimbot", "Miscellaneous", "No Recoil") and me:Health() > 0 and me:GetMoveType() ~= 10 and me:GetObserverTarget() == nil then
+		if gBool("Aimbot", "Miscellaneous", "No Recoil") and (me:Alive() or me:Health() > 0) and me:GetMoveType() ~= 10 and me:GetObserverTarget() == nil then
 			view.origin = me:EyePos()
 			view.angles = me:EyeAngles()
 		end
@@ -5491,7 +5651,7 @@ hook.Add("CalcView", "Hook17", function(me, pos, ang, fov)
 end)
 
 local function FreeRoam(pCmd)
-	if (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:"))) and (me:Alive())) then
+	if (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:"))) and (me:Alive() or me:Health() > 0)) then
 		if roamon == false then
 			roampos, roamang = LocalPlayer():EyePos(), pCmd:GetViewAngles()
 			roamy, roamx = pCmd:GetViewAngles().x, pCmd:GetViewAngles().y
@@ -5538,6 +5698,8 @@ hook.Add("CreateMove", "Hook20", function(pCmd)
 	end
 	AntiAFK(pCmd)
 	BunnyHop(pCmd)
+	CircleStrafe(pCmd)
+	AutoStrafe(pCmd)
 	FakeAngs(pCmd)
 	FreeRoam(pCmd)
 	AutoReload(pCmd)
@@ -5546,7 +5708,6 @@ hook.Add("CreateMove", "Hook20", function(pCmd)
 	AntiAim(pCmd)
 	RapidFire(pCmd)
 	RapidAltFire(pCmd)
-	CircleStrafe(pCmd)
 	AutoStop(pCmd)
 	AutoCrouch(pCmd)
 	FakeCrouch(pCmd)
@@ -5578,7 +5739,7 @@ hook.Add("HUDPaint2", "Hook22", function()
 	if gui.IsConsoleVisible() then return end
 	if (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then return end
 	if me:Team() == TEAM_SPECTATOR and not ((gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) and gBool("Visuals", "Miscellaneous", "Show Spectators")) then return end
-	if not me:Alive() then return end
+	if not me:Alive() or me:Health() < 1 then return end
 	if (v == me and not em.IsValid(v)) then return end
 	local Cap = math.cos(math.rad(45))
 	local Offset = Vector(0, 0, 32)
