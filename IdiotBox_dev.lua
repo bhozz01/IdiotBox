@@ -1324,6 +1324,7 @@ local function Changelog()
 	print("- Added 'NPCs' to Visuals;")
 	print("- Added 'Frozen Players' to Aim Priorities;")
 	print("- Added more music to Sounds;")
+	print("- Reworked 'Bunny Hop' from scratch;")
 	print("- Reworked 'Auto Wallbang' from Aimbot;")
 	print("- Reworked 'Ignores' from Aim Priorities;")
 	print("- Reworked 'Max Player Health' from Aim Priorities;")
@@ -3501,9 +3502,8 @@ local timeHoldingSpaceOnGround = 0
 
 local function BunnyHop(pCmd)
 	if me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) then return end
-	if gOption("Miscellaneous", "Movement", "Auto-Strafe:") ~= "Off" then return end
 	if not me:Alive() or me:Health() < 1 then return end
-	if gBool("Miscellaneous", "Movement", "Bunny Hop") then 
+	if gBool("Miscellaneous", "Movement", "Bunny Hop") and gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Off" and not gBool("Miscellaneous", "Movement", "Circle Strafe") then 
     local badmovetypes = {
         [MOVETYPE_NOCLIP] = true,
         [MOVETYPE_LADDER] = true,
@@ -3526,38 +3526,41 @@ local function BunnyHop(pCmd)
 end
 
 local function LegitStrafe(pCmd)
-	if(!me:IsOnGround() && pCmd:KeyDown(IN_JUMP)) then
+	if !me:IsOnGround() && pCmd:KeyDown(IN_JUMP) then
 		pCmd:RemoveKey(IN_JUMP)
-    if (pCmd:GetMouseX() > 0) then
-        pCmd:SetSideMove(10000)
-    elseif (pCmd:GetMouseX() < 0) then
-        pCmd:SetSideMove(-10000)
-    else
-        pCmd:SetSideMove(0)
-    end
+		if (pCmd:GetMouseX() > 1 || pCmd:GetMouseX() < - 1) then
+			pCmd:SetSideMove(pCmd:GetMouseX() > 1 && 10000 || - 10000)
+		else
+			pCmd:SetSideMove(0)
+		end
+	elseif pCmd:KeyDown(IN_JUMP) then
+		pCmd:SetForwardMove(10000)
 	end
 end
 
 local function RageStrafe(pCmd)
-	if(!me:IsOnGround() && pCmd:KeyDown(IN_JUMP)) then
+	if !me:IsOnGround() && pCmd:KeyDown(IN_JUMP) then
 		pCmd:RemoveKey(IN_JUMP)
-    if (pCmd:GetMouseX() > 1 || pCmd:GetMouseX() < - 1) then
-		pCmd:SetSideMove(pCmd:GetMouseX() > 1 && 10000 || - 10000)
-	else
-		pCmd:SetForwardMove(10000 / me:GetVelocity():Length2D())
-		pCmd:SetSideMove((pCmd:CommandNumber() % 2 == 0) && - 10000 || 10000)
-	end
+		if (pCmd:GetMouseX() > 1 || pCmd:GetMouseX() < - 1) then
+			pCmd:SetSideMove(pCmd:GetMouseX() > 1 && 10000 || - 10000)
+		else
+			pCmd:SetForwardMove(10000 / me:GetVelocity():Length2D())
+			pCmd:SetSideMove((pCmd:CommandNumber() % 2 == 0) && - 10000 || 10000)
+		end
 	elseif pCmd:KeyDown(IN_JUMP) then
 		pCmd:SetForwardMove(10000)
 	end
 end
 
 local function CircleStrafe(pCmd)
-	if em.GetMoveType(me) == MOVETYPE_NOCLIP then return end
 	if me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) then return end
 	if not me:Alive() or me:Health() < 1 then return end
-	if LocalPlayer():IsFlagSet(1024) then return end
-	if gBool("Miscellaneous", "Movement", "Circle Strafe") then
+	if gBool("Miscellaneous", "Movement", "Bunny Hop") and gBool("Miscellaneous", "Movement", "Circle Strafe") then 
+    local badmovetypes = {
+        [MOVETYPE_NOCLIP] = true,
+        [MOVETYPE_LADDER] = true,
+    }
+    if(badmovetypes[LocalPlayer():GetMoveType()]) then return end
 		if (me) then
 		if (pCmd:KeyDown(IN_JUMP)) then
 		local local_velocity = me:GetVelocity()
@@ -3580,15 +3583,15 @@ end
 
 local old_yaw = 0.0
 
-local FixMovement
+local fixmovement
 
 local function DirectionalStrafe(pCmd)
-	if !FixMovement then FixMovement = cm.GetViewAngles(pCmd) end
-	FixMovement = FixMovement + Angle(cm.GetMouseY(pCmd) * GetConVarNumber("m_pitch"), cm.GetMouseX(pCmd) * -GetConVarNumber("m_yaw"))
-	FixMovement.x = math.Clamp(FixMovement.x, -89, 89)
-    FixMovement.y = math.NormalizeAngle(FixMovement.y)
-    FixMovement.z = 0
-		if(!me:IsOnGround() && pCmd:KeyDown(IN_JUMP)) then
+	if !fixmovement then fixmovement = cm.GetViewAngles(pCmd) end
+	fixmovement = fixmovement + Angle(cm.GetMouseY(pCmd) * GetConVarNumber("m_pitch"), cm.GetMouseX(pCmd) * -GetConVarNumber("m_yaw"))
+	fixmovement.x = math.Clamp(fixmovement.x, -89, 89)
+    fixmovement.y = math.NormalizeAngle(fixmovement.y)
+    fixmovement.z = 0
+		if !me:IsOnGround() && pCmd:KeyDown(IN_JUMP) then
 			pCmd:RemoveKey(IN_JUMP)
         local get_velocity_degree = function(velocity)
             local tmp = math.deg(math.atan(30.0 / velocity))     
@@ -3611,14 +3614,14 @@ local function DirectionalStrafe(pCmd)
         end
         local flip = pCmd:TickCount() % 2 == 0
         local turn_direction_modifier = flip && 1.0 || -1.0
-        local viewangles = Angle(FixMovement.x, FixMovement.y, FixMovement.z)
+        local viewangles = Angle(fixmovement.x, fixmovement.y, fixmovement.z)
         if (forwardmove || sidemove) then
             pCmd:SetForwardMove(0)
             pCmd:SetSideMove(0)
             local turn_angle = math.atan2(-sidemove, forwardmove)
             viewangles.y = viewangles.y + (turn_angle * M_RADPI)
         elseif (forwardmove) then
-            cmd:SetForwardMove(0)
+            pCmd:SetForwardMove(0)
         end
         local strafe_angle = math.deg(math.atan(15 / velocity:Length2D()))
         if (strafe_angle > 90) then
@@ -3657,34 +3660,36 @@ local function DirectionalStrafe(pCmd)
         local move = Vector(pCmd:GetForwardMove(), pCmd:GetSideMove(), 0)
         local speed = move:Length()
         local angles_move = move:Angle()
-		local normalized_x = math.modf(FixMovement.x + 180, 360) - 180
-        local normalized_y = math.modf(FixMovement.y + 180, 360) - 180
+		local normalized_x = math.modf(fixmovement.x + 180, 360) - 180
+        local normalized_y = math.modf(fixmovement.y + 180, 360) - 180
         local yaw = math.rad(normalized_y - viewangles.y + angles_move.y)
-        if (normalized_x >= 90 || normalized_x <= -90 || FixMovement.x >= 90 && FixMovement.x <= 200 || FixMovement.x <= -90 && FixMovement.x <= 200) then
+        if (normalized_x >= 90 || normalized_x <= -90 || fixmovement.x >= 90 && fixmovement.x <= 200 || fixmovement.x <= -90 && fixmovement.x <= 200) then
             pCmd:SetForwardMove(-math.cos(yaw) * speed)
         else
             pCmd:SetForwardMove(math.cos(yaw) * speed)
         end
-	pCmd:SetSideMove(math.sin(yaw) * speed)
+		pCmd:SetSideMove(math.sin(yaw) * speed)
+	elseif pCmd:KeyDown(IN_JUMP) then
+		pCmd:SetForwardMove(10000)
 	end
 end
 
 local function AutoStrafe(pCmd)
     if me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) then return end
 	if not me:Alive() or me:Health() < 1 then return end
-	if gBool("Miscellaneous", "Movement", "Bunny Hop") and gOption("Miscellaneous", "Movement", "Auto-Strafe:") ~= "Off" then
+	if gBool("Miscellaneous", "Movement", "Bunny Hop") and gOption("Miscellaneous", "Movement", "Auto-Strafe:") ~= "Off" and not gBool("Miscellaneous", "Movement", "Circle Strafe") then
     local badmovetypes = {
         [MOVETYPE_NOCLIP] = true,
         [MOVETYPE_LADDER] = true,
     }
     if(badmovetypes[LocalPlayer():GetMoveType()]) then return end
-    if(gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Legit") then
-        LegitStrafe(pCmd)
-    elseif(gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Rage") then
-        RageStrafe(pCmd)
-	elseif(gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Directional") then
-        DirectionalStrafe(pCmd)
-    end
+		if(gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Legit") then
+			LegitStrafe(pCmd)
+		elseif(gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Rage") then
+			RageStrafe(pCmd)
+		elseif(gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Directional") then
+			DirectionalStrafe(pCmd)
+		end
 	end
 end
 
