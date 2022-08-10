@@ -308,7 +308,7 @@ local options = {
 					{"Configuration:", "Selection", "Configuration #1", {"Configuration #1", "Configuration #2", "Configuration #3", "Configuration #4", "Configuration #5"}, 92}, 
           		}, 
 				{
-          			{"IdiotBox Console Commands", 376, 183, 347, 100, 218}, 
+          			{"IdiotBox Console Commands", 376, 183, 347, 99, 218}, 
 					{"Run the 'idiot_openmenu' command to open the menu;", "Checkbox", false, 9999}, 
           			{"Run the 'idiot_changename' command to set a custom name.", "Checkbox", false, 9999}, 
 					{"Apply custom name", "Checkbox", false, 78}, 
@@ -375,7 +375,7 @@ local options = {
 					{"No Hands", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Free Roaming", 376, 316, 347, 105, 218}, 
+					{"Free Roaming", 376, 317, 347, 105, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Free Roaming Key:", "Toggle", 0, 92, 0}, 
 					{"Free Roaming Speed:", "Slider", 30, 100, 92}, 
@@ -1267,6 +1267,7 @@ local function Changelog()
 	print("- Fixed skybox changing upon loading;")
 	print("- Fixed Anti-Aim breaking the Radar view angles;")
 	print("- Fixed Free Roaming not working with Anti-Aim;")
+	print("- Fixed Thirdperson, Custom FoV and Free Roaming working when the user is dead;")
 	print("- Fixed Fire Delay not working correctly;")
 	print("- Fixed Prop Kill giving script errors when toggled;")
 	print("- Fixed Anti-Aim X-Axis Jitter, Semi-Jitter Down and Semi-Jitter Up breaking the Anti-Aim Y-Axis;")
@@ -3748,12 +3749,12 @@ end
 
 local old_yaw = 0.0
 
-local fixmovement
+local fixmovement = fixmovement || nil
 
 local function DirectionalStrafe(pCmd)
 	if !fixmovement then fixmovement = cm.GetViewAngles(pCmd) end
-	fixmovement = fixmovement + Angle(cm.GetMouseY(pCmd) * GetConVarNumber("m_pitch"), cm.GetMouseX(pCmd) * -GetConVarNumber("m_yaw"))
-	fixmovement.x = math.Clamp(fixmovement.x, -0, 0)
+	fixmovement = fixmovement + Angle(cm.GetMouseY(pCmd) * GetConVarNumber("m_pitch"), cm.GetMouseX(pCmd) * - GetConVarNumber("m_yaw"))
+	fixmovement.x = math.Clamp(fixmovement.x, - 89, 89)
     fixmovement.y = math.NormalizeAngle(fixmovement.y)
     fixmovement.z = 0
 		if !me:IsOnGround() && pCmd:KeyDown(IN_JUMP) then
@@ -3778,12 +3779,12 @@ local function DirectionalStrafe(pCmd)
             return
         end
         local flip = pCmd:TickCount() % 2 == 0
-        local turn_direction_modifier = flip && 1.0 || -1.0
+        local turn_direction_modifier = flip && 1.0 || - 1.0
         local viewangles = Angle(fixmovement.x, fixmovement.y, fixmovement.z)
         if (forwardmove || sidemove) then
             pCmd:SetForwardMove(0)
             pCmd:SetSideMove(0)
-            local turn_angle = math.atan2(-sidemove, forwardmove)
+            local turn_angle = math.atan2( - sidemove, forwardmove)
             viewangles.y = viewangles.y + (turn_angle * M_RADPI)
         elseif (forwardmove) then
             pCmd:SetForwardMove(0)
@@ -3806,7 +3807,7 @@ local function DirectionalStrafe(pCmd)
             local velocityangle_yawdelta = temp.y
             local velocity_degree = get_velocity_degree(velocity:Length2D() * 128)
             if (velocityangle_yawdelta <= velocity_degree || velocity:Length2D() <= 15) then
-                if (-velocity_degree <= velocityangle_yawdelta || velocity:Length2D() <= 15) then
+                if ( - velocity_degree <= velocityangle_yawdelta || velocity:Length2D() <= 15) then
                     viewangles.y = viewangles.y + (strafe_angle * turn_direction_modifier)
                     pCmd:SetSideMove(side_speed * turn_direction_modifier)
                 else
@@ -3815,10 +3816,10 @@ local function DirectionalStrafe(pCmd)
                 end
             else
                 viewangles.y = velocity_angles.y + velocity_degree
-                pCmd:SetSideMove(-side_speed)
+                pCmd:SetSideMove( - side_speed)
             end
         elseif (yaw_delta > 0) then
-            pCmd:SetSideMove(-side_speed)
+            pCmd:SetSideMove( - side_speed)
         elseif (yaw_delta < 0) then
             pCmd:SetSideMove(side_speed)
         end
@@ -3828,8 +3829,8 @@ local function DirectionalStrafe(pCmd)
 		local normalized_x = math.modf(fixmovement.x + 180, 360) - 180
         local normalized_y = math.modf(fixmovement.y + 180, 360) - 180
         local yaw = math.rad(normalized_y - viewangles.y + angles_move.y)
-        if (normalized_x >= 90 || normalized_x <= -90 || fixmovement.x >= 90 && fixmovement.x <= 200 || fixmovement.x <= -90 && fixmovement.x <= 200) then
-            pCmd:SetForwardMove(-math.cos(yaw) * speed)
+        if (normalized_x >= 90 || normalized_x <= - 90 || fixmovement.x >= 90 && fixmovement.x <= 200 || fixmovement.x <= - 90 && fixmovement.x <= 200) then
+            pCmd:SetForwardMove( - math.cos(yaw) * speed)
         else
             pCmd:SetForwardMove(math.cos(yaw) * speed)
         end
@@ -5799,7 +5800,7 @@ hook.Add("CalcView", "Hook17", function(me, pos, ang, fov)
 			view.fov = fov
 			view.drawviewer = true
 		end
-		if gBool("Miscellaneous", "Point of View", "Custom FoV") and not gBool("Miscellaneous", "Point of View", "Thirdperson") and not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:")) then
+		if gBool("Miscellaneous", "Point of View", "Custom FoV") and not gBool("Miscellaneous", "Point of View", "Thirdperson") and not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:")) and (me:Alive() or me:Health() > 0) then
 			view.origin = pos
 			view.angles = angles
 			view.fov = gInt("Miscellaneous", "Point of View", "FoV Range:")
@@ -5808,12 +5809,12 @@ hook.Add("CalcView", "Hook17", function(me, pos, ang, fov)
 			view.origin = me:EyePos()
 			view.angles = me:EyeAngles()
 		end
-		if gBool("Miscellaneous", "Point of View", "Thirdperson") and not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:")) then
+		if gBool("Miscellaneous", "Point of View", "Thirdperson") and not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:")) and (me:Alive() or me:Health() > 0) then
 			view.angles = GetAngle(fa)
 			view.origin = gBool("Miscellaneous", "Point of View", "Thirdperson") and pos + am.Forward(fa) * (gInt("Miscellaneous", "Point of View", "Thirdperson Range:") * - 10)
 			return view
 		end
-		if not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:")) then
+		if not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:")) and (me:Alive() or me:Health() > 0) then
 			view.angles = GetAngle(fa)
 			view.origin = pos
 		end
