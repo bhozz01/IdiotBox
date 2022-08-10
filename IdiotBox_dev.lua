@@ -2525,7 +2525,7 @@ local function Clamp(val, min, max)
 end
 
 local function NormalizeAngle(ang)
-	if not NoPhys() and not NoCam() then
+	if not NoPhys() and not NoCam() and not (gBool("Miscellaneous", "Movement", "Bunny Hop") and gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Directional") then
 		ang.x = math.NormalizeAngle(ang.x)
 		ang.p = math.Clamp(ang.p, - 89, 89)
 	end
