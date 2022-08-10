@@ -346,16 +346,17 @@ local options = {
 					{"List Spacing:", "Slider", 0, 10, 92}, 
                 }, 
 				{
-					{"Sounds", 16, 280, 347, 95, 218}, 
-					{"Turn on Music", "Checkbox", true, 78}, -- Enabled by default
+					{"Sounds", 16, 280, 347, 125, 218}, 
+					{"Music Player", "Checkbox", false, 78}, -- Enabled by default
+					{"Song:", "Selection", "Random", {"'Rust'", "'Resonance'", "'Daisuke'", "'A Burning M...'", "'Libet's Delay'", "'Lullaby Of T...'", "'Erectin' a River'", "'Fleeting Love'", "'Malo Tebya'", "'Vermilion'", "'Gravity'", "'Remorse'", "'Hold'", "'Green Valleys'", "'FP3'", "Random"}, 92}, 
 					{"Reset Sounds", "Checkbox", false, 78}, 
 					{"Hitsounds", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Textures", 16, 390, 347, 120, 218}, 
+					{"Textures", 16, 420, 347, 120, 218}, 
 					{"Transparent Walls", "Checkbox", false, 78}, 
 					{"No Sky", "Checkbox", false, 78}, 
-					{"Light Mode", "Checkbox", false, 78}, 
+					{"Bright Mode", "Checkbox", false, 78}, 
 					{"Dark Mode", "Checkbox", false, 78}, 
                 }, 
 				{
@@ -480,7 +481,7 @@ local options = {
 				{
 					{"Others", 321, 380, 205, 157, 70}, 
 					{"T Opacity:", "Slider", 255, 255, 88}, 
-					{"B Opacity:", "Slider", 155, 255, 88}, 
+					{"B Opacity:", "Slider", 125, 255, 88}, 
 					{"BG Opacity:", "Slider", 255, 255, 88}, 
 					{"BG Darkness:", "Slider", 18, 25, 88}, 
 					{"Roundness:", "Slider", 57, 67, 88}, 
@@ -1329,6 +1330,7 @@ local function Changelog()
 	print("- Added 'Clientside' to Wallhack;")
 	print("- Added bordered menu styles;")
 	print("- Added more music to Sounds;")
+	print("- Added custom music player to Sounds;")
 	print("- Reworked 'Bunny Hop' from scratch;")
 	print("- Reworked 'Auto Wallbang' from Aimbot;")
 	print("- Reworked 'Ignores' from Aim Priorities;")
@@ -1765,24 +1767,6 @@ local function DrawSub(self, w, h)
 	end
 end
 
-local menusongs = {
-	"https://dl.dropbox.com/s/0m22ytfia8qoy4m/Daisuke%20-%20El%20Huervo.mp3?dl=1", 
-	"https://dl.dropbox.com/s/0fdgaj0ry8uummf/Rust_%28getmp3.pro%29.mp3?dl=1", 
-	"https://dl.dropbox.com/s/vsz77wdjqy1xf83/HOME%20-%20Resonance.mp3?dl=1", 
-	"https://dl.dropbox.com/s/ovh8xt0nn6wjgjj/The%20Caretaker%20-%20It%27s%20just%20a%20burning%20memory%20%282016%29.mp3?dl=1", 
-	"https://dl.dropbox.com/s/8bg55iwowf2jtv8/cuckoid%20-%20ponyinajar.mp3?dl=1", 
-	"https://dl.dropbox.com/s/0uly6phlgpoj4ss/1932_George_Olsen_-_Lullaby_Of_The_%28getmp3.pro%29.mp3?dl=1", 
-	"https://dl.dropbox.com/s/qfl7mu39us5hzn4/Erectin_a_River_%28getmp3.pro%29.mp3?dl=1", 
-	"https://dl.dropbox.com/s/stkat6jlp4jhpxo/Monrroe_-_Fleeting_Love_%28getmp3.pro%29.mp3?dl=1",
-	"https://dl.dropbox.com/s/vhd3il20d8ephb4/DJ_Spizdil_-_malo_tebyaHardstyle_m_%28getmp3.pro%29.mp3?dl=1", 
-	"https://dl.dropbox.com/s/2vf1lx9cnd5g9pq/Maduk_-_Vermilion_%28getmp3.pro%29.mp3?dl=1", 
-	"https://dl.dropbox.com/s/wcoo6cov1iatcao/Metrik_-_Gravity_%28getmp3.pro%29.mp3?dl=1", 
-	"https://dl.dropbox.com/s/8a91zs6woqz9bb4/Scattle_Remorse_REUPLOAD_CHECK_DE_%28getmp3.pro%29.mp3?dl=1",
-	"https://dl.dropbox.com/s/bqt4dcjoziezdjk/The_Caretaker_-_Libets_Delay_%28getmp3.pro%29.mp3?dl=1", 
-	"https://dl.dropbox.com/s/12ztoyw2rc2q0z0/HOME_-_Hold_%28getmp3.pro%29.mp3?dl=1", 
-	"https://dl.dropbox.com/s/xlk7wuel56bwrr3/T_Sugah_-_Green_Valleys_LAOS_%28getmp3.pro%29.mp3?dl=1"
-}
-
 local function MenuBorder() -- Probably a dumb way of doing this but still
 	local frame = vgui.Create("DFrame")
 	frame:SetSize(1116, 748)
@@ -1869,6 +1853,24 @@ local function AutoLoad()
 	viewmodelcol = Color(gInt("Settings", "Viewmodel Color", "Red:"), gInt("Settings", "Viewmodel Color", "Green:"), gInt("Settings", "Viewmodel Color", "Blue:"))
 end
 
+local menusongs = {
+	"https://dl.dropbox.com/s/0m22ytfia8qoy4m/Daisuke%20-%20El%20Huervo.mp3?dl=1", 
+	"https://dl.dropbox.com/s/0fdgaj0ry8uummf/Rust_%28getmp3.pro%29.mp3?dl=1", 
+	"https://dl.dropbox.com/s/vsz77wdjqy1xf83/HOME%20-%20Resonance.mp3?dl=1", 
+	"https://dl.dropbox.com/s/ovh8xt0nn6wjgjj/The%20Caretaker%20-%20It%27s%20just%20a%20burning%20memory%20%282016%29.mp3?dl=1", 
+	"https://dl.dropbox.com/s/8bg55iwowf2jtv8/cuckoid%20-%20ponyinajar.mp3?dl=1", 
+	"https://dl.dropbox.com/s/0uly6phlgpoj4ss/1932_George_Olsen_-_Lullaby_Of_The_%28getmp3.pro%29.mp3?dl=1", 
+	"https://dl.dropbox.com/s/qfl7mu39us5hzn4/Erectin_a_River_%28getmp3.pro%29.mp3?dl=1", 
+	"https://dl.dropbox.com/s/stkat6jlp4jhpxo/Monrroe_-_Fleeting_Love_%28getmp3.pro%29.mp3?dl=1",
+	"https://dl.dropbox.com/s/vhd3il20d8ephb4/DJ_Spizdil_-_malo_tebyaHardstyle_m_%28getmp3.pro%29.mp3?dl=1", 
+	"https://dl.dropbox.com/s/2vf1lx9cnd5g9pq/Maduk_-_Vermilion_%28getmp3.pro%29.mp3?dl=1", 
+	"https://dl.dropbox.com/s/wcoo6cov1iatcao/Metrik_-_Gravity_%28getmp3.pro%29.mp3?dl=1", 
+	"https://dl.dropbox.com/s/8a91zs6woqz9bb4/Scattle_Remorse_REUPLOAD_CHECK_DE_%28getmp3.pro%29.mp3?dl=1",
+	"https://dl.dropbox.com/s/bqt4dcjoziezdjk/The_Caretaker_-_Libets_Delay_%28getmp3.pro%29.mp3?dl=1", 
+	"https://dl.dropbox.com/s/12ztoyw2rc2q0z0/HOME_-_Hold_%28getmp3.pro%29.mp3?dl=1", 
+	"https://dl.dropbox.com/s/xlk7wuel56bwrr3/T_Sugah_-_Green_Valleys_LAOS_%28getmp3.pro%29.mp3?dl=1"
+}
+
 local function Menu()
 	local frame = vgui.Create("DFrame")
 	frame:SetSize(1110, 742)
@@ -1876,17 +1878,6 @@ local function Menu()
 	frame:SetTitle("")
 	frame:MakePopup()
 	frame:ShowCloseButton(false)
-	if (gBool("Miscellaneous", "Sounds", "Turn on Music")) then
-		RunConsoleCommand("stopsound")
-		idiot.sound.PlayURL(menusongs[math.random(#menusongs)], "mono", function(station)
-		if (idiot.IsValid(station)) then
-			station:Play()
-			end
-		end)
-	end
-	if (gBool("Miscellaneous", "Sounds", "Reset Sounds")) then
-		RunConsoleCommand("stopsound")
-	end
 	frame.Paint = function(self, w, h)
 		if (candoslider and not mousedown and not drawlast and not input.IsMouseDown(MOUSE_LEFT)) then
 			candoslider = false
@@ -1902,7 +1893,123 @@ local function Menu()
 		mousedown = input.IsMouseDown(MOUSE_LEFT)
 	end
 	frame.Think = function()
+		if (gBool("Miscellaneous", "Sounds", "Reset Sounds")) then
+			RunConsoleCommand("stopsound")
+		end
 		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or unloaded == true) then
+			if (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Random") then
+				RunConsoleCommand("stopsound")
+				idiot.sound.PlayURL(menusongs[math.random(#menusongs)], "mono", function(station)
+				if (idiot.IsValid(station)) then
+					station:Play()
+					end
+				end)
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Rust'") then
+				RunConsoleCommand("stopsound")
+				idiot.sound.PlayURL("https://dl.dropbox.com/s/0fdgaj0ry8uummf/Rust_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
+				if (idiot.IsValid(station)) then
+					station:Play()
+					end
+				end)
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Resonance'") then
+				RunConsoleCommand("stopsound")
+				idiot.sound.PlayURL("https://dl.dropbox.com/s/vsz77wdjqy1xf83/HOME%20-%20Resonance.mp3?dl=1", "mono", function(station)
+				if (idiot.IsValid(station)) then
+					station:Play()
+					end
+				end)
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Daisuke'") then
+				RunConsoleCommand("stopsound")
+				idiot.sound.PlayURL("https://dl.dropbox.com/s/0m22ytfia8qoy4m/Daisuke%20-%20El%20Huervo.mp3?dl=1", "mono", function(station)
+				if (idiot.IsValid(station)) then
+					station:Play()
+					end
+				end)
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'A Burning M...'") then
+				RunConsoleCommand("stopsound")
+				idiot.sound.PlayURL("https://dl.dropbox.com/s/ovh8xt0nn6wjgjj/The%20Caretaker%20-%20It%27s%20just%20a%20burning%20memory%20%282016%29.mp3?dl=1", "mono", function(station)
+				if (idiot.IsValid(station)) then
+					station:Play()
+					end
+				end)
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Libet's Delay'") then
+				RunConsoleCommand("stopsound")
+				idiot.sound.PlayURL("https://dl.dropbox.com/s/bqt4dcjoziezdjk/The_Caretaker_-_Libets_Delay_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
+				if (idiot.IsValid(station)) then
+					station:Play()
+					end
+				end)
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Lullaby Of T...'") then
+				RunConsoleCommand("stopsound")
+				idiot.sound.PlayURL("https://dl.dropbox.com/s/0uly6phlgpoj4ss/1932_George_Olsen_-_Lullaby_Of_The_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
+				if (idiot.IsValid(station)) then
+					station:Play()
+					end
+				end)
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Erectin' a River'") then
+				RunConsoleCommand("stopsound")
+				idiot.sound.PlayURL("https://dl.dropbox.com/s/qfl7mu39us5hzn4/Erectin_a_River_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
+				if (idiot.IsValid(station)) then
+					station:Play()
+					end
+				end)
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Fleeting Love'") then
+				RunConsoleCommand("stopsound")
+				idiot.sound.PlayURL("https://dl.dropbox.com/s/stkat6jlp4jhpxo/Monrroe_-_Fleeting_Love_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
+				if (idiot.IsValid(station)) then
+					station:Play()
+					end
+				end)
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Malo Tebya'") then
+				RunConsoleCommand("stopsound")
+				idiot.sound.PlayURL("https://dl.dropbox.com/s/vhd3il20d8ephb4/DJ_Spizdil_-_malo_tebyaHardstyle_m_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
+				if (idiot.IsValid(station)) then
+					station:Play()
+					end
+				end)
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Vermilion'") then
+				RunConsoleCommand("stopsound")
+				idiot.sound.PlayURL("https://dl.dropbox.com/s/2vf1lx9cnd5g9pq/Maduk_-_Vermilion_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
+				if (idiot.IsValid(station)) then
+					station:Play()
+					end
+				end)
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Gravity'") then
+				RunConsoleCommand("stopsound")
+				idiot.sound.PlayURL("https://dl.dropbox.com/s/wcoo6cov1iatcao/Metrik_-_Gravity_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
+				if (idiot.IsValid(station)) then
+					station:Play()
+					end
+				end)
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Remorse'") then
+				RunConsoleCommand("stopsound")
+				idiot.sound.PlayURL("https://dl.dropbox.com/s/8a91zs6woqz9bb4/Scattle_Remorse_REUPLOAD_CHECK_DE_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
+				if (idiot.IsValid(station)) then
+					station:Play()
+					end
+				end)
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Hold'") then
+				RunConsoleCommand("stopsound")
+				idiot.sound.PlayURL("https://dl.dropbox.com/s/12ztoyw2rc2q0z0/HOME_-_Hold_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
+				if (idiot.IsValid(station)) then
+					station:Play()
+					end
+				end)
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Green Valleys'") then
+				RunConsoleCommand("stopsound")
+				idiot.sound.PlayURL("https://dl.dropbox.com/s/xlk7wuel56bwrr3/T_Sugah_-_Green_Valleys_LAOS_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
+				if (idiot.IsValid(station)) then
+					station:Play()
+					end
+				end)
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'FP3'") then
+				RunConsoleCommand("stopsound")
+				idiot.sound.PlayURL("https://dl.dropbox.com/s/8bg55iwowf2jtv8/cuckoid%20-%20ponyinajar.mp3?dl=1", "mono", function(station)
+				if (idiot.IsValid(station)) then
+					station:Play()
+					end
+				end)
+			end
 			frame:Remove()
 			menuopen = false
 			candoslider = false
@@ -2794,7 +2901,7 @@ hook.Add("RenderScene", "Hook0", function(origin, angle, fov)
 		render.SuppressEngineLighting(false)
 		render.ResetModelLighting(1, 1, 1)
 	end
-	render.SetLightingMode(gBool("Miscellaneous", "Textures", "Light Mode") and 1 or 0)
+	render.SetLightingMode(gBool("Miscellaneous", "Textures", "Bright Mode") and 1 or 0)
 	local view = {
 		x = 0,
 		y = 0,
@@ -4505,7 +4612,7 @@ hook.Add("RenderScreenspaceEffects", "Hook12", function()
 	if (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then return end
 	if menuopen then return end
 		for k, v in next, player.GetAll() do
-		if (not em.IsValid(v) or em.Health(v) < 1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (!gBool("Miscellaneous", "Point of View", "Thirdperson") and !gOption("Visuals", "Wallhack", "Visibility:") == "Clientside" and v == me or gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) then continue end
+		if (not em.IsValid(v) or em.Health(v) < 1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (!(gBool("Miscellaneous", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) then continue end
 		if (not WallhackFilter(v)) then continue end
 		if (not EnemyWallhackFilter(v)) then continue end
 		Chams(v)
@@ -4567,7 +4674,7 @@ end
 hook.Add("DrawOverlay", "Hook13", function()
 	if (gBool("Visuals", "Wallhack", "Enabled") && (!gui.IsGameUIVisible()) && (!gui.IsConsoleVisible()) && (!(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible())) && !menuopen) then
 		for k, v in next, player.GetAll() do
-		if ((!gBool("Miscellaneous", "Point of View", "Thirdperson") and !gOption("Visuals", "Wallhack", "Visibility:") == "Clientside" and v == me or gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or not em.IsValid(v) or em.Health(v) < 0.1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) then continue end
+		if ((!(gBool("Miscellaneous", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or not em.IsValid(v) or em.Health(v) < 0.1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) then continue end
 		if not WallhackFilter(v) then continue end
 		if not EnemyWallhackFilter(v) then continue end
 			Visuals(v)
@@ -4584,7 +4691,7 @@ hook.Add("DrawOverlay", "Hook13", function()
 	end
 	for k, v in next, ents.GetAll() do
 	if (v:IsDormant() and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or not v:IsValid() then continue end
-	if not WallhackFilter(v) or not OnScreen(v) or (!gBool("Miscellaneous", "Point of View", "Thirdperson") and !gOption("Visuals", "Wallhack", "Visibility:") == "Clientside" and v == me or gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) then continue end
+	if not WallhackFilter(v) or not OnScreen(v) or (!(gBool("Miscellaneous", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) then continue end
 	if (gBool("Visuals", "Miscellaneous", "Show Entities") && (!gui.IsGameUIVisible()) && (!gui.IsConsoleVisible()) && (!(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible())) && !menuopen) then
 	if table.HasValue(drawn_ents, v:GetClass()) and v:IsValid() and v:GetPos():Distance(me:GetPos()) > 40 then
 				local pos = em.GetPos(v) + Vector(0, 0, 0)
