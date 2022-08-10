@@ -222,8 +222,9 @@ local options = {
 		}, 
         ["Visuals"] = {
                 {
-					{"Wallhack", 16, 20, 347, 550, 218}, 
+					{"Wallhack", 16, 20, 347, 570, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
+					{"Visibility:", "Selection", "Global", {"Global", "Clientside"}, 92}, 
 					{"Box:", "Selection", "Off", {"Off", "2D Box", "3D Box", "Edged Box"}, 92}, 
 					{"Chams:", "Selection", "Off", {"Off", "Normal", "Playermodel"}, 92}, 
 					{"Skeleton", "Checkbox", false, 78}, 
@@ -1323,6 +1324,7 @@ local function Changelog()
 	print("- Added 'Bystander Name' to Visuals;")
 	print("- Added 'NPCs' to Visuals;")
 	print("- Added 'Frozen Players' to Aim Priorities;")
+	print("- Added 'Clientside' to Wallhack;")
 	print("- Added more music to Sounds;")
 	print("- Reworked 'Bunny Hop' from scratch;")
 	print("- Reworked 'Auto Wallbang' from Aimbot;")
@@ -1733,9 +1735,11 @@ local menusongs = {
 	"https://dl.dropbox.com/s/8bg55iwowf2jtv8/cuckoid%20-%20ponyinajar.mp3?dl=1", 
 	"https://dl.dropbox.com/s/0uly6phlgpoj4ss/1932_George_Olsen_-_Lullaby_Of_The_%28getmp3.pro%29.mp3?dl=1", 
 	"https://dl.dropbox.com/s/qfl7mu39us5hzn4/Erectin_a_River_%28getmp3.pro%29.mp3?dl=1", 
+	"https://dl.dropbox.com/s/stkat6jlp4jhpxo/Monrroe_-_Fleeting_Love_%28getmp3.pro%29.mp3?dl=1",
 	"https://dl.dropbox.com/s/vhd3il20d8ephb4/DJ_Spizdil_-_malo_tebyaHardstyle_m_%28getmp3.pro%29.mp3?dl=1", 
 	"https://dl.dropbox.com/s/2vf1lx9cnd5g9pq/Maduk_-_Vermilion_%28getmp3.pro%29.mp3?dl=1", 
 	"https://dl.dropbox.com/s/wcoo6cov1iatcao/Metrik_-_Gravity_%28getmp3.pro%29.mp3?dl=1", 
+	"https://dl.dropbox.com/s/8a91zs6woqz9bb4/Scattle_Remorse_REUPLOAD_CHECK_DE_%28getmp3.pro%29.mp3?dl=1",
 	"https://dl.dropbox.com/s/bqt4dcjoziezdjk/The_Caretaker_-_Libets_Delay_%28getmp3.pro%29.mp3?dl=1", 
 	"https://dl.dropbox.com/s/12ztoyw2rc2q0z0/HOME_-_Hold_%28getmp3.pro%29.mp3?dl=1", 
 	"https://dl.dropbox.com/s/xlk7wuel56bwrr3/T_Sugah_-_Green_Valleys_LAOS_%28getmp3.pro%29.mp3?dl=1"
@@ -3379,19 +3383,15 @@ local function GetChamsColor(v)
     return(Color(r, g, b, 220))
 end
 
-local chamsmat = CreateMaterial("a", "VertexLitGeneric", {
-	["$ignorez"] = 1, 
-	["$model"] = 1, 
-	["$basetexture"] = "models/debug/debugwhite", 
-})
-
-local chamsmat2 = CreateMaterial("@", "VertexLitGeneric", {
-	["$ignorez"] = 0, 
-	["$model"] = 1, 
-	["$basetexture"] = "models/debug/debugwhite", 
-})
-
 local function Chams(v)
+	local chamsmat = CreateMaterial("a", "VertexLitGeneric", {
+		["$ignorez"] = 1, 
+		["$basetexture"] = "models/debug/debugwhite", 
+	})
+	local chamsmat2 = CreateMaterial("aa", "VertexLitGeneric", {
+		["$ignorez"] = 0, 
+		["$basetexture"] = "models/debug/debugwhite", 
+	})
 	local col = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetChamsColor(v)
 	local wep = v:GetActiveWeapon()
 	if (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
@@ -3449,7 +3449,7 @@ end
 
 local circlestrafeval = 0
 
-local forwardspeedvar = idiot.GetConVar("cl_forwardspeed")
+local forwardspeedvar = GetConVar("cl_forwardspeed")
 
 local forwardspeedval = 10000
 
@@ -4447,7 +4447,7 @@ hook.Add("RenderScreenspaceEffects", "Hook12", function()
 	if (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then return end
 	if menuopen then return end
 		for k, v in next, player.GetAll() do
-		if (not em.IsValid(v) or em.Health(v) < 1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or v == me or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) then continue end
+		if (not em.IsValid(v) or em.Health(v) < 1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (!gBool("Miscellaneous", "Point of View", "Thirdperson") and !gOption("Visuals", "Wallhack", "Visibility:") == "Clientside" and v == me or gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) then continue end
 		if (not WallhackFilter(v)) then continue end
 		if (not EnemyWallhackFilter(v)) then continue end
 		Chams(v)
@@ -4509,7 +4509,7 @@ end
 hook.Add("DrawOverlay", "Hook13", function()
 	if (gBool("Visuals", "Wallhack", "Enabled") && (!gui.IsGameUIVisible()) && (!gui.IsConsoleVisible()) && (!(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible())) && !menuopen) then
 		for k, v in next, player.GetAll() do
-		if (v == me or not em.IsValid(v) or em.Health(v) < 0.1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) then continue end
+		if ((!gBool("Miscellaneous", "Point of View", "Thirdperson") and !gOption("Visuals", "Wallhack", "Visibility:") == "Clientside" and v == me or gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or not em.IsValid(v) or em.Health(v) < 0.1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) then continue end
 		if not WallhackFilter(v) then continue end
 		if not EnemyWallhackFilter(v) then continue end
 			Visuals(v)
@@ -4526,7 +4526,7 @@ hook.Add("DrawOverlay", "Hook13", function()
 	end
 	for k, v in next, ents.GetAll() do
 	if (v:IsDormant() and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or not v:IsValid() then continue end
-	if not WallhackFilter(v) or not OnScreen(v) or v == me then continue end
+	if not WallhackFilter(v) or not OnScreen(v) or (!gBool("Miscellaneous", "Point of View", "Thirdperson") and !gOption("Visuals", "Wallhack", "Visibility:") == "Clientside" and v == me or gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) then continue end
 	if (gBool("Visuals", "Miscellaneous", "Show Entities") && (!gui.IsGameUIVisible()) && (!gui.IsConsoleVisible()) && (!(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible())) && !menuopen) then
 	if table.HasValue(drawn_ents, v:GetClass()) and v:IsValid() and v:GetPos():Distance(me:GetPos()) > 40 then
 				local pos = em.GetPos(v) + Vector(0, 0, 0)
