@@ -319,12 +319,14 @@ local options = {
 					{"Mode:", "Selection", "Disable All", {"Disable Ragebot", "Disable Legitbot", "Disable Anti-Aim", "Disable All"}, 92}, 
                 }, 
 				{
-          			{"Menus", 736, 20, 347, 80, 218}, 
+          			{"Menus", 736, 20, 347, 120, 218}, 
 					{"Entity Menu", "Button", "", 92}, 
 					{"Plugin Loader", "Button", "", 92}, 
+					{"Menu Style:", "Selection", "Borders", {"Borders", "Borderless"}, 92}, 
+					{"Options Style:", "Selection", "Borderless", {"Borders", "Borderless"}, 92}, 
           		}, 
 				{
-          			{"Others", 736, 113, 347, 80, 218}, 
+          			{"Others", 736, 153, 347, 80, 218}, 
 					{"Print Changelog", "Button", "", 92}, 
 					{"Unload Cheat", "Button", "", 92}, 
           		}, 
@@ -478,7 +480,7 @@ local options = {
 				{
 					{"Others", 321, 380, 205, 157, 70}, 
 					{"T Opacity:", "Slider", 255, 255, 88}, 
-					{"B Opacity:", "Slider", 255, 255, 88}, 
+					{"B Opacity:", "Slider", 155, 255, 88}, 
 					{"BG Opacity:", "Slider", 255, 255, 88}, 
 					{"BG Darkness:", "Slider", 18, 25, 88}, 
 					{"Roundness:", "Slider", 57, 67, 88}, 
@@ -1325,6 +1327,7 @@ local function Changelog()
 	print("- Added 'NPCs' to Visuals;")
 	print("- Added 'Frozen Players' to Aim Priorities;")
 	print("- Added 'Clientside' to Wallhack;")
+	print("- Added bordered menu styles;")
 	print("- Added more music to Sounds;")
 	print("- Reworked 'Bunny Hop' from scratch;")
 	print("- Reworked 'Auto Wallbang' from Aimbot;")
@@ -1684,13 +1687,14 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 end
 
 local function DrawSubSub(self, w, h, k, var)
+	if gOption("Utilities", "Menus", "Options Style:") == "Borders" then
 	local opt, posx, posy, sizex, sizey, dist = var[1][1], var[1][2], var[1][3], var[1][4], var[1][5], var[1][6]
 	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:"))
 	local startpos = 61 + posy
 	surface.SetTextColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "T Opacity:"))
 	surface.SetFont("MenuFont")
 	local tw, th = surface.GetTextSize(opt)
-	surface.SetDrawColor(bgmenucol.r + 10, bgmenucol.g + 10, bgmenucol.b + 10, gInt("Settings", "Others", "BG Opacity:"));
+	surface.SetDrawColor(bgmenucol.r + 13, bgmenucol.g + 13, bgmenucol.b + 13, gInt("Settings", "Others", "BG Opacity:"));
 	surface.DrawRect(5 + posx, startpos, sizex, sizey);
 	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:"))
 	surface.DrawLine(5 + posx, startpos, 5 + posx + 15, startpos)
@@ -1715,6 +1719,40 @@ local function DrawSubSub(self, w, h, k, var)
 				DrawButton(self, w, h, v, maxy, posx, posy, dist)
 			end
 		maxy = maxy + 25
+		end
+	elseif gOption("Utilities", "Menus", "Options Style:") == "Borderless" then
+	local opt, posx, posy, sizex, sizey, dist = var[1][1], var[1][2], var[1][3], var[1][4], var[1][5], var[1][6]
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 0)
+	local startpos = 61 + posy
+	surface.SetTextColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetFont("MenuFont")
+	local tw, th = surface.GetTextSize(opt)
+	surface.SetDrawColor(bgmenucol.r + 13, bgmenucol.g + 13, bgmenucol.b + 13, gInt("Settings", "Others", "BG Opacity:"));
+	surface.DrawRect(5 + posx, startpos, sizex, sizey);
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 0)
+	surface.DrawLine(5 + posx, startpos, 5 + posx + 15, startpos)
+	surface.SetTextPos(5 + posx + 15 + 5, startpos - th / 2)
+	surface.DrawLine(5 + posx + 15 + 5 + tw + 5, startpos, 5 + posx + sizex, startpos)
+	surface.DrawLine(5 + posx, startpos, 5 + posx, startpos + sizey)
+	surface.DrawLine(5 + posx, startpos + sizey, 5 + posx + sizex, startpos + sizey)
+	surface.DrawLine(5 + posx + sizex, startpos, 5 + posx + sizex, startpos + sizey)
+	surface.DrawText(opt)
+	local maxy = 15
+	for k, v in next, var do
+		if (k == 1) then continue end
+			if (v[2] == "Checkbox") then
+				DrawCheckbox(self, w, h, v, maxy, posx, posy, dist)
+			elseif (v[2] == "Slider") then
+				DrawSlider(self, w, h, v, maxy, posx, posy, dist)
+			elseif (v[2] == "Selection") then
+				DrawSelect(self, w, h, v, maxy, posx, posy, dist)
+			elseif(v[2] == "Toggle") then
+				DrawToggle(self, w, h, v, maxy, posx, posy, dist)
+			elseif v[2] == "Button" then
+				DrawButton(self, w, h, v, maxy, posx, posy, dist)
+			end
+		maxy = maxy + 25
+		end
 	end
 end
 
@@ -1752,13 +1790,17 @@ local function MenuBorder() -- Probably a dumb way of doing this but still
 	frame:SetTitle("")
 	frame:MakePopup()
 	frame:ShowCloseButton(false)
-	frame.Paint = function(self, w, h)
-	draw.RoundedBox(gInt("Settings", "Others", "Roundness:"), 0, 0, w, h, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:")))
-	end
+		frame.Paint = function(self, w, h)
+			if gOption("Utilities", "Menus", "Menu Style:") == "Borders" then
+				draw.RoundedBox(gInt("Settings", "Others", "Roundness:"), 0, 0, w, h, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:")))
+			elseif gOption("Utilities", "Menus", "Menu Style:") == "Borderless" then
+				draw.RoundedBox(gInt("Settings", "Others", "Roundness:"), 0, 0, w, h, Color(bordercol.r, bordercol.g, bordercol.b, 0))
+			end
+		end
 	frame.Think = function()
 		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or unloaded == true) then
-		frame:Remove()
-		menuopen = false
+			frame:Remove()
+			menuopen = false
 		end
 	end
 end
@@ -2394,7 +2436,11 @@ local function EntityName()
 end
 
 local function Logo()
-	draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Custom Status X:") - 1, gInt("Settings", "List Positions", "Custom Status Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:")))
+	if gOption("Utilities", "Menus", "Menu Style:") == "Borders" then
+		draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Custom Status X:") - 1, gInt("Settings", "List Positions", "Custom Status Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:")))
+	elseif gOption("Utilities", "Menus", "Menu Style:") == "Borderless" then
+		draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Custom Status X:") - 1, gInt("Settings", "List Positions", "Custom Status Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, 0))
+	end
 	draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Custom Status X:") + 1, gInt("Settings", "List Positions", "Custom Status Y:") - 23, 88, 20, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Settings", "Others", "BG Opacity:")))
 	draw.DrawText("Status", "MiscFont2", gInt("Settings", "List Positions", "Custom Status X:") + 45, gInt("Settings", "List Positions", "Custom Status Y:") - 22, Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Settings", "Others", "T Opacity:")), TEXT_ALIGN_CENTER)
 end
@@ -2477,7 +2523,11 @@ local function Spectator()
 	local color4 = (Color(0, 131, 125, gInt("Settings", "Others", "T Opacity:")))
 	local hudspecslength = 150
 	specscount = 0
-	draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Spectators X:") - 1, gInt("Settings", "Window Positions", "Spectators Y:") - 3, radarWidth + 6, radarHeight + 6, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:")))
+	if gOption("Utilities", "Menus", "Menu Style:") == "Borders" then
+		draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Spectators X:") - 1, gInt("Settings", "Window Positions", "Spectators Y:") - 3, radarWidth + 6, radarHeight + 6, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:")))
+	elseif gOption("Utilities", "Menus", "Menu Style:") == "Borderless" then
+		draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Spectators X:") - 1, gInt("Settings", "Window Positions", "Spectators Y:") - 3, radarWidth + 6, radarHeight + 6, Color(bordercol.r, bordercol.g, bordercol.b, 0))
+	end
 	draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Spectators X:") + 2, gInt("Settings", "Window Positions", "Spectators Y:"), radarWidth, radarHeight, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Settings", "Others", "BG Opacity:")))
 	draw.SimpleText("Spectators", "MiscFont2", gInt("Settings", "Window Positions", "Spectators X:") + 102, gInt("Settings", "Window Positions", "Spectators Y:") + 11, color3, 1, 1)
 	for k, v in pairs(player.GetAll()) do
@@ -2518,7 +2568,11 @@ local radarX, radarY, radarWidth, radarHeight = 50, ScrH() / 3, 200, 200
 local function RadarDraw()
 	local col = Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Settings", "Others", "T Opacity:"))
 	local everything = ents.GetAll()
-	draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Radar X:") - 1, gInt("Settings", "Window Positions", "Radar Y:") - 3, radarWidth + 6, radarHeight + 6, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:")))
+	if gOption("Utilities", "Menus", "Menu Style:") == "Borders" then
+		draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Radar X:") - 1, gInt("Settings", "Window Positions", "Radar Y:") - 3, radarWidth + 6, radarHeight + 6, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:")))
+	elseif gOption("Utilities", "Menus", "Menu Style:") == "Borderless" then
+		draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Radar X:") - 1, gInt("Settings", "Window Positions", "Radar Y:") - 3, radarWidth + 6, radarHeight + 6, Color(bordercol.r, bordercol.g, bordercol.b, 0))
+	end
 	draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Radar X:") + 2, gInt("Settings", "Window Positions", "Radar Y:"), radarWidth, radarHeight, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Settings", "Others", "BG Opacity:")))
 	draw.SimpleText("Radar", "MiscFont2", gInt("Settings", "Window Positions", "Radar X:") + 102, gInt("Settings", "Window Positions", "Radar Y:") + 11, col, 1, 1)
 	draw.NoTexture()
@@ -2547,7 +2601,11 @@ local function RadarDraw()
 end
 
 local function Logo2()
-	draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Players List X:") - 1, gInt("Settings", "List Positions", "Players List Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:")))
+	if gOption("Utilities", "Menus", "Menu Style:") == "Borders" then
+		draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Players List X:") - 1, gInt("Settings", "List Positions", "Players List Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:")))
+	elseif gOption("Utilities", "Menus", "Menu Style:") == "Borderless" then
+		draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Players List X:") - 1, gInt("Settings", "List Positions", "Players List Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, 0))
+	end
 	draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Players List X:") + 1, gInt("Settings", "List Positions", "Players List Y:") - 23, 88, 20, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Settings", "Others", "BG Opacity:")))
 	draw.DrawText("Players", "MiscFont2", gInt("Settings", "List Positions", "Players List X:") + 47, gInt("Settings", "List Positions", "Players List Y:") - 22, Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Settings", "Others", "T Opacity:")), TEXT_ALIGN_CENTER)
 end
@@ -3588,7 +3646,7 @@ local fixmovement
 local function DirectionalStrafe(pCmd)
 	if !fixmovement then fixmovement = cm.GetViewAngles(pCmd) end
 	fixmovement = fixmovement + Angle(cm.GetMouseY(pCmd) * GetConVarNumber("m_pitch"), cm.GetMouseX(pCmd) * -GetConVarNumber("m_yaw"))
-	fixmovement.x = math.Clamp(fixmovement.x, -89, 89)
+	fixmovement.x = math.Clamp(fixmovement.x, -0, 0)
     fixmovement.y = math.NormalizeAngle(fixmovement.y)
     fixmovement.z = 0
 		if !me:IsOnGround() && pCmd:KeyDown(IN_JUMP) then
