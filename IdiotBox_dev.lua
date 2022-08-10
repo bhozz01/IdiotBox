@@ -480,7 +480,7 @@ local options = {
                 }, 
 				{
 					{"Others", 321, 380, 205, 157, 70}, 
-					{"T Opacity:", "Slider", 255, 255, 88}, 
+					{"T Opacity:", "Slider", 205, 255, 88}, 
 					{"B Opacity:", "Slider", 125, 255, 88}, 
 					{"BG Opacity:", "Slider", 255, 255, 88}, 
 					{"BG Darkness:", "Slider", 18, 25, 88}, 
