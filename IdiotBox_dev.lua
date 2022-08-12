@@ -3763,7 +3763,7 @@ local function DirectionalStrafe(pCmd)
 	if !me:IsOnGround() && pCmd:KeyDown(IN_JUMP) then
 		pCmd:RemoveKey(IN_JUMP)
 			local get_velocity_degree = function(velocity)
-            local tmp = math.deg(math.atan(30.0 / velocity))     
+            local tmp = math.deg(math.atan(30.0 / velocity))
             if (tmp > 90.0) then
                 return 90.0
             elseif (tmp < 0.0) then
