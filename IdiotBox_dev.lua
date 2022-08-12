@@ -116,7 +116,7 @@ local options = {
 					{"Target Lock", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Aim Priorities", 376, 20, 347, 535, 218}, 
+					{"Aim Priorities", 376, 20, 347, 560, 218}, 
 					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Projectile Prediction", "Checkbox", false, 78}, 
 					{"Disable in Noclip", "Checkbox", false, 78}, 
@@ -124,6 +124,7 @@ local options = {
 					{"Aim Priority:", "Selection", "Crosshair", {"Crosshair", "Distance", "Health", "Random"}, 92}, 
 					{"Players:", "Checkbox", true, 78}, -- Enabled by default
 					{"Team:", "Checkbox", true, 78}, -- Enabled by default
+					{"Enemies:", "Checkbox", true, 78}, -- Enabled by default
 					{"Friends:", "Checkbox", false, 78}, 
 					{"Bots:", "Checkbox", false, 78}, 
 					{"NPCs:", "Checkbox", false, 78}, 
@@ -167,12 +168,13 @@ local options = {
 					{"Fire Delay:", "Slider", 0, 100, 92}, 
                 }, 
 				{
-					{"Aim Priorities", 736, 20, 347, 370, 218}, 
+					{"Aim Priorities", 736, 20, 347, 400, 218}, 
 					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Disable in Noclip", "Checkbox", false, 78}, 
 					{"Hitbox:", "Selection", "Body", {"Head", "Body"}, 92}, 
 					{"Players:", "Checkbox", true, 78}, -- Enabled by default
 					{"Team:", "Checkbox", true, 78}, -- Enabled by default
+					{"Enemies:", "Checkbox", true, 78}, -- Enabled by default
 					{"Friends:", "Checkbox", false, 78}, 
 					{"Bots:", "Checkbox", false, 78}, 
 					{"NPCs:", "Checkbox", false, 78}, 
@@ -189,7 +191,7 @@ local options = {
 					{"Anti-Aim", 16, 20, 347, 450, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Disable in Noclip", "Checkbox", true, 78}, -- Enabled by default
-					{"Disable with 'E' Key", "Checkbox", true, 78}, -- Enabled by default
+					{"Disable in Physgun Rotation", "Checkbox", true, 78}, -- Enabled by default
 					{"Wall Detect", "Checkbox", false, 78}, 
 					{"View Lock", "Checkbox", false, 78}, 
 					{"Static", "Checkbox", false, 78}, 
@@ -275,29 +277,29 @@ local options = {
 		["Utilities"] = {
 				{
 					{"General Utilities", 16, 20, 347, 124, 218}, 
-					{"Optimize Game", "Checkbox", true, 78}, -- Enabled by default
+					{"Optimize Game", "Checkbox", false, 78}, 
 					{"Anti-AFK", "Checkbox", false, 78}, 
-					{"Anti-Ads", "Checkbox", true, 78}, -- Enabled by default
-					{"Anti-Blind", "Checkbox", true, 78}, -- Enabled by default
+					{"Anti-Ads", "Checkbox", false, 78}, 
+					{"Anti-Blind", "Checkbox", false, 78}, 
                 }, 
 				{
 					{"Trouble in Terrorist Town Utilities", 16, 157, 347, 125, 218}, 
-					{"Hide Round Report", "Checkbox", true, 78}, -- Enabled by default
-					{"Panel Remover", "Checkbox", true, 78}, -- Enabled by default
+					{"Hide Round Report", "Checkbox", false, 78}, 
+					{"Panel Remover", "Checkbox", false, 78}, 
 					{"Prop Kill", "Checkbox", false, 78}, 
 					{"Prop Kill Key:", "Toggle", 0, 92, 0}, 
 				}, 
 				{
 					{"DarkRP Utilities", 16, 296, 347, 103, 218}, 
-					{"Suicide Near Arrest Batons", "Checkbox", true, 78}, -- Enabled by default
+					{"Suicide Near Arrest Batons", "Checkbox", false, 78}, 
 					{"Transparent Props", "Checkbox", false, 78}, 
 					{"Transparency:", "Slider", 157, 255, 92}, 
 				}, 
 				{
 					{"Murder Utilities", 16, 413, 347, 100, 218}, 
-					{"Hide End Round Board", "Checkbox", true, 78}, -- Enabled by default
-					{"Hide Footprints", "Checkbox", true, 78}, -- Enabled by default
-					{"No Black Screens", "Checkbox", true, 78}, -- Enabled by default
+					{"Hide End Round Board", "Checkbox", false, 78}, 
+					{"Hide Footprints", "Checkbox", false, 78}, 
+					{"No Black Screens", "Checkbox", false, 78}, 
 				}, 
 				{
           			{"Configurations", 376, 20, 347, 150, 218}, 
@@ -1328,6 +1330,7 @@ local function Changelog()
 	print("- Added 'Bystander Name' to Visuals;")
 	print("- Added 'NPCs' to Visuals;")
 	print("- Added 'Frozen Players' to Aim Priorities;")
+	print("- Added 'Enemies' to Aim Priorities;")
 	print("- Added 'Clientside' to Wallhack;")
 	print("- Added bordered menu styles;")
 	print("- Added more music to Sounds;")
@@ -4864,6 +4867,9 @@ local function Valid(v)
 	if !gBool("Aimbot", "Aim Priorities", "Team:") then
         if pm.Team(v) == pm.Team(me) then return false end
     end
+	if !gBool("Aimbot", "Aim Priorities", "Enemies:") then
+        if pm.Team(v) != pm.Team(me) then return false end
+    end
 	if !gBool("Aimbot", "Aim Priorities", "Transparent Players:") then
         if em.GetColor(v).a < 255 then return false end
     end
@@ -5206,6 +5212,9 @@ local function Triggerbot(pCmd)
 	end
 	if !gBool("Triggerbot", "Aim Priorities", "Team:") then
     if pm.Team(v) == pm.Team(me) then return false end
+    end
+	if !gBool("Triggerbot", "Aim Priorities", "Enemies:") then
+    if pm.Team(v) != pm.Team(me) then return false end
     end
 	if !gBool("Triggerbot", "Aim Priorities", "Transparent Players:") then
     if em.GetColor(v).a < 255 then return false end
@@ -5605,7 +5614,7 @@ local function AntiAim(pCmd)
 	if (gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable Anti-Aim" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me) then return end
 	end
 	local wep = pm.GetActiveWeapon(me)
-	if (gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP || me:Team() == TEAM_SPECTATOR || idiot.Triggering == true || (cm.CommandNumber(pCmd) == 0 && !gBool("Miscellaneous", "Point of View", "Thirdperson")) || cm.KeyDown(pCmd, 1) || gBool("Miscellaneous", "Point of View", "Custom FoV") && gBool("Miscellaneous", "Free Roaming", "Enabled") && gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") && !gBool("Miscellaneous", "Point of View", "Thirdperson") || me:WaterLevel() > 1 || input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable with 'E' Key") || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aimbot", "Legitbot", "Enabled") && !gBool("Aimbot", "Legitbot", "Silent (For Anti-Aim)") || gBool("Utilities", "Trouble in Terrorist Town Utilities", "Prop Kill") && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" && idiot.engine.ActiveGamemode() == "terrortown") then return end
+	if (gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP || me:Team() == TEAM_SPECTATOR || idiot.Triggering == true || (cm.CommandNumber(pCmd) == 0 && !gBool("Miscellaneous", "Point of View", "Thirdperson")) || cm.KeyDown(pCmd, 1) || gBool("Miscellaneous", "Point of View", "Custom FoV") && gBool("Miscellaneous", "Free Roaming", "Enabled") && gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") && !gBool("Miscellaneous", "Point of View", "Thirdperson") || me:WaterLevel() > 1 || input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable in Physgun Rotation") || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aimbot", "Legitbot", "Enabled") && !gBool("Aimbot", "Legitbot", "Silent (For Anti-Aim)") || gBool("Utilities", "Trouble in Terrorist Town Utilities", "Prop Kill") && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" && idiot.engine.ActiveGamemode() == "terrortown") then return end
 	if gOption("Hack vs. Hack", "Anti-Aim", "Anti-Aim Direction:") == "Manual Switch" then
 	if gKey("Hack vs. Hack", "Anti-Aim", "Switch Key:") and not manualpressed then
 	manualpressed = true
