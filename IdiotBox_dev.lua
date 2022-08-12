@@ -3760,9 +3760,9 @@ local function DirectionalStrafe(pCmd)
 	fixmovement.x = math.Clamp(fixmovement.x, - 89, 89)
     fixmovement.y = math.NormalizeAngle(fixmovement.y)
     fixmovement.z = 0
-		if !me:IsOnGround() && pCmd:KeyDown(IN_JUMP) then
-			pCmd:RemoveKey(IN_JUMP)
-        local get_velocity_degree = function(velocity)
+	if !me:IsOnGround() && pCmd:KeyDown(IN_JUMP) then
+		pCmd:RemoveKey(IN_JUMP)
+			local get_velocity_degree = function(velocity)
             local tmp = math.deg(math.atan(30.0 / velocity))     
             if (tmp > 90.0) then
                 return 90.0
