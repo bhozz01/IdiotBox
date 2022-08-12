@@ -3672,7 +3672,7 @@ local timeHoldingSpaceOnGround = 0
 local function BunnyHop(pCmd)
 	if me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) then return end
 	if not me:Alive() or me:Health() < 1 then return end
-	if gBool("Miscellaneous", "Movement", "Bunny Hop") and gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Off" and not gBool("Miscellaneous", "Movement", "Circle Strafe") then 
+	if gBool("Miscellaneous", "Movement", "Bunny Hop") and not gBool("Miscellaneous", "Movement", "Circle Strafe") then 
     local badmovetypes = {
         [MOVETYPE_NOCLIP] = true,
         [MOVETYPE_LADDER] = true,
@@ -3760,8 +3760,7 @@ local function DirectionalStrafe(pCmd)
 	fixmovement.x = math.Clamp(fixmovement.x, - 89, 89)
     fixmovement.y = math.NormalizeAngle(fixmovement.y)
     fixmovement.z = 0
-		if !me:IsOnGround() && pCmd:KeyDown(IN_JUMP) then
-			pCmd:RemoveKey(IN_JUMP)
+		if !pCmd:KeyDown(IN_JUMP) then return end
         local get_velocity_degree = function(velocity)
             local tmp = math.deg(math.atan(30.0 / velocity))     
             if (tmp > 90.0) then
@@ -3838,9 +3837,6 @@ local function DirectionalStrafe(pCmd)
             pCmd:SetForwardMove(math.cos(yaw) * speed)
         end
 		pCmd:SetSideMove(math.sin(yaw) * speed)
-	elseif pCmd:KeyDown(IN_JUMP) then
-		pCmd:SetForwardMove(10000)
-	end
 end
 
 local function AutoStrafe(pCmd)
@@ -5060,51 +5056,51 @@ local function PredictPos(aimtarget)
 			end
 		elseif string.find(string.lower(wep:GetClass()), "m9k_rpg7") or string.find(string.lower(me:GetActiveWeapon():GetClass()), "m9k_m202") then
 			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 2600 then
-				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4500) + me:Ping() / 950) - Vector(0, 0, 25) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4500) + me:Ping() / 950) - Vector(0, 0, 25) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 4000 then
-				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			else
 				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 90) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			end
 		elseif string.find(string.lower(wep:GetClass()), "m9k_ex41") or string.find(string.lower(wep:GetClass()), "m9k_m79gl") then
 			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 1100 then
-				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2550) + me:Ping() / 950) - Vector(0, 0, 25) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2550) + me:Ping() / 950) - Vector(0, 0, 25) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 4000 then
-				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2130) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 35) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2130) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 35) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 7000 then
-				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2130) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 13) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2130) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 13) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			else
-				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2670) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 6) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2670) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 6) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			end
 		elseif string.find(string.lower(wep:GetClass()), "m9k_matador") then
 			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 2600 then
-				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 6500) + me:Ping() / 950) - Vector(0, 0, 25) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 6500) + me:Ping() / 950) - Vector(0, 0, 25) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 4000 then
-				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 6500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 6500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			else
-				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 6500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 90) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 6500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 90) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			end
 		elseif string.find(string.lower(wep:GetClass()), "m9k_milkormgl") then
 			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 1100 then
-				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2500) + me:Ping() / 950) - Vector(0, 0, 25) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2500) + me:Ping() / 950) - Vector(0, 0, 25) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 4000 then
-				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2000) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 43) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2000) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 43) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 7000 then
-				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2460) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 38) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2460) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 38) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			else
-				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2580) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 17.5) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2580) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 17.5) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			end
 		elseif string.find(string.lower(wep:GetClass()), "m9k_m61_frag") then
-			return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 650) + me:Ping() / 950) - Vector(0, 0, 225) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4) - em.GetVelocity(me) / 50) - em.EyePos(me)
+			return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 650) + me:Ping() / 950) - Vector(0, 0, 225) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4) - em.GetVelocity(me) / 50) - em.EyePos(me)
 		elseif string.find(string.lower(wep:GetClass()), "m9k_harpoon") then
 			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 1200 then
-				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2300) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 20) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2300) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 20) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 1750 then
-				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2000) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 8) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 2000) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 8) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 2000 then
-				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 1500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 5) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 1500) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 5) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			else
-				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 900) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 3) - em.GetVelocity(me) / 50) - em.EyePos(me)
+				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 900) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 3) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			end
 		else
 			return AimPos(aimtarget) - em.EyePos(me)
