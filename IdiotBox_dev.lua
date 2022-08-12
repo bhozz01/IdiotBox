@@ -3672,7 +3672,7 @@ local timeHoldingSpaceOnGround = 0
 local function BunnyHop(pCmd)
 	if me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) then return end
 	if not me:Alive() or me:Health() < 1 then return end
-	if gBool("Miscellaneous", "Movement", "Bunny Hop") and not (gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Legit" or gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Rage") then 
+	if gBool("Miscellaneous", "Movement", "Bunny Hop") and gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Off" then
     local badmovetypes = {
         [MOVETYPE_NOCLIP] = true,
         [MOVETYPE_LADDER] = true,
@@ -3760,7 +3760,8 @@ local function DirectionalStrafe(pCmd)
 	fixmovement.x = math.Clamp(fixmovement.x, - 89, 89)
     fixmovement.y = math.NormalizeAngle(fixmovement.y)
     fixmovement.z = 0
-		if !pCmd:KeyDown(IN_JUMP) then return end
+		if !me:IsOnGround() && pCmd:KeyDown(IN_JUMP) then
+			pCmd:RemoveKey(IN_JUMP)
         local get_velocity_degree = function(velocity)
             local tmp = math.deg(math.atan(30.0 / velocity))     
             if (tmp > 90.0) then
@@ -3837,6 +3838,9 @@ local function DirectionalStrafe(pCmd)
             pCmd:SetForwardMove(math.cos(yaw) * speed)
         end
 		pCmd:SetSideMove(math.sin(yaw) * speed)
+	elseif pCmd:KeyDown(IN_JUMP) then
+		pCmd:SetForwardMove(10000)
+	end
 end
 
 local function AutoStrafe(pCmd)
