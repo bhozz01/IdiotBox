@@ -3672,7 +3672,7 @@ local timeHoldingSpaceOnGround = 0
 local function BunnyHop(pCmd)
 	if me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) then return end
 	if not me:Alive() or me:Health() < 1 then return end
-	if gBool("Miscellaneous", "Movement", "Bunny Hop") and not gBool("Miscellaneous", "Movement", "Circle Strafe") then 
+	if gBool("Miscellaneous", "Movement", "Bunny Hop") and not (gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Legit" or gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Rage") and not gBool("Miscellaneous", "Movement", "Circle Strafe") then 
     local badmovetypes = {
         [MOVETYPE_NOCLIP] = true,
         [MOVETYPE_LADDER] = true,
