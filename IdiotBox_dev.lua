@@ -2519,7 +2519,7 @@ local function FixMovement(pCmd)
 	pCmd:SetSideMove(math.sin(math.rad(yaw)) * vel)
 end
 
-local function FixedAngle(ang)
+local function FixAngle(ang)
 	if not NoPhys() and not NoCam() then
 		ang.x = math.NormalizeAngle(ang.x)
 		ang.p = math.Clamp(ang.p, - 89, 89)
@@ -5125,7 +5125,7 @@ local function Ragebot(pCmd)
 		aa = true
 		local pos = PredictPos(aimtarget)
 		local ang = vm.Angle(PredictSpread(pCmd, vm.Angle(pos)))
-		FixedAngle(ang)
+		FixAngle(ang)
 		cm.SetViewAngles(pCmd, ang)
 		if (gBool("Aimbot", "Ragebot", "Auto Fire")) then
 			AutoFire(pCmd)
@@ -5157,7 +5157,7 @@ local function Legitbot(pCmd)
 	if (FovValue > 0) then
 		local pos = PredictPos(aimtarget)
 		local ang = vm.Angle(PredictSpread(pCmd, vm.Angle(pos)))
-		FixedAngle(ang)
+		FixAngle(ang)
 		local CalcX = ang.x - fa.x
 	    local CalcY = ang.y - fa.y
 		if CalcY < 0 then CalcY = CalcY * - 1 end	
@@ -5731,7 +5731,7 @@ local function FakeAngs(pCmd)
 		fa = cm.GetViewAngles(pCmd)
 	end
     fa = fa + Angle(cm.GetMouseY(pCmd) * .023, cm.GetMouseX(pCmd) * - .023, 0)
-    FixedAngle(fa)
+    FixAngle(fa)
     if (cm.CommandNumber(pCmd) == 0) then
 		if not NoPhys() and not NoCam() then
 			cm.SetViewAngles(pCmd, GetAngle(fa))
@@ -5741,7 +5741,7 @@ local function FakeAngs(pCmd)
 	if (cm.KeyDown(pCmd, 1)) then
 		if not NoPhys() and not NoCam() then
 			local ang = GetAngle(vm.Angle(PredictSpread(pCmd, fa)))
-			FixedAngle(ang)
+			FixAngle(ang)
 			cm.SetViewAngles(pCmd, ang)
 		end
     end
