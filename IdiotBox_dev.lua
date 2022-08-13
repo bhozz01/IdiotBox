@@ -555,8 +555,17 @@ local function gInt(men, sub, lookup)
 	return 0
 end
 
+local menukeydown, menukeydown2, menuopen
+
+local mousedown
+
+local candoslider
+
+local drawlast
+
 local function gKey(men, sub, lookup)
     if (not options[men]) then return end
+	if LocalPlayer():IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or menuopen then return end
     for aa, aaa in next, options[men] do
         for key, val in next, aaa do
             if(aaa[1][1] ~= sub) then continue end
@@ -801,7 +810,7 @@ local function UpdateVar(men, sub, lookup, new)
 end
 
 local folder = "IdiotBox"
-local version = "6.7.3"
+local version = "6.7.3p1"
 
 if not file.IsDir(folder, "DATA") then
 	file.CreateDir(folder)
@@ -930,14 +939,6 @@ local function LoadConfig5()
 		end
 	end
 end
-
-local menukeydown, menukeydown2, menuopen
-
-local mousedown
-
-local candoslider
-
-local drawlast
 
 local visible = {}
 
@@ -3992,10 +3993,10 @@ local function Think()
 	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Random" then
 		RunConsoleCommand("act", randomemote[math.random(#randomemote)])
 	end
-	if (gBool("Miscellaneous", "Miscellaneous", "Flash Spam") and input.IsKeyDown(KEY_F)) then
+	if gBool("Miscellaneous", "Miscellaneous", "Flash Spam") and input.IsKeyDown(KEY_F) and not (LocalPlayer():IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or menuopen) then
 		RunConsoleCommand("impulse", "100")
 	end
-	if (gBool("Miscellaneous", "Miscellaneous", "Use Spam") and input.IsKeyDown(KEY_E)) then
+	if gBool("Miscellaneous", "Miscellaneous", "Use Spam") and input.IsKeyDown(KEY_E) and not (LocalPlayer():IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or menuopen) then
 		RunConsoleCommand("idiot_usespam")
 	end
 	if gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Normal" or gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Priority Targets" then
