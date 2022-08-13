@@ -385,7 +385,7 @@ local options = {
 				{
 					{"Movement", 736, 20, 347, 172, 218}, 
 					{"Bunny Hop", "Checkbox", false, 78}, 
-					{"Auto-Strafe:", "Selection", "Off", {"Off", "Legit", "Rage", "Circle", "Directional"}, 92}, 
+					{"Auto-Strafe:", "Selection", "Off", {"Off", "Legit", "Rage", "Circle", "(UNFINISHED)"}, 92}, 
 					{"Strafe Key:", "Toggle", 0, 92, 0}, 
 					{"Strafe Speed:", "Slider", 2, 6, 92}, 
 					{"Air Crouch", "Checkbox", false, 78}, 
@@ -1326,6 +1326,7 @@ local function Changelog()
 	print("- Added 'Murder Taunts' to Taunting;")
 	print("- Added 'Velocity' to Visuals;")
 	print("- Added 'Dormant Check' to Visuals;")
+	print("- Added 'Legit', 'Rage', 'Circle' and 'Directional' to Auto-Strafe;")
 	print("- Added 'Show Spectators' to Visuals;")
 	print("- Added 'Bystander Name' to Visuals;")
 	print("- Added 'NPCs' to Visuals;")
@@ -3842,7 +3843,7 @@ local function AutoStrafe(pCmd)
 			RageStrafe(pCmd)
 		elseif (gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Circle") then
 			CircleStrafe(pCmd)
-		elseif (gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Directional") then
+		elseif (gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "(UNFINISHED)") then
 			DirectionalStrafe(pCmd)
 		end
 	end
