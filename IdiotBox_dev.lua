@@ -5726,7 +5726,7 @@ local function AutoCrouch(pCmd)
 	end
 end
 
-local function FakeAngs(pCmd)
+local function FakeAngles(pCmd)
 	if (!fa) then 
 		fa = cm.GetViewAngles(pCmd)
 	end
@@ -5876,7 +5876,7 @@ hook.Add("CreateMove", "Hook20", function(pCmd)
 	AntiAFK(pCmd)
 	BunnyHop(pCmd)
 	AutoStrafe(pCmd)
-	FakeAngs(pCmd)
+	FakeAngles(pCmd)
 	FreeRoam(pCmd)
 	AutoReload(pCmd)
 	Ragebot(pCmd)
