@@ -1,4 +1,4 @@
-  //-----IdiotBox v6.7.3----//
+  //-----IdiotBox v6.8b1----//
  //---------By Phizz-------//
 //------------------------//
 
@@ -810,7 +810,7 @@ local function UpdateVar(men, sub, lookup, new)
 end
 
 local folder = "IdiotBox"
-local version = "6.7.3p1"
+local version = "6.8b1"
 
 if not file.IsDir(folder, "DATA") then
 	file.CreateDir(folder)
@@ -952,11 +952,11 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(512, 15 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g, maintextcol.b, 255)
 	surface.SetFont("MainFont")
-	surface.DrawText("IdiotBox v6.7.3")
-	surface.SetTextPos(615, 18 - th / 2)
+	surface.DrawText("IdiotBox v6.8b1")
+	surface.SetTextPos(619, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest patch: August 11th 2022")
+	surface.DrawText("Latest build: August 13th 2022")
 	surface.SetFont("MenuFont")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -1233,9 +1233,9 @@ end
 
 local function Changelog()
 	print("===========================================================\n\n")
-	print("IdiotBox v6.7/ v6.7.1/ v6.7.2/ v6.7.3 bugfixes (in no particular order)")
+	print("IdiotBox v6.8b1 bugfixes (in no particular order)")
 	print("")
-	print("Total bugfix count: ~50 bugs have been found and fixed in the v6.7/ v6.7.1/ v6.7.2/ v6.7.3 updates;")
+	print("Total bugfix count: ~50 bugs have been found and fixed in the v6.8b1 update;")
 	print("\n")
 	print("- The 'readme.txt' file is finally up-to-date and only contains the important information;")
 	print("- Aim Smoothness will automatically disable itself if the Legitbot Silent aim is turned on;")
@@ -1294,9 +1294,9 @@ local function Changelog()
 	print("- Removed old and unused Fake Lag functions;")
 	print("- Removed 'aaa' module as 'IdiotBox_alpha1.lua' was replaced by 'IdiotBox_dev.lua' and had no use.")
 	print("\n")
-	print("IdiotBox v6.7/ v6.7.1/ v6.7.2/ v6.7.3 new features (in no particular order)")
+	print("IdiotBox v6.8b1 new features (in no particular order)")
 	print("")
-	print("Total feature count: ~50 features have been added in the v6.7/ v6.7.1/ v6.7.2/ v6.7.3 updates;")
+	print("Total feature count: ~50 features have been added in the v6.8b1 update;")
 	print("\n")
 	print("- Added 'Plugin Loader' to Utilities;")
 	print("- Added 'Projectile Prediction' to Aimbot;")
@@ -3262,7 +3262,7 @@ local advertise = {
 	"IdiotBox - A reliable way to go!",
 	"IdiotBox - Visit our website for fresh Discord invite links!",
 	"IdiotBox - Monthly bugfixes & updates. It never gets outdated!",
-	"IdiotBox - Download IdiotBox v6.7.3 right now!",
+	"IdiotBox - Download IdiotBox v6.8b1 right now!",
 	"IdiotBox - Bug-free and fully customizable!",
 	"IdiotBox - Our Steam group is down, so join our Discord server to stay up-to-date!",
 	"IdiotBox - Refund all your cheats, use this better and free alternative!",
@@ -3331,7 +3331,7 @@ local toxicadvertise = {
 	"IdiotBox needs no Steam group, we're too chad for one",
 	"Our Discord was tapped at some point but IdiotBox is back and stronger than ever",
 	"IdiotBox came back to kill silly niggers, and it came back with a vengeance",
-	"Download Idiotbox v6.7.3 now, you dont even know what you're missing you mongoloids",
+	"Download Idiotbox v6.8b1 now, you dont even know what you're missing you mongoloids",
 	"Have I told you about IdiotBox, the best Garry's Mod cheat ever made??",
 	"Holy shit, IdiotBox for Garry's Mod is the best cheat that I have ever used!!",
 }
@@ -5052,7 +5052,7 @@ end
 
 local function PredictPos(aimtarget)
 	local wep = me:GetActiveWeapon()
-	if gBool("Aimbot", "Aim Priorities", "Projectile Prediction") then
+	if gBool("Aimbot", "Aim Priorities", "Projectile Prediction") and me:Alive() and me:Health() > 0 then
 		if string.find(string.lower(wep:GetPrintName()), "crossbow") then
 			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 1100 then
 				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 1600) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
@@ -5288,7 +5288,7 @@ local function GetClosest()
 end
 
 local function ViewLock()
-	if (gBool("Hack vs. Hack", "Anti-Aim", "View Lock")) then
+	if (gBool("Hack vs. Hack", "Anti-Aim", "View Lock") and me:Alive() and me:Health() > 0) then
 		local wep = pm.GetActiveWeapon(me)
 				if !IsValid(wep) then return end
 		local n = string.lower(wep:GetPrintName())
