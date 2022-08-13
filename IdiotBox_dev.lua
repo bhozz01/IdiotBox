@@ -554,17 +554,9 @@ local function gInt(men, sub, lookup)
 	return 0
 end
 
-local menukeydown, menukeydown2, menuopen
-
-local mousedown
-
-local candoslider
-
-local drawlast
-
 local function gKey(men, sub, lookup)
     if (not options[men]) then return end
-	if LocalPlayer():IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or menuopen then return end
+	if LocalPlayer():IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then return end
     for aa, aaa in next, options[men] do
         for key, val in next, aaa do
             if(aaa[1][1] ~= sub) then continue end
@@ -938,6 +930,14 @@ local function LoadConfig5()
 		end
 	end
 end
+
+local menukeydown, menukeydown2, menuopen
+
+local mousedown
+
+local candoslider
+
+local drawlast
 
 local visible = {}
 
