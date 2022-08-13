@@ -2037,22 +2037,11 @@ local function Menu()
 	end
 end
 
-local function NoCam()
+local function FixTools()
 	if gBool("Hack vs. Hack", "Anti-Aim", "Enabled") or gBool("Miscellaneous", "Point of View", "Thirdperson") or not me:Alive() or me:Health() < 1 then
 		return false
 	end
-	if me:GetActiveWeapon():IsValid() and me:GetActiveWeapon():GetClass() == "gmod_camera" then
-		return true
-	else
-		return false
-	end
-end
-
-local function NoPhys()
-	if gBool("Hack vs. Hack", "Anti-Aim", "Enabled") or gBool("Miscellaneous", "Point of View", "Thirdperson") or not me:Alive() or me:Health() < 1 then
-		return false
-	end
-	if me:GetActiveWeapon():IsValid() and me:GetActiveWeapon():GetClass() == "weapon_physgun" then
+	if me:GetActiveWeapon():IsValid() and (me:GetActiveWeapon():GetClass() == "weapon_physgun" or me:GetActiveWeapon():GetClass() == "gmod_camera") then
 		return true
 	else
 		return false
@@ -2066,7 +2055,7 @@ local function RapidFire(pCmd)
 	local wep = pm.GetActiveWeapon(me)
 		if pm.KeyDown(me, IN_ATTACK) then
 			if (me:Alive() or em.Health(me) > 0) then
-				if not NoPhys() and not NoCam() then
+				if not FixTools() then
 					if toggler == 0 then
 						cm.SetButtons(pCmd, bit.bor(cm.GetButtons(pCmd), IN_ATTACK))
 						toggler = 1
@@ -2087,7 +2076,7 @@ local function RapidAltFire(pCmd)
 	local wep = pm.GetActiveWeapon(me)
 		if pm.KeyDown(me, IN_ATTACK) then
 			if (me:Alive() or em.Health(me) > 0) then
-				if not NoPhys() and not NoCam() then
+				if not FixTools() then
 					if toggler == 0 then
 						cm.SetButtons(pCmd, bit.bor(cm.GetButtons(pCmd), IN_ATTACK2))
 						toggler = 1
@@ -2520,7 +2509,7 @@ local function FixMovement(pCmd)
 end
 
 local function FixAngle(ang)
-	if not NoPhys() and not NoCam() then
+	if not FixTools() then
 		ang.x = math.NormalizeAngle(ang.x)
 		ang.p = math.Clamp(ang.p, - 89, 89)
 	end
@@ -4741,7 +4730,7 @@ hook.Add("DrawOverlay", "Hook13", function()
 	for k, v in pairs(player.GetAll()) do
 	if (gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable Ragebot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable Legitbot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me) then return end
 	end
-	if (aimtarget and em.IsValid(aimtarget) and not NoPhys() and not NoCam() and gBool("Visuals", "Miscellaneous", "Snap Lines") and (gBool("Aimbot", "Ragebot", "Enabled") or gBool("Aimbot", "Legitbot", "Enabled"))) then
+	if (aimtarget and em.IsValid(aimtarget) and not FixTools() and gBool("Visuals", "Miscellaneous", "Snap Lines") and (gBool("Aimbot", "Ragebot", "Enabled") or gBool("Aimbot", "Legitbot", "Enabled"))) then
 		if me:Alive() or em.Health(me) > 0 then
 			local col = Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:"))
 			local pos = vm.ToScreen(em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)))
@@ -5116,7 +5105,7 @@ local function Ragebot(pCmd)
 	if me:Team() == TEAM_SPECTATOR and not gBool("Aimbot", "Aim Priorities", "Spectators:") then return end
 	if not me:Alive() or me:Health() < 1 then return end
 	for k, v in pairs(player.GetAll()) do
-	if (gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable Ragebot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || NoPhys() || NoCam()) then return end
+	if (gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable Ragebot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || FixTools()) then return end
 	end
 	if (cm.CommandNumber(pCmd) == 0 || !gBool("Aimbot", "Ragebot", "Enabled") || gBool("Aimbot", "Legitbot", "Enabled")) then return end
 	GetTarget()
@@ -5145,7 +5134,7 @@ local function Legitbot(pCmd)
 	if me:Team() == TEAM_SPECTATOR and not gBool("Aimbot", "Aim Priorities", "Spectators:") then return end
 	if not me:Alive() or me:Health() < 1 then return end
 	for k, v in pairs(player.GetAll()) do
-	if (gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable Legitbot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || NoPhys() || NoCam()) then return end
+	if (gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable Legitbot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || FixTools()) then return end
 	end
 	if (cm.CommandNumber(pCmd) == 0 || !gBool("Aimbot", "Legitbot", "Enabled") || gBool("Aimbot", "Ragebot", "Enabled")) then return end
 	GetTarget()
@@ -5197,7 +5186,7 @@ local function TriggerFilter(hitbox)
 end
 
 local function Triggerbot(pCmd)
-	if not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not gBool("Triggerbot", "Triggerbot", "Spectators:")) or not gKey("Triggerbot", "Triggerbot", "Trigger Key:") or pCmd:KeyDown(IN_ATTACK) or not gBool("Triggerbot", "Triggerbot", "Enabled") or NoPhys() or NoCam() then return end
+	if not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not gBool("Triggerbot", "Triggerbot", "Spectators:")) or not gKey("Triggerbot", "Triggerbot", "Trigger Key:") or pCmd:KeyDown(IN_ATTACK) or not gBool("Triggerbot", "Triggerbot", "Enabled") or FixTools() then return end
 	local dist = gBool("Triggerbot", "Triggerbot", "Distance:")
 	local trace = me:GetEyeTraceNoCursor()
 	local v = trace.Entity
@@ -5657,7 +5646,7 @@ local function FakeLag(pCmd, Choke, Send)
 end
 
 local function GetAngle(ang)
-	if not NoPhys() and not NoCam() then
+	if not FixTools() then
 		if (not gBool("Aimbot", "Miscellaneous", "No Recoil")) then 
 			return ang + pm.GetPunchAngle(me)
 		else
@@ -5733,13 +5722,13 @@ local function FakeAngles(pCmd)
     fa = fa + Angle(cm.GetMouseY(pCmd) * .023, cm.GetMouseX(pCmd) * - .023, 0)
     FixAngle(fa)
     if (cm.CommandNumber(pCmd) == 0) then
-		if not NoPhys() and not NoCam() then
+		if not FixTools() then
 			cm.SetViewAngles(pCmd, GetAngle(fa))
 			return
 		end
 	end
 	if (cm.KeyDown(pCmd, 1)) then
-		if not NoPhys() and not NoCam() then
+		if not FixTools() then
 			local ang = GetAngle(vm.Angle(PredictSpread(pCmd, fa)))
 			FixAngle(ang)
 			cm.SetViewAngles(pCmd, ang)
@@ -5859,8 +5848,7 @@ hook.Add("AdjustMouseSensitivity", "Hook18", function()
 	if not gBool("Triggerbot", "Triggerbot", "Smooth Aim") then return end
 	if not gKey("Triggerbot", "Triggerbot", "Trigger Key:") then return end
 	if not idiot.Triggering then return end
-	if NoPhys() then return end
-	if NoCam() then return end
+	if FixTools() then return end
 	return .10
 end)
 
