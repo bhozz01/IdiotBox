@@ -385,7 +385,7 @@ local options = {
 				{
 					{"Movement", 736, 20, 347, 172, 218}, 
 					{"Bunny Hop", "Checkbox", false, 78}, 
-					{"Auto-Strafe:", "Selection", "Off", {"Off", "Legit", "Rage", "Circle", "(UNFINISHED)"}, 92}, 
+					{"Auto-Strafe:", "Selection", "Off", {"Off", "Legit", "Rage", "Circle", "Directional"}, 92}, 
 					{"Strafe Key:", "Toggle", 0, 92, 0}, 
 					{"Strafe Speed:", "Slider", 2, 6, 92}, 
 					{"Air Crouch", "Checkbox", false, 78}, 
@@ -955,7 +955,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(613, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: August 13th 2022")
+	surface.DrawText("Latest build: August 14th 2022")
 	surface.SetFont("MenuFont")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -3843,7 +3843,7 @@ local function AutoStrafe(pCmd)
 			RageStrafe(pCmd)
 		elseif (gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Circle") then
 			CircleStrafe(pCmd)
-		elseif (gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "(UNFINISHED)") then
+		elseif (gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Directional") then
 			DirectionalStrafe(pCmd)
 		end
 	end
