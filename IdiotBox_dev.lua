@@ -385,7 +385,7 @@ local options = {
 				{
 					{"Movement", 736, 20, 347, 172, 218}, 
 					{"Bunny Hop", "Checkbox", false, 78}, 
-					{"Auto-Strafe:", "Selection", "Off", {"Off", "Legit", "Rage", "Circle", "Directional"}, 92}, 
+					{"Auto-Strafe:", "Selection", "Off", {"Off", "Legit", "Rage", "Circle" --[[, "Directional"]]}, 92}, 
 					{"Strafe Key:", "Toggle", 0, 92, 0}, 
 					{"Strafe Speed:", "Slider", 2, 6, 92}, 
 					{"Air Crouch", "Checkbox", false, 78}, 
@@ -482,7 +482,7 @@ local options = {
 				{
 					{"Others", 321, 380, 205, 157, 70}, 
 					{"T Opacity:", "Slider", 205, 255, 88}, 
-					{"B Opacity:", "Slider", 125, 255, 88}, 
+					{"B Opacity:", "Slider", 175, 255, 88}, 
 					{"BG Opacity:", "Slider", 255, 255, 88}, 
 					{"BG Darkness:", "Slider", 18, 25, 88}, 
 					{"Roundness:", "Slider", 57, 67, 88}, 
@@ -1301,7 +1301,7 @@ local function Changelog()
 	print("- Added 'Projectile Prediction' to Aimbot;")
 	print("- Added 'Line of Sight Check' to Aimbot;")
 	print("- Added 'Emote Resolver' to Resolver;")
-	print("- Added 'Panic Mode' & NPC targeting to Aimbot and Triggerbot;")
+	print("- Added 'Panic Mode', 'Distance Limit' and NPC targeting to Aimbot and Triggerbot;")
 	print("- Added 'Priority List' to Miscellaneous;")
 	print("- Added 'Cheater Callout' and 'Copy Messages' to Reply Spam;")
 	print("- Added 'Border Color', 'Misc Visuals Color' and 'B Opacity' to Settings;")
@@ -1310,8 +1310,6 @@ local function Changelog()
 	print("- Added 'Optimize Game' and TTT/ Murder/ DarkRP specific features to Utilities;")
 	print("- Added 'Spectators' to Aim Priorities;")
 	print("- Added 'Players' to Aim Priorities;")
-	print("- Added 'Distance Limit' to Aimbot and Triggerbot;")
-	print("- Added custom key binds;")
 	print("- Added 'Free Roaming Key' to Free Roaming;")
 	print("- Added 'Free Roaming Speed' to Free Roaming;")
 	print("- Added 'Strafe Key' to Movement;")
@@ -1326,24 +1324,26 @@ local function Changelog()
 	print("- Added 'Murder Taunts' to Taunting;")
 	print("- Added 'Velocity' to Visuals;")
 	print("- Added 'Dormant Check' to Visuals;")
-	print("- Added 'Legit', 'Rage', 'Circle' and 'Directional' to Auto-Strafe;")
+	--[[print("- Added 'Legit', 'Rage', 'Circle' and 'Directional' to Auto-Strafe;")]]
 	print("- Added 'Show Spectators' to Visuals;")
 	print("- Added 'Bystander Name' to Visuals;")
 	print("- Added 'NPCs' to Visuals;")
 	print("- Added 'Frozen Players' to Aim Priorities;")
 	print("- Added 'Enemies' to Aim Priorities;")
-	print("- Added 'Clientside' to Wallhack;")
+	print("- Added 'Clientside' to Visuals;")
+	print("- Added custom key binds;")
 	print("- Added bordered menu styles;")
 	print("- Added more music to Sounds;")
 	print("- Added custom music player to Sounds;")
 	print("- Reworked 'Bunny Hop' from scratch;")
+	print("- Reworked 'Auto-Strafe' from scratch;")
+	print("- Reworked 'Circle' from Auto-Strafe;")
 	print("- Reworked 'Auto Wallbang' from Aimbot;")
 	print("- Reworked 'Ignores' from Aim Priorities;")
 	print("- Reworked 'Max Player Health' from Aim Priorities;")
 	print("- Reworked 'Resolver' from Hack vs. Hack;")
 	print("- Reworked 'Radar', 'Spectators' and 'Status' from Visuals;")
 	print("- Reworked 'Free Roaming' from Miscellaneous;")
-	print("- Reworked 'Circle' from Auto-Strafe;")
 	print("- Renamed 'Hack vs. Hack' tab;")
 	print("- Removed 'Shoutout' from Chat Spam;")
 	print("- Removed 'Drop Money' from Chat Spam;")
@@ -3735,6 +3735,7 @@ local function CircleStrafe(pCmd)
 	ClampMove(pCmd)
 end
 
+--[[
 local old_yaw = 0.0
 
 local fixmovement = fixmovement || nil
@@ -3827,6 +3828,7 @@ local function DirectionalStrafe(pCmd)
 		pCmd:SetForwardMove(10000)
 	end
 end
+]]
 
 local function AutoStrafe(pCmd)
     if me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) then return end
@@ -3843,8 +3845,8 @@ local function AutoStrafe(pCmd)
 			RageStrafe(pCmd)
 		elseif (gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Circle") then
 			CircleStrafe(pCmd)
-		elseif (gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Directional") then
-			DirectionalStrafe(pCmd)
+		--[[elseif (gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Directional") then
+			DirectionalStrafe(pCmd)]]
 		end
 	end
 end
