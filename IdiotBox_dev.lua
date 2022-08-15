@@ -1643,15 +1643,15 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Delete Configuration" then
 			if gOption("Utilities", "Configurations", "Configuration:") == "Config #1" then
-				file.Delete(folder.."/config_1.txt")
+				file.Delete(folder.."/config1.txt")
 			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #2" then
-				file.Delete(folder.."/config_2.txt")
+				file.Delete(folder.."/config2.txt")
 			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #3" then
-				file.Delete(folder.."/config_3.txt")
+				file.Delete(folder.."/config3.txt")
 			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #4" then
-				file.Delete(folder.."/config_4.txt")
+				file.Delete(folder.."/config4.txt")
 			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #5" then
-				file.Delete(folder.."/config_5.txt")
+				file.Delete(folder.."/config5.txt")
 			end
 			timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Configuration Deleted!") end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
