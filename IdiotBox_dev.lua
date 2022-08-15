@@ -12,26 +12,26 @@
 
 
 
-local Detours = {}
+local detours = {}
 
-local ProtectedFiles = {
+local protectedfiles = {
     "IdiotBox_latest.lua", 
     "IdiotBox_backup.lua", 
 	"IdiotBox_dev.lua", 
 }
 
 local function DetourFunction(originalFunction, newFunction)
-    Detours[newFunction] = originalFunction
+    detours[newFunction] = originalFunction
     return newFunction
 end
  
 file.Read = DetourFunction(file.Read, function(fileName, path)
-	for k, v in next, ProtectedFiles do
+	for k, v in next, protectedfiles do
 		if string.find("IdiotBox*", v) then
 			return "3D_TrollFace_Troll_Model_200"
 		end
 	end 
-    return Detours[file.Read](fileName, path)
+    return detours[file.Read](fileName, path)
 end)
 
 surface.CreateFont("VisualsFont", {
