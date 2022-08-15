@@ -3551,10 +3551,7 @@ local function TriggerbotFilter(v)
 end
 
 local function EnemyWallhackFilter(v)
-	local friendstatus = pm.GetFriendStatus(v)
-	if friendstatus == "friend" then return true end
-	local enemy = gBool("Visuals", "Miscellaneous", "Show Enemies Only")
-	if (enemy) then
+	if gBool("Visuals", "Miscellaneous", "Show Enemies Only") then
 		if (pm.Team(v) == pm.Team(me)) then return false end
 	end
 	return true
