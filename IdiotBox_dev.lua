@@ -385,7 +385,7 @@ local options = {
 				{
 					{"Movement", 736, 20, 347, 172, 218}, 
 					{"Bunny Hop", "Checkbox", false, 78}, 
-					{"Auto-Strafe:", "Selection", "Off", {"Off", "Legit", "Rage", "Circle" --[[, "Directional"]]}, 92}, 
+					{"Auto Strafe:", "Selection", "Off", {"Off", "Legit", "Rage", "Circle" --[[, "Directional"]]}, 92}, 
 					{"Strafe Key:", "Toggle", 0, 92, 0}, 
 					{"Strafe Speed:", "Slider", 2, 6, 92}, 
 					{"Air Crouch", "Checkbox", false, 78}, 
@@ -1324,8 +1324,9 @@ local function Changelog()
 	print("- Added 'Murder Taunts' to Taunting;")
 	print("- Added 'Velocity' to Visuals;")
 	print("- Added 'Dormant Check' to Visuals;")
-	--[[print("- Added 'Legit', 'Rage', 'Circle' and 'Directional' to Auto-Strafe;")]]
+	--[[print("- Added 'Legit', 'Rage', 'Circle' and 'Directional' to Auto Strafe;")]]
 	print("- Added 'Show Spectators' to Visuals;")
+	print("- Added 'Hide Ignored Targets' to Visuals;")
 	print("- Added 'Bystander Name' to Visuals;")
 	print("- Added 'NPCs' to Visuals;")
 	print("- Added 'Frozen Players' to Aim Priorities;")
@@ -1336,8 +1337,8 @@ local function Changelog()
 	print("- Added more music to Sounds;")
 	print("- Added custom music player to Sounds;")
 	print("- Reworked 'Bunny Hop' from scratch;")
-	print("- Reworked 'Auto-Strafe' from scratch;")
-	print("- Reworked 'Circle' from Auto-Strafe;")
+	print("- Reworked 'Auto Strafe' from scratch;")
+	print("- Reworked 'Circle' from Auto Strafe;")
 	print("- Reworked 'Auto Wallbang' from Aimbot;")
 	print("- Reworked 'Ignores' from Aim Priorities;")
 	print("- Reworked 'Max Player Health' from Aim Priorities;")
@@ -3495,6 +3496,44 @@ local randomemote = {
 	"group", 
 }
 
+local function EmoteSpam()
+	if gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Dance" then
+		RunConsoleCommand("act", "dance")
+	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Sexy" then
+		RunConsoleCommand("act", "muscle")
+	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Wave" then
+		RunConsoleCommand("act", "wave")
+	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Robot" then
+		RunConsoleCommand("act", "robot")
+	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Bow" then
+		RunConsoleCommand("act", "bow")
+	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Cheer" then
+		RunConsoleCommand("act", "cheer")
+	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Laugh" then
+		RunConsoleCommand("act", "laugh")
+	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Zombie" then
+		RunConsoleCommand("act", "zombie")
+	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Agree" then
+		RunConsoleCommand("act", "agree")
+	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Disagree" then
+		RunConsoleCommand("act", "disagree")
+	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Forward" then
+		RunConsoleCommand("act", "forward")
+	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Back" then
+		RunConsoleCommand("act", "becon")
+	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Salute" then
+		RunConsoleCommand("act", "salute")
+	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Pose" then
+		RunConsoleCommand("act", "pers")
+	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Halt" then
+		RunConsoleCommand("act", "halt")
+	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Group" then
+		RunConsoleCommand("act", "group")
+	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Random" then
+		RunConsoleCommand("act", randomemote[math.random(#randomemote)])
+	end
+end
+
 local function WallhackFilter(v)
 	if (gBool("Visuals", "Miscellaneous", "Distance Limit")) then
 		local dist = gBool("Visuals", "Miscellaneous", "Distance:")
@@ -3654,7 +3693,7 @@ local timeHoldingSpaceOnGround = 0
 local function BunnyHop(pCmd)
 	if me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) then return end
 	if not me:Alive() or me:Health() < 1 then return end
-	if gBool("Miscellaneous", "Movement", "Bunny Hop") and gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Off" then
+	if gBool("Miscellaneous", "Movement", "Bunny Hop") and gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Off" then
     local badmovetypes = {
         [MOVETYPE_NOCLIP] = true,
         [MOVETYPE_LADDER] = true,
@@ -3833,19 +3872,19 @@ end
 local function AutoStrafe(pCmd)
     if me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) then return end
 	if not me:Alive() or me:Health() < 1 then return end
-	if gBool("Miscellaneous", "Movement", "Bunny Hop") and gOption("Miscellaneous", "Movement", "Auto-Strafe:") ~= "Off" then
+	if gBool("Miscellaneous", "Movement", "Bunny Hop") and gOption("Miscellaneous", "Movement", "Auto Strafe:") ~= "Off" then
     local badmovetypes = {
         [MOVETYPE_NOCLIP] = true,
         [MOVETYPE_LADDER] = true,
     }
     if(badmovetypes[LocalPlayer():GetMoveType()]) then return end
-		if (gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Legit") then
+		if (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Legit") then
 			LegitStrafe(pCmd)
-		elseif (gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Rage") then
+		elseif (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Rage") then
 			RageStrafe(pCmd)
-		elseif (gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Circle") then
+		elseif (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Circle") then
 			CircleStrafe(pCmd)
-		--[[elseif (gOption("Miscellaneous", "Movement", "Auto-Strafe:") == "Directional") then
+		--[[elseif (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Directional") then
 			DirectionalStrafe(pCmd)]]
 		end
 	end
@@ -3946,40 +3985,8 @@ local function Think()
 	if gOption("Miscellaneous", "Chat", "Chat Spam:") ~= "Off" then
 		ChatSpam()
 	end
-	if gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Dance" then
-		RunConsoleCommand("act", "dance")
-	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Sexy" then
-		RunConsoleCommand("act", "muscle")
-	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Wave" then
-		RunConsoleCommand("act", "wave")
-	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Robot" then
-		RunConsoleCommand("act", "robot")
-	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Bow" then
-		RunConsoleCommand("act", "bow")
-	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Cheer" then
-		RunConsoleCommand("act", "cheer")
-	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Laugh" then
-		RunConsoleCommand("act", "laugh")
-	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Zombie" then
-		RunConsoleCommand("act", "zombie")
-	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Agree" then
-		RunConsoleCommand("act", "agree")
-	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Disagree" then
-		RunConsoleCommand("act", "disagree")
-	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Forward" then
-		RunConsoleCommand("act", "forward")
-	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Back" then
-		RunConsoleCommand("act", "becon")
-	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Salute" then
-		RunConsoleCommand("act", "salute")
-	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Pose" then
-		RunConsoleCommand("act", "pers")
-	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Halt" then
-		RunConsoleCommand("act", "halt")
-	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Group" then
-		RunConsoleCommand("act", "group")
-	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Random" then
-		RunConsoleCommand("act", randomemote[math.random(#randomemote)])
+	if gOption("Miscellaneous", "Miscellaneous", "Emotes:") ~= "Off" then
+		EmoteSpam()
 	end
 	if gBool("Miscellaneous", "Miscellaneous", "Flash Spam") and input.IsKeyDown(KEY_F) and not (LocalPlayer():IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or menuopen) then
 		RunConsoleCommand("impulse", "100")
@@ -6035,7 +6042,7 @@ local randomresponse = {
 	"fuck", 
 }
 
-hook.Add("OnPlayerChat", "Hook24", function(v, text, team)
+local function ReplySpam(data)
 	if v == me or not v:IsValid() or (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
 		return false
 	end
@@ -6097,7 +6104,7 @@ hook.Add("OnPlayerChat", "Hook24", function(v, text, team)
 			RunConsoleCommand("say_team", "fuck")
 		elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "fuck") then
 			RunConsoleCommand("say", "fuck")
-			end
+		end
 		elseif gOption("Miscellaneous", "Chat", "Reply Spam:") == "Cheater Callout" then
 		if string.find(string.lower(text), "hac") or string.find(string.lower(text), "h4c") or string.find(string.lower(text), "h@c") or string.find(string.lower(text), "hak") or string.find(string.lower(text), "h4k") or string.find(string.lower(text), "h@k") or string.find(string.lower(text), "hec") or string.find(string.lower(text), "h3c") or string.find(string.lower(text), "hek") or string.find(string.lower(text), "h3k") or string.find(string.lower(text), "hax") or string.find(string.lower(text), "h4x") or string.find(string.lower(text), "h@x") or string.find(string.lower(text), "hex") or string.find(string.lower(text), "h3x") or string.find(string.lower(text), "hask") or string.find(string.lower(text), "h4sk") or string.find(string.lower(text), "h@sk") or string.find(string.lower(text), "ha$k") or string.find(string.lower(text), "h4$k") or string.find(string.lower(text), "h@$k") or string.find(string.lower(text), "hasc") or string.find(string.lower(text), "h4sc") or string.find(string.lower(text), "h@sc") or string.find(string.lower(text), "ha$c") or string.find(string.lower(text), "h4$c") or string.find(string.lower(text), "h@$c") or string.find(string.lower(text), "cheat") or string.find(string.lower(text), "ch3at") or string.find(string.lower(text), "che4t") or string.find(string.lower(text), "che@t") or string.find(string.lower(text), "ch34t") or string.find(string.lower(text), "ch3@t") or string.find(string.lower(text), "chet") or string.find(string.lower(text), "ch3t") or string.find(string.lower(text), "chit") or string.find(string.lower(text), "ch1t") or string.find(string.lower(text), "wal") or string.find(string.lower(text), "w4l") or string.find(string.lower(text), "w@l") or string.find(string.lower(text), "wa1") or string.find(string.lower(text), "w@1") or string.find(string.lower(text), "w41") or string.find(string.lower(text), "aim") or string.find(string.lower(text), "a1m") or string.find(string.lower(text), "4im") or string.find(string.lower(text), "@im") or string.find(string.lower(text), "@1m") or string.find(string.lower(text), "41m") or string.find(string.lower(text), "trig") or string.find(string.lower(text), "tr1g") or string.find(string.lower(text), "spin") or string.find(string.lower(text), "sp1n") or string.find(string.lower(text), "legit") or string.find(string.lower(text), "leg1t") or string.find(string.lower(text), "rage") or string.find(string.lower(text), "r4ge") or string.find(string.lower(text), "r@ge") or string.find(string.lower(text), "rag3") or string.find(string.lower(text), "r@g3") or string.find(string.lower(text), "r4g3") or string.find(string.lower(text), "bot") or string.find(string.lower(text), "b0t") or string.find(string.lower(text), "esp") or string.find(string.lower(text), "3sp") or string.find(string.lower(text), "e$p") or string.find(string.lower(text), "3$p") or string.find(string.lower(text), "lua") or string.find(string.lower(text), "1ua") or string.find(string.lower(text), "lu4") or string.find(string.lower(text), "lu@") or string.find(string.lower(text), "1u4") or string.find(string.lower(text), "1u@") or string.find(string.lower(text), "scr") or string.find(string.lower(text), "skr") or string.find(string.lower(text), "$cr") or string.find(string.lower(text), "$kr") or string.find(string.lower(text), "skid") or string.find(string.lower(text), "sk1d") or string.find(string.lower(text), "$kid") or string.find(string.lower(text), "$k1d") or string.find(string.lower(text), "bunny") or string.find(string.lower(text), "buny") or string.find(string.lower(text), "h0p") or string.find(string.lower(text), "hop") or string.find(string.lower(text), "aa") or string.find(string.lower(text), "anti") or string.find(string.lower(text), "4nti") or string.find(string.lower(text), "@nti") or string.find(string.lower(text), "ant1") or string.find(string.lower(text), "@nt1") or string.find(string.lower(text), "4nt1") or string.find(string.lower(text), "idiot") or string.find(string.lower(text), "idi0t") or string.find(string.lower(text), "1diot") or string.find(string.lower(text), "id1ot") or string.find(string.lower(text), "1di0t") or string.find(string.lower(text), "id10t") or string.find(string.lower(text), "1d10t") or string.find(string.lower(text), "paste") or string.find(string.lower(text), "p4ste") or string.find(string.lower(text), "p@ste") or string.find(string.lower(text), "past3") or string.find(string.lower(text), "p@st3") or string.find(string.lower(text), "p4st3") or string.find(string.lower(text), "box") or string.find(string.lower(text), "b0x") or string.find(string.lower(text), "blo") or string.find(string.lower(text), "bl0") or string.find(string.lower(text), "b1o") or string.find(string.lower(text), "b10") or string.find(string.lower(text), "ware") or string.find(string.lower(text), "w4re") or string.find(string.lower(text), "w@re") or string.find(string.lower(text), "war3") or string.find(string.lower(text), "w@r3") or string.find(string.lower(text), "w4r3") or string.find(string.lower(text), "meth") or string.find(string.lower(text), "m3th") or string.find(string.lower(text), "kick") or string.find(string.lower(text), "k1ck") or string.find(string.lower(text), "kik") or string.find(string.lower(text), "k1k") or string.find(string.lower(text), "ban") or string.find(string.lower(text), "b4n") or string.find(string.lower(text), "b@n") or string.find(string.lower(text), "fake") or string.find(string.lower(text), "f4ke") or string.find(string.lower(text), "f@ke") or string.find(string.lower(text), "fak3") or string.find(string.lower(text), "f4k3") or string.find(string.lower(text), "f@k3") then
 			if engine.ActiveGamemode() == "darkrp" then
@@ -6115,6 +6122,12 @@ hook.Add("OnPlayerChat", "Hook24", function(v, text, team)
 				end
 			end
 		end
+	end
+end
+
+hook.Add("OnPlayerChat", "Hook24", function(v, text, team)
+	if gOption("Miscellaneous", "Chat", "Reply Spam:") ~= "Off" then
+		ReplySpam(data)
 	end
 end)
 
