@@ -188,7 +188,7 @@ local options = {
 		}, 
 		["Hack vs. Hack"] = {
 				{
-					{"Anti-Aim", 16, 20, 347, 450, 218}, 
+					{"Anti-Aim", 16, 20, 347, 385, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Disable in Noclip", "Checkbox", true, 78}, -- Enabled by default
 					{"Disable in Physgun Rotation", "Checkbox", true, 78}, -- Enabled by default
@@ -203,9 +203,6 @@ local options = {
 					{"Spinbot Speed:", "Slider", 0, 180, 92}, 
 					{"Emotion X-Axis:", "Slider", 0, 100, 92}, 
 					{"Emotion Y-Axis:", "Slider", 0, 100, 92}, 
-					{"", "Checkbox", false, 9999}, 
-					{"-------------------WHEN USING 'FREE ROAMING'---------------------", "Checkbox", false, 9999},
-					{"--------'ANTI-AIM' WILL AUTOMATICALLY TURN OFF---------", "Checkbox", false, 9999},
                 }, 
 				{
 					{"Resolver", 736, 20, 347, 150, 218}, 
@@ -302,21 +299,22 @@ local options = {
 					{"No Black Screens", "Checkbox", false, 78}, 
 				}, 
 				{
-          			{"Configurations", 376, 20, 347, 150, 218}, 
+          			{"Configurations", 376, 20, 347, 170, 218}, 
 					{"Automatically Save", "Checkbox", false, 78}, 
+					{"Automatically Load", "Checkbox", false, 78}, 
 					{"Save Configuration", "Button", "", 92}, 
 					{"Load Configuration", "Button", "", 92}, 
 					{"Delete Configuration", "Button", "", 92}, 
 					{"Configuration:", "Selection", "Config #1", {"Config #1", "Config #2", "Config #3", "Config #4", "Config #5"}, 92}, 
           		}, 
 				{
-          			{"IdiotBox Console Commands", 376, 183, 347, 99, 218}, 
+          			{"IdiotBox Console Commands", 376, 203, 347, 99, 218}, 
 					{"Run the 'idiot_openmenu' command to open the menu;", "Checkbox", false, 9999}, 
           			{"Run the 'idiot_changename' command to set a custom name.", "Checkbox", false, 9999}, 
 					{"Apply custom name", "Checkbox", false, 78}, 
           		}, 
 				{
-					{"Panic Mode", 376, 296, 347, 75, 218}, 
+					{"Panic Mode", 376, 316, 347, 75, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Mode:", "Selection", "Disable All", {"Disable Ragebot", "Disable Legitbot", "Disable Anti-Aim", "Disable All"}, 92}, 
                 }, 
@@ -1349,6 +1347,7 @@ local function Changelog()
 	print("- Removed 'Shoutout' from Chat Spam;")
 	print("- Removed 'Drop Money' from Chat Spam;")
 	print("- Removed 'Screengrab Notifications' from Miscellaneous;")
+	print("- Removed useless information from Anti-Aim;")
 	print("- Changed the default menu colors, menu size and others;")
 	print("- Changed the config menu;")
 	print("- Changed the entity menu;")
@@ -1799,6 +1798,7 @@ end
 local loaded1, loaded2, loaded3, loaded4, loaded5 = false
 
 local function AutoLoad()
+	if not gBool("Utilities", "Configurations", "Automatically Load") then return end
 	if gOption("Utilities", "Configurations", "Configuration:") == "Config #1" then
 		if not loaded1 then
 			LoadConfig1()
@@ -1858,6 +1858,55 @@ local function AutoLoad()
 	enemychamscol = Color(gInt("Settings", "Enemy Chams Color", "Red:"), gInt("Settings", "Enemy Chams Color", "Green:"), gInt("Settings", "Enemy Chams Color", "Blue:"))
 	crosshaircol = Color(gInt("Settings", "Crosshair Color", "Red:"), gInt("Settings", "Crosshair Color", "Green:"), gInt("Settings", "Crosshair Color", "Blue:"))
 	viewmodelcol = Color(gInt("Settings", "Viewmodel Color", "Red:"), gInt("Settings", "Viewmodel Color", "Green:"), gInt("Settings", "Viewmodel Color", "Blue:"))
+end
+
+local function InitializeConfig()
+	if gOption("Utilities", "Configurations", "Configuration:") == "Config #1" then
+		if not loaded1 then
+			LoadConfig1()
+			loaded1 = true
+			loaded2 = false
+			loaded3 = false
+			loaded4 = false
+			loaded5 = false
+		end
+	elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #2" then
+		if not loaded2 then
+			LoadConfig2()
+			loaded2 = true
+			loaded1 = false
+			loaded3 = false
+			loaded4 = false
+			loaded5 = false
+		end
+	elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #3" then
+		if not loaded3 then
+			LoadConfig3()
+			loaded3 = true
+			loaded1 = false
+			loaded2 = false
+			loaded4 = false
+			loaded5 = false
+		end
+	elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #4" then
+		if not loaded4 then
+			LoadConfig4()
+			loaded4 = true
+			loaded1 = false
+			loaded2 = false
+			loaded3 = false
+			loaded5 = false
+		end
+	else
+		if not loaded5 then
+			LoadConfig5()
+			loaded5 = true
+			loaded1 = false
+			loaded2 = false
+			loaded3 = false
+			loaded4 = false
+		end
+	end
 end
 
 local menusongs = {
@@ -6138,6 +6187,8 @@ if not file.Exists(folder.."/version.txt", "DATA") then
 		file.Write(folder.."/version.txt", version)
 	end
 end
+
+InitializeConfig()
 
 MsgG(5.3, "Welcome, "..me:Nick()..". Press 'Insert', 'F11' or 'Home' to toggle.")
 surface.PlaySound("buttons/lightswitch2.wav")
