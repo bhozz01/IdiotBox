@@ -307,7 +307,7 @@ local options = {
 					{"Save Configuration", "Button", "", 92}, 
 					{"Load Configuration", "Button", "", 92}, 
 					{"Delete Configuration", "Button", "", 92}, 
-					{"Configuration:", "Selection", "Configuration #1", {"Configuration #1", "Configuration #2", "Configuration #3", "Configuration #4", "Configuration #5"}, 92}, 
+					{"Configuration:", "Selection", "Config #1", {"Config #1", "Config #2", "Config #3", "Config #4", "Config #5"}, 92}, 
           		}, 
 				{
           			{"IdiotBox Console Commands", 376, 183, 347, 99, 218}, 
@@ -1211,15 +1211,15 @@ local function Unload()
 	hook.Remove("PreDrawOpaqueRenderables", "Hook23")
 	hook.Remove("OnPlayerChat", "Hook24")
 		if gBool("Utilities", "Configurations", "Automatically Save") then
-			if gOption("Utilities", "Configurations", "Configuration:") == "Configuration #1" then
+			if gOption("Utilities", "Configurations", "Configuration:") == "Config #1" then
 				SaveConfig1()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #2" then
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #2" then
 				SaveConfig2()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #3" then
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #3" then
 				SaveConfig3()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #4" then
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #4" then
 				SaveConfig4()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #5" then
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #5" then
 				SaveConfig5()
 			end
 		end
@@ -1614,43 +1614,43 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 		elseif text == "Print Changelog" then
 			Changelog()
 		elseif text == "Save Configuration" then
-			if gOption("Utilities", "Configurations", "Configuration:") == "Configuration #1" then
+			if gOption("Utilities", "Configurations", "Configuration:") == "Config #1" then
 				SaveConfig1()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #2" then
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #2" then
 				SaveConfig2()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #3" then
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #3" then
 				SaveConfig3()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #4" then
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #4" then
 				SaveConfig4()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #5" then
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #5" then
 				SaveConfig5()
 			end
 			timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Configuration Saved!") end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Load Configuration" then
-			if gOption("Utilities", "Configurations", "Configuration:") == "Configuration #1" then
+			if gOption("Utilities", "Configurations", "Configuration:") == "Config #1" then
 				LoadConfig1()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #2" then
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #2" then
 				LoadConfig2()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #3" then
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #3" then
 				LoadConfig3()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #4" then
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #4" then
 				LoadConfig4()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #5" then
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #5" then
 				LoadConfig5()
 			end
 			timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Configuration Loaded!") end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Delete Configuration" then
-			if gOption("Utilities", "Configurations", "Configuration:") == "Configuration #1" then
+			if gOption("Utilities", "Configurations", "Configuration:") == "Config #1" then
 				file.Delete(folder.."/config_1.txt")
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #2" then
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #2" then
 				file.Delete(folder.."/config_2.txt")
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #3" then
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #3" then
 				file.Delete(folder.."/config_3.txt")
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #4" then
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #4" then
 				file.Delete(folder.."/config_4.txt")
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #5" then
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #5" then
 				file.Delete(folder.."/config_5.txt")
 			end
 			timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Configuration Deleted!") end)
@@ -1658,15 +1658,15 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 		elseif text == "Plugin Loader" then
 			self:Remove()
 			if gBool("Utilities", "Configurations", "Automatically Save") then
-				if gOption("Utilities", "Configurations", "Configuration:") == "Configuration #1" then
+				if gOption("Utilities", "Configurations", "Configuration:") == "Config #1" then
 					SaveConfig1()
-				elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #2" then
+				elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #2" then
 					SaveConfig2()
-				elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #3" then
+				elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #3" then
 					SaveConfig3()
-				elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #4" then
+				elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #4" then
 					SaveConfig4()
-				elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #5" then
+				elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #5" then
 					SaveConfig5()
 				end
 			end
@@ -1676,15 +1676,15 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 		elseif text == "Entity Menu" then
 				self:Remove()
 				if gBool("Utilities", "Configurations", "Automatically Save") then
-					if gOption("Utilities", "Configurations", "Configuration:") == "Configuration #1" then
+					if gOption("Utilities", "Configurations", "Configuration:") == "Config #1" then
 						SaveConfig1()
-					elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #2" then
+					elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #2" then
 						SaveConfig2()
-					elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #3" then
+					elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #3" then
 						SaveConfig3()
-					elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #4" then
+					elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #4" then
 						SaveConfig4()
-					elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #5" then
+					elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #5" then
 						SaveConfig5()
 					end
 				end
@@ -1799,7 +1799,7 @@ end
 local loaded1, loaded2, loaded3, loaded4, loaded5 = false
 
 local function AutoLoad()
-	if gOption("Utilities", "Configurations", "Configuration:") == "Configuration #1" then
+	if gOption("Utilities", "Configurations", "Configuration:") == "Config #1" then
 		if not loaded1 then
 			LoadConfig1()
 			loaded1 = true
@@ -1808,7 +1808,7 @@ local function AutoLoad()
 			loaded4 = false
 			loaded5 = false
 		end
-	elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #2" then
+	elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #2" then
 		if not loaded2 then
 			LoadConfig2()
 			loaded2 = true
@@ -1817,7 +1817,7 @@ local function AutoLoad()
 			loaded4 = false
 			loaded5 = false
 		end
-	elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #3" then
+	elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #3" then
 		if not loaded3 then
 			LoadConfig3()
 			loaded3 = true
@@ -1826,7 +1826,7 @@ local function AutoLoad()
 			loaded4 = false
 			loaded5 = false
 		end
-	elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #4" then
+	elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #4" then
 		if not loaded4 then
 			LoadConfig4()
 			loaded4 = true
@@ -2022,15 +2022,15 @@ local function Menu()
 			candoslider = false
 			drawlast = nil
 		if gBool("Utilities", "Configurations", "Automatically Save") then
-			if gOption("Utilities", "Configurations", "Configuration:") == "Configuration #1" then
+			if gOption("Utilities", "Configurations", "Configuration:") == "Config #1" then
 				SaveConfig1()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #2" then
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #2" then
 				SaveConfig2()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #3" then
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #3" then
 				SaveConfig3()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #4" then
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #4" then
 				SaveConfig4()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Configuration #5" then
+			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #5" then
 				SaveConfig5()
 			end
 		end
