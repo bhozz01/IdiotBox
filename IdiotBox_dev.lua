@@ -394,7 +394,7 @@ local options = {
 					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Chat Spam:", "Selection", "Off", {"Off", "Advertising 1", "Advertising 2", "Advertising 3", "Nazi 1", "Nazi 2", "Nazi 3", "Arabic Spam", "Hebrew Spam", "Offensive Spam", "Insult Spam", "Message Spam", "N-Word Spam", "N-WORD SPAM", "'H' Spam", "Clear Chat", "OOC Clear Chat"}, 92}, 
 					{"Kill Spam:", "Selection", "Off", {"Off", "Normal", "Insult", "Salty", "HvH", "IdiotBox HvH", "Votekick", "Voteban", "Killstreak", }, 92}, 
-					{"Reply Spam:", "Selection", "Off", {"Off", "shut up", "ok", "who", "nobody cares", "where", "lol stop spam...", "what", "yea", "lol", "english please", "lmao", "shit", "fuck", "Random", "Disconnect Spam", "Cheater Callout", "Copy Messages"}, 92}, 
+					{"Reply Spam:", "Selection", "Off", {"Off", "shut up", "ok", "who", "nobody cares", "where", "stop spamming", "what", "yea", "lol", "english please", "lmao", "shit", "fuck", "Random", "Disconnect Spam", "Cheater Callout", "Copy Messages"}, 92}, 
                 }, 
         }, 
 		["Settings"] = {
@@ -5979,7 +5979,7 @@ local randomresponse = {
 	"who", 
 	"nobody cares", 
 	"where", 
-	"lol stop spam...", 
+	"stop spamming", 
 	"what", 
 	"yea", 
 	"lol", 
@@ -6020,10 +6020,10 @@ hook.Add("OnPlayerChat", "Hook24", function(v, text, team)
 					RunConsoleCommand("say_team", "where")
 				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "where") then
 					RunConsoleCommand("say", "where")
-				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "lol stop spam...") then
-					RunConsoleCommand("say_team", "lol stop spam...")
-				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "lol stop spam...") then
-					RunConsoleCommand("say", "lol stop spam...")
+				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "stop spamming") then
+					RunConsoleCommand("say_team", "stop spamming")
+				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "stop spamming") then
+					RunConsoleCommand("say", "stop spamming")
 				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "what") then
 					RunConsoleCommand("say_team", "what")
 				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "what") then
