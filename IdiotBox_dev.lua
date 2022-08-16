@@ -3415,7 +3415,7 @@ local siegheilviktoria = {
 	end
 end
 
-CreateClientConVar("idiot_changename", "www.IDIOTBOX.net | Get tapped!", true, false)
+CreateClientConVar("idiot_changename", "www.IB4G.net | Cry, dog!", true, false)
 
 local namechangeTime = 0
 
