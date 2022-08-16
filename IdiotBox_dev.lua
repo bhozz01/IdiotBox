@@ -118,7 +118,14 @@ local options = {
 					{"No Black Screens", "Checkbox", false, 78}, 
 				}, 
 				{
-          			{"Configurations", 376, 20, 347, 150, 218}, 
+          			{"Menus", 376, 20, 347, 124, 218}, 
+					{"Entity Menu", "Button", "", 92}, 
+					{"Plugin Loader", "Button", "", 92}, 
+					{"Menu Style:", "Selection", "Borders", {"Borders", "Borderless"}, 92}, 
+					{"Options Style:", "Selection", "Borderless", {"Borders", "Borderless"}, 92}, 
+          		}, 
+				{
+          			{"Configurations", 376, 157, 347, 150, 218}, 
 					{"Automatically Save", "Checkbox", false, 78}, 
 					{"Save Configuration", "Button", "", 92}, 
 					{"Load Configuration", "Button", "", 92}, 
@@ -126,25 +133,14 @@ local options = {
 					{"Configuration:", "Selection", "Config #1", {"Config #1", "Config #2", "Config #3", "Config #4", "Config #5"}, 92}, 
           		}, 
 				{
-          			{"IdiotBox Console Commands", 376, 183, 347, 99, 218}, 
-					{"Run the 'idiot_openmenu' command to open the menu;", "Checkbox", false, 9999}, 
-          			{"Run the 'idiot_changename' command to set a custom name.", "Checkbox", false, 9999}, 
-					{"Apply custom name", "Checkbox", false, 78}, 
-          		}, 
-				{
-					{"Panic Mode", 376, 296, 347, 75, 218}, 
+					{"Panic Mode", 736, 20, 347, 75, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Mode:", "Selection", "Disable All", {"Disable Ragebot", "Disable Legitbot", "Disable Anti-Aim", "Disable All"}, 92}, 
                 }, 
 				{
-          			{"Menus", 736, 20, 347, 120, 218}, 
-					{"Entity Menu", "Button", "", 92}, 
-					{"Plugin Loader", "Button", "", 92}, 
-					{"Menu Style:", "Selection", "Borders", {"Borders", "Borderless"}, 92}, 
-					{"Options Style:", "Selection", "Borderless", {"Borders", "Borderless"}, 92}, 
-          		}, 
-				{
-          			{"Others", 736, 153, 347, 80, 218}, 
+          			{"Others", 736, 108, 347, 125, 218}, 
+					{"Run the 'idiot_changename' command to set a custom name.", "Checkbox", false, 9999}, 
+					{"Apply custom name", "Checkbox", false, 78}, 
 					{"Print Changelog", "Button", "", 92}, 
 					{"Unload Cheat", "Button", "", 92}, 
           		}, 
@@ -1242,22 +1238,19 @@ local function Changelog()
 	print("- Show Entities, Traitor Finder and Murderer Finder can only be used if Visuals is turned on;")
 	print("- Mirror cannot be used with Visuals to prevent weird rendering;")
 	print("- Added missing space between the Custom Status rank and username;")
-	print("- Fixed developers getting the notification that a developer is on the server;")
 	print("- Fixed dimension of the Armor Bar not matching the dimension of the Health Bar;")
-	print("- Fixed menu loading twice when opened with the 'idiot_openmenu' command and closed by pressing 'Insert', 'Home' or 'F11';")
-	print("- Fixed Bunny Hop and Circle Strafe breaking the movement when in water;")
+	print("- Fixed Bunny Hop and Circle strafing breaking the movement when in water;")
 	print("- Fixed Entities not using the correct Visuals color;")
-	print("- Fixed Save/ Load/ Unload buttons spamming the 'click' sound when holding them down;")
+	print("- Fixed buttons spamming the 'click' sound when holding them down;")
 	print("- Fixed Reply Spam and Copy Messages not ignoring friends;")
-	print("- Fixed being unable to rotate props or fly planes;")
+	print("- Fixed being unable to fly WAC planes and rotate props or camera angles;")
 	print("- Fixed Kill Spam giving script errors when an NPC was killed;")
 	print("- Fixed Chat Spam and Kill Spam still using the old IdiotBox Alpha variables;")
-	print("- Fixed 3D Box and Hitbox still showing spectators or dead people or still showing people with Distance Limit or Show Enemies Only enabled;")
-	print("- Fixed Bunny Hop and Circle Strafe breaking Free Roaming;")
+	print("- Fixed 3D Box and Hitbox still showing spectators or dead people or breaking certain limitations;")
+	print("- Fixed Bunny Hop and Circle strafing breaking Free Roaming;")
 	print("- Fixed Hitbox spamming the console with error messages;")
 	print("- Fixed Snap Lines still showing when Aimbot is not enabled;")
-	print("- Fixed toggle keys activating when browsing game menus/ browsing cheat menu/ typing;")
-	print("- Fixed menu Darkness not working when opening the menu with the console command;")
+	print("- Fixed toggle keys activating when browsing game menus/ typing;")
 	print("- Fixed Hide Round Report and Panel Remover not working correctly;")
 	print("- Fixed poorly placed checkboxes/ sliders/ selections;")
 	print("- Fixed Anti-Ads not working correctly;")
@@ -1271,22 +1264,19 @@ local function Changelog()
 	print("- Fixed Prop Kill giving script errors when toggled;")
 	print("- Fixed Anti-Aim X-Axis Jitter, Semi-Jitter Down and Semi-Jitter Up breaking the Anti-Aim Y-Axis;")
 	print("- Fixed Triggerbot Smooth Aim slowing your mouse speed;")
-	print("- Fixed certain outlines and fonts not having their proper dimensions;")
-	print("- Fixed the Save/ Load/ Unload/ Close Menu buttons not having the correct color when hovering your mouse over them;")
+	print("- Fixed certain outlines and fonts not having the proper dimensions;")
 	print("- Fixed the menu not being large enough for certain outlines;")
-	print("- Fixed various Free Roaming bugs that allowed it to not work when certain features were enabled;")
 	print("- Fixed No Lerp and Dark Mode not resetting when disabled;")
 	print("- Fixed a few minor Aim Priorities bugs from both Aimbot and Triggerbot;")
 	print("- Reworked script for better performance;")
 	print("- Reworked Anti-Screengrabber from scratch;")
+	print("- Reworked old 'file.Read' blocker from scratch;")
 	print("- Reworked user visibility of IdiotBox developers on servers;")
 	print("- Reorganized certain out-of-place functions and menu options;")
-	print("- Rearranged menu options so that they no longer look messy;")
 	print("- Renamed certain misspelled or broken functions and menu options;")
-	print("- Removed local variables that had no use;")
+	print("- Removed calls and variables that had no use;")
 	print("- Removed unusable DarkRP names from the Name Changer;")
 	print("- Removed cloned hooks and combined them all into one for better performance;")
-	print("- Removed old broken 'file.Read' blocker that had no use;")
 	print("- Removed old and unused Fake Lag functions;")
 	print("- Removed 'aaa' module as 'IdiotBox_alpha1.lua' was replaced by 'IdiotBox_dev.lua' and had no use.")
 	print("\n")
@@ -1333,6 +1323,7 @@ local function Changelog()
 	print("- Added bordered menu styles;")
 	print("- Added more music to Sounds;")
 	print("- Added custom music player to Sounds;")
+	print("- Added a custom configurations menu;")
 	print("- Reworked 'Bunny Hop' from scratch;")
 	print("- Reworked 'Auto Strafe' from scratch;")
 	print("- Reworked 'Circle' from Auto Strafe;")
@@ -1348,7 +1339,6 @@ local function Changelog()
 	print("- Removed 'Screengrab Notifications' from Miscellaneous;")
 	print("- Removed useless information from Anti-Aim;")
 	print("- Changed the default menu colors, menu size and others;")
-	print("- Changed the config menu;")
 	print("- Changed the entity menu;")
 	print("- Changed the changelog.")
 	print("\n\n===========================================================")
@@ -3964,7 +3954,7 @@ local function Think()
 		namechangeTime = 0
 		end
 	end
-	if (gBool("Utilities", "IdiotBox Console Commands", "Apply custom name")) then
+	if (gBool("Utilities", "Others", "Apply custom name")) then
 		hook.Add("Think", "Hook7", function()
 		IdiotBox.ChangeName(GetConVarString("idiot_changename"))
 		if not Confirmed1 then
