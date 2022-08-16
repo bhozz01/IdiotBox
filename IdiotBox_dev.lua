@@ -342,7 +342,7 @@ local options = {
                 }, 
 				{
 					{"Sounds", 16, 280, 347, 125, 218}, 
-					{"Music Player", "Checkbox", false, 78}, -- Enabled by default
+					{"Music Player", "Checkbox", true, 78}, -- Enabled by default
 					{"Song:", "Selection", "Random", {"'Rust'", "'Resonance'", "'Daisuke'", "'A Burning M...'", "'Libet's Delay'", "'Lullaby Of T...'", "'Erectin' a River'", "'Fleeting Love'", "'Malo Tebya'", "'Vermilion'", "'Gravity'", "'Remorse'", "'Hold'", "'Green Valleys'", "'FP3'", "Random"}, 92}, 
 					{"Reset Sounds", "Checkbox", false, 78}, 
 					{"Hitsounds", "Checkbox", false, 78}, 
