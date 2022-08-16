@@ -6083,7 +6083,7 @@ if ac != true then
 	timer.Create("PlaySound", 5.7, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 end
 
-if (idiot.QAC or idiot.qac or idiot.CAC or idiot.cac or idiot.SAC or idiot.sac or idiot.DAC or idiot.dac or idiot.TAC or idiot.tac or idiot.simplicity or idiot.Simplicity or idiot.swiftAC or idiot.swiftac or idiot.SwiftAC or idiot.Swiftac or idiot.SMAC or idiot.smac or idiot.MAC or idiot.mac or idiot.GAC or idiot.gac or idiot.GS or idiot.gs or idiot.GTS or idiot.gts or idiot.AE or idiot.ae or idiot.CardinalLib or idiot.cardinallib or idiot.cardinalLib or idiot.Cardinallib) then
+if (idiot.QAC or idiot.qac or idiot.CAC or idiot.cac or idiot.SAC or idiot.sac or idiot.DAC or idiot.dac or idiot.TAC or idiot.tac or idiot.LSAC or idiot.lsac or idiot.simplicity or idiot.Simplicity or idiot.swiftAC or idiot.swiftac or idiot.SwiftAC or idiot.Swiftac or idiot.SMAC or idiot.smac or idiot.MAC or idiot.mac or idiot.GAC or idiot.gac or idiot.GS or idiot.gs or idiot.GTS or idiot.gts or idiot.AE or idiot.ae or idiot.CardinalLib or idiot.cardinallib or idiot.cardinalLib or idiot.Cardinallib) then
 	timer.Create("ChatPrint", 5.7, 1, function() MsgR(5.3, "An anti-cheat has been detected. Use with caution to avoid getting banned!") end)
 	timer.Create("PlaySound", 5.7, 1, function() surface.PlaySound("npc/scanner/combat_scan1.wav") end)
 		ac = true
