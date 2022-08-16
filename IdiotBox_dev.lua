@@ -504,11 +504,11 @@ local options = {
 }
 
 local order = {
+	"Utilities", 
 	"Aimbot", 
 	"Triggerbot", 
 	"Hack vs. Hack", 
 	"Visuals", 
-	"Utilities", 
 	"Miscellaneous", 
 	"Settings", 
 }
