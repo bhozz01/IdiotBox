@@ -178,11 +178,11 @@ local options = {
 					{"Hitbox:", "Selection", "Head", {"Head", "Body"}, 92}, 
 					{"Aim Priority:", "Selection", "Crosshair", {"Crosshair", "Distance", "Health", "Random"}, 92}, 
 					{"Players:", "Checkbox", true, 78}, -- Enabled by default
+					{"Bots:", "Checkbox", false, 78}, 
+					{"NPCs:", "Checkbox", false, 78}, 
 					{"Team:", "Checkbox", true, 78}, -- Enabled by default
 					{"Enemies:", "Checkbox", true, 78}, -- Enabled by default
 					{"Friends:", "Checkbox", false, 78}, 
-					{"Bots:", "Checkbox", false, 78}, 
-					{"NPCs:", "Checkbox", false, 78}, 
 					{"Admins:", "Checkbox", false, 78}, 
 					{"Spectators:", "Checkbox", false, 78}, 
 					{"Frozen Players:", "Checkbox", false, 78}, 
@@ -228,11 +228,11 @@ local options = {
 					{"Disable in Noclip", "Checkbox", false, 78}, 
 					{"Hitbox:", "Selection", "Body", {"Head", "Body"}, 92}, 
 					{"Players:", "Checkbox", true, 78}, -- Enabled by default
+					{"Bots:", "Checkbox", false, 78}, 
+					{"NPCs:", "Checkbox", false, 78}, 
 					{"Team:", "Checkbox", true, 78}, -- Enabled by default
 					{"Enemies:", "Checkbox", true, 78}, -- Enabled by default
 					{"Friends:", "Checkbox", false, 78}, 
-					{"Bots:", "Checkbox", false, 78}, 
-					{"NPCs:", "Checkbox", false, 78}, 
 					{"Admins:", "Checkbox", false, 78}, 
 					{"Spectators:", "Checkbox", false, 78}, 
 					{"Frozen Players:", "Checkbox", false, 78}, 
