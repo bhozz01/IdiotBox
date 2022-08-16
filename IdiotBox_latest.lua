@@ -1254,6 +1254,7 @@ local function Changelog()
 	print("- Fixed Hide Round Report and Panel Remover not working correctly;")
 	print("- Fixed poorly placed checkboxes/ sliders/ selections;")
 	print("- Fixed Anti-Ads not working correctly;")
+	print("- Fixed Anti-Aim Resolver continuing to resolve angles when set to 'Off';")
 	print("- Fixed Thirdperson showing in spectator mode;")
 	print("- Fixed FoV Circle not showing upon enabling;")
 	print("- Fixed skybox changing upon loading;")
@@ -1268,7 +1269,7 @@ local function Changelog()
 	print("- Fixed the menu not being large enough for certain outlines;")
 	print("- Fixed No Lerp and Dark Mode not resetting when disabled;")
 	print("- Fixed a few minor Aim Priorities bugs from both Aimbot and Triggerbot;")
-	print("- Reworked script for better performance;")
+	print("- Reworked script for slightly better performance;")
 	print("- Reworked Anti-Screengrabber from scratch;")
 	print("- Reworked old 'file.Read' blocker from scratch;")
 	print("- Reworked user visibility of IdiotBox developers on servers;")
@@ -3243,8 +3244,10 @@ local toxicadvertise = {
 	"Join the fucking Discord, promise it won't hurt you faggots",
 	"Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ right this moment or I will hire a hitman to kill you",
 	"Join the IdiotBox group at OH wait niggers got mad and mass-reported it, kys shitkids",
+	"Nvm, Steam group is back lol get fucked you mad skid shitkids",
 	"IdiotBox killed all of the paid cheats because it's too good",
 	"Get IdiotBox, it's free and very good, you sacks of crying shit",
+	"IdiotBox is the fucking G.O.A.T.",
 	"What the fuck are you doing not using this god-like cheat lol",
 	"This is an epic fucking cheat called IdiotBox that was created by Phizz and others, worship your new gods kiddos",
 	"You were fed cock milk as a baby if you're not using IdiotBox and you can not prove me wrong",
@@ -3278,14 +3281,17 @@ local lmaoboxadvertise = {
 	"www.IB4G.net - 100% NO SKILL REQUIRED!",
 	"www.IB4G.net - MAKE IDIOTBOX GREAT AGAIN!",
 	"www.IB4G.net - WHY ARE YOU NOT CHEATING IN A DYING GAME?",
-	"www.IB4G.net - RUINING EVERYONES' FUN SINCE 2016!",
+	"www.IB4G.net - RUINING EVERYONE'S FUN SINCE 2016!",
 	"www.IB4G.net - IT'S PASTED, BUT IT'S THE BEST PASTE YOU WILL EVER USE!",
 	"www.IB4G.net - A VERY CLEAN, HIGH-QUALITY AND BUG-FREE PASTE!",
 	"www.IB4G.net - ALWAYS UPDATED! NEVER GETS OUTDATED!",
 	"www.IB4G.net - WITH A FUCK TON OF NEW FEATURES!",
-	"www.IB4G.net - STEAM GROUP WAS TAKEN DOWN, BUT WHO THE FUCK CARES?",
+	"www.IB4G.net - ONCE YOU GO BLACK, YOU NEVER GO BACK. GET IDIOTBOX NOW!",
+	"www.IB4G.net - SACRIFICE A FEW FRAMES FOR THE BEST EXPERIENCE OF YOUR LIFE!",
+	"www.IB4G.net - STEAM GROUP WAS TAKEN DOWN, BUT IT'S BACK BABY!",
 	"www.IB4G.net - BEST GARRY'S MOD CHEAT, NO CAP!",
 	"www.IB4G.net - WITH IDIOTBOX, YOU'LL NEVER GET BANNED FOR CHEATING AGAIN!",
+	"www.IB4G.net - DISCORD SERVER WAS TAKEN DOWN MANY TIMES, BUT WE ALWAYS COME BACK!",
 }
 
 local horstwessellied = {
@@ -5929,6 +5935,7 @@ hook.Add("PreDrawOpaqueRenderables", "Hook23", function()
 			local pitch = v:EyeAngles().x
 			local yaw = v:EyeAngles().y
 			local roll = 0
+			if gOption("Hack vs. Hack", "Resolver", "X-Axis:") ~= "Off" then
 				if gOption("Hack vs. Hack", "Resolver", "X-Axis:") == "Down" then
 					pitch = 90
 				elseif gOption("Hack vs. Hack", "Resolver", "X-Axis:") == "Up" then
@@ -5944,6 +5951,8 @@ hook.Add("PreDrawOpaqueRenderables", "Hook23", function()
 						pitch = 90
 					end
 				end
+			end
+			if gOption("Hack vs. Hack", "Resolver", "Y-Axis:") ~= "Off" then
 				if gOption("Hack vs. Hack", "Resolver", "Y-Axis:") == "Left" then
 					yaw = yaw + 90
 				elseif gOption("Hack vs. Hack", "Resolver", "Y-Axis:") == "Right" then
@@ -5955,6 +5964,7 @@ hook.Add("PreDrawOpaqueRenderables", "Hook23", function()
 				else
 					roll = v:EyeAngles().z
 				end
+			end
 			v:SetPoseParameter("aim_pitch", math.NormalizeAngle(pitch))
 			v:SetPoseParameter("head_pitch", math.NormalizeAngle(pitch))
 			v:SetPoseParameter("body_yaw", 0)
