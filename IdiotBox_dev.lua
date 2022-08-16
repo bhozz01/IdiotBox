@@ -90,6 +90,65 @@ surface.CreateFont("MiscFont3", {
 })
 
 local options = {
+		["Utilities"] = {
+				{
+					{"General Utilities", 16, 20, 347, 124, 218}, 
+					{"Optimize Game", "Checkbox", false, 78}, 
+					{"Anti-AFK", "Checkbox", false, 78}, 
+					{"Anti-Ads", "Checkbox", false, 78}, 
+					{"Anti-Blind", "Checkbox", false, 78}, 
+                }, 
+				{
+					{"Trouble in Terrorist Town Utilities", 16, 157, 347, 125, 218}, 
+					{"Hide Round Report", "Checkbox", false, 78}, 
+					{"Panel Remover", "Checkbox", false, 78}, 
+					{"Prop Kill", "Checkbox", false, 78}, 
+					{"Prop Kill Key:", "Toggle", 0, 92, 0}, 
+				}, 
+				{
+					{"DarkRP Utilities", 16, 296, 347, 103, 218}, 
+					{"Suicide Near Arrest Batons", "Checkbox", false, 78}, 
+					{"Transparent Props", "Checkbox", false, 78}, 
+					{"Transparency:", "Slider", 157, 255, 92}, 
+				}, 
+				{
+					{"Murder Utilities", 16, 413, 347, 100, 218}, 
+					{"Hide End Round Board", "Checkbox", false, 78}, 
+					{"Hide Footprints", "Checkbox", false, 78}, 
+					{"No Black Screens", "Checkbox", false, 78}, 
+				}, 
+				{
+          			{"Configurations", 376, 20, 347, 150, 218}, 
+					{"Automatically Save", "Checkbox", false, 78}, 
+					{"Save Configuration", "Button", "", 92}, 
+					{"Load Configuration", "Button", "", 92}, 
+					{"Delete Configuration", "Button", "", 92}, 
+					{"Configuration:", "Selection", "Config #1", {"Config #1", "Config #2", "Config #3", "Config #4", "Config #5"}, 92}, 
+          		}, 
+				{
+          			{"IdiotBox Console Commands", 376, 183, 347, 99, 218}, 
+					{"Run the 'idiot_openmenu' command to open the menu;", "Checkbox", false, 9999}, 
+          			{"Run the 'idiot_changename' command to set a custom name.", "Checkbox", false, 9999}, 
+					{"Apply custom name", "Checkbox", false, 78}, 
+          		}, 
+				{
+					{"Panic Mode", 376, 296, 347, 75, 218}, 
+					{"Enabled", "Checkbox", false, 78}, 
+					{"Mode:", "Selection", "Disable All", {"Disable Ragebot", "Disable Legitbot", "Disable Anti-Aim", "Disable All"}, 92}, 
+                }, 
+				{
+          			{"Menus", 736, 20, 347, 120, 218}, 
+					{"Entity Menu", "Button", "", 92}, 
+					{"Plugin Loader", "Button", "", 92}, 
+					{"Menu Style:", "Selection", "Borders", {"Borders", "Borderless"}, 92}, 
+					{"Options Style:", "Selection", "Borderless", {"Borders", "Borderless"}, 92}, 
+          		}, 
+				{
+          			{"Others", 736, 153, 347, 80, 218}, 
+					{"Print Changelog", "Button", "", 92}, 
+					{"Unload Cheat", "Button", "", 92}, 
+          		}, 
+        }, 
         ["Aimbot"] = {
                 {
 					{"Ragebot", 16, 20, 347, 226, 218}, 
@@ -270,65 +329,6 @@ local options = {
 					{"Distance Limit", "Checkbox", false, 78}, 
 					{"Distance:", "Slider", 0, 5000, 92}, 
                 }, 
-        }, 
-		["Utilities"] = {
-				{
-					{"General Utilities", 16, 20, 347, 124, 218}, 
-					{"Optimize Game", "Checkbox", false, 78}, 
-					{"Anti-AFK", "Checkbox", false, 78}, 
-					{"Anti-Ads", "Checkbox", false, 78}, 
-					{"Anti-Blind", "Checkbox", false, 78}, 
-                }, 
-				{
-					{"Trouble in Terrorist Town Utilities", 16, 157, 347, 125, 218}, 
-					{"Hide Round Report", "Checkbox", false, 78}, 
-					{"Panel Remover", "Checkbox", false, 78}, 
-					{"Prop Kill", "Checkbox", false, 78}, 
-					{"Prop Kill Key:", "Toggle", 0, 92, 0}, 
-				}, 
-				{
-					{"DarkRP Utilities", 16, 296, 347, 103, 218}, 
-					{"Suicide Near Arrest Batons", "Checkbox", false, 78}, 
-					{"Transparent Props", "Checkbox", false, 78}, 
-					{"Transparency:", "Slider", 157, 255, 92}, 
-				}, 
-				{
-					{"Murder Utilities", 16, 413, 347, 100, 218}, 
-					{"Hide End Round Board", "Checkbox", false, 78}, 
-					{"Hide Footprints", "Checkbox", false, 78}, 
-					{"No Black Screens", "Checkbox", false, 78}, 
-				}, 
-				{
-          			{"Configurations", 376, 20, 347, 150, 218}, 
-					{"Automatically Save", "Checkbox", false, 78}, 
-					{"Save Configuration", "Button", "", 92}, 
-					{"Load Configuration", "Button", "", 92}, 
-					{"Delete Configuration", "Button", "", 92}, 
-					{"Configuration:", "Selection", "Config #1", {"Config #1", "Config #2", "Config #3", "Config #4", "Config #5"}, 92}, 
-          		}, 
-				{
-          			{"IdiotBox Console Commands", 376, 183, 347, 99, 218}, 
-					{"Run the 'idiot_openmenu' command to open the menu;", "Checkbox", false, 9999}, 
-          			{"Run the 'idiot_changename' command to set a custom name.", "Checkbox", false, 9999}, 
-					{"Apply custom name", "Checkbox", false, 78}, 
-          		}, 
-				{
-					{"Panic Mode", 376, 296, 347, 75, 218}, 
-					{"Enabled", "Checkbox", false, 78}, 
-					{"Mode:", "Selection", "Disable All", {"Disable Ragebot", "Disable Legitbot", "Disable Anti-Aim", "Disable All"}, 92}, 
-                }, 
-				{
-          			{"Menus", 736, 20, 347, 120, 218}, 
-					{"Entity Menu", "Button", "", 92}, 
-					{"Plugin Loader", "Button", "", 92}, 
-					{"Menu Style:", "Selection", "Borders", {"Borders", "Borderless"}, 92}, 
-					{"Options Style:", "Selection", "Borderless", {"Borders", "Borderless"}, 92}, 
-          		}, 
-				{
-          			{"Others", 736, 153, 347, 80, 218}, 
-					{"Print Changelog", "Button", "", 92}, 
-					{"Unload Cheat", "Button", "", 92}, 
-          		}, 
         }, 
 		["Miscellaneous"] = {
 				{
