@@ -5989,92 +5989,86 @@ local randomresponse = {
 	"fuck", 
 }
 
-local function ReplySpam(data)
-	if v == me or not v:IsValid() or (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
-		return false
-	end
-	if pm.GetFriendStatus(v) ~= "friend" then
-	if (v ~= me) then
-		if (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "Random") then
-			RunConsoleCommand("say_team", randomresponse[math.random(#randomresponse)])
-		elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "Random") then
-			RunConsoleCommand("say", randomresponse[math.random(#randomresponse)])
-		elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "shut up") then
-			RunConsoleCommand("say_team", "shut up")
-		elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "shut up") then
-			RunConsoleCommand("say", "shut up")
-		elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "ok") then
-			RunConsoleCommand("say_team", "ok")
-		elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "ok") then
-			RunConsoleCommand("say", "ok")
-		elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "who") then
-			RunConsoleCommand("say_team", "who")
-		elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "who") then
-			RunConsoleCommand("say", "who")
-		elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "nobody cares") then
-			RunConsoleCommand("say_team", "nobody cares")
-		elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "nobody cares") then
-			RunConsoleCommand("say", "nobody cares")
-		elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "where") then
-			RunConsoleCommand("say_team", "where")
-		elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "where") then
-			RunConsoleCommand("say", "where")
-		elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "lol stop spam...") then
-			RunConsoleCommand("say_team", "lol stop spam...")
-		elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "lol stop spam...") then
-			RunConsoleCommand("say", "lol stop spam...")
-		elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "what") then
-			RunConsoleCommand("say_team", "what")
-		elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "what") then
-			RunConsoleCommand("say", "what")
-		elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "yea") then
-			RunConsoleCommand("say_team", "yea")
-		elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "yea") then
-			RunConsoleCommand("say", "yea")
-		elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "lol") then
-			RunConsoleCommand("say_team", "lol")
-		elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "lol") then
-			RunConsoleCommand("say", "lol")
-		elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "english please") then
-			RunConsoleCommand("say_team", "english please")
-		elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "english please") then
-			RunConsoleCommand("say", "english please")
-		elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "lmao") then
-			RunConsoleCommand("say_team", "lmao")
-		elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "lmao") then
-			RunConsoleCommand("say", "lmao")
-		elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "shit") then
-			RunConsoleCommand("say_team", "shit")
-		elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "shit") then
-			RunConsoleCommand("say", "shit")
-		elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "fuck") then
-			RunConsoleCommand("say_team", "fuck")
-		elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "fuck") then
-			RunConsoleCommand("say", "fuck")
+hook.Add("OnPlayerChat", "Hook24", function(v, text, team)
+	if gOption("Miscellaneous", "Chat", "Reply Spam:") ~= "Off" then
+		if v == me or not v:IsValid() or (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
+			return false
 		end
-		elseif gOption("Miscellaneous", "Chat", "Reply Spam:") == "Cheater Callout" then
-		if string.find(string.lower(text), "hac") or string.find(string.lower(text), "h4c") or string.find(string.lower(text), "h@c") or string.find(string.lower(text), "hak") or string.find(string.lower(text), "h4k") or string.find(string.lower(text), "h@k") or string.find(string.lower(text), "hec") or string.find(string.lower(text), "h3c") or string.find(string.lower(text), "hek") or string.find(string.lower(text), "h3k") or string.find(string.lower(text), "hax") or string.find(string.lower(text), "h4x") or string.find(string.lower(text), "h@x") or string.find(string.lower(text), "hex") or string.find(string.lower(text), "h3x") or string.find(string.lower(text), "hask") or string.find(string.lower(text), "h4sk") or string.find(string.lower(text), "h@sk") or string.find(string.lower(text), "ha$k") or string.find(string.lower(text), "h4$k") or string.find(string.lower(text), "h@$k") or string.find(string.lower(text), "hasc") or string.find(string.lower(text), "h4sc") or string.find(string.lower(text), "h@sc") or string.find(string.lower(text), "ha$c") or string.find(string.lower(text), "h4$c") or string.find(string.lower(text), "h@$c") or string.find(string.lower(text), "cheat") or string.find(string.lower(text), "ch3at") or string.find(string.lower(text), "che4t") or string.find(string.lower(text), "che@t") or string.find(string.lower(text), "ch34t") or string.find(string.lower(text), "ch3@t") or string.find(string.lower(text), "chet") or string.find(string.lower(text), "ch3t") or string.find(string.lower(text), "chit") or string.find(string.lower(text), "ch1t") or string.find(string.lower(text), "wal") or string.find(string.lower(text), "w4l") or string.find(string.lower(text), "w@l") or string.find(string.lower(text), "wa1") or string.find(string.lower(text), "w@1") or string.find(string.lower(text), "w41") or string.find(string.lower(text), "aim") or string.find(string.lower(text), "a1m") or string.find(string.lower(text), "4im") or string.find(string.lower(text), "@im") or string.find(string.lower(text), "@1m") or string.find(string.lower(text), "41m") or string.find(string.lower(text), "trig") or string.find(string.lower(text), "tr1g") or string.find(string.lower(text), "spin") or string.find(string.lower(text), "sp1n") or string.find(string.lower(text), "legit") or string.find(string.lower(text), "leg1t") or string.find(string.lower(text), "rage") or string.find(string.lower(text), "r4ge") or string.find(string.lower(text), "r@ge") or string.find(string.lower(text), "rag3") or string.find(string.lower(text), "r@g3") or string.find(string.lower(text), "r4g3") or string.find(string.lower(text), "bot") or string.find(string.lower(text), "b0t") or string.find(string.lower(text), "esp") or string.find(string.lower(text), "3sp") or string.find(string.lower(text), "e$p") or string.find(string.lower(text), "3$p") or string.find(string.lower(text), "lua") or string.find(string.lower(text), "1ua") or string.find(string.lower(text), "lu4") or string.find(string.lower(text), "lu@") or string.find(string.lower(text), "1u4") or string.find(string.lower(text), "1u@") or string.find(string.lower(text), "scr") or string.find(string.lower(text), "skr") or string.find(string.lower(text), "$cr") or string.find(string.lower(text), "$kr") or string.find(string.lower(text), "skid") or string.find(string.lower(text), "sk1d") or string.find(string.lower(text), "$kid") or string.find(string.lower(text), "$k1d") or string.find(string.lower(text), "bunny") or string.find(string.lower(text), "buny") or string.find(string.lower(text), "h0p") or string.find(string.lower(text), "hop") or string.find(string.lower(text), "aa") or string.find(string.lower(text), "anti") or string.find(string.lower(text), "4nti") or string.find(string.lower(text), "@nti") or string.find(string.lower(text), "ant1") or string.find(string.lower(text), "@nt1") or string.find(string.lower(text), "4nt1") or string.find(string.lower(text), "idiot") or string.find(string.lower(text), "idi0t") or string.find(string.lower(text), "1diot") or string.find(string.lower(text), "id1ot") or string.find(string.lower(text), "1di0t") or string.find(string.lower(text), "id10t") or string.find(string.lower(text), "1d10t") or string.find(string.lower(text), "paste") or string.find(string.lower(text), "p4ste") or string.find(string.lower(text), "p@ste") or string.find(string.lower(text), "past3") or string.find(string.lower(text), "p@st3") or string.find(string.lower(text), "p4st3") or string.find(string.lower(text), "box") or string.find(string.lower(text), "b0x") or string.find(string.lower(text), "blo") or string.find(string.lower(text), "bl0") or string.find(string.lower(text), "b1o") or string.find(string.lower(text), "b10") or string.find(string.lower(text), "ware") or string.find(string.lower(text), "w4re") or string.find(string.lower(text), "w@re") or string.find(string.lower(text), "war3") or string.find(string.lower(text), "w@r3") or string.find(string.lower(text), "w4r3") or string.find(string.lower(text), "meth") or string.find(string.lower(text), "m3th") or string.find(string.lower(text), "kick") or string.find(string.lower(text), "k1ck") or string.find(string.lower(text), "kik") or string.find(string.lower(text), "k1k") or string.find(string.lower(text), "ban") or string.find(string.lower(text), "b4n") or string.find(string.lower(text), "b@n") or string.find(string.lower(text), "fake") or string.find(string.lower(text), "f4ke") or string.find(string.lower(text), "f@ke") or string.find(string.lower(text), "fak3") or string.find(string.lower(text), "f4k3") or string.find(string.lower(text), "f@k3") then
-			if engine.ActiveGamemode() == "darkrp" then
-				ChatClear.OOC()
-			else
-				ChatClear.Run()
-			end
-		end
-		elseif gOption("Miscellaneous", "Chat", "Reply Spam:") == "Copy Messages" then
-		if (v ~= me) then
-			if (team) then
-				me:ConCommand("say_team '"..text.."' - "..v:Nick())
-			else
-				me:ConCommand("say '"..text.."' - "..v:Nick())
+		if pm.GetFriendStatus(v) ~= "friend" then
+			if (v ~= me) then
+				if (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "Random") then
+					RunConsoleCommand("say_team", randomresponse[math.random(#randomresponse)])
+				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "Random") then
+					RunConsoleCommand("say", randomresponse[math.random(#randomresponse)])
+				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "shut up") then
+					RunConsoleCommand("say_team", "shut up")
+				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "shut up") then
+					RunConsoleCommand("say", "shut up")
+				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "ok") then
+					RunConsoleCommand("say_team", "ok")
+				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "ok") then
+					RunConsoleCommand("say", "ok")
+				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "who") then
+					RunConsoleCommand("say_team", "who")
+				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "who") then
+					RunConsoleCommand("say", "who")
+				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "nobody cares") then
+					RunConsoleCommand("say_team", "nobody cares")
+				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "nobody cares") then
+					RunConsoleCommand("say", "nobody cares")
+				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "where") then
+					RunConsoleCommand("say_team", "where")
+				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "where") then
+					RunConsoleCommand("say", "where")
+				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "lol stop spam...") then
+					RunConsoleCommand("say_team", "lol stop spam...")
+				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "lol stop spam...") then
+					RunConsoleCommand("say", "lol stop spam...")
+				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "what") then
+					RunConsoleCommand("say_team", "what")
+				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "what") then
+					RunConsoleCommand("say", "what")
+				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "yea") then
+					RunConsoleCommand("say_team", "yea")
+				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "yea") then
+					RunConsoleCommand("say", "yea")
+				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "lol") then
+					RunConsoleCommand("say_team", "lol")
+				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "lol") then
+					RunConsoleCommand("say", "lol")
+				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "english please") then
+					RunConsoleCommand("say_team", "english please")
+				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "english please") then
+					RunConsoleCommand("say", "english please")
+				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "lmao") then
+					RunConsoleCommand("say_team", "lmao")
+				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "lmao") then
+					RunConsoleCommand("say", "lmao")
+				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "shit") then
+					RunConsoleCommand("say_team", "shit")
+				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "shit") then
+					RunConsoleCommand("say", "shit")
+				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "fuck") then
+					RunConsoleCommand("say_team", "fuck")
+				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "fuck") then
+					RunConsoleCommand("say", "fuck")
+				elseif gOption("Miscellaneous", "Chat", "Reply Spam:") == "Cheater Callout" then
+					if string.find(string.lower(text), "hac") or string.find(string.lower(text), "h4c") or string.find(string.lower(text), "h@c") or string.find(string.lower(text), "hak") or string.find(string.lower(text), "h4k") or string.find(string.lower(text), "h@k") or string.find(string.lower(text), "hec") or string.find(string.lower(text), "h3c") or string.find(string.lower(text), "hek") or string.find(string.lower(text), "h3k") or string.find(string.lower(text), "hax") or string.find(string.lower(text), "h4x") or string.find(string.lower(text), "h@x") or string.find(string.lower(text), "hex") or string.find(string.lower(text), "h3x") or string.find(string.lower(text), "hask") or string.find(string.lower(text), "h4sk") or string.find(string.lower(text), "h@sk") or string.find(string.lower(text), "ha$k") or string.find(string.lower(text), "h4$k") or string.find(string.lower(text), "h@$k") or string.find(string.lower(text), "hasc") or string.find(string.lower(text), "h4sc") or string.find(string.lower(text), "h@sc") or string.find(string.lower(text), "ha$c") or string.find(string.lower(text), "h4$c") or string.find(string.lower(text), "h@$c") or string.find(string.lower(text), "cheat") or string.find(string.lower(text), "ch3at") or string.find(string.lower(text), "che4t") or string.find(string.lower(text), "che@t") or string.find(string.lower(text), "ch34t") or string.find(string.lower(text), "ch3@t") or string.find(string.lower(text), "chet") or string.find(string.lower(text), "ch3t") or string.find(string.lower(text), "chit") or string.find(string.lower(text), "ch1t") or string.find(string.lower(text), "wal") or string.find(string.lower(text), "w4l") or string.find(string.lower(text), "w@l") or string.find(string.lower(text), "wa1") or string.find(string.lower(text), "w@1") or string.find(string.lower(text), "w41") or string.find(string.lower(text), "aim") or string.find(string.lower(text), "a1m") or string.find(string.lower(text), "4im") or string.find(string.lower(text), "@im") or string.find(string.lower(text), "@1m") or string.find(string.lower(text), "41m") or string.find(string.lower(text), "trig") or string.find(string.lower(text), "tr1g") or string.find(string.lower(text), "spin") or string.find(string.lower(text), "sp1n") or string.find(string.lower(text), "legit") or string.find(string.lower(text), "leg1t") or string.find(string.lower(text), "rage") or string.find(string.lower(text), "r4ge") or string.find(string.lower(text), "r@ge") or string.find(string.lower(text), "rag3") or string.find(string.lower(text), "r@g3") or string.find(string.lower(text), "r4g3") or string.find(string.lower(text), "bot") or string.find(string.lower(text), "b0t") or string.find(string.lower(text), "esp") or string.find(string.lower(text), "3sp") or string.find(string.lower(text), "e$p") or string.find(string.lower(text), "3$p") or string.find(string.lower(text), "lua") or string.find(string.lower(text), "1ua") or string.find(string.lower(text), "lu4") or string.find(string.lower(text), "lu@") or string.find(string.lower(text), "1u4") or string.find(string.lower(text), "1u@") or string.find(string.lower(text), "scr") or string.find(string.lower(text), "skr") or string.find(string.lower(text), "$cr") or string.find(string.lower(text), "$kr") or string.find(string.lower(text), "skid") or string.find(string.lower(text), "sk1d") or string.find(string.lower(text), "$kid") or string.find(string.lower(text), "$k1d") or string.find(string.lower(text), "bunny") or string.find(string.lower(text), "buny") or string.find(string.lower(text), "h0p") or string.find(string.lower(text), "hop") or string.find(string.lower(text), "aa") or string.find(string.lower(text), "anti") or string.find(string.lower(text), "4nti") or string.find(string.lower(text), "@nti") or string.find(string.lower(text), "ant1") or string.find(string.lower(text), "@nt1") or string.find(string.lower(text), "4nt1") or string.find(string.lower(text), "idiot") or string.find(string.lower(text), "idi0t") or string.find(string.lower(text), "1diot") or string.find(string.lower(text), "id1ot") or string.find(string.lower(text), "1di0t") or string.find(string.lower(text), "id10t") or string.find(string.lower(text), "1d10t") or string.find(string.lower(text), "paste") or string.find(string.lower(text), "p4ste") or string.find(string.lower(text), "p@ste") or string.find(string.lower(text), "past3") or string.find(string.lower(text), "p@st3") or string.find(string.lower(text), "p4st3") or string.find(string.lower(text), "box") or string.find(string.lower(text), "b0x") or string.find(string.lower(text), "blo") or string.find(string.lower(text), "bl0") or string.find(string.lower(text), "b1o") or string.find(string.lower(text), "b10") or string.find(string.lower(text), "ware") or string.find(string.lower(text), "w4re") or string.find(string.lower(text), "w@re") or string.find(string.lower(text), "war3") or string.find(string.lower(text), "w@r3") or string.find(string.lower(text), "w4r3") or string.find(string.lower(text), "meth") or string.find(string.lower(text), "m3th") or string.find(string.lower(text), "kick") or string.find(string.lower(text), "k1ck") or string.find(string.lower(text), "kik") or string.find(string.lower(text), "k1k") or string.find(string.lower(text), "ban") or string.find(string.lower(text), "b4n") or string.find(string.lower(text), "b@n") or string.find(string.lower(text), "fake") or string.find(string.lower(text), "f4ke") or string.find(string.lower(text), "f@ke") or string.find(string.lower(text), "fak3") or string.find(string.lower(text), "f4k3") or string.find(string.lower(text), "f@k3") then
+						if engine.ActiveGamemode() == "darkrp" then
+							ChatClear.OOC()
+						else
+							ChatClear.Run()
+						end
+					end
+				elseif gOption("Miscellaneous", "Chat", "Reply Spam:") == "Copy Messages" then
+					if (team) then
+						me:ConCommand("say_team '"..text.."' - "..v:Nick())
+					else
+						me:ConCommand("say '"..text.."' - "..v:Nick())
+					end
 				end
 			end
 		end
-	end
-end
-
-hook.Add("OnPlayerChat", "Hook24", function(v, text, team)
-	if gOption("Miscellaneous", "Chat", "Reply Spam:") ~= "Off" then
-		ReplySpam(data)
 	end
 end)
 
