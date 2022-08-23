@@ -1,4 +1,4 @@
-  //----IdiotBox v6.8.b1----//
+  //----IdiotBox v6.8.b2----//
  //--------By Phizz--------//
 //------------------------//
 
@@ -652,34 +652,6 @@ local function MsgR(time, text)
 	print("\n"..text.."\n")
 end
 
-local function MsgRGB(time, text)
-	if not windowopen then
-		windowopen = true
-		local window = vgui.Create("DFrame")
-		window:SetPos(ScrW() / 2.7, 0)
-		window:SetSize(500, 25)
-		window:SlideDown(0.3)
-		window:SetTitle("")
-		window:ShowCloseButton(false)
-		window:SetDraggable(false)
-		window.Paint = function(s, w, h)
-			surface.SetDrawColor(bgmenucol.r, bgmenucol.g, bgmenucol.b, 240)
-			surface.DrawRect(0, 0, w, h)
-			draw.DrawText(text, "MenuFont", w / 2, 6, HSVToColor(RealTime() * 69 % 360, 1, 1) || Color(0, 0, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-		end
-		timer.Simple(time, function()
-			if windowopen then
-				window:SlideUp(0.3)
-				timer.Simple(0.3, function()
-					windowopen = false
-					window:Remove()
-				end)
-			end
-		end)
-	end
-	print("\n"..text.."\n")
-end
-
 if gui.IsGameUIVisible() then
 	gui.HideGameUI()
 end
@@ -794,7 +766,7 @@ local function UpdateVar(men, sub, lookup, new)
 end
 
 local folder = "IdiotBox"
-local version = "6.8.b1"
+local version = "6.8.b2"
 
 if not file.IsDir(folder, "DATA") then
 	file.CreateDir(folder)
@@ -944,11 +916,11 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(503, 15 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g, maintextcol.b, 255)
 	surface.SetFont("MainFont")
-	surface.DrawText("IdiotBox v6.8.b1")
+	surface.DrawText("IdiotBox v6.8.b2")
 	surface.SetTextPos(613, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: August 16th 2022")
+	surface.DrawText("Latest build: August 23rd 2022")
 	surface.SetFont("MenuFont")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -1225,9 +1197,9 @@ end
 
 local function Changelog()
 	print("===========================================================\n\n")
-	print("IdiotBox v6.8.b1 bugfixes (in no particular order)")
+	print("IdiotBox v6.8.b2 bugfixes (in no particular order)")
 	print("")
-	print("Total bugfix count: ~50 bugs have been found and fixed in the v6.8.b1 update;")
+	print("Total bugfix count: ~50 bugs have been found and fixed in the v6.8.b2 update;")
 	print("\n")
 	print("- The 'readme.txt' file is finally up-to-date and only contains the important information;")
 	print("- Aim Smoothness will automatically disable itself if the Legitbot Silent aim is turned on;")
@@ -1267,6 +1239,7 @@ local function Changelog()
 	print("- Fixed Triggerbot Smooth Aim slowing your mouse speed;")
 	print("- Fixed certain outlines and fonts not having the proper dimensions;")
 	print("- Fixed the menu not being large enough for certain outlines;")
+	print("- Fixed a Projectile Prediction bug where dying would cause script errors;")
 	print("- Fixed No Lerp and Dark Mode not resetting when disabled;")
 	print("- Fixed a few minor Aim Priorities bugs from both Aimbot and Triggerbot;")
 	print("- Reworked script for slightly better performance;")
@@ -1279,11 +1252,12 @@ local function Changelog()
 	print("- Removed unusable DarkRP names from the Name Changer;")
 	print("- Removed cloned hooks and combined them all into one for better performance;")
 	print("- Removed old and unused Fake Lag functions;")
+	print("- Removed old and unused message pop-up function;")
 	print("- Removed 'aaa' module as 'IdiotBox_alpha1.lua' was replaced by 'IdiotBox_dev.lua' and had no use.")
 	print("\n")
-	print("IdiotBox v6.8.b1 new features (in no particular order)")
+	print("IdiotBox v6.8.b2 new features (in no particular order)")
 	print("")
-	print("Total feature count: ~50 features have been added in the v6.8.b1 update;")
+	print("Total feature count: ~50 features have been added in the v6.8.b2 update;")
 	print("\n")
 	print("- Added 'Plugin Loader' to Utilities;")
 	print("- Added 'Projectile Prediction' to Aimbot;")
@@ -1322,6 +1296,7 @@ local function Changelog()
 	print("- Added 'Clientside' to Visuals;")
 	print("- Added custom key binds;")
 	print("- Added bordered menu styles;")
+	print("- Added sliding menu;")
 	print("- Added more music to Sounds;")
 	print("- Added custom music player to Sounds;")
 	print("- Added a custom configurations menu;")
@@ -1767,6 +1742,7 @@ local function MenuBorder() -- Probably a dumb way of doing this but still
 	local frame = vgui.Create("DFrame")
 	frame:SetSize(1116, 748)
 	frame:Center()
+	frame:SlideDown(0.5)
 	frame:SetTitle("")
 	frame:MakePopup()
 	frame:ShowCloseButton(false)
@@ -1779,8 +1755,11 @@ local function MenuBorder() -- Probably a dumb way of doing this but still
 		end
 	frame.Think = function()
 		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or unloaded == true) then
+			frame:SlideUp(0.5)
+			timer.Simple(0.5, function()
 			frame:Remove()
 			menuopen = false
+			end)
 		end
 	end
 end
@@ -1823,6 +1802,7 @@ local function Menu()
 	local frame = vgui.Create("DFrame")
 	frame:SetSize(1110, 742)
 	frame:Center()
+	frame:SlideDown(0.5)
 	frame:SetTitle("")
 	frame:MakePopup()
 	frame:ShowCloseButton(false)
@@ -1958,10 +1938,13 @@ local function Menu()
 					end
 				end)
 			end
+			frame:SlideUp(0.5)
+			timer.Simple(0.5, function()
 			frame:Remove()
 			menuopen = false
 			candoslider = false
 			drawlast = nil
+			end)
 		if gBool("Utilities", "Configurations", "Automatically Save") then
 			if gOption("Utilities", "Configurations", "Configuration:") == "Config #1" then
 				SaveConfig1()
@@ -3186,7 +3169,7 @@ local advertise = {
 	"IdiotBox - Make Garry's Mod great again!",
 	"IdiotBox - Visit our website for fresh Discord invite links!",
 	"IdiotBox - Monthly bugfixes & updates. It never gets outdated!",
-	"IdiotBox - Download IdiotBox v6.8.b1 right now!",
+	"IdiotBox - Download IdiotBox v6.8.b2 right now!",
 	"IdiotBox - Bug-free and fully customizable!",
 	"IdiotBox - Join our Steam group and Discord server to stay up-to-date!",
 	"IdiotBox - Refund all your cheats, use this better and free alternative!",
@@ -3257,7 +3240,7 @@ local toxicadvertise = {
 	"IdiotBox needs no Steam group, we're too chad for one",
 	"Our Discord was tapped at some point but IdiotBox is back and stronger than ever",
 	"IdiotBox came back to kill silly niggers, and it came back with a vengeance",
-	"Download Idiotbox v6.8.b1 now, you dont even know what you're missing you mongoloids",
+	"Download Idiotbox v6.8.b2 now, you dont even know what you're missing you mongoloids",
 	"Have I told you about IdiotBox, the best Garry's Mod cheat ever made??",
 	"Holy shit, IdiotBox for Garry's Mod is the best cheat that I have ever used!!",
 }
@@ -3279,6 +3262,7 @@ local lmaoboxadvertise = {
 	"www.IB4G.net - PHIZZ IS A GOD FOR MAKING THIS!",
 	"www.IB4G.net - BECOME THE SERVER MVP IN NO TIME!",
 	"www.IB4G.net - 100% NO SKILL REQUIRED!",
+	"www.IB4G.net - BEST CHEAT, MADE BY THE CHINESE COMMUNIST PARTY!",
 	"www.IB4G.net - MAKE IDIOTBOX GREAT AGAIN!",
 	"www.IB4G.net - WHY ARE YOU NOT CHEATING IN A DYING GAME?",
 	"www.IB4G.net - RUINING EVERYONE'S FUN SINCE 2016!",
@@ -4993,13 +4977,13 @@ end
 local function PredictPos(aimtarget)
 	local wep = me:GetActiveWeapon()
 	if gBool("Aimbot", "Aim Priorities", "Projectile Prediction") and me:Alive() and me:Health() > 0 then
-		if string.find(string.lower(wep:GetPrintName()), "crossbow") then
+		if string.find(string.lower(wep:GetClass()), "crossbow") then
 			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 1100 then
 				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 1600) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			else
 				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 3215) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			end
-		elseif string.find(string.lower(wep:GetClass()), "m9k_rpg7") or string.find(string.lower(me:GetActiveWeapon():GetClass()), "m9k_m202") then
+		elseif string.find(string.lower(wep:GetClass()), "m9k_rpg7") or string.find(string.lower(wep:GetClass()), "m9k_m202") then
 			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 2600 then
 				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4500) + me:Ping() / 950) - Vector(0, 0, 25) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 4000 then
