@@ -1,8 +1,10 @@
 -----INSTALLING AND INITIALIZING:-----
 
 1. Drag 'IdiotBox_latest.lua' and the 'bin' folder located in the .zip file into the following directory: Program Files (x86) > Steam > steamapps > common > GarrysMod > garrysmod > lua;
-2. After injecting your 'sv_allowcslua' bypasser (look below), join a multiplayer server and type the following command in the console: 'lua_openscript_cl IdiotBox_latest.lua'.
+2. Start Garry's Mod in the 32-bit version of the game, NOT the 64-bit branch (x86-64 beta branch as of now), as the modules (located in the 'bin' folder) are ONLY COMPATIBLE with the default version of Garry's Mod;
+3. After injecting your 'sv_allowcslua' bypasser (look below), join a multiplayer server and type the following command in the console: 'lua_openscript_cl IdiotBox_latest.lua'.
 ***If you are using a gLua loader, you will have to copy the script itself (which you can do by opening the .lua file with any text editor), paste it into the loader's console and execute it from there;
+***If you are using a prorpietary .lua script loader, follow the tutorial that came with it. There is not much else I can help you with in this instance.
 ***If GitHub's servers are down and you cannot load IdiotBox, use the 'IdiotBox_backup.lua' file. The backup version does not load the script from GitHub, thus requiring manual updating when new versions come out.
 
 -----HOW TO INJECT A BYPASSER:-----
