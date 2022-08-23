@@ -9,13 +9,13 @@
 
 -----HOW TO INJECT A BYPASSER:-----
 
-There are a lot of methods out there for loading .lua scripts on servers that don't have 'sv_allowcslua' enabled. Some of these methods can change from time to time, as they get patched and replaced by others;
-1. If you are having trouble with loading IdiotBox or other .lua scripts on public servers, add me on Discord (Phizz#1667) and I will assist you as much as I possibly can.
+1. There are a lot of methods out there for loading .lua scripts on servers that don't have 'sv_allowcslua' enabled. Some of these methods can change from time to time, as they get patched and replaced by others;
+2. If you are having trouble with loading IdiotBox or other .lua scripts on public servers, add me on Discord (Phizz#1667) and I will assist you as much as I possibly can.
 
 -----REPORTING ISSUES:-----
 
-If you encounter any bugs, errors or glitches while using IdiotBox, contact me through Discord (Phizz#1667) and I will assist you as much as I possibly can;
-Alternatively, you can add me on Steam (https://steamcommunity.com/id/phizzofficial), however, my friends list is usually full and you might not be able to add me, but you can always leave a comment.
+1. If you encounter any bugs, errors or glitches while using IdiotBox, contact me through Discord (Phizz#1667) and I will assist you as much as I possibly can;
+2. Alternatively, you can add me on Steam (https://steamcommunity.com/id/phizzofficial), however, my friends list is usually full and you might not be able to add me, but you can always leave a comment.
 
 -----NOTES:-----
 
