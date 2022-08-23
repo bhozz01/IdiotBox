@@ -1,4 +1,4 @@
-  //----IdiotBox v6.8.b1----//
+  //----IdiotBox v6.8.b2----//
  //--------By Phizz--------//
 //------------------------//
 
@@ -652,34 +652,6 @@ local function MsgR(time, text)
 	print("\n"..text.."\n")
 end
 
-local function MsgRGB(time, text)
-	if not windowopen then
-		windowopen = true
-		local window = vgui.Create("DFrame")
-		window:SetPos(ScrW() / 2.7, 0)
-		window:SetSize(500, 25)
-		window:SlideDown(0.3)
-		window:SetTitle("")
-		window:ShowCloseButton(false)
-		window:SetDraggable(false)
-		window.Paint = function(s, w, h)
-			surface.SetDrawColor(bgmenucol.r, bgmenucol.g, bgmenucol.b, 240)
-			surface.DrawRect(0, 0, w, h)
-			draw.DrawText(text, "MenuFont", w / 2, 6, HSVToColor(RealTime() * 69 % 360, 1, 1) || Color(0, 0, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
-		end
-		timer.Simple(time, function()
-			if windowopen then
-				window:SlideUp(0.3)
-				timer.Simple(0.3, function()
-					windowopen = false
-					window:Remove()
-				end)
-			end
-		end)
-	end
-	print("\n"..text.."\n")
-end
-
 if gui.IsGameUIVisible() then
 	gui.HideGameUI()
 end
@@ -794,7 +766,7 @@ local function UpdateVar(men, sub, lookup, new)
 end
 
 local folder = "IdiotBox"
-local version = "6.8.b1"
+local version = "6.8.b2"
 
 if not file.IsDir(folder, "DATA") then
 	file.CreateDir(folder)
@@ -944,11 +916,11 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(503, 15 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g, maintextcol.b, 255)
 	surface.SetFont("MainFont")
-	surface.DrawText("IdiotBox v6.8.b1")
+	surface.DrawText("IdiotBox v6.8.b2")
 	surface.SetTextPos(613, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: August 16th 2022")
+	surface.DrawText("Latest build: August 23rd 2022")
 	surface.SetFont("MenuFont")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -1225,9 +1197,9 @@ end
 
 local function Changelog()
 	print("===========================================================\n\n")
-	print("IdiotBox v6.8.b1 bugfixes (in no particular order)")
+	print("IdiotBox v6.8.b2 bugfixes (in no particular order)")
 	print("")
-	print("Total bugfix count: ~50 bugs have been found and fixed in the v6.8.b1 update;")
+	print("Total bugfix count: ~50 bugs have been found and fixed in the v6.8.b2 update;")
 	print("\n")
 	print("- The 'readme.txt' file is finally up-to-date and only contains the important information;")
 	print("- Aim Smoothness will automatically disable itself if the Legitbot Silent aim is turned on;")
@@ -1281,9 +1253,9 @@ local function Changelog()
 	print("- Removed old and unused Fake Lag functions;")
 	print("- Removed 'aaa' module as 'IdiotBox_alpha1.lua' was replaced by 'IdiotBox_dev.lua' and had no use.")
 	print("\n")
-	print("IdiotBox v6.8.b1 new features (in no particular order)")
+	print("IdiotBox v6.8.b2 new features (in no particular order)")
 	print("")
-	print("Total feature count: ~50 features have been added in the v6.8.b1 update;")
+	print("Total feature count: ~50 features have been added in the v6.8.b2 update;")
 	print("\n")
 	print("- Added 'Plugin Loader' to Utilities;")
 	print("- Added 'Projectile Prediction' to Aimbot;")
@@ -1767,6 +1739,7 @@ local function MenuBorder() -- Probably a dumb way of doing this but still
 	local frame = vgui.Create("DFrame")
 	frame:SetSize(1116, 748)
 	frame:Center()
+	frame:SlideDown(0.5)
 	frame:SetTitle("")
 	frame:MakePopup()
 	frame:ShowCloseButton(false)
@@ -1779,8 +1752,11 @@ local function MenuBorder() -- Probably a dumb way of doing this but still
 		end
 	frame.Think = function()
 		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or unloaded == true) then
+			frame:SlideUp(0.5)
+			timer.Simple(0.5, function()
 			frame:Remove()
 			menuopen = false
+			end)
 		end
 	end
 end
@@ -1823,6 +1799,7 @@ local function Menu()
 	local frame = vgui.Create("DFrame")
 	frame:SetSize(1110, 742)
 	frame:Center()
+	frame:SlideDown(0.5)
 	frame:SetTitle("")
 	frame:MakePopup()
 	frame:ShowCloseButton(false)
@@ -1958,10 +1935,13 @@ local function Menu()
 					end
 				end)
 			end
+			frame:SlideUp(0.5)
+			timer.Simple(0.5, function()
 			frame:Remove()
 			menuopen = false
 			candoslider = false
 			drawlast = nil
+			end)
 		if gBool("Utilities", "Configurations", "Automatically Save") then
 			if gOption("Utilities", "Configurations", "Configuration:") == "Config #1" then
 				SaveConfig1()
@@ -3186,7 +3166,7 @@ local advertise = {
 	"IdiotBox - Make Garry's Mod great again!",
 	"IdiotBox - Visit our website for fresh Discord invite links!",
 	"IdiotBox - Monthly bugfixes & updates. It never gets outdated!",
-	"IdiotBox - Download IdiotBox v6.8.b1 right now!",
+	"IdiotBox - Download IdiotBox v6.8.b2 right now!",
 	"IdiotBox - Bug-free and fully customizable!",
 	"IdiotBox - Join our Steam group and Discord server to stay up-to-date!",
 	"IdiotBox - Refund all your cheats, use this better and free alternative!",
@@ -3257,7 +3237,7 @@ local toxicadvertise = {
 	"IdiotBox needs no Steam group, we're too chad for one",
 	"Our Discord was tapped at some point but IdiotBox is back and stronger than ever",
 	"IdiotBox came back to kill silly niggers, and it came back with a vengeance",
-	"Download Idiotbox v6.8.b1 now, you dont even know what you're missing you mongoloids",
+	"Download Idiotbox v6.8.b2 now, you dont even know what you're missing you mongoloids",
 	"Have I told you about IdiotBox, the best Garry's Mod cheat ever made??",
 	"Holy shit, IdiotBox for Garry's Mod is the best cheat that I have ever used!!",
 }
