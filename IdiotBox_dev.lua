@@ -1239,6 +1239,7 @@ local function Changelog()
 	print("- Fixed Triggerbot Smooth Aim slowing your mouse speed;")
 	print("- Fixed certain outlines and fonts not having the proper dimensions;")
 	print("- Fixed the menu not being large enough for certain outlines;")
+	print("- Fixed a Projectile Prediction bug where dying would cause script errors;")
 	print("- Fixed No Lerp and Dark Mode not resetting when disabled;")
 	print("- Fixed a few minor Aim Priorities bugs from both Aimbot and Triggerbot;")
 	print("- Reworked script for slightly better performance;")
@@ -1251,6 +1252,7 @@ local function Changelog()
 	print("- Removed unusable DarkRP names from the Name Changer;")
 	print("- Removed cloned hooks and combined them all into one for better performance;")
 	print("- Removed old and unused Fake Lag functions;")
+	print("- Removed old and unused message pop-up function;")
 	print("- Removed 'aaa' module as 'IdiotBox_alpha1.lua' was replaced by 'IdiotBox_dev.lua' and had no use.")
 	print("\n")
 	print("IdiotBox v6.8.b2 new features (in no particular order)")
@@ -1294,6 +1296,7 @@ local function Changelog()
 	print("- Added 'Clientside' to Visuals;")
 	print("- Added custom key binds;")
 	print("- Added bordered menu styles;")
+	print("- Added sliding menu;")
 	print("- Added more music to Sounds;")
 	print("- Added custom music player to Sounds;")
 	print("- Added a custom configurations menu;")
@@ -3259,6 +3262,7 @@ local lmaoboxadvertise = {
 	"www.IB4G.net - PHIZZ IS A GOD FOR MAKING THIS!",
 	"www.IB4G.net - BECOME THE SERVER MVP IN NO TIME!",
 	"www.IB4G.net - 100% NO SKILL REQUIRED!",
+	"www.IB4G.net - BEST CHEAT, MADE BY THE CHINESE COMMUNIST PARTY!",
 	"www.IB4G.net - MAKE IDIOTBOX GREAT AGAIN!",
 	"www.IB4G.net - WHY ARE YOU NOT CHEATING IN A DYING GAME?",
 	"www.IB4G.net - RUINING EVERYONE'S FUN SINCE 2016!",
@@ -4973,13 +4977,13 @@ end
 local function PredictPos(aimtarget)
 	local wep = me:GetActiveWeapon()
 	if gBool("Aimbot", "Aim Priorities", "Projectile Prediction") and me:Alive() and me:Health() > 0 then
-		if string.find(string.lower(wep:GetPrintName()), "crossbow") then
+		if string.find(string.lower(wep:GetClass()), "crossbow") then
 			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 1100 then
 				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 1600) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			else
 				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 3215) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			end
-		elseif string.find(string.lower(wep:GetClass()), "m9k_rpg7") or string.find(string.lower(me:GetActiveWeapon():GetClass()), "m9k_m202") then
+		elseif string.find(string.lower(wep:GetClass()), "m9k_rpg7") or string.find(string.lower(wep:GetClass()), "m9k_m202") then
 			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 2600 then
 				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 4500) + me:Ping() / 950) - Vector(0, 0, 25) - em.GetVelocity(me) / 50) - em.EyePos(me)
 			elseif vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 4000 then
