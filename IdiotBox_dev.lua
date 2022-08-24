@@ -474,7 +474,7 @@ local options = {
                 }, 
 				{
 					{"Others", 321, 380, 205, 157, 70}, 
-					{"T Opacity:", "Slider", 205, 255, 88}, 
+					{"T Opacity:", "Slider", 255, 255, 88}, 
 					{"B Opacity:", "Slider", 175, 255, 88}, 
 					{"BG Opacity:", "Slider", 255, 255, 88}, 
 					{"BG Darkness:", "Slider", 18, 25, 88}, 
@@ -982,12 +982,12 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
 	surface.SetTextPos(5 + posx + 15 + 5, 61 + posy + maxy)
 	local tw, th = surface.GetTextSize(var[1])
-	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:"))
 	local mx, my = self:GetPos()
 	local bMouse = MouseInArea(mx + 5 + posx + 15 + 5, my + 61 + posy + maxy, mx + 5 + posx + 15 + 5 + dist + 14 + var[4], my + 61 + posy + maxy + 16)
 	if bMouse then
 		surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:") - 155)
-		surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:") - 155)
+		surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:") - 155)
 		if not input.IsMouseDown(MOUSE_LEFT) then
 			surface.DrawRect(5 + posx + 15 + 5 + dist + 2 + var[4], 61 + posy + maxy + 2, 10, 10)
 		end
@@ -995,9 +995,9 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 	surface.DrawText(var[1])
 	surface.DrawOutlinedRect( posx + 25 + dist + var[4], 61 + posy + maxy , 13, 13)
 	if var[3] then
-		surface.SetDrawColor(menutextcol.r - 30, menutextcol.g - 30, menutextcol.b - 30, 100)
+		surface.SetDrawColor(bordercol.r - 30, bordercol.g - 30, bordercol.b - 30, 100)
 		surface.DrawRect(5 + posx + 15 + 5 + dist + 2 + var[4], 61 + posy + maxy + 2, 10, 10)
-		surface.SetDrawColor(menutextcol.r - 10, menutextcol.g - 10, menutextcol.b - 10, 100)
+		surface.SetDrawColor(bordercol.r - 10, bordercol.g - 10, bordercol.b - 10, 100)
 		surface.DrawOutlinedRect(5 + posx + 15 + 5 + dist + 2 + var[4], 61 + posy + maxy + 2, 10, 10)
 	end
 	if bMouse and input.IsMouseDown(MOUSE_LEFT) and not mousedown and not drawlast then
@@ -1014,12 +1014,12 @@ local function DrawSlider(self, w, h, var, maxy, posx, posy, dist)
 	surface.SetTextPos(5 + posx + 15 + 5, 61 + posy + maxy)
 	surface.DrawText(var[1])
 	local tw, th = surface.GetTextSize(var[1])
-	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:"))
 	surface.DrawRect(5 + posx + 15 + 5 + dist, 61 + posy + maxy + 9, size, 2)
 	local ww = math.ceil(curnum * size / max)
-	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:"))
 	surface.DrawRect(3 + posx + 15 + 5 + dist + ww, 61 + posy + maxy + 9 - 5, 4, 12)
-	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:"))
 	local tw, th = surface.GetTextSize(curnum)
 	surface.DrawOutlinedRect(3 + posx + 15 + 5 + dist + ww, 61 + posy + maxy + 4, 4, 12)
 	surface.SetTextPos(5 + posx + 15 + 5 + dist + (size / 2) - tw / 2, 61 + posy + maxy + 16)
@@ -1043,13 +1043,13 @@ local function DrawSelect(self, w, h, var, maxy, posx, posy, dist)
 	surface.SetTextPos(5 + posx + 15 + 5, 61 + posy + maxy)
 	local tw, th = surface.GetTextSize(var[1])
 	surface.DrawText(var[1])
-	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:"))
 	surface.DrawOutlinedRect(25 + posx + dist, 61 + posy + maxy, size, 16)
 	local mx, my = self:GetPos()
 	local bMouse = MouseInArea(mx + 25 + posx + dist, my + 61 + posy + maxy, mx + 25 + posx + dist + size, my + 61 + posy + maxy + 16)
 	local check = dist..posy..posx..w..h..maxy
 	if (bMouse || notyetselected == check) then
-		surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, 150)
+		surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 150)
 		surface.DrawRect(25 + posx + dist + 2, 61 + posy + maxy + 2, size - 4, 12)
 	end
 	local tw, th = surface.GetTextSize(curopt)
@@ -1060,11 +1060,11 @@ local function DrawSelect(self, w, h, var, maxy, posx, posy, dist)
 		drawlast = function()
 			local maxy2 = 16
 			for k, v in next, var[4] do
-				surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, 50)
+				surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 50)
 				surface.DrawRect(25 + posx + dist, 61 + posy + maxy + maxy2, size, 16)
 				local bMouse2 = MouseInArea(mx + 25 + posx + dist, my + 61 + posy + maxy + maxy2, mx + 25 + posx + dist + size, my + 61 + posy + maxy + 16 + maxy2)
 				if (bMouse2) then
-					surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, 100)
+					surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 100)
 					surface.DrawRect(25 + posx + dist, 61 + posy + maxy + maxy2, size, 16)
 				end
 				if (bMouse2 && input.IsMouseDown(MOUSE_LEFT) && !mousedown) then
@@ -1096,18 +1096,18 @@ local function DrawToggle(self, w, h, var, maxy, posx, posy, dist)
 	surface.SetTextPos(5 + posx + 15 + 5, 61 + posy + maxy)
 	local tw, th = surface.GetTextSize(text)
 	surface.DrawText(var[1])
-	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:"))
 	surface.DrawOutlinedRect(25 + posx + dist, 61 + posy + maxy, size, 16)
 	local mx, my = self:GetPos()
 	local bMouse = MouseInArea(mx + 25 + posx + dist, my + 61 + posy + maxy, mx + 25 + posx + dist + 14 + var[4], my + 61 + posy + maxy + 16)
 	local check = dist..posy..posx..w..h..maxy
 	if bMouse or notyetselected == check then
-		surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, 150)
+		surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 150)
 		surface.DrawRect(25 + posx + dist + 2, 61 + posy + maxy + 2, size - 4, 12)
 	end
       	if bMouse then
         	if input.IsMouseDown(MOUSE_LEFT) && !drawlast && !mousedown && var[5] ~= 2 || notyetselected == check then
-               surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, 150)
+               surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 150)
                surface.DrawRect(25 + posx + dist + 2, 61 + posy + maxy + 2, var[4] - 4, 12)
                var[5] = 1
             end
@@ -1488,11 +1488,14 @@ local function EntityFinder()
 	end
 	finder.Think = function()
 		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or unloaded == true) then
+			finder:SlideUp(0.5)
+			timer.Simple(0.5, function()
 			finder:Remove()
 			file.Write(folder.."/entities.txt", util.TableToJSON(drawn_ents))
 			menuopen = false
 			candoslider = false
 			drawlast = nil
+			end)
 		end
 	end
 end
@@ -1546,10 +1549,13 @@ local function PluginLoader()
 	end
 	plugin.Think = function()
 		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or unloaded == true) then
+			plugin:SlideUp(0.5)
+			timer.Simple(0.5, function()
 			plugin:Remove()
 			menuopen = false
 			candoslider = false
 			drawlast = nil
+			end)
 		end
 	end
 end
@@ -1559,13 +1565,13 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 	local size = var[4]
 	surface.SetFont("MenuFont")
 	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
-	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "T Opacity:"))
 	surface.DrawOutlinedRect(posx - 193 + dist, 61 + posy + maxy, size + 219, 16)
 	local mx, my = self:GetPos()
 	local bMouse = MouseInArea(mx - 193 + posx + dist, my + 61 + posy + maxy, mx - 193 + posx + dist + size + 219, my + 61 + posy + maxy + 16)
 	local check = dist..posy..posx..w..h..maxy
 	if bMouse or notyetselected == check then
-		surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, 150)
+		surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 150)
 		surface.DrawRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, size + 215, 12)
 	end
 	local tw, th = surface.GetTextSize(text)
