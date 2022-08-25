@@ -341,14 +341,13 @@ local options = {
 					{"List Spacing:", "Slider", 0, 10, 92}, 
                 }, 
 				{
-					{"Sounds", 16, 280, 347, 125, 218}, 
-					{"Music Player", "Checkbox", false, 78},
-					{"Song:", "Selection", "Random", {"Rust", "Resonance", "Daisuke", "A Burning M...", "Libet's Delay", "Lullaby Of T...", "Erectin' a River", "Fleeting Love", "Malo Tebya", "Vermilion", "Gravity", "Remorse", "Hold", "Green Valleys", "FP3", "Random"}, 92}, 
+					{"Sounds", 16, 280, 347, 95, 218}, 
+					{"Music Player:", "Selection", "Off", {"Off", "Rust", "Resonance", "Daisuke", "A Burning M...", "Libet's Delay", "Lullaby Of T...", "Erectin' a River", "Fleeting Love", "Malo Tebya", "Vermilion", "Gravity", "Remorse", "Hold", "Green Valleys", "FP3", "Random"}, 92}, 
 					{"Reset Sounds", "Checkbox", false, 78}, 
 					{"Hitsounds", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Textures", 16, 420, 347, 120, 218}, 
+					{"Textures", 16, 390, 347, 120, 218}, 
 					{"Transparent Walls", "Checkbox", false, 78}, 
 					{"No Sky", "Checkbox", false, 78}, 
 					{"Bright Mode", "Checkbox", false, 78}, 
@@ -1815,112 +1814,113 @@ local function Menu()
 			RunConsoleCommand("stopsound")
 		end
 		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or unloaded == true) then
-			if (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Random") then
+		if gOption("Miscellaneous", "Sounds", "Music Player:") ~= "Off" then
+			if gOption("Miscellaneous", "Sounds", "Music Player:") == "Random" then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL(menusongs[math.random(#menusongs)], "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Rust") then
+			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Rust" then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/0fdgaj0ry8uummf/Rust_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Resonance") then
+			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Resonance" then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/vsz77wdjqy1xf83/HOME%20-%20Resonance.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Daisuke") then
+			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Daisuke" then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/0m22ytfia8qoy4m/Daisuke%20-%20El%20Huervo.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "A Burning M...") then
+			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "A Burning M..." then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/ovh8xt0nn6wjgjj/The%20Caretaker%20-%20It%27s%20just%20a%20burning%20memory%20%282016%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Libet's Delay") then
+			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Libet's Delay" then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/bqt4dcjoziezdjk/The_Caretaker_-_Libets_Delay_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Lullaby Of T...") then
+			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Lullaby Of T..." then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/0uly6phlgpoj4ss/1932_George_Olsen_-_Lullaby_Of_The_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Erectin' a River") then
+			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Erectin' a River" then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/qfl7mu39us5hzn4/Erectin_a_River_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Fleeting Love") then
+			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Fleeting Love" then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/stkat6jlp4jhpxo/Monrroe_-_Fleeting_Love_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Malo Tebya") then
+			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Malo Tebya" then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/vhd3il20d8ephb4/DJ_Spizdil_-_malo_tebyaHardstyle_m_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Vermilion") then
+			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Vermilion" then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/2vf1lx9cnd5g9pq/Maduk_-_Vermilion_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Gravity") then
+			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Gravity" then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/wcoo6cov1iatcao/Metrik_-_Gravity_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Remorse") then
+			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Remorse" then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/8a91zs6woqz9bb4/Scattle_Remorse_REUPLOAD_CHECK_DE_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Hold") then
+			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Hold" then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/12ztoyw2rc2q0z0/HOME_-_Hold_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Green Valleys") then
+			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Green Valleys" then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/xlk7wuel56bwrr3/T_Sugah_-_Green_Valleys_LAOS_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "FP3") then
+			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "FP3" then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/8bg55iwowf2jtv8/cuckoid%20-%20ponyinajar.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
@@ -1928,13 +1928,14 @@ local function Menu()
 					end
 				end)
 			end
-			frame:SlideUp(0.5)
-			timer.Simple(0.5, function()
-			frame:Remove()
-			menuopen = false
-			candoslider = false
-			drawlast = nil
-			end)
+		end
+		frame:SlideUp(0.5)
+		timer.Simple(0.5, function()
+		frame:Remove()
+		menuopen = false
+		candoslider = false
+		drawlast = nil
+		end)
 		if gBool("Main Menu", "Configurations", "Automatically Save") then
 			if gOption("Main Menu", "Configurations", "Configuration:") == "Config #1" then
 				SaveConfig1()
@@ -1946,8 +1947,8 @@ local function Menu()
 				SaveConfig4()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
 				SaveConfig5()
+				end
 			end
-		end
 		end
 		CacheColors()
 	end
