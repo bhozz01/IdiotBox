@@ -90,7 +90,7 @@ surface.CreateFont("MiscFont3", {
 })
 
 local options = {
-		["Utilities"] = {
+		["Main Menu"] = {
 				{
 					{"General Utilities", 16, 20, 347, 124, 218}, 
 					{"Optimize Game", "Checkbox", false, 78}, 
@@ -342,8 +342,8 @@ local options = {
                 }, 
 				{
 					{"Sounds", 16, 280, 347, 125, 218}, 
-					{"Music Player", "Checkbox", true, 78}, -- Enabled by default
-					{"Song:", "Selection", "Random", {"'Rust'", "'Resonance'", "'Daisuke'", "'A Burning M...'", "'Libet's Delay'", "'Lullaby Of T...'", "'Erectin' a River'", "'Fleeting Love'", "'Malo Tebya'", "'Vermilion'", "'Gravity'", "'Remorse'", "'Hold'", "'Green Valleys'", "'FP3'", "Random"}, 92}, 
+					{"Music Player", "Checkbox", false, 78},
+					{"Song:", "Selection", "Random", {"Rust", "Resonance", "Daisuke", "A Burning M...", "Libet's Delay", "Lullaby Of T...", "Erectin' a River", "Fleeting Love", "Malo Tebya", "Vermilion", "Gravity", "Remorse", "Hold", "Green Valleys", "FP3", "Random"}, 92}, 
 					{"Reset Sounds", "Checkbox", false, 78}, 
 					{"Hitsounds", "Checkbox", false, 78}, 
                 }, 
@@ -475,9 +475,9 @@ local options = {
 				{
 					{"Others", 321, 380, 205, 157, 70}, 
 					{"T Opacity:", "Slider", 255, 255, 88}, 
-					{"B Opacity:", "Slider", 175, 255, 88}, 
+					{"B Opacity:", "Slider", 255, 255, 88}, 
 					{"BG Opacity:", "Slider", 255, 255, 88}, 
-					{"BG Darkness:", "Slider", 18, 25, 88}, 
+					{"BG Darkness:", "Slider", 22, 25, 88}, 
 					{"Roundness:", "Slider", 57, 67, 88}, 
                 }, 
 				{
@@ -500,7 +500,7 @@ local options = {
 }
 
 local order = {
-	"Utilities", 
+	"Main Menu", 
 	"Aimbot", 
 	"Triggerbot", 
 	"Hack vs. Hack", 
@@ -920,7 +920,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(613, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: August 23rd 2022")
+	surface.DrawText("Latest build: August 26th 2022")
 	surface.SetFont("MenuFont")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -982,22 +982,22 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
 	surface.SetTextPos(5 + posx + 15 + 5, 61 + posy + maxy)
 	local tw, th = surface.GetTextSize(var[1])
-	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:"))
+	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
 	local mx, my = self:GetPos()
 	local bMouse = MouseInArea(mx + 5 + posx + 15 + 5, my + 61 + posy + maxy, mx + 5 + posx + 15 + 5 + dist + 14 + var[4], my + 61 + posy + maxy + 16)
 	if bMouse then
 		surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:") - 155)
-		surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:") - 155)
+		surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:") - 155)
 		if not input.IsMouseDown(MOUSE_LEFT) then
 			surface.DrawRect(5 + posx + 15 + 5 + dist + 2 + var[4], 61 + posy + maxy + 2, 10, 10)
 		end
 	end
 	surface.DrawText(var[1])
-	surface.DrawOutlinedRect( posx + 25 + dist + var[4], 61 + posy + maxy , 13, 13)
+	surface.DrawOutlinedRect(posx + 25 + dist + var[4], 61 + posy + maxy , 13, 13)
 	if var[3] then
-		surface.SetDrawColor(bordercol.r - 30, bordercol.g - 30, bordercol.b - 30, 100)
+		surface.SetDrawColor(menutextcol.r - 30, menutextcol.g - 30, menutextcol.b - 30, 100)
 		surface.DrawRect(5 + posx + 15 + 5 + dist + 2 + var[4], 61 + posy + maxy + 2, 10, 10)
-		surface.SetDrawColor(bordercol.r - 10, bordercol.g - 10, bordercol.b - 10, 100)
+		surface.SetDrawColor(menutextcol.r - 10, menutextcol.g - 10, menutextcol.b - 10, 100)
 		surface.DrawOutlinedRect(5 + posx + 15 + 5 + dist + 2 + var[4], 61 + posy + maxy + 2, 10, 10)
 	end
 	if bMouse and input.IsMouseDown(MOUSE_LEFT) and not mousedown and not drawlast then
@@ -1014,12 +1014,12 @@ local function DrawSlider(self, w, h, var, maxy, posx, posy, dist)
 	surface.SetTextPos(5 + posx + 15 + 5, 61 + posy + maxy)
 	surface.DrawText(var[1])
 	local tw, th = surface.GetTextSize(var[1])
-	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:"))
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "T Opacity:"))
 	surface.DrawRect(5 + posx + 15 + 5 + dist, 61 + posy + maxy + 9, size, 2)
 	local ww = math.ceil(curnum * size / max)
-	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:"))
+	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
 	surface.DrawRect(3 + posx + 15 + 5 + dist + ww, 61 + posy + maxy + 9 - 5, 4, 12)
-	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:"))
+	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
 	local tw, th = surface.GetTextSize(curnum)
 	surface.DrawOutlinedRect(3 + posx + 15 + 5 + dist + ww, 61 + posy + maxy + 4, 4, 12)
 	surface.SetTextPos(5 + posx + 15 + 5 + dist + (size / 2) - tw / 2, 61 + posy + maxy + 16)
@@ -1043,13 +1043,13 @@ local function DrawSelect(self, w, h, var, maxy, posx, posy, dist)
 	surface.SetTextPos(5 + posx + 15 + 5, 61 + posy + maxy)
 	local tw, th = surface.GetTextSize(var[1])
 	surface.DrawText(var[1])
-	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:"))
+	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
 	surface.DrawOutlinedRect(25 + posx + dist, 61 + posy + maxy, size, 16)
 	local mx, my = self:GetPos()
 	local bMouse = MouseInArea(mx + 25 + posx + dist, my + 61 + posy + maxy, mx + 25 + posx + dist + size, my + 61 + posy + maxy + 16)
 	local check = dist..posy..posx..w..h..maxy
 	if (bMouse || notyetselected == check) then
-		surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 150)
+		surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, 150)
 		surface.DrawRect(25 + posx + dist + 2, 61 + posy + maxy + 2, size - 4, 12)
 	end
 	local tw, th = surface.GetTextSize(curopt)
@@ -1060,11 +1060,11 @@ local function DrawSelect(self, w, h, var, maxy, posx, posy, dist)
 		drawlast = function()
 			local maxy2 = 16
 			for k, v in next, var[4] do
-				surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 50)
+				surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, 50)
 				surface.DrawRect(25 + posx + dist, 61 + posy + maxy + maxy2, size, 16)
 				local bMouse2 = MouseInArea(mx + 25 + posx + dist, my + 61 + posy + maxy + maxy2, mx + 25 + posx + dist + size, my + 61 + posy + maxy + 16 + maxy2)
 				if (bMouse2) then
-					surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 100)
+					surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, 100)
 					surface.DrawRect(25 + posx + dist, 61 + posy + maxy + maxy2, size, 16)
 				end
 				if (bMouse2 && input.IsMouseDown(MOUSE_LEFT) && !mousedown) then
@@ -1096,18 +1096,18 @@ local function DrawToggle(self, w, h, var, maxy, posx, posy, dist)
 	surface.SetTextPos(5 + posx + 15 + 5, 61 + posy + maxy)
 	local tw, th = surface.GetTextSize(text)
 	surface.DrawText(var[1])
-	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:"))
+	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
 	surface.DrawOutlinedRect(25 + posx + dist, 61 + posy + maxy, size, 16)
 	local mx, my = self:GetPos()
 	local bMouse = MouseInArea(mx + 25 + posx + dist, my + 61 + posy + maxy, mx + 25 + posx + dist + 14 + var[4], my + 61 + posy + maxy + 16)
 	local check = dist..posy..posx..w..h..maxy
 	if bMouse or notyetselected == check then
-		surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 150)
+		surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, 150)
 		surface.DrawRect(25 + posx + dist + 2, 61 + posy + maxy + 2, size - 4, 12)
 	end
       	if bMouse then
         	if input.IsMouseDown(MOUSE_LEFT) && !drawlast && !mousedown && var[5] ~= 2 || notyetselected == check then
-               surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 150)
+               surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, 150)
                surface.DrawRect(25 + posx + dist + 2, 61 + posy + maxy + 2, var[4] - 4, 12)
                var[5] = 1
             end
@@ -1175,16 +1175,16 @@ local function Unload()
 	hook.Remove("HUDPaint2", "Hook22")
 	hook.Remove("PreDrawOpaqueRenderables", "Hook23")
 	hook.Remove("OnPlayerChat", "Hook24")
-		if gBool("Utilities", "Configurations", "Automatically Save") then
-			if gOption("Utilities", "Configurations", "Configuration:") == "Config #1" then
+		if gBool("Main Menu", "Configurations", "Automatically Save") then
+			if gOption("Main Menu", "Configurations", "Configuration:") == "Config #1" then
 				SaveConfig1()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #2" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #2" then
 				SaveConfig2()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #3" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #3" then
 				SaveConfig3()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #4" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #4" then
 				SaveConfig4()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #5" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
 				SaveConfig5()
 			end
 		end
@@ -1565,13 +1565,13 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 	local size = var[4]
 	surface.SetFont("MenuFont")
 	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
-	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
 	surface.DrawOutlinedRect(posx - 193 + dist, 61 + posy + maxy, size + 219, 16)
 	local mx, my = self:GetPos()
 	local bMouse = MouseInArea(mx - 193 + posx + dist, my + 61 + posy + maxy, mx - 193 + posx + dist + size + 219, my + 61 + posy + maxy + 16)
 	local check = dist..posy..posx..w..h..maxy
 	if bMouse or notyetselected == check then
-		surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 150)
+		surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, 150)
 		surface.DrawRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, size + 215, 12)
 	end
 	local tw, th = surface.GetTextSize(text)
@@ -1584,59 +1584,59 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 		elseif text == "Print Changelog" then
 			Changelog()
 		elseif text == "Save Configuration" then
-			if gOption("Utilities", "Configurations", "Configuration:") == "Config #1" then
+			if gOption("Main Menu", "Configurations", "Configuration:") == "Config #1" then
 				SaveConfig1()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #2" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #2" then
 				SaveConfig2()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #3" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #3" then
 				SaveConfig3()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #4" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #4" then
 				SaveConfig4()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #5" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
 				SaveConfig5()
 			end
 			timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Configuration Saved!") end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Load Configuration" then
-			if gOption("Utilities", "Configurations", "Configuration:") == "Config #1" then
+			if gOption("Main Menu", "Configurations", "Configuration:") == "Config #1" then
 				LoadConfig1()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #2" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #2" then
 				LoadConfig2()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #3" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #3" then
 				LoadConfig3()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #4" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #4" then
 				LoadConfig4()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #5" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
 				LoadConfig5()
 			end
 			timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Configuration Loaded!") end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Delete Configuration" then
-			if gOption("Utilities", "Configurations", "Configuration:") == "Config #1" then
+			if gOption("Main Menu", "Configurations", "Configuration:") == "Config #1" then
 				file.Delete(folder.."/config1.txt")
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #2" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #2" then
 				file.Delete(folder.."/config2.txt")
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #3" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #3" then
 				file.Delete(folder.."/config3.txt")
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #4" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #4" then
 				file.Delete(folder.."/config4.txt")
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #5" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
 				file.Delete(folder.."/config5.txt")
 			end
 			timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Configuration Deleted!") end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Plugin Loader" then
 			self:Remove()
-			if gBool("Utilities", "Configurations", "Automatically Save") then
-				if gOption("Utilities", "Configurations", "Configuration:") == "Config #1" then
+			if gBool("Main Menu", "Configurations", "Automatically Save") then
+				if gOption("Main Menu", "Configurations", "Configuration:") == "Config #1" then
 					SaveConfig1()
-				elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #2" then
+				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #2" then
 					SaveConfig2()
-				elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #3" then
+				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #3" then
 					SaveConfig3()
-				elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #4" then
+				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #4" then
 					SaveConfig4()
-				elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #5" then
+				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
 					SaveConfig5()
 				end
 			end
@@ -1645,16 +1645,16 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Entity Menu" then
 				self:Remove()
-				if gBool("Utilities", "Configurations", "Automatically Save") then
-					if gOption("Utilities", "Configurations", "Configuration:") == "Config #1" then
+				if gBool("Main Menu", "Configurations", "Automatically Save") then
+					if gOption("Main Menu", "Configurations", "Configuration:") == "Config #1" then
 						SaveConfig1()
-					elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #2" then
+					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #2" then
 						SaveConfig2()
-					elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #3" then
+					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #3" then
 						SaveConfig3()
-					elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #4" then
+					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #4" then
 						SaveConfig4()
-					elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #5" then
+					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
 						SaveConfig5()
 					end
 				end
@@ -1666,7 +1666,7 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 end
 
 local function DrawSubSub(self, w, h, k, var)
-	if gOption("Utilities", "Menus", "Options Style:") == "Borders" then
+	if gOption("Main Menu", "Menus", "Options Style:") == "Borders" then
 	local opt, posx, posy, sizex, sizey, dist = var[1][1], var[1][2], var[1][3], var[1][4], var[1][5], var[1][6]
 	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:"))
 	local startpos = 61 + posy
@@ -1699,7 +1699,7 @@ local function DrawSubSub(self, w, h, k, var)
 			end
 		maxy = maxy + 25
 		end
-	elseif gOption("Utilities", "Menus", "Options Style:") == "Borderless" then
+	elseif gOption("Main Menu", "Menus", "Options Style:") == "Borderless" then
 	local opt, posx, posy, sizex, sizey, dist = var[1][1], var[1][2], var[1][3], var[1][4], var[1][5], var[1][6]
 	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 0)
 	local startpos = 61 + posy
@@ -1753,9 +1753,9 @@ local function MenuBorder() -- Probably a dumb way of doing this but still
 	frame:MakePopup()
 	frame:ShowCloseButton(false)
 		frame.Paint = function(self, w, h)
-			if gOption("Utilities", "Menus", "Menu Style:") == "Borders" then
+			if gOption("Main Menu", "Menus", "Menu Style:") == "Borders" then
 				draw.RoundedBox(gInt("Settings", "Others", "Roundness:"), 0, 0, w, h, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:")))
-			elseif gOption("Utilities", "Menus", "Menu Style:") == "Borderless" then
+			elseif gOption("Main Menu", "Menus", "Menu Style:") == "Borderless" then
 				draw.RoundedBox(gInt("Settings", "Others", "Roundness:"), 0, 0, w, h, Color(bordercol.r, bordercol.g, bordercol.b, 0))
 			end
 		end
@@ -1786,23 +1786,7 @@ local function CacheColors()
 	viewmodelcol = Color(gInt("Settings", "Viewmodel Color", "Red:"), gInt("Settings", "Viewmodel Color", "Green:"), gInt("Settings", "Viewmodel Color", "Blue:"))
 end
 
-local menusongs = {
-	"https://dl.dropbox.com/s/0m22ytfia8qoy4m/Daisuke%20-%20El%20Huervo.mp3?dl=1", 
-	"https://dl.dropbox.com/s/0fdgaj0ry8uummf/Rust_%28getmp3.pro%29.mp3?dl=1", 
-	"https://dl.dropbox.com/s/vsz77wdjqy1xf83/HOME%20-%20Resonance.mp3?dl=1", 
-	"https://dl.dropbox.com/s/ovh8xt0nn6wjgjj/The%20Caretaker%20-%20It%27s%20just%20a%20burning%20memory%20%282016%29.mp3?dl=1", 
-	"https://dl.dropbox.com/s/8bg55iwowf2jtv8/cuckoid%20-%20ponyinajar.mp3?dl=1", 
-	"https://dl.dropbox.com/s/0uly6phlgpoj4ss/1932_George_Olsen_-_Lullaby_Of_The_%28getmp3.pro%29.mp3?dl=1", 
-	"https://dl.dropbox.com/s/qfl7mu39us5hzn4/Erectin_a_River_%28getmp3.pro%29.mp3?dl=1", 
-	"https://dl.dropbox.com/s/stkat6jlp4jhpxo/Monrroe_-_Fleeting_Love_%28getmp3.pro%29.mp3?dl=1",
-	"https://dl.dropbox.com/s/vhd3il20d8ephb4/DJ_Spizdil_-_malo_tebyaHardstyle_m_%28getmp3.pro%29.mp3?dl=1", 
-	"https://dl.dropbox.com/s/2vf1lx9cnd5g9pq/Maduk_-_Vermilion_%28getmp3.pro%29.mp3?dl=1", 
-	"https://dl.dropbox.com/s/wcoo6cov1iatcao/Metrik_-_Gravity_%28getmp3.pro%29.mp3?dl=1", 
-	"https://dl.dropbox.com/s/8a91zs6woqz9bb4/Scattle_Remorse_REUPLOAD_CHECK_DE_%28getmp3.pro%29.mp3?dl=1",
-	"https://dl.dropbox.com/s/bqt4dcjoziezdjk/The_Caretaker_-_Libets_Delay_%28getmp3.pro%29.mp3?dl=1", 
-	"https://dl.dropbox.com/s/12ztoyw2rc2q0z0/HOME_-_Hold_%28getmp3.pro%29.mp3?dl=1", 
-	"https://dl.dropbox.com/s/xlk7wuel56bwrr3/T_Sugah_-_Green_Valleys_LAOS_%28getmp3.pro%29.mp3?dl=1"
-}
+local menusongs = {"https://dl.dropbox.com/s/0m22ytfia8qoy4m/Daisuke%20-%20El%20Huervo.mp3?dl=1", "https://dl.dropbox.com/s/0fdgaj0ry8uummf/Rust_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/vsz77wdjqy1xf83/HOME%20-%20Resonance.mp3?dl=1", "https://dl.dropbox.com/s/ovh8xt0nn6wjgjj/The%20Caretaker%20-%20It%27s%20just%20a%20burning%20memory%20%282016%29.mp3?dl=1", "https://dl.dropbox.com/s/8bg55iwowf2jtv8/cuckoid%20-%20ponyinajar.mp3?dl=1", "https://dl.dropbox.com/s/0uly6phlgpoj4ss/1932_George_Olsen_-_Lullaby_Of_The_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/qfl7mu39us5hzn4/Erectin_a_River_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/stkat6jlp4jhpxo/Monrroe_-_Fleeting_Love_%28getmp3.pro%29.mp3?dl=1","https://dl.dropbox.com/s/vhd3il20d8ephb4/DJ_Spizdil_-_malo_tebyaHardstyle_m_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/2vf1lx9cnd5g9pq/Maduk_-_Vermilion_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/wcoo6cov1iatcao/Metrik_-_Gravity_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/8a91zs6woqz9bb4/Scattle_Remorse_REUPLOAD_CHECK_DE_%28getmp3.pro%29.mp3?dl=1","https://dl.dropbox.com/s/bqt4dcjoziezdjk/The_Caretaker_-_Libets_Delay_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/12ztoyw2rc2q0z0/HOME_-_Hold_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/xlk7wuel56bwrr3/T_Sugah_-_Green_Valleys_LAOS_%28getmp3.pro%29.mp3?dl=1",}
 
 local function Menu()
 	local frame = vgui.Create("DFrame")
@@ -1838,105 +1822,105 @@ local function Menu()
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Rust'") then
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Rust") then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/0fdgaj0ry8uummf/Rust_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Resonance'") then
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Resonance") then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/vsz77wdjqy1xf83/HOME%20-%20Resonance.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Daisuke'") then
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Daisuke") then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/0m22ytfia8qoy4m/Daisuke%20-%20El%20Huervo.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'A Burning M...'") then
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "A Burning M...") then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/ovh8xt0nn6wjgjj/The%20Caretaker%20-%20It%27s%20just%20a%20burning%20memory%20%282016%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Libet's Delay'") then
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Libet's Delay") then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/bqt4dcjoziezdjk/The_Caretaker_-_Libets_Delay_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Lullaby Of T...'") then
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Lullaby Of T...") then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/0uly6phlgpoj4ss/1932_George_Olsen_-_Lullaby_Of_The_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Erectin' a River'") then
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Erectin' a River") then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/qfl7mu39us5hzn4/Erectin_a_River_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Fleeting Love'") then
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Fleeting Love") then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/stkat6jlp4jhpxo/Monrroe_-_Fleeting_Love_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Malo Tebya'") then
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Malo Tebya") then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/vhd3il20d8ephb4/DJ_Spizdil_-_malo_tebyaHardstyle_m_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Vermilion'") then
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Vermilion") then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/2vf1lx9cnd5g9pq/Maduk_-_Vermilion_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Gravity'") then
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Gravity") then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/wcoo6cov1iatcao/Metrik_-_Gravity_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Remorse'") then
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Remorse") then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/8a91zs6woqz9bb4/Scattle_Remorse_REUPLOAD_CHECK_DE_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Hold'") then
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Hold") then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/12ztoyw2rc2q0z0/HOME_-_Hold_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'Green Valleys'") then
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "Green Valleys") then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/xlk7wuel56bwrr3/T_Sugah_-_Green_Valleys_LAOS_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
 					station:Play()
 					end
 				end)
-			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "'FP3'") then
+			elseif (gBool("Miscellaneous", "Sounds", "Music Player") && gOption("Miscellaneous", "Sounds", "Song:") == "FP3") then
 				RunConsoleCommand("stopsound")
 				idiot.sound.PlayURL("https://dl.dropbox.com/s/8bg55iwowf2jtv8/cuckoid%20-%20ponyinajar.mp3?dl=1", "mono", function(station)
 				if (idiot.IsValid(station)) then
@@ -1951,16 +1935,16 @@ local function Menu()
 			candoslider = false
 			drawlast = nil
 			end)
-		if gBool("Utilities", "Configurations", "Automatically Save") then
-			if gOption("Utilities", "Configurations", "Configuration:") == "Config #1" then
+		if gBool("Main Menu", "Configurations", "Automatically Save") then
+			if gOption("Main Menu", "Configurations", "Configuration:") == "Config #1" then
 				SaveConfig1()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #2" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #2" then
 				SaveConfig2()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #3" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #3" then
 				SaveConfig3()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #4" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #4" then
 				SaveConfig4()
-			elseif gOption("Utilities", "Configurations", "Configuration:") == "Config #5" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
 				SaveConfig5()
 			end
 		end
@@ -2025,6 +2009,21 @@ end
 local playerkills = 0
 
 local function KillSpam(data)
+	local playerphrases = {"Owned", "Bodied", "Smashed", "Fucked", "Destroyed", "Annihilated", "Decimated", "Wrecked", "Demolished", "Trashed", "Ruined", "Murdered", "Exterminated", "Slaughtered", "Butchered", "Genocided", "Executed", "Bamboozled", "IdiotBox'd",}
+	local excuses = {"i lagged out wtf", "bad ping wtf", "lol wasnt looking at you", "was alt tabbed", "luck", "wow", "nice one", "i think ur hacking m8", "my cat was on the keyboard", "my dog was on the keyboard", "my fps is trash", "my ping is trash", "ouch", "wtf", "ok",}
+	local hvhexcuses = {"forgot to press aimkey lol", "give me a minute to configurate", "wtf it didnt save my settings wait", "lol my hvh settings are gone, wait", "luck lol", "my fps is trash", "my ping is trash", "what are you using?",}
+	local hvhexcuses2 = {"Ok", "Nice", "Lucky", "Sorry, bad aa", "My configs suck", "I suck at HvH", "What are you using?", "I'm using a shit cheat",}
+	local reason = {"bad at game", "spawnkilling", "hacker", "hacking", "hack", "bad", "eats penis",}
+	local reason2 = {"hacker", "spawnkiller", "propkiller", "rdm", "being annoying", "bad at the game", "acts like a retard", "is stupid",}
+	local bantime = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100", "200", "300", "400", "500", "600", "700", "800", "900", "1000", "2000", "3000", "4000", "5000", "6000", "7000", "8000", "9000", "10000", "20000", "30000", "40000", "50000", "60000", "70000", "80000", "90000", "100000", "200000", "300000", "400000", "500000", "600000", "700000", "800000", "900000", "1000000", "999999999",}
+	local randomoption = {"likes_penis", "eats_penis", "is_gay", "is_a_faggot", "should_get_kicked", "hates_vagina", "doesnt_eat_pussy", "doesnt_get_pussy", "thinks_about_penis_all_day", "has_a_fake_penis", "is_a_dirty_jew",}
+	local owned = {killed:Nick().." is so shit", "can you stop dying, "..killed:Nick().."?", "hey, "..killed:Nick().."? it's okay, try again next time!", "what the fuck was that "..killed:Nick().."?", "plan your next try in the respawn room!", "rekt", "owned", "lol", "you're a retard, "..killed:Nick(), "there you go, back to the respawn", "you're bad, "..killed:Nick(), "noob down", "lmao", killed:Nick().." has died more times than native americans did back in the 1800's", "i bet you're insecure about your aim", "ahahah", "excuse me "..killed:Nick()..", you have won the world record of the worst KD in history!", "there he goes back to the respawn room", "don't let the door hit you on the way out, "..killed:Nick().."!", "noob", killed:Nick().." is a noob", "nerd", "pff", "ha", "ez", killed:Nick().." is a nerd", "good job!", "try not to die next time, "..killed:Nick().."!", "!votekick "..killed:Nick().." "..reason[math.random(#reason)], "!voteban "..killed:Nick().." 9999 "..reason[math.random(#reason)], "!vote "..killed:Nick().." "..randomoption[math.random(#randomoption)].." "..randomoption[math.random(#randomoption)].." "..randomoption[math.random(#randomoption)],}
+	local votekick = {"!votekick "..killed:Nick().." "..reason2[math.random(#reason2)],}
+	local voteban = {"!voteban "..killed:Nick().." "..bantime[math.random(#bantime)].." "..reason2[math.random(#reason2)],}
+	local hvhowned = {"sick cheat, "..killed:Nick().."!", "get fucked", "rekt", "owned", "did you get that garbage from the steam workshop?", "ha", "ez", "loser", "take this L", "\"my cheat is good it owns everyone!!\" - "..killed:Nick(), killed:Nick()..": LOL WHAT ARE YOU USING??? I WANT THAT", "noob", "nerd", "pff", "gj", "how can a cheat suck this hard?", "nice strategy", "nice move", "lmfao, "..killed:Nick(), "what the fuck are you using "..killed:Nick().."?",}
+	local hvhowned2 = {"Hey, "..killed:Nick()..", stop using that shit and get IdiotBox", ""..killed:Nick().." just got owned by IdiotBox", "Get IdiotBox'd you nerd", "Get fucked by IdiotBox", "Don't stay too much inside the respawn room, "..killed:Nick().."!", "You have been tapped by IdiotBox", "Get IdiotBox before trying to HvH, "..killed:Nick(), "IdiotBox owns your garbage cheat",}
+	local comebackexcuses = {"what the fuck", "ok?????", "fucking nigger", "fuck you", "fuck off smelly jew", "smelly nigger", "bad ping", "you're next", "eat shit", "eat a fat steaming cock you unpriviledged homosexual", "suck my universe sized dick", "drink my piss fucking faggot", "hop off my dick fucking nigger",}
+	local comebackowned = {"you got fucked in the ass", "get fucking raped", ""..killed:Nick().." can drink my fucking piss", "you suck shit gay nigger", "you should eat my shit", "you got shafted by my large penis, "..killed:Nick(), ""..killed:Nick().." is getting fucked by an aimbot", ""..killed:Nick().." is getting fucking murdered", "you're so shit at this game, quit already", "drink my dog's piss faggot", "hey don't cry bro, you need a tissue?", "you're so fucking gay", "you're the reason why equal rights don't exist, "..killed:Nick(), ""..killed:Nick().." is radiating big faggot energy", "hurr durr stop cheating in an ancient video game!!!", "stop being such a spastical retard already", "you're more braindead than kim jong un after his surgery", "you're a furfag and should not be proud, "..killed:Nick(), ""..killed:Nick().." is getting dominated by me, aka god", "you live in a fucking dirty hut, retarded african boy", "i bet you're literally fucking black", ""..killed:Nick().." is a gay autistic nigger with no privileges", ""..killed:Nick().." is being searched for by the fbi", ""..killed:Nick().." literally fucking died in gmod", "you're ultra retarded, kid", "you need a tissue, little faggot?", ""..killed:Nick().." should get killed by me once again", "please die more, you're feeding my addiction", ""..killed:Nick().." is a retard bot", "you're so much of a loser, get a fucking life and stop playing this shit game kid", "virgin lol get good", "fucking coomer, go wash your crusty underwear you filth", ""..killed:Nick().." got cucked", ""..killed:Nick().." is dominated by pure fucking skill", "you are a big noob", "i can't wait to headshot you irl, "..killed:Nick(), "you smelly homeless nigger", ""..killed:Nick().." still believes that god and santa exist lol", "bruh you really do be crying at a game", "please stop doing what you're doing and kill yourself", ""..killed:Nick().." lives in america", "you are a deformed fetus", ""..killed:Nick().." is ugly as shit fr tho", "you're cringe, stop doing this shit", ""..killed:Nick()..", you look like you died", "fucking putrid fuck, kill yourself", ""..killed:Nick().." is a trash cheater", ""..killed:Nick().." is a normie", "smelly fucker", ""..killed:Nick().." is a dickless prick", ""..killed:Nick().." is gay", ""..killed:Nick().." does not get any pussy", "you're too stupid to be considered human", "i bet this faggot, "..killed:Nick().." kisses girls!!", ""..killed:Nick().." is a furry", ""..killed:Nick().." is a waste of human flesh", "i bet you won't be able to kill me even with hacks", ""..killed:Nick()..", men are the fuck. you are not the fuck. you are not men", ""..killed:Nick().." is a failed abortion", ""..killed:Nick().." fucking died", ""..killed:Nick().." plays with his dick for fun", "play with my stinky fat throbbing cock you gay faggot", "stop using hacks you cringe skid!!!", ""..killed:Nick().." uses cancer shit cheats!!", "you show all of the signs of mental retardation", "please just quit the game already", ""..killed:Nick().." is a "..killed:Nick().."", "shut the fuck up and die", "nigger lol",}
 	local killer = Entity(data.entindex_attacker)
 	local killed = Entity(data.entindex_killed)
 	if not killer:IsValid() or not killed:IsValid() or not killer:IsPlayer() or not killed:IsPlayer() then return end
@@ -2032,328 +2031,7 @@ local function KillSpam(data)
 	if gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, killer:UniqueID()) then return end
 	if gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and (killed ~= me and killer == me and not table.HasValue(priority_list, killed:UniqueID())) then return end
 	if gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and (killed == me and killer ~= me and not table.HasValue(priority_list, killer:UniqueID())) then return end
-
-local playerphrases = {
-	"Owned", 
-	"Bodied", 
-	"Smashed", 
-	"Fucked", 
-	"Destroyed", 
-	"Annihilated", 
-	"Decimated", 
-	"Wrecked", 
-	"Demolished", 
-	"Trashed", 
-	"Ruined", 
-	"Murdered", 
-	"Exterminated", 
-	"Slaughtered", 
-	"Butchered", 
-	"Genocided", 
-	"Executed", 
-	"Bamboozled", 
-	"IdiotBox'd", 
-}
-
-local excuses = {
-	"i lagged out wtf", 
-	"bad ping wtf", 
-	"lol wasnt looking at you", 
-	"was alt tabbed", 
-	"luck", 
-	"wow", 
-	"nice one", 
-	"i think ur hacking m8", 
-	"my cat was on the keyboard", 
-	"my dog was on the keyboard", 
-	"my fps is trash", 
-	"my ping is trash", 
-	"ouch", 
-	"wtf", 
-	"ok", 
-}
-
-local hvhexcuses = {
-	"forgot to press aimkey lol", 
-	"give me a minute to configurate", 
-	"wtf it didnt save my settings wait", 
-	"lol my hvh settings are gone, wait", 
-	"luck lol", 
-	"my fps is trash", 
-	"my ping is trash", 
-	"what are you using?", 
-}
-
-local hvhexcuses2 = {
-	"Ok", 
-	"Nice", 
-	"Lucky", 
-	"Sorry, bad aa", 
-	"My configs suck", 
-	"I suck at HvH", 
-	"What are you using?", 
-	"I'm using a shit cheat", 
-}
-
-local reason = {
-	"bad at game", 
-	"spawnkilling", 
-	"hacker", 
-	"hacking", 
-	"hack", 
-	"bad", 
-	"eats penis", 
-}
-
-local reason2 = {
-	"hacker", 
-	"spawnkiller", 
-	"propkiller", 
-	"rdm", 
-	"being annoying", 
-	"bad at the game", 
-	"acts like a retard", 
-	"is stupid", 
-}
-
-local bantime = {
-	"1", 
-	"2", 
-	"3", 
-	"4", 
-	"5", 
-	"6", 
-	"7", 
-	"8", 
-	"9", 
-	"10", 
-	"20", 
-	"30", 
-	"40", 
-	"50", 
-	"60", 
-	"70", 
-	"80", 
-	"90", 
-	"100", 
-	"200", 
-	"300", 
-	"400", 
-	"500", 
-	"600", 
-	"700", 
-	"800", 
-	"900", 
-	"1000", 
-	"2000", 
-	"3000", 
-	"4000", 
-	"5000", 
-	"6000", 
-	"7000", 
-	"8000", 
-	"9000", 
-	"10000", 
-	"20000", 
-	"30000", 
-	"40000", 
-	"50000", 
-	"60000", 
-	"70000", 
-	"80000", 
-	"90000", 
-	"100000", 
-	"200000", 
-	"300000", 
-	"400000", 
-	"500000", 
-	"600000", 
-	"700000", 
-	"800000", 
-	"900000", 
-	"1000000", 
-	"999999999", 
-}
-
-local randomoption = { 
-	"likes_penis", 
-	"eats_penis", 
-	"is_gay", 
-	"is_a_faggot", 
-	"should_get_kicked", 
-	"hates_vagina", 
-	"doesnt_eat_pussy", 
-	"doesnt_get_pussy", 
-	"thinks_about_penis_all_day", 
-	"has_a_fake_penis", 
-	"is_a_dirty_jew", 
-}
-
-local owned = {
-	killed:Nick().." is so shit", 
-	"can you stop dying, "..killed:Nick().."?", 
-	"hey, "..killed:Nick().."? it's okay, try again next time!", 
-	"what the fuck was that "..killed:Nick().."?", 
-	"plan your next try in the respawn room!", 
-	"rekt", 
-	"owned", 
-	"lol", 
-	"you're a retard, "..killed:Nick(), 
-	"there you go, back to the respawn", 
-	"you're bad, "..killed:Nick(), 
-	"noob down", 
-	"lmao", 
-	killed:Nick().." has died more times than native americans did back in the 1800's", 
-	"i bet you're insecure about your aim", 
-	"ahahah", 
-	"excuse me "..killed:Nick()..", you have won the world record of the worst KD in history!", 
-	"there he goes back to the respawn room", 
-	"don't let the door hit you on the way out, "..killed:Nick().."!", 
-	"noob", 
-	killed:Nick().." is a noob", 
-	"nerd", 
-	"pff", 
-	"ha", 
-	"ez", 
-	killed:Nick().." is a nerd", 
-	"good job!", 
-	"try not to die next time, "..killed:Nick().."!", 
-	"!votekick "..killed:Nick().." "..reason[math.random(#reason)], 
-	"!voteban "..killed:Nick().." 9999 "..reason[math.random(#reason)], 
-	"!vote "..killed:Nick().." "..randomoption[math.random(#randomoption)].." "..randomoption[math.random(#randomoption)].." "..randomoption[math.random(#randomoption)], 
-}
-
-local votekick = {
-	"!votekick "..killed:Nick().." "..reason2[math.random(#reason2)], 
-}
-
-local voteban = {
-	"!voteban "..killed:Nick().." "..bantime[math.random(#bantime)].." "..reason2[math.random(#reason2)], 
-}
-
-local hvhowned = {
-	"sick cheat, "..killed:Nick().."!", 
-	"get fucked", 
-	"rekt", 
-	"owned", 
-	"did you get that garbage from the steam workshop?", 
-	"ha", 
-	"ez", 
-	"loser", 
-	"take this L", 
-	"\"my cheat is good it owns everyone!!\" - "..killed:Nick(), 
-	killed:Nick()..": LOL WHAT ARE YOU USING??? I WANT THAT", 
-	"noob", 
-	"nerd", 
-	"pff", 
-	"gj", 
-	"how can a cheat suck this hard?", 
-	"nice strategy", 
-	"nice move", 
-	"lmfao, "..killed:Nick(), 
-	"what the fuck are you using "..killed:Nick().."?", 
-}
-
-local hvhowned2 = {
-	"Hey, "..killed:Nick()..", stop using that shit and get IdiotBox", 
-	""..killed:Nick().." just got owned by IdiotBox", 
-	"Get IdiotBox'd you nerd", 
-	"Get fucked by IdiotBox", 
-	"Don't stay too much inside the respawn room, "..killed:Nick().."!", 
-	"You have been tapped by IdiotBox", 
-	"Get IdiotBox before trying to HvH, "..killed:Nick(), 
-	"IdiotBox owns your garbage cheat", 
-}
-
-local comebackexcuses = {
-	"what the fuck", 
-	"ok?????", 
-	"fucking nigger", 
-	"fuck you", 
-	"fuck off smelly jew", 
-	"smelly nigger", 
-	"bad ping", 
-	"you're next", 
-	"eat shit", 
-	"eat a fat steaming cock you unpriviledged homosexual", 
-	"suck my universe sized dick", 
-	"drink my piss fucking faggot", 
-	"hop off my dick fucking nigger", 
-}
-
-local comebackowned = {
-	"you got fucked in the ass", 
-	"get fucking raped", 
-	""..killed:Nick().." can drink my fucking piss", 
-	"you suck shit gay nigger", 
-	"you should eat my shit", 
-	"you got shafted by my large penis, "..killed:Nick(), 
-	""..killed:Nick().." is getting fucked by an aimbot", 
-	""..killed:Nick().." is getting fucking murdered", 
-	"you're so shit at this game, quit already", 
-	"drink my dog's piss faggot", 
-	"hey don't cry bro, you need a tissue?", 
-	"you're so fucking gay", 
-	"you're the reason why equal rights don't exist, "..killed:Nick(), 
-	""..killed:Nick().." is radiating big faggot energy", 
-	"hurr durr stop cheating in an ancient video game!!!", 
-	"stop being such a spastical retard already", 
-	"you're more braindead than kim jong un after his surgery", 
-	"you're a furfag and should not be proud, "..killed:Nick(), 
-	""..killed:Nick().." is getting dominated by me, aka god", 
-	"you live in a fucking dirty hut, retarded african boy", 
-	"i bet you're literally fucking black", 
-	""..killed:Nick().." is a gay autistic nigger with no privileges", 
-	""..killed:Nick().." is being searched for by the fbi", 
-	""..killed:Nick().." literally fucking died in gmod", 
-	"you're ultra retarded, kid", 
-	"you need a tissue, little faggot?", 
-	""..killed:Nick().." should get killed by me once again", 
-	"please die more, you're feeding my addiction", 
-	""..killed:Nick().." is a retard bot", 
-	"you're so much of a loser, get a fucking life and stop playing this shit game kid", 
-	"virgin lol get good", 
-	"fucking coomer, go wash your crusty underwear you filth", 
-	""..killed:Nick().." got cucked", 
-	""..killed:Nick().." is dominated by pure fucking skill", 
-	"you are a big noob", 
-	"i can't wait to headshot you irl, "..killed:Nick(), 
-	"you smelly homeless nigger", 
-	""..killed:Nick().." still believes that god and santa exist lol", 
-	"bruh you really do be crying at a game", 
-	"please stop doing what you're doing and kill yourself", 
-	""..killed:Nick().." lives in america", 
-	"you are a deformed fetus", 
-	""..killed:Nick().." is ugly as shit fr tho", 
-	"you're cringe, stop doing this shit", 
-	""..killed:Nick()..", you look like you died", 
-	"fucking putrid fuck, kill yourself", 
-	""..killed:Nick().." is a trash cheater", 
-	""..killed:Nick().." is a normie", 
-	"smelly fucker", 
-	""..killed:Nick().." is a dickless prick", 
-	""..killed:Nick().." is gay", 
-	""..killed:Nick().." does not get any pussy", 
-	"you're too stupid to be considered human", 
-	"i bet this faggot, "..killed:Nick().." kisses girls!!", 
-	""..killed:Nick().." is a furry", 
-	""..killed:Nick().." is a waste of human flesh", 
-	"i bet you won't be able to kill me even with hacks", 
-	""..killed:Nick()..", men are the fuck. you are not the fuck. you are not men", 
-	""..killed:Nick().." is a failed abortion", 
-	""..killed:Nick().." fucking died", 
-	""..killed:Nick().." plays with his dick for fun", 
-	"play with my stinky fat throbbing cock you gay faggot", 
-	"stop using hacks you cringe skid!!!", 
-	""..killed:Nick().." uses cancer shit cheats!!", 
-	"you show all of the signs of mental retardation", 
-	"please just quit the game already", 
-	""..killed:Nick().." is a "..killed:Nick().."", 
-	"shut the fuck up and die", 
-	"nigger lol", 
-}
-
-if (gOption("Miscellaneous", "Chat", "Kill Spam:") == "Normal") then
+	if (gOption("Miscellaneous", "Chat", "Kill Spam:") == "Normal") then
 	if (killed == me and killer ~= me) then
 		if not me:Alive() or me:Health() < 1 then return end
 			RunConsoleCommand("say", string.format(excuses[math.random(#excuses)], killed:Nick()))
@@ -2460,9 +2138,9 @@ local function EntityName()
 end
 
 local function Logo()
-	if gOption("Utilities", "Menus", "Menu Style:") == "Borders" then
+	if gOption("Main Menu", "Menus", "Menu Style:") == "Borders" then
 		draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Custom Status X:") - 1, gInt("Settings", "List Positions", "Custom Status Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:")))
-	elseif gOption("Utilities", "Menus", "Menu Style:") == "Borderless" then
+	elseif gOption("Main Menu", "Menus", "Menu Style:") == "Borderless" then
 		draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Custom Status X:") - 1, gInt("Settings", "List Positions", "Custom Status Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, 0))
 	end
 	draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Custom Status X:") + 1, gInt("Settings", "List Positions", "Custom Status Y:") - 23, 88, 20, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Settings", "Others", "BG Opacity:")))
@@ -2547,9 +2225,9 @@ local function Spectator()
 	local color4 = (Color(0, 131, 125, gInt("Settings", "Others", "T Opacity:")))
 	local hudspecslength = 150
 	specscount = 0
-	if gOption("Utilities", "Menus", "Menu Style:") == "Borders" then
+	if gOption("Main Menu", "Menus", "Menu Style:") == "Borders" then
 		draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Spectators X:") - 1, gInt("Settings", "Window Positions", "Spectators Y:") - 3, radarWidth + 6, radarHeight + 6, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:")))
-	elseif gOption("Utilities", "Menus", "Menu Style:") == "Borderless" then
+	elseif gOption("Main Menu", "Menus", "Menu Style:") == "Borderless" then
 		draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Spectators X:") - 1, gInt("Settings", "Window Positions", "Spectators Y:") - 3, radarWidth + 6, radarHeight + 6, Color(bordercol.r, bordercol.g, bordercol.b, 0))
 	end
 	draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Spectators X:") + 2, gInt("Settings", "Window Positions", "Spectators Y:"), radarWidth, radarHeight, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Settings", "Others", "BG Opacity:")))
@@ -2592,9 +2270,9 @@ local radarX, radarY, radarWidth, radarHeight = 50, ScrH() / 3, 200, 200
 local function RadarDraw()
 	local col = Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Settings", "Others", "T Opacity:"))
 	local everything = ents.GetAll()
-	if gOption("Utilities", "Menus", "Menu Style:") == "Borders" then
+	if gOption("Main Menu", "Menus", "Menu Style:") == "Borders" then
 		draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Radar X:") - 1, gInt("Settings", "Window Positions", "Radar Y:") - 3, radarWidth + 6, radarHeight + 6, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:")))
-	elseif gOption("Utilities", "Menus", "Menu Style:") == "Borderless" then
+	elseif gOption("Main Menu", "Menus", "Menu Style:") == "Borderless" then
 		draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Radar X:") - 1, gInt("Settings", "Window Positions", "Radar Y:") - 3, radarWidth + 6, radarHeight + 6, Color(bordercol.r, bordercol.g, bordercol.b, 0))
 	end
 	draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Radar X:") + 2, gInt("Settings", "Window Positions", "Radar Y:"), radarWidth, radarHeight, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Settings", "Others", "BG Opacity:")))
@@ -2625,9 +2303,9 @@ local function RadarDraw()
 end
 
 local function Logo2()
-	if gOption("Utilities", "Menus", "Menu Style:") == "Borders" then
+	if gOption("Main Menu", "Menus", "Menu Style:") == "Borders" then
 		draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Players List X:") - 1, gInt("Settings", "List Positions", "Players List Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:")))
-	elseif gOption("Utilities", "Menus", "Menu Style:") == "Borderless" then
+	elseif gOption("Main Menu", "Menus", "Menu Style:") == "Borderless" then
 		draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Players List X:") - 1, gInt("Settings", "List Positions", "Players List Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, 0))
 	end
 	draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Players List X:") + 1, gInt("Settings", "List Positions", "Players List Y:") - 23, 88, 20, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Settings", "Others", "BG Opacity:")))
@@ -3029,346 +2707,18 @@ local function MurdererFinder()
 	end
 end
 
-local randomname = {
-	"Mike Hawk", 
-	"Moe Lester", 
-	"Mike Hunt", 
-	"Ben Dover", 
-	"Harold Kundt", 
-	"Peter Pain", 
-	"Dusan Mandic", 
-	"Harry Gooch", 
-	"Mike Oxlong", 
-	"Ivana Dooyu", 
-	"Slim Shader", 
-	"Dead Walker", 
-	"Mike Oxbig", 
-	"Mike Rotch", 
-	"Hugh Jass", 
-	"Robin Banks", 
-	"Mike Litt", 
-	"Harry Wang", 
-	"Harry Cox", 
-	"Moss Cular", 
-	"Amanda Reen", 
-	"Major Kumm", 
-	"Willie Wang", 
-	"Hugh Blackstuff", 
-	"Mike Rap", 
-	"Al Coholic", 
-	"Cole Kutz", 
-	"Mike Litoris", 
-	"Dixie Normous", 
-	"Dick Pound", 
-	"Mike Ock", 
-	"Sum Ting Wong", 
-	"Ho Lee Fuk", 
-	"Harry Azcrac", 
-	"Jay L. Bate", 
-	"Hugh G. Rection", 
-	"Long Wang", 
-	"Wayne King", 
-}
-
 local function ChatSpam()
-
-local ArabFunni = { -- I love my Discord server for making this thing
-	"يمارس الجنس مع السلطة العربية سنة عظيمة",
-	"رائحة مثل البظر دون السن القانونية هنا اسمحوا لي أن اللعنة",
-	"ازدهار مسحوق الطاقة العربية سنة جيدة",
-	"نحن نكره اليهو",
-	"يمارس الجنس مع الأطفال الماعز نعم الجنس",
-	"الله أكبر نعم رجل تفجير طفل",
-	"هذه لحظة بره لحظة ارهابية سنة",
-	"في تلك اللحظة التي يبدأ فيها أخاك في المغازلة مع والدتك",
-	"الحصول على صندوق احمق نعم العربية غش كازاخستان",
-	"يمارس الجنس مع نيغا الكلبة دا قرن الطفل",
-	"ترك العرب باكستاني لحظة برمة تجميع كرمة",
-	"حرق اليهود ، يمارس الجنس مع المسيح ، قتل الأطفال ، أصبح الله",
-}
-
-local HebrewFunni = { -- I love my Discord server for making this thing x2
-	"לזיין את הכלב שלך אמא לעזאזל חרא סקס בכוס",
-	"לעזאזל כוס כלבה בזין אני אוהבת עורלה הדוקה חתכה לי שלום כומר",
-	"זו לא בדיחה מזוינת אני רוצה לתלות את עצמי השנה",
-	"תזדיין שאתה יהודי הוא הגדול ביותר שכולכם כושים",
-	"אני אהיה בן שש בשנה מכושן",
-	"יש למול את הפין",
-	"ישראל היא פלסטין המזוין הגדול ביותר במדינה",
-	"זקן ישבן גדול על סנטרי, זהב בביתי, פוליטיקה במכנסיים שלי",
-	"מזדיין לצאת מכושים ישראלים",
-	"כוס חתולה אני מזיין את הזין ואז אני מוצץ כן",
-	"חרא של אלוהים זה חרא של רחוב כן",
-	"אני הולך לזיין ילד בן שתים עשרה בתחת, כן חתוך עורלה לעזאזל חרא כלבה",
-}
-
-local messagespam = {
-	"GET FUCKED BY IDIOTBOX KIDDIE",
-	"YOU SUCK SHIT LMAO",
-	"STOP BEING SUCH A WORTHLESS CUMSTAIN AND GET IDIOTBOX NOW",
-	"MONEY WASTER LOL",
-	"YOU FUCKING FATASS, GET IDIOTBOX AND LOSE ALL THAT WEIGHT YOU INCEL",
-	"ARE ALL THE GIRLS IGNORING YOU? GET IDIOTBOX AND YOU'LL BE FLOODED WITH PUSSY",
-	"DO YOU FEEL WORTHLESS? WELL, YOU ARE LOL",
-	"GET IDIOTBOX IF YOU WANT SOME OF THAT CLOUT",
-	"STOP WASTING YOUR TIME ON SOUNDCLOUD BECAUSE YOU AIN'T GONNA GET NOWHERE WITH IT",
-	"GET IDIOTBOX AND YOUR DICK WILL GROW 4 TIMES ITS SIZE",
-	"LITTLE KID LMAO",
-}
-
-local offensivespam = {
-	"fuck niggers like fr",
-	"who else here hates black people lmao",
-	"all niggers should be locked in cages and fed bananas",
-	"black people are some sub-human slaves imo",
-	"i've never met an intelligent black person",
-	"why tf are all niggers so ugly lol",
-	"all the black dudes i've seen look like monkeys",
-	"ooga booga black rights",
-	"my grandpa died in ww2, he was the best german pilot",
-	"white people are genetically superior to every othe race",
-	"all jews can do is hide the truth, steal money and start wars",
-}
-
-local insultspam = {
-	" is shit at building",
-	" is no older than 13",
-	" looks like a 2 month old corpse",
-	" really thinks gmod is a good game",
-	" can't afford a better pc lmao",
-	", so how do you like your 40 fps?",
-	" will definitely kill himself before his 30's ",
-	" is a fucking virgin lmao",
-	" is a script kiddie",
-	" thinks his 12cm penis is big lmfao",
-	", how does it feel when you've never seen a naked woman in person?",
-	", what do you like not being able to do a single push-up?",
-	", tell me how it feels to be shorter than every girl you've met",
-	" is a fatass who only spends his time in front of a monitor like an incel",
-	"'s parents have a lower than average income",
-	" lives under a bridge lmao",
-	" vapes because is too afraid to smoke an actual ciggarette",
-	", your low self esteem really pays off you loser",
-	", make sure you tell me what unemployment feels like",
-	" lives off of his parents' money",
-	", you're a dissapointment to your entire family, fatass",
-	" has probably fried all of his dopamine receptors by masturbating this much",
-}
-
-local advertise = {
-	"IdiotBox - https://phizzofficial.wixsite.com/idiotbox4gmod/",
-	"IdiotBox - Destroying everyone since '16.",
-	"IdiotBox - Easy to use, free Garry's Mod cheat.",
-	"IdiotBox - Now you can forget that negative KD's can be possible.",
-	"IdiotBox - Beats all of your other cheats.",
-	"IdiotBox - IdiotBox came back, and it came back with a vengeance.",
-	"IdiotBox - Join the Discord server if you have a high IQ.",
-	"IdiotBox - The only high-quality free cheat, out for Garry's Mod.",
-	"IdiotBox - Best cheat, created by Phizz & more.",
-	"IdiotBox - Always updated, never dead.",
-	"IdiotBox - A highly reliable and optimised cheating software.",
-	"IdiotBox - Top class, free cheat for Garry's Mod.",
-	"IdiotBox - Makes noobs cry waves of tears since forever!",
-	"IdiotBox - Say goodbye to the respawn room!",
-	"IdiotBox - Download the highest quality Garry's Mod cheat for free now!",
-	"IdiotBox - A reliable way to go!",
-	"IdiotBox - Make Garry's Mod great again!",
-	"IdiotBox - Visit our website for fresh Discord invite links!",
-	"IdiotBox - Monthly bugfixes & updates. It never gets outdated!",
-	"IdiotBox - Download IdiotBox v6.8.b2 right now!",
-	"IdiotBox - Bug-free and fully customizable!",
-	"IdiotBox - Join our Steam group and Discord server to stay up-to-date!",
-	"IdiotBox - Refund all your cheats, use this better and free alternative!",
-	"IdiotBox - Now with more features than ever!",
-	"IdiotBox - The best Garry's Mod cheat, with 24/7 support, for free!",
-	"IdiotBox - Bypasses most anti-cheats and screengrabbers!",
-}
-
-local toxicadvertise = {
-	"Get IdiotBox you fucking smelly niggers",
-	"IdiotBox is the best fucking cheat and that is a fact",
-	"All of you are fucking autistic for not having IdiotBox",
-	"Why the fuck don't you get IdiotBox lol",
-	"Stay being gay or get IdiotBox",
-	"Your moms should know that you play grown-up games, join our Discord to prove you are not under-aged",
-	"I have your IPs you dumb niggers, I will delete the IPs if you get IdiotBox",
-	"You all fucking smell like shit for not using IdiotBox",
-	"IdiotBox makes kiddos cry and piss their pants maybe and maybe shit and cum",
-	"IdiotBox is the best free cheat in the history of the entire world so get it faggots",
-	"Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ or you're retarded",
-	"Join our fucking Discord or else you are literally an unpriviledged niggers",
-	"IdiotBox is a cheat for people with high IQ only, use IdiotBox to prove you're smart",
-	"Don't wanna get fucking raped? Get IdiotBox and shit on them skids",
-	"This is the best free paste around, no other paste is better than IdiotBox",
-	"How the fuck are you not using IdiotBox in a shitty dying game lmfao",
-	"IdiotBox is the best and most popular Garry's Mod cheat ever, why are you not using it lol",
-	"May cause a bit of lag but it's worth it for the fuckton of features that it has",
-	"You're all faggots if you don't cheat with IdiotBox",
-	"You literally go to pride month parades if you don't use IdiotBox",
-	"Idiotbox is the highest quality, most popular free cheat, just get it already",
-	"Shit on all of the virgins that unironically play this game with this high-quality cheat",
-	"Get good, get IdiotBox you fucking retards",
-	"You're mad retarded if you are not using IdiotBox, no cap",
-	"Own every single retard in HvH with this superior cheat now",
-	"All of you are dumb niggers for not downloading IdiotBox and that is a fact",
-	"You suck fat cocks in public bathrooms if you're not using IdiotBox",
-	"Just get this god-like cheat already and rape all existing servers",
-	"No you idiots, you can't get VAC banned for using lua scripts you absolute cretins",
-	"IdiotBox bypasses even the most complex anti-cheats and screengrabbers, you're not getting banned anytime soon",
-	"Just use IdiotBox to revert your sad lives and feel better about yourselves",
-	"Phizz is a god because he made this god-like cheat called IdiotBox",
-	"I am forced to put IdiotBox in almost every sentence and advertise in a toxic way because I'm a text in a lua script",
-	"Why are you fucking gay? Get IdiotBox today",
-	"The sentence above is a rhyme but the script says to put random sentences so I don't think you can see it, get IdiotBox btw",
-	"Purchase IdiotBox now! Only for OH wait it's free",
-	"It is highly recommended that you get IdiotBox in case of getting pwned",
-	"You are swag and good looking, but only if you get IdiotBox",
-	"Phizz spent so many fucking nights creating this masterpiece of a cheat so get it now or he will legit kill you",
-	"Fuck you and get IdiotBox now lol",
-	"IdiotBox is constantly getting updated with dope-ass features, it never gets outdated so just get it",
-	"Have IdiotBox installed if you're mega straight and zero gay",
-	"Whoever the fuck said lua cheats are bad deserves to die in a house fire",
-	"You get IdiotBox, everyone else on the server gets pwned, ez as that",
-	"Many cheats copied IdiotBox, but this is the original one, fucking copycats",
-	"Join the fucking Discord, promise it won't hurt you faggots",
-	"Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ right this moment or I will hire a hitman to kill you",
-	"Join the IdiotBox group at OH wait niggers got mad and mass-reported it, kys shitkids",
-	"Nvm, Steam group is back lol get fucked you mad skid shitkids",
-	"IdiotBox killed all of the paid cheats because it's too good",
-	"Get IdiotBox, it's free and very good, you sacks of crying shit",
-	"IdiotBox is the fucking G.O.A.T.",
-	"What the fuck are you doing not using this god-like cheat lol",
-	"This is an epic fucking cheat called IdiotBox that was created by Phizz and others, worship your new gods kiddos",
-	"You were fed cock milk as a baby if you're not using IdiotBox and you can not prove me wrong",
-	"IdiotBox has the dopest anti-aims and resolvers you'll ever use, you will be a HvH god",
-	"Just please get IdiotBox already you retards, I am tired of typing these lines for fuck's sake",
-	"Phizz will give everyone IdiotBox v6.9 soon so quit your shit",
-	"IdiotBox needs no Steam group, we're too chad for one",
-	"Our Discord was tapped at some point but IdiotBox is back and stronger than ever",
-	"IdiotBox came back to kill silly niggers, and it came back with a vengeance",
-	"Download Idiotbox v6.8.b2 now, you dont even know what you're missing you mongoloids",
-	"Have I told you about IdiotBox, the best Garry's Mod cheat ever made??",
-	"Holy shit, IdiotBox for Garry's Mod is the best cheat that I have ever used!!",
-}
-
-local lmaoboxadvertise = {
-	"www.IB4G.net - https://phizzofficial.wixsite.com/idiotbox4gmod/",
-	"www.IB4G.net - WHAT ARE YOU WAITING FOR?",
-	"www.IB4G.net - BEST GARRY'S MOD CHEAT OUT RIGHT NOW!",
-	"www.IB4G.net - SAY GOODBYE TO THE RESPAWN ROOM!",
-	"www.IB4G.net - NO SKILL REQUIRED!",
-	"www.IB4G.net - NEVER DIE AGAIN WITH THIS!",
-	"www.IB4G.net - ONLY HIGH IQ NIGGAS' USE IDIOTBOX!",
-	"www.IB4G.net - THE GAME IS NOT ACTUALLY DYING, I JUST LIKE TO ANNOY KIDS LOL!",
-	"www.IB4G.net - DOWNLOAD THE CHEAT FOR FREE!",
-	"www.IB4G.net - NOW WITH AUTOMATIC UPDATES!",
-	"www.IB4G.net - GUARANTEED SWAG AND RESPECT ON EVERY SERVER!",
-	"www.IB4G.net - IDIOTBOX COMING SOON TO TETIRS!",
-	"www.IB4G.net - VISIT OUR WEBSITE FOR A FRESH INVITE LINK TO OUR DISCORD!",
-	"www.IB4G.net - PHIZZ IS A GOD FOR MAKING THIS!",
-	"www.IB4G.net - BECOME THE SERVER MVP IN NO TIME!",
-	"www.IB4G.net - 100% NO SKILL REQUIRED!",
-	"www.IB4G.net - BEST CHEAT, MADE BY THE CHINESE COMMUNIST PARTY!",
-	"www.IB4G.net - MAKE IDIOTBOX GREAT AGAIN!",
-	"www.IB4G.net - WHY ARE YOU NOT CHEATING IN A DYING GAME?",
-	"www.IB4G.net - RUINING EVERYONE'S FUN SINCE 2016!",
-	"www.IB4G.net - IT'S PASTED, BUT IT'S THE BEST PASTE YOU WILL EVER USE!",
-	"www.IB4G.net - A VERY CLEAN, HIGH-QUALITY AND BUG-FREE PASTE!",
-	"www.IB4G.net - ALWAYS UPDATED! NEVER GETS OUTDATED!",
-	"www.IB4G.net - WITH A FUCK TON OF NEW FEATURES!",
-	"www.IB4G.net - ONCE YOU GO BLACK, YOU NEVER GO BACK. GET IDIOTBOX NOW!",
-	"www.IB4G.net - SACRIFICE A FEW FRAMES FOR THE BEST EXPERIENCE OF YOUR LIFE!",
-	"www.IB4G.net - STEAM GROUP WAS TAKEN DOWN, BUT IT'S BACK BABY!",
-	"www.IB4G.net - BEST GARRY'S MOD CHEAT, NO CAP!",
-	"www.IB4G.net - WITH IDIOTBOX, YOU'LL NEVER GET BANNED FOR CHEATING AGAIN!",
-	"www.IB4G.net - DISCORD SERVER WAS TAKEN DOWN MANY TIMES, BUT WE ALWAYS COME BACK!",
-}
-
-local horstwessellied = {
-	"Die Fahne hoch! Die Reihen fest geschlossen",
-	"SA marschiert mit ruhig festem Schritt",
-	"Kam'raden, die Rotfront und Reaktion erschossen",
-	"Marschier'n im Geist in unser'n Reihen mit",
-	"Die Straße frei den braunen Bataillonen",
-	"Die Straße frei dem Sturmabteilungsmann",
-	"Es schau'n aufs Hakenkreuz voll Hoffnung schon Millionen",
-	"Der Tag für Freiheit und für Brot bricht an",
-	"Zum letzten Mal wird Sturmalarm geblasen",
-	"Zum Kampfe steh'n wir alle schon bereit",
-	"Schon flattern Hitlerfahnen über allen Straßen",
-	"Die Knechtschaft dauert nur noch kurze Zeit",
-	"Die Fahne hoch! Die Reihen fest geschlossen",
-	"SA marschiert mit ruhig festem Schritt",
-	"Kam'raden, die Rotfront und Reaktion erschossen",
-	"Marschier'n im Geist in unser'n Reihen mit",
-}
-
-local ssmarschiertinfeindesland = {
-	"SS marschiert in Feindesland",
-	"Und singt ein Teufelslied",
-	"Ein Schütze steht am Wolgastrand",
-	"Und leise summt er mit",
-	"Wir pfeifen auf Unten und Oben",
-	"Und uns kann die ganze Welt",
-	"Verfluchen oder auch loben",
-	"Grad wie es jedem gefällt",
-	"Wo wir sind da geht's immer vorwärts",
-	"Und der Teufel, der lacht nur dazu",
-	"Ha, ha, ha, ha, ha, ha",
-	"Wir kämpfen für Deutschland",
-	"Wir kämpfen für Hitler",
-	"Der Rote kommt niemehr zur Ruh'",
-	"Wir kämpften schon in mancher Schlacht",
-	"In Nord, Süd, Ost und West",
-	"Und stehen nun zum Kampf bereit",
-	"Gegen die rote Pest",
-	"SS wird nicht ruh'n, wir vernichten",
-	"Bis niemand mehr stört Deutschlands Glück",
-	"Und wenn sich die Reihen auch lichten",
-	"Für uns gibt es nie ein Zurück",
-	"Wo wir sind da geht's immer vorwärts",
-	"Und der Teufel, der lacht nur dazu",
-	"Ha, ha, ha, ha, ha, ha",
-	"Wir kämpfen für Deutschland",
-	"Wir kämpfen für Hitler",
-	"Der Rote kommt niemehr zur Ruh'",
-}
-
-local siegheilviktoria = {
-	"Ade, mein liebes Schätzelein",
-	"Ade, ade, ade",
-	"Es muß, es muß geschieden sein",
-	"Ade, ade, ade",
-	"Es geht um Deutschlands Gloria",
-	"Gloria, Gloria",
-	"Sieg Heil! Sieg Heil Viktoria!",
-	"Sieg Heil, Viktoria!",
-	"Visier und Ziel sind eingestellt",
-	"Ade, ade, ade",
-	"Auf Stalin, Churchill, Roosevelt",
-	"Ade, ade, ade",
-	"Es geht um Deutschlands Gloria",
-	"Gloria, Gloria",
-	"Sieg Heil! Sieg Heil Viktoria!",
-	"Sieg Heil, Viktoria!",
-	"Wir ruhen und wir rasten nicht",
-	"Ade, ade, ade",
-	"Bis daß die Satansbrut zerbricht",
-	"Ade, ade, ade",
-	"Es geht um Deutschlands Gloria",
-	"Gloria, Gloria",
-	"Sieg Heil! Sieg Heil Viktoria!",
-	"Sieg Heil, Viktoria!",
-	"Reich mir die Hand zum Scheidegruß",
-	"Ade, ade, ade",
-	"Und deinen Mund zum Abschiedskuß",
-	"Ade, ade, ade",
-	"Es geht um Deutschlands Gloria",
-	"Gloria, Gloria",
-	"Sieg Heil! Sieg Heil Viktoria!",
-	"Sieg Heil, Viktoria!",
-}
-
+	local ArabFunni = {"يمارس الجنس مع السلطة العربية سنة عظيمة", "رائحة مثل البظر دون السن القانونية هنا اسمحوا لي أن اللعنة", "ازدهار مسحوق الطاقة العربية سنة جيدة", "نحن نكره اليهو", "يمارس الجنس مع الأطفال الماعز نعم الجنس", "الله أكبر نعم رجل تفجير طفل", "هذه لحظة بره لحظة ارهابية سنة", "في تلك اللحظة التي يبدأ فيها أخاك في المغازلة مع والدتك", "الحصول على صندوق احمق نعم العربية غش كازاخستان", "يمارس الجنس مع نيغا الكلبة دا قرن الطفل", "ترك العرب باكستاني لحظة برمة تجميع كرمة", "حرق اليهود ، يمارس الجنس مع المسيح ، قتل الأطفال ، أصبح الله",}
+	local HebrewFunni = {"לזיין את הכלב שלך אמא לעזאזל חרא סקס בכוס", "לעזאזל כוס כלבה בזין אני אוהבת עורלה הדוקה חתכה לי שלום כומר", "זו לא בדיחה מזוינת אני רוצה לתלות את עצמי השנה", "תזדיין שאתה יהודי הוא הגדול ביותר שכולכם כושים", "אני אהיה בן שש בשנה מכושן", "יש למול את הפין", "ישראל היא פלסטין המזוין הגדול ביותר במדינה", "זקן ישבן גדול על סנטרי, זהב בביתי, פוליטיקה במכנסיים שלי", "מזדיין לצאת מכושים ישראלים", "כוס חתולה אני מזיין את הזין ואז אני מוצץ כן", "חרא של אלוהים זה חרא של רחוב כן", "אני הולך לזיין ילד בן שתים עשרה בתחת, כן חתוך עורלה לעזאזל חרא כלבה",}
+	local messagespam = {"GET FUCKED BY IDIOTBOX KIDDIE", "YOU SUCK SHIT LMAO", "STOP BEING SUCH A WORTHLESS CUMSTAIN AND GET IDIOTBOX NOW", "MONEY WASTER LOL", "YOU FUCKING FATASS, GET IDIOTBOX AND LOSE ALL THAT WEIGHT YOU INCEL", "ARE ALL THE GIRLS IGNORING YOU? GET IDIOTBOX AND YOU'LL BE FLOODED WITH PUSSY", "DO YOU FEEL WORTHLESS? WELL, YOU ARE LOL", "GET IDIOTBOX IF YOU WANT SOME OF THAT CLOUT", "STOP WASTING YOUR TIME ON SOUNDCLOUD BECAUSE YOU AIN'T GONNA GET NOWHERE WITH IT", "GET IDIOTBOX AND YOUR DICK WILL GROW 4 TIMES ITS SIZE", "LITTLE KID LMAO",}
+	local offensivespam = { "fuck niggers like fr", "who else here hates black people lmao", "all niggers should be locked in cages and fed bananas", "black people are some sub-human slaves imo", "i've never met an intelligent black person", "why tf are all niggers so ugly lol", "all the black dudes i've seen look like monkeys", "ooga booga black rights", "my grandpa died in ww2, he was the best german pilot", "white people are genetically superior to every othe race", "all jews can do is hide the truth, steal money and start wars",}
+	local insultspam = {" is shit at building", " is no older than 13", " looks like a 2 month old corpse", " really thinks gmod is a good game", " can't afford a better pc lmao", ", so how do you like your 40 fps?", " will definitely kill himself before his 30's ", " is a fucking virgin lmao", " is a script kiddie", " thinks his 12cm penis is big lmfao", ", how does it feel when you've never seen a naked woman in person?", ", what do you like not being able to do a single push-up?", ", tell me how it feels to be shorter than every girl you've met", " is a fatass who only spends his time in front of a monitor like an incel", "'s parents have a lower than average income", " lives under a bridge lmao", " vapes because is too afraid to smoke an actual ciggarette", ", your low self esteem really pays off you loser", ", make sure you tell me what unemployment feels like", " lives off of his parents' money", ", you're a dissapointment to your entire family, fatass", " has probably fried all of his dopamine receptors by masturbating this much",}
+	local advertise = {"IdiotBox - https://phizzofficial.wixsite.com/idiotbox4gmod/", "IdiotBox - Destroying everyone since '16.", "IdiotBox - Easy to use, free Garry's Mod cheat.", "IdiotBox - Now you can forget that negative KD's can be possible.", "IdiotBox - Beats all of your other cheats.", "IdiotBox - IdiotBox came back, and it came back with a vengeance.", "IdiotBox - Join the Discord server if you have a high IQ.", "IdiotBox - The only high-quality free cheat, out for Garry's Mod.", "IdiotBox - Best cheat, created by Phizz & more.", "IdiotBox - Always updated, never dead.", "IdiotBox - A highly reliable and optimised cheating software.", "IdiotBox - Top class, free cheat for Garry's Mod.", "IdiotBox - Makes noobs cry waves of tears since forever!", "IdiotBox - Say goodbye to the respawn room!", "IdiotBox - Download the highest quality Garry's Mod cheat for free now!", "IdiotBox - A reliable way to go!", "IdiotBox - Make Garry's Mod great again!", "IdiotBox - Visit our website for fresh Discord invite links!", "IdiotBox - Monthly bugfixes & updates. It never gets outdated!", "IdiotBox - Download IdiotBox v6.8.b2 right now!", "IdiotBox - Bug-free and fully customizable!", "IdiotBox - Join our Steam group and Discord server to stay up-to-date!", "IdiotBox - Refund all your cheats, use this better and free alternative!", "IdiotBox - Now with more features than ever!", "IdiotBox - The best Garry's Mod cheat, with 24/7 support, for free!", "IdiotBox - Bypasses most anti-cheats and screengrabbers!",}
+	local toxicadvertise = {"Get IdiotBox you fucking smelly niggers", "IdiotBox is the best fucking cheat and that is a fact", "All of you are fucking autistic for not having IdiotBox", "Why the fuck don't you get IdiotBox lol", "Stay being gay or get IdiotBox", "Your moms should know that you play grown-up games, join our Discord to prove you are not under-aged", "I have your IPs you dumb niggers, I will delete the IPs if you get IdiotBox", "You all fucking smell like shit for not using IdiotBox", "IdiotBox makes kiddos cry and piss their pants maybe and maybe shit and cum", "IdiotBox is the best free cheat in the history of the entire world so get it faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ or you're retarded", "Join our fucking Discord or else you are literally an unpriviledged niggers", "IdiotBox is a cheat for people with high IQ only, use IdiotBox to prove you're smart", "Don't wanna get fucking raped? Get IdiotBox and shit on them skids", "This is the best free paste around, no other paste is better than IdiotBox", "How the fuck are you not using IdiotBox in a shitty dying game lmfao", "IdiotBox is the best and most popular Garry's Mod cheat ever, why are you not using it lol", "May cause a bit of lag but it's worth it for the fuckton of features that it has", "You're all faggots if you don't cheat with IdiotBox", "You literally go to pride month parades if you don't use IdiotBox", "Idiotbox is the highest quality, most popular free cheat, just get it already", "Shit on all of the virgins that unironically play this game with this high-quality cheat", "Get good, get IdiotBox you fucking retards", "You're mad retarded if you are not using IdiotBox, no cap", "Own every single retard in HvH with this superior cheat now", "All of you are dumb niggers for not downloading IdiotBox and that is a fact", "You suck fat cocks in public bathrooms if you're not using IdiotBox", "Just get this god-like cheat already and rape all existing servers", "No you idiots, you can't get VAC banned for using lua scripts you absolute cretins", "IdiotBox bypasses even the most complex anti-cheats and screengrabbers, you're not getting banned anytime soon", "Just use IdiotBox to revert your sad lives and feel better about yourselves", "Phizz is a god because he made this god-like cheat called IdiotBox", "I am forced to put IdiotBox in almost every sentence and advertise in a toxic way because I'm a text in a lua script", "Why are you fucking gay? Get IdiotBox today", "The sentence above is a rhyme but the script says to put random sentences so I don't think you can see it, get IdiotBox btw", "Purchase IdiotBox now! Only for OH wait it's free", "It is highly recommended that you get IdiotBox in case of getting pwned", "You are swag and good looking, but only if you get IdiotBox", "Phizz spent so many fucking nights creating this masterpiece of a cheat so get it now or he will legit kill you", "Fuck you and get IdiotBox now lol", "IdiotBox is constantly getting updated with dope-ass features, it never gets outdated so just get it", "Have IdiotBox installed if you're mega straight and zero gay", "Whoever the fuck said lua cheats are bad deserves to die in a house fire", "You get IdiotBox, everyone else on the server gets pwned, ez as that", "Many cheats copied IdiotBox, but this is the original one, fucking copycats", "Join the fucking Discord, promise it won't hurt you faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ right this moment or I will hire a hitman to kill you", "Join the IdiotBox group at OH wait niggers got mad and mass-reported it, kys shitkids", "Nvm, Steam group is back lol get fucked you mad skid shitkids", "IdiotBox killed all of the paid cheats because it's too good", "Get IdiotBox, it's free and very good, you sacks of crying shit", "IdiotBox is the fucking G.O.A.T.", "What the fuck are you doing not using this god-like cheat lol", "This is an epic fucking cheat called IdiotBox that was created by Phizz and others, worship your new gods kiddos", "You were fed cock milk as a baby if you're not using IdiotBox and you can not prove me wrong", "IdiotBox has the dopest anti-aims and resolvers you'll ever use, you will be a HvH god", "Just please get IdiotBox already you retards, I am tired of typing these lines for fuck's sake", "Phizz will give everyone IdiotBox v6.9 soon so quit your shit", "IdiotBox needs no Steam group, we're too chad for one", "Our Discord was tapped at some point but IdiotBox is back and stronger than ever", "IdiotBox came back to kill silly niggers, and it came back with a vengeance", "Download Idiotbox v6.8.b2 now, you dont even know what you're missing you mongoloids", "Have I told you about IdiotBox, the best Garry's Mod cheat ever made??", "Holy shit, IdiotBox for Garry's Mod is the best cheat that I have ever used!!",}
+	local lmaoboxadvertise = {"www.IB4G.net - https://phizzofficial.wixsite.com/idiotbox4gmod/", "www.IB4G.net - WHAT ARE YOU WAITING FOR?", "www.IB4G.net - BEST GARRY'S MOD CHEAT OUT RIGHT NOW!", "www.IB4G.net - SAY GOODBYE TO THE RESPAWN ROOM!", "www.IB4G.net - NO SKILL REQUIRED!", "www.IB4G.net - NEVER DIE AGAIN WITH THIS!", "www.IB4G.net - ONLY HIGH IQ NIGGAS' USE IDIOTBOX!", "www.IB4G.net - THE GAME IS NOT ACTUALLY DYING, I JUST LIKE TO ANNOY KIDS LOL!", "www.IB4G.net - DOWNLOAD THE CHEAT FOR FREE!", "www.IB4G.net - NOW WITH AUTOMATIC UPDATES!", "www.IB4G.net - GUARANTEED SWAG AND RESPECT ON EVERY SERVER!", "www.IB4G.net - IDIOTBOX COMING SOON TO TETIRS!", "www.IB4G.net - VISIT OUR WEBSITE FOR A FRESH INVITE LINK TO OUR DISCORD!", "www.IB4G.net - PHIZZ IS A GOD FOR MAKING THIS!", "www.IB4G.net - BECOME THE SERVER MVP IN NO TIME!", "www.IB4G.net - 100% NO SKILL REQUIRED!", "www.IB4G.net - BEST CHEAT, MADE BY THE CHINESE COMMUNIST PARTY!", "www.IB4G.net - MAKE IDIOTBOX GREAT AGAIN!", "www.IB4G.net - WHY ARE YOU NOT CHEATING IN A DYING GAME?", "www.IB4G.net - RUINING EVERYONE'S FUN SINCE 2016!", "www.IB4G.net - IT'S PASTED, BUT IT'S THE BEST PASTE YOU WILL EVER USE!", "www.IB4G.net - A VERY CLEAN, HIGH-QUALITY AND BUG-FREE PASTE!", "www.IB4G.net - ALWAYS UPDATED! NEVER GETS OUTDATED!", "www.IB4G.net - WITH A FUCK TON OF NEW FEATURES!", "www.IB4G.net - ONCE YOU GO BLACK, YOU NEVER GO BACK. GET IDIOTBOX NOW!", "www.IB4G.net - SACRIFICE A FEW FRAMES FOR THE BEST EXPERIENCE OF YOUR LIFE!", "www.IB4G.net - STEAM GROUP WAS TAKEN DOWN, BUT IT'S BACK BABY!", "www.IB4G.net - BEST GARRY'S MOD CHEAT, NO CAP!", "www.IB4G.net - WITH IDIOTBOX, YOU'LL NEVER GET BANNED FOR CHEATING AGAIN!", "www.IB4G.net - DISCORD SERVER WAS TAKEN DOWN MANY TIMES, BUT WE ALWAYS COME BACK!",}
+	local horstwessellied = {"Die Fahne hoch! Die Reihen fest geschlossen", "SA marschiert mit ruhig festem Schritt", "Kam'raden, die Rotfront und Reaktion erschossen", "Marschier'n im Geist in unser'n Reihen mit", "Die Straße frei den braunen Bataillonen", "Die Straße frei dem Sturmabteilungsmann", "Es schau'n aufs Hakenkreuz voll Hoffnung schon Millionen", "Der Tag für Freiheit und für Brot bricht an", "Zum letzten Mal wird Sturmalarm geblasen", "Zum Kampfe steh'n wir alle schon bereit", "Schon flattern Hitlerfahnen über allen Straßen", "Die Knechtschaft dauert nur noch kurze Zeit", "Die Fahne hoch! Die Reihen fest geschlossen", "SA marschiert mit ruhig festem Schritt", "Kam'raden, die Rotfront und Reaktion erschossen", "Marschier'n im Geist in unser'n Reihen mit",}
+	local ssmarschiertinfeindesland = {"SS marschiert in Feindesland", "Und singt ein Teufelslied", "Ein Schütze steht am Wolgastrand", "Und leise summt er mit", "Wir pfeifen auf Unten und Oben", "Und uns kann die ganze Welt", "Verfluchen oder auch loben", "Grad wie es jedem gefällt", "Wo wir sind da geht's immer vorwärts", "Und der Teufel, der lacht nur dazu", "Ha, ha, ha, ha, ha, ha", "Wir kämpfen für Deutschland", "Wir kämpfen für Hitler", "Der Rote kommt niemehr zur Ruh'", "Wir kämpften schon in mancher Schlacht", "In Nord, Süd, Ost und West", "Und stehen nun zum Kampf bereit", "Gegen die rote Pest", "SS wird nicht ruh'n, wir vernichten", "Bis niemand mehr stört Deutschlands Glück", "Und wenn sich die Reihen auch lichten", "Für uns gibt es nie ein Zurück", "Wo wir sind da geht's immer vorwärts", "Und der Teufel, der lacht nur dazu", "Ha, ha, ha, ha, ha, ha", "Wir kämpfen für Deutschland", "Wir kämpfen für Hitler", "Der Rote kommt niemehr zur Ruh'",}
+	local siegheilviktoria = {"Ade, mein liebes Schätzelein", "Ade, ade, ade", "Es muß, es muß geschieden sein", "Ade, ade, ade", "Es geht um Deutschlands Gloria", "Gloria, Gloria", "Sieg Heil! Sieg Heil Viktoria!", "Sieg Heil, Viktoria!", "Visier und Ziel sind eingestellt", "Ade, ade, ade", "Auf Stalin, Churchill, Roosevelt", "Ade, ade, ade", "Es geht um Deutschlands Gloria", "Gloria, Gloria", "Sieg Heil! Sieg Heil Viktoria!", "Sieg Heil, Viktoria!", "Wir ruhen und wir rasten nicht", "Ade, ade, ade", "Bis daß die Satansbrut zerbricht", "Ade, ade, ade", "Es geht um Deutschlands Gloria", "Gloria, Gloria", "Sieg Heil! Sieg Heil Viktoria!", "Sieg Heil, Viktoria!", "Reich mir die Hand zum Scheidegruß", "Ade, ade, ade", "Und deinen Mund zum Abschiedskuß", "Ade, ade, ade", "Es geht um Deutschlands Gloria", "Gloria, Gloria", "Sieg Heil! Sieg Heil Viktoria!", "Sieg Heil, Viktoria!",}
 	if (gOption("Miscellaneous", "Chat", "Chat Spam:") == "Nazi 1") then
 		RunConsoleCommand("say", horstwessellied[math.random(#horstwessellied)])
 	elseif (gOption("Miscellaneous", "Chat", "Chat Spam:") == "Nazi 2") then
@@ -3415,26 +2765,8 @@ CreateClientConVar("idiot_changename", "www.IB4G.net | Cry, dog!", true, false)
 
 local namechangeTime = 0
 
-local randomemote = {
-	"dance", 
-	"muscle", 
-	"wave", 
-	"robot", 
-	"bow", 
-	"cheer", 
-	"laugh", 
-	"zombie", 
-	"agree", 
-	"disagree", 
-	"forward", 
-	"becon", 
-	"salute", 
-	"pose", 
-	"halt", 
-	"group", 
-}
-
 local function EmoteSpam()
+	local randomemote = {"dance", "muscle", "wave", "robot", "bow", "cheer", "laugh", "zombie", "agree", "disagree", "forward", "becon", "salute", "pose", "halt", "group",}
 	if gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Dance" then
 		RunConsoleCommand("act", "dance")
 	elseif gOption("Miscellaneous", "Miscellaneous", "Emotes:") == "Sexy" then
@@ -3904,6 +3236,7 @@ timer.Create("usespam", 0, 0, function()
 end)
 
 local function Think()
+	local randomname = {"Mike Hawk", "Moe Lester", "Mike Hunt", "Ben Dover", "Harold Kundt", "Peter Pain", "Dusan Mandic", "Harry Gooch", "Mike Oxlong", "Ivana Dooyu", "Slim Shader", "Dead Walker", "Mike Oxbig", "Mike Rotch", "Hugh Jass", "Robin Banks", "Mike Litt", "Harry Wang", "Harry Cox", "Moss Cular", "Amanda Reen", "Major Kumm", "Willie Wang", "Hugh Blackstuff", "Mike Rap", "Al Coholic", "Cole Kutz", "Mike Litoris", "Dixie Normous", "Dick Pound", "Mike Ock", "Sum Ting Wong", "Ho Lee Fuk", "Harry Azcrac", "Jay L. Bate", "Hugh G. Rection", "Long Wang", "Wayne King",}
 	if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menuopen and not menukeydown) then
 		menuopen = true
 		menukeydown = true
@@ -3950,7 +3283,7 @@ local function Think()
 		namechangeTime = 0
 		end
 	end
-	if (gBool("Utilities", "Others", "Apply custom name")) then
+	if (gBool("Main Menu", "Others", "Apply custom name")) then
 		hook.Add("Think", "Hook7", function()
 		IdiotBox.ChangeName(GetConVarString("idiot_changename"))
 		if not Confirmed1 then
@@ -3983,12 +3316,7 @@ local footprints = false
 
 local looped_props = false
 
-local tauntspam = {
-	"funny", 
-	"help", 
-	"scream", 
-	"morose", 
-}
+local tauntspam = {"funny", "help", "scream", "morose",}
 
 local function CheckChild(pan)
 	if (pan and pan:IsValid() and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible())) then
@@ -4026,7 +3354,7 @@ hook.Add("Think", "Hook8", function()
 	MurdererDetector()
 	TransparentWalls()
 	Think()
-	if gBool("Utilities", "General Utilities", "Optimize Game") then
+	if gBool("Main Menu", "General Utilities", "Optimize Game") then
 		if not optimized then
 			me:ConCommand("r_cleardecals; M9KGasEffect 0")
 		optimized = true
@@ -4048,29 +3376,29 @@ hook.Add("Think", "Hook8", function()
 		applied = false
 		end
 	end
-	if gBool("Utilities", "Trouble in Terrorist Town Utilities", "Hide Round Report") and idiot.engine.ActiveGamemode() == "terrortown" then
+	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Hide Round Report") and idiot.engine.ActiveGamemode() == "terrortown" then
 		if not displayed then
 			function CLSCORE:ShowPanel() return end
 		displayed = true
 		end
 	end
-	if gBool("Utilities", "Trouble in Terrorist Town Utilities", "Panel Remover") and idiot.engine.ActiveGamemode() == "terrortown" then
+	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Panel Remover") and idiot.engine.ActiveGamemode() == "terrortown" then
 		local pan = vgui.GetHoveredPanel()
 		CheckChild(pan)
 	end
-	if gBool("Utilities", "Murder Utilities", "Hide End Round Board") and idiot.engine.ActiveGamemode() == "murder" then
+	if gBool("Main Menu", "Murder Utilities", "Hide End Round Board") and idiot.engine.ActiveGamemode() == "murder" then
 		if not displayed then
 			function GAMEMODE:DisplayEndRoundBoard(data) return end
 			displayed = true
 		end
 	end
-	if gBool("Utilities", "Murder Utilities", "Hide Footprints") and idiot.engine.ActiveGamemode() == "murder" then
+	if gBool("Main Menu", "Murder Utilities", "Hide Footprints") and idiot.engine.ActiveGamemode() == "murder" then
 		if not footprints then
 			function GAMEMODE:DrawFootprints() return end
 			footprints = true
 		end
 	end
-	if gBool("Utilities", "Murder Utilities", "No Black Screens") and idiot.engine.ActiveGamemode() == "murder" then
+	if gBool("Main Menu", "Murder Utilities", "No Black Screens") and idiot.engine.ActiveGamemode() == "murder" then
 		if not blackscreen then
 			function GAMEMODE:RenderScreenspaceEffects() return end
 			function GAMEMODE:PostDrawHUD() return end
@@ -4090,7 +3418,7 @@ hook.Add("Think", "Hook8", function()
 			RunConsoleCommand("mu_taunt", tauntspam[math.random(#tauntspam)])
 		end
 	end
-	if gBool("Utilities", "DarkRP Utilities", "Suicide Near Arrest Batons") and idiot.engine.ActiveGamemode() == "darkrp" and (me:Alive() or me:Health() > 0) then
+	if gBool("Main Menu", "DarkRP Utilities", "Suicide Near Arrest Batons") and idiot.engine.ActiveGamemode() == "darkrp" and (me:Alive() or me:Health() > 0) then
 		for k, v in next, player.GetAll() do
 			if not v:IsValid() or v:Health() < 1 or v:IsDormant() or v == me then continue end
 			if gBool("Aimbot", "Aim Priorities", "Ignore Friends") and v:GetFriendStatus() == "friend" then continue end
@@ -4099,11 +3427,11 @@ hook.Add("Think", "Hook8", function()
 			end
 		end
 	end
-	if gBool("Utilities", "DarkRP Utilities", "Transparent Props") and idiot.engine.ActiveGamemode() == "darkrp" then
+	if gBool("Main Menu", "DarkRP Utilities", "Transparent Props") and idiot.engine.ActiveGamemode() == "darkrp" then
 		for k, v in next, ents.FindByClass("prop_physics") do
 			v:SetRenderMode(RENDERMODE_TRANSCOLOR)
 			v:SetKeyValue("renderfx", 0)
-			v:SetColor(Color(255, 255, 255, gInt("Utilities", "DarkRP Utilities", "Transparency:")))
+			v:SetColor(Color(255, 255, 255, gInt("Main Menu", "DarkRP Utilities", "Transparency:")))
 		end
 		if looped_props then
 			looped_props = false
@@ -4116,7 +3444,7 @@ hook.Add("Think", "Hook8", function()
 			looped_props = true
 		end
 	end
-	if (gBool("Utilities", "General Utilities", "Anti-Blind")) then
+	if (gBool("Main Menu", "General Utilities", "Anti-Blind")) then
 		if (HookExist("HUDPaint", "ulx_blind")) then
 			MsgR(4.3, "IdiotBox successfully blocked a blinding attempt.")
 			surface.PlaySound("buttons/lightswitch2.wav")
@@ -4125,7 +3453,7 @@ hook.Add("Think", "Hook8", function()
     end
 	if MOTDgd or MOTDGD then
 		function MOTDgd.GetIfSkip()
-		if (gBool("Utilities", "General Utilities", "Anti-Ads")) then
+		if (gBool("Main Menu", "General Utilities", "Anti-Ads")) then
 			MsgR(4.3, "IdiotBox successfully blocked an advertisement.")
 			surface.PlaySound("buttons/lightswitch2.wav")
 			return true
@@ -4673,7 +4001,7 @@ hook.Add("DrawOverlay", "Hook13", function()
 	if (gBool("Triggerbot", "Triggerbot", "Enabled")) then return end
 	if (gBool("Aimbot", "Ragebot", "Enabled") && gBool("Aimbot", "Legitbot", "Enabled")) then return end
 	for k, v in pairs(player.GetAll()) do
-	if (gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable Ragebot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable Legitbot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me) then return end
+	if (gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Ragebot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Legitbot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me) then return end
 	end
 	if (aimtarget and em.IsValid(aimtarget) and not FixTools() and gBool("Visuals", "Miscellaneous", "Snap Lines") and (gBool("Aimbot", "Ragebot", "Enabled") or gBool("Aimbot", "Legitbot", "Enabled"))) then
 		if me:Alive() or em.Health(me) > 0 then
@@ -4690,13 +4018,13 @@ hook.Add("DrawOverlay", "Hook13", function()
 end)
 
 local function AntiAFK(pCmd)
-	if (!gBool("Utilities", "General Utilities", "Anti-AFK")) then
+	if (!gBool("Main Menu", "General Utilities", "Anti-AFK")) then
 		timer.Create("afk1", 6, 0, function()
 		local commands = {"moveleft", "moveright", "moveup", "movedown"}
 		local command1 = table.Random(commands)
 		local command2 = table.Random(commands)
 		if unloaded == true then return end
-		if (!gBool("Utilities", "General Utilities", "Anti-AFK")) then return end
+		if (!gBool("Main Menu", "General Utilities", "Anti-AFK")) then return end
 		timer.Create("afk2", 1, 1, function()
 		RunConsoleCommand("+"..command1)
 		RunConsoleCommand("+"..command2)
@@ -5050,7 +4378,7 @@ local function Ragebot(pCmd)
 	if me:Team() == TEAM_SPECTATOR and not gBool("Aimbot", "Aim Priorities", "Spectators:") then return end
 	if not me:Alive() or me:Health() < 1 then return end
 	for k, v in pairs(player.GetAll()) do
-	if (gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable Ragebot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || FixTools()) then return end
+	if (gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Ragebot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || FixTools()) then return end
 	end
 	if (cm.CommandNumber(pCmd) == 0 || !gBool("Aimbot", "Ragebot", "Enabled") || gBool("Aimbot", "Legitbot", "Enabled")) then return end
 	GetTarget()
@@ -5079,7 +4407,7 @@ local function Legitbot(pCmd)
 	if me:Team() == TEAM_SPECTATOR and not gBool("Aimbot", "Aim Priorities", "Spectators:") then return end
 	if not me:Alive() or me:Health() < 1 then return end
 	for k, v in pairs(player.GetAll()) do
-	if (gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable Legitbot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || FixTools()) then return end
+	if (gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Legitbot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || FixTools()) then return end
 	end
 	if (cm.CommandNumber(pCmd) == 0 || !gBool("Aimbot", "Legitbot", "Enabled") || gBool("Aimbot", "Ragebot", "Enabled")) then return end
 	GetTarget()
@@ -5542,10 +4870,10 @@ end
 
 local function AntiAim(pCmd)
 	for k, v in pairs(player.GetAll()) do
-	if (gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Utilities", "Panic Mode", "Enabled") && gOption("Utilities", "Panic Mode", "Mode:") == "Disable Anti-Aim" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me) then return end
+	if (gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Anti-Aim" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me) then return end
 	end
 	local wep = pm.GetActiveWeapon(me)
-	if (gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP || me:Team() == TEAM_SPECTATOR || idiot.Triggering == true || (cm.CommandNumber(pCmd) == 0 && !gBool("Miscellaneous", "Point of View", "Thirdperson")) || cm.KeyDown(pCmd, 1) || gBool("Miscellaneous", "Point of View", "Custom FoV") && gBool("Miscellaneous", "Free Roaming", "Enabled") && gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") && !gBool("Miscellaneous", "Point of View", "Thirdperson") || me:WaterLevel() > 1 || input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable in Physgun Rotation") || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aimbot", "Legitbot", "Enabled") && !gBool("Aimbot", "Legitbot", "Silent (For Anti-Aim)") || gBool("Utilities", "Trouble in Terrorist Town Utilities", "Prop Kill") && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" && idiot.engine.ActiveGamemode() == "terrortown") then return end
+	if (gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP || me:Team() == TEAM_SPECTATOR || idiot.Triggering == true || (cm.CommandNumber(pCmd) == 0 && !gBool("Miscellaneous", "Point of View", "Thirdperson")) || cm.KeyDown(pCmd, 1) || gBool("Miscellaneous", "Point of View", "Custom FoV") && gBool("Miscellaneous", "Free Roaming", "Enabled") && gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") && !gBool("Miscellaneous", "Point of View", "Thirdperson") || me:WaterLevel() > 1 || input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable in Physgun Rotation") || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aimbot", "Legitbot", "Enabled") && !gBool("Aimbot", "Legitbot", "Silent (For Anti-Aim)") || gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" && idiot.engine.ActiveGamemode() == "terrortown") then return end
 	if gOption("Hack vs. Hack", "Anti-Aim", "Anti-Aim Direction:") == "Manual Switch" then
 	if gKey("Hack vs. Hack", "Anti-Aim", "Switch Key:") and not manualpressed then
 	manualpressed = true
@@ -5616,7 +4944,7 @@ local function PropKill(pCmd)
 	elseif (cm.CommandNumber(pCmd) == 0 && gBool("Miscellaneous", "Point of View", "Thirdperson")) then
 		return
 	end
-	if gKey("Utilities", "Trouble in Terrorist Town Utilities", "Prop Kill Key:") then
+	if gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:") then
 		ox = fa.x - 27
 		if prop_val < 180 then
 			oy = fa.y + prop_val
@@ -5823,14 +5151,14 @@ hook.Add("CreateMove", "Hook20", function(pCmd)
 	AirCrouch(pCmd)
 	Triggerbot(pCmd)
 	local wep = pm.GetActiveWeapon(me)
-	if idiot.engine.ActiveGamemode() == "terrortown" and gBool("Utilities", "Trouble in Terrorist Town Utilities", "Prop Kill") and wep:IsValid() and wep:GetClass() == "weapon_zm_carry" then
+	if idiot.engine.ActiveGamemode() == "terrortown" and gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") and wep:IsValid() and wep:GetClass() == "weapon_zm_carry" then
 		PropKill(pCmd)
 	end
 end)
 
 hook.Add("player_disconnect", "Hook21", function(v, data)
-	if gOption("Miscellaneous", "Chat", "Reply Spam:") == "Disconnect Spam" then
 	local quit = {"rage quit", "rage quit lol", "he raged", "he raged lmao", "he left", "he left lmfao"}
+	if gOption("Miscellaneous", "Chat", "Reply Spam:") == "Disconnect Spam" then
 		if (engine.ActiveGamemode() == "darkrp") then
 			me:ConCommand("say /ooc "..quit[math.random(#quit)])
 		else
@@ -5897,7 +5225,7 @@ hook.Add("HUDPaint2", "Hook22", function()
 			view.h = ScrH() / 5
 		render.RenderView(view)
 	end
-	if gBool("Utilities", "Trouble in Terrorist Town Utilities", "Prop Kill") && gKey("Utilities", "Trouble in Terrorist Town Utilities", "Prop Kill Key:") then
+	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:") then
 		if prop_val >= 180 then
 			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(255, 0, 0))
 		else
@@ -5965,103 +5293,35 @@ hook.Add("PreDrawOpaqueRenderables", "Hook23", function()
 	end
 end)
 
-local randomresponse = {
-	"shut up", 
-	"ok", 
-	"who", 
-	"nobody cares", 
-	"where", 
-	"stop spamming", 
-	"what", 
-	"yea", 
-	"lol", 
-	"english please", 
-	"lmao", 
-	"shit", 
-	"fuck", 
-}
-
-hook.Add("OnPlayerChat", "Hook24", function(v, text, team)
-	if gOption("Miscellaneous", "Chat", "Reply Spam:") ~= "Off" then
-		if v == me or not v:IsValid() or (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
-			return false
-		end
-		if pm.GetFriendStatus(v) ~= "friend" then
-			if (v ~= me) then
-				if (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "Random") then
-					RunConsoleCommand("say_team", randomresponse[math.random(#randomresponse)])
-				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "Random") then
-					RunConsoleCommand("say", randomresponse[math.random(#randomresponse)])
-				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "shut up") then
-					RunConsoleCommand("say_team", "shut up")
-				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "shut up") then
-					RunConsoleCommand("say", "shut up")
-				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "ok") then
-					RunConsoleCommand("say_team", "ok")
-				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "ok") then
-					RunConsoleCommand("say", "ok")
-				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "who") then
-					RunConsoleCommand("say_team", "who")
-				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "who") then
-					RunConsoleCommand("say", "who")
-				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "nobody cares") then
-					RunConsoleCommand("say_team", "nobody cares")
-				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "nobody cares") then
-					RunConsoleCommand("say", "nobody cares")
-				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "where") then
-					RunConsoleCommand("say_team", "where")
-				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "where") then
-					RunConsoleCommand("say", "where")
-				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "stop spamming") then
-					RunConsoleCommand("say_team", "stop spamming")
-				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "stop spamming") then
-					RunConsoleCommand("say", "stop spamming")
-				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "what") then
-					RunConsoleCommand("say_team", "what")
-				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "what") then
-					RunConsoleCommand("say", "what")
-				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "yea") then
-					RunConsoleCommand("say_team", "yea")
-				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "yea") then
-					RunConsoleCommand("say", "yea")
-				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "lol") then
-					RunConsoleCommand("say_team", "lol")
-				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "lol") then
-					RunConsoleCommand("say", "lol")
-				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "english please") then
-					RunConsoleCommand("say_team", "english please")
-				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "english please") then
-					RunConsoleCommand("say", "english please")
-				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "lmao") then
-					RunConsoleCommand("say_team", "lmao")
-				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "lmao") then
-					RunConsoleCommand("say", "lmao")
-				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "shit") then
-					RunConsoleCommand("say_team", "shit")
-				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "shit") then
-					RunConsoleCommand("say", "shit")
-				elseif (team && gOption("Miscellaneous", "Chat", "Reply Spam:") == "fuck") then
-					RunConsoleCommand("say_team", "fuck")
-				elseif (gOption("Miscellaneous", "Chat", "Reply Spam:") == "fuck") then
-					RunConsoleCommand("say", "fuck")
-				elseif gOption("Miscellaneous", "Chat", "Reply Spam:") == "Cheater Callout" then
-					if string.find(string.lower(text), "hac") or string.find(string.lower(text), "h4c") or string.find(string.lower(text), "h@c") or string.find(string.lower(text), "hak") or string.find(string.lower(text), "h4k") or string.find(string.lower(text), "h@k") or string.find(string.lower(text), "hec") or string.find(string.lower(text), "h3c") or string.find(string.lower(text), "hek") or string.find(string.lower(text), "h3k") or string.find(string.lower(text), "hax") or string.find(string.lower(text), "h4x") or string.find(string.lower(text), "h@x") or string.find(string.lower(text), "hex") or string.find(string.lower(text), "h3x") or string.find(string.lower(text), "hask") or string.find(string.lower(text), "h4sk") or string.find(string.lower(text), "h@sk") or string.find(string.lower(text), "ha$k") or string.find(string.lower(text), "h4$k") or string.find(string.lower(text), "h@$k") or string.find(string.lower(text), "hasc") or string.find(string.lower(text), "h4sc") or string.find(string.lower(text), "h@sc") or string.find(string.lower(text), "ha$c") or string.find(string.lower(text), "h4$c") or string.find(string.lower(text), "h@$c") or string.find(string.lower(text), "cheat") or string.find(string.lower(text), "ch3at") or string.find(string.lower(text), "che4t") or string.find(string.lower(text), "che@t") or string.find(string.lower(text), "ch34t") or string.find(string.lower(text), "ch3@t") or string.find(string.lower(text), "chet") or string.find(string.lower(text), "ch3t") or string.find(string.lower(text), "chit") or string.find(string.lower(text), "ch1t") or string.find(string.lower(text), "wal") or string.find(string.lower(text), "w4l") or string.find(string.lower(text), "w@l") or string.find(string.lower(text), "wa1") or string.find(string.lower(text), "w@1") or string.find(string.lower(text), "w41") or string.find(string.lower(text), "aim") or string.find(string.lower(text), "a1m") or string.find(string.lower(text), "4im") or string.find(string.lower(text), "@im") or string.find(string.lower(text), "@1m") or string.find(string.lower(text), "41m") or string.find(string.lower(text), "trig") or string.find(string.lower(text), "tr1g") or string.find(string.lower(text), "spin") or string.find(string.lower(text), "sp1n") or string.find(string.lower(text), "legit") or string.find(string.lower(text), "leg1t") or string.find(string.lower(text), "rage") or string.find(string.lower(text), "r4ge") or string.find(string.lower(text), "r@ge") or string.find(string.lower(text), "rag3") or string.find(string.lower(text), "r@g3") or string.find(string.lower(text), "r4g3") or string.find(string.lower(text), "bot") or string.find(string.lower(text), "b0t") or string.find(string.lower(text), "esp") or string.find(string.lower(text), "3sp") or string.find(string.lower(text), "e$p") or string.find(string.lower(text), "3$p") or string.find(string.lower(text), "lua") or string.find(string.lower(text), "1ua") or string.find(string.lower(text), "lu4") or string.find(string.lower(text), "lu@") or string.find(string.lower(text), "1u4") or string.find(string.lower(text), "1u@") or string.find(string.lower(text), "scr") or string.find(string.lower(text), "skr") or string.find(string.lower(text), "$cr") or string.find(string.lower(text), "$kr") or string.find(string.lower(text), "skid") or string.find(string.lower(text), "sk1d") or string.find(string.lower(text), "$kid") or string.find(string.lower(text), "$k1d") or string.find(string.lower(text), "bunny") or string.find(string.lower(text), "buny") or string.find(string.lower(text), "h0p") or string.find(string.lower(text), "hop") or string.find(string.lower(text), "aa") or string.find(string.lower(text), "anti") or string.find(string.lower(text), "4nti") or string.find(string.lower(text), "@nti") or string.find(string.lower(text), "ant1") or string.find(string.lower(text), "@nt1") or string.find(string.lower(text), "4nt1") or string.find(string.lower(text), "idiot") or string.find(string.lower(text), "idi0t") or string.find(string.lower(text), "1diot") or string.find(string.lower(text), "id1ot") or string.find(string.lower(text), "1di0t") or string.find(string.lower(text), "id10t") or string.find(string.lower(text), "1d10t") or string.find(string.lower(text), "paste") or string.find(string.lower(text), "p4ste") or string.find(string.lower(text), "p@ste") or string.find(string.lower(text), "past3") or string.find(string.lower(text), "p@st3") or string.find(string.lower(text), "p4st3") or string.find(string.lower(text), "box") or string.find(string.lower(text), "b0x") or string.find(string.lower(text), "blo") or string.find(string.lower(text), "bl0") or string.find(string.lower(text), "b1o") or string.find(string.lower(text), "b10") or string.find(string.lower(text), "ware") or string.find(string.lower(text), "w4re") or string.find(string.lower(text), "w@re") or string.find(string.lower(text), "war3") or string.find(string.lower(text), "w@r3") or string.find(string.lower(text), "w4r3") or string.find(string.lower(text), "meth") or string.find(string.lower(text), "m3th") or string.find(string.lower(text), "kick") or string.find(string.lower(text), "k1ck") or string.find(string.lower(text), "kik") or string.find(string.lower(text), "k1k") or string.find(string.lower(text), "ban") or string.find(string.lower(text), "b4n") or string.find(string.lower(text), "b@n") or string.find(string.lower(text), "fake") or string.find(string.lower(text), "f4ke") or string.find(string.lower(text), "f@ke") or string.find(string.lower(text), "fak3") or string.find(string.lower(text), "f4k3") or string.find(string.lower(text), "f@k3") then
-						if engine.ActiveGamemode() == "darkrp" then
-							ChatClear.OOC()
-						else
-							ChatClear.Run()
-						end
-					end
-				elseif gOption("Miscellaneous", "Chat", "Reply Spam:") == "Copy Messages" then
-					if (team) then
-						me:ConCommand("say_team '"..text.."' - "..v:Nick())
-					else
-						me:ConCommand("say '"..text.."' - "..v:Nick())
-					end
-				end
-			end
-		end
-	end
+hook.Add("OnPlayerChat", "Hook24", function(chatPlayer, text, teamChat)
+	local randomresponse = {"shut up", "ok", "who", "nobody cares", "where", "stop spamming", "what", "yea", "lol", "english please", "lmao", "shit", "fuck",}
+	local cheatcallouts = {"hac", "h4c", "h@c", "hak", "h4k", "h@k", "hec", "h3c", "hek", "h3k", "hax", "h4x", "h@x", "hex", "h3x", "hask", "h4sk", "h@sk", "ha$k", "h4$k", "h@$k", "hasc", "h4sc", "h@sc", "ha$c", "h4$c", "h@$c", "cheat", "ch3at", "che4t", "che@t", "ch34t", "ch3@t", "chet", "ch3t", "chit", "ch1t", "wal", "w4l", "w@l", "wa1", "w@1", "w41", "aim", "a1m", "4im", "@im", "@1m", "41m", "trig", "tr1g", "spin", "sp1n", "legit", "leg1t", "rage", "r4ge", "r@ge", "rag3", "r@g3", "r4g3", "bot", "b0t", "esp", "3sp", "e$p", "3$p", "lua", "1ua", "lu4", "lu@", "1u4", "1u@", "scr", "skr", "$cr", "$kr", "skid", "sk1d", "$kid", "$k1d", "bunny", "buny", "h0p", "hop", "aa", "anti", "4nti", "@nti", "ant1", "@nt1", "4nt1", "idiot", "idi0t", "1diot", "id1ot", "1di0t", "id10t", "1d10t", "paste", "p4ste", "p@ste", "past3", "p@st3", "p4st3", "box", "b0x", "blo", "bl0", "b1o", "b10", "ware", "w4re", "w@re", "war3", "w@r3", "w4r3", "meth", "m3th", "kick", "k1ck", "kik", "k1k", "ban", "b4n", "b@n", "fake", "f4ke", "f@ke", "fak3", "f4k3", "f@k3",}
+	local replyspam = gOption("Miscellaneous", "Chat", "Reply Spam:")
+    if replyspam ~= "Off" then
+        if chatPlayer == me or not chatPlayer:IsValid() or (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, chatPlayer:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and not table.HasValue(priority_list, chatPlayer:UniqueID())) then return false end
+        if pm.GetFriendStatus(chatPlayer) ~= "friend" then
+            if teamChat and replyspam == "Random" then
+                RunConsoleCommand("say_team", randomresponse[math.random(#randomresponse)])
+            elseif replyspam == "Random" then
+                RunConsoleCommand("say", randomresponse[math.random(#randomresponse)])
+            elseif replyspam == "Cheater Callout" then
+                local lowertext = string.lower(text)
+                for _, callout in next, cheatcallouts do
+                    if string.find(lowertext, callout) then
+                        if engine.ActiveGamemode() == "darkrp" then
+                            ChatClear.OOC()
+                        else
+                            ChatClear.Run()
+                        end
+                    end
+                end
+            elseif replyspam == "Copy Messages" then
+                me:ConCommand("say"..(teamChat and "_team '" or " '")..text.."' - "..chatPlayer:Nick())
+            else
+                RunConsoleCommand("say"..(teamChat and "_team" or ""), replyspam or "what")
+            end
+        end
+    end
 end)
 
 if not file.Exists(folder.."/version.txt", "DATA") then
