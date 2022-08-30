@@ -118,14 +118,19 @@ local options = {
 					{"No Black Screens", "Checkbox", false, 78}, 
 				}, 
 				{
-          			{"Menus", 376, 20, 347, 124, 218}, 
+					{"Panic Mode", 736, 20, 347, 75, 218}, 
+					{"Enabled", "Checkbox", false, 78}, 
+					{"Mode:", "Selection", "Disable All", {"Disable Ragebot", "Disable Legitbot", "Disable Anti-Aim", "Disable All"}, 92}, 
+                }, 
+				{
+          			{"Menus", 736, 108, 347, 125, 218}, 
 					{"Entity Menu", "Button", "", 92}, 
 					{"Plugin Loader", "Button", "", 92}, 
 					{"Menu Style:", "Selection", "Borders", {"Borders", "Borderless"}, 92}, 
 					{"Options Style:", "Selection", "Borderless", {"Borders", "Borderless"}, 92}, 
           		}, 
 				{
-          			{"Configurations", 376, 157, 347, 150, 218}, 
+          			{"Configurations", 736, 246, 347, 150, 218}, 
 					{"Automatically Save", "Checkbox", false, 78}, 
 					{"Save Configuration", "Button", "", 92}, 
 					{"Load Configuration", "Button", "", 92}, 
@@ -133,12 +138,7 @@ local options = {
 					{"Configuration:", "Selection", "Config #1", {"Config #1", "Config #2", "Config #3", "Config #4", "Config #5"}, 92}, 
           		}, 
 				{
-					{"Panic Mode", 736, 20, 347, 75, 218}, 
-					{"Enabled", "Checkbox", false, 78}, 
-					{"Mode:", "Selection", "Disable All", {"Disable Ragebot", "Disable Legitbot", "Disable Anti-Aim", "Disable All"}, 92}, 
-                }, 
-				{
-          			{"Others", 736, 108, 347, 125, 218}, 
+          			{"Others", 736, 409, 347, 125, 218}, 
 					{"Run the 'idiot_changename' command to set a custom name.", "Checkbox", false, 9999}, 
 					{"Apply custom name", "Checkbox", false, 78}, 
 					{"Print Changelog", "Button", "", 92}, 
@@ -1298,6 +1298,7 @@ local function Changelog()
 	print("- Added sliding menu;")
 	print("- Added more music to Sounds;")
 	print("- Added custom music player to Sounds;")
+	print("- Added solid color to buttons;")
 	print("- Added a custom configurations menu;")
 	print("- Reworked 'Bunny Hop' from scratch;")
 	print("- Reworked 'Auto Strafe' from scratch;")
@@ -1566,11 +1567,13 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
 	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
 	surface.DrawOutlinedRect(posx - 193 + dist, 61 + posy + maxy, size + 219, 16)
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 125)
+	surface.DrawRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, size + 215, 12)
 	local mx, my = self:GetPos()
 	local bMouse = MouseInArea(mx - 193 + posx + dist, my + 61 + posy + maxy, mx - 193 + posx + dist + size + 219, my + 61 + posy + maxy + 16)
 	local check = dist..posy..posx..w..h..maxy
 	if bMouse or notyetselected == check then
-		surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, 150)
+		surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 150)
 		surface.DrawRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, size + 215, 12)
 	end
 	local tw, th = surface.GetTextSize(text)
@@ -1765,6 +1768,9 @@ local function MenuBorder() -- Probably a dumb way of doing this but still
 			frame:Remove()
 			menuopen = false
 			end)
+		end
+		if unloaded == true then
+			frame:Remove()
 		end
 	end
 end
@@ -2933,12 +2939,12 @@ local function ClampMove(pCmd)
 end
 
 local function FixMove(pCmd, rotation)
-	local rot_cos = math.cos(rotation)
-	local rot_sin = math.sin(rotation)
-	local cur_forwardmove = pCmd:GetForwardMove()
-	local cur_sidemove = pCmd:GetSideMove()
-	pCmd:SetForwardMove(((rot_cos * cur_forwardmove) - (rot_sin * cur_sidemove)))
-	pCmd:SetSideMove(((rot_sin * cur_forwardmove) + (rot_cos * cur_sidemove)))
+	local rotcos = math.cos(rotation)
+	local rotsin = math.sin(rotation)
+	local curforwardmove = pCmd:GetForwardMove()
+	local cursidemove = pCmd:GetSideMove()
+	pCmd:SetForwardMove(((rotcos * curforwardmove) - (rotsin * cursidemove)))
+	pCmd:SetSideMove(((rotsin * curforwardmove) + (rotcos * cursidemove)))
 end
 
 local function Circle(pCmd)
@@ -3025,8 +3031,8 @@ local function CircleStrafe(pCmd)
 		else
 			pCmd:SetSideMove(0)
 		end
-		local local_velocity = me:GetVelocity()
-		if (local_velocity:Length2D() < 50) then
+		local localvelocity = me:GetVelocity()
+		if (localvelocity:Length2D() < 50) then
 			pCmd:SetForwardMove(forwardspeedval)
 		end
 		local shouldautostrafe = Circle(pCmd)
