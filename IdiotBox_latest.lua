@@ -223,7 +223,7 @@ local options = {
 					{"Fire Delay:", "Slider", 0, 100, 92}, 
                 }, 
 				{
-					{"Aim Priorities", 736, 20, 347, 400, 218}, 
+					{"Aim Priorities", 736, 20, 347, 460, 218}, 
 					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Disable in Noclip", "Checkbox", false, 78}, 
 					{"Hitbox:", "Selection", "Body", {"Head", "Body"}, 92}, 
@@ -239,6 +239,8 @@ local options = {
 					{"Noclipping Players:", "Checkbox", false, 78}, 
 					{"Driving Players:", "Checkbox", false, 78}, 
 					{"Transparent Players:", "Checkbox", false, 78}, 
+					{"Overhealed Players:", "Checkbox", false, 78}, 
+					{"Max Player Health:", "Slider", 500, 5000, 92}, 
                 }, 
 		}, 
 		["Hack vs. Hack"] = {
@@ -1567,13 +1569,13 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
 	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
 	surface.DrawOutlinedRect(posx - 193 + dist, 61 + posy + maxy, size + 219, 16)
-	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 125)
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 75)
 	surface.DrawRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, size + 215, 12)
 	local mx, my = self:GetPos()
 	local bMouse = MouseInArea(mx - 193 + posx + dist, my + 61 + posy + maxy, mx - 193 + posx + dist + size + 219, my + 61 + posy + maxy + 16)
 	local check = dist..posy..posx..w..h..maxy
 	if bMouse or notyetselected == check then
-		surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 150)
+		surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 180)
 		surface.DrawRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, size + 215, 12)
 	end
 	local tw, th = surface.GetTextSize(text)
@@ -4157,9 +4159,6 @@ local function Valid(v)
 	if !gBool("Aimbot", "Aim Priorities", "Frozen Players:") then
 		if pm.IsFrozen(v) then return false end
 	end
-	if !gBool("Aimbot", "Aim Priorities", "God Mode Players:") then
-		if pm.HasGodMode(v) then return false end
-	end
 	if !gBool("Aimbot", "Aim Priorities", "Overhealed Players:") then
 		if v:Health() > maxhealth then return false end
 	end
@@ -4468,6 +4467,7 @@ end
 local function Triggerbot(pCmd)
 	if not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not gBool("Triggerbot", "Triggerbot", "Spectators:")) or not gKey("Triggerbot", "Triggerbot", "Trigger Key:") or pCmd:KeyDown(IN_ATTACK) or not gBool("Triggerbot", "Triggerbot", "Enabled") or FixTools() then return end
 	local dist = gBool("Triggerbot", "Triggerbot", "Distance:")
+	local maxhealth = gInt("Aimbot", "Aim Priorities", "Max Player Health:") 
 	local trace = me:GetEyeTraceNoCursor()
 	local v = trace.Entity
 	local hitbox = trace.HitBox
@@ -4508,6 +4508,9 @@ local function Triggerbot(pCmd)
 	end
 	if !gBool("Triggerbot", "Aim Priorities", "Spectators:") then
 	if pm.Team(v) == TEAM_SPECTATOR then return false end
+	end
+	if !gBool("Triggerbot", "Aim Priorities", "Overhealed Players:") then
+	if v:Health() > maxhealth then return false end
 	end
 	if (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Triggerbot", "Aim Priorities", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
 	return false
