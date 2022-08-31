@@ -211,19 +211,17 @@ local options = {
         }, 
 		["Triggerbot"] = {
 				{
-					{"Triggerbot", 16, 20, 347, 261, 218}, 
+					{"Triggerbot", 16, 20, 347, 210, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Trigger Key:", "Toggle", 0, 92, 0}, 
 					{"Smooth Aim", "Checkbox", false, 78}, 
 					{"Alt Fire", "Checkbox", false, 78}, 
 					{"Auto Stop", "Checkbox", false, 78}, 
 					{"Auto Crouch", "Checkbox", false, 78}, 
-					{"Distance Limit", "Checkbox", false, 78}, 
-					{"Distance:", "Slider", 200, 5000, 92}, 
 					{"Fire Delay:", "Slider", 0, 100, 92}, 
                 }, 
 				{
-					{"Aim Priorities", 736, 20, 347, 460, 218}, 
+					{"Aim Priorities", 736, 20, 347, 510, 218}, 
 					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Disable in Noclip", "Checkbox", false, 78}, 
 					{"Hitbox:", "Selection", "Body", {"Head", "Body"}, 92}, 
@@ -241,6 +239,8 @@ local options = {
 					{"Transparent Players:", "Checkbox", false, 78}, 
 					{"Overhealed Players:", "Checkbox", false, 78}, 
 					{"Max Player Health:", "Slider", 500, 5000, 92}, 
+					{"Distance Limit", "Checkbox", false, 78}, 
+					{"Distance:", "Slider", 200, 5000, 92}, 
                 }, 
 		}, 
 		["Hack vs. Hack"] = {
@@ -2821,14 +2821,6 @@ local function WallhackFilter(v)
 	return true
 end
 
-local function TriggerbotFilter(v)
-	if (gBool("Triggerbot", "Triggerbot", "Distance Limit")) then
-		local dist = gBool("Triggerbot", "Triggerbot", "Distance:")
-			if (vm.Distance(em.GetPos(v), em.GetPos(me)) > (dist * 5)) then return false end
-		end
-	return true
-end
-
 local function EnemyWallhackFilter(v)
 	if gBool("Visuals", "Miscellaneous", "Show Enemies Only") then
 		if (pm.Team(v) == pm.Team(me)) then return false end
@@ -4466,14 +4458,14 @@ end
 
 local function Triggerbot(pCmd)
 	if not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not gBool("Triggerbot", "Triggerbot", "Spectators:")) or not gKey("Triggerbot", "Triggerbot", "Trigger Key:") or pCmd:KeyDown(IN_ATTACK) or not gBool("Triggerbot", "Triggerbot", "Enabled") or FixTools() then return end
-	local dist = gBool("Triggerbot", "Triggerbot", "Distance:")
-	local maxhealth = gInt("Aimbot", "Aim Priorities", "Max Player Health:") 
+	local dist = gBool("Triggerbot", "Aim Priorities", "Distance:")
+	local maxhealth = gInt("Triggerbot", "Aim Priorities", "Max Player Health:") 
 	local trace = me:GetEyeTraceNoCursor()
 	local v = trace.Entity
 	local hitbox = trace.HitBox
 	if TriggerValid(v) and TriggerFilter(hitbox) then
 	if v:IsPlayer() then
-	if gBool("Triggerbot", "Triggerbot", "Distance Limit") then
+	if gBool("Triggerbot", "Aim Priorities", "Distance Limit") then
 	if (vm.Distance(em.GetPos(v), em.GetPos(me)) > (dist * 5)) then return false end
 	end
 	if !gBool("Triggerbot", "Aim Priorities", "Team:") then
