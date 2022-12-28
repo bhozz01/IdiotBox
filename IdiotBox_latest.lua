@@ -1119,10 +1119,10 @@ local function DrawToggle(self, w, h, var, maxy, posx, posy, dist)
             end
         end
         if var[5] == 2 then
-        	if !input.IsKeyDown(KEY_BACKSPACE) && !input.IsKeyDown(KEY_ESCAPE) then
+        	if !input.IsKeyDown(KEY_BACKSPACE) && !input.IsKeyDown(KEY_ESCAPE) && !input.IsKeyDown(KEY_CAPSLOCK) && !input.IsKeyDown(KEY_CAPSLOCKTOGGLE) && !input.IsKeyDown(KEY_SCROLLLOCK) && !input.IsKeyDown(KEY_SCROLLLOCKTOGGLE) && !input.IsKeyDown(KEY_NUMLOCK) && !input.IsKeyDown(KEY_NUMLOCKTOGGLE) then
         	for i = 1, 159 do
-        		if !input.IsKeyDown(KEY_BACKSPACE) && !input.IsKeyDown(KEY_ESCAPE) then
-        			if (input.IsKeyDown(i) || input.IsMouseDown(i)) && !(input.IsKeyDown(KEY_CAPSLOCK) || input.IsKeyDown(KEY_CAPSLOCKTOGGLE)) then
+        		if !input.IsKeyDown(KEY_BACKSPACE) && !input.IsKeyDown(KEY_ESCAPE) && !input.IsKeyDown(KEY_CAPSLOCK) && !input.IsKeyDown(KEY_CAPSLOCKTOGGLE) && !input.IsKeyDown(KEY_SCROLLLOCK) && !input.IsKeyDown(KEY_SCROLLLOCKTOGGLE) && !input.IsKeyDown(KEY_NUMLOCK) && !input.IsKeyDown(KEY_NUMLOCKTOGGLE) then
+        			if (input.IsKeyDown(i) || input.IsMouseDown(i)) then
         				var[3] = i
         				var[5] = 0
         			end
