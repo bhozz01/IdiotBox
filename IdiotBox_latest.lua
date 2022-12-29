@@ -311,7 +311,7 @@ local options = {
 					{"Team Colors", "Checkbox", false, 78}, 
 					{"Spectators Box", "Checkbox", true, 78}, -- Enabled by default
 					{"Radar Box", "Checkbox", true, 78}, -- Enabled by default
-					{"Radar Distance:", "Slider", 50, 100, 92}, 
+					{"Radar Distance:", "Slider", 25, 100, 92}, 
 					{"Custom Status", "Checkbox", true, 78}, -- Enabled by default
 					{"Players List", "Checkbox", true, 78}, -- Enabled by default
 					{"Show NPCs", "Checkbox", false, 78}, 
@@ -2287,10 +2287,13 @@ local function RadarDraw()
 	draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Radar X:") + 2, gInt("Settings", "Window Positions", "Radar Y:"), radarWidth, radarHeight, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Settings", "Others", "BG Opacity:")))
 	draw.SimpleText("Radar", "MiscFont2", gInt("Settings", "Window Positions", "Radar X:") + 102, gInt("Settings", "Window Positions", "Radar Y:") + 11, col, 1, 1)
 	draw.NoTexture()
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:") - 75)
+	surface.DrawLine(gInt("Settings", "Window Positions", "Radar X:") + 209 * 0.5, gInt("Settings", "Window Positions", "Radar Y:") + 24, gInt("Settings", "Window Positions", "Radar X:") + 209 * 0.5, gInt("Settings", "Window Positions", "Radar Y:") + 190)
+	surface.DrawLine(gInt("Settings", "Window Positions", "Radar X:") + 12, gInt("Settings", "Window Positions", "Radar Y:") + 209 * 0.5, gInt("Settings", "Window Positions", "Radar X:") + 191, gInt("Settings", "Window Positions", "Radar Y:") + 209 * 0.5)
 	surface.SetDrawColor(team.GetColor(me:Team()))
 	for k = 1, #everything do
 		local v = everything[k]
-		if (v:IsPlayer() and v:Health() > 0 and not (em.IsDormant(v) and gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All") and not (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or (v:IsNPC() and v:Health() > 0)) then
+		if (v != LocalPlayer() and v:IsPlayer() and v:Health() > 0 and not (em.IsDormant(v) and gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All") and not (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) and not ((gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID()))) or (v:IsNPC() and v:Health() > 0)) then
 			color = v:IsPlayer() and team.GetColor(v:Team()) or Color(255, 255, 255)
 			surface.SetDrawColor(color)
 			local myPos = me:GetPos()
@@ -2309,6 +2312,7 @@ local function RadarDraw()
 			end
 		end
 	end
+	render.SetScissorRect(0, 0, 0, 0, false)
 end
 
 local function Logo2()
