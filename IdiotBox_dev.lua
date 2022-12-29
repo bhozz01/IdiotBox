@@ -171,7 +171,7 @@ local options = {
 					{"Target Lock", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Aim Priorities", 376, 20, 347, 560, 218}, 
+					{"Aim Priorities", 376, 20, 347, 610, 218}, 
 					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Projectile Prediction", "Checkbox", false, 78}, 
 					{"Disable in Noclip", "Checkbox", false, 78}, 
@@ -193,6 +193,8 @@ local options = {
 					{"Max Player Health:", "Slider", 500, 5000, 92}, 
 					{"Distance Limit", "Checkbox", false, 78}, 
 					{"Distance:", "Slider", 200, 5000, 92}, 
+					{"Velocity Limit", "Checkbox", false, 78}, 
+					{"Velocity:", "Slider", 1000, 5000, 92}, 
                 }, 
 				{
 					{"Miscellaneous", 736, 20, 347, 309, 218}, 
@@ -221,7 +223,7 @@ local options = {
 					{"Fire Delay:", "Slider", 0, 100, 92}, 
                 }, 
 				{
-					{"Aim Priorities", 736, 20, 347, 510, 218}, 
+					{"Aim Priorities", 736, 20, 347, 560, 218}, 
 					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Disable in Noclip", "Checkbox", false, 78}, 
 					{"Hitbox:", "Selection", "Body", {"Head", "Body"}, 92}, 
@@ -241,6 +243,8 @@ local options = {
 					{"Max Player Health:", "Slider", 500, 5000, 92}, 
 					{"Distance Limit", "Checkbox", false, 78}, 
 					{"Distance:", "Slider", 200, 5000, 92}, 
+					{"Velocity Limit", "Checkbox", false, 78}, 
+					{"Velocity:", "Slider", 1000, 5000, 92}, 
                 }, 
 		}, 
 		["Hack vs. Hack"] = {
@@ -1264,7 +1268,7 @@ local function Changelog()
 	print("- Added 'Projectile Prediction' to Aimbot;")
 	print("- Added 'Line of Sight Check' to Aimbot;")
 	print("- Added 'Emote Resolver' to Resolver;")
-	print("- Added 'Panic Mode', 'Distance Limit' and NPC targeting to Aimbot and Triggerbot;")
+	print("- Added 'Panic Mode', 'Distance Limit', 'Velocity Limit' and NPC targeting to Aimbot and Triggerbot;")
 	print("- Added 'Priority List' to Miscellaneous;")
 	print("- Added 'Cheater Callout' and 'Copy Messages' to Reply Spam;")
 	print("- Added 'Border Color', 'Misc Visuals Color' and 'B Opacity' to Settings;")
@@ -4135,12 +4139,16 @@ local aimignore
 
 local function Valid(v)
 	local dist = gBool("Aimbot", "Aim Priorities", "Distance:")
+	local vel = gBool("Aimbot", "Aim Priorities", "Velocity:")
     local wep = me:GetActiveWeapon()
 	local maxhealth = gInt("Aimbot", "Aim Priorities", "Max Player Health:") 
 	if (!v || !em.IsValid(v) || v == me || em.Health(v) < 1 || em.IsDormant(v) || !AimbotPriorities(v) || (v == aimignore && gOption("Aimbot", "Aim Priorities", "Aim Priority:") == "Random")) then return false end
 	if v:IsPlayer() then
 	if gBool("Aimbot", "Aim Priorities", "Distance Limit") then
 		if (vm.Distance(em.GetPos(v), em.GetPos(me)) > (dist * 5)) then return false end
+	end
+	if gBool("Aimbot", "Aim Priorities", "Velocity Limit") then
+		if (v:GetVelocity():Length() > vel) then return false end
 	end
 	if gBool("Aimbot", "Aim Priorities", "Disable in Noclip") then
 		if em.GetMoveType(me) == MOVETYPE_NOCLIP then return false end
@@ -4480,6 +4488,7 @@ end
 local function Triggerbot(pCmd)
 	if not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not gBool("Triggerbot", "Triggerbot", "Spectators:")) or not gKey("Triggerbot", "Triggerbot", "Trigger Key:") or pCmd:KeyDown(IN_ATTACK) or not gBool("Triggerbot", "Triggerbot", "Enabled") or FixTools() then return end
 	local dist = gBool("Triggerbot", "Aim Priorities", "Distance:")
+	local vel = gBool("Triggerbot", "Aim Priorities", "Velocity:")
 	local maxhealth = gInt("Triggerbot", "Aim Priorities", "Max Player Health:") 
 	local trace = me:GetEyeTraceNoCursor()
 	local v = trace.Entity
@@ -4488,6 +4497,9 @@ local function Triggerbot(pCmd)
 	if v:IsPlayer() then
 	if gBool("Triggerbot", "Aim Priorities", "Distance Limit") then
 	if (vm.Distance(em.GetPos(v), em.GetPos(me)) > (dist * 5)) then return false end
+	end
+	if gBool("Triggerbot", "Aim Priorities", "Velocity Limit") then
+	if (v:GetVelocity():Length() > vel) then return false end
 	end
 	if !gBool("Triggerbot", "Aim Priorities", "Team:") then
     if pm.Team(v) == pm.Team(me) then return false end
