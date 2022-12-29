@@ -248,7 +248,7 @@ local options = {
 					{"Anti-Aim", 16, 20, 347, 385, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Disable in Noclip", "Checkbox", true, 78}, -- Enabled by default
-					{"Disable in Physgun Rotation", "Checkbox", true, 78}, -- Enabled by default
+					{"Disable in 'Use' Toggle", "Checkbox", true, 78}, -- Enabled by default
 					{"Wall Detect", "Checkbox", false, 78}, 
 					{"View Lock", "Checkbox", false, 78}, 
 					{"Static", "Checkbox", false, 78}, 
@@ -323,7 +323,7 @@ local options = {
 					{"Dormant Check:", "Selection", "All", {"None", "Players", "Entities", "All"}, 92}, 
 					{"Show FoV Circle", "Checkbox", false, 78}, 
 					{"Snap Lines", "Checkbox", false, 78}, 
-					{"Crosshair:", "Selection", "Off", {"Off", "Square", "Cross", "Swastika", "Aimware", "Box", "Circle", "Dot", "GTA IV"}, 92}, 
+					{"Crosshair:", "Selection", "Off", {"Off", "Box", "Dot", "Square", "Circle", "Cross", "Edged Cross", "Swastika", "GTA IV"}, 92}, 
 					{"Distance Limit", "Checkbox", false, 78}, 
 					{"Distance:", "Slider", 0, 5000, 92}, 
                 }, 
@@ -921,7 +921,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(613, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: December 29th 2022")
+	surface.DrawText("Latest build: January 4th 2023")
 	surface.SetFont("MenuFont")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -2445,19 +2445,49 @@ local function Crosshair()
 	if menuopen then return end
 	if me:Team() == TEAM_SPECTATOR and not ((gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) and gBool("Visuals", "Miscellaneous", "Show Spectators")) then return end
 	if not me:Alive() or me:Health() < 1 then return end
-	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Square") then
+	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Box") then
 	local x1, y1 = ScrW() * 0.5, ScrH() * 0.5
-		surface.SetDrawColor(0, 0, 0)
+		surface.SetDrawColor(0, 0, 0, gInt("Settings", "Others", "T Opacity:"))
 		surface.DrawOutlinedRect(x1 - 3, y1 - 2, 6, 6)
 		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:"))
 		surface.DrawRect(x1 - 2, y1 - 1, 4, 4)
 	end
-		if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Cross") then
+	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Dot") then -- I want to avoid using surface.DrawPoly as much as possible
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.6, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.8, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.6, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.8, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.6, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.8, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 3, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4, Color(0, 0, 0, gInt("Settings", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.2, Color(0, 0, 0, gInt("Settings", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.4, Color(0, 0, 0, gInt("Settings", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.6, Color(0, 0, 0, gInt("Settings", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.8, Color(0, 0, 0, gInt("Settings", "Others", "T Opacity:")))
+	end
+	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Square") then
+	local x1, y1 = ScrW() * 0.5, ScrH() * 0.5
+		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:"))
+		surface.DrawOutlinedRect(x1 - 3, y1 - 2, 6, 6)
+	end
+	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Circle") then
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
+	end
+	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Cross") then
 		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:"))
 		surface.DrawLine(ScrW() / 2 - 11, ScrH() / 2, ScrW() / 2 + 11, ScrH() / 2)
 		surface.DrawLine(ScrW() / 2 - 0, ScrH() / 2 - 11, ScrW() / 2 - 0, ScrH() / 2 + 11)
 	end
-		if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Aimware") then
+	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Edged Cross") then
 		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:"))
 		surface.DrawLine(ScrW() / 2 - 14.5, ScrH() / 2, ScrW() / 2 + 14.5, ScrH() / 2)
 		surface.DrawLine(ScrW() / 2 - 0, ScrH() / 2 - 14.5, ScrW() / 2 - 0, ScrH() / 2 + 14.5)
@@ -2465,7 +2495,7 @@ local function Crosshair()
 		surface.DrawLine(ScrW() / 2 - 9, ScrH() / 2, ScrW() / 2 + 9, ScrH() / 2)
 		surface.DrawLine(ScrW() / 2 - 0, ScrH() / 2 - 9, ScrW() / 2 - 0, ScrH() / 2 + 9)
 	end
-		if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Swastika") then
+	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Swastika") then
 		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:"))
 		surface.DrawLine(ScrW() / 2, ScrH() / 2, ScrW() / 2 + 20, ScrH() / 2)
 		surface.DrawLine(ScrW() / 2 + 20, ScrH() / 2, ScrW() / 2 + 20, ScrH() / 2 + 20)
@@ -2476,18 +2506,7 @@ local function Crosshair()
 		surface.DrawLine(ScrW() / 2, ScrH() / 2, ScrW() / 2, ScrH() / 2 + 20)
 		surface.DrawLine(ScrW() / 2, ScrH() / 2 + 20, ScrW() / 2 - 20, ScrH() / 2 + 20)
 	end
-		if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Box") then
-		local x1, y1 = ScrW() * 0.5, ScrH() * 0.5
-		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:"))
-		surface.DrawOutlinedRect(x1 - 3, y1 - 2, 6, 6)
-	end
-		if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Circle") then
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
-	end
-		if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Dot") then
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
-	end
-		if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "GTA IV") then
+	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "GTA IV") then
 		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 11, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
 		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
 	end
@@ -4877,7 +4896,7 @@ local function AntiAim(pCmd)
 	if (gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Anti-Aim" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me) then return end
 	end
 	local wep = pm.GetActiveWeapon(me)
-	if (gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP || me:Team() == TEAM_SPECTATOR || idiot.Triggering == true || (cm.CommandNumber(pCmd) == 0 && !gBool("Miscellaneous", "Point of View", "Thirdperson")) || cm.KeyDown(pCmd, 1) || gBool("Miscellaneous", "Point of View", "Custom FoV") && gBool("Miscellaneous", "Free Roaming", "Enabled") && gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") && !gBool("Miscellaneous", "Point of View", "Thirdperson") || me:WaterLevel() > 1 || (me:GetActiveWeapon():IsValid() && me:GetActiveWeapon():GetClass() == "weapon_physgun") && input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable in Physgun Rotation") && !me:IsTyping() || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aimbot", "Legitbot", "Enabled") && !gBool("Aimbot", "Legitbot", "Silent (For Anti-Aim)") || gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" && idiot.engine.ActiveGamemode() == "terrortown") then return end
+	if (gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP || me:Team() == TEAM_SPECTATOR || idiot.Triggering == true || (cm.CommandNumber(pCmd) == 0 && !gBool("Miscellaneous", "Point of View", "Thirdperson")) || cm.KeyDown(pCmd, 1) || gBool("Miscellaneous", "Point of View", "Custom FoV") && gBool("Miscellaneous", "Free Roaming", "Enabled") && gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") && !gBool("Miscellaneous", "Point of View", "Thirdperson") || me:WaterLevel() > 1 || input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable in 'Use' Toggle") && !me:IsTyping() || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aimbot", "Legitbot", "Enabled") && !gBool("Aimbot", "Legitbot", "Silent (For Anti-Aim)") || gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" && idiot.engine.ActiveGamemode() == "terrortown") then return end
 	if gOption("Hack vs. Hack", "Anti-Aim", "Anti-Aim Direction:") == "Manual Switch" then
 	if gKey("Hack vs. Hack", "Anti-Aim", "Switch Key:") and not manualpressed then
 	manualpressed = true
