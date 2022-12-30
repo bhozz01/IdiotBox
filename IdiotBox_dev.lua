@@ -5330,7 +5330,7 @@ end)
 
 hook.Add("OnPlayerChat", "Hook24", function(chatPlayer, text, teamChat)
 	local randomresponse = {"shut up", "ok", "who", "nobody cares", "where", "stop spamming", "what", "yea", "lol", "english please", "lmao", "shit", "fuck",}
-	local cheatcallouts = {"hac", "h4c", "h@c", "hak", "h4k", "h@k", "hec", "h3c", "hek", "h3k", "hax", "h4x", "h@x", "hex", "h3x", "hask", "h4sk", "h@sk", "ha$k", "h4$k", "h@$k", "hasc", "h4sc", "h@sc", "ha$c", "h4$c", "h@$c", "cheat", "ch3at", "che4t", "che@t", "ch34t", "ch3@t", "chet", "ch3t", "chit", "ch1t", "wal", "w4l", "w@l", "wa1", "w@1", "w41", "aim", "a1m", "4im", "@im", "@1m", "41m", "trig", "tr1g", "spin", "sp1n", "legit", "leg1t", "rage", "r4ge", "r@ge", "rag3", "r@g3", "r4g3", "bot", "b0t", "esp", "3sp", "e$p", "3$p", "lua", "1ua", "lu4", "lu@", "1u4", "1u@", "scr", "skr", "$cr", "$kr", "skid", "sk1d", "$kid", "$k1d", "bunny", "buny", "h0p", "hop", "aa", "anti", "4nti", "@nti", "ant1", "@nt1", "4nt1", "idiot", "idi0t", "1diot", "id1ot", "1di0t", "id10t", "1d10t", "paste", "p4ste", "p@ste", "past3", "p@st3", "p4st3", "box", "b0x", "blo", "bl0", "b1o", "b10", "ware", "w4re", "w@re", "war3", "w@r3", "w4r3", "meth", "m3th", "kick", "k1ck", "kik", "k1k", "ban", "b4n", "b@n", "fake", "f4ke", "f@ke", "fak3", "f4k3", "f@k3",}
+	local cheatcallouts = {"hac", "h4c", "h@c", "hak", "h4k", "h@k", "hck", "hax", "h4x", "h@x", "hask", "h4sk", "h@sk", "ha$k", "h4$k", "h@$k", "cheat", "ch3at", "che4t", "che@t", "ch34t", "ch3@t", "chet", "ch3t", "wall", "w4ll", "w@ll", "wa11", "w@11", "w411", "aim", "a1m", "4im", "@im", "@1m", "41m", "trigg", "tr1gg", "spin", "sp1n", "bot", "b0t", "esp", "3sp", "e$p", "3$p", "lua", "1ua", "lu4", "lu@", "1u4", "1u@", "scr", "skr", "$cr", "$kr", "skid", "sk1d", "$kid", "$k1d", "bunny", "buny", "h0p", "hop", "kick", "k1ck", "kik", "k1k", "ban", "b4n", "b@n", "fake", "f4ke", "f@ke", "fak3", "f4k3", "f@k3",}
 	local replyspam = gOption("Miscellaneous", "Chat", "Reply Spam:")
     if replyspam ~= "Off" then
         if chatPlayer == me or not chatPlayer:IsValid() or (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, chatPlayer:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and not table.HasValue(priority_list, chatPlayer:UniqueID())) then return false end
@@ -5352,8 +5352,8 @@ hook.Add("OnPlayerChat", "Hook24", function(chatPlayer, text, teamChat)
                 end
             elseif replyspam == "Copy Messages" then
                 me:ConCommand("say"..(teamChat and "_team '" or " '")..text.."' - "..chatPlayer:Nick())
-            else
-                RunConsoleCommand("say"..(teamChat and "_team" or ""), replyspam or "what")
+            elseif replyspam ~= "Disconnect Spam" then
+                RunConsoleCommand("say"..(teamChat and "_team" or ""), replyspam)
             end
         end
     end
