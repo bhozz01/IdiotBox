@@ -696,7 +696,7 @@ do
 		surface.PlaySound("buttons/lightswitch2.wav")
 		return
 	end
-	if not file.Exists("lua/bin/gmcl_bsendpacket_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_fhook_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_ChatClear_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_dickwrap_win32.dll", "MOD") then
+	if not file.Exists("lua/bin/gmcl_bsendpacket_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_fhook_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_ChatClear_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_dickwrap_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_big_win32.dll", "MOD") then
 			MsgR(4.3, "Please download the modules before using IdiotBox.")
 			surface.PlaySound("buttons/lightswitch2.wav")
 			return
