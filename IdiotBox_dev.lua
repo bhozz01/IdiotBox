@@ -249,7 +249,7 @@ local options = {
 		}, 
 		["Hack vs. Hack"] = {
 				{
-					{"Anti-Aim", 16, 20, 347, 385, 218}, 
+					{"Anti-Aim", 16, 20, 347, 410, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Disable in Noclip", "Checkbox", true, 78}, -- Enabled by default
 					{"Disable in 'Use' Toggle", "Checkbox", true, 78}, -- Enabled by default
@@ -261,9 +261,10 @@ local options = {
 					{"Y-Axis:", "Selection", "Off", {"Off", "Forwards", "Backwards", "Sideways", "Fake-Forwards", "Fake-Backwards", "Fake-Sideways", "Jitter", "Backwards Jitter", "Sideways Jitter", "Semi-Jitter", "Back Semi-Jitter", "Side Semi-Jitter", "Side Switch", "Emotion", "Spinbot"}, 92}, 
 					{"Anti-Aim Direction:", "Selection", "Left", {"Left", "Right", "Manual Switch"}, 92}, 
 					{"Switch Key:", "Toggle", 0, 92, 0}, 
-					{"Spinbot Speed:", "Slider", 0, 180, 92}, 
-					{"Emotion X-Axis:", "Slider", 0, 100, 92}, 
-					{"Emotion Y-Axis:", "Slider", 0, 100, 92}, 
+					{"Spinbot X-Axis Speed:", "Slider", 0, 180, 92}, 
+					{"Spinbot Y-Axis Speed:", "Slider", 0, 180, 92}, 
+					{"Emotion X-Axis Speed:", "Slider", 0, 100, 92}, 
+					{"Emotion Y-Axis Speed:", "Slider", 0, 100, 92}, 
                 }, 
 				{
 					{"Resolver", 736, 20, 347, 150, 218}, 
@@ -1265,66 +1266,44 @@ local function Changelog()
 	print("")
 	print("Total feature count: ~50 features have been added in the v6.8.b3 update;")
 	print("\n")
-	print("- Added 'Plugin Loader' to Utilities;")
-	print("- Added 'Projectile Prediction' to Aimbot;")
-	print("- Added 'Line of Sight Check' to Aimbot;")
+	print("- Added 'Projectile Prediction' and 'Line of Sight Check' to Aimbot;")
 	print("- Added 'Emote Resolver' to Resolver;")
-	print("- Added 'Panic Mode', 'Distance Limit', 'Velocity Limit' and NPC targeting to Aimbot and Triggerbot;")
-	print("- Added 'Priority List' to Miscellaneous;")
-	print("- Added 'Cheater Callout' and 'Copy Messages' to Reply Spam;")
+	print("- Added 'Distance Limit', 'Velocity Limit' and NPC targeting to Aimbot and Triggerbot;")
+	print("- Added 'Priority List' and 'Use Spam' to Miscellaneous;")
+	print("- Added 'Cheater Callout', 'Copy Messages', 'Disconnect Spam', 'lol', 'english please', 'lmao', 'shit' and 'fuck' to Reply Spam;")
 	print("- Added 'Border Color', 'Misc Visuals Color' and 'B Opacity' to Settings;")
-	print("- Added 'Fake-Forwards/ Backwards/ Sideways', 'Static' and 'Adaptive' to Anti-Aim;")
-	print("- Added 'Players List', 'Show Entities' and 'Conditions' to Visuals;")
-	print("- Added 'Optimize Game' and TTT/ Murder/ DarkRP specific features to Utilities;")
-	print("- Added 'Spectators' to Aim Priorities;")
-	print("- Added 'Players' to Aim Priorities;")
-	print("- Added 'Free Roaming Key' to Free Roaming;")
-	print("- Added 'Free Roaming Speed' to Free Roaming;")
-	print("- Added 'Strafe Key' to Movement;")
-	print("- Added 'Disconnect Spam', 'lol', 'english please', 'lmao', 'shit' and 'fuck' to Reply Spam;")
+	print("- Added 'Fake-Forwards/ Backwards/ Sideways', X-Axis Spinbot, 'Static', 'Adaptive' and 'Disable in Use Toggle' to Anti-Aim;")
+	print("- Added 'Players List', 'Show Entities', 'Conditions', 'Velocity', 'Dormant Check', 'Show Spectators', 'Hide Ignored Targets', 'Bystander Name', 'NPCs' and 'Clientside' to Visuals;")
+	print("- Added 'Panic Mode', 'Entity Menu', 'Plugin Loader', 'Optimize Game' and TTT/ Murder/ DarkRP specific features to Main Menu;")
+	print("- Added 'Spectators', 'Players', 'Frozen Players' and 'Enemies' to Aim Priorities;")
+	print("- Added 'Free Roaming Key' and 'Free Roaming Speed' to Free Roaming;")
+	print("- Added 'Strafe Key' and 'Fake Crouch' to Movement;")
 	print("- Added 'Arabic Spam' and 'Hebrew Spam' to Chat Spam;")
 	print("- Added 'Priority Targets Only' to Priority List;")
-	print("- Added 'Use Spam' to Miscellaneous;")
-	print("- Added 'Fake Crouch' to Movement;")
-	print("- Added 'Enable Spams' to Chat;")
 	print("- Added 'Rainbow' viewmodels to Viewmodel;")
 	print("- Added 'Random' to Emotes;")
 	print("- Added 'Murder Taunts' to Taunting;")
-	print("- Added 'Velocity' to Visuals;")
-	print("- Added 'Dormant Check' to Visuals;")
 	print("- Added 'Legit', 'Rage', 'Circle' and 'Directional' to Auto Strafe;")
-	print("- Added 'Show Spectators' to Visuals;")
-	print("- Added 'Hide Ignored Targets' to Visuals;")
-	print("- Added 'Bystander Name' to Visuals;")
-	print("- Added 'NPCs' to Visuals;")
-	print("- Added 'Frozen Players' to Aim Priorities;")
-	print("- Added 'Enemies' to Aim Priorities;")
-	print("- Added 'Clientside' to Visuals;")
 	print("- Added engine prediction module (big.dll);")
 	print("- Added custom key binds;")
 	print("- Added bordered menu styles;")
 	print("- Added sliding menu;")
-	print("- Added more music to Sounds;")
-	print("- Added custom music player to Sounds;")
+	print("- Added more music and a custom music player to Sounds;")
 	print("- Added solid color to buttons;")
 	print("- Added a custom configurations menu;")
-	print("- Reworked 'Bunny Hop' from scratch;")
-	print("- Reworked 'Auto Strafe' from scratch;")
-	print("- Reworked 'Circle' from Auto Strafe;")
+	print("- Reworked 'Bunny Hop' and 'Auto Strafe' from scratch;")
 	print("- Reworked 'Auto Wallbang' from Aimbot;")
-	print("- Reworked 'Ignores' from Aim Priorities;")
-	print("- Reworked 'Max Player Health' from Aim Priorities;")
+	print("- Reworked 'Ignores' and 'Max Player Health' from Aim Priorities;")
 	print("- Reworked 'Resolver' from Hack vs. Hack;")
 	print("- Reworked 'Radar', 'Spectators' and 'Status' from Visuals;")
 	print("- Reworked 'Free Roaming' from Miscellaneous;")
-	print("- Renamed 'Hack vs. Hack' tab;")
-	print("- Removed 'Shoutout' from Chat Spam;")
-	print("- Removed 'Drop Money' from Chat Spam;")
+	print("- Renamed 'Hack vs. Hack' and 'Main Menu' tabs;")
+	print("- Removed 'Shoutout' and 'Drop Money' from Chat Spam;")
 	print("- Removed 'Screengrab Notifications' from Miscellaneous;")
-	print("- Removed useless information from Anti-Aim;")
+	print("- Removed useless information from Anti-Aim and Miscellaneous;")
 	print("- Changed the default menu colors, menu size and others;")
 	print("- Changed the entity menu;")
-	print("- Changed the changelog.")
+	print("- Changed the changelog (ironic).")
 	print("\n\n===========================================================")
 	timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Printed changelog to console!") end)
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
@@ -4606,7 +4585,7 @@ local manualpressed = false
 
 local function GetX()
 	local opt = gOption("Hack vs. Hack", "Anti-Aim", "X-Axis:")
-	local randcoin = gInt("Hack vs. Hack", "Anti-Aim", "Emotion X-Axis:")
+	local randcoin = gInt("Hack vs. Hack", "Anti-Aim", "Emotion X-Axis Speed:")
 	if (opt == "Emotion") then
 	if (math.random(100) < randcoin) then
 		ox = RandCoin() * 181
@@ -4642,14 +4621,14 @@ local function GetX()
 	elseif (opt == "Semi-Jitter Up") then
 		ox = math.random(0, - 89)
 	elseif opt == "Spinbot" then
-		ox = math.sin(CurTime() * gInt("Hack vs. Hack", "Anti-Aim", "Spinbot Speed:") / 8) * 60
+		ox = math.sin(CurTime() * gInt("Hack vs. Hack", "Anti-Aim", "Spinbot X-Axis Speed:") / 8) * 60
 	end
 end
 
 local function GetY()
     local left = gOption("Hack vs. Hack", "Anti-Aim", "Anti-Aim Direction:") == "Left"
     local right = gOption("Hack vs. Hack", "Anti-Aim", "Anti-Aim Direction:") == "Right"
-	local randcoin = gInt("Hack vs. Hack", "Anti-Aim", "Emotion Y-Axis:")
+	local randcoin = gInt("Hack vs. Hack", "Anti-Aim", "Emotion Y-Axis Speed:")
 	local opt = gOption("Hack vs. Hack", "Anti-Aim", "Y-Axis:")
 	local adapt = gBool("Hack vs. Hack", "Anti-Aim", "Adaptive")
 	local static = gBool("Hack vs. Hack", "Anti-Aim", "Static")
@@ -4699,13 +4678,13 @@ local function GetY()
 		oy = 0 + math.random (25, - 25)
 	elseif (opt == "Spinbot") then
 		if left then
-        oy = (idiot.CurTime() * gInt("Hack vs. Hack", "Anti-Aim", "Spinbot Speed:") * 23) % 350, 1
+        oy = (idiot.CurTime() * gInt("Hack vs. Hack", "Anti-Aim", "Spinbot Y-Axis Speed:") * 23) % 350, 1
    		elseif right then
-        oy = (idiot.CurTime() * - gInt("Hack vs. Hack", "Anti-Aim", "Spinbot Speed:") * 23) % 350, 1
+        oy = (idiot.CurTime() * - gInt("Hack vs. Hack", "Anti-Aim", "Spinbot Y-Axis Speed:") * 23) % 350, 1
 		elseif manual then
-		oy = (idiot.CurTime() * - gInt("Hack vs. Hack", "Anti-Aim", "Spinbot Speed:") * 23) % 350, 1
+		oy = (idiot.CurTime() * - gInt("Hack vs. Hack", "Anti-Aim", "Spinbot Y-Axis Speed:") * 23) % 350, 1
 		else
-		oy = (idiot.CurTime() * gInt("Hack vs. Hack", "Anti-Aim", "Spinbot Speed:") * 23) % 350, 1
+		oy = (idiot.CurTime() * gInt("Hack vs. Hack", "Anti-Aim", "Spinbot Y-Axis Speed:") * 23) % 350, 1
 	    end
 	elseif (opt == "Sideways" && !adapt && !static) then
 		if right then
