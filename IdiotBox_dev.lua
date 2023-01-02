@@ -27,7 +27,7 @@ end
  
 file.Read = DetourFunction(file.Read, function(fileName, path)
 	for k, v in next, protectedfiles do
-		if string.find("IdiotBox*", v) then
+		if string.find("IdiotBox", v) then
 			return "3D_TrollFace_Troll_Model_200"
 		end
 	end 
