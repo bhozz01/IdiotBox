@@ -1,4 +1,4 @@
-  //----IdiotBox v6.8.b3----//
+  //----IdiotBox v6.8.b4----//
  //--------By Phizz--------//
 //------------------------//
 
@@ -109,7 +109,7 @@ local options = {
 					{"DarkRP Utilities", 16, 296, 347, 103, 218}, 
 					{"Suicide Near Arrest Batons", "Checkbox", false, 78}, 
 					{"Transparent Props", "Checkbox", false, 78}, 
-					{"Transparency:", "Slider", 157, 255, 92}, 
+					{"Transparency:", "Slider", 175, 255, 92}, 
 				}, 
 				{
 					{"Murder Utilities", 16, 413, 347, 100, 218}, 
@@ -120,7 +120,7 @@ local options = {
 				{
 					{"Panic Mode", 736, 20, 347, 75, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
-					{"Mode:", "Selection", "Disable All", {"Disable Ragebot", "Disable Legitbot", "Disable Anti-Aim", "Disable All"}, 92}, 
+					{"Mode:", "Selection", "Disable All", {"Disable Aimbot", "Disable Anti-Aim", "Disable All"}, 92}, 
                 }, 
 				{
           			{"Menus", 736, 108, 347, 125, 218}, 
@@ -145,30 +145,28 @@ local options = {
 					{"Unload Cheat", "Button", "", 92}, 
           		}, 
         }, 
-        ["Aimbot"] = {
-                {
-					{"Ragebot", 16, 20, 347, 226, 218}, 
+        ["Aim Assist"] = {
+				{
+					{"Aimbot", 16, 20, 347, 275, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Aim Key:", "Toggle", 0, 92, 0}, 
+					{"Aim FoV Value:", "Slider", 0, 180, 92}, 
+					{"Aim Smoothness:", "Slider", 0, 50, 92}, 
 					{"Silent", "Checkbox", false, 78}, 
 					{"Auto Fire", "Checkbox", false, 78}, 
-					{"Alt Fire", "Checkbox", false, 78}, 
+					{"Auto Zoom", "Checkbox", false, 78}, 
 					{"Auto Stop", "Checkbox", false, 78}, 
 					{"Auto Crouch", "Checkbox", false, 78}, 
 					{"Target Lock", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Legitbot", 16, 260, 347, 275, 218}, 
+					{"Triggerbot", 16, 310, 347, 175, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
-					{"Aim Key:", "Toggle", 0, 92, 0}, 
-					{"Aim FoV Value:", "Slider", 25, 500, 92}, 
-					{"Aim Smoothness:", "Slider", 5, 50, 92}, 
-					{"Silent (For Anti-Aim)", "Checkbox", false, 78}, 
-					{"Auto Fire", "Checkbox", false, 78}, 
-					{"Alt Fire", "Checkbox", false, 78}, 
+					{"Trigger Key:", "Toggle", 0, 92, 0}, 
+					{"Smooth Aim", "Checkbox", false, 78}, 
+					{"Auto Zoom", "Checkbox", false, 78}, 
 					{"Auto Stop", "Checkbox", false, 78}, 
 					{"Auto Crouch", "Checkbox", false, 78}, 
-					{"Target Lock", "Checkbox", false, 78}, 
                 }, 
 				{
 					{"Aim Priorities", 376, 20, 347, 610, 218}, 
@@ -178,8 +176,8 @@ local options = {
 					{"Hitbox:", "Selection", "Head", {"Head", "Body"}, 92}, 
 					{"Aim Priority:", "Selection", "Crosshair", {"Crosshair", "Distance", "Health", "Random"}, 92}, 
 					{"Players:", "Checkbox", true, 78}, -- Enabled by default
-					{"Bots:", "Checkbox", false, 78}, 
-					{"NPCs:", "Checkbox", false, 78}, 
+					{"Bots:", "Checkbox", true, 78}, -- Enabled by default
+					{"NPCs:", "Checkbox", true, 78}, -- Enabled by default
 					{"Team:", "Checkbox", true, 78}, -- Enabled by default
 					{"Enemies:", "Checkbox", true, 78}, -- Enabled by default
 					{"Friends:", "Checkbox", false, 78}, 
@@ -192,16 +190,15 @@ local options = {
 					{"Overhealed Players:", "Checkbox", false, 78}, 
 					{"Max Player Health:", "Slider", 500, 5000, 92}, 
 					{"Distance Limit", "Checkbox", false, 78}, 
-					{"Distance:", "Slider", 200, 5000, 92}, 
+					{"Distance:", "Slider", 1500, 5000, 92}, 
 					{"Velocity Limit", "Checkbox", false, 78}, 
 					{"Velocity:", "Slider", 1000, 5000, 92}, 
                 }, 
 				{
-					{"Miscellaneous", 736, 20, 347, 309, 218}, 
-					{"No Recoil", "Checkbox", false, 78}, 
-					{"No Spread", "Checkbox", false, 78}, 
-					{"Rapid Fire", "Checkbox", false, 78}, 
-					{"Rapid Alt Fire", "Checkbox", false, 78}, 
+					{"Miscellaneous", 736, 20, 347, 285, 218}, 
+					{"Remove Weapon Recoil", "Checkbox", false, 78}, 
+					{"Remove Bullet Spread", "Checkbox", false, 78}, 
+					{"Rapid Fire:", "Selection", "Off", {"Off", "Primary Fire", "Alt Fire"}, 92}, 
 					{"Line of Sight Check", "Checkbox", true, 78}, -- Enabled by default
 					{"Auto Wallbang", "Checkbox", false, 78}, 
 					{"No Lerp", "Checkbox", false, 78}, 
@@ -211,42 +208,6 @@ local options = {
                 	{"Auto Reload at:", "Slider", 0, 99, 92}, 
                 }, 
         }, 
-		["Triggerbot"] = {
-				{
-					{"Triggerbot", 16, 20, 347, 210, 218}, 
-					{"Enabled", "Checkbox", false, 78}, 
-					{"Trigger Key:", "Toggle", 0, 92, 0}, 
-					{"Smooth Aim", "Checkbox", false, 78}, 
-					{"Alt Fire", "Checkbox", false, 78}, 
-					{"Auto Stop", "Checkbox", false, 78}, 
-					{"Auto Crouch", "Checkbox", false, 78}, 
-					{"Fire Delay:", "Slider", 0, 100, 92}, 
-                }, 
-				{
-					{"Aim Priorities", 736, 20, 347, 560, 218}, 
-					{"Priority Targets Only", "Checkbox", false, 78}, 
-					{"Disable in Noclip", "Checkbox", false, 78}, 
-					{"Hitbox:", "Selection", "Body", {"Head", "Body"}, 92}, 
-					{"Players:", "Checkbox", true, 78}, -- Enabled by default
-					{"Bots:", "Checkbox", false, 78}, 
-					{"NPCs:", "Checkbox", false, 78}, 
-					{"Team:", "Checkbox", true, 78}, -- Enabled by default
-					{"Enemies:", "Checkbox", true, 78}, -- Enabled by default
-					{"Friends:", "Checkbox", false, 78}, 
-					{"Admins:", "Checkbox", false, 78}, 
-					{"Spectators:", "Checkbox", false, 78}, 
-					{"Frozen Players:", "Checkbox", false, 78}, 
-					{"Noclipping Players:", "Checkbox", false, 78}, 
-					{"Driving Players:", "Checkbox", false, 78}, 
-					{"Transparent Players:", "Checkbox", false, 78}, 
-					{"Overhealed Players:", "Checkbox", false, 78}, 
-					{"Max Player Health:", "Slider", 500, 5000, 92}, 
-					{"Distance Limit", "Checkbox", false, 78}, 
-					{"Distance:", "Slider", 200, 5000, 92}, 
-					{"Velocity Limit", "Checkbox", false, 78}, 
-					{"Velocity:", "Slider", 1000, 5000, 92}, 
-                }, 
-		}, 
 		["Hack vs. Hack"] = {
 				{
 					{"Anti-Aim", 16, 20, 347, 410, 218}, 
@@ -261,10 +222,10 @@ local options = {
 					{"Y-Axis:", "Selection", "Off", {"Off", "Forwards", "Backwards", "Sideways", "Fake-Forwards", "Fake-Backwards", "Fake-Sideways", "Jitter", "Backwards Jitter", "Sideways Jitter", "Semi-Jitter", "Back Semi-Jitter", "Side Semi-Jitter", "Side Switch", "Emotion", "Spinbot"}, 92}, 
 					{"Anti-Aim Direction:", "Selection", "Left", {"Left", "Right", "Manual Switch"}, 92}, 
 					{"Switch Key:", "Toggle", 0, 92, 0}, 
-					{"Spinbot X-Axis Speed:", "Slider", 0, 180, 92}, 
-					{"Spinbot Y-Axis Speed:", "Slider", 0, 180, 92}, 
-					{"Emotion X-Axis Speed:", "Slider", 0, 100, 92}, 
-					{"Emotion Y-Axis Speed:", "Slider", 0, 100, 92}, 
+					{"Spinbot X-Axis Speed:", "Slider", 30, 180, 92}, 
+					{"Spinbot Y-Axis Speed:", "Slider", 30, 180, 92}, 
+					{"Emotion X-Axis Speed:", "Slider", 18, 100, 92}, 
+					{"Emotion Y-Axis Speed:", "Slider", 18, 100, 92}, 
                 }, 
 				{
 					{"Resolver", 736, 20, 347, 150, 218}, 
@@ -278,12 +239,12 @@ local options = {
 					{"Fake Lag", 736, 184, 347, 109, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Disable on Attack", "Checkbox", false, 78}, 
-					{"Lag Factor:", "Slider", 0, 14, 92}, 
+					{"Lag Factor:", "Slider", 7, 14, 92}, 
                 }, 
 		}, 
         ["Visuals"] = {
                 {
-					{"Wallhack", 16, 20, 347, 570, 218}, 
+					{"Wallhack", 16, 20, 347, 577, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Visibility:", "Selection", "Global", {"Global", "Clientside"}, 92}, 
 					{"Box:", "Selection", "Off", {"Off", "2D Box", "3D Box", "Edged Box"}, 92}, 
@@ -308,17 +269,17 @@ local options = {
 					{"DarkRP Money", "Checkbox", false, 78}, 
                 }, 
                 {
-					{"Miscellaneous", 736, 20, 347, 585, 218}, 
+					{"Miscellaneous", 736, 20, 347, 590, 218}, 
 					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Hide Ignored Targets", "Checkbox", false, 78}, 
 					{"Show Enemies Only", "Checkbox", false, 78}, 
 					{"Show Spectators", "Checkbox", false, 78}, 
 					{"Team Colors", "Checkbox", false, 78}, 
-					{"Spectators Box", "Checkbox", true, 78}, -- Enabled by default
-					{"Radar Box", "Checkbox", true, 78}, -- Enabled by default
-					{"Radar Distance:", "Slider", 25, 100, 92}, 
-					{"Custom Status", "Checkbox", true, 78}, -- Enabled by default
-					{"Players List", "Checkbox", true, 78}, -- Enabled by default
+					{"Spectators Box", "Checkbox", false, 78}, 
+					{"Radar Box", "Checkbox", false, 78}, 
+					{"Radar Distance:", "Slider", 50, 100, 92}, 
+					{"Custom Status", "Checkbox", false, 78}, 
+					{"Players List", "Checkbox", false, 78}, 
 					{"Show NPCs", "Checkbox", false, 78}, 
 					{"Show Entities", "Checkbox", false, 78}, 
 					{"Hide HUD", "Checkbox", false, 78}, 
@@ -330,7 +291,7 @@ local options = {
 					{"Snap Lines", "Checkbox", false, 78}, 
 					{"Crosshair:", "Selection", "Off", {"Off", "Box", "Dot", "Square", "Circle", "Cross", "Edged Cross", "Swastika", "GTA IV"}, 92}, 
 					{"Distance Limit", "Checkbox", false, 78}, 
-					{"Distance:", "Slider", 0, 5000, 92}, 
+					{"Distance:", "Slider", 1500, 5000, 92}, 
                 }, 
         }, 
 		["Miscellaneous"] = {
@@ -361,22 +322,21 @@ local options = {
 					{"Dark Mode", "Checkbox", false, 78}, 
                 }, 
 				{
-                	{"Point of View", 376, 20, 347, 150, 218}, 
+                	{"Point of View", 376, 20, 347, 130, 218}, 
 					{"Custom FoV", "Checkbox", false, 78}, 
 					{"FoV Range:", "Slider", 110, 360, 92}, 
 					{"Thirdperson", "Checkbox", false, 78}, 
 					{"Thirdperson Range:", "Slider", 15, 100, 92}, 
-					{"Mirror", "Checkbox", false, 78}, 			
                 }, 
 				{
-					{"Viewmodel", 376, 183, 347, 120, 218}, 
+					{"Viewmodel", 376, 163, 347, 120, 218}, 
 					{"Viewmodel Chams:", "Selection", "Off", {"Off", "Normal", "Rainbow"}, 92}, 
 					{"Viewmodel Wireframe:", "Selection", "Off", {"Off", "Normal", "Rainbow"}, 92}, 
 					{"No Viewmodel", "Checkbox", false, 78}, 
 					{"No Hands", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Free Roaming", 376, 317, 347, 105, 218}, 
+					{"Free Roaming", 376, 297, 347, 105, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Free Roaming Key:", "Toggle", 0, 92, 0}, 
 					{"Free Roaming Speed:", "Slider", 30, 100, 92}, 
@@ -384,7 +344,7 @@ local options = {
 				{
 					{"Movement", 736, 20, 347, 172, 218}, 
 					{"Bunny Hop", "Checkbox", false, 78}, 
-					{"Auto Strafe:", "Selection", "Off", {"Off", "Legit", "Rage", "Circle", "Directional"}, 92}, -- Directional strafing is a 'work-in-progress'
+					{"Auto Strafe:", "Selection", "Off", {"Off", "Legit", "Rage", "Circle", "Directional"}, 92}, -- Directional strafing is a 'work-in-progress' feature
 					{"Strafe Key:", "Toggle", 0, 92, 0}, 
 					{"Strafe Speed:", "Slider", 2, 6, 92}, 
 					{"Air Crouch", "Checkbox", false, 78}, 
@@ -507,8 +467,7 @@ local options = {
 
 local order = {
 	"Main Menu", 
-	"Aimbot", 
-	"Triggerbot", 
+	"Aim Assist", 
 	"Hack vs. Hack", 
 	"Visuals", 
 	"Miscellaneous", 
@@ -773,7 +732,7 @@ local function UpdateVar(men, sub, lookup, new)
 end
 
 local folder = "IdiotBox"
-local version = "6.8.b3"
+local version = "6.8.b4"
 
 if not file.IsDir(folder, "DATA") then
 	file.CreateDir(folder)
@@ -923,11 +882,11 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(503, 15 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g, maintextcol.b, 255)
 	surface.SetFont("MainFont")
-	surface.DrawText("IdiotBox v6.8.b3")
+	surface.DrawText("IdiotBox v6.8.b4")
 	surface.SetTextPos(613, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: January 2nd 2023")
+	surface.DrawText("Latest build: January 5th 2023")
 	surface.SetFont("MenuFont")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -1204,29 +1163,26 @@ end
 
 local function Changelog()
 	print("===========================================================\n\n")
-	print("IdiotBox v6.8.b3 bugfixes (in no particular order)")
+	print("IdiotBox v6.8.b4 bugfixes (in no particular order)")
 	print("")
-	print("Total bugfix count: ~50 bugs have been found and fixed in the v6.8.b3 update;")
+	print("Total bugfix count: ~50 bugs have been found and fixed in the v6.8.b4 update;")
 	print("\n")
 	print("- The 'readme.txt' file is finally up-to-date and only contains the important information;")
-	print("- Aim Smoothness will automatically disable itself if the Legitbot Silent aim is turned on;")
-	print("- Anti-Aim cannot be used with the Legitbot if Silent is turned on to prevent bad angle calculations;")
+	print("- Aim Smoothness will automatically disable itself if Silent aim is turned on;")
+	print("- Merged Ragebot and Legitbot into a single function;")
 	print("- Cheat menu/ game menus will no longer be covered by Visuals/ windows/ lists and others;")
-	print("- Chams and Playermodel Chams cannot be used at the same time anymore;")
-	print("- Reply Spam and Copy Messages cannot be used at the same time anymore to prevent weird function collisions;")
 	print("- Show Entities, Traitor Finder and Murderer Finder can only be used if Visuals is turned on;")
-	print("- Mirror cannot be used with Visuals to prevent weird rendering;")
 	print("- Added missing space between the Custom Status rank and username;")
 	print("- Fixed dimension of the Armor Bar not matching the dimension of the Health Bar;")
-	print("- Fixed Bunny Hop and Circle strafing breaking the movement when in water;")
+	print("- Fixed Bunny Hop breaking the movement when in water;")
 	print("- Fixed Entities not using the correct Visuals color;")
 	print("- Fixed buttons spamming the 'click' sound when holding them down;")
 	print("- Fixed Reply Spam and Copy Messages not ignoring friends;")
 	print("- Fixed being unable to fly WAC planes and rotate props or camera angles;")
 	print("- Fixed Kill Spam giving script errors when an NPC was killed;")
-	print("- Fixed Chat Spam and Kill Spam still using the old IdiotBox Alpha variables;")
+	print("- Fixed Chat Spam and Kill Spam still using IdiotBox Alpha variables;")
 	print("- Fixed 3D Box and Hitbox still showing spectators or dead people or breaking certain limitations;")
-	print("- Fixed Bunny Hop and Circle strafing breaking Free Roaming;")
+	print("- Fixed Bunny Hop and Auto Strafe breaking Free Roaming;")
 	print("- Fixed Hitbox spamming the console with error messages;")
 	print("- Fixed Snap Lines still showing when Aimbot is not enabled;")
 	print("- Fixed toggle keys activating when browsing game menus/ typing;")
@@ -1236,22 +1192,20 @@ local function Changelog()
 	print("- Fixed Anti-Aim Resolver continuing to resolve angles when set to 'Off';")
 	print("- Fixed Thirdperson showing in spectator mode;")
 	print("- Fixed FoV Circle not showing upon enabling;")
-	print("- Fixed skybox changing upon loading;")
+	print("- Fixed skybox changing upon initializing the script;")
 	print("- Fixed Anti-Aim breaking the Radar view angles;")
 	print("- Fixed Free Roaming not working with Anti-Aim;")
-	print("- Fixed Thirdperson, Custom FoV and Free Roaming working when the user is dead;")
+	print("- Fixed Cheater Callout clearing chat when it should not;")
+	print("- Fixed Thirdperson, Custom FoV and Free Roaming working incorrectly when the user is dead;")
 	print("- Fixed Fire Delay not working correctly;")
 	print("- Fixed Prop Kill giving script errors when toggled;")
 	print("- Fixed Anti-Aim X-Axis Jitter, Semi-Jitter Down and Semi-Jitter Up breaking the Anti-Aim Y-Axis;")
-	print("- Fixed Triggerbot Smooth Aim slowing your mouse speed;")
+	print("- Fixed Triggerbot Smooth Aim slowing your overall mouse speed;")
 	print("- Fixed certain outlines and fonts not having the proper dimensions;")
 	print("- Fixed the menu not being large enough for certain outlines;")
 	print("- Fixed a Projectile Prediction bug where dying would cause script errors;")
 	print("- Fixed No Lerp and Dark Mode not resetting when disabled;")
-	print("- Fixed a few minor Aim Priorities bugs from both Aimbot and Triggerbot;")
 	print("- Reworked script for slightly better performance;")
-	print("- Reworked Anti-Screengrabber from scratch;")
-	print("- Reworked old 'file.Read' blocker from scratch;")
 	print("- Reworked user visibility of IdiotBox developers on servers;")
 	print("- Reorganized certain out-of-place functions and menu options;")
 	print("- Renamed certain misspelled or broken functions and menu options;")
@@ -1262,13 +1216,13 @@ local function Changelog()
 	print("- Removed old and unused message pop-up function;")
 	print("- Removed 'aaa' module as 'IdiotBox_alpha1.lua' was replaced by 'IdiotBox_dev.lua' and had no use.")
 	print("\n")
-	print("IdiotBox v6.8.b3 new features (in no particular order)")
+	print("IdiotBox v6.8.b4 new features (in no particular order)")
 	print("")
-	print("Total feature count: ~50 features have been added in the v6.8.b3 update;")
+	print("Total feature count: ~50 features have been added in the v6.8.b4 update;")
 	print("\n")
 	print("- Added 'Projectile Prediction' and 'Line of Sight Check' to Aimbot;")
 	print("- Added 'Emote Resolver' to Resolver;")
-	print("- Added 'Distance Limit', 'Velocity Limit' and NPC targeting to Aimbot and Triggerbot;")
+	print("- Added 'Distance Limit', 'Velocity Limit' and NPC targeting to Aim Assist;")
 	print("- Added 'Priority List' and 'Use Spam' to Miscellaneous;")
 	print("- Added 'Cheater Callout', 'Copy Messages', 'Disconnect Spam', 'lol', 'english please', 'lmao', 'shit' and 'fuck' to Reply Spam;")
 	print("- Added 'Border Color', 'Misc Visuals Color' and 'B Opacity' to Settings;")
@@ -1297,13 +1251,17 @@ local function Changelog()
 	print("- Reworked 'Resolver' from Hack vs. Hack;")
 	print("- Reworked 'Radar', 'Spectators' and 'Status' from Visuals;")
 	print("- Reworked 'Free Roaming' from Miscellaneous;")
-	print("- Renamed 'Hack vs. Hack' and 'Main Menu' tabs;")
+	print("- Reworked anti-screengrabber from scratch;")
+	print("- Reworked old 'file.Read' blocker from scratch;")
+	print("- Renamed 'Aim Assist', 'Hack vs. Hack' and 'Main Menu' tabs;")
+	print("- Removed 'Triggerbot' tab and merged it with the 'Aim Assist' tab;")
 	print("- Removed 'Shoutout' and 'Drop Money' from Chat Spam;")
 	print("- Removed 'Screengrab Notifications' from Miscellaneous;")
+	print("- Removed 'Mirror' from Point of View;")
 	print("- Removed useless information from Anti-Aim and Miscellaneous;")
 	print("- Changed the default menu colors, menu size and others;")
 	print("- Changed the entity menu;")
-	print("- Changed the changelog (ironic).")
+	print("- Changed the changelog, ironically enough.")
 	print("\n\n===========================================================")
 	timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Printed changelog to console!") end)
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
@@ -1960,8 +1918,8 @@ end
 
 local toggler = 0
 
-local function RapidFire(pCmd)
-	if (gBool("Aimbot", "Miscellaneous", "Rapid Fire")) then
+local function RapidPrimaryFire(pCmd)
+	if gOption("Aim Assist", "Miscellaneous", "Rapid Fire:") ~= "Off" and gOption("Aim Assist", "Miscellaneous", "Rapid Fire:") == "Primary Fire" then
 	local wep = pm.GetActiveWeapon(me)
 		if pm.KeyDown(me, IN_ATTACK) then
 			if (me:Alive() or em.Health(me) > 0) then
@@ -1979,10 +1937,8 @@ local function RapidFire(pCmd)
 	end
 end
 
-toggler = 0
-
 local function RapidAltFire(pCmd)
-	if (gBool("Aimbot", "Miscellaneous", "Rapid Alt Fire")) then
+	if gOption("Aim Assist", "Miscellaneous", "Rapid Fire:") ~= "Off" and gOption("Aim Assist", "Miscellaneous", "Rapid Fire:") == "Alt Fire" then
 	local wep = pm.GetActiveWeapon(me)
 		if pm.KeyDown(me, IN_ATTACK) then
 			if (me:Alive() or em.Health(me) > 0) then
@@ -2428,7 +2384,7 @@ end
 
 local function Crosshair()
 	if menuopen then return end
-	if me:Team() == TEAM_SPECTATOR and not ((gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) and gBool("Visuals", "Miscellaneous", "Show Spectators")) then return end
+	if me:Team() == TEAM_SPECTATOR and not ((gBool("Aim Assist", "Aim Priorities", "Spectators:") or gBool("Aim Assist", "Aim Priorities", "Spectators:")) and gBool("Visuals", "Miscellaneous", "Show Spectators")) then return end
 	if not me:Alive() or me:Health() < 1 then return end
 	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Box") then
 	local x1, y1 = ScrW() * 0.5, ScrH() * 0.5
@@ -2730,8 +2686,8 @@ local function ChatSpam()
 	local messagespam = {"GET FUCKED BY IDIOTBOX KIDDIE", "YOU SUCK SHIT LMAO", "STOP BEING SUCH A WORTHLESS CUMSTAIN AND GET IDIOTBOX NOW", "MONEY WASTER LOL", "YOU FUCKING FATASS, GET IDIOTBOX AND LOSE ALL THAT WEIGHT YOU INCEL", "ARE ALL THE GIRLS IGNORING YOU? GET IDIOTBOX AND YOU'LL BE FLOODED WITH PUSSY", "DO YOU FEEL WORTHLESS? WELL, YOU ARE LOL", "GET IDIOTBOX IF YOU WANT SOME OF THAT CLOUT", "STOP WASTING YOUR TIME ON SOUNDCLOUD BECAUSE YOU AIN'T GONNA GET NOWHERE WITH IT", "GET IDIOTBOX AND YOUR DICK WILL GROW 4 TIMES ITS SIZE", "LITTLE KID LMAO",}
 	local offensivespam = { "fuck niggers like fr", "who else here hates black people lmao", "all niggers should be locked in cages and fed bananas", "black people are some sub-human slaves imo", "i've never met an intelligent black person", "why tf are all niggers so ugly lol", "all the black dudes i've seen look like monkeys", "ooga booga black rights", "my grandpa died in ww2, he was the best german pilot", "white people are genetically superior to every othe race", "all jews can do is hide the truth, steal money and start wars",}
 	local insultspam = {" is shit at building", " is no older than 13", " looks like a 2 month old corpse", " really thinks gmod is a good game", " can't afford a better pc lmao", ", so how do you like your 40 fps?", " will definitely kill himself before his 30's ", " is a fucking virgin lmao", " is a script kiddie", " thinks his 12cm penis is big lmfao", ", how does it feel when you've never seen a naked woman in person?", ", what do you like not being able to do a single push-up?", ", tell me how it feels to be shorter than every girl you've met", " is a fatass who only spends his time in front of a monitor like an incel", "'s parents have a lower than average income", " lives under a bridge lmao", " vapes because is too afraid to smoke an actual ciggarette", ", your low self esteem really pays off you loser", ", make sure you tell me what unemployment feels like", " lives off of his parents' money", ", you're a dissapointment to your entire family, fatass", " has probably fried all of his dopamine receptors by masturbating this much",}
-	local advertise = {"IdiotBox - https://phizzofficial.wixsite.com/idiotbox4gmod/", "IdiotBox - Destroying everyone since '16.", "IdiotBox - Easy to use, free Garry's Mod cheat.", "IdiotBox - Now you can forget that negative KD's can be possible.", "IdiotBox - Beats all of your other cheats.", "IdiotBox - IdiotBox came back, and it came back with a vengeance.", "IdiotBox - Join the Discord server if you have a high IQ.", "IdiotBox - The only high-quality free cheat, out for Garry's Mod.", "IdiotBox - Best cheat, created by Phizz & more.", "IdiotBox - Always updated, never dead.", "IdiotBox - A highly reliable and optimised cheating software.", "IdiotBox - Top class, free cheat for Garry's Mod.", "IdiotBox - Makes noobs cry waves of tears since forever!", "IdiotBox - Say goodbye to the respawn room!", "IdiotBox - Download the highest quality Garry's Mod cheat for free now!", "IdiotBox - A reliable way to go!", "IdiotBox - Make Garry's Mod great again!", "IdiotBox - Visit our website for fresh Discord invite links!", "IdiotBox - Monthly bugfixes & updates. It never gets outdated!", "IdiotBox - Download IdiotBox v6.8.b3 right now!", "IdiotBox - Bug-free and fully customizable!", "IdiotBox - Join our Steam group and Discord server to stay up-to-date!", "IdiotBox - Refund all your cheats, use this better and free alternative!", "IdiotBox - Now with more features than ever!", "IdiotBox - The best Garry's Mod cheat, with 24/7 support, for free!", "IdiotBox - Bypasses most anti-cheats and screengrabbers!",}
-	local toxicadvertise = {"Get IdiotBox you fucking smelly niggers", "IdiotBox is the best fucking cheat and that is a fact", "All of you are fucking autistic for not having IdiotBox", "Why the fuck don't you get IdiotBox lol", "Stay being gay or get IdiotBox", "Your moms should know that you play grown-up games, join our Discord to prove you are not under-aged", "I have your IPs you dumb niggers, I will delete the IPs if you get IdiotBox", "You all fucking smell like shit for not using IdiotBox", "IdiotBox makes kiddos cry and piss their pants maybe and maybe shit and cum", "IdiotBox is the best free cheat in the history of the entire world so get it faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ or you're retarded", "Join our fucking Discord or else you are literally an unpriviledged niggers", "IdiotBox is a cheat for people with high IQ only, use IdiotBox to prove you're smart", "Don't wanna get fucking raped? Get IdiotBox and shit on them skids", "This is the best free paste around, no other paste is better than IdiotBox", "How the fuck are you not using IdiotBox in a shitty dying game lmfao", "IdiotBox is the best and most popular Garry's Mod cheat ever, why are you not using it lol", "May cause a bit of lag but it's worth it for the fuckton of features that it has", "You're all faggots if you don't cheat with IdiotBox", "You literally go to pride month parades if you don't use IdiotBox", "Idiotbox is the highest quality, most popular free cheat, just get it already", "Shit on all of the virgins that unironically play this game with this high-quality cheat", "Get good, get IdiotBox you fucking retards", "You're mad retarded if you are not using IdiotBox, no cap", "Own every single retard in HvH with this superior cheat now", "All of you are dumb niggers for not downloading IdiotBox and that is a fact", "You suck fat cocks in public bathrooms if you're not using IdiotBox", "Just get this god-like cheat already and rape all existing servers", "No you idiots, you can't get VAC banned for using lua scripts you absolute cretins", "IdiotBox bypasses even the most complex anti-cheats and screengrabbers, you're not getting banned anytime soon", "Just use IdiotBox to revert your sad lives and feel better about yourselves", "Phizz is a god because he made this god-like cheat called IdiotBox", "I am forced to put IdiotBox in almost every sentence and advertise in a toxic way because I'm a text in a lua script", "Why are you fucking gay? Get IdiotBox today", "The sentence above is a rhyme but the script says to put random sentences so I don't think you can see it, get IdiotBox btw", "Purchase IdiotBox now! Only for OH wait it's free", "It is highly recommended that you get IdiotBox in case of getting pwned", "You are swag and good looking, but only if you get IdiotBox", "Phizz spent so many fucking nights creating this masterpiece of a cheat so get it now or he will legit kill you", "Fuck you and get IdiotBox now lol", "IdiotBox is constantly getting updated with dope-ass features, it never gets outdated so just get it", "Have IdiotBox installed if you're mega straight and zero gay", "Whoever the fuck said lua cheats are bad deserves to die in a house fire", "You get IdiotBox, everyone else on the server gets pwned, ez as that", "Many cheats copied IdiotBox, but this is the original one, fucking copycats", "Join the fucking Discord, promise it won't hurt you faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ right this moment or I will hire a hitman to kill you", "Join the IdiotBox group at OH wait niggers got mad and mass-reported it, kys shitkids", "Nvm, Steam group is back lol get fucked you mad skid shitkids", "IdiotBox killed all of the paid cheats because it's too good", "Get IdiotBox, it's free and very good, you sacks of crying shit", "IdiotBox is the fucking G.O.A.T.", "What the fuck are you doing not using this god-like cheat lol", "This is an epic fucking cheat called IdiotBox that was created by Phizz and others, worship your new gods kiddos", "You were fed cock milk as a baby if you're not using IdiotBox and you can not prove me wrong", "IdiotBox has the dopest anti-aims and resolvers you'll ever use, you will be a HvH god", "Just please get IdiotBox already you retards, I am tired of typing these lines for fuck's sake", "Phizz will give everyone IdiotBox v6.9 soon so quit your shit", "IdiotBox needs no Steam group, we're too chad for one", "Our Discord was tapped at some point but IdiotBox is back and stronger than ever", "IdiotBox came back to kill silly niggers, and it came back with a vengeance", "Download Idiotbox v6.8.b3 now, you dont even know what you're missing you mongoloids", "Have I told you about IdiotBox, the best Garry's Mod cheat ever made??", "Holy shit, IdiotBox for Garry's Mod is the best cheat that I have ever used!!",}
+	local advertise = {"IdiotBox - https://phizzofficial.wixsite.com/idiotbox4gmod/", "IdiotBox - Destroying everyone since '16.", "IdiotBox - Easy to use, free Garry's Mod cheat.", "IdiotBox - Now you can forget that negative KD's can be possible.", "IdiotBox - Beats all of your other cheats.", "IdiotBox - IdiotBox came back, and it came back with a vengeance.", "IdiotBox - Join the Discord server if you have a high IQ.", "IdiotBox - The only high-quality free cheat, out for Garry's Mod.", "IdiotBox - Best cheat, created by Phizz & more.", "IdiotBox - Always updated, never dead.", "IdiotBox - A highly reliable and optimised cheating software.", "IdiotBox - Top class, free cheat for Garry's Mod.", "IdiotBox - Makes noobs cry waves of tears since forever!", "IdiotBox - Say goodbye to the respawn room!", "IdiotBox - Download the highest quality Garry's Mod cheat for free now!", "IdiotBox - A reliable way to go!", "IdiotBox - Make Garry's Mod great again!", "IdiotBox - Visit our website for fresh Discord invite links!", "IdiotBox - Monthly bugfixes & updates. It never gets outdated!", "IdiotBox - Download IdiotBox v6.8.b4 right now!", "IdiotBox - Bug-free and fully customizable!", "IdiotBox - Join our Steam group and Discord server to stay up-to-date!", "IdiotBox - Refund all your cheats, use this better and free alternative!", "IdiotBox - Now with more features than ever!", "IdiotBox - The best Garry's Mod cheat, with 24/7 support, for free!", "IdiotBox - Bypasses most anti-cheats and screengrabbers!",}
+	local toxicadvertise = {"Get IdiotBox you fucking smelly niggers", "IdiotBox is the best fucking cheat and that is a fact", "All of you are fucking autistic for not having IdiotBox", "Why the fuck don't you get IdiotBox lol", "Stay being gay or get IdiotBox", "Your moms should know that you play grown-up games, join our Discord to prove you are not under-aged", "I have your IPs you dumb niggers, I will delete the IPs if you get IdiotBox", "You all fucking smell like shit for not using IdiotBox", "IdiotBox makes kiddos cry and piss their pants maybe and maybe shit and cum", "IdiotBox is the best free cheat in the history of the entire world so get it faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ or you're retarded", "Join our fucking Discord or else you are literally an unpriviledged niggers", "IdiotBox is a cheat for people with high IQ only, use IdiotBox to prove you're smart", "Don't wanna get fucking raped? Get IdiotBox and shit on them skids", "This is the best free paste around, no other paste is better than IdiotBox", "How the fuck are you not using IdiotBox in a shitty dying game lmfao", "IdiotBox is the best and most popular Garry's Mod cheat ever, why are you not using it lol", "May cause a bit of lag but it's worth it for the fuckton of features that it has", "You're all faggots if you don't cheat with IdiotBox", "You literally go to pride month parades if you don't use IdiotBox", "Idiotbox is the highest quality, most popular free cheat, just get it already", "Shit on all of the virgins that unironically play this game with this high-quality cheat", "Get good, get IdiotBox you fucking retards", "You're mad retarded if you are not using IdiotBox, no cap", "Own every single retard in HvH with this superior cheat now", "All of you are dumb niggers for not downloading IdiotBox and that is a fact", "You suck fat cocks in public bathrooms if you're not using IdiotBox", "Just get this god-like cheat already and rape all existing servers", "No you idiots, you can't get VAC banned for using lua scripts you absolute cretins", "IdiotBox bypasses even the most complex anti-cheats and screengrabbers, you're not getting banned anytime soon", "Just use IdiotBox to revert your sad lives and feel better about yourselves", "Phizz is a god because he made this god-like cheat called IdiotBox", "I am forced to put IdiotBox in almost every sentence and advertise in a toxic way because I'm a text in a lua script", "Why are you fucking gay? Get IdiotBox today", "The sentence above is a rhyme but the script says to put random sentences so I don't think you can see it, get IdiotBox btw", "Purchase IdiotBox now! Only for OH wait it's free", "It is highly recommended that you get IdiotBox in case of getting pwned", "You are swag and good looking, but only if you get IdiotBox", "Phizz spent so many fucking nights creating this masterpiece of a cheat so get it now or he will legit kill you", "Fuck you and get IdiotBox now lol", "IdiotBox is constantly getting updated with dope-ass features, it never gets outdated so just get it", "Have IdiotBox installed if you're mega straight and zero gay", "Whoever the fuck said lua cheats are bad deserves to die in a house fire", "You get IdiotBox, everyone else on the server gets pwned, ez as that", "Many cheats copied IdiotBox, but this is the original one, fucking copycats", "Join the fucking Discord, promise it won't hurt you faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ right this moment or I will hire a hitman to kill you", "Join the IdiotBox group at OH wait niggers got mad and mass-reported it, kys shitkids", "Nvm, Steam group is back lol get fucked you mad skid shitkids", "IdiotBox killed all of the paid cheats because it's too good", "Get IdiotBox, it's free and very good, you sacks of crying shit", "IdiotBox is the fucking G.O.A.T.", "What the fuck are you doing not using this god-like cheat lol", "This is an epic fucking cheat called IdiotBox that was created by Phizz and others, worship your new gods kiddos", "You were fed cock milk as a baby if you're not using IdiotBox and you can not prove me wrong", "IdiotBox has the dopest anti-aims and resolvers you'll ever use, you will be a HvH god", "Just please get IdiotBox already you retards, I am tired of typing these lines for fuck's sake", "Phizz will give everyone IdiotBox v6.9 soon so quit your shit", "IdiotBox needs no Steam group, we're too chad for one", "Our Discord was tapped at some point but IdiotBox is back and stronger than ever", "IdiotBox came back to kill silly niggers, and it came back with a vengeance", "Download Idiotbox v6.8.b4 now, you dont even know what you're missing you mongoloids", "Have I told you about IdiotBox, the best Garry's Mod cheat ever made??", "Holy shit, IdiotBox for Garry's Mod is the best cheat that I have ever used!!",}
 	local lmaoboxadvertise = {"www.IB4G.net - https://phizzofficial.wixsite.com/idiotbox4gmod/", "www.IB4G.net - WHAT ARE YOU WAITING FOR?", "www.IB4G.net - BEST GARRY'S MOD CHEAT OUT RIGHT NOW!", "www.IB4G.net - SAY GOODBYE TO THE RESPAWN ROOM!", "www.IB4G.net - NO SKILL REQUIRED!", "www.IB4G.net - NEVER DIE AGAIN WITH THIS!", "www.IB4G.net - ONLY HIGH IQ NIGGAS' USE IDIOTBOX!", "www.IB4G.net - THE GAME IS NOT ACTUALLY DYING, I JUST LIKE TO ANNOY KIDS LOL!", "www.IB4G.net - DOWNLOAD THE CHEAT FOR FREE!", "www.IB4G.net - NOW WITH AUTOMATIC UPDATES!", "www.IB4G.net - GUARANTEED SWAG AND RESPECT ON EVERY SERVER!", "www.IB4G.net - IDIOTBOX COMING SOON TO TETIRS!", "www.IB4G.net - VISIT OUR WEBSITE FOR A FRESH INVITE LINK TO OUR DISCORD!", "www.IB4G.net - PHIZZ IS A GOD FOR MAKING THIS!", "www.IB4G.net - BECOME THE SERVER MVP IN NO TIME!", "www.IB4G.net - 100% NO SKILL REQUIRED!", "www.IB4G.net - BEST CHEAT, MADE BY THE CHINESE COMMUNIST PARTY!", "www.IB4G.net - MAKE IDIOTBOX GREAT AGAIN!", "www.IB4G.net - WHY ARE YOU NOT CHEATING IN A DYING GAME?", "www.IB4G.net - RUINING EVERYONE'S FUN SINCE 2016!", "www.IB4G.net - IT'S PASTED, BUT IT'S THE BEST PASTE YOU WILL EVER USE!", "www.IB4G.net - A VERY CLEAN, HIGH-QUALITY AND BUG-FREE PASTE!", "www.IB4G.net - ALWAYS UPDATED! NEVER GETS OUTDATED!", "www.IB4G.net - WITH A FUCK TON OF NEW FEATURES!", "www.IB4G.net - ONCE YOU GO BLACK, YOU NEVER GO BACK. GET IDIOTBOX NOW!", "www.IB4G.net - SACRIFICE A FEW FRAMES FOR THE BEST EXPERIENCE OF YOUR LIFE!", "www.IB4G.net - STEAM GROUP WAS TAKEN DOWN, BUT IT'S BACK BABY!", "www.IB4G.net - BEST GARRY'S MOD CHEAT, NO CAP!", "www.IB4G.net - WITH IDIOTBOX, YOU'LL NEVER GET BANNED FOR CHEATING AGAIN!", "www.IB4G.net - DISCORD SERVER WAS TAKEN DOWN MANY TIMES, BUT WE ALWAYS COME BACK!",}
 	local horstwessellied = {"Die Fahne hoch! Die Reihen fest geschlossen", "SA marschiert mit ruhig festem Schritt", "Kam'raden, die Rotfront und Reaktion erschossen", "Marschier'n im Geist in unser'n Reihen mit", "Die Straße frei den braunen Bataillonen", "Die Straße frei dem Sturmabteilungsmann", "Es schau'n aufs Hakenkreuz voll Hoffnung schon Millionen", "Der Tag für Freiheit und für Brot bricht an", "Zum letzten Mal wird Sturmalarm geblasen", "Zum Kampfe steh'n wir alle schon bereit", "Schon flattern Hitlerfahnen über allen Straßen", "Die Knechtschaft dauert nur noch kurze Zeit", "Die Fahne hoch! Die Reihen fest geschlossen", "SA marschiert mit ruhig festem Schritt", "Kam'raden, die Rotfront und Reaktion erschossen", "Marschier'n im Geist in unser'n Reihen mit",}
 	local ssmarschiertinfeindesland = {"SS marschiert in Feindesland", "Und singt ein Teufelslied", "Ein Schütze steht am Wolgastrand", "Und leise summt er mit", "Wir pfeifen auf Unten und Oben", "Und uns kann die ganze Welt", "Verfluchen oder auch loben", "Grad wie es jedem gefällt", "Wo wir sind da geht's immer vorwärts", "Und der Teufel, der lacht nur dazu", "Ha, ha, ha, ha, ha, ha", "Wir kämpfen für Deutschland", "Wir kämpfen für Hitler", "Der Rote kommt niemehr zur Ruh'", "Wir kämpften schon in mancher Schlacht", "In Nord, Süd, Ost und West", "Und stehen nun zum Kampf bereit", "Gegen die rote Pest", "SS wird nicht ruh'n, wir vernichten", "Bis niemand mehr stört Deutschlands Glück", "Und wenn sich die Reihen auch lichten", "Für uns gibt es nie ein Zurück", "Wo wir sind da geht's immer vorwärts", "Und der Teufel, der lacht nur dazu", "Ha, ha, ha, ha, ha, ha", "Wir kämpfen für Deutschland", "Wir kämpfen für Hitler", "Der Rote kommt niemehr zur Ruh'",}
@@ -2967,7 +2923,7 @@ end
 local timeHoldingSpaceOnGround = 0
 
 local function BunnyHop(pCmd)
-	if me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) then return end
+	if me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Spectators:") or gBool("Aim Assist", "Aim Priorities", "Spectators:")) then return end
 	if not me:Alive() or me:Health() < 1 then return end
 	if gBool("Miscellaneous", "Movement", "Bunny Hop") and gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Off" then
     local badmovetypes = {
@@ -3019,7 +2975,7 @@ local function RageStrafe(pCmd)
 end
 
 local function CircleStrafe(pCmd)
-	if me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) then return end
+	if me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Spectators:") or gBool("Aim Assist", "Aim Priorities", "Spectators:")) then return end
 	if not me:Alive() or me:Health() < 1 then return end
     local badmovetypes = {
         [MOVETYPE_NOCLIP] = true,
@@ -3144,7 +3100,7 @@ local function DirectionalStrafe(pCmd)
 end
 
 local function AutoStrafe(pCmd)
-    if me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) then return end
+    if me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Spectators:") or gBool("Aim Assist", "Aim Priorities", "Spectators:")) then return end
 	if not me:Alive() or me:Health() < 1 then return end
 	if gBool("Miscellaneous", "Movement", "Bunny Hop") and gOption("Miscellaneous", "Movement", "Auto Strafe:") ~= "Off" then
     local badmovetypes = {
@@ -3166,7 +3122,7 @@ end
 
 local function AirCrouch(pCmd)
 	if em.GetMoveType(me) == MOVETYPE_NOCLIP then return end
-	if me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) then return end
+	if me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Spectators:") or gBool("Aim Assist", "Aim Priorities", "Spectators:")) then return end
 	if not me:Alive() or me:Health() < 1 then return end
 	if LocalPlayer():IsFlagSet(1024) then return end
 	if gBool("Miscellaneous", "Movement", "Air Crouch") then
@@ -3372,7 +3328,7 @@ hook.Add("Think", "Hook8", function()
 		optimized = false
 		end
 	end
-	if gBool("Aimbot", "Miscellaneous", "No Lerp") then
+	if gBool("Aim Assist", "Miscellaneous", "No Lerp") then
 		if not applied then
 			me:ConCommand("cl_interp 0; cl_interp_ratio 0; cl_updaterate 99999")
 		applied = true
@@ -3428,7 +3384,7 @@ hook.Add("Think", "Hook8", function()
 	if gBool("Main Menu", "DarkRP Utilities", "Suicide Near Arrest Batons") and idiot.engine.ActiveGamemode() == "darkrp" and (me:Alive() or me:Health() > 0) then
 		for k, v in next, player.GetAll() do
 			if not v:IsValid() or v:Health() < 1 or v:IsDormant() or v == me then continue end
-			if gBool("Aimbot", "Aim Priorities", "Ignore Friends") and v:GetFriendStatus() == "friend" then continue end
+			if gBool("Aim Assist", "Aim Priorities", "Ignore Friends") and v:GetFriendStatus() == "friend" then continue end
 			if v:GetPos():Distance(me:GetPos()) < 95 and v:GetActiveWeapon():GetClass() == "arrest_stick" and me:GetPos():Distance(v:GetEyeTrace().HitPos) < 105 then
 				me:ConCommand("kill")
 			end
@@ -3513,9 +3469,9 @@ end)
 
 local function AutoReload(pCmd)
 	local wep = me:GetActiveWeapon()
-	if (not gBool("Aimbot", "Miscellaneous", "Auto Reload")) then return end
+	if (not gBool("Aim Assist", "Miscellaneous", "Auto Reload")) then return end
 	if (me:Alive() or me:Health() > 0) and idiot.IsValid(wep) then
-		if (wep:Clip1() <= (gInt("Aimbot", "Miscellaneous", "Auto Reload at:")) and wep:GetMaxClip1() > 0 and idiot.CurTime() > wep:GetNextPrimaryFire()) then
+		if (wep:Clip1() <= (gInt("Aim Assist", "Miscellaneous", "Auto Reload at:")) and wep:GetMaxClip1() > 0 and idiot.CurTime() > wep:GetNextPrimaryFire()) then
 			pCmd:SetButtons(pCmd:GetButtons() + IN_RELOAD)
 		end
 	end
@@ -3876,7 +3832,7 @@ local function Visuals(v)
 end
 
 hook.Add("RenderScreenspaceEffects", "Hook12", function()
-	if (not gBool("Visuals", "Wallhack", "Enabled")) then return end
+	if not gBool("Visuals", "Wallhack", "Enabled") then return end
 	if gui.IsGameUIVisible() then return end
 	if gui.IsConsoleVisible() then return end
 	if (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then return end
@@ -4003,14 +3959,13 @@ hook.Add("DrawOverlay", "Hook13", function()
 	if (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then return end
 	if me:IsTyping() then return end
 	if menuopen then return end
-	if me:Team() == TEAM_SPECTATOR and not ((gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) and gBool("Visuals", "Miscellaneous", "Show Spectators")) then return end
+	if me:Team() == TEAM_SPECTATOR and not ((gBool("Aim Assist", "Aim Priorities", "Spectators:") or gBool("Aim Assist", "Aim Priorities", "Spectators:")) and gBool("Visuals", "Miscellaneous", "Show Spectators")) then return end
 	if not me:Alive() or me:Health() < 1 then return end
-	if (gBool("Triggerbot", "Triggerbot", "Enabled")) then return end
-	if (gBool("Aimbot", "Ragebot", "Enabled") && gBool("Aimbot", "Legitbot", "Enabled")) then return end
+	if (gBool("Aim Assist", "Triggerbot", "Enabled") and not gBool("Aim Assist", "Aimbot", "Enabled")) then return end
 	for k, v in pairs(player.GetAll()) do
-	if (gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Ragebot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Legitbot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me) then return end
+	if (gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me) then return end
 	end
-	if (aimtarget and em.IsValid(aimtarget) and not FixTools() and gBool("Visuals", "Miscellaneous", "Snap Lines") and (gBool("Aimbot", "Ragebot", "Enabled") or gBool("Aimbot", "Legitbot", "Enabled"))) then
+	if (aimtarget and em.IsValid(aimtarget) and not FixTools() and gBool("Visuals", "Miscellaneous", "Snap Lines") and (gBool("Aim Assist", "Aimbot", "Enabled"))) then
 		if me:Alive() or em.Health(me) > 0 then
 			local col = Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:"))
 			local pos = vm.ToScreen(em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)))
@@ -4047,7 +4002,7 @@ end
 local dists = {}
 
 local function AimPos(v)
-	if (gOption("Aimbot", "Aim Priorities", "Hitbox:") ~= "Head") or (v:IsPlayer() and v:IsPlayingTaunt() and gBool("Hack vs. Hack", "Resolver", "Enabled") and gBool("Hack vs. Hack", "Resolver", "Emote Resolver")) then return (em.LocalToWorld(v, em.OBBCenter(v))) end
+	if (gOption("Aim Assist", "Aim Priorities", "Hitbox:") ~= "Head") or (v:IsPlayer() and v:IsPlayingTaunt() and gBool("Hack vs. Hack", "Resolver", "Enabled") and gBool("Hack vs. Hack", "Resolver", "Emote Resolver")) then return (em.LocalToWorld(v, em.OBBCenter(v))) end
 	local eyes = em.LookupAttachment(v, "eyes")
 	if (!eyes) then return(em.LocalToWorld(v, em.OBBCenter(v))) end
 	local pos = em.GetAttachment(v, eyes)
@@ -4092,24 +4047,12 @@ hook.Add("entity_killed", "Hook15", function(data)
 	end
 end)
 
-local function AimbotPriorities(v)
-	if gBool("Aimbot", "Aim Priorities", "Players:") and not gBool("Aimbot", "Aim Priorities", "NPCs:") then
+local function AimAssistPriorities(v)
+	if gBool("Aim Assist", "Aim Priorities", "Players:") and not gBool("Aim Assist", "Aim Priorities", "NPCs:") then
 		return v:IsPlayer()
-	elseif gBool("Aimbot", "Aim Priorities", "NPCs:") and not gBool("Aimbot", "Aim Priorities", "Players:") then
+	elseif gBool("Aim Assist", "Aim Priorities", "NPCs:") and not gBool("Aim Assist", "Aim Priorities", "Players:") then
 		return v:IsNPC()
-	elseif gBool("Aimbot", "Aim Priorities", "Players:") and gBool("Aimbot", "Aim Priorities", "NPCs:") then
-		return v:IsPlayer() or v:IsNPC()
-	else
-		return nil
-	end
-end
-
-local function TriggerbotPriorities(v)
-	if gBool("Triggerbot", "Aim Priorities", "Players:") and not gBool("Triggerbot", "Aim Priorities", "NPCs:") then
-		return v:IsPlayer()
-	elseif gBool("Triggerbot", "Aim Priorities", "NPCs:") and not gBool("Triggerbot", "Aim Priorities", "Players:") then
-		return v:IsNPC()
-	elseif gBool("Triggerbot", "Aim Priorities", "Players:") and gBool("Triggerbot", "Aim Priorities", "NPCs:") then
+	elseif gBool("Aim Assist", "Aim Priorities", "Players:") and gBool("Aim Assist", "Aim Priorities", "NPCs:") then
 		return v:IsPlayer() or v:IsNPC()
 	else
 		return nil
@@ -4119,55 +4062,55 @@ end
 local aimignore
 
 local function Valid(v)
-	local dist = gBool("Aimbot", "Aim Priorities", "Distance:")
-	local vel = gBool("Aimbot", "Aim Priorities", "Velocity:")
+	local dist = gBool("Aim Assist", "Aim Priorities", "Distance:")
+	local vel = gBool("Aim Assist", "Aim Priorities", "Velocity:")
     local wep = me:GetActiveWeapon()
-	local maxhealth = gInt("Aimbot", "Aim Priorities", "Max Player Health:") 
-	if (!v || !em.IsValid(v) || v == me || em.Health(v) < 1 || em.IsDormant(v) || !AimbotPriorities(v) || (v == aimignore && gOption("Aimbot", "Aim Priorities", "Aim Priority:") == "Random")) then return false end
+	local maxhealth = gInt("Aim Assist", "Aim Priorities", "Max Player Health:") 
+	if (!v || !em.IsValid(v) || v == me || em.Health(v) < 1 || em.IsDormant(v) || !AimAssistPriorities(v) || (v == aimignore && gOption("Aim Assist", "Aim Priorities", "Aim Priority:") == "Random")) then return false end
 	if v:IsPlayer() then
-	if gBool("Aimbot", "Aim Priorities", "Distance Limit") then
+	if gBool("Aim Assist", "Aim Priorities", "Distance Limit") then
 		if (vm.Distance(em.GetPos(v), em.GetPos(me)) > (dist * 5)) then return false end
 	end
-	if gBool("Aimbot", "Aim Priorities", "Velocity Limit") then
+	if gBool("Aim Assist", "Aim Priorities", "Velocity Limit") then
 		if (v:GetVelocity():Length() > vel) then return false end
 	end
-	if gBool("Aimbot", "Aim Priorities", "Disable in Noclip") then
+	if gBool("Aim Assist", "Aim Priorities", "Disable in Noclip") then
 		if em.GetMoveType(me) == MOVETYPE_NOCLIP then return false end
 	end
-	if !gBool("Aimbot", "Aim Priorities", "Team:") then
+	if !gBool("Aim Assist", "Aim Priorities", "Team:") then
         if pm.Team(v) == pm.Team(me) then return false end
     end
-	if !gBool("Aimbot", "Aim Priorities", "Enemies:") then
+	if !gBool("Aim Assist", "Aim Priorities", "Enemies:") then
         if pm.Team(v) != pm.Team(me) then return false end
     end
-	if !gBool("Aimbot", "Aim Priorities", "Transparent Players:") then
+	if !gBool("Aim Assist", "Aim Priorities", "Transparent Players:") then
         if em.GetColor(v).a < 255 then return false end
     end
-    if !gBool("Aimbot", "Aim Priorities", "Friends:") then
+    if !gBool("Aim Assist", "Aim Priorities", "Friends:") then
         if pm.GetFriendStatus(v) == "friend" then return false end
     end
-	if !gBool("Aimbot", "Aim Priorities", "Bots:") then
+	if !gBool("Aim Assist", "Aim Priorities", "Bots:") then
 		if pm.IsBot(v) then return false end
 	end
-    if !gBool("Aimbot", "Aim Priorities", "Admins:") then
+    if !gBool("Aim Assist", "Aim Priorities", "Admins:") then
         if pm.IsAdmin(v) then return false end
     end
-    if !gBool("Aimbot", "Aim Priorities", "Driving Players:") then
+    if !gBool("Aim Assist", "Aim Priorities", "Driving Players:") then
 		if pm.InVehicle(v) then return false end
 	end
-	if !gBool("Aimbot", "Aim Priorities", "Noclipping Players:") then
+	if !gBool("Aim Assist", "Aim Priorities", "Noclipping Players:") then
 		if em.GetMoveType(v) == MOVETYPE_NOCLIP then return false end
 	end
-	if !gBool("Aimbot", "Aim Priorities", "Frozen Players:") then
+	if !gBool("Aim Assist", "Aim Priorities", "Frozen Players:") then
 		if pm.IsFrozen(v) then return false end
 	end
-	if !gBool("Aimbot", "Aim Priorities", "Overhealed Players:") then
+	if !gBool("Aim Assist", "Aim Priorities", "Overhealed Players:") then
 		if v:Health() > maxhealth then return false end
 	end
-	if !gBool("Aimbot", "Aim Priorities", "Spectators:") then
+	if !gBool("Aim Assist", "Aim Priorities", "Spectators:") then
 		if v:Team() == TEAM_SPECTATOR then return false end
 	end
-	if (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Aimbot", "Aim Priorities", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
+	if (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Aim Assist", "Aim Priorities", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
 		return false
 	end
 	end
@@ -4175,12 +4118,12 @@ local function Valid(v)
         tr.start = me
         tr.endpos = v
         tr.filter = {me, v}
-	if gBool("Aimbot", "Miscellaneous", "Auto Wallbang") then
+	if gBool("Aim Assist", "Miscellaneous", "Auto Wallbang") then
 		tr.start = em.EyePos(me)
         tr.endpos = AimPos(v)
 		tr.mask = MASK_SHOT
 		tr.filter = {me, v}
-	elseif gBool("Aimbot", "Miscellaneous", "Line of Sight Check") then
+	elseif gBool("Aim Assist", "Miscellaneous", "Line of Sight Check") then
 		tr.start = em.EyePos(me)
         tr.endpos = AimPos(v)
 		tr.mask = MASK_VISIBLE_AND_NPCS
@@ -4193,8 +4136,8 @@ local function Valid(v)
 end
 
 local function GetTarget()
-	local opt = gOption("Aimbot", "Aim Priorities", "Aim Priority:")
-	local sticky = gOption("Aimbot", "Ragebot", "Target Lock") or gOption("Aimbot", "Legitbot", "Target Lock")
+	local opt = gOption("Aim Assist", "Aim Priorities", "Aim Priority:")
+	local sticky = gOption("Aim Assist", "Aimbot", "Target Lock")
 	if (opt == "Distance") then
 		if (sticky && Valid(aimtarget)) then return end
 		dists = {}
@@ -4256,11 +4199,9 @@ hook.Add("Move", "Hook16", function()
     if (IsFirstTimePredicted()) then
         servertime = CurTime() + engine.TickInterval()
     end
-	if gBool("Aimbot", "Miscellaneous", "Bullet Time") then
-		if gBool("Aimbot", "Ragebot", "Auto Fire") or gBool("Aimbot", "Legitbot", "Auto Fire") and gInt("Aimbot", "Miscellaneous", "Fire Delay:") ~= 1 then
-			servertime = CurTime() - gInt("Aimbot", "Miscellaneous", "Fire Delay:") / 100
-		elseif gBool("Triggerbot", "Triggerbot", "Enabled") and gInt("Triggerbot", "Triggerbot", "Fire Delay:") ~= 1 then
-			servertime = CurTime() - gInt("Triggerbot", "Triggerbot", "Fire Delay:") / 100
+	if gBool("Aim Assist", "Miscellaneous", "Bullet Time") then
+		if gBool("Aim Assist", "Aimbot", "Auto Fire") and gInt("Aim Assist", "Miscellaneous", "Fire Delay:") ~= 1 then
+			servertime = CurTime() - gInt("Aim Assist", "Miscellaneous", "Fire Delay:") / 100
 		else
 			servertime = CurTime()
 		end
@@ -4269,7 +4210,7 @@ end)
 
 local function WeaponCanFire()
 	local w = pm.GetActiveWeapon(me)
-		if (!w || !em.IsValid(w) || !gBool("Aimbot", "Miscellaneous", "Bullet Time")) then return true end
+		if (!w || !em.IsValid(w) || !gBool("Aim Assist", "Miscellaneous", "Bullet Time")) then return true end
 	return(servertime >= wm.GetNextPrimaryFire(w))
 end
 
@@ -4283,7 +4224,7 @@ end
 
 local function PredictSpread(pCmd, ang)
 	local w = pm.GetActiveWeapon(me)
-	if (not w or not em.IsValid(w) or not cones[em.GetClass(w)] or not gBool("Aimbot", "Miscellaneous", "No Spread")) then return am.Forward(ang) end
+	if (not w or not em.IsValid(w) or not cones[em.GetClass(w)] or not gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread")) then return am.Forward(ang) end
 	return (IdiotBox.Predict(pCmd, am.Forward(ang), cones[em.GetClass(w)]))
 end
 
@@ -4295,7 +4236,7 @@ local function AutoFire(pCmd)
 	end
 end
 
-local function AltFire(pCmd)
+local function AutoZoom(pCmd)
 	if (pm.KeyDown(me, 1)) then
 		cm.SetButtons(pCmd, bit.band(cm.GetButtons(pCmd), bit.bnot(IN_ATTACK2)))
 	else
@@ -4304,11 +4245,11 @@ local function AltFire(pCmd)
 end
 
 local function SmoothAim(ang) 
-	if (gInt("Aimbot", "Legitbot", "Aim Smoothness:") > 0 && !gBool("Aimbot", "Legitbot", "Silent (For Anti-Aim)")) then
+	if (gInt("Aim Assist", "Aimbot", "Aim Smoothness:") > 0 && !gBool("Aim Assist", "Aimbot", "Silent")) then
 		ang.y = math.NormalizeAngle(ang.y) 	
 		ang.p = math.NormalizeAngle(ang.p) 	
 		eyeang = LocalPlayer():EyeAngles() 	
-		local smooth = gInt("Aimbot", "Legitbot", "Aim Smoothness:") 	
+		local smooth = gInt("Aim Assist", "Aimbot", "Aim Smoothness:") 	
 		if ((eyeang.y - ang.y) * - 1 > 180 && eyeang.y < 0) 
 		then eyeang.y = eyeang.y + 360 end 	if ((ang.y - eyeang.y) * - 1 > 180 && ang.y < 0) then ang.y = ang.y + 360 end 	
 		eyeang.y = eyeang.y + (ang.y - eyeang.y) / smooth eyeang.x = eyeang.x + (ang.x - eyeang.x) / smooth eyeang.r = 0 	
@@ -4318,7 +4259,7 @@ end
 
 local function PredictPos(aimtarget)
 	local wep = me:GetActiveWeapon()
-	if gBool("Aimbot", "Aim Priorities", "Projectile Prediction") and me:Alive() and me:Health() > 0 then
+	if gBool("Aim Assist", "Aim Priorities", "Projectile Prediction") and me:Alive() and me:Health() > 0 then
 		if string.find(string.lower(wep:GetClass()), "crossbow") then
 			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 1100 then
 				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 1600) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
@@ -4377,161 +4318,139 @@ local function PredictPos(aimtarget)
 			return AimPos(aimtarget) - em.EyePos(me)
 		end
 	end
-	if not gBool("Aimbot", "Aim Priorities", "Projectile Prediction") then
+	if not gBool("Aim Assist", "Aim Priorities", "Projectile Prediction") then
 		return AimPos(aimtarget) - em.EyePos(me)
 	end
 end
 
-local function Ragebot(pCmd)
-	if me:Team() == TEAM_SPECTATOR and not gBool("Aimbot", "Aim Priorities", "Spectators:") then return end
+local function Aimbot(pCmd)
+	if me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:") then return end
 	if not me:Alive() or me:Health() < 1 then return end
 	for k, v in pairs(player.GetAll()) do
-	if (gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Ragebot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || FixTools()) then return end
+	if (gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || FixTools()) then return end
 	end
-	if (cm.CommandNumber(pCmd) == 0 || !gBool("Aimbot", "Ragebot", "Enabled") || gBool("Aimbot", "Legitbot", "Enabled")) then return end
+	if (cm.CommandNumber(pCmd) == 0 || !gBool("Aim Assist", "Aimbot", "Enabled")) then return end
 	GetTarget()
-	aa = false
-	if (aimtarget && aimtarget:IsValid() && gKey("Aimbot", "Ragebot", "Aim Key:") && WeaponCanFire()) then
+    aa = false
+    if (aimtarget && aimtarget:IsValid() && gKey("Aim Assist", "Aimbot", "Aim Key:") && WeaponCanFire()) then
+	local pos = PredictPos(aimtarget)
+	local ang = vm.Angle(PredictSpread(pCmd, vm.Angle(pos)))
+	local ady = math.abs(math.NormalizeAngle(ang.y - fa.y))
+	local adp = math.abs(math.NormalizeAngle(ang.p - fa.p))
+	local ang = SmoothAim(ang)
+	local fov = gInt("Aim Assist", "Aimbot", "Aim FoV Value:")
+	if fov == 0 then
 		aa = true
-		local pos = PredictPos(aimtarget)
-		local ang = vm.Angle(PredictSpread(pCmd, vm.Angle(pos)))
 		FixAngle(ang)
 		cm.SetViewAngles(pCmd, ang)
-		if (gBool("Aimbot", "Ragebot", "Auto Fire")) then
-			AutoFire(pCmd)
+		if (gBool("Aim Assist", "Aimbot", "Auto Fire")) then
+            AutoFire(pCmd)
+        end
+		if (gBool("Aim Assist", "Aimbot", "Auto Zoom")) then
+			AutoZoom(pCmd)
 		end
-		if (gBool("Aimbot", "Ragebot", "Alt Fire")) then
-			AltFire(pCmd)
-		end
-		if (gBool("Aimbot", "Ragebot", "Silent")) then
+		if (gBool("Aim Assist", "Aimbot", "Silent")) then
 			FixMovement(pCmd)
 		else
 			fa = ang
 		end
-	end
-end
-
-local function Legitbot(pCmd)
-	if me:Team() == TEAM_SPECTATOR and not gBool("Aimbot", "Aim Priorities", "Spectators:") then return end
-	if not me:Alive() or me:Health() < 1 then return end
-	for k, v in pairs(player.GetAll()) do
-	if (gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Legitbot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || FixTools()) then return end
-	end
-	if (cm.CommandNumber(pCmd) == 0 || !gBool("Aimbot", "Legitbot", "Enabled") || gBool("Aimbot", "Ragebot", "Enabled")) then return end
-	GetTarget()
-    aa = false
-    if (aimtarget && aimtarget:IsValid() && gKey("Aimbot", "Legitbot", "Aim Key:") && WeaponCanFire()) then
-	local FovValue = gInt("Aimbot", "Legitbot", "Aim FoV Value:")
-	if (FovValue < 0) then
-	return end
-	if (FovValue > 0) then
-		local pos = PredictPos(aimtarget)
-		local ang = vm.Angle(PredictSpread(pCmd, vm.Angle(pos)))
+	else
+	if not (ady > fov or adp > fov) then
 		FixAngle(ang)
-		local CalcX = ang.x - fa.x
-	    local CalcY = ang.y - fa.y
-		if CalcY < 0 then CalcY = CalcY * - 1 end	
-		if CalcX < 0 then CalcX = CalcX * - 1 end
-		if CalcY > 360 then CalcY = CalcY - 360 end
-		if CalcX > 360 then CalcX = CalcX - 360 end
-		if CalcY > 180 then CalcY = 360 - CalcY end
-		if CalcX > 180 then CalcX = 360 - CalcX end
-		if (CalcX <= FovValue / 2 && CalcY <= FovValue  * 0.4) then
-		local ang = SmoothAim(ang)
 		cm.SetViewAngles(pCmd, ang)
-        if (gBool("Aimbot", "Legitbot", "Auto Fire")) then
+        if (gBool("Aim Assist", "Aimbot", "Auto Fire")) then
             AutoFire(pCmd)
         end
-		if (gBool("Aimbot", "Legitbot", "Alt Fire")) then
-			AltFire(pCmd)
+		if (gBool("Aim Assist", "Aimbot", "Auto Zoom")) then
+			AutoZoom(pCmd)
 		end
-        if (gBool("Aimbot", "Legitbot", "Silent (For Anti-Aim)")) then
-            FixMovement(pCmd)
-        else
-            fa = ang
-        end
+		if (gBool("Aim Assist", "Aimbot", "Silent")) then
+			FixMovement(pCmd)
+		else
+			fa = ang
+		end
 			end
 		end
 	end
 end
 
 local function TriggerValid(v)
-	return (v and idiot.IsValid(v) and v:Health() > 0 and not v:IsDormant() and me:GetObserverTarget() ~= v and TriggerbotPriorities(v))
+	return (v and idiot.IsValid(v) and v:Health() > 0 and not v:IsDormant() and me:GetObserverTarget() ~= v and AimAssistPriorities(v))
 end
 
 local function TriggerFilter(hitbox)
-	if (gBool("Triggerbot", "Aim Priorities", "Hitbox:") == "Head") then
+	if gOption("Aim Assist", "Aim Priorities", "Hitbox:") == "Head" then
 		return hitbox == 0
 	end
 	return hitbox ~= nil
 end
 
 local function Triggerbot(pCmd)
-	if not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not gBool("Triggerbot", "Triggerbot", "Spectators:")) or not gKey("Triggerbot", "Triggerbot", "Trigger Key:") or pCmd:KeyDown(IN_ATTACK) or not gBool("Triggerbot", "Triggerbot", "Enabled") or FixTools() then return end
-	local dist = gBool("Triggerbot", "Aim Priorities", "Distance:")
-	local vel = gBool("Triggerbot", "Aim Priorities", "Velocity:")
-	local maxhealth = gInt("Triggerbot", "Aim Priorities", "Max Player Health:") 
+	if not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Triggerbot", "Spectators:")) or not gKey("Aim Assist", "Triggerbot", "Trigger Key:") or pCmd:KeyDown(IN_ATTACK) or not gBool("Aim Assist", "Triggerbot", "Enabled") or FixTools() then return end
+	local dist = gBool("Aim Assist", "Aim Priorities", "Distance:")
+	local vel = gBool("Aim Assist", "Aim Priorities", "Velocity:")
+	local maxhealth = gInt("Aim Assist", "Aim Priorities", "Max Player Health:") 
 	local trace = me:GetEyeTraceNoCursor()
 	local v = trace.Entity
 	local hitbox = trace.HitBox
 	if TriggerValid(v) and TriggerFilter(hitbox) then
 	if v:IsPlayer() then
-	if gBool("Triggerbot", "Aim Priorities", "Distance Limit") then
-	if (vm.Distance(em.GetPos(v), em.GetPos(me)) > (dist * 5)) then return false end
+		if gBool("Aim Assist", "Aim Priorities", "Distance Limit") then
+			if (vm.Distance(em.GetPos(v), em.GetPos(me)) > (dist * 5)) then return false end
+		end
+		if gBool("Aim Assist", "Aim Priorities", "Velocity Limit") then
+			if (v:GetVelocity():Length() > vel) then return false end
+		end
+		if !gBool("Aim Assist", "Aim Priorities", "Team:") then
+			if pm.Team(v) == pm.Team(me) then return false end
+		end
+		if !gBool("Aim Assist", "Aim Priorities", "Enemies:") then
+			if pm.Team(v) != pm.Team(me) then return false end
+		end
+		if !gBool("Aim Assist", "Aim Priorities", "Transparent Players:") then
+			if em.GetColor(v).a < 255 then return false end
+		end
+		if !gBool("Aim Assist", "Aim Priorities", "Friends:") then
+			if pm.GetFriendStatus(v) == "friend" then return false end
+		end
+		if !gBool("Aim Assist", "Aim Priorities", "Bots:") then
+			if pm.IsBot(v) then return false end
+		end
+		if !gBool("Aim Assist", "Aim Priorities", "Admins:") then
+			if pm.IsAdmin(v) then return false end
+		end
+		if !gBool("Aim Assist", "Aim Priorities", "Frozen Players:") then
+			if pm.IsFrozen(v) then return false end
+		end
+		if !gBool("Aim Assist", "Aim Priorities", "Driving Players:") then
+			if pm.InVehicle(v) then return false end
+		end
+		if !gBool("Aim Assist", "Aim Priorities", "Noclipping Players:") then
+			if em.GetMoveType(v) == MOVETYPE_NOCLIP then return false end
+		end
+		if gBool("Aim Assist", "Aim Priorities", "Disable in Noclip") then
+			if em.GetMoveType(me) == MOVETYPE_NOCLIP then return false end
+		end
+		if !gBool("Aim Assist", "Aim Priorities", "Spectators:") then
+			if pm.Team(v) == TEAM_SPECTATOR then return false end
+		end
+		if !gBool("Aim Assist", "Aim Priorities", "Overhealed Players:") then
+			if v:Health() > maxhealth then return false end
+		end
+		if (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Aim Assist", "Aim Priorities", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
+			return false
+		end
 	end
-	if gBool("Triggerbot", "Aim Priorities", "Velocity Limit") then
-	if (v:GetVelocity():Length() > vel) then return false end
-	end
-	if !gBool("Triggerbot", "Aim Priorities", "Team:") then
-    if pm.Team(v) == pm.Team(me) then return false end
-    end
-	if !gBool("Triggerbot", "Aim Priorities", "Enemies:") then
-    if pm.Team(v) != pm.Team(me) then return false end
-    end
-	if !gBool("Triggerbot", "Aim Priorities", "Transparent Players:") then
-    if em.GetColor(v).a < 255 then return false end
-    end
-    if !gBool("Triggerbot", "Aim Priorities", "Friends:") then
-    if pm.GetFriendStatus(v) == "friend" then return false end
-    end
-	if !gBool("Triggerbot", "Aim Priorities", "Bots:") then
-	if pm.IsBot(v) then return false end
-	end
-    if !gBool("Triggerbot", "Aim Priorities", "Admins:") then
-    if pm.IsAdmin(v) then return false end
-    end
-	if !gBool("Triggerbot", "Aim Priorities", "Frozen Players:") then
-	if pm.IsFrozen(v) then return false end
-	end
-    if !gBool("Triggerbot", "Aim Priorities", "Driving Players:") then
-	if pm.InVehicle(v) then return false end
-	end
-	if !gBool("Triggerbot", "Aim Priorities", "Noclipping Players:") then
-	if em.GetMoveType(v) == MOVETYPE_NOCLIP then return false end
-	end
-	if gBool("Triggerbot", "Aim Priorities", "Disable in Noclip") then
-	if em.GetMoveType(me) == MOVETYPE_NOCLIP then return false end
-	end
-	if !gBool("Triggerbot", "Aim Priorities", "Spectators:") then
-	if pm.Team(v) == TEAM_SPECTATOR then return false end
-	end
-	if !gBool("Triggerbot", "Aim Priorities", "Overhealed Players:") then
-	if v:Health() > maxhealth then return false end
-	end
-	if (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Triggerbot", "Aim Priorities", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
-	return false
-	end
-	end
-	if (gBool("Triggerbot", "Triggerbot", "Alt Fire")) then
-	pCmd:SetButtons(pCmd:GetButtons() + IN_ATTACK2)
+	if (gBool("Aim Assist", "Triggerbot", "Auto Zoom")) then
+		pCmd:SetButtons(pCmd:GetButtons() + IN_ATTACK2)
 	end
 	if not TriggerValid(v) then return end
-	idiot.Triggering = true
+	triggering = true
 	if WeaponCanFire() then
-	pCmd:SetButtons(pCmd:GetButtons() + IN_ATTACK)
+		pCmd:SetButtons(pCmd:GetButtons() + IN_ATTACK)
 	end
 	else
-	idiot.Triggering = false
+	triggering = false
 	end
 end
 
@@ -4889,7 +4808,7 @@ local function AntiAim(pCmd)
 	if (gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Anti-Aim" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me) then return end
 	end
 	local wep = pm.GetActiveWeapon(me)
-	if (gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP || me:Team() == TEAM_SPECTATOR || idiot.Triggering == true || (cm.CommandNumber(pCmd) == 0 && !gBool("Miscellaneous", "Point of View", "Thirdperson")) || cm.KeyDown(pCmd, 1) || gBool("Miscellaneous", "Point of View", "Custom FoV") && gBool("Miscellaneous", "Free Roaming", "Enabled") && gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") && !gBool("Miscellaneous", "Point of View", "Thirdperson") || me:WaterLevel() > 1 || input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable in 'Use' Toggle") && !me:IsTyping() || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aimbot", "Legitbot", "Enabled") && !gBool("Aimbot", "Legitbot", "Silent (For Anti-Aim)") || gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" && idiot.engine.ActiveGamemode() == "terrortown") then return end
+	if (gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP || me:Team() == TEAM_SPECTATOR || triggering == true || (cm.CommandNumber(pCmd) == 0 && !gBool("Miscellaneous", "Point of View", "Thirdperson")) || cm.KeyDown(pCmd, 1) || gBool("Miscellaneous", "Point of View", "Custom FoV") && gBool("Miscellaneous", "Free Roaming", "Enabled") && gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") && !gBool("Miscellaneous", "Point of View", "Thirdperson") || me:WaterLevel() > 1 || input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable in 'Use' Toggle") && !me:IsTyping() || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aim Assist", "Aimbot", "Enabled") && (gInt("Aim Assist", "Aimbot", "Aim FoV Value:") > 0 or gInt("Aim Assist", "Aimbot", "Aim Smoothness:") > 0) || gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" && idiot.engine.ActiveGamemode() == "terrortown") then return end
 	if gOption("Hack vs. Hack", "Anti-Aim", "Anti-Aim Direction:") == "Manual Switch" then
 	if gKey("Hack vs. Hack", "Anti-Aim", "Switch Key:") and not manualpressed then
 	manualpressed = true
@@ -4936,7 +4855,7 @@ end
 
 local function GetAngle(ang)
 	if not FixTools() then
-		if (not gBool("Aimbot", "Miscellaneous", "No Recoil")) then 
+		if (not gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil")) then 
 			return ang + pm.GetPunchAngle(me)
 		else
 			return ang
@@ -4989,18 +4908,18 @@ local function PropKill(pCmd)
 end
 
 local function AutoStop(pCmd)
-		if (gBool("Aimbot", "Ragebot", "Enabled") && gBool("Aimbot", "Ragebot", "Auto Stop") && aimtarget && gKey("Aimbot", "Ragebot", "Aim Key:") && WeaponCanFire() or gBool("Aimbot", "Legitbot", "Enabled") && gBool("Aimbot", "Legitbot", "Auto Stop") && aimtarget && gKey("Aimbot", "Ragebot", "Aim Key:") && WeaponCanFire() or gBool("Triggerbot", "Triggerbot", "Enabled") && gBool("Triggerbot", "Triggerbot", "Auto Stop") && gKey("Triggerbot", "Triggerbot", "Trigger Key:") && idiot.Triggering && WeaponCanFire()) then
-			pCmd:SetForwardMove(0)
-			pCmd:SetSideMove(0)
-			pCmd:SetUpMove(0)
-		return
+	if (gBool("Aim Assist", "Aimbot", "Enabled") && gBool("Aim Assist", "Aimbot", "Auto Stop") && aimtarget && gKey("Aim Assist", "Aimbot", "Aim Key:") && WeaponCanFire() or gBool("Aim Assist", "Triggerbot", "Enabled") && gBool("Aim Assist", "Triggerbot", "Auto Stop") && gKey("Aim Assist", "Triggerbot", "Trigger Key:") && triggering && WeaponCanFire()) then
+		pCmd:SetForwardMove(0)
+		pCmd:SetSideMove(0)
+		pCmd:SetUpMove(0)
+	return
 	end
 end
 
 local function AutoCrouch(pCmd)	
-		if (gBool("Aimbot", "Ragebot", "Enabled") && gBool("Aimbot", "Ragebot", "Auto Crouch") && aimtarget && gKey("Aimbot", "Ragebot", "Aim Key:") && WeaponCanFire() or gBool("Aimbot", "Legitbot", "Enabled") && gBool("Aimbot", "Legitbot", "Auto Crouch") && aimtarget && gKey("Aimbot", "Ragebot", "Aim Key:") && WeaponCanFire() or gBool("Triggerbot", "Triggerbot", "Enabled") && gBool("Triggerbot", "Triggerbot", "Auto Crouch") && gKey("Triggerbot", "Triggerbot", "Trigger Key:") && idiot.Triggering && WeaponCanFire()) then
-			pCmd:SetButtons(pCmd:GetButtons() + IN_DUCK)
-		return
+	if (gBool("Aim Assist", "Aimbot", "Enabled") && gBool("Aim Assist", "Aimbot", "Auto Crouch") && aimtarget && gKey("Aim Assist", "Aimbot", "Aim Key:") && WeaponCanFire() or gBool("Aim Assist", "Triggerbot", "Enabled") && gBool("Aim Assist", "Triggerbot", "Auto Crouch") && gKey("Aim Assist", "Triggerbot", "Trigger Key:") && triggering && WeaponCanFire()) then
+		pCmd:SetButtons(pCmd:GetButtons() + IN_DUCK)
+	return
 	end
 end
 
@@ -5030,7 +4949,7 @@ local crouched = 0
 local function FakeCrouch(pCmd)
 	if gBool("Miscellaneous", "Movement", "Fake Crouch") then
 	if em.GetMoveType(me) == MOVETYPE_NOCLIP then return end
-	if me:Team() == TEAM_SPECTATOR and not (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) then return end
+	if me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Spectators:") or gBool("Aim Assist", "Aim Priorities", "Spectators:")) then return end
 	if not me:Alive() or me:Health() < 1 then return end
 	if LocalPlayer():IsFlagSet(1024) then return end
 		if me:KeyDown(IN_DUCK) then
@@ -5055,7 +4974,7 @@ local roampos, roamang, roamon, roamx, roamy, roamduck, roamjump = LocalPlayer()
 
 hook.Add("CalcView", "Hook17", function(me, pos, ang, fov)
 	local view = {}
-		if gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:"))) and (me:Alive() or me:Health() > 0) then
+		if gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and (gBool("Aim Assist", "Aim Priorities", "Spectators:") or gBool("Aim Assist", "Aim Priorities", "Spectators:"))) and (me:Alive() or me:Health() > 0) then
 			local speed = gInt("Miscellaneous", "Free Roaming", "Free Roaming Speed:") / 5
 			local mouseang = Angle(roamy, roamx, 0)
 			if LocalPlayer():KeyDown(IN_SPEED) then
@@ -5089,7 +5008,7 @@ hook.Add("CalcView", "Hook17", function(me, pos, ang, fov)
 			view.angles = angles
 			view.fov = gInt("Miscellaneous", "Point of View", "FoV Range:")
 		end
-		if gBool("Aimbot", "Miscellaneous", "No Recoil") and (me:Alive() or me:Health() > 0) and me:GetMoveType() ~= 10 and me:GetObserverTarget() == nil then
+		if gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil") and (me:Alive() or me:Health() > 0) and me:GetMoveType() ~= 10 and me:GetObserverTarget() == nil then
 			view.origin = me:EyePos()
 			view.angles = me:EyeAngles()
 		end
@@ -5106,7 +5025,7 @@ hook.Add("CalcView", "Hook17", function(me, pos, ang, fov)
 end)
 
 local function FreeRoam(pCmd)
-	if (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and (gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:"))) and (me:Alive() or me:Health() > 0)) then
+	if (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and (gBool("Aim Assist", "Aim Priorities", "Spectators:") or gBool("Aim Assist", "Aim Priorities", "Spectators:"))) and (me:Alive() or me:Health() > 0)) then
 		if roamon == false then
 			roampos, roamang = LocalPlayer():EyePos(), pCmd:GetViewAngles()
 			roamy, roamx = pCmd:GetViewAngles().x, pCmd:GetViewAngles().y
@@ -5134,9 +5053,9 @@ local function FreeRoam(pCmd)
 end
 
 hook.Add("AdjustMouseSensitivity", "Hook18", function()
-	if not gBool("Triggerbot", "Triggerbot", "Smooth Aim") then return end
-	if not gKey("Triggerbot", "Triggerbot", "Trigger Key:") then return end
-	if not idiot.Triggering then return end
+	if not gBool("Aim Assist", "Triggerbot", "Smooth Aim") then return end
+	if not gKey("Aim Assist", "Triggerbot", "Trigger Key:") then return end
+	if not triggering then return end
 	if FixTools() then return end
 	return .10
 end)
@@ -5157,13 +5076,12 @@ hook.Add("CreateMove", "Hook20", function(pCmd)
 	FreeRoam(pCmd)
 	AutoReload(pCmd)
 	AntiAim(pCmd)
-	RapidFire(pCmd)
+	RapidPrimaryFire(pCmd)
 	RapidAltFire(pCmd)
 	AutoStop(pCmd)
 	AutoCrouch(pCmd)
 	FakeCrouch(pCmd)
 	AirCrouch(pCmd)
-	Triggerbot(pCmd)
 	local wep = pm.GetActiveWeapon(me)
 	if idiot.engine.ActiveGamemode() == "terrortown" and gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") and wep:IsValid() and wep:GetClass() == "weapon_zm_carry" then
 		PropKill(pCmd)
@@ -5172,8 +5090,8 @@ hook.Add("CreateMove", "Hook20", function(pCmd)
 	return
 	end
 	big.StartPrediction(pCmd, cm.CommandNumber(pCmd))
-	Ragebot(pCmd)
-	Legitbot(pCmd)
+	Aimbot(pCmd)
+	Triggerbot(pCmd)
 	big.FinishPrediction()
 end)
 
@@ -5196,7 +5114,7 @@ hook.Add("HUDPaint2", "Hook22", function()
 	if gui.IsGameUIVisible() then return end
 	if gui.IsConsoleVisible() then return end
 	if (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then return end
-	if me:Team() == TEAM_SPECTATOR and not ((gBool("Aimbot", "Aim Priorities", "Spectators:") or gBool("Triggerbot", "Aim Priorities", "Spectators:")) and gBool("Visuals", "Miscellaneous", "Show Spectators")) then return end
+	if me:Team() == TEAM_SPECTATOR and not ((gBool("Aim Assist", "Aim Priorities", "Spectators:") or gBool("Aim Assist", "Aim Priorities", "Spectators:")) and gBool("Visuals", "Miscellaneous", "Show Spectators")) then return end
 	if not me:Alive() or me:Health() < 1 then return end
 	if (v == me and not em.IsValid(v)) then return end
 	local Cap = math.cos(math.rad(45))
@@ -5236,16 +5154,6 @@ hook.Add("HUDPaint2", "Hook22", function()
     	surface.DrawRect((ScrW() / 2) - 73, 55, 152, 5)
     end
 	if menuopen then return end
-	if gBool("Miscellaneous", "Point of View", "Mirror") then
-		local view = {}
-			view.angles = Angle(fa.p - fa.p - fa.p, fa.y - 180, fa.r)
-			view.origin = me:GetShootPos()
-			view.x = 650
-			view.y = 0
-			view.w = ScrW() / 3
-			view.h = ScrH() / 5
-		render.RenderView(view)
-	end
 	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:") then
 		if prop_val >= 180 then
 			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(255, 0, 0))
@@ -5253,9 +5161,9 @@ hook.Add("HUDPaint2", "Hook22", function()
 			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
 		end
 	end
-	if gBool("Aimbot", "Legitbot", "Enabled") and gBool("Visuals", "Miscellaneous", "Show FoV Circle") and not gBool("Aimbot", "Ragebot", "Enabled") then
+	if gBool("Aim Assist", "Aimbot", "Enabled") and gBool("Visuals", "Miscellaneous", "Show FoV Circle") and not gBool("Aim Assist", "Aimbot", "Enabled") then
 		local center = Vector(ScrW() / 2, ScrH() / 2, 0)
-		local scale = Vector(((gInt("Aimbot", "Legitbot", "Aim FoV Value:")) * 6.1), ((gInt("Aimbot", "Legitbot", "Aim FoV Value:")) * 6.1), 0)
+		local scale = Vector(((gInt("Aim Assist", "Aimbot", "Aim FoV Value:")) * 8.5), ((gInt("Aim Assist", "Aimbot", "Aim FoV Value:")) * 8.5), 0)
 		local segmentdist = 360 / (2 * math.pi * math.max(scale.x, scale.y) / 2)
 			surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:"))	
 		for a = 0, 360 - segmentdist, segmentdist do
