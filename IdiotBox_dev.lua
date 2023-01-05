@@ -244,7 +244,7 @@ local options = {
 		}, 
         ["Visuals"] = {
                 {
-					{"Wallhack", 16, 20, 347, 575, 218}, 
+					{"Wallhack", 16, 20, 347, 580, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Visibility:", "Selection", "Global", {"Global", "Clientside"}, 92}, 
 					{"Box:", "Selection", "Off", {"Off", "2D Box", "3D Box", "Edged Box"}, 92}, 
@@ -269,7 +269,7 @@ local options = {
 					{"DarkRP Money", "Checkbox", false, 78}, 
                 }, 
                 {
-					{"Miscellaneous", 736, 20, 347, 585, 218}, 
+					{"Miscellaneous", 736, 20, 347, 595, 218}, 
 					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Hide Ignored Targets", "Checkbox", false, 78}, 
 					{"Show Enemies Only", "Checkbox", false, 78}, 
