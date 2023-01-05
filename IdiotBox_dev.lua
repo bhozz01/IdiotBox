@@ -244,7 +244,7 @@ local options = {
 		}, 
         ["Visuals"] = {
                 {
-					{"Wallhack", 16, 20, 347, 570, 218}, 
+					{"Wallhack", 16, 20, 347, 575, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Visibility:", "Selection", "Global", {"Global", "Clientside"}, 92}, 
 					{"Box:", "Selection", "Off", {"Off", "2D Box", "3D Box", "Edged Box"}, 92}, 
