@@ -12,6 +12,7 @@
 -----HOW TO INITIALIZE IDIOTBOX ON PUBLIC SERVERS:-----
 
 There are a lot of methods out there for loading .lua scripts on servers that don't have 'sv_allowcslua' enabled. Some of these methods can change from time to time, as they get patched and replaced by others;
+
 My method of choice is using a loader named 'external.dll' (message me on Discord and I will send it to you). To use it, follow these steps:
 1. Create a folder in 'C:\Documents' named 'external' (other names won't work); 
 2. Drag 'IdiotBox_latest.lua' or any other .lua script of your choice in said folder;
@@ -31,6 +32,7 @@ My method of choice is using a loader named 'external.dll' (message me on Discor
 -----REPORTING ISSUES:-----
 
 If you encounter any bugs, errors or glitches while using IdiotBox, contact me through Discord (Phizz#1667) and I will assist you as much as I possibly can;
+
 Alternatively, you can add me on Steam (https://steamcommunity.com/id/phizzofficial), however, my friends list is usually full and you might not be able to add me, but you can always leave a comment.
 
 -----NOTES:-----
@@ -42,6 +44,7 @@ Alternatively, you can add me on Steam (https://steamcommunity.com/id/phizzoffic
 -----CREDITS:-----
 
 Pasteware - Many of the basic features;
+
 Others - Smaller features.
 
 Happy Cheating!
