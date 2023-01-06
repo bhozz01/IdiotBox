@@ -47,8 +47,6 @@ Pasteware - Many of the basic features;
 
 Others - Smaller features.
 
-
-
 Happy Cheating!
 
    ~Phizz
