@@ -21,7 +21,7 @@ My method of choice is using a loader named 'external.dll' (message me on Discor
 6. Open the console and type the following command: 'external IdiotBox_latest.lua" (or whatever your script's name is);
 7. Run the command;
 8. Enjoy!
-9. 
+
 ***If you are using a gLua loader, you will have to copy the script itself (which you can do by opening the .lua file with any text editor), paste it into the loader's console and execute it from there;
 
 ***If you are using a prorpietary .lua script loader, follow the tutorial that came with it. There is not much else I can help you with in this instance;
