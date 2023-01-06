@@ -6,7 +6,7 @@
 4. Open the console and type the following command: 'lua_openscript_cl IdiotBox_latest.lua" (or whatever your script's name is);
 5. Run the command;
 6. Enjoy!
-***If GitHub's servers are down and you cannot load IdiotBox, use the 'IdiotBox_backup.lua' file. The backup version does not load the script from GitHub, thus requiring manual updating when new versions come out.
+*If GitHub's servers are down and you cannot load IdiotBox, use the 'IdiotBox_backup.lua' file. The backup version does not load the script from GitHub, thus requiring manual updating when new versions come out.
 
 -----HOW TO INITIALIZE IDIOTBOX ON PUBLIC SERVERS:-----
 
@@ -20,9 +20,9 @@ My method of choice is using a loader named 'external.dll' (message me on Discor
 6. Open the console and type the following command: 'external IdiotBox_latest.lua" (or whatever your script's name is);
 7. Run the command;
 8. Enjoy!
-***If you are using a gLua loader, you will have to copy the script itself (which you can do by opening the .lua file with any text editor), paste it into the loader's console and execute it from there;
-***If you are using a prorpietary .lua script loader, follow the tutorial that came with it. There is not much else I can help you with in this instance;
-***If you are having trouble with loading IdiotBox or other .lua scripts on public servers, add me on Discord (Phizz#1667) and I will assist you as much as I possibly can.
+*If you are using a gLua loader, you will have to copy the script itself (which you can do by opening the .lua file with any text editor), paste it into the loader's console and execute it from there;
+*If you are using a prorpietary .lua script loader, follow the tutorial that came with it. There is not much else I can help you with in this instance;
+*If you are having trouble with loading IdiotBox or other .lua scripts on public servers, add me on Discord (Phizz#1667) and I will assist you as much as I possibly can.
 
 -----REPORTING ISSUES:-----
 
@@ -31,8 +31,8 @@ Alternatively, you can add me on Steam (https://steamcommunity.com/id/phizzoffic
 
 -----NOTES:-----
 
-***To reiterate, DRAG BOTH 'IdiotBox_latest.lua' AND THE 'bin' FOLDER INTO THE AFOREMENTIONED DIRECTORY;
-***The 'IdiotBox_dev.lua' file lets you access the currently work-in-progress version of IdiotBox - but as a heads up - it can be very buggy and unstable.
+*To reiterate, DRAG BOTH 'IdiotBox_latest.lua' AND THE 'bin' FOLDER INTO THE AFOREMENTIONED DIRECTORY;
+*The 'IdiotBox_dev.lua' file lets you access the currently work-in-progress version of IdiotBox - but as a heads up - it can be very buggy and unstable.
 
 -----CREDITS:-----
 
