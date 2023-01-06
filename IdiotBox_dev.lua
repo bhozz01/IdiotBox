@@ -475,7 +475,7 @@ local order = {
 }
 
 local function gBool(men, sub, lookup)
-	if (not options[men]) then return end
+	if not options[men] then return end
 	for aa, aaa in next, options[men] do
 		for key, val in next, aaa do
 			if (aaa[1][1] ~= sub) then continue end
@@ -487,7 +487,7 @@ local function gBool(men, sub, lookup)
 end
 
 local function gOption(men, sub, lookup)
-	if (not options[men]) then return "" end
+	if not options[men] then return "" end
 	for aa, aaa in next, options[men] do
 		for key, val in next, aaa do
 			if (aaa[1][1] ~= sub) then continue end
@@ -500,7 +500,7 @@ local function gOption(men, sub, lookup)
 end
 
 local function gInt(men, sub, lookup)
-	if (not options[men]) then return 0 end
+	if not options[men] then return 0 end
 	for aa, aaa in next, options[men] do
 		for key, val in next, aaa do
 			if (aaa[1][1] ~= sub) then continue end
@@ -513,8 +513,7 @@ local function gInt(men, sub, lookup)
 end
 
 local function gKey(men, sub, lookup)
-    if (not options[men]) then return end
-	if LocalPlayer():IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then return end
+    if not options[men] or LocalPlayer():IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then return end
     for aa, aaa in next, options[men] do
         for key, val in next, aaa do
             if(aaa[1][1] ~= sub) then continue end
@@ -1961,11 +1960,7 @@ local playerkills = 0
 local function KillSpam(data)
 	local killer = Entity(data.entindex_attacker)
 	local killed = Entity(data.entindex_killed)
-	if not killer:IsValid() or not killed:IsValid() or not killer:IsPlayer() or not killed:IsPlayer() then return end
-	if gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, killed:UniqueID()) then return end
-	if gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, killer:UniqueID()) then return end
-	if gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and (killed ~= me and killer == me and not table.HasValue(priority_list, killed:UniqueID())) then return end
-	if gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and (killed == me and killer ~= me and not table.HasValue(priority_list, killer:UniqueID())) then return end
+	if (not killer:IsValid() or not killed:IsValid() or not killer:IsPlayer() or not killed:IsPlayer()) or (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, killed:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, killer:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and (killed ~= me and killer == me and not table.HasValue(priority_list, killed:UniqueID()))) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and (killed == me and killer ~= me and not table.HasValue(priority_list, killer:UniqueID()))) then return end
 	local playerphrases = {"Owned", "Bodied", "Smashed", "Fucked", "Destroyed", "Annihilated", "Decimated", "Wrecked", "Demolished", "Trashed", "Ruined", "Murdered", "Exterminated", "Slaughtered", "Butchered", "Genocided", "Executed", "Bamboozled", "IdiotBox'd",}
 	local excuses = {"i lagged out wtf", "bad ping wtf", "lol wasnt looking at you", "was alt tabbed", "luck", "wow", "nice one", "i think ur hacking m8", "my cat was on the keyboard", "my dog was on the keyboard", "my fps is trash", "my ping is trash", "ouch", "wtf", "ok",}
 	local hvhexcuses = {"forgot to press aimkey lol", "give me a minute to configurate", "wtf it didnt save my settings wait", "lol my hvh settings are gone, wait", "luck lol", "my fps is trash", "my ping is trash", "what are you using?",}
@@ -2383,9 +2378,7 @@ local function PlayerList()
 end
 
 local function Crosshair()
-	if menuopen then return end
-	if me:Team() == TEAM_SPECTATOR and not ((gBool("Aim Assist", "Aim Priorities", "Spectators:") or gBool("Aim Assist", "Aim Priorities", "Spectators:")) and gBool("Visuals", "Miscellaneous", "Show Spectators")) then return end
-	if not me:Alive() or me:Health() < 1 then return end
+	if menuopen or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Spectators:") and gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not me:Alive() or me:Health() < 1 then return end
 	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Box") then
 	local x1, y1 = ScrW() * 0.5, ScrH() * 0.5
 		surface.SetDrawColor(0, 0, 0, gInt("Settings", "Others", "T Opacity:"))
@@ -2393,7 +2386,7 @@ local function Crosshair()
 		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:"))
 		surface.DrawRect(x1 - 2, y1 - 1, 4, 4)
 	end
-	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Dot") then -- I want to avoid using surface.DrawPoly as much as possible
+	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Dot") then -- Cancer, I know, but I want to avoid using surface.DrawPoly as much as possible
 		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
 		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
 		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.6, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
@@ -2923,8 +2916,7 @@ end
 local timeHoldingSpaceOnGround = 0
 
 local function BunnyHop(pCmd)
-	if me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Spectators:") or gBool("Aim Assist", "Aim Priorities", "Spectators:")) then return end
-	if not me:Alive() or me:Health() < 1 then return end
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) or not me:Alive() or me:Health() < 1 then return end
 	if gBool("Miscellaneous", "Movement", "Bunny Hop") and gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Off" then
     local badmovetypes = {
         [MOVETYPE_NOCLIP] = true,
@@ -2941,8 +2933,8 @@ local function BunnyHop(pCmd)
         end
         return
     end
-    local in_water = LocalPlayer():WaterLevel() >= 2
-    if(in_water) then return end
+    local water = LocalPlayer():WaterLevel() >= 2
+    if water then return end
     pCmd:RemoveKey(IN_JUMP)
 	end
 end
@@ -2975,8 +2967,7 @@ local function RageStrafe(pCmd)
 end
 
 local function CircleStrafe(pCmd)
-	if me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Spectators:") or gBool("Aim Assist", "Aim Priorities", "Spectators:")) then return end
-	if not me:Alive() or me:Health() < 1 then return end
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) or not me:Alive() or me:Health() < 1 then return end
     local badmovetypes = {
         [MOVETYPE_NOCLIP] = true,
         [MOVETYPE_LADDER] = true,
@@ -3100,8 +3091,7 @@ local function DirectionalStrafe(pCmd)
 end
 
 local function AutoStrafe(pCmd)
-    if me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Spectators:") or gBool("Aim Assist", "Aim Priorities", "Spectators:")) then return end
-	if not me:Alive() or me:Health() < 1 then return end
+    if (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) or not me:Alive() or me:Health() < 1 then return end
 	if gBool("Miscellaneous", "Movement", "Bunny Hop") and gOption("Miscellaneous", "Movement", "Auto Strafe:") ~= "Off" then
     local badmovetypes = {
         [MOVETYPE_NOCLIP] = true,
@@ -3121,10 +3111,7 @@ local function AutoStrafe(pCmd)
 end
 
 local function AirCrouch(pCmd)
-	if em.GetMoveType(me) == MOVETYPE_NOCLIP then return end
-	if me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Spectators:") or gBool("Aim Assist", "Aim Priorities", "Spectators:")) then return end
-	if not me:Alive() or me:Health() < 1 then return end
-	if LocalPlayer():IsFlagSet(1024) then return end
+	if em.GetMoveType(me) == MOVETYPE_NOCLIP or (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) or not me:Alive() or me:Health() < 1 or LocalPlayer():IsFlagSet(1024) then return end
 	if gBool("Miscellaneous", "Movement", "Air Crouch") then
 	local pos = me:GetPos()
 	local trace = {
@@ -3160,8 +3147,7 @@ local function TraitorDetector()
 end
 
 local function MurdererDetector()
-	if not (gBool("Visuals", "Miscellaneous", "Murderer Finder")) then return end
-	if (idiot.engine.ActiveGamemode() ~= "murder") then return end
+	if not gBool("Visuals", "Miscellaneous", "Murderer Finder") or idiot.engine.ActiveGamemode() ~= "murder" then return end
 	for k, v in idiot.ipairs(idiot.player.GetAll()) do
 		if (v == me) then continue end
 		if (GAMEMODE.RoundStage == 1 and not v.Detected and not v.Magnum) then
@@ -3383,8 +3369,7 @@ hook.Add("Think", "Hook8", function()
 	end
 	if gBool("Main Menu", "DarkRP Utilities", "Suicide Near Arrest Batons") and idiot.engine.ActiveGamemode() == "darkrp" and (me:Alive() or me:Health() > 0) then
 		for k, v in next, player.GetAll() do
-			if not v:IsValid() or v:Health() < 1 or v:IsDormant() or v == me then continue end
-			if gBool("Aim Assist", "Aim Priorities", "Ignore Friends") and v:GetFriendStatus() == "friend" then continue end
+			if not v:IsValid() or v:Health() < 1 or v:IsDormant() or v == me or (gBool("Aim Assist", "Aim Priorities", "Ignore Friends") and v:GetFriendStatus() == "friend") then continue end
 			if v:GetPos():Distance(me:GetPos()) < 95 and v:GetActiveWeapon():GetClass() == "arrest_stick" and me:GetPos():Distance(v:GetEyeTrace().HitPos) < 105 then
 				me:ConCommand("kill")
 			end
@@ -3770,11 +3755,9 @@ local function Visuals(v)
 		local pos = em.GetPos(v)
 		for i = 0, em.GetBoneCount(v) do
 		local parent = em.GetBoneParent(v, i)
-		if (!parent) then continue end
 		local bonepos = em.GetBonePosition(v, i)
-		if (bonepos == pos) then continue end
 		local parentpos = em.GetBonePosition(v, parent)
-		if (!bonepos || !parentpos) then continue end
+		if (!parent) or (bonepos == pos) or (!bonepos || !parentpos) then continue end
 		local screen1, screen2 = vm.ToScreen(bonepos), vm.ToScreen(parentpos)
 		surface.SetDrawColor(teamcol)
 		surface.DrawLine(screen1.x, screen1.y, screen2.x, screen2.y)
@@ -3832,15 +3815,9 @@ local function Visuals(v)
 end
 
 hook.Add("RenderScreenspaceEffects", "Hook12", function()
-	if not gBool("Visuals", "Wallhack", "Enabled") then return end
-	if gui.IsGameUIVisible() then return end
-	if gui.IsConsoleVisible() then return end
-	if (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then return end
-	if menuopen then return end
+	if not gBool("Visuals", "Wallhack", "Enabled") or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or menuopen then return end
 		for k, v in next, player.GetAll() do
-		if (not em.IsValid(v) or em.Health(v) < 1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (!(gBool("Miscellaneous", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) then continue end
-		if (not WallhackFilter(v)) then continue end
-		if (not EnemyWallhackFilter(v)) then continue end
+		if (not em.IsValid(v) or em.Health(v) < 1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (!(gBool("Miscellaneous", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not WallhackFilter(v) or not EnemyWallhackFilter(v) then continue end
 		Chams(v)
 	end
 end)
@@ -3898,27 +3875,24 @@ local function OnScreen(v)
 end
 
 hook.Add("DrawOverlay", "Hook13", function()
-	if (gBool("Visuals", "Wallhack", "Enabled") && (!gui.IsGameUIVisible()) && (!gui.IsConsoleVisible()) && (!(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible())) && !menuopen) then
+	if gBool("Visuals", "Wallhack", "Enabled") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) && !menuopen then
 		for k, v in next, player.GetAll() do
-		if ((!(gBool("Miscellaneous", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or not em.IsValid(v) or em.Health(v) < 0.1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) then continue end
-		if not WallhackFilter(v) then continue end
-		if not EnemyWallhackFilter(v) then continue end
+		if ((!(gBool("Miscellaneous", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or not em.IsValid(v) or em.Health(v) < 0.1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not WallhackFilter(v) or not EnemyWallhackFilter(v) then continue end
 			Visuals(v)
 		end
 	end
-	if (gBool("Visuals", "Wallhack", "Enabled") && gBool("Visuals", "Miscellaneous", "Traitor Finder") && (!gui.IsGameUIVisible()) && (!gui.IsConsoleVisible()) && (!(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible())) && !menuopen) then
+	if gBool("Visuals", "Wallhack", "Enabled") && gBool("Visuals", "Miscellaneous", "Traitor Finder") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) && !menuopen then
 		TraitorFinder()
 	end
-	if (gBool("Visuals", "Wallhack", "Enabled") && gBool("Visuals", "Miscellaneous", "Murderer Finder") && (!gui.IsGameUIVisible()) && (!gui.IsConsoleVisible()) && (!(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible())) && !menuopen) then
+	if gBool("Visuals", "Wallhack", "Enabled") && gBool("Visuals", "Miscellaneous", "Murderer Finder") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) && !menuopen then
 		MurdererFinder()
 	end
-	if (gBool("Visuals", "Miscellaneous", "Show NPCs") && (!gui.IsGameUIVisible()) && (!gui.IsConsoleVisible()) && (!(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible())) && !menuopen) then
+	if gBool("Visuals", "Miscellaneous", "Show NPCs") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) && !menuopen then
 		ShowNPCs()
 	end
 	for k, v in next, ents.GetAll() do
-	if (v:IsDormant() and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or not v:IsValid() then continue end
-	if not WallhackFilter(v) or not OnScreen(v) or (!(gBool("Miscellaneous", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) then continue end
-	if (gBool("Visuals", "Miscellaneous", "Show Entities") && (!gui.IsGameUIVisible()) && (!gui.IsConsoleVisible()) && (!(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible())) && !menuopen) then
+	if (v:IsDormant() and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or not v:IsValid() or not WallhackFilter(v) or not OnScreen(v) or (!(gBool("Miscellaneous", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) then continue end
+	if gBool("Visuals", "Miscellaneous", "Show Entities") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) && !menuopen then
 	if table.HasValue(drawn_ents, v:GetClass()) and v:IsValid() and v:GetPos():Distance(me:GetPos()) > 40 then
 				local pos = em.GetPos(v) + Vector(0, 0, 0)
 				local pos2 = pos + Vector(0, 0, 0)
@@ -3937,31 +3911,24 @@ hook.Add("DrawOverlay", "Hook13", function()
 		PlayerList()
 	end
 	if v == me and not em.IsValid(v) then return end
-	if (gBool("Visuals", "Miscellaneous", "Spectators Box") && (!gui.IsGameUIVisible()) && (!gui.IsConsoleVisible()) && (!(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()))) then
+	if gBool("Visuals", "Miscellaneous", "Spectators Box") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
 		Spectator()
 	end
-	if (gBool("Visuals", "Miscellaneous", "Radar Box") && (!gui.IsGameUIVisible()) && (!gui.IsConsoleVisible()) && (!(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()))) then
+	if gBool("Visuals", "Miscellaneous", "Radar Box") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
 		RadarDraw()
 	end
-	if (gBool("Visuals", "Miscellaneous", "Custom Status") && (!gui.IsGameUIVisible()) && (!gui.IsConsoleVisible()) && (!(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()))) then
+	if gBool("Visuals", "Miscellaneous", "Custom Status") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
 		Logo()
 		Status()
 	end
-	if (gBool("Visuals", "Miscellaneous", "Players List") && (!gui.IsGameUIVisible()) && (!gui.IsConsoleVisible()) && (!(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()))) then
+	if gBool("Visuals", "Miscellaneous", "Players List") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
 		Logo2()
 		Players()
 	end
-	if (gOption("Visuals", "Miscellaneous", "Crosshair:") ~= "Off" && (!gui.IsGameUIVisible()) && (!gui.IsConsoleVisible()) && (!(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()))) then
+	if gOption("Visuals", "Miscellaneous", "Crosshair:") ~= "Off" && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
 		Crosshair()
 	end
-	if gui.IsGameUIVisible() then return end
-	if gui.IsConsoleVisible() then return end
-	if (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then return end
-	if me:IsTyping() then return end
-	if menuopen then return end
-	if me:Team() == TEAM_SPECTATOR and not ((gBool("Aim Assist", "Aim Priorities", "Spectators:") or gBool("Aim Assist", "Aim Priorities", "Spectators:")) and gBool("Visuals", "Miscellaneous", "Show Spectators")) then return end
-	if not me:Alive() or me:Health() < 1 then return end
-	if (gBool("Aim Assist", "Triggerbot", "Enabled") and not gBool("Aim Assist", "Aimbot", "Enabled")) then return end
+	if gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or me:IsTyping() or menuopen or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Spectators:") and gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not me:Alive() or me:Health() < 1 or (gBool("Aim Assist", "Triggerbot", "Enabled") and not gBool("Aim Assist", "Aimbot", "Enabled")) then return end
 	for k, v in pairs(player.GetAll()) do
 	if (gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me) then return end
 	end
@@ -3985,8 +3952,7 @@ local function AntiAFK(pCmd)
 		local commands = {"moveleft", "moveright", "moveup", "movedown"}
 		local command1 = table.Random(commands)
 		local command2 = table.Random(commands)
-		if unloaded == true then return end
-		if (!gBool("Main Menu", "General Utilities", "Anti-AFK")) then return end
+		if unloaded == true or !gBool("Main Menu", "General Utilities", "Anti-AFK") then return end
 		timer.Create("afk2", 1, 1, function()
 		RunConsoleCommand("+"..command1)
 		RunConsoleCommand("+"..command2)
@@ -4259,7 +4225,7 @@ end
 
 local function PredictPos(aimtarget)
 	local wep = me:GetActiveWeapon()
-	if gBool("Aim Assist", "Aim Priorities", "Projectile Prediction") and me:Alive() and me:Health() > 0 then
+	if gBool("Aim Assist", "Aim Priorities", "Projectile Prediction") and me:GetActiveWeapon():IsValid() and me:Alive() and me:Health() > 0 then
 		if string.find(string.lower(wep:GetClass()), "crossbow") then
 			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 1100 then
 				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 1600) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
@@ -4324,12 +4290,10 @@ local function PredictPos(aimtarget)
 end
 
 local function Aimbot(pCmd)
-	if me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:") then return end
-	if not me:Alive() or me:Health() < 1 then return end
+	if cm.CommandNumber(pCmd) == 0 or not gBool("Aim Assist", "Aimbot", "Enabled") or not me:Alive() or me:Health() < 1 or not me:GetActiveWeapon():IsValid() or (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) then return end
 	for k, v in pairs(player.GetAll()) do
 	if (gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || FixTools()) then return end
 	end
-	if (cm.CommandNumber(pCmd) == 0 || !gBool("Aim Assist", "Aimbot", "Enabled")) then return end
 	GetTarget()
     aa = false
     if (aimtarget && aimtarget:IsValid() && gKey("Aim Assist", "Aimbot", "Aim Key:") && WeaponCanFire()) then
@@ -4386,7 +4350,7 @@ local function TriggerFilter(hitbox)
 end
 
 local function Triggerbot(pCmd)
-	if not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Triggerbot", "Spectators:")) or not gKey("Aim Assist", "Triggerbot", "Trigger Key:") or pCmd:KeyDown(IN_ATTACK) or not gBool("Aim Assist", "Triggerbot", "Enabled") or FixTools() then return end
+	if cm.CommandNumber(pCmd) == 0 or not gBool("Aim Assist", "Triggerbot", "Enabled") or not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Triggerbot", "Spectators:")) or not gKey("Aim Assist", "Triggerbot", "Trigger Key:") or pCmd:KeyDown(IN_ATTACK) or FixTools() then return end
 	local dist = gBool("Aim Assist", "Aim Priorities", "Distance:")
 	local vel = gBool("Aim Assist", "Aim Priorities", "Velocity:")
 	local maxhealth = gInt("Aim Assist", "Aim Priorities", "Max Player Health:") 
@@ -4483,7 +4447,7 @@ end
 local function ViewLock()
 	if (gBool("Hack vs. Hack", "Anti-Aim", "View Lock") and me:Alive() and me:Health() > 0) then
 		local wep = pm.GetActiveWeapon(me)
-				if !IsValid(wep) then return end
+		if !IsValid(wep) then return end
 		local n = string.lower(wep:GetPrintName())
 		ox = 181
 		if (string.find(n, "pistol") or string.find(n, "beretta") or string.find(n, "deagle") or string.find(n, "eagle") or string.find(n, "9mm") or string.find(n, "9 mm") or string.find(n, "1911") or string.find(n, "tool") or string.find(n, "glock") or string.find(n, "luger") or string.find(n, "M92") or string.find(n, "M29") or string.find(n, "MR69") or string.find(n, "usp") or string.find(n, "p229r") or string.find(n, "45c")) then
@@ -4868,12 +4832,7 @@ local prop_val = 0
 local prop_delay = 0
 
 local function PropKill(pCmd)
-	if gui.IsGameUIVisible() then return end
-	if gui.IsConsoleVisible() then return end
-	if me:IsTyping() then return end
-	if menuopen then return end
-	if me:Team() == TEAM_SPECTATOR then return end
-	if not me:Alive() or me:Health() < 1 then return end
+	if menuopen or me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) or not me:Alive() or me:Health() < 1 then return end
 	if (cm.CommandNumber(pCmd) == 0 && !gBool("Miscellaneous", "Point of View", "Thirdperson")) then
 		return
 	elseif (cm.CommandNumber(pCmd) == 0 && gBool("Miscellaneous", "Point of View", "Thirdperson")) then
@@ -4947,11 +4906,8 @@ end
 local crouched = 0
 
 local function FakeCrouch(pCmd)
+	if em.GetMoveType(me) == MOVETYPE_NOCLIP or (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) or not me:Alive() or me:Health() < 1 or LocalPlayer():IsFlagSet(1024) then return end
 	if gBool("Miscellaneous", "Movement", "Fake Crouch") then
-	if em.GetMoveType(me) == MOVETYPE_NOCLIP then return end
-	if me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Spectators:") or gBool("Aim Assist", "Aim Priorities", "Spectators:")) then return end
-	if not me:Alive() or me:Health() < 1 then return end
-	if LocalPlayer():IsFlagSet(1024) then return end
 		if me:KeyDown(IN_DUCK) then
 			if crouched <= 5 then
 				pCmd:SetButtons(pCmd:GetButtons() + IN_DUCK)
@@ -4974,7 +4930,7 @@ local roampos, roamang, roamon, roamx, roamy, roamduck, roamjump = LocalPlayer()
 
 hook.Add("CalcView", "Hook17", function(me, pos, ang, fov)
 	local view = {}
-		if gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and (gBool("Aim Assist", "Aim Priorities", "Spectators:") or gBool("Aim Assist", "Aim Priorities", "Spectators:"))) and (me:Alive() or me:Health() > 0) then
+		if gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) and (me:Alive() or me:Health() > 0) then
 			local speed = gInt("Miscellaneous", "Free Roaming", "Free Roaming Speed:") / 5
 			local mouseang = Angle(roamy, roamx, 0)
 			if LocalPlayer():KeyDown(IN_SPEED) then
@@ -5025,7 +4981,7 @@ hook.Add("CalcView", "Hook17", function(me, pos, ang, fov)
 end)
 
 local function FreeRoam(pCmd)
-	if (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and (gBool("Aim Assist", "Aim Priorities", "Spectators:") or gBool("Aim Assist", "Aim Priorities", "Spectators:"))) and (me:Alive() or me:Health() > 0)) then
+	if (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) and (me:Alive() or me:Health() > 0)) then
 		if roamon == false then
 			roampos, roamang = LocalPlayer():EyePos(), pCmd:GetViewAngles()
 			roamy, roamx = pCmd:GetViewAngles().x, pCmd:GetViewAngles().y
@@ -5053,10 +5009,7 @@ local function FreeRoam(pCmd)
 end
 
 hook.Add("AdjustMouseSensitivity", "Hook18", function()
-	if not gBool("Aim Assist", "Triggerbot", "Smooth Aim") then return end
-	if not gKey("Aim Assist", "Triggerbot", "Trigger Key:") then return end
-	if not triggering then return end
-	if FixTools() then return end
+	if not gBool("Aim Assist", "Triggerbot", "Smooth Aim") or not gKey("Aim Assist", "Triggerbot", "Trigger Key:") or not triggering or FixTools() then return end
 	return .10
 end)
 
@@ -5111,12 +5064,7 @@ hook.Add("HUDPaint2", "Hook22", function()
 		surface.SetDrawColor(0, 0, 0, gInt("Settings", "Others", "BG Darkness:") * 10)
 		surface.DrawRect(0, 0, ScrW(), ScrH())
 	end
-	if gui.IsGameUIVisible() then return end
-	if gui.IsConsoleVisible() then return end
-	if (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then return end
-	if me:Team() == TEAM_SPECTATOR and not ((gBool("Aim Assist", "Aim Priorities", "Spectators:") or gBool("Aim Assist", "Aim Priorities", "Spectators:")) and gBool("Visuals", "Miscellaneous", "Show Spectators")) then return end
-	if not me:Alive() or me:Health() < 1 then return end
-	if (v == me and not em.IsValid(v)) then return end
+	if gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Spectators:") and gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not me:Alive() or me:Health() < 1 or (v == me and not em.IsValid(v)) then return end
 	local Cap = math.cos(math.rad(45))
 	local Offset = Vector(0, 0, 32)
 	local Trace = {}
@@ -5153,7 +5101,7 @@ hook.Add("HUDPaint2", "Hook22", function()
     	surface.SetDrawColor(WitnessColor)
     	surface.DrawRect((ScrW() / 2) - 73, 55, 152, 5)
     end
-	if menuopen then return end
+	if menuopen or me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) or not me:Alive() or me:Health() < 1 then return end
 	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:") then
 		if prop_val >= 180 then
 			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(255, 0, 0))
