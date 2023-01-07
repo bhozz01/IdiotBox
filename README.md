@@ -3,7 +3,7 @@
 1. Drag 'IdiotBox_latest.lua' and the 'bin' folder located in the .zip file into the following directory: Program Files (x86) > Steam > steamapps > common > GarrysMod > garrysmod > lua;
 2. Open Garry's Mod in the 32-bit version of the game, NOT the 64-bit branch (x86-64 beta branch as of now), as the modules (located in the 'bin' folder) are ONLY COMPATIBLE with the default version of the game;
 3. Join a multiplayer game/ public server that allows players to load .lua scripts (the server must have 'sv_allowcslua' set to 1);
-4. Open the console and type the following command: 'lua_openscript_cl IdiotBox_latest.lua" (or whatever your script's name is);
+4. Open the console and type the following command: 'lua_openscript_cl IdiotBox_latest.lua' (or whatever your script's name is);
 5. Run the command;
 6. Enjoy!
 
@@ -19,7 +19,7 @@ My method of choice is using a loader named 'external.dll' (message me on Discor
 3. Open Garry's Mod in the 32-bit version of the game, NOT the 64-bit branch (x86-64 beta branch as of now), as the modules (located in the 'bin' folder) are ONLY COMPATIBLE with the default version of the game;
 4. Inject 'external.dll' into Garry's Mod (with an injector of your choice);
 5. Join a multiplayer game/ public server;
-6. Open the console and type the following command: 'external IdiotBox_latest.lua" (or whatever your script's name is);
+6. Open the console and type the following command: 'external IdiotBox_latest.lua' (or whatever your script's name is);
 7. Run the command;
 8. Enjoy!
 
