@@ -294,6 +294,10 @@ local options = {
 					{"Distance:", "Slider", 1500, 5000, 92}, 
                 }, 
         }, 
+		["Entity Menu"] = {
+		}, 
+		["Plugin Loader"] = {
+		}, 
 		["Miscellaneous"] = {
 				{
 					{"Miscellaneous", 16, 20, 347, 150, 218}, 
@@ -470,6 +474,8 @@ local order = {
 	"Aim Assist", 
 	"Hack vs. Hack", 
 	"Visuals", 
+	"Entity Menu", 
+	"Plugin Loader", 
 	"Miscellaneous", 
 	"Settings", 
 }
@@ -1269,7 +1275,7 @@ end
 local added = {}
 
 local function BadEntities(v)
-	if string.find(v:GetClass(), "grav") or string.find(v:GetClass(), "phys") or string.find(v:GetClass(), "class") or string.find(v:GetClass(), "viewmodel") or string.find(v:GetClass(), "worldspawn") or string.find(v:GetClass(), "dynamic") or string.find(v:GetClass(), "beam") or string.find(v:GetClass(), "keys") or string.find(v:GetClass(), "pocket") or string.find(v:GetClass(), "prop_") or string.find(v:GetClass(), "gmod_") or string.find(v:GetClass(), "env_") or string.find(v:GetClass(), "func_") or string.find(v:GetClass(), "manipulate_") then
+	if string.find(v:GetClass(), "class") or string.find(v:GetClass(), "viewmodel") or string.find(v:GetClass(), "worldspawn") or string.find(v:GetClass(), "beam") or string.find(v:GetClass(), "env_") or string.find(v:GetClass(), "func_") or string.find(v:GetClass(), "manipulate_") then
 		return false
 	else
 		return true
@@ -1293,6 +1299,36 @@ local function EntityFinder()
 	draw_list:SetSize(300, 500)
 	draw_list:SetMultiSelect(false)
 	draw_list:AddColumn("Drawn entities"):SetFixedWidth(300)
+	function RefreshEntities()
+		ent_list:Clear()
+		draw_list:Clear()
+			for k, v in next, ents.GetAll() do
+			local name = v:GetClass()
+			local copy = false
+			if not table.HasValue(added, v:GetClass()) and not table.HasValue(drawn_ents, v:GetClass()) and BadEntities(v) and v:GetClass() ~= "player" then
+				for k, v in pairs (ent_list:GetLines()) do
+					if v:GetValue(1) == name then copy = true end
+				end
+					if copy == false then ent_list:AddLine(v:GetClass()) end
+				end
+			end
+			table.sort(added)
+			for k, v in next, added do
+				ent_list:AddLine(v)
+			end
+			table.sort(drawn_ents)
+			for k, v in next, drawn_ents do
+				draw_list:AddLine(v)
+			end
+		end
+	local refresh = vgui.Create("DButton", finder)
+	refresh:SetText("Refresh")
+	refresh:SetPos(512, 350)
+	refresh:SetSize(100, 30)
+	refresh.DoClick = function()
+	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
+	RefreshEntities()
+	end
 	local add = vgui.Create("DButton", finder)
 	add:SetText(">>")
 	add:SetPos(512, 250)
@@ -1307,6 +1343,7 @@ local function EntityFinder()
 				draw_list:AddLine(ent)
 			end
 		end
+		RefreshEntities()
 	end
 	local remove = vgui.Create("DButton", finder)
 	remove:SetText("<<")
@@ -1326,28 +1363,7 @@ local function EntityFinder()
 				ent_list:AddLine(ent)
 			end
 		end
-	end
-	local refresh = vgui.Create("DButton", finder)
-	refresh:SetText("Refresh")
-	refresh:SetPos(512, 350)
-	refresh:SetSize(100, 30)
-	refresh.DoClick = function()
-	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
-		ent_list:Clear()
-		draw_list:Clear()
-		for k, v in next, ents.GetAll() do
-			if not table.HasValue(added, v:GetClass()) and not table.HasValue(drawn_ents, v:GetClass()) and BadEntities(v) and v:GetClass() ~= "player" then
-				ent_list:AddLine(v:GetClass())
-			end
-		end
-		table.sort(added)
-		for k, v in next, added do
-			ent_list:AddLine(v)
-		end
-		table.sort(drawn_ents)
-		for k, v in next, drawn_ents do
-			draw_list:AddLine(v)
-		end
+		RefreshEntities()
 	end
 	local add_custom = vgui.Create("DTextEntry", finder)
 	add_custom:SetPos(712, 600)
@@ -1364,24 +1380,35 @@ local function EntityFinder()
 			table.insert(drawn_ents, ent)
 			draw_list:AddLine(ent)
 		end
+		RefreshEntities()
 	end
 	local find = vgui.Create("DTextEntry", finder)
 	find:SetPos(272, 600)
-	find:SetSize(140, 20)
+	find:SetSize(205, 20)
 	find:SetText("")
 	find.OnChange = function()
 		if find:GetValue() ~= "" then
 			ent_list:Clear()
 			for k, v in next, ents.GetAll() do
-				if string.find(v:GetClass(), find:GetValue()) and not table.HasValue(added, v:GetClass()) and not table.HasValue(drawn_ents, v:GetClass()) and BadEntities(v) and v:GetClass() ~= "player" then
-					ent_list:AddLine(v:GetClass())
+			local name = v:GetClass()
+			local copy = false
+			if string.find(v:GetClass(), find:GetValue()) and not table.HasValue(added, v:GetClass()) and not table.HasValue(drawn_ents, v:GetClass()) and BadEntities(v) and v:GetClass() ~= "player" then
+				for k, v in pairs (ent_list:GetLines()) do
+					if v:GetValue(1) == name then copy = true end
+				end
+					if copy == false then ent_list:AddLine(v:GetClass()) end
 				end
 			end
 		else
 			ent_list:Clear()
 			for k, v in next, ents.GetAll() do
-				if not table.HasValue(added, v:GetClass()) and not table.HasValue(drawn_ents, v:GetClass()) and BadEntities(v) and v:GetClass() ~= "player" then
-					ent_list:AddLine(v:GetClass())
+			local name = v:GetClass()
+			local copy = false
+			if not table.HasValue(added, v:GetClass()) and not table.HasValue(drawn_ents, v:GetClass()) and BadEntities(v) and v:GetClass() ~= "player" then
+				for k, v in pairs (ent_list:GetLines()) do
+					if v:GetValue(1) == name then copy = true end
+				end
+					if copy == false then ent_list:AddLine(v:GetClass()) end
 				end
 			end
 			table.sort(added)
@@ -1390,24 +1417,18 @@ local function EntityFinder()
 			end
 		end
 	end
-	local find_button = vgui.Create("DButton", finder)
-	find_button:SetText("Search")
-	find_button:SetPos(417, 600)
-	find_button:SetSize(60, 20)
-	find_button.DoClick = function()
-	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
-		if find:GetValue() ~= "" then
-			ent_list:Clear()
-			for k, v in next, ents.GetAll() do
-				if not table.HasValue(added, v:GetClass()) and not table.HasValue(drawn_ents, v:GetClass()) and BadEntities(v) and v:GetClass() ~= "player" then
-					ent_list:AddLine(v:GetClass())
-				end
-			end
-		end
-	end
 	finder.Paint = function(self, w, h)
+		if (candoslider and not mousedown and not drawlast and not input.IsMouseDown(MOUSE_LEFT)) then
+			candoslider = false
+		end
 		draw.RoundedBox(gInt("Settings", "Others", "Roundness:"), 0, 0, w, h, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Settings", "Others", "BG Opacity:")))
 		DrawUpperText(w, h)
+		DrawOptions(self, w, h)
+		if (drawlast) then
+			drawlast()
+			candoslider = true
+		end
+		mousedown = input.IsMouseDown(MOUSE_LEFT)
 		draw.SimpleText("Search Entity:", "MenuFont", 192, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 		draw.SimpleText("Add Entity:", "MenuFont", 642, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 	end
@@ -1442,6 +1463,7 @@ local function EntityFinder()
 			end)
 		end
 	end
+	RefreshEntities()
 end
 
 local function PluginLoader()
@@ -1488,8 +1510,17 @@ local function PluginLoader()
 		draw.RoundedBox(16, 0, 0, w, h, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:")))
 	end
 	plugin.Paint = function(self, w, h)
+		if (candoslider and not mousedown and not drawlast and not input.IsMouseDown(MOUSE_LEFT)) then
+			candoslider = false
+		end
 		draw.RoundedBox(gInt("Settings", "Others", "Roundness:"), 0, 0, w, h, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Settings", "Others", "BG Opacity:")))
 		DrawUpperText(w, h)
+		DrawOptions(self, w, h)
+		if (drawlast) then
+			drawlast()
+			candoslider = true
+		end
+		mousedown = input.IsMouseDown(MOUSE_LEFT)
 	end
 	plugin.Think = function()
 		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or unloaded == true) then
