@@ -3,7 +3,7 @@
 //------------------------//
 
 
-
+cacat
 --NOTE-- I do not take credit for all of the features in this cheat. Some codes have been taken from other scripts. In fact, most of this thing is pasted. The contributors are listed in the 'readme.txt' file;
 
 --NOTE-- You can report any bugs or post any suggestions in our Discord server (link is on the website - if the server gets disabled, DM me at https://steamcommunity.com/id/phizzofficial/ or visit the website, we always refresh invite links) or through our website, at https://phizzofficial.wixsite.com/idiotbox4gmod/;
