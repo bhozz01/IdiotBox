@@ -127,7 +127,7 @@ local options = {
 					{"Entity Menu", "Button", "", 92}, 
 					{"Plugin Loader", "Button", "", 92}, 
 					{"Menu Style:", "Selection", "Borders", {"Borders", "Borderless"}, 92}, 
-					{"Options Style:", "Selection", "Borderless", {"Borders", "Borderless"}, 92}, 
+					{"Options Style:", "Selection", "Borders", {"Borders", "Borderless"}, 92}, 
           		}, 
 				{
           			{"Configurations", 736, 246, 347, 150, 218}, 
