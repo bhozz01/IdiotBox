@@ -294,10 +294,6 @@ local options = {
 					{"Distance:", "Slider", 1500, 5000, 92}, 
                 }, 
         }, 
-		["Entity Menu"] = {
-		}, 
-		["Plugin Loader"] = {
-		}, 
 		["Miscellaneous"] = {
 				{
 					{"Miscellaneous", 16, 20, 347, 150, 218}, 
@@ -474,8 +470,6 @@ local order = {
 	"Aim Assist", 
 	"Hack vs. Hack", 
 	"Visuals", 
-	"Entity Menu", 
-	"Plugin Loader", 
 	"Miscellaneous", 
 	"Settings", 
 }
@@ -891,7 +885,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(613, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: UNKNOWN DATE 2023")
+	surface.DrawText("Latest build: February 19th 2023")
 	surface.SetFont("MenuFont")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -1181,6 +1175,7 @@ local function Changelog()
 	print("- Fixed dimension of the Armor Bar not matching the dimension of the Health Bar;")
 	print("- Fixed Bunny Hop breaking the movement when in water;")
 	print("- Fixed Entities not using the correct Visuals color;")
+	print("- Fixed entity list being too cluttered;")
 	print("- Fixed buttons spamming the 'click' sound when holding them down;")
 	print("- Fixed Reply Spam and Copy Messages not ignoring friends;")
 	print("- Fixed being unable to fly WAC planes and rotate props or camera angles;")
@@ -1418,17 +1413,8 @@ local function EntityFinder()
 		end
 	end
 	finder.Paint = function(self, w, h)
-		if (candoslider and not mousedown and not drawlast and not input.IsMouseDown(MOUSE_LEFT)) then
-			candoslider = false
-		end
 		draw.RoundedBox(gInt("Settings", "Others", "Roundness:"), 0, 0, w, h, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Settings", "Others", "BG Opacity:")))
 		DrawUpperText(w, h)
-		DrawOptions(self, w, h)
-		if (drawlast) then
-			drawlast()
-			candoslider = true
-		end
-		mousedown = input.IsMouseDown(MOUSE_LEFT)
 		draw.SimpleText("Search Entity:", "MenuFont", 192, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 		draw.SimpleText("Add Entity:", "MenuFont", 642, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 	end
@@ -1457,9 +1443,6 @@ local function EntityFinder()
 			timer.Simple(0.5, function()
 			finder:Remove()
 			file.Write(folder.."/entities.txt", util.TableToJSON(drawn_ents))
-			menuopen = false
-			candoslider = false
-			drawlast = nil
 			end)
 		end
 	end
@@ -1510,17 +1493,8 @@ local function PluginLoader()
 		draw.RoundedBox(16, 0, 0, w, h, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:")))
 	end
 	plugin.Paint = function(self, w, h)
-		if (candoslider and not mousedown and not drawlast and not input.IsMouseDown(MOUSE_LEFT)) then
-			candoslider = false
-		end
 		draw.RoundedBox(gInt("Settings", "Others", "Roundness:"), 0, 0, w, h, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Settings", "Others", "BG Opacity:")))
 		DrawUpperText(w, h)
-		DrawOptions(self, w, h)
-		if (drawlast) then
-			drawlast()
-			candoslider = true
-		end
-		mousedown = input.IsMouseDown(MOUSE_LEFT)
 	end
 	plugin.Think = function()
 		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or unloaded == true) then
