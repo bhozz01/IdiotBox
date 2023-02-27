@@ -3492,8 +3492,8 @@ local function Visuals(v)
 	local ww = h / 4
 	local col = (devs[v:SteamID()] || creator[v:SteamID()]) && Color(0, 0, 0) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
 	local ocol = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || Color(0, 0, 0)
-	local colololol = gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
-	local ocolololol = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
+	local colol = gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
+	local ocolol = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
 	local teamcol = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
 	local teamocol = gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
 	local hh = 0
@@ -3518,13 +3518,14 @@ local function Visuals(v)
 	end
 	if gOption("Visuals", "Wallhack", "Box:") == "3D Box" then
 	for k, v in pairs(player.GetAll()) do
-	if v != LocalPlayer() and v:IsValid() and v:Alive() and v:Health() > 0 then
+	if (!(gBool("Miscellaneous", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) then continue end
+	if v:IsValid() and v:Alive() and v:Health() > 0 then
 		local eye = v:EyeAngles()
 		local min, max = v:WorldSpaceAABB()
 		local origin = v:GetPos()
 		if !(devs[v:SteamID()] || creator[v:SteamID()]) then
 			cam.Start3D()
-				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, colololol)
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, colol)
 			cam.End3D()
 		elseif (devs[v:SteamID()] || creator[v:SteamID()]) then
 			cam.Start3D()
@@ -3539,7 +3540,7 @@ local function Visuals(v)
 		end
 	end
 	if (gBool("Visuals", "Wallhack", "Enabled") && gOption("Visuals", "Wallhack", "Box:") == "Edged Box") then   
-    surface.SetDrawColor(ocolololol)
+    surface.SetDrawColor(ocolol)
 	x1, y1, x2, y2 = ScrW() * 2, ScrH() * 2, - ScrW(), - ScrH()
 		min, max = v:GetCollisionBounds()
 		corners = {v:LocalToWorld(Vector(min.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, min.y, max.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, max.z)):ToScreen()}
@@ -3625,6 +3626,38 @@ local function Visuals(v)
 			end
 			if devs[v:SteamID()] then
 				draw.SimpleText("IdiotBox Developer", "VisualsFont", pos.x, pos.y - h - 13 - 13, HSVToColor(RealTime() * 45 % 360, 1, 1), 1, 1)
+			end
+		end
+		if (friendstatus == "friend") and (creator[v:SteamID()] or devs[v:SteamID()]) then
+			if table.HasValue(ignore_list, v:UniqueID()) then
+				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 39 - 13, Color(175, 175, 175), 1, 1)
+			end
+			if table.HasValue(priority_list, v:UniqueID()) then
+				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 39 - 13, Color(255, 0, 100), 1, 1)
+			end
+		end
+		if (friendstatus == "friend") and not (creator[v:SteamID()] or devs[v:SteamID()]) then
+			if table.HasValue(ignore_list, v:UniqueID()) then
+				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, Color(175, 175, 175), 1, 1)
+			end
+			if table.HasValue(priority_list, v:UniqueID()) then
+				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, Color(255, 0, 100), 1, 1)
+			end
+		end
+		if (friendstatus ~= "friend") and (creator[v:SteamID()] or devs[v:SteamID()]) then
+			if table.HasValue(ignore_list, v:UniqueID()) then
+				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, Color(175, 175, 175), 1, 1)
+			end
+			if table.HasValue(priority_list, v:UniqueID()) then
+				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, Color(255, 0, 100), 1, 1)
+			end
+		end
+		if (friendstatus ~= "friend") and not (creator[v:SteamID()] or devs[v:SteamID()]) then
+			if table.HasValue(ignore_list, v:UniqueID()) then
+				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 13 - 13, Color(175, 175, 175), 1, 1)
+			end
+			if table.HasValue(priority_list, v:UniqueID()) then
+				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 13 - 13, Color(255, 0, 100), 1, 1)
 			end
 		end
 	end
@@ -3781,6 +3814,7 @@ local function Visuals(v)
 	idiot.cam.End3D()
 	if (gBool("Visuals", "Wallhack", "Hitbox")) then
 		for k, v in next, player.GetAll() do
+		if (!(gBool("Miscellaneous", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) then continue end
 			for i = 0, v:GetHitBoxGroupCount() - 1 do
 			for _i = 0, v:GetHitBoxCount(i) - 1 do
 			local bone = v:GetHitBoxBone(_i, i)
@@ -3800,6 +3834,7 @@ local function Visuals(v)
 	end
 	if (gBool("Visuals", "Wallhack", "Hitbox")) then
 		for k, v in next, player.GetAll() do
+		if (!(gBool("Miscellaneous", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) then continue end
 			for i = 0, v:GetHitBoxGroupCount() - 1 do
 			for _i = 0, v:GetHitBoxCount(i) - 1 do
 			local bone = v:GetHitBoxBone(_i, i)
