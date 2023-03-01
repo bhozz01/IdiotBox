@@ -3525,7 +3525,7 @@ local function Visuals(v)
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, Color(friendvisualscol.r, friendvisualscol.g, friendvisualscol.b))
 			cam.End3D()
-		else
+		elseif (friendstatus ~= "friend") then
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, colThree)
 			cam.End3D()
