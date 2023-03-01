@@ -3488,10 +3488,10 @@ local function Visuals(v)
 	local h = pos.y - pos2.y
 	local w = h / 2
 	local ww = h / 4
-	local colOne = (devs[v:SteamID()] || creator[v:SteamID()]) && Color(0, 0, 0) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
+	local colOne = (devs[v:SteamID()] || creator[v:SteamID()]) && Color(0, 0, 0) || ((table.HasValue(ignore_list, v:UniqueID()) && Color(175, 175, 175)) or (table.HasValue(priority_list, v:UniqueID()) && Color(255, 0, 100))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
 	local colTwo = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || Color(0, 0, 0)
-	local colThree = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
-	local colFour = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
+	local colThree = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || ((table.HasValue(ignore_list, v:UniqueID()) && Color(175, 175, 175)) or (table.HasValue(priority_list, v:UniqueID()) && Color(255, 0, 100))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
+	local colFour = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || ((table.HasValue(ignore_list, v:UniqueID()) && Color(175, 175, 175)) or (table.HasValue(priority_list, v:UniqueID()) && Color(255, 0, 100))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
 	local colFive = gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
 	local hh = 0
 	if (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
