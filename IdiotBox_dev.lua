@@ -3488,11 +3488,11 @@ local function Visuals(v)
 	local h = pos.y - pos2.y
 	local w = h / 2
 	local ww = h / 4
-	local col = (devs[v:SteamID()] || creator[v:SteamID()]) && Color(0, 0, 0) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
-	local ocol = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || Color(0, 0, 0)
-	local ocolol = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
-	local teamcol = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
-	local teamocol = gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
+	local colOne = (devs[v:SteamID()] || creator[v:SteamID()]) && Color(0, 0, 0) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
+	local colTwo = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || Color(0, 0, 0)
+	local colThree = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
+	local colFour = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
+	local colFive = gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
 	local hh = 0
 	if (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
 		return false
@@ -3502,13 +3502,13 @@ local function Visuals(v)
 		if (friendstatus == "friend") && !(devs[v:SteamID()] || creator[v:SteamID()]) then
 			surface.SetDrawColor(friendvisualscol.r, friendvisualscol.g, friendvisualscol.b)
 			surface.DrawOutlinedRect(pos.x - w / 2, pos.y - h, w, h)
-			surface.SetDrawColor(ocol)
+			surface.SetDrawColor(colTwo)
 			surface.DrawOutlinedRect(pos.x - w / 2 - 1, pos.y - h - 1, w + 2, h + 2)
 			surface.DrawOutlinedRect(pos.x - w / 2 + 1, pos.y - h + 1, w - 2, h - 2)
 		else
-			surface.SetDrawColor(col)
+			surface.SetDrawColor(colOne)
 			surface.DrawOutlinedRect(pos.x - w / 2, pos.y - h, w, h)
-			surface.SetDrawColor(ocol)
+			surface.SetDrawColor(colTwo)
 			surface.DrawOutlinedRect(pos.x - w / 2 - 1, pos.y - h - 1, w + 2, h + 2)
 			surface.DrawOutlinedRect(pos.x - w / 2 + 1, pos.y - h + 1, w - 2, h - 2)
 		end
@@ -3527,14 +3527,14 @@ local function Visuals(v)
 			cam.End3D()
 		else
 			cam.Start3D()
-				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, ocolol)
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, colThree)
 			cam.End3D()
 				end
 			end
 		end
 	end
 	if (gBool("Visuals", "Wallhack", "Enabled") && gOption("Visuals", "Wallhack", "Box:") == "Edged Box") then   
-    surface.SetDrawColor(ocolol)
+    surface.SetDrawColor(colThree)
 	x1, y1, x2, y2 = ScrW() * 2, ScrH() * 2, - ScrW(), - ScrH()
 		min, max = v:GetCollisionBounds()
 		corners = {v:LocalToWorld(Vector(min.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, min.y, max.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, max.z)):ToScreen()}
@@ -3593,15 +3593,15 @@ local function Visuals(v)
 		surface.DrawRect(pos.x + ww + 4, pos.y - h + diff, 3, armor)
 	end
 	if (gBool("Visuals", "Wallhack", "Name")) then
-        local col = Color(255, 255, 255)
+        local colOne = Color(255, 255, 255)
 		local friendstatus = pm.GetFriendStatus(v)
 		if (friendstatus == "friend") then
 		draw.SimpleText("Friend", "VisualsFont", pos.x, pos.y - h - 13 - 13, Color(friendvisualscol.r, friendvisualscol.g, friendvisualscol.b), 1, 1)
 		end
 		if (gBool("Visuals", "Wallhack", "Bystander Name") && idiot.engine.ActiveGamemode() == "murder") then
-		draw.SimpleText(v:GetNWString("bystanderName"), "VisualsFont", pos.x, pos.y - h - 1 - (friendstatus == "friend" && 12 || 12), col, 1, 1)
+		draw.SimpleText(v:GetNWString("bystanderName"), "VisualsFont", pos.x, pos.y - h - 1 - (friendstatus == "friend" && 12 || 12), colOne, 1, 1)
 		else
-		draw.SimpleText(pm.Name(v), "VisualsFont", pos.x, pos.y - h - 1 - (friendstatus == "friend" && 12 || 12), col, 1, 1)
+		draw.SimpleText(pm.Name(v), "VisualsFont", pos.x, pos.y - h - 1 - (friendstatus == "friend" && 12 || 12), colOne, 1, 1)
 	end
 	end
 	if (gBool("Visuals", "Wallhack", "Enabled") and gBool("Visuals", "Wallhack", "Name")) then
@@ -3657,133 +3657,133 @@ local function Visuals(v)
 	end
 	if (gBool("Visuals", "Wallhack", "Health Value")) then
 	hh = hh + 1
-	local col = Color((100 - em.Health(v)) * 2.55, em.Health(v) * 2, 0)
-	draw.SimpleText(em.Health(v).." Health", "VisualsFont", pos.x, pos.y - 1 + hh, col, 1, 0)
+	local colOne = Color((100 - em.Health(v)) * 2.55, em.Health(v) * 2, 0)
+	draw.SimpleText(em.Health(v).." Health", "VisualsFont", pos.x, pos.y - 1 + hh, colOne, 1, 0)
 	hh = hh + 9
 	end
 	if (gBool("Visuals", "Wallhack", "Armor Value")) then
 	hh = hh + 1
-	local col = Color((100 - v:Armor()) * 2.55, v:Armor() * 2, 0)
-	draw.SimpleText(v:Armor().." Armor", "VisualsFont", pos.x, pos.y - 1 + hh, col, 1, 0)
+	local colOne = Color((100 - v:Armor()) * 2.55, v:Armor() * 2, 0)
+	draw.SimpleText(v:Armor().." Armor", "VisualsFont", pos.x, pos.y - 1 + hh, colOne, 1, 0)
 	hh = hh + 9
 	end
 	if (gBool("Visuals", "Wallhack", "Weapon")) then
 	hh = hh + 1
 	local w = pm.GetActiveWeapon(v)
 	if (w && em.IsValid(w)) then
-	local col = Color(200, 150, 150)
-	draw.SimpleText(w:GetPrintName(), "VisualsFont", pos.x, pos.y - 0 + hh, col, 1, 0)
+	local colOne = Color(200, 150, 150)
+	draw.SimpleText(w:GetPrintName(), "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	hh = hh + 9
 	end
 	end
 	if (gBool("Visuals", "Wallhack", "Rank")) then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
-	draw.SimpleText(pm.GetUserGroup(v), "VisualsFont", pos.x, pos.y - 0 + hh, col, 1, 0)
+	local colOne = Color(255, 255, 255)
+	draw.SimpleText(pm.GetUserGroup(v), "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	hh = hh + 9
 	end
 	if (gBool("Visuals", "Wallhack", "Distance")) then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
+	local colOne = Color(255, 255, 255)
 	draw.SimpleText(math.Round(v:GetPos():Distance(LocalPlayer():GetPos()) / 40).." Meters", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
 	hh = hh + 9
 	end
 	if (gBool("Visuals", "Wallhack", "Velocity")) then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
+	local colOne = Color(255, 255, 255)
 	draw.SimpleText(math.Round(v:GetVelocity():Length()).." Speed", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
 	hh = hh + 9
 	end
 	if gBool("Visuals", "Wallhack", "Conditions") and v:IsPlayer() then
 	if v:InVehicle() then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
+	local colOne = Color(255, 255, 255)
 	draw.SimpleText("*driving*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
 	hh = hh + 9
 	elseif v:GetMoveType() == MOVETYPE_NOCLIP then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
+	local colOne = Color(255, 255, 255)
 	draw.SimpleText("*noclipping*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
 	hh = hh + 9
 	elseif v:IsDormant() then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
+	local colOne = Color(255, 255, 255)
 	draw.SimpleText("*dormant*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
 	hh = hh + 9
 	elseif v:IsFlagSet(2) then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
+	local colOne = Color(255, 255, 255)
 	draw.SimpleText("*crouching*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
 	hh = hh + 9
 	elseif v:GetMoveType() == MOVETYPE_LADDER then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
+	local colOne = Color(255, 255, 255)
 	draw.SimpleText("*climbing*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
 	hh = hh + 9
 	elseif v:GetColor(v).a < 255 then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
+	local colOne = Color(255, 255, 255)
 	draw.SimpleText("*spawning*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
 	hh = hh + 9
 	elseif v:IsFlagSet(64) then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
+	local colOne = Color(255, 255, 255)
 	draw.SimpleText("*frozen*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
 	hh = hh + 9
 	elseif v:IsPlayingTaunt() then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
+	local colOne = Color(255, 255, 255)
 	draw.SimpleText("*emoting*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
 	hh = hh + 9
 	elseif v:IsFlagSet(1024) then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
+	local colOne = Color(255, 255, 255)
 	draw.SimpleText("*swimming*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
 	hh = hh + 9
 	elseif v:IsSprinting() then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
+	local colOne = Color(255, 255, 255)
 	draw.SimpleText("*sprinting*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
 	hh = hh + 9
 	elseif v:IsTyping() then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
+	local colOne = Color(255, 255, 255)
 	draw.SimpleText("*typing*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
 	hh = hh + 9
 	elseif v:GetMoveType() == MOVETYPE_WALK or v:GetMoveType() == MOVETYPE_NONE then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
+	local colOne = Color(255, 255, 255)
 	draw.SimpleText("*none*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
 	hh = hh + 9
 	end
 	end
 	if (gBool("Visuals", "Wallhack", "Steam ID")) then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
+	local colOne = Color(255, 255, 255)
 	if (v:SteamID() ~= "NULL") then
-	draw.SimpleText(v:SteamID(v), "VisualsFont", pos.x, pos.y - 0 + hh, col, 1, 0)
+	draw.SimpleText(v:SteamID(v), "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	else
-	draw.SimpleText("BOT", "VisualsFont", pos.x, pos.y - 0 + hh, col, 1, 0)
+	draw.SimpleText("BOT", "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	end
 	hh = hh + 9
 	end
 	if (gBool("Visuals", "Wallhack", "Ping")) then
 	hh = hh + 1
-	local col = Color(v:Ping() * 2.55, 255 - v:Ping() - 5 * 2, 0)
-	draw.SimpleText(v:Ping().."ms", "VisualsFont", pos.x, pos.y - 0 + hh, col, 1, 0)
+	local colOne = Color(v:Ping() * 2.55, 255 - v:Ping() - 5 * 2, 0)
+	draw.SimpleText(v:Ping().."ms", "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	hh = hh + 9
 	end
 	if (gBool("Visuals", "Wallhack", "DarkRP Money")) then
 	hh = hh + 1
 	if (gmod.GetGamemode().Name == "DarkRP") then
-	local col = Color(0, 255, 0)
+	local colOne = Color(0, 255, 0)
 	if (v:getDarkRPVar("money") == nil) then return end
-	draw.SimpleText("$"..v:getDarkRPVar("money"), "VisualsFont", pos.x, pos.y - 0 + hh, col, 1, 0)
+	draw.SimpleText("$"..v:getDarkRPVar("money"), "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	hh = hh + 9
 	end
 	end
 	if (gBool("Visuals", "Wallhack", "Skeleton")) then
-		local col = gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
+		local colOne = gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
 		local pos = em.GetPos(v)
 		for i = 0, em.GetBoneCount(v) do
 		local parent = em.GetBoneParent(v, i)
@@ -3791,19 +3791,19 @@ local function Visuals(v)
 		local parentpos = em.GetBonePosition(v, parent)
 		if (!parent) or (bonepos == pos) or (!bonepos || !parentpos) then continue end
 		local screen1, screen2 = vm.ToScreen(bonepos), vm.ToScreen(parentpos)
-		surface.SetDrawColor(teamcol)
+		surface.SetDrawColor(colFour)
 		surface.DrawLine(screen1.x, screen1.y, screen2.x, screen2.y)
 		end
 	end
 	if (gBool("Visuals", "Wallhack", "Glow")) then
 		local wep = v:GetActiveWeapon()
-		halo.Add({v, wep}, teamcol, .55, .55, 5, true, true)
+		halo.Add({v, wep}, colFour, .55, .55, 5, true, true)
 	end
 	idiot.cam.Start3D()
 		if (gBool("Visuals", "Wallhack", "Vision Line")) then
 			local b1, b2 = v:EyePos(), v:GetEyeTrace().HitPos
-			idiot.render.DrawLine(b1, b2, teamcol)
-			idiot.render.DrawWireframeSphere(b2, 2, 10, 10, teamcol, b2)
+			idiot.render.DrawLine(b1, b2, colFour)
+			idiot.render.DrawWireframeSphere(b2, 2, 10, 10, colFour, b2)
 		end
 	idiot.cam.End3D()
 	if (gBool("Visuals", "Wallhack", "Hitbox")) then
@@ -3818,7 +3818,7 @@ local function Visuals(v)
 			local pos, ang = v:GetBonePosition(bone)
 			if !(devs[v:SteamID()] || creator[v:SteamID()]) then
 			cam.Start3D()
-			render.DrawWireframeBox(pos, ang, min, max, teamocol)
+			render.DrawWireframeBox(pos, ang, min, max, colFive)
 			cam.End3D()
 		end
 			end
