@@ -359,7 +359,7 @@ local options = {
 					{"Reply Spam:", "Selection", "Off", {"Off", "shut up", "ok", "who", "nobody cares", "where", "stop spamming", "what", "yea", "lol", "english please", "lmao", "shit", "fuck", "Random", "Disconnect Spam", "Cheater Callout", "Copy Messages"}, 92}, 
                 }, 
         }, 
-		["Settings"] = {
+		["Colors & Adjustments"] = {
 				{
           			{"Main Text Color", 60, 20, 250, 105, 100}, 
           			{"Red:", "Slider", 0, 255, 88}, 
@@ -388,25 +388,25 @@ local options = {
 					{"Team Visuals Color", 60, 140, 250, 105, 100}, 
 					{"Red:", "Slider", 255, 255, 88}, 
 					{"Green:", "Slider", 255, 255, 88}, 
-					{"Blue:", "Slider", 255, 255, 88}, 
+					{"Blue:", "Slider", 0, 255, 88}, 
                 }, 
 				{
 					{"Enemy Visuals Color", 321, 140, 205, 105, 70}, 
 					{"Red:", "Slider", 255, 255, 75}, 
-					{"Green:", "Slider", 255, 255, 75}, 
+					{"Green:", "Slider", 125, 255, 75}, 
 					{"Blue:", "Slider", 255, 255, 75}, 
                 }, 
 				{
-					{"Friend Visuals Color", 535, 140, 245, 105, 100}, 
-					{"Red:", "Slider", 0, 255, 88}, 
-					{"Green:", "Slider", 255, 255, 88}, 
-					{"Blue:", "Slider", 255, 255, 88}, 
+					{"Priority Targets Color", 535, 140, 245, 105, 100}, 
+					{"Red:", "Slider", 255, 255, 88}, 
+					{"Green:", "Slider", 0, 255, 88}, 
+					{"Blue:", "Slider", 100, 255, 88}, 
                 }, 
 				{
-					{"Entities Visuals Color", 790, 140, 250, 105, 100}, 
-					{"Red:", "Slider", 0, 255, 88}, 
-					{"Green:", "Slider", 255, 255, 88}, 
-					{"Blue:", "Slider", 255, 255, 88}, 
+					{"Ignored Targets Color", 790, 140, 250, 105, 100}, 
+					{"Red:", "Slider", 175, 255, 88}, 
+					{"Green:", "Slider", 175, 255, 88}, 
+					{"Blue:", "Slider", 175, 255, 88}, 
                 }, 
 				{
 					{"Misc Visuals Color", 60, 260, 250, 105, 100}, 
@@ -416,14 +416,14 @@ local options = {
                 }, 
 				{
 					{"Team Chams Color", 321, 260, 205, 105, 70}, 
-					{"Red:", "Slider", 0, 255, 75}, 
-					{"Green:", "Slider", 255, 255, 75}, 
-					{"Blue:", "Slider", 255, 255, 75}, 
+					{"Red:", "Slider", 255, 255, 75}, 
+					{"Green:", "Slider", 215, 255, 75}, 
+					{"Blue:", "Slider", 0, 255, 75}, 
                 }, 
 				{
 					{"Enemy Chams Color", 535, 260, 245, 105, 100}, 
-					{"Red:", "Slider", 0, 255, 75}, 
-					{"Green:", "Slider", 255, 255, 75}, 
+					{"Red:", "Slider", 255, 255, 75}, 
+					{"Green:", "Slider", 70, 255, 75}, 
 					{"Blue:", "Slider", 255, 255, 75}, 
                 }, 
 				{
@@ -471,7 +471,7 @@ local order = {
 	"Hack vs. Hack", 
 	"Visuals", 
 	"Miscellaneous", 
-	"Settings", 
+	"Colors & Adjustments", 
 }
 
 local function gBool(men, sub, lookup)
@@ -528,7 +528,7 @@ local function gKey(men, sub, lookup)
 	end
 end
 
-local maintextcol, menutextcol, bgmenucol, bordercol, teamvisualscol, enemyvisualscol, friendvisualscol, entitiesvisualscol, miscvisualscol, teamchamscol, enemychamscol, crosshaircol, viewmodelcol = Color(0, 205, 255), Color(255, 255, 255), Color(30, 30, 45), Color(0, 155, 255), Color(255, 255, 255), Color(255, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 235, 255), Color(0, 235, 255)
+local maintextcol, menutextcol, bgmenucol, bordercol, teamvisualscol, enemyvisualscol, prioritytargetscol, ignoredtargetscol, miscvisualscol, teamchamscol, enemychamscol, crosshaircol, viewmodelcol = Color(0, 205, 255), Color(255, 255, 255), Color(30, 30, 45), Color(0, 155, 255), Color(255, 255, 255), Color(255, 255, 255), Color(255, 0, 100), Color(175, 175, 175), Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 235, 255), Color(0, 235, 255)
 
 local windowopen = false
 
@@ -941,15 +941,15 @@ end
 
 local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 	surface.SetFont("MenuFont")
-	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.SetTextPos(5 + posx + 15 + 5, 61 + posy + maxy)
 	local tw, th = surface.GetTextSize(var[1])
-	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	local mx, my = self:GetPos()
 	local bMouse = MouseInArea(mx + 5 + posx + 15 + 5, my + 61 + posy + maxy, mx + 5 + posx + 15 + 5 + dist + 14 + var[4], my + 61 + posy + maxy + 16)
 	if bMouse then
-		surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:") - 155)
-		surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:") - 155)
+		surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:") - 155)
+		surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:") - 155)
 		if not input.IsMouseDown(MOUSE_LEFT) then
 			surface.DrawRect(5 + posx + 15 + 5 + dist + 2 + var[4], 61 + posy + maxy + 2, 10, 10)
 		end
@@ -972,16 +972,16 @@ local function DrawSlider(self, w, h, var, maxy, posx, posy, dist)
 	local max = var[4]
 	local size = var[5]
 	surface.SetFont("MenuFont")
-	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.SetTextPos(5 + posx + 15 + 5, 61 + posy + maxy)
 	surface.DrawText(var[1])
 	local tw, th = surface.GetTextSize(var[1])
-	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.DrawRect(5 + posx + 15 + 5 + dist, 61 + posy + maxy + 9, size, 2)
 	local ww = math.ceil(curnum * size / max)
-	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.DrawRect(3 + posx + 15 + 5 + dist + ww, 61 + posy + maxy + 9 - 5, 4, 12)
-	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	local tw, th = surface.GetTextSize(curnum)
 	surface.DrawOutlinedRect(3 + posx + 15 + 5 + dist + ww, 61 + posy + maxy + 4, 4, 12)
 	surface.SetTextPos(5 + posx + 15 + 5 + dist + (size / 2) - tw / 2, 61 + posy + maxy + 16)
@@ -1001,11 +1001,11 @@ local function DrawSelect(self, w, h, var, maxy, posx, posy, dist)
 	local size = var[5]
 	local curopt = var[3]
 	surface.SetFont("MenuFont")
-	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.SetTextPos(5 + posx + 15 + 5, 61 + posy + maxy)
 	local tw, th = surface.GetTextSize(var[1])
 	surface.DrawText(var[1])
-	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.DrawOutlinedRect(25 + posx + dist, 61 + posy + maxy, size, 16)
 	local mx, my = self:GetPos()
 	local bMouse = MouseInArea(mx + 25 + posx + dist, my + 61 + posy + maxy, mx + 25 + posx + dist + size, my + 61 + posy + maxy + 16)
@@ -1054,11 +1054,11 @@ local function DrawToggle(self, w, h, var, maxy, posx, posy, dist)
 	local text = var[1]
 	local size = var[4]
 	surface.SetFont("MenuFont")
-	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.SetTextPos(5 + posx + 15 + 5, 61 + posy + maxy)
 	local tw, th = surface.GetTextSize(text)
 	surface.DrawText(var[1])
-	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.DrawOutlinedRect(25 + posx + dist, 61 + posy + maxy, size, 16)
 	local mx, my = self:GetPos()
 	local bMouse = MouseInArea(mx + 25 + posx + dist, my + 61 + posy + maxy, mx + 25 + posx + dist + 14 + var[4], my + 61 + posy + maxy + 16)
@@ -1223,7 +1223,7 @@ local function Changelog()
 	print("- Added 'Distance Limit', 'Velocity Limit' and NPC targeting to Aim Assist;")
 	print("- Added 'Priority List' and 'Use Spam' to Miscellaneous;")
 	print("- Added 'Cheater Callout', 'Copy Messages', 'Disconnect Spam', 'lol', 'english please', 'lmao', 'shit' and 'fuck' to Reply Spam;")
-	print("- Added 'Border Color', 'Misc Visuals Color' and 'B Opacity' to Settings;")
+	print("- Added 'Border Color', 'Misc Visuals Color' and 'B Opacity' to Colors & Adjustments;")
 	print("- Added 'Fake-Forwards/ Backwards/ Sideways', X-Axis Spinbot, 'Static', 'Adaptive' and 'Disable in Use Toggle' to Anti-Aim;")
 	print("- Added 'Players List', 'Show Entities', 'Conditions', 'Velocity', 'Dormant Check', 'Show Spectators', 'Hide Ignored Targets', 'Bystander Name', 'NPCs' and 'Clientside' and priority statuses to Visuals;")
 	print("- Added 'Panic Mode', 'Entity Menu', 'Plugin Loader', 'Optimize Game' and TTT/ Murder/ DarkRP specific features to Main Menu;")
@@ -1411,16 +1411,16 @@ local function EntityFinder()
 		end
 	end
 	finder.Paint = function(self, w, h)
-		draw.RoundedBox(gInt("Settings", "Others", "Roundness:"), 0, 0, w, h, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Settings", "Others", "BG Opacity:")))
+		draw.RoundedBox(gInt("Colors & Adjustments", "Others", "Roundness:"), 0, 0, w, h, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Colors & Adjustments", "Others", "BG Opacity:")))
 		DrawUpperText(w, h)
-		draw.SimpleText("Search Entity:", "MenuFont", 192, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-		draw.SimpleText("Add Entity:", "MenuFont", 642, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		draw.SimpleText("Search Entity:", "MenuFont", 192, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		draw.SimpleText("Add Entity:", "MenuFont", 642, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 	end
 	ent_list.Paint = function(self, w, h)
-		draw.RoundedBox(15, 0, 0, w, h, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:")))
+		draw.RoundedBox(15, 0, 0, w, h, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
 	end
 	draw_list.Paint = function(self, w, h)
-		draw.RoundedBox(15, 0, 0, w, h, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:")))
+		draw.RoundedBox(15, 0, 0, w, h, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
 	end
 	for k, v in next, ents.GetAll() do
 		if not table.HasValue(added, v:GetClass()) and not table.HasValue(drawn_ents, v:GetClass()) and BadEntities(v) and v:GetClass() ~= "player" then
@@ -1488,10 +1488,10 @@ local function PluginLoader()
 			plugin_list:AddLine(v)
 		end
 	plugin_list.Paint = function(self, w, h)
-		draw.RoundedBox(16, 0, 0, w, h, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:")))
+		draw.RoundedBox(16, 0, 0, w, h, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
 	end
 	plugin.Paint = function(self, w, h)
-		draw.RoundedBox(gInt("Settings", "Others", "Roundness:"), 0, 0, w, h, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Settings", "Others", "BG Opacity:")))
+		draw.RoundedBox(gInt("Colors & Adjustments", "Others", "Roundness:"), 0, 0, w, h, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Colors & Adjustments", "Others", "BG Opacity:")))
 		DrawUpperText(w, h)
 	end
 	plugin.Think = function()
@@ -1511,8 +1511,8 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 	local text = var[1]
 	local size = var[4]
 	surface.SetFont("MenuFont")
-	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
-	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))
+	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.DrawOutlinedRect(posx - 193 + dist, 61 + posy + maxy, size + 219, 16)
 	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 75)
 	surface.DrawRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, size + 215, 12)
@@ -1617,14 +1617,14 @@ end
 local function DrawSubSub(self, w, h, k, var)
 	if gOption("Main Menu", "Menus", "Options Style:") == "Borders" then
 	local opt, posx, posy, sizex, sizey, dist = var[1][1], var[1][2], var[1][3], var[1][4], var[1][5], var[1][6]
-	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:"))
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Colors & Adjustments", "Others", "B Opacity:"))
 	local startpos = 61 + posy
-	surface.SetTextColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetTextColor(bordercol.r, bordercol.g, bordercol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.SetFont("MenuFont")
 	local tw, th = surface.GetTextSize(opt)
-	surface.SetDrawColor(bgmenucol.r + 13, bgmenucol.g + 13, bgmenucol.b + 13, gInt("Settings", "Others", "BG Opacity:"));
+	surface.SetDrawColor(bgmenucol.r + 13, bgmenucol.g + 13, bgmenucol.b + 13, gInt("Colors & Adjustments", "Others", "BG Opacity:"));
 	surface.DrawRect(5 + posx, startpos, sizex, sizey);
-	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:"))
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Colors & Adjustments", "Others", "B Opacity:"))
 	surface.DrawLine(5 + posx, startpos, 5 + posx + 15, startpos)
 	surface.SetTextPos(5 + posx + 15 + 5, startpos - th / 2)
 	surface.DrawLine(5 + posx + 15 + 5 + tw + 5, startpos, 5 + posx + sizex, startpos)
@@ -1652,10 +1652,10 @@ local function DrawSubSub(self, w, h, k, var)
 	local opt, posx, posy, sizex, sizey, dist = var[1][1], var[1][2], var[1][3], var[1][4], var[1][5], var[1][6]
 	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 0)
 	local startpos = 61 + posy
-	surface.SetTextColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetTextColor(bordercol.r, bordercol.g, bordercol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.SetFont("MenuFont")
 	local tw, th = surface.GetTextSize(opt)
-	surface.SetDrawColor(bgmenucol.r + 13, bgmenucol.g + 13, bgmenucol.b + 13, gInt("Settings", "Others", "BG Opacity:"));
+	surface.SetDrawColor(bgmenucol.r + 13, bgmenucol.g + 13, bgmenucol.b + 13, gInt("Colors & Adjustments", "Others", "BG Opacity:"));
 	surface.DrawRect(5 + posx, startpos, sizex, sizey);
 	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 0)
 	surface.DrawLine(5 + posx, startpos, 5 + posx + 15, startpos)
@@ -1703,9 +1703,9 @@ local function MenuBorder() -- Probably a dumb way of doing this but still
 	frame:ShowCloseButton(false)
 		frame.Paint = function(self, w, h)
 			if gOption("Main Menu", "Menus", "Menu Style:") == "Borders" then
-				draw.RoundedBox(gInt("Settings", "Others", "Roundness:"), 0, 0, w, h, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:")))
+				draw.RoundedBox(gInt("Colors & Adjustments", "Others", "Roundness:"), 0, 0, w, h, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Colors & Adjustments", "Others", "B Opacity:")))
 			elseif gOption("Main Menu", "Menus", "Menu Style:") == "Borderless" then
-				draw.RoundedBox(gInt("Settings", "Others", "Roundness:"), 0, 0, w, h, Color(bordercol.r, bordercol.g, bordercol.b, 0))
+				draw.RoundedBox(gInt("Colors & Adjustments", "Others", "Roundness:"), 0, 0, w, h, Color(bordercol.r, bordercol.g, bordercol.b, 0))
 			end
 		end
 	frame.Think = function()
@@ -1723,19 +1723,19 @@ local function MenuBorder() -- Probably a dumb way of doing this but still
 end
 
 local function CacheColors()
-	maintextcol = Color(gInt("Settings", "Main Text Color", "Red:"), gInt("Settings", "Main Text Color", "Green:"), gInt("Settings", "Main Text Color", "Blue:"))
-	menutextcol = Color(gInt("Settings", "Menu Text Color", "Red:"), gInt("Settings", "Menu Text Color", "Green:"), gInt("Settings", "Menu Text Color", "Blue:"))
-	bgmenucol = Color(gInt("Settings", "Background Menu Color", "Red:"), gInt("Settings", "Background Menu Color", "Green:"), gInt("Settings", "Background Menu Color", "Blue:"))
-	bordercol = Color(gInt("Settings", "Border Color", "Red:"), gInt("Settings", "Border Color", "Green:"), gInt("Settings", "Border Color", "Blue:"))
-	teamvisualscol = Color(gInt("Settings", "Team Visuals Color", "Red:"), gInt("Settings", "Team Visuals Color", "Green:"), gInt("Settings", "Team Visuals Color", "Blue:"))
-	enemyvisualscol = Color(gInt("Settings", "Enemy Visuals Color", "Red:"), gInt("Settings", "Enemy Visuals Color", "Green:"), gInt("Settings", "Enemy Visuals Color", "Blue:"))
-	friendvisualscol = Color(gInt("Settings", "Friend Visuals Color", "Red:"), gInt("Settings", "Friend Visuals Color", "Green:"), gInt("Settings", "Friend Visuals Color", "Blue:"))
-	entitiesvisualscol = Color(gInt("Settings", "Entities Visuals Color", "Red:"), gInt("Settings", "Entities Visuals Color", "Green:"), gInt("Settings", "Entities Visuals Color", "Blue:"))
-	miscvisualscol = Color(gInt("Settings", "Misc Visuals Color", "Red:"), gInt("Settings", "Misc Visuals Color", "Green:"), gInt("Settings", "Misc Visuals Color", "Blue:"))
-	teamchamscol = Color(gInt("Settings", "Team Chams Color", "Red:"), gInt("Settings", "Team Chams Color", "Green:"), gInt("Settings", "Team Chams Color", "Blue:"))
-	enemychamscol = Color(gInt("Settings", "Enemy Chams Color", "Red:"), gInt("Settings", "Enemy Chams Color", "Green:"), gInt("Settings", "Enemy Chams Color", "Blue:"))
-	crosshaircol = Color(gInt("Settings", "Crosshair Color", "Red:"), gInt("Settings", "Crosshair Color", "Green:"), gInt("Settings", "Crosshair Color", "Blue:"))
-	viewmodelcol = Color(gInt("Settings", "Viewmodel Color", "Red:"), gInt("Settings", "Viewmodel Color", "Green:"), gInt("Settings", "Viewmodel Color", "Blue:"))
+	maintextcol = Color(gInt("Colors & Adjustments", "Main Text Color", "Red:"), gInt("Colors & Adjustments", "Main Text Color", "Green:"), gInt("Colors & Adjustments", "Main Text Color", "Blue:"))
+	menutextcol = Color(gInt("Colors & Adjustments", "Menu Text Color", "Red:"), gInt("Colors & Adjustments", "Menu Text Color", "Green:"), gInt("Colors & Adjustments", "Menu Text Color", "Blue:"))
+	bgmenucol = Color(gInt("Colors & Adjustments", "Background Menu Color", "Red:"), gInt("Colors & Adjustments", "Background Menu Color", "Green:"), gInt("Colors & Adjustments", "Background Menu Color", "Blue:"))
+	bordercol = Color(gInt("Colors & Adjustments", "Border Color", "Red:"), gInt("Colors & Adjustments", "Border Color", "Green:"), gInt("Colors & Adjustments", "Border Color", "Blue:"))
+	teamvisualscol = Color(gInt("Colors & Adjustments", "Team Visuals Color", "Red:"), gInt("Colors & Adjustments", "Team Visuals Color", "Green:"), gInt("Colors & Adjustments", "Team Visuals Color", "Blue:"))
+	enemyvisualscol = Color(gInt("Colors & Adjustments", "Enemy Visuals Color", "Red:"), gInt("Colors & Adjustments", "Enemy Visuals Color", "Green:"), gInt("Colors & Adjustments", "Enemy Visuals Color", "Blue:"))
+	prioritytargetscol = Color(gInt("Colors & Adjustments", "Priority Targets Color", "Red:"), gInt("Colors & Adjustments", "Priority Targets Color", "Green:"), gInt("Colors & Adjustments", "Priority Targets Color", "Blue:"))
+	ignoredtargetscol = Color(gInt("Colors & Adjustments", "Ignored Targets Color", "Red:"), gInt("Colors & Adjustments", "Ignored Targets Color", "Green:"), gInt("Colors & Adjustments", "Ignored Targets Color", "Blue:"))
+	miscvisualscol = Color(gInt("Colors & Adjustments", "Misc Visuals Color", "Red:"), gInt("Colors & Adjustments", "Misc Visuals Color", "Green:"), gInt("Colors & Adjustments", "Misc Visuals Color", "Blue:"))
+	teamchamscol = Color(gInt("Colors & Adjustments", "Team Chams Color", "Red:"), gInt("Colors & Adjustments", "Team Chams Color", "Green:"), gInt("Colors & Adjustments", "Team Chams Color", "Blue:"))
+	enemychamscol = Color(gInt("Colors & Adjustments", "Enemy Chams Color", "Red:"), gInt("Colors & Adjustments", "Enemy Chams Color", "Green:"), gInt("Colors & Adjustments", "Enemy Chams Color", "Blue:"))
+	crosshaircol = Color(gInt("Colors & Adjustments", "Crosshair Color", "Red:"), gInt("Colors & Adjustments", "Crosshair Color", "Green:"), gInt("Colors & Adjustments", "Crosshair Color", "Blue:"))
+	viewmodelcol = Color(gInt("Colors & Adjustments", "Viewmodel Color", "Red:"), gInt("Colors & Adjustments", "Viewmodel Color", "Green:"), gInt("Colors & Adjustments", "Viewmodel Color", "Blue:"))
 end
 
 local menusongs = {"https://dl.dropbox.com/s/0m22ytfia8qoy4m/Daisuke%20-%20El%20Huervo.mp3?dl=1", "https://dl.dropbox.com/s/0fdgaj0ry8uummf/Rust_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/vsz77wdjqy1xf83/HOME%20-%20Resonance.mp3?dl=1", "https://dl.dropbox.com/s/ovh8xt0nn6wjgjj/The%20Caretaker%20-%20It%27s%20just%20a%20burning%20memory%20%282016%29.mp3?dl=1", "https://dl.dropbox.com/s/8bg55iwowf2jtv8/cuckoid%20-%20ponyinajar.mp3?dl=1", "https://dl.dropbox.com/s/0uly6phlgpoj4ss/1932_George_Olsen_-_Lullaby_Of_The_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/qfl7mu39us5hzn4/Erectin_a_River_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/stkat6jlp4jhpxo/Monrroe_-_Fleeting_Love_%28getmp3.pro%29.mp3?dl=1","https://dl.dropbox.com/s/vhd3il20d8ephb4/DJ_Spizdil_-_malo_tebyaHardstyle_m_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/2vf1lx9cnd5g9pq/Maduk_-_Vermilion_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/wcoo6cov1iatcao/Metrik_-_Gravity_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/8a91zs6woqz9bb4/Scattle_Remorse_REUPLOAD_CHECK_DE_%28getmp3.pro%29.mp3?dl=1","https://dl.dropbox.com/s/bqt4dcjoziezdjk/The_Caretaker_-_Libets_Delay_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/12ztoyw2rc2q0z0/HOME_-_Hold_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/xlk7wuel56bwrr3/T_Sugah_-_Green_Valleys_LAOS_%28getmp3.pro%29.mp3?dl=1",}
@@ -1752,7 +1752,7 @@ local function Menu()
 		if (candoslider and not mousedown and not drawlast and not input.IsMouseDown(MOUSE_LEFT)) then
 			candoslider = false
 		end
-		draw.RoundedBox(gInt("Settings", "Others", "Roundness:"), 0, 0, w, h, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Settings", "Others", "BG Opacity:")))
+		draw.RoundedBox(gInt("Colors & Adjustments", "Others", "Roundness:"), 0, 0, w, h, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Colors & Adjustments", "Others", "BG Opacity:")))
 		DrawUpperText(w, h)
 		DrawOptions(self, w, h)
 		DrawSub(self, w, h)
@@ -1966,7 +1966,7 @@ local function KillSpam(data)
 	if (not killer:IsValid() or not killed:IsValid() or not killer:IsPlayer() or not killed:IsPlayer()) or (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, killed:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, killer:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and (killed ~= me and killer == me and not table.HasValue(priority_list, killed:UniqueID()))) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and (killed == me and killer ~= me and not table.HasValue(priority_list, killer:UniqueID()))) then return end
 	local playerphrases = {"Owned", "Bodied", "Smashed", "Fucked", "Destroyed", "Annihilated", "Decimated", "Wrecked", "Demolished", "Trashed", "Ruined", "Murdered", "Exterminated", "Slaughtered", "Butchered", "Genocided", "Executed", "Bamboozled", "IdiotBox'd",}
 	local excuses = {"i lagged out wtf", "bad ping wtf", "lol wasnt looking at you", "was alt tabbed", "luck", "wow", "nice one", "i think ur hacking m8", "my cat was on the keyboard", "my dog was on the keyboard", "my fps is trash", "my ping is trash", "ouch", "wtf", "ok",}
-	local hvhexcuses = {"forgot to press aimkey lol", "give me a minute to configurate", "wtf it didnt save my settings wait", "lol my hvh settings are gone, wait", "luck lol", "my fps is trash", "my ping is trash", "what are you using?",}
+	local hvhexcuses = {"forgot to press aimkey lol", "give me a minute to configurate", "wtf it didnt save my Colors & Adjustments wait", "lol my hvh Colors & Adjustments are gone, wait", "luck lol", "my fps is trash", "my ping is trash", "what are you using?",}
 	local hvhexcuses2 = {"Ok", "Nice", "Lucky", "Sorry, bad aa", "My configs suck", "I suck at HvH", "What are you using?", "I'm using a shit cheat",}
 	local reason = {"bad at game", "spawnkilling", "hacker", "hacking", "hack", "bad", "eats penis",}
 	local reason2 = {"hacker", "spawnkiller", "propkiller", "rdm", "being annoying", "bad at the game", "acts like a retard", "is stupid",}
@@ -2087,12 +2087,12 @@ end
 
 local function Logo()
 	if gOption("Main Menu", "Menus", "Menu Style:") == "Borders" then
-		draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Custom Status X:") - 1, gInt("Settings", "List Positions", "Custom Status Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:")))
+		draw.RoundedBox(gInt("Colors & Adjustments", "List Positions", "Roundness:"), gInt("Colors & Adjustments", "List Positions", "Custom Status X:") - 1, gInt("Colors & Adjustments", "List Positions", "Custom Status Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Colors & Adjustments", "Others", "B Opacity:")))
 	elseif gOption("Main Menu", "Menus", "Menu Style:") == "Borderless" then
-		draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Custom Status X:") - 1, gInt("Settings", "List Positions", "Custom Status Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, 0))
+		draw.RoundedBox(gInt("Colors & Adjustments", "List Positions", "Roundness:"), gInt("Colors & Adjustments", "List Positions", "Custom Status X:") - 1, gInt("Colors & Adjustments", "List Positions", "Custom Status Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, 0))
 	end
-	draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Custom Status X:") + 1, gInt("Settings", "List Positions", "Custom Status Y:") - 23, 88, 20, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Settings", "Others", "BG Opacity:")))
-	draw.DrawText("Status", "MiscFont2", gInt("Settings", "List Positions", "Custom Status X:") + 45, gInt("Settings", "List Positions", "Custom Status Y:") - 22, Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Settings", "Others", "T Opacity:")), TEXT_ALIGN_CENTER)
+	draw.RoundedBox(gInt("Colors & Adjustments", "List Positions", "Roundness:"), gInt("Colors & Adjustments", "List Positions", "Custom Status X:") + 1, gInt("Colors & Adjustments", "List Positions", "Custom Status Y:") - 23, 88, 20, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Colors & Adjustments", "Others", "BG Opacity:")))
+	draw.DrawText("Status", "MiscFont2", gInt("Colors & Adjustments", "List Positions", "Custom Status X:") + 45, gInt("Colors & Adjustments", "List Positions", "Custom Status Y:") - 22, Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_CENTER)
 end
 
 local function Status()
@@ -2105,89 +2105,89 @@ local function Status()
 	end
 	surface.SetFont("MiscFont")
 	hh = hh + 12
-	surface.SetTextPos(gInt("Settings", "List Positions", "Custom Status X:") + 3, hh + gInt("Settings", "List Positions", "Custom Status Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetTextPos(gInt("Colors & Adjustments", "List Positions", "Custom Status X:") + 3, hh + gInt("Colors & Adjustments", "List Positions", "Custom Status Y:"))
+	surface.SetTextColor(0, 131, 125, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Health: "..hp)
 	if (em.IsValid(wep)) then
 	local daclip = wep:Clip1()
 		if daclip < 0 then
 			daclip = 0
 		end
-		surface.SetTextColor(0, 131, 125, gInt("Settings", "Others", "T Opacity:"))
+		surface.SetTextColor(0, 131, 125, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 		hh = hh + 12
-		surface.SetTextPos(gInt("Settings", "List Positions", "Custom Status X:") + 3, hh + gInt("Settings", "List Positions", "Custom Status Y:"))
+		surface.SetTextPos(gInt("Colors & Adjustments", "List Positions", "Custom Status X:") + 3, hh + gInt("Colors & Adjustments", "List Positions", "Custom Status Y:"))
 		surface.DrawText("Ammo: "..daclip.."/"..me:GetAmmoCount(wep:GetPrimaryAmmoType()))
 	else
-		surface.SetTextColor(0, 131, 125, gInt("Settings", "Others", "T Opacity:"))
+		surface.SetTextColor(0, 131, 125, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 		hh = hh + 12
-		surface.SetTextPos(gInt("Settings", "List Positions", "Custom Status X:") + 3, hh + gInt("Settings", "List Positions", "Custom Status Y:"))
+		surface.SetTextPos(gInt("Colors & Adjustments", "List Positions", "Custom Status X:") + 3, hh + gInt("Colors & Adjustments", "List Positions", "Custom Status Y:"))
 		surface.DrawText("Ammo: ".."0".."/".."0")
 	end
 	hh = hh + 12
-	surface.SetTextPos(gInt("Settings", "List Positions", "Custom Status X:") + 3, hh + gInt("Settings", "List Positions", "Custom Status Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetTextPos(gInt("Colors & Adjustments", "List Positions", "Custom Status X:") + 3, hh + gInt("Colors & Adjustments", "List Positions", "Custom Status Y:"))
+	surface.SetTextColor(0, 131, 125, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Velocity: "..math.Round(velocity))
 	hh = hh + 12
-	surface.SetTextPos(gInt("Settings", "List Positions", "Custom Status X:") + 3, hh + gInt("Settings", "List Positions", "Custom Status Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetTextPos(gInt("Colors & Adjustments", "List Positions", "Custom Status X:") + 3, hh + gInt("Colors & Adjustments", "List Positions", "Custom Status Y:"))
+	surface.SetTextColor(0, 131, 125, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Server: "..GetHostName())
 	hh = hh + 12
-	surface.SetTextPos(gInt("Settings", "List Positions", "Custom Status X:") + 3, hh + gInt("Settings", "List Positions", "Custom Status Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetTextPos(gInt("Colors & Adjustments", "List Positions", "Custom Status X:") + 3, hh + gInt("Colors & Adjustments", "List Positions", "Custom Status Y:"))
+	surface.SetTextColor(0, 131, 125, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Gamemode: "..engine.ActiveGamemode())
 	hh = hh + 12
-	surface.SetTextPos(gInt("Settings", "List Positions", "Custom Status X:") + 3, hh + gInt("Settings", "List Positions", "Custom Status Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetTextPos(gInt("Colors & Adjustments", "List Positions", "Custom Status X:") + 3, hh + gInt("Colors & Adjustments", "List Positions", "Custom Status Y:"))
+	surface.SetTextColor(0, 131, 125, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Map: "..game.GetMap())
 	hh = hh + 12
-	surface.SetTextPos(gInt("Settings", "List Positions", "Custom Status X:") + 3, hh + gInt("Settings", "List Positions", "Custom Status Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetTextPos(gInt("Colors & Adjustments", "List Positions", "Custom Status X:") + 3, hh + gInt("Colors & Adjustments", "List Positions", "Custom Status Y:"))
+	surface.SetTextColor(0, 131, 125, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Looking at: "..EntityName())
 	hh = hh + 12
-	surface.SetTextPos(gInt("Settings", "List Positions", "Custom Status X:") + 3, hh + gInt("Settings", "List Positions", "Custom Status Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetTextPos(gInt("Colors & Adjustments", "List Positions", "Custom Status X:") + 3, hh + gInt("Colors & Adjustments", "List Positions", "Custom Status Y:"))
+	surface.SetTextColor(0, 131, 125, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Entities: "..math.Round(ents.GetCount() - player.GetCount() * 12))
 	hh = hh + 12
-	surface.SetTextPos(gInt("Settings", "List Positions", "Custom Status X:") + 3, hh + gInt("Settings", "List Positions", "Custom Status Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetTextPos(gInt("Colors & Adjustments", "List Positions", "Custom Status X:") + 3, hh + gInt("Colors & Adjustments", "List Positions", "Custom Status Y:"))
+	surface.SetTextColor(0, 131, 125, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Frames: "..math.Round(1 / FrameTime()))
 	hh = hh + 12
-	surface.SetTextPos(gInt("Settings", "List Positions", "Custom Status X:") + 3, hh + gInt("Settings", "List Positions", "Custom Status Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetTextPos(gInt("Colors & Adjustments", "List Positions", "Custom Status X:") + 3, hh + gInt("Colors & Adjustments", "List Positions", "Custom Status Y:"))
+	surface.SetTextColor(0, 131, 125, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Ping: "..me:Ping())
 	hh = hh + 12
-	surface.SetTextPos(gInt("Settings", "List Positions", "Custom Status X:") + 3, hh + gInt("Settings", "List Positions", "Custom Status Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetTextPos(gInt("Colors & Adjustments", "List Positions", "Custom Status X:") + 3, hh + gInt("Colors & Adjustments", "List Positions", "Custom Status Y:"))
+	surface.SetTextColor(0, 131, 125, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Date: "..os.date("%d %b %Y"))
 	hh = hh + 12
-	surface.SetTextPos(gInt("Settings", "List Positions", "Custom Status X:") + 3, hh + gInt("Settings", "List Positions", "Custom Status Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetTextPos(gInt("Colors & Adjustments", "List Positions", "Custom Status X:") + 3, hh + gInt("Colors & Adjustments", "List Positions", "Custom Status Y:"))
+	surface.SetTextColor(0, 131, 125, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Time: "..os.date("%H:%M:%S"))
 end
 
 local function Spectator()
 	local radarX, radarY, radarWidth, radarHeight = 50, ScrH() / 3, 200, 200
-	local color1 = (Color(0, 0, 0, gInt("Settings", "Others", "BG Opacity:")))
-	local color2 = (Color(255, 0, 0, gInt("Settings", "Others", "T Opacity:")))
-	local color3 = (Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Settings", "Others", "T Opacity:")))
-	local color4 = (Color(0, 131, 125, gInt("Settings", "Others", "T Opacity:")))
+	local color1 = (Color(0, 0, 0, gInt("Colors & Adjustments", "Others", "BG Opacity:")))
+	local color2 = (Color(255, 0, 0, gInt("Colors & Adjustments", "Others", "T Opacity:")))
+	local color3 = (Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
+	local color4 = (Color(0, 131, 125, gInt("Colors & Adjustments", "Others", "T Opacity:")))
 	local hudspecslength = 150
 	specscount = 0
 	if gOption("Main Menu", "Menus", "Menu Style:") == "Borders" then
-		draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Spectators X:") - 1, gInt("Settings", "Window Positions", "Spectators Y:") - 3, radarWidth + 6, radarHeight + 6, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:")))
+		draw.RoundedBox(gInt("Colors & Adjustments", "Window Positions", "Roundness:"), gInt("Colors & Adjustments", "Window Positions", "Spectators X:") - 1, gInt("Colors & Adjustments", "Window Positions", "Spectators Y:") - 3, radarWidth + 6, radarHeight + 6, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Colors & Adjustments", "Others", "B Opacity:")))
 	elseif gOption("Main Menu", "Menus", "Menu Style:") == "Borderless" then
-		draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Spectators X:") - 1, gInt("Settings", "Window Positions", "Spectators Y:") - 3, radarWidth + 6, radarHeight + 6, Color(bordercol.r, bordercol.g, bordercol.b, 0))
+		draw.RoundedBox(gInt("Colors & Adjustments", "Window Positions", "Roundness:"), gInt("Colors & Adjustments", "Window Positions", "Spectators X:") - 1, gInt("Colors & Adjustments", "Window Positions", "Spectators Y:") - 3, radarWidth + 6, radarHeight + 6, Color(bordercol.r, bordercol.g, bordercol.b, 0))
 	end
-	draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Spectators X:") + 2, gInt("Settings", "Window Positions", "Spectators Y:"), radarWidth, radarHeight, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Settings", "Others", "BG Opacity:")))
-	draw.SimpleText("Spectators", "MiscFont2", gInt("Settings", "Window Positions", "Spectators X:") + 102, gInt("Settings", "Window Positions", "Spectators Y:") + 11, color3, 1, 1)
+	draw.RoundedBox(gInt("Colors & Adjustments", "Window Positions", "Roundness:"), gInt("Colors & Adjustments", "Window Positions", "Spectators X:") + 2, gInt("Colors & Adjustments", "Window Positions", "Spectators Y:"), radarWidth, radarHeight, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Colors & Adjustments", "Others", "BG Opacity:")))
+	draw.SimpleText("Spectators", "MiscFont2", gInt("Colors & Adjustments", "Window Positions", "Spectators X:") + 102, gInt("Colors & Adjustments", "Window Positions", "Spectators Y:") + 11, color3, 1, 1)
 	for k, v in pairs(player.GetAll()) do
 		if (IsValid(v:GetObserverTarget())) and v:GetObserverTarget() == me then
-			DrawOutlinedText (v:GetName(), "MiscFont2", gInt("Settings", "Window Positions", "Spectators X:") + 102, gInt("Settings", "Window Positions", "Spectators Y:") + 32 + specscount, color2, 0.1, color1)
+			DrawOutlinedText (v:GetName(), "MiscFont2", gInt("Colors & Adjustments", "Window Positions", "Spectators X:") + 102, gInt("Colors & Adjustments", "Window Positions", "Spectators Y:") + 32 + specscount, color2, 0.1, color1)
 			specscount = specscount + 12
 		end
 	end
 	if specscount == 0 then
-		DrawOutlinedText ("none", "MiscFont2", gInt("Settings", "Window Positions", "Spectators X:") + 102, gInt("Settings", "Window Positions", "Spectators Y:") + 32, color4, 0.1, color1)
+		DrawOutlinedText ("none", "MiscFont2", gInt("Colors & Adjustments", "Window Positions", "Spectators X:") + 102, gInt("Colors & Adjustments", "Window Positions", "Spectators Y:") + 32, color4, 0.1, color1)
 	end
 	hudspecslength = specscount + 19
 end
@@ -2216,19 +2216,19 @@ end
 local radarX, radarY, radarWidth, radarHeight = 50, ScrH() / 3, 200, 200
 
 local function RadarDraw()
-	local col = Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Settings", "Others", "T Opacity:"))
+	local col = Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	local everything = ents.GetAll()
 	if gOption("Main Menu", "Menus", "Menu Style:") == "Borders" then
-		draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Radar X:") - 1, gInt("Settings", "Window Positions", "Radar Y:") - 3, radarWidth + 6, radarHeight + 6, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:")))
+		draw.RoundedBox(gInt("Colors & Adjustments", "Window Positions", "Roundness:"), gInt("Colors & Adjustments", "Window Positions", "Radar X:") - 1, gInt("Colors & Adjustments", "Window Positions", "Radar Y:") - 3, radarWidth + 6, radarHeight + 6, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Colors & Adjustments", "Others", "B Opacity:")))
 	elseif gOption("Main Menu", "Menus", "Menu Style:") == "Borderless" then
-		draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Radar X:") - 1, gInt("Settings", "Window Positions", "Radar Y:") - 3, radarWidth + 6, radarHeight + 6, Color(bordercol.r, bordercol.g, bordercol.b, 0))
+		draw.RoundedBox(gInt("Colors & Adjustments", "Window Positions", "Roundness:"), gInt("Colors & Adjustments", "Window Positions", "Radar X:") - 1, gInt("Colors & Adjustments", "Window Positions", "Radar Y:") - 3, radarWidth + 6, radarHeight + 6, Color(bordercol.r, bordercol.g, bordercol.b, 0))
 	end
-	draw.RoundedBox(gInt("Settings", "Window Positions", "Roundness:"), gInt("Settings", "Window Positions", "Radar X:") + 2, gInt("Settings", "Window Positions", "Radar Y:"), radarWidth, radarHeight, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Settings", "Others", "BG Opacity:")))
-	draw.SimpleText("Radar", "MiscFont2", gInt("Settings", "Window Positions", "Radar X:") + 102, gInt("Settings", "Window Positions", "Radar Y:") + 11, col, 1, 1)
+	draw.RoundedBox(gInt("Colors & Adjustments", "Window Positions", "Roundness:"), gInt("Colors & Adjustments", "Window Positions", "Radar X:") + 2, gInt("Colors & Adjustments", "Window Positions", "Radar Y:"), radarWidth, radarHeight, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Colors & Adjustments", "Others", "BG Opacity:")))
+	draw.SimpleText("Radar", "MiscFont2", gInt("Colors & Adjustments", "Window Positions", "Radar X:") + 102, gInt("Colors & Adjustments", "Window Positions", "Radar Y:") + 11, col, 1, 1)
 	draw.NoTexture()
-	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:") - 75)
-	surface.DrawLine(gInt("Settings", "Window Positions", "Radar X:") + 209 * 0.5, gInt("Settings", "Window Positions", "Radar Y:") + 24, gInt("Settings", "Window Positions", "Radar X:") + 209 * 0.5, gInt("Settings", "Window Positions", "Radar Y:") + 190)
-	surface.DrawLine(gInt("Settings", "Window Positions", "Radar X:") + 12, gInt("Settings", "Window Positions", "Radar Y:") + 209 * 0.5, gInt("Settings", "Window Positions", "Radar X:") + 191, gInt("Settings", "Window Positions", "Radar Y:") + 209 * 0.5)
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Colors & Adjustments", "Others", "B Opacity:") - 75)
+	surface.DrawLine(gInt("Colors & Adjustments", "Window Positions", "Radar X:") + 209 * 0.5, gInt("Colors & Adjustments", "Window Positions", "Radar Y:") + 24, gInt("Colors & Adjustments", "Window Positions", "Radar X:") + 209 * 0.5, gInt("Colors & Adjustments", "Window Positions", "Radar Y:") + 190)
+	surface.DrawLine(gInt("Colors & Adjustments", "Window Positions", "Radar X:") + 12, gInt("Colors & Adjustments", "Window Positions", "Radar Y:") + 209 * 0.5, gInt("Colors & Adjustments", "Window Positions", "Radar X:") + 191, gInt("Colors & Adjustments", "Window Positions", "Radar Y:") + 209 * 0.5)
 	surface.SetDrawColor(team.GetColor(me:Team()))
 	for k = 1, #everything do
 		local v = everything[k]
@@ -2244,9 +2244,9 @@ local function RadarDraw()
 			theirY = theirY - (radarY + (radarHeight / 2))
 			local newX = theirX * math.cos(myRotation) - theirY * math.sin(myRotation)
 			local newY = theirX * math.sin(myRotation) + theirY * math.cos(myRotation)
-			newX = newX + (gInt("Settings", "Window Positions", "Radar X:") + 2 + (radarWidth / 2))
-			newY = newY + (gInt("Settings", "Window Positions", "Radar Y:") + 2 + (radarHeight / 2))
-			if newX < (gInt("Settings", "Window Positions", "Radar X:") + 2 + radarWidth) and newX > gInt("Settings", "Window Positions", "Radar X:") + 2 and newY < (gInt("Settings", "Window Positions", "Radar Y:") + radarHeight) and newY > gInt("Settings", "Window Positions", "Radar Y:") then
+			newX = newX + (gInt("Colors & Adjustments", "Window Positions", "Radar X:") + 2 + (radarWidth / 2))
+			newY = newY + (gInt("Colors & Adjustments", "Window Positions", "Radar Y:") + 2 + (radarHeight / 2))
+			if newX < (gInt("Colors & Adjustments", "Window Positions", "Radar X:") + 2 + radarWidth) and newX > gInt("Colors & Adjustments", "Window Positions", "Radar X:") + 2 and newY < (gInt("Colors & Adjustments", "Window Positions", "Radar Y:") + radarHeight) and newY > gInt("Colors & Adjustments", "Window Positions", "Radar Y:") then
 				DrawArrow(newX + 4, newY, v:EyeAngles().y - fa.y)
 			end
 		end
@@ -2256,28 +2256,28 @@ end
 
 local function Logo2()
 	if gOption("Main Menu", "Menus", "Menu Style:") == "Borders" then
-		draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Players List X:") - 1, gInt("Settings", "List Positions", "Players List Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Settings", "Others", "B Opacity:")))
+		draw.RoundedBox(gInt("Colors & Adjustments", "List Positions", "Roundness:"), gInt("Colors & Adjustments", "List Positions", "Players List X:") - 1, gInt("Colors & Adjustments", "List Positions", "Players List Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Colors & Adjustments", "Others", "B Opacity:")))
 	elseif gOption("Main Menu", "Menus", "Menu Style:") == "Borderless" then
-		draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Players List X:") - 1, gInt("Settings", "List Positions", "Players List Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, 0))
+		draw.RoundedBox(gInt("Colors & Adjustments", "List Positions", "Roundness:"), gInt("Colors & Adjustments", "List Positions", "Players List X:") - 1, gInt("Colors & Adjustments", "List Positions", "Players List Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, 0))
 	end
-	draw.RoundedBox(gInt("Settings", "List Positions", "Roundness:"), gInt("Settings", "List Positions", "Players List X:") + 1, gInt("Settings", "List Positions", "Players List Y:") - 23, 88, 20, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Settings", "Others", "BG Opacity:")))
-	draw.DrawText("Players", "MiscFont2", gInt("Settings", "List Positions", "Players List X:") + 47, gInt("Settings", "List Positions", "Players List Y:") - 22, Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Settings", "Others", "T Opacity:")), TEXT_ALIGN_CENTER)
+	draw.RoundedBox(gInt("Colors & Adjustments", "List Positions", "Roundness:"), gInt("Colors & Adjustments", "List Positions", "Players List X:") + 1, gInt("Colors & Adjustments", "List Positions", "Players List Y:") - 23, 88, 20, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Colors & Adjustments", "Others", "BG Opacity:")))
+	draw.DrawText("Players", "MiscFont2", gInt("Colors & Adjustments", "List Positions", "Players List X:") + 47, gInt("Colors & Adjustments", "List Positions", "Players List Y:") - 22, Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_CENTER)
 end
 
 local function Players()
 	local hh = - 10
 	surface.SetFont("MiscFont")
 	hh = hh + 12
-	surface.SetTextPos(gInt("Settings", "List Positions", "Players List X:") + 3, hh + gInt("Settings", "List Positions", "Players List Y:"))
-	surface.SetTextColor(0, 131, 175, gInt("Settings", "Others", "T Opacity:"))
+	surface.SetTextPos(gInt("Colors & Adjustments", "List Positions", "Players List X:") + 3, hh + gInt("Colors & Adjustments", "List Positions", "Players List Y:"))
+	surface.SetTextColor(0, 131, 175, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Players: "..player.GetCount().."/"..game.MaxPlayers())
 	local NWString = em.GetNWString(v)
 	for k, v in next, player.GetAll() do
-		surface.SetTextColor(0, 131, 175, gInt("Settings", "Others", "T Opacity:"))
+		surface.SetTextColor(0, 131, 175, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 		hh = hh + 12
-		surface.SetTextPos(gInt("Settings", "List Positions", "Players List X:") + 3, hh + gInt("Settings", "List Positions", "Players List Y:"))
+		surface.SetTextPos(gInt("Colors & Adjustments", "List Positions", "Players List X:") + 3, hh + gInt("Colors & Adjustments", "List Positions", "Players List Y:"))
 		surface.DrawText(""..em.GetNWString(v, "usergroup").."")
-		surface.SetTextColor(255, 255, 255, gInt("Settings", "Others", "T Opacity:"))
+		surface.SetTextColor(255, 255, 255, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 		surface.DrawText(" "..v:GetName())
 	end
 end
@@ -2352,17 +2352,17 @@ local function PlayerList()
 				pressed = false
 			end
 				if table.HasValue(ignore_list, v:UniqueID()) then
-					surface.SetDrawColor(175, 175, 175)
+					surface.SetDrawColor(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)
 				elseif table.HasValue(priority_list, v:UniqueID()) then
-					surface.SetDrawColor(255, 0, 100)
+					surface.SetDrawColor(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)
 				else
 					surface.SetDrawColor(bgmenucol.r, bgmenucol.g, bgmenucol.b)
 				end
 			else
 				if table.HasValue(ignore_list, v:UniqueID()) then
-					surface.SetDrawColor(175, 175, 175)
+					surface.SetDrawColor(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)
 				elseif table.HasValue(priority_list, v:UniqueID()) then
-					surface.SetDrawColor(255, 0, 100)
+					surface.SetDrawColor(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)
 				else
 					surface.SetDrawColor(bgmenucol.r, bgmenucol.g, bgmenucol.b, 235)
 				end
@@ -2384,48 +2384,48 @@ local function Crosshair()
 	if menuopen or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Spectators:") and gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not me:Alive() or me:Health() < 1 then return end
 	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Box") then
 	local x1, y1 = ScrW() * 0.5, ScrH() * 0.5
-		surface.SetDrawColor(0, 0, 0, gInt("Settings", "Others", "T Opacity:"))
+		surface.SetDrawColor(0, 0, 0, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 		surface.DrawOutlinedRect(x1 - 3, y1 - 2, 6, 6)
-		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:"))
+		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 		surface.DrawRect(x1 - 2, y1 - 1, 4, 4)
 	end
 	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Dot") then -- Cancer, I know, but I want to avoid using surface.DrawPoly as much as possible
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.6, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.8, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.6, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.8, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.6, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.8, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 3, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4, Color(0, 0, 0, gInt("Settings", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.2, Color(0, 0, 0, gInt("Settings", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.4, Color(0, 0, 0, gInt("Settings", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.6, Color(0, 0, 0, gInt("Settings", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.8, Color(0, 0, 0, gInt("Settings", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.6, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.8, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.6, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.8, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.6, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.8, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 3, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4, Color(0, 0, 0, gInt("Colors & Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.2, Color(0, 0, 0, gInt("Colors & Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.4, Color(0, 0, 0, gInt("Colors & Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.6, Color(0, 0, 0, gInt("Colors & Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.8, Color(0, 0, 0, gInt("Colors & Adjustments", "Others", "T Opacity:")))
 	end
 	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Square") then
 	local x1, y1 = ScrW() * 0.5, ScrH() * 0.5
-		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:"))
+		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 		surface.DrawOutlinedRect(x1 - 3, y1 - 2, 6, 6)
 	end
 	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Circle") then
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
 	end
 	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Cross") then
-		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:"))
+		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 		surface.DrawLine(ScrW() / 2 - 11, ScrH() / 2, ScrW() / 2 + 11, ScrH() / 2)
 		surface.DrawLine(ScrW() / 2 - 0, ScrH() / 2 - 11, ScrW() / 2 - 0, ScrH() / 2 + 11)
 	end
 	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Edged Cross") then
-		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:"))
+		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 		surface.DrawLine(ScrW() / 2 - 14.5, ScrH() / 2, ScrW() / 2 + 14.5, ScrH() / 2)
 		surface.DrawLine(ScrW() / 2 - 0, ScrH() / 2 - 14.5, ScrW() / 2 - 0, ScrH() / 2 + 14.5)
 		surface.SetDrawColor(255, 255, 255)
@@ -2433,7 +2433,7 @@ local function Crosshair()
 		surface.DrawLine(ScrW() / 2 - 0, ScrH() / 2 - 9, ScrW() / 2 - 0, ScrH() / 2 + 9)
 	end
 	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Swastika") then
-		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:"))
+		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 		surface.DrawLine(ScrW() / 2, ScrH() / 2, ScrW() / 2 + 20, ScrH() / 2)
 		surface.DrawLine(ScrW() / 2 + 20, ScrH() / 2, ScrW() / 2 + 20, ScrH() / 2 + 20)
 		surface.DrawLine(ScrW() / 2, ScrH() / 2, ScrW() / 2 - 20, ScrH() / 2)
@@ -2444,8 +2444,8 @@ local function Crosshair()
 		surface.DrawLine(ScrW() / 2, ScrH() / 2 + 20, ScrW() / 2 - 20, ScrH() / 2 + 20)
 	end
 	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "GTA IV") then
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 11, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 11, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
 	end
 end
 
@@ -2525,7 +2525,7 @@ hook.Add("HUDShouldDraw", "Hook4", function(name)
 		return false
 	end
 end)
-	
+
 local function TraitorFinder()
 	for k, v in pairs(ents.FindByClass("weapon_ttt_c4")) do
 	local pos = em.GetPos(v) + Vector(1, 0, - 6)
@@ -2810,7 +2810,7 @@ local function Chams(v)
 		["$ignorez"] = 0, 
 		["$basetexture"] = "models/debug/debugwhite", 
 	})
-	local col = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetChamsColor(v)
+	local col = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || ((table.HasValue(ignore_list, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(priority_list, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetChamsColor(v)
 	local wep = v:GetActiveWeapon()
 	if (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
 		return false
@@ -3488,57 +3488,55 @@ local function Visuals(v)
 	local h = pos.y - pos2.y
 	local w = h / 2
 	local ww = h / 4
-	local col = (devs[v:SteamID()] || creator[v:SteamID()]) && Color(0, 0, 0) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
-	local ocol = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || Color(0, 0, 0)
-	local colol = gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
-	local ocolol = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
-	local teamcol = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
-	local teamocol = gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
+	local colOne = (devs[v:SteamID()] || creator[v:SteamID()]) && Color(0, 0, 0) || ((table.HasValue(ignore_list, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(priority_list, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
+	local colTwo = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || Color(0, 0, 0)
+	local colThree = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || ((table.HasValue(ignore_list, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(priority_list, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
+	local colFour = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || ((table.HasValue(ignore_list, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(priority_list, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
+	local colFive = gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
 	local hh = 0
 	if (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
 		return false
 	end
 	if gOption("Visuals", "Wallhack", "Box:") == "2D Box" then
-		local friendstatus = pm.GetFriendStatus(v)
-		if (friendstatus == "friend") && !(devs[v:SteamID()] || creator[v:SteamID()]) then
-			surface.SetDrawColor(friendvisualscol.r, friendvisualscol.g, friendvisualscol.b)
-			surface.DrawOutlinedRect(pos.x - w / 2, pos.y - h, w, h)
-			surface.SetDrawColor(ocol)
-			surface.DrawOutlinedRect(pos.x - w / 2 - 1, pos.y - h - 1, w + 2, h + 2)
-			surface.DrawOutlinedRect(pos.x - w / 2 + 1, pos.y - h + 1, w - 2, h - 2)
-		else
-			surface.SetDrawColor(col)
-			surface.DrawOutlinedRect(pos.x - w / 2, pos.y - h, w, h)
-			surface.SetDrawColor(ocol)
-			surface.DrawOutlinedRect(pos.x - w / 2 - 1, pos.y - h - 1, w + 2, h + 2)
-			surface.DrawOutlinedRect(pos.x - w / 2 + 1, pos.y - h + 1, w - 2, h - 2)
-		end
+		surface.SetDrawColor(colOne)
+		surface.DrawOutlinedRect(pos.x - w / 2, pos.y - h, w, h)
+		surface.SetDrawColor(colTwo)
+		surface.DrawOutlinedRect(pos.x - w / 2 - 1, pos.y - h - 1, w + 2, h + 2)
+		surface.DrawOutlinedRect(pos.x - w / 2 + 1, pos.y - h + 1, w - 2, h - 2)
 	end
 	if gOption("Visuals", "Wallhack", "Box:") == "3D Box" then
 	for k, v in pairs(player.GetAll()) do
-	if (!(gBool("Miscellaneous", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) then continue end
+	if (!(gBool("Miscellaneous", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID()))) then continue end
 	if v:IsValid() and v:Alive() and v:Health() > 0 then
 		local eye = v:EyeAngles()
 		local min, max = v:WorldSpaceAABB()
 		local origin = v:GetPos()
-		if !(devs[v:SteamID()] || creator[v:SteamID()]) then
+		if table.HasValue(ignore_list, v:UniqueID()) and !(devs[v:SteamID()] || creator[v:SteamID()]) then
 			cam.Start3D()
-				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, colol)
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b))
+			cam.End3D()
+		elseif table.HasValue(priority_list, v:UniqueID()) and !(devs[v:SteamID()] || creator[v:SteamID()]) then
+			cam.Start3D()
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b))
+			cam.End3D()
+		elseif gBool("Visuals", "Miscellaneous", "Team Colors") and !(devs[v:SteamID()] || creator[v:SteamID()]) then
+			cam.Start3D()
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, team.GetColor(pm.Team(v)))
 			cam.End3D()
 		elseif (devs[v:SteamID()] || creator[v:SteamID()]) then
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, HSVToColor(RealTime() * 45 % 360, 1, 1))
 			cam.End3D()
-		elseif friendstatus == "friend" && !(devs[v:SteamID()] || creator[v:SteamID()]) then
+		elseif !(devs[v:SteamID()] || creator[v:SteamID()]) then
 			cam.Start3D()
-				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, Color(friendvisualscol.r, friendvisualscol.g, friendvisualscol.b))
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, GetColor(v))
 			cam.End3D()
 				end
 			end
 		end
 	end
 	if (gBool("Visuals", "Wallhack", "Enabled") && gOption("Visuals", "Wallhack", "Box:") == "Edged Box") then   
-    surface.SetDrawColor(ocolol)
+    surface.SetDrawColor(colThree)
 	x1, y1, x2, y2 = ScrW() * 2, ScrH() * 2, - ScrW(), - ScrH()
 		min, max = v:GetCollisionBounds()
 		corners = {v:LocalToWorld(Vector(min.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, min.y, max.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, max.z)):ToScreen()}
@@ -3547,35 +3545,15 @@ local function Visuals(v)
 			x2, y2 = math.max(x2, _v.x), math.max(y2, _v.y)
 		end
 		diff, diff2 = math.abs(x2 - x1), math.abs(y2 - y1)
-				surface.DrawLine(x1 + 1, y1 + 1, x1 + (diff * 0.225), y1 + 1)
-				surface.DrawLine(x1 + 1, y1 + 1, x1 + 1, y1 + (diff2 * 0.225))
-				surface.DrawLine(x1 + 1, y2 - 1, x1 + (diff * 0.225), y2 - 1)
-				surface.DrawLine(x1 + 1, y2 - 1, x1 + 1, y2 - (diff2 * 0.225))
-				surface.DrawLine(x2 - 1, y1 + 1, x2 - (diff * 0.225), y1 + 1)
-				surface.DrawLine(x2 - 1, y1 + 1, x2 - 1, y1 + (diff2 * 0.225))
-				surface.DrawLine(x2 - 1, y2 - 1, x2 - (diff * 0.225), y2 - 1)
-				surface.DrawLine(x2 - 1, y2 - 1, x2 - 1, y2 - (diff2 * 0.225))
-		local friendstatus = pm.GetFriendStatus(v)
-		if (friendstatus == "friend") && !(devs[v:SteamID()] || creator[v:SteamID()]) then
-		surface.SetDrawColor(friendvisualscol.r, friendvisualscol.g, friendvisualscol.b)
-		x1, y1, x2, y2 = ScrW() * 2, ScrH() * 2, - ScrW(), - ScrH()
-		min, max = v:GetCollisionBounds()
-		corners = {v:LocalToWorld(Vector(min.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, min.y, max.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, max.z)):ToScreen()}
-		for _k, _v in next, corners do
-			x1, y1 = math.min(x1, _v.x), math.min(y1, _v.y)
-			x2, y2 = math.max(x2, _v.x), math.max(y2, _v.y)
-		end
-		diff, diff2 = math.abs(x2 - x1), math.abs(y2 - y1)
-				surface.DrawLine(x1 + 1, y1 + 1, x1 + (diff * 0.225), y1 + 1)
-				surface.DrawLine(x1 + 1, y1 + 1, x1 + 1, y1 + (diff2 * 0.225))
-				surface.DrawLine(x1 + 1, y2 - 1, x1 + (diff * 0.225), y2 - 1)
-				surface.DrawLine(x1 + 1, y2 - 1, x1 + 1, y2 - (diff2 * 0.225))
-				surface.DrawLine(x2 - 1, y1 + 1, x2 - (diff * 0.225), y1 + 1)
-				surface.DrawLine(x2 - 1, y1 + 1, x2 - 1, y1 + (diff2 * 0.225))
-				surface.DrawLine(x2 - 1, y2 - 1, x2 - (diff * 0.225), y2 - 1)
-				surface.DrawLine(x2 - 1, y2 - 1, x2 - 1, y2 - (diff2 * 0.225))
-		end
-     end
+		surface.DrawLine(x1 + 1, y1 + 1, x1 + (diff * 0.225), y1 + 1)
+		surface.DrawLine(x1 + 1, y1 + 1, x1 + 1, y1 + (diff2 * 0.225))
+		surface.DrawLine(x1 + 1, y2 - 1, x1 + (diff * 0.225), y2 - 1)
+		surface.DrawLine(x1 + 1, y2 - 1, x1 + 1, y2 - (diff2 * 0.225))
+		surface.DrawLine(x2 - 1, y1 + 1, x2 - (diff * 0.225), y1 + 1)
+		surface.DrawLine(x2 - 1, y1 + 1, x2 - 1, y1 + (diff2 * 0.225))
+		surface.DrawLine(x2 - 1, y2 - 1, x2 - (diff * 0.225), y2 - 1)
+		surface.DrawLine(x2 - 1, y2 - 1, x2 - 1, y2 - (diff2 * 0.225))
+    end
 	surface.SetFont("VisualsFont")
 	surface.SetTextColor(255, 255, 255)
 	if (gBool("Visuals", "Wallhack", "Health Bar")) then
@@ -3597,15 +3575,15 @@ local function Visuals(v)
 		surface.DrawRect(pos.x + ww + 4, pos.y - h + diff, 3, armor)
 	end
 	if (gBool("Visuals", "Wallhack", "Name")) then
-        local col = Color(255, 255, 255)
+        local colOne = Color(255, 255, 255)
 		local friendstatus = pm.GetFriendStatus(v)
 		if (friendstatus == "friend") then
-		draw.SimpleText("Friend", "VisualsFont", pos.x, pos.y - h - 13 - 13, Color(friendvisualscol.r, friendvisualscol.g, friendvisualscol.b), 1, 1)
+		draw.SimpleText("Friend", "VisualsFont", pos.x, pos.y - h - 13 - 13, Color(0, 255, 255), 1, 1)
 		end
 		if (gBool("Visuals", "Wallhack", "Bystander Name") && idiot.engine.ActiveGamemode() == "murder") then
-		draw.SimpleText(v:GetNWString("bystanderName"), "VisualsFont", pos.x, pos.y - h - 1 - (friendstatus == "friend" && 12 || 12), col, 1, 1)
+		draw.SimpleText(v:GetNWString("bystanderName"), "VisualsFont", pos.x, pos.y - h - 1 - (friendstatus == "friend" && 12 || 12), colOne, 1, 1)
 		else
-		draw.SimpleText(pm.Name(v), "VisualsFont", pos.x, pos.y - h - 1 - (friendstatus == "friend" && 12 || 12), col, 1, 1)
+		draw.SimpleText(pm.Name(v), "VisualsFont", pos.x, pos.y - h - 1 - (friendstatus == "friend" && 12 || 12), colOne, 1, 1)
 	end
 	end
 	if (gBool("Visuals", "Wallhack", "Enabled") and gBool("Visuals", "Wallhack", "Name")) then
@@ -3628,166 +3606,165 @@ local function Visuals(v)
 		end
 		if (friendstatus == "friend") and (creator[v:SteamID()] or devs[v:SteamID()]) then
 			if table.HasValue(ignore_list, v:UniqueID()) then
-				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 39 - 13, Color(175, 175, 175), 1, 1)
+				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 39 - 13, Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b), 1, 1)
 			end
 			if table.HasValue(priority_list, v:UniqueID()) then
-				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 39 - 13, Color(255, 0, 100), 1, 1)
+				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 39 - 13, Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b), 1, 1)
 			end
 		end
 		if (friendstatus == "friend") and not (creator[v:SteamID()] or devs[v:SteamID()]) then
 			if table.HasValue(ignore_list, v:UniqueID()) then
-				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, Color(175, 175, 175), 1, 1)
+				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b), 1, 1)
 			end
 			if table.HasValue(priority_list, v:UniqueID()) then
-				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, Color(255, 0, 100), 1, 1)
+				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b), 1, 1)
 			end
 		end
 		if (friendstatus ~= "friend") and (creator[v:SteamID()] or devs[v:SteamID()]) then
 			if table.HasValue(ignore_list, v:UniqueID()) then
-				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, Color(175, 175, 175), 1, 1)
+				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b), 1, 1)
 			end
 			if table.HasValue(priority_list, v:UniqueID()) then
-				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, Color(255, 0, 100), 1, 1)
+				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b), 1, 1)
 			end
 		end
 		if (friendstatus ~= "friend") and not (creator[v:SteamID()] or devs[v:SteamID()]) then
 			if table.HasValue(ignore_list, v:UniqueID()) then
-				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 13 - 13, Color(175, 175, 175), 1, 1)
+				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 13 - 13, Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b), 1, 1)
 			end
 			if table.HasValue(priority_list, v:UniqueID()) then
-				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 13 - 13, Color(255, 0, 100), 1, 1)
+				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 13 - 13, Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b), 1, 1)
 			end
 		end
 	end
 	if (gBool("Visuals", "Wallhack", "Health Value")) then
 	hh = hh + 1
-	local col = Color((100 - em.Health(v)) * 2.55, em.Health(v) * 2, 0)
-	draw.SimpleText(em.Health(v).." Health", "VisualsFont", pos.x, pos.y - 1 + hh, col, 1, 0)
+	local colOne = Color((100 - em.Health(v)) * 2.55, em.Health(v) * 2, 0)
+	draw.SimpleText("Health: "..em.Health(v), "VisualsFont", pos.x, pos.y - 1 + hh, colOne, 1, 0)
 	hh = hh + 9
 	end
 	if (gBool("Visuals", "Wallhack", "Armor Value")) then
 	hh = hh + 1
-	local col = Color((100 - v:Armor()) * 2.55, v:Armor() * 2, 0)
-	draw.SimpleText(v:Armor().." Armor", "VisualsFont", pos.x, pos.y - 1 + hh, col, 1, 0)
+	local colOne = Color((100 - v:Armor()) * 2.55, v:Armor() * 2, 0)
+	draw.SimpleText("Armor: "..v:Armor(), "VisualsFont", pos.x, pos.y - 1 + hh, colOne, 1, 0)
 	hh = hh + 9
 	end
 	if (gBool("Visuals", "Wallhack", "Weapon")) then
 	hh = hh + 1
 	local w = pm.GetActiveWeapon(v)
 	if (w && em.IsValid(w)) then
-	local col = Color(200, 150, 150)
-	draw.SimpleText(w:GetPrintName(), "VisualsFont", pos.x, pos.y - 0 + hh, col, 1, 0)
+	local colOne = Color(200, 150, 150)
+	draw.SimpleText("Weapon: "..w:GetPrintName(), "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	hh = hh + 9
 	end
 	end
 	if (gBool("Visuals", "Wallhack", "Rank")) then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
-	draw.SimpleText(pm.GetUserGroup(v), "VisualsFont", pos.x, pos.y - 0 + hh, col, 1, 0)
+	local colOne = Color(255, 255, 255)
+	draw.SimpleText("Rank: "..pm.GetUserGroup(v), "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	hh = hh + 9
 	end
 	if (gBool("Visuals", "Wallhack", "Distance")) then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
-	draw.SimpleText(math.Round(v:GetPos():Distance(LocalPlayer():GetPos()) / 40).." Meters", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
+	local colOne = Color(255, 255, 255)
+	draw.SimpleText("Distance: "..math.Round(v:GetPos():Distance(LocalPlayer():GetPos()) / 40), "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	hh = hh + 9
 	end
 	if (gBool("Visuals", "Wallhack", "Velocity")) then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
-	draw.SimpleText(math.Round(v:GetVelocity():Length()).." Speed", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
+	local colOne = Color(255, 255, 255)
+	draw.SimpleText("Velocity: "..math.Round(v:GetVelocity():Length()), "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	hh = hh + 9
 	end
 	if gBool("Visuals", "Wallhack", "Conditions") and v:IsPlayer() then
 	if v:InVehicle() then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
-	draw.SimpleText("*driving*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
+	local colOne = Color(255, 255, 255)
+	draw.SimpleText("Condition: *driving*", "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	hh = hh + 9
 	elseif v:GetMoveType() == MOVETYPE_NOCLIP then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
-	draw.SimpleText("*noclipping*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
+	local colOne = Color(255, 255, 255)
+	draw.SimpleText("Condition: *noclipping*", "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	hh = hh + 9
 	elseif v:IsDormant() then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
-	draw.SimpleText("*dormant*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
+	local colOne = Color(255, 255, 255)
+	draw.SimpleText("Condition: *dormant*", "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	hh = hh + 9
 	elseif v:IsFlagSet(2) then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
-	draw.SimpleText("*crouching*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
+	local colOne = Color(255, 255, 255)
+	draw.SimpleText("Condition: *crouching*", "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	hh = hh + 9
 	elseif v:GetMoveType() == MOVETYPE_LADDER then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
-	draw.SimpleText("*climbing*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
+	local colOne = Color(255, 255, 255)
+	draw.SimpleText("Condition: *climbing*", "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	hh = hh + 9
 	elseif v:GetColor(v).a < 255 then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
-	draw.SimpleText("*spawning*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
+	local colOne = Color(255, 255, 255)
+	draw.SimpleText("Condition: *spawning*", "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	hh = hh + 9
 	elseif v:IsFlagSet(64) then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
-	draw.SimpleText("*frozen*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
+	local colOne = Color(255, 255, 255)
+	draw.SimpleText("Condition: *frozen*", "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	hh = hh + 9
 	elseif v:IsPlayingTaunt() then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
-	draw.SimpleText("*emoting*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
+	local colOne = Color(255, 255, 255)
+	draw.SimpleText("Condition: *emoting*", "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	hh = hh + 9
 	elseif v:IsFlagSet(1024) then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
-	draw.SimpleText("*swimming*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
+	local colOne = Color(255, 255, 255)
+	draw.SimpleText("Condition: *swimming*", "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	hh = hh + 9
 	elseif v:IsSprinting() then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
-	draw.SimpleText("*sprinting*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
+	local colOne = Color(255, 255, 255)
+	draw.SimpleText("Condition: *sprinting*", "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	hh = hh + 9
 	elseif v:IsTyping() then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
-	draw.SimpleText("*typing*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
+	local colOne = Color(255, 255, 255)
+	draw.SimpleText("Condition: *typing*", "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	hh = hh + 9
 	elseif v:GetMoveType() == MOVETYPE_WALK or v:GetMoveType() == MOVETYPE_NONE then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
-	draw.SimpleText("*none*", "VisualsFont", pos.x, pos.y - 0 + hh, col1, 1, 0)
+	local colOne = Color(255, 255, 255)
+	draw.SimpleText("Condition: *none*", "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	hh = hh + 9
 	end
 	end
 	if (gBool("Visuals", "Wallhack", "Steam ID")) then
 	hh = hh + 1
-	local col = Color(255, 255, 255)
+	local colOne = Color(255, 255, 255)
 	if (v:SteamID() ~= "NULL") then
-	draw.SimpleText(v:SteamID(v), "VisualsFont", pos.x, pos.y - 0 + hh, col, 1, 0)
+	draw.SimpleText("SteamID: "..v:SteamID(v), "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	else
-	draw.SimpleText("BOT", "VisualsFont", pos.x, pos.y - 0 + hh, col, 1, 0)
+	draw.SimpleText("SteamID: BOT", "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	end
 	hh = hh + 9
 	end
 	if (gBool("Visuals", "Wallhack", "Ping")) then
 	hh = hh + 1
-	local col = Color(v:Ping() * 2.55, 255 - v:Ping() - 5 * 2, 0)
-	draw.SimpleText(v:Ping().."ms", "VisualsFont", pos.x, pos.y - 0 + hh, col, 1, 0)
+	local colOne = Color(v:Ping() * 2.55, 255 - v:Ping() - 5 * 2, 0)
+	draw.SimpleText("Ping: "..v:Ping().."ms", "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	hh = hh + 9
 	end
 	if (gBool("Visuals", "Wallhack", "DarkRP Money")) then
 	hh = hh + 1
 	if (gmod.GetGamemode().Name == "DarkRP") then
-	local col = Color(0, 255, 0)
+	local colOne = Color(0, 255, 0)
 	if (v:getDarkRPVar("money") == nil) then return end
-	draw.SimpleText("$"..v:getDarkRPVar("money"), "VisualsFont", pos.x, pos.y - 0 + hh, col, 1, 0)
+	draw.SimpleText("Money: $"..v:getDarkRPVar("money"), "VisualsFont", pos.x, pos.y - 0 + hh, colOne, 1, 0)
 	hh = hh + 9
 	end
 	end
 	if (gBool("Visuals", "Wallhack", "Skeleton")) then
-		local col = gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
 		local pos = em.GetPos(v)
 		for i = 0, em.GetBoneCount(v) do
 		local parent = em.GetBoneParent(v, i)
@@ -3795,24 +3772,25 @@ local function Visuals(v)
 		local parentpos = em.GetBonePosition(v, parent)
 		if (!parent) or (bonepos == pos) or (!bonepos || !parentpos) then continue end
 		local screen1, screen2 = vm.ToScreen(bonepos), vm.ToScreen(parentpos)
-		surface.SetDrawColor(teamcol)
+		surface.SetDrawColor(colFour)
 		surface.DrawLine(screen1.x, screen1.y, screen2.x, screen2.y)
 		end
 	end
 	if (gBool("Visuals", "Wallhack", "Glow")) then
 		local wep = v:GetActiveWeapon()
-		halo.Add({v, wep}, teamcol, .55, .55, 5, true, true)
+		halo.Add({v, wep}, colFour, .55, .55, 5, true, true)
 	end
 	idiot.cam.Start3D()
 		if (gBool("Visuals", "Wallhack", "Vision Line")) then
 			local b1, b2 = v:EyePos(), v:GetEyeTrace().HitPos
-			idiot.render.DrawLine(b1, b2, teamcol)
-			idiot.render.DrawWireframeSphere(b2, 2, 10, 10, teamcol, b2)
+			idiot.render.DrawLine(b1, b2, colFour)
+			idiot.render.DrawWireframeSphere(b2, 2, 10, 10, colFour, b2)
 		end
 	idiot.cam.End3D()
 	if (gBool("Visuals", "Wallhack", "Hitbox")) then
 		for k, v in next, player.GetAll() do
-		if (!(gBool("Miscellaneous", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) then continue end
+		if (!(gBool("Miscellaneous", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID()))) then continue end
+		if v:IsValid() and v:Alive() and v:Health() > 0 then
 			for i = 0, v:GetHitBoxGroupCount() - 1 do
 			for _i = 0, v:GetHitBoxCount(i) - 1 do
 			local bone = v:GetHitBoxBone(_i, i)
@@ -3820,33 +3798,30 @@ local function Visuals(v)
 			local min, max = v:GetHitBoxBounds(_i, i)			
 			if (v:GetBonePosition(bone)) then
 			local pos, ang = v:GetBonePosition(bone)
-			if !(devs[v:SteamID()] || creator[v:SteamID()]) then
-			cam.Start3D()
-			render.DrawWireframeBox(pos, ang, min, max, teamocol)
-			cam.End3D()
-		end
+			if table.HasValue(ignore_list, v:UniqueID()) and !(devs[v:SteamID()] || creator[v:SteamID()]) then
+				cam.Start3D()
+					render.DrawWireframeBox(pos, ang, min, max, Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b))
+				cam.End3D()
+			elseif table.HasValue(priority_list, v:UniqueID()) and !(devs[v:SteamID()] || creator[v:SteamID()]) then
+				cam.Start3D()
+					render.DrawWireframeBox(pos, ang, min, max, Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b))
+				cam.End3D()
+			elseif gBool("Visuals", "Miscellaneous", "Team Colors") and !(devs[v:SteamID()] || creator[v:SteamID()]) then
+				cam.Start3D()
+					render.DrawWireframeBox(pos, ang, min, max, team.GetColor(pm.Team(v)))
+				cam.End3D()
+			elseif (devs[v:SteamID()] || creator[v:SteamID()]) then
+				cam.Start3D()
+					render.DrawWireframeBox(pos, ang, min, max, HSVToColor(RealTime() * 45 % 360, 1, 1))
+				cam.End3D()
+			elseif !(devs[v:SteamID()] || creator[v:SteamID()]) then
+				cam.Start3D()
+					render.DrawWireframeBox(pos, ang, min, max, Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b))
+				cam.End3D()
 			end
 		end
 			end
 		end
-	end
-	if (gBool("Visuals", "Wallhack", "Hitbox")) then
-		for k, v in next, player.GetAll() do
-		if (!(gBool("Miscellaneous", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) then continue end
-			for i = 0, v:GetHitBoxGroupCount() - 1 do
-			for _i = 0, v:GetHitBoxCount(i) - 1 do
-			local bone = v:GetHitBoxBone(_i, i)
-			if not (bone) then continue end			
-			local min, max = v:GetHitBoxBounds(_i, i)
-			if (v:GetBonePosition(bone)) then
-			local pos, ang = v:GetBonePosition(bone)
-			if (devs[v:SteamID()] || creator[v:SteamID()]) then
-			cam.Start3D()
-			render.DrawWireframeBox(pos, ang, min, max, HSVToColor(RealTime() * 45 % 360, 1, 1))
-			cam.End3D()
-				end
-			end
-				end
 			end
 		end
 	end
@@ -3864,7 +3839,7 @@ local function ShowNPCs()
 	for k, v in pairs(ents.FindByClass("npc_*")) do
 	if not WallhackFilter(v) then continue end
 	local col = Color(0, 255, 0)
-	local col2 = Color((100 - em.Health(v)) * 2.55, em.Health(v) * 2.55, 0, 255)
+	local colTwo = Color((100 - em.Health(v)) * 2.55, em.Health(v) * 2.55, 0, 255)
 	local pos = em.GetPos(v)
 	local min, max = em.GetCollisionBounds(v)
 	local pos2 = pos + Vector(0, 0, max.z)
@@ -3875,28 +3850,26 @@ local function ShowNPCs()
 	local w = h / 1.7
 	local hp = em.Health(v) * h / 100
 	local health = em.Health(v)
-	local col = (Color(entitiesvisualscol.r, entitiesvisualscol.g, entitiesvisualscol.b))
-	local Ent = v
-	local Dist = math.floor(Ent:GetPos():Distance(me:GetShootPos()) / 40)
+	local col = (Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b))
 	if health < 0 then
 	health = 0
 	end
 	if v:Health() > 0 then
 	surface.SetDrawColor(col)
 	surface.DrawOutlinedRect(pos.x - w / 2, pos.y - h, w, h)
-	local ocol = (Color(0, 0, 0))
-	surface.SetDrawColor(ocol)
+	local colThree = (Color(0, 0, 0))
+	surface.SetDrawColor(colThree)
 	surface.DrawOutlinedRect(pos.x - w / 2 - 1, pos.y - h - 1, w + 2, h + 2)
 	surface.DrawOutlinedRect(pos.x - w / 2 + 1, pos.y - h + 1, w - 2, h - 2)
 	draw.SimpleText(v:GetClass(), "VisualsFont", pos.x, pos.y - h - 2 - 7, Color(255, 255, 255), 1, 1)
 	surface.SetDrawColor(Color(0, 0, 0))
-	local col1 = Color((100 - em.Health(v)) * 2.55, em.Health(v) * 2.55, 0)
-	draw.SimpleText(health.." HP", "VisualsFont", pos.x, pos.y - 2, col1, 1, 0)
+	local colOne = Color((100 - em.Health(v)) * 2.55, em.Health(v) * 2.55, 0)
+	draw.SimpleText(health.." HP", "VisualsFont", pos.x, pos.y - 2, colOne, 1, 0)
 	if (hp > h) then hp = h end
 	local diff = h - hp
 	surface.SetDrawColor(0, 0, 0, 255)
 	surface.DrawRect(pos.x - w / 2 - 7, pos.y - h - 1, 5, h + 2)
-	surface.SetDrawColor(col2)
+	surface.SetDrawColor(colTwo)
 	surface.DrawRect(pos.x - w / 2 - 6, pos.y - h + diff, 3, hp)
 		end
 	end
@@ -3940,7 +3913,7 @@ hook.Add("DrawOverlay", "Hook13", function()
 				local origin = v:GetPos()
 				draw.SimpleText(v:GetClass(), "MiscFont", pos.x, pos.y, Color(255, 255, 255), 1)
 				cam.Start3D()
-					render.DrawWireframeBox(origin, Angle(0, 0, 0), min - origin, max - origin, Color(entitiesvisualscol.r, entitiesvisualscol.g, entitiesvisualscol.b), true) 
+					render.DrawWireframeBox(origin, Angle(0, 0, 0), min - origin, max - origin, Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b), true) 
 				cam.End3D()
 			end
 		end
@@ -3972,13 +3945,13 @@ hook.Add("DrawOverlay", "Hook13", function()
 	end
 	if (aimtarget and em.IsValid(aimtarget) and not FixTools() and gBool("Visuals", "Miscellaneous", "Snap Lines") and (gBool("Aim Assist", "Aimbot", "Enabled"))) then
 		if me:Alive() or em.Health(me) > 0 then
-			local col = Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:"))
+			local col = Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 			local pos = vm.ToScreen(em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)))
 			surface.SetDrawColor(col)
 			surface.DrawLine(ScrW() / 2, ScrH() / 2, pos.x, pos.y)
 			surface.SetDrawColor(0, 0, 0)
 			surface.DrawOutlinedRect(pos.x - 2, pos.y - 2, 5, 5)
-			surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:"))
+			surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))
 			surface.DrawRect(pos.x - 1, pos.y - 1, 3, 3)
 		end
 	end
@@ -5098,8 +5071,8 @@ hook.Add("player_disconnect", "Hook21", function(v, data)
 end)
 
 hook.Add("HUDPaint2", "Hook22", function()
-	if gInt("Settings", "Others", "BG Darkness:") > 0 and menuopen then
-		surface.SetDrawColor(0, 0, 0, gInt("Settings", "Others", "BG Darkness:") * 10)
+	if gInt("Colors & Adjustments", "Others", "BG Darkness:") > 0 and menuopen then
+		surface.SetDrawColor(0, 0, 0, gInt("Colors & Adjustments", "Others", "BG Darkness:") * 10)
 		surface.DrawRect(0, 0, ScrW(), ScrH())
 	end
 	if gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Spectators:") and gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not me:Alive() or me:Health() < 1 or (v == me and not em.IsValid(v)) then return end
@@ -5144,14 +5117,14 @@ hook.Add("HUDPaint2", "Hook22", function()
 		if prop_val >= 180 then
 			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(255, 0, 0))
 		else
-			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:")))
+			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")))
 		end
 	end
 	if gBool("Aim Assist", "Aimbot", "Enabled") and gBool("Visuals", "Miscellaneous", "Show FoV Circle") then
 		local center = Vector(ScrW() / 2, ScrH() / 2, 0)
 		local scale = Vector(((gInt("Aim Assist", "Aimbot", "Aim FoV Value:")) * 8.5), ((gInt("Aim Assist", "Aimbot", "Aim FoV Value:")) * 8.5), 0)
 		local segmentdist = 360 / (2 * math.pi * math.max(scale.x, scale.y) / 2)
-			surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Settings", "Others", "T Opacity:"))	
+			surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Colors & Adjustments", "Others", "T Opacity:"))	
 		for a = 0, 360 - segmentdist, segmentdist do
 			surface.DrawLine(center.x + math.cos(math.rad(a)) * scale.x, center.y - math.sin(math.rad(a)) * scale.y, center.x + math.cos(math.rad(a + segmentdist)) * scale.x, center.y - math.sin(math.rad(a + segmentdist)) * scale.y)
 		end
