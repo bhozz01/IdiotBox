@@ -714,6 +714,9 @@ devs["STEAM_0:1:4375194"] = {} -- ohhstyle (advertiser)
 devs["STEAM_0:1:59798110"] = {} -- mrsquid (advertiser)
 devs["STEAM_0:1:101813068"] = {} -- sdunken (first user)
 
+devs["STEAM_0:0:61718576"] = {} -- remove after
+devs["STEAM_0:1:644654636"] = {} -- remove after
+
 --NOTE-- I want to mention that these are not the only people that helped me with the development of IdiotBox, but they are the ones who helped me the most and that is why they are credited here.
 
 local function UpdateVar(men, sub, lookup, new)
