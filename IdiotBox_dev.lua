@@ -3538,7 +3538,7 @@ local function Visuals(v)
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, Color(175, 175, 175))
 			cam.End3D()
-		elseif table.HasValue(priority_list, v:UniqueID()) !(devs[v:SteamID()] || creator[v:SteamID()]) then
+		elseif table.HasValue(priority_list, v:UniqueID()) and !(devs[v:SteamID()] || creator[v:SteamID()]) then
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, Color(255, 0, 100))
 			cam.End3D()
