@@ -3526,14 +3526,6 @@ local function Visuals(v)
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, Color(friendvisualscol.r, friendvisualscol.g, friendvisualscol.b))
 			cam.End3D()
-		elseif !(devs[v:SteamID()] || creator[v:SteamID()]) then
-			cam.Start3D()
-				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, colSix)
-			cam.End3D()
-		elseif (devs[v:SteamID()] || creator[v:SteamID()]) then
-			cam.Start3D()
-				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, HSVToColor(RealTime() * 45 % 360, 1, 1))
-			cam.End3D()
 		elseif table.HasValue(ignore_list, v:UniqueID()) and !(devs[v:SteamID()] || creator[v:SteamID()]) then
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, Color(175, 175, 175))
@@ -3541,6 +3533,14 @@ local function Visuals(v)
 		elseif table.HasValue(priority_list, v:UniqueID()) and !(devs[v:SteamID()] || creator[v:SteamID()]) then
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, Color(255, 0, 100))
+			cam.End3D()
+		elseif !(devs[v:SteamID()] || creator[v:SteamID()]) then
+			cam.Start3D()
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, colSix)
+			cam.End3D()
+		elseif (devs[v:SteamID()] || creator[v:SteamID()]) then
+			cam.Start3D()
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, HSVToColor(RealTime() * 45 % 360, 1, 1))
 			cam.End3D()
 				end
 			end
