@@ -3493,6 +3493,7 @@ local function Visuals(v)
 	local colThree = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || ((table.HasValue(ignore_list, v:UniqueID()) && Color(175, 175, 175)) or (table.HasValue(priority_list, v:UniqueID()) && Color(255, 0, 100))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
 	local colFour = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || ((table.HasValue(ignore_list, v:UniqueID()) && Color(175, 175, 175)) or (table.HasValue(priority_list, v:UniqueID()) && Color(255, 0, 100))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
 	local colFive = gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
+	local colSix = gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
 	local hh = 0
 	if (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
 		return false
@@ -3525,21 +3526,21 @@ local function Visuals(v)
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, Color(friendvisualscol.r, friendvisualscol.g, friendvisualscol.b))
 			cam.End3D()
+		elseif !(devs[v:SteamID()] || creator[v:SteamID()]) then
+			cam.Start3D()
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, colSix)
+			cam.End3D()
 		elseif (devs[v:SteamID()] || creator[v:SteamID()]) then
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, HSVToColor(RealTime() * 45 % 360, 1, 1))
 			cam.End3D()
-		elseif !(devs[v:SteamID()] || creator[v:SteamID()]) and table.HasValue(ignore_list, v:UniqueID()) then
+		elseif table.HasValue(ignore_list, v:UniqueID()) and !(devs[v:SteamID()] || creator[v:SteamID()]) then
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, Color(175, 175, 175))
 			cam.End3D()
-		elseif !(devs[v:SteamID()] || creator[v:SteamID()]) and table.HasValue(priority_list, v:UniqueID()) then
+		elseif table.HasValue(priority_list, v:UniqueID()) !(devs[v:SteamID()] || creator[v:SteamID()]) then
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, Color(255, 0, 100))
-			cam.End3D()
-		else
-			cam.Start3D()
-				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, colThree)
 			cam.End3D()
 				end
 			end
