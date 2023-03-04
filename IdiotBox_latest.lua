@@ -3484,7 +3484,6 @@ local function Visuals(v)
 	local pos2 = pos + Vector(0, 0, max.z)
 	local pos = vm.ToScreen(pos)
 	local pos2 = vm.ToScreen(pos2)
-	local hh = 0
 	local h = pos.y - pos2.y
 	local w = h / 2
 	local ww = h / 4
@@ -3538,21 +3537,20 @@ local function Visuals(v)
 	if (gBool("Visuals", "Wallhack", "Enabled") && gOption("Visuals", "Wallhack", "Box:") == "Edged Box") then   
     surface.SetDrawColor(colThree)
 	x1, y1, x2, y2 = ScrW() * 2, ScrH() * 2, - ScrW(), - ScrH()
-		min, max = v:GetCollisionBounds()
 		corners = {v:LocalToWorld(Vector(min.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, min.y, max.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, max.z)):ToScreen()}
 		for _k, _v in next, corners do
 			x1, y1 = math.min(x1, _v.x), math.min(y1, _v.y)
 			x2, y2 = math.max(x2, _v.x), math.max(y2, _v.y)
 		end
 		diff, diff2 = math.abs(x2 - x1), math.abs(y2 - y1)
-		surface.DrawLine(x1 + 1, y1 + 1, x1 + (diff * 0.225), y1 + 1)
-		surface.DrawLine(x1 + 1, y1 + 1, x1 + 1, y1 + (diff2 * 0.225))
-		surface.DrawLine(x1 + 1, y2 - 1, x1 + (diff * 0.225), y2 - 1)
-		surface.DrawLine(x1 + 1, y2 - 1, x1 + 1, y2 - (diff2 * 0.225))
-		surface.DrawLine(x2 - 1, y1 + 1, x2 - (diff * 0.225), y1 + 1)
-		surface.DrawLine(x2 - 1, y1 + 1, x2 - 1, y1 + (diff2 * 0.225))
-		surface.DrawLine(x2 - 1, y2 - 1, x2 - (diff * 0.225), y2 - 1)
-		surface.DrawLine(x2 - 1, y2 - 1, x2 - 1, y2 - (diff2 * 0.225))
+		surface.DrawLine(x1, y1, x1 + (diff * 0.225), y1)
+		surface.DrawLine(x1, y1, x1, y1 + (diff2 * 0.225))
+		surface.DrawLine(x1, y2, x1 + (diff * 0.225), y2)
+		surface.DrawLine(x1, y2, x1, y2 - (diff2 * 0.225))
+		surface.DrawLine(x2, y1, x2 - (diff * 0.225), y1)
+		surface.DrawLine(x2, y1, x2, y1 + (diff2 * 0.225))
+		surface.DrawLine(x2, y2, x2 - (diff * 0.225), y2)
+		surface.DrawLine(x2, y2, x2, y2 - (diff2 * 0.225))
     end
 	surface.SetFont("VisualsFont")
 	surface.SetTextColor(255, 255, 255)
