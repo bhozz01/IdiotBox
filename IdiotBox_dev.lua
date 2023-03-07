@@ -309,13 +309,14 @@ local options = {
 					{"List Spacing:", "Slider", 0, 10, 92}, 
                 }, 
 				{
-					{"Sounds", 16, 280, 347, 95, 218}, 
+					{"Sounds", 16, 280, 347, 122, 218}, 
+					{"Hitsounds:", "Selection", "Off", {"Off", "Default", "Headshot 1", "Headshot 2", "Metal", "Blip", "Eggcrack", "Balloon Pop"}, 92}, 
+					{"Killsounds:", "Selection", "Off", {"Off", "Default", "Headshot 1", "Headshot 2", "Metal", "Blip", "Eggcrack", "Balloon Pop"}, 92}, 
 					{"Music Player:", "Selection", "Off", {"Off", "Rust", "Resonance", "Daisuke", "A Burning M...", "Libet's Delay", "Lullaby Of T...", "Erectin' a River", "Fleeting Love", "Malo Tebya", "Vermilion", "Gravity", "Remorse", "Hold", "Green Valleys", "FP3", "Random"}, 92}, 
 					{"Reset Sounds", "Checkbox", false, 78}, 
-					{"Hitsounds", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Textures", 16, 390, 347, 120, 218}, 
+					{"Textures", 16, 417, 347, 120, 218}, 
 					{"Transparent Walls", "Checkbox", false, 78}, 
 					{"No Sky", "Checkbox", false, 78}, 
 					{"Bright Mode", "Checkbox", false, 78}, 
@@ -882,7 +883,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(613, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: February 27th 2023")
+	surface.DrawText("Latest build: March 8th 2023")
 	surface.SetFont("MenuFont")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -1240,7 +1241,7 @@ local function Changelog()
 	print("- Added custom key binds;")
 	print("- Added bordered menu styles;")
 	print("- Added sliding menu;")
-	print("- Added more music and a custom music player to Sounds;")
+	print("- Added more hitsounds, killsounds, more music and a custom music player to Sounds;")
 	print("- Added solid color to buttons;")
 	print("- Added a custom configurations menu;")
 	print("- Reworked 'Bunny Hop' and 'Auto Strafe' from scratch;")
@@ -3985,14 +3986,60 @@ local function AimPos(v)
 	return(pos.Pos)
 end
 
+local headshot1 = {"playerfx/headshot1.wav", "playerfx/headshot2.wav",}
+
+local headshot2 = {"player/headshot1.wav", "player/headshot2.wav", "player/headshot3.wav",}
+
+local metal = {"phx/hmetal1.wav", "phx/hmetal2.wav", "phx/hmetal3.wav",}
+
 hook.Add("player_hurt", "Hook14", function(data)
-	if (gBool("Miscellaneous", "Sounds", "Hitsounds")) then
-		local attacker = data.attacker
-		if attacker == me:UserID() then
-			surface.PlaySound("buttons/bell1.wav")
+	local attacker = data.attacker
+	if attacker == me:UserID() then
+		if gOption("Miscellaneous", "Sounds", "Hitsounds:") ~= "Off" then
+			if gOption("Miscellaneous", "Sounds", "Hitsounds:") == "Default" then
+				surface.PlaySound("buttons/bell1.wav")
+            elseif gOption("Miscellaneous", "Sounds", "Hitsounds:") == "Headshot 1" then
+                surface.PlaySound(headshot1[math.random(#headshot1)])
+			elseif gOption("Miscellaneous", "Sounds", "Hitsounds:") == "Headshot 2" then
+                surface.PlaySound(headshot2[math.random(#headshot2)])
+			elseif gOption("Miscellaneous", "Sounds", "Hitsounds:") == "Metal" then
+                surface.PlaySound(metal[math.random(#metal)])
+            elseif gOption("Miscellaneous", "Sounds", "Hitsounds:") == "Blip" then
+                surface.PlaySound("buttons/blip2.wav")
+			elseif gOption("Miscellaneous", "Sounds", "Hitsounds:") == "Eggcrack" then
+                surface.PlaySound("phx/eggcrack.wav")
+            elseif gOption("Miscellaneous", "Sounds", "Hitsounds:") == "Balloon Pop" then
+                surface.PlaySound("garrysmod/balloon_pop_cute.wav")
+			end
 		end
 	end
 end)
+
+local function Killsounds(data)
+	local killer = idiot.Entity(data.entindex_attacker)
+	local victim = idiot.Entity(data.entindex_killed)
+	if (idiot.IsValid(killer) and idiot.IsValid(victim) and killer:IsPlayer() and victim:IsPlayer()) then
+		if (killer == me and victim ~= me) then
+			if gOption("Miscellaneous", "Sounds", "Killsounds:") ~= "Off" then
+				if gOption("Miscellaneous", "Sounds", "Killsounds:") == "Default" then
+					surface.PlaySound("buttons/bell1.wav")
+				elseif gOption("Miscellaneous", "Sounds", "Killsounds:") == "Headshot 1" then
+					surface.PlaySound(headshot1[math.random(#headshot1)])
+				elseif gOption("Miscellaneous", "Sounds", "Killsounds:") == "Headshot 2" then
+					surface.PlaySound(headshot2[math.random(#headshot2)])
+				elseif gOption("Miscellaneous", "Sounds", "Killsounds:") == "Metal" then
+					surface.PlaySound(metal[math.random(#metal)])
+				elseif gOption("Miscellaneous", "Sounds", "Killsounds:") == "Blip" then
+					surface.PlaySound("buttons/blip2.wav")
+				elseif gOption("Miscellaneous", "Sounds", "Killsounds:") == "Eggcrack" then
+					surface.PlaySound("phx/eggcrack.wav")
+				elseif gOption("Miscellaneous", "Sounds", "Killsounds:") == "Balloon Pop" then
+					surface.PlaySound("garrysmod/balloon_pop_cute.wav")
+				end
+			end
+		end
+	end	
+end
 
 local function LogKills(data)
 	local killer = idiot.Entity(data.entindex_attacker)
@@ -4014,6 +4061,9 @@ local function LogKills(data)
 end
 
 hook.Add("entity_killed", "Hook15", function(data)
+	if gOption("Miscellaneous", "Sounds", "Killsounds:") ~= "Off" then
+		Killsounds(data)
+	end
 	if gOption("Miscellaneous", "Chat", "Kill Spam:") ~= "Off" then
 		KillSpam(data)
 	end
