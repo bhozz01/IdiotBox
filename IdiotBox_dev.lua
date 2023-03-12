@@ -2166,6 +2166,19 @@ local function Status()
 	surface.DrawText("Time: "..os.date("%H:%M:%S"))
 end
 
+local function GetColor(v)
+    if (pm.Team(v) == pm.Team(me)) then
+		local r = teamvisualscol.r
+		local g = teamvisualscol.g
+		local b = teamvisualscol.b
+		return(Color(r, g, b, 220))
+    end
+		local r = enemyvisualscol.r
+		local g = enemyvisualscol.g
+		local b = enemyvisualscol.b
+	return(Color(r, g, b, 220))
+end
+
 local function Spectator()
 	local radarX, radarY, radarWidth, radarHeight = 50, ScrH() / 3, 200, 200
 	local color1 = (Color(0, 0, 0, gInt("Colors & Adjustments", "Others", "BG Opacity:")))
@@ -2234,7 +2247,7 @@ local function RadarDraw()
 	for k = 1, #everything do
 		local v = everything[k]
 		if (v != LocalPlayer() and v:IsPlayer() and v:Health() > 0 and not (em.IsDormant(v) and gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All") and not (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) and not ((gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID()))) or (v:IsNPC() and v:Health() > 0)) then
-			color = v:IsPlayer() and team.GetColor(v:Team()) or Color(255, 255, 255)
+			color = (v:IsPlayer() and ((devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || ((table.HasValue(ignore_list, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(priority_list, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b))) || pm.GetFriendStatus(v) == "friend" && Color(0, 255, 255) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v))) or Color(255, 255, 255)
 			surface.SetDrawColor(color)
 			local myPos = me:GetPos()
 			local theirPos = v:GetPos()
@@ -3464,19 +3477,6 @@ local function AutoReload(pCmd)
 			pCmd:SetButtons(pCmd:GetButtons() + IN_RELOAD)
 		end
 	end
-end
-
-local function GetColor(v)
-    if (pm.Team(v) == pm.Team(me)) then
-		local r = teamvisualscol.r
-		local g = teamvisualscol.g
-		local b = teamvisualscol.b
-		return(Color(r, g, b, 220))
-    end
-		local r = enemyvisualscol.r
-		local g = enemyvisualscol.g
-		local b = enemyvisualscol.b
-	return(Color(r, g, b, 220))
 end
 
 local function Visuals(v)
