@@ -138,9 +138,10 @@ local options = {
 					{"Configuration:", "Selection", "Config #1", {"Config #1", "Config #2", "Config #3", "Config #4", "Config #5", "Config #6", "Config #7", "Config #8", "Config #9", "Config #10"}, 92}, 
           		}, 
 				{
-          			{"Others", 736, 409, 347, 130, 218}, 
+          			{"Others", 736, 409, 347, 152, 218}, 
 					{"Run the 'idiot_changename' command to set a custom name.", "Checkbox", false, 9999}, 
 					{"Apply custom name", "Checkbox", false, 78}, 
+					{"Feature Tooltips", "Checkbox", true, 78}, -- Enabled by default
 					{"Print Changelog", "Button", "", 92}, 
 					{"Unload Cheat", "Button", "", 92}, 
           		}, 
@@ -152,7 +153,7 @@ local options = {
 					{"Toggle Key:", "Toggle", 0, 92, 0}, 
 					{"Aim FoV Value:", "Slider", 0, 180, 92}, 
 					{"Aim Smoothness:", "Slider", 0, 50, 92}, 
-					{"Silent", "Checkbox", false, 78}, 
+					{"Silent Aim", "Checkbox", false, 78}, 
 					{"Auto Fire", "Checkbox", false, 78}, 
 					{"Auto Zoom", "Checkbox", false, 78}, 
 					{"Auto Stop", "Checkbox", false, 78}, 
@@ -174,19 +175,19 @@ local options = {
 					{"Disable in Noclip", "Checkbox", false, 78}, 
 					{"Hitbox:", "Selection", "Head", {"Head", "Body"}, 92}, 
 					{"Aim Priority:", "Selection", "Crosshair", {"Crosshair", "Distance", "Health", "Random"}, 92}, 
-					{"Players:", "Checkbox", true, 78}, -- Enabled by default
-					{"Bots:", "Checkbox", true, 78}, -- Enabled by default
-					{"NPCs:", "Checkbox", true, 78}, -- Enabled by default
-					{"Team:", "Checkbox", true, 78}, -- Enabled by default
-					{"Enemies:", "Checkbox", true, 78}, -- Enabled by default
-					{"Friends:", "Checkbox", false, 78}, 
-					{"Admins:", "Checkbox", false, 78}, 
-					{"Spectators:", "Checkbox", false, 78}, 
-					{"Frozen Players:", "Checkbox", false, 78}, 
-					{"Noclipping Players:", "Checkbox", false, 78}, 
-					{"Driving Players:", "Checkbox", false, 78}, 
-					{"Transparent Players:", "Checkbox", false, 78}, 
-					{"Overhealed Players:", "Checkbox", false, 78}, 
+					{"Target Players:", "Checkbox", true, 78}, -- Enabled by default
+					{"Target Bots:", "Checkbox", true, 78}, -- Enabled by default
+					{"Target NPCs:", "Checkbox", true, 78}, -- Enabled by default
+					{"Target Team:", "Checkbox", true, 78}, -- Enabled by default
+					{"Target Enemies:", "Checkbox", true, 78}, -- Enabled by default
+					{"Target Friends:", "Checkbox", false, 78}, 
+					{"Target Admins:", "Checkbox", false, 78}, 
+					{"Target Spectators:", "Checkbox", false, 78}, 
+					{"Target Frozen Players:", "Checkbox", false, 78}, 
+					{"Target Noclipping Players:", "Checkbox", false, 78}, 
+					{"Target Driving Players:", "Checkbox", false, 78}, 
+					{"Target Transparent Players:", "Checkbox", false, 78}, 
+					{"Target Overhealed Players:", "Checkbox", false, 78}, 
 					{"Max Player Health:", "Slider", 500, 5000, 92}, 
 					{"Distance Limit", "Checkbox", false, 78}, 
 					{"Distance:", "Slider", 1500, 5000, 92}, 
@@ -1053,6 +1054,208 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 		if not input.IsMouseDown(MOUSE_LEFT) then
 			surface.DrawRect(5 + posx + 15 + 5 + dist + 2 + var[4], 61 + posy + maxy + 2, 10, 10)
 		end
+		local feat = var[1]
+		if feat == "Enabled" then
+			info = "Toggles this feature."
+		elseif feat == "Optimize Game" then
+			info = "Clears decals and other effects to improve framerate."
+		elseif feat == "Anti-AFK" then
+			info = "Makes you move from left to right in order to avoid getting kicked for being inactive on certain servers."
+		elseif feat == "Anti-Ads" then
+			info = "Blocks ads from showing up."
+		elseif feat == "Anti-Blind" then
+			info = "Blocks ULX blinding."
+		elseif feat == "Hide Round Report" then
+			info = "Hides the report at the end of a round."
+		elseif feat == "Panel Remover" then
+			info = "Removes panels, such as RDM reports, by pressing the 'G' key."
+		elseif feat == "Prop Kill" then
+			info = "Allows you to prop kill with the Magneto-stick upon toggling the prop kill key."
+		elseif feat == "Suicide Near Arrest Batons" then
+			info = "Automatically die when nearing an arrest baton to avoid being jailed."
+		elseif feat == "Transparent Props" then
+			info = "Changes prop opacity in DarkRP."
+		elseif feat == "Hide End Round Board" then
+			info = "Hides the board at the end of a round."
+		elseif feat == "Hide Footprints" then
+			info = "Makes the footprints invisible for you."
+		elseif feat == "No Black Screens" then
+			info = "Makes the screen not turn black at any given moment during a round."
+		elseif feat == "Automatically Save" then
+			info = "Saves your current configuration automatically."
+		elseif feat == "Apply custom name" then
+			info = "Applies a custom name of your choice. Do not use in TTT as it may get you kicked from servers."
+		elseif feat == "Feature Tooltips" then
+			info = "Detailed information about features will appear here, at the bottom of the menu."
+		elseif feat == "Silent Aim" then
+			info = "Makes the Aimbot invisible for you."
+		elseif feat == "Auto Fire" then
+			info = "Makes the Aimbot automatically shoot at your target for you."
+		elseif feat == "Auto Zoom" then
+			info = "Automatically scope/ zoom in with your weapon while targeting."
+		elseif feat == "Auto Stop" then
+			info = "Force-stops you from moving while targeting."
+		elseif feat == "Auto Crouch" then
+			info = "Force-crouches you while targeting."
+		elseif feat == "Target Lock" then
+			info = "Locks onto a specific target, until the target is no longer in your line of sight, or until it's eliminated."
+		elseif feat == "Smooth Aim" then
+			info = "Slows your mouse speed when triggering to improve accuracy."
+		elseif feat == "Priority Targets Only" then
+			info = "Players selected as priority targets will be the only ones targeted by this feature."
+		elseif feat == "Disable in Noclip" then
+			info = "Disables this feature when noclipping."
+		elseif feat == "Target Players:" then
+			info = "Makes the Aim Assist target players."
+		elseif feat == "Target Bots:" then
+			info = "Makes the Aim Assist target bots."
+		elseif feat == "Target NPCs:" then
+			info = "Makes the Aim Assist target NPCs."
+		elseif feat == "Target Team:" then
+			info = "Makes the Aim Assist target teammates."
+		elseif feat == "Target Enemies:" then
+			info = "Makes the Aim Assist target enemies."
+		elseif feat == "Target Friends:" then
+			info = "Makes the Aim Assist target Steam friends."
+		elseif feat == "Target Admins:" then
+			info = "Makes the Aim Assist target server admins."
+		elseif feat == "Target Spectators:" then
+			info = "Makes the Aim Assist target spectators."
+		elseif feat == "Target Frozen Players:" then
+			info = "Makes the Aim Assist target frozen players."
+		elseif feat == "Target Noclipping Players:" then
+			info = "Makes the Aim Assist target noclipping players."
+		elseif feat == "Target Driving Players:" then
+			info = "Makes the Aim Assist target driving players."
+		elseif feat == "Target Transparent Players:" then
+			info = "Makes the Aim Assist target transparent or invisible players."
+		elseif feat == "Target Overhealed Players:" then
+			info = "Makes the Aim Assist target overhealed players."
+		elseif feat == "Distance Limit" then
+			info = "Sets a specific rendering limit for this feature."
+		elseif feat == "Velocity Limit" then
+			info = "Sets a specific velocity limit to avoid lightning-fast players from being targeted."
+		elseif feat == "Remove Weapon Recoil" then
+			info = "Removes weapon recoil."
+		elseif feat == "Remove Bullet Spread" then
+			info = "Creates a perfectly still bullet spread."
+		elseif feat == "Projectile Prediction" then
+			info = "Aimbot calculates your and your target's speed and compensates for non-hitscan weapons."
+		elseif feat == "Auto Reload" then
+			info = "Automatically reloads your weapon after firing it."
+		elseif feat == "Manipulate Interpolation" then
+			info = "Lag exploit, could be used to your advantage. Do not use if unfamiliar."
+		elseif feat == "Manipulate Bullet Time" then
+			info = "Creates a tiny delay between each gunshot for better efficiency."
+		elseif feat == "Disable in 'Use' Toggle" then
+			info = "Disables your Anti-Aim when pressing the 'E' key."
+		elseif feat == "Detect Walls" then
+			info = "Changes your angles based on your position relative to the world."
+		elseif feat == "Lock View" then
+			info = "Finds optimal angle to cover your head with a different part of the body."
+		elseif feat == "Emote Resolver" then
+			info = "Instead of resolving another player's angles, it will make the Aimbot automatically shoot emoters in their torso."
+		elseif feat == "Disable on Attack" then
+			info = "Disables fake lagging when shooting to improve accuracy when using this feature."
+		elseif feat == "Skeleton" then
+			info = "Draws the player's bones."
+		elseif feat == "Glow" then
+			info = "Draws a glowing outline of the player."
+		elseif feat == "Hitbox" then
+			info = "Draws the player's hitbox."
+		elseif feat == "Vision Line" then
+			info = "Draws a line, indicating where the player is looking."
+		elseif feat == "Name" then
+			info = "Draws the player's name, along with the priority status."
+		elseif feat == "Bystander Name" then
+			info = "Draws the player's bystander name in Murder."
+		elseif feat == "Health Bar" then
+			info = "Draws a health bar on the left side of the player."
+		elseif feat == "Health Value" then
+			info = "Draws the player's health value in numbers."
+		elseif feat == "Armor Bar" then
+			info = "Draws an armor bar on the right side of the player."
+		elseif feat == "Armor Value" then
+			info = "Draws the player's armor value in numbers."
+		elseif feat == "Weapon" then
+			info = "Draws the weapon currently held by the player."
+		elseif feat == "Rank" then
+			info = "Draws the player's rank on the server."
+		elseif feat == "Distance" then
+			info = "Draws the player's distance value, relative to you."
+		elseif feat == "Velocity" then
+			info = "Draws the player's speed."
+		elseif feat == "Conditions" then
+			info = "Draws the player's current conditions, for example: sprinting, swimming, driving etc."
+		elseif feat == "Steam ID" then
+			info = "Draws the player's Steam ID. Bots will appear as 'BOT'."
+		elseif feat == "Ping" then
+			info = "Draws the player's ping."
+		elseif feat == "DarkRP Money" then
+			info = "Draws the player's money value in DarkRP."
+		elseif feat == "Hide Ignored Targets" then
+			info = "Makes ignored targets not show up on your Visuals."
+		elseif feat == "Show Enemies Only" then
+			info = "Only shows players that are not on your team."
+		elseif feat == "Show Spectators" then
+			info = "Shows players that are in spectator mode on your Visuals."
+		elseif feat == "Team Colors" then
+			info = "Visuals will draw with each player's assigned team color."
+		elseif feat == "Spectators Box" then
+			info = "Draws a spectator box, where you will be alerted if anyone is currently spectating you."
+		elseif feat == "Radar Box" then
+			info = "Draws a radar box."
+		elseif feat == "Custom Status" then
+			info = "Draws your ping, framerate, current date and time etc."
+		elseif feat == "Player List" then
+			info = "Draws a list of the players present on a server, along with their ranks."
+		elseif feat == "Show NPCs" then
+			info = "Shows NPCs on Visuals."
+		elseif feat == "Show Entities" then
+			info = "Draws the selected entities from the Entity Menu."
+		elseif feat == "Hide HUD" then
+			info = "Hides the original HUD, for example: health value, ammo value, crosshair etc."
+		elseif feat == "Witness Finder" then
+			info = "Shows how many people can currently see you."
+		elseif feat == "Traitor Finder" then
+			info = "Draws TTT traitor-specific weapons, and sends alerts whenever a player buys one."
+		elseif feat == "Murderer Finder" then
+			info = "Draws Murder weapons, and sends alerts about who the murderer is."
+		elseif feat == "Show FoV Circle" then
+			info = "Draws an FoV circle for your Aimbot's FoV value."
+		elseif feat == "Snap Lines" then
+			info = "Draws a line towards the player currently being targeted by your Aimbot."
+		elseif feat == "Flash Spam" then
+			info = "Spams your flashlight, for fun."
+		elseif feat == "Use Spam" then
+			info = "Spams the 'use' command on interactive entities."
+		elseif feat == "Reset Sounds" then
+			info = "Clears all sounds that are currently playing on your server."
+		elseif feat == "Transparent Walls" then
+			info = "Makes the walls see-through."
+		elseif feat == "No Sky" then
+			info = "Removes the skybox."
+		elseif feat == "Bright Mode" then
+			info = "Creates uniform lighting throughout the whole map. Useful for dark maps."
+		elseif feat == "Dark Mode" then
+			info = "Gives the map a night-like feeling."
+		elseif feat == "Custom FoV" then
+			info = "Allows you to set a custom FoV, outside of the default boundaries."
+		elseif feat == "Thirdperson" then
+			info = "Allows you to toggle thirdperson."
+		elseif feat == "No Viewmodel" then
+			info = "Removes your entire viewmodel."
+		elseif feat == "No Hands" then
+			info = "Removes your viewmodel hands."
+		elseif feat == "Bunny Hop" then
+			info = "Jump continuously when holding your jump key. Pair with Auto Strafe to gain velocity and to be in maximum control of your directions while jumping."
+		elseif feat == "Air Crouch" then
+			info = "Spam-crouches you when jumping."
+		elseif feat == "Fake Crouch" then
+			info = "Combines walking and spam-crouching."
+		elseif feat == "Log Kills in Chat" then
+			info = "Logs every kill in chat."
+		end
 	end
 	surface.DrawText(var[1])
 	surface.DrawOutlinedRect(posx + 25 + dist + var[4], 61 + posy + maxy , 13, 13)
@@ -1336,7 +1539,7 @@ local function Changelog()
 	print("- Added 'Border Color', 'Misc Visuals Color' and 'B Opacity' to Colors & Adjustments;")
 	print("- Added 'Fake-Forwards/ Backwards/ Sideways', X-Axis Spinbot, 'Static', 'Adaptive' and 'Disable in Use Toggle' to Anti-Aim;")
 	print("- Added 'Players List', 'Show Entities', 'Conditions', 'Velocity', 'Dormant Check', 'Show Spectators', 'Hide Ignored Targets', 'Bystander Name', 'NPCs' and 'Clientside' and priority statuses to Visuals;")
-	print("- Added 'Panic Mode', 'Entity Menu', 'Plugin Loader', 'Optimize Game' and TTT/ Murder/ DarkRP specific features to Main Menu;")
+	print("- Added 'Panic Mode', 'Entity Menu', 'Plugin Loader', 'Optimize Game', 'Feature Tooltips' and TTT/ Murder/ DarkRP specific features to Main Menu;")
 	print("- Added 'Spectators', 'Players', 'Frozen Players' and 'Enemies' to Aim Priorities;")
 	print("- Added 'Toggle Key' and 'Speed' to Free Roaming;")
 	print("- Added 'Strafe Key' and 'Fake Crouch' to Movement;")
@@ -1912,6 +2115,7 @@ local function Menu()
 		if (candoslider and not mousedown and not drawlast and not input.IsMouseDown(MOUSE_LEFT)) then
 			candoslider = false
 		end
+		info = ""
 		draw.RoundedBox(gInt("Colors & Adjustments", "Others", "Roundness:"), 0, 0, w, h, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Colors & Adjustments", "Others", "BG Opacity:")))
 		DrawUpperText(w, h)
 		DrawOptions(self, w, h)
@@ -1921,6 +2125,9 @@ local function Menu()
 			candoslider = true
 		end
 		mousedown = input.IsMouseDown(MOUSE_LEFT)
+		if gBool("Main Menu", "Others", "Feature Tooltips") and info ~= "" then
+			draw.SimpleText(info, "MenuFont", w / 2, h / 1.05, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
 	end
 	frame.Think = function()
 		if (gBool("Miscellaneous", "Sounds", "Reset Sounds")) then
@@ -4242,11 +4449,11 @@ hook.Add("entity_killed", "Hook15", function(data)
 end)
 
 local function AimAssistPriorities(v)
-	if gBool("Aim Assist", "Aim Priorities", "Players:") and not gBool("Aim Assist", "Aim Priorities", "NPCs:") then
+	if gBool("Aim Assist", "Aim Priorities", "Target Players:") and not gBool("Aim Assist", "Aim Priorities", "Target NPCs:") then
 		return v:IsPlayer()
-	elseif gBool("Aim Assist", "Aim Priorities", "NPCs:") and not gBool("Aim Assist", "Aim Priorities", "Players:") then
+	elseif gBool("Aim Assist", "Aim Priorities", "Target NPCs:") and not gBool("Aim Assist", "Aim Priorities", "Target Players:") then
 		return v:IsNPC()
-	elseif gBool("Aim Assist", "Aim Priorities", "Players:") and gBool("Aim Assist", "Aim Priorities", "NPCs:") then
+	elseif gBool("Aim Assist", "Aim Priorities", "Target Players:") and gBool("Aim Assist", "Aim Priorities", "Target NPCs:") then
 		return v:IsPlayer() or v:IsNPC()
 	else
 		return nil
@@ -4271,37 +4478,37 @@ local function Valid(v)
 	if gBool("Aim Assist", "Aim Priorities", "Disable in Noclip") then
 		if em.GetMoveType(me) == MOVETYPE_NOCLIP then return false end
 	end
-	if !gBool("Aim Assist", "Aim Priorities", "Team:") then
+	if !gBool("Aim Assist", "Aim Priorities", "Target Team:") then
         if pm.Team(v) == pm.Team(me) then return false end
     end
-	if !gBool("Aim Assist", "Aim Priorities", "Enemies:") then
+	if !gBool("Aim Assist", "Aim Priorities", "Target Enemies:") then
         if pm.Team(v) != pm.Team(me) then return false end
     end
-	if !gBool("Aim Assist", "Aim Priorities", "Transparent Players:") then
+	if !gBool("Aim Assist", "Aim Priorities", "Target Transparent Players:") then
         if em.GetColor(v).a < 255 then return false end
     end
-    if !gBool("Aim Assist", "Aim Priorities", "Friends:") then
+    if !gBool("Aim Assist", "Aim Priorities", "Target Friends:") then
         if pm.GetFriendStatus(v) == "friend" then return false end
     end
-	if !gBool("Aim Assist", "Aim Priorities", "Bots:") then
+	if !gBool("Aim Assist", "Aim Priorities", "Target Bots:") then
 		if pm.IsBot(v) then return false end
 	end
-    if !gBool("Aim Assist", "Aim Priorities", "Admins:") then
+    if !gBool("Aim Assist", "Aim Priorities", "Target Admins:") then
         if pm.IsAdmin(v) then return false end
     end
-    if !gBool("Aim Assist", "Aim Priorities", "Driving Players:") then
+    if !gBool("Aim Assist", "Aim Priorities", "Target Driving Players:") then
 		if pm.InVehicle(v) then return false end
 	end
-	if !gBool("Aim Assist", "Aim Priorities", "Noclipping Players:") then
+	if !gBool("Aim Assist", "Aim Priorities", "Target Noclipping Players:") then
 		if em.GetMoveType(v) == MOVETYPE_NOCLIP then return false end
 	end
-	if !gBool("Aim Assist", "Aim Priorities", "Frozen Players:") then
+	if !gBool("Aim Assist", "Aim Priorities", "Target Frozen Players:") then
 		if pm.IsFrozen(v) then return false end
 	end
-	if !gBool("Aim Assist", "Aim Priorities", "Overhealed Players:") then
+	if !gBool("Aim Assist", "Aim Priorities", "Target Overhealed Players:") then
 		if v:Health() > maxhealth then return false end
 	end
-	if !gBool("Aim Assist", "Aim Priorities", "Spectators:") then
+	if !gBool("Aim Assist", "Aim Priorities", "Target Spectators:") then
 		if v:Team() == TEAM_SPECTATOR then return false end
 	end
 	if (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Aim Assist", "Aim Priorities", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
@@ -4441,7 +4648,7 @@ local function AutoZoom(pCmd)
 end
 
 local function SmoothAim(ang) 
-	if (gInt("Aim Assist", "Aimbot", "Aim Smoothness:") > 0 && !gBool("Aim Assist", "Aimbot", "Silent")) then
+	if (gInt("Aim Assist", "Aimbot", "Aim Smoothness:") > 0 && !gBool("Aim Assist", "Aimbot", "Silent Aim")) then
 		ang.y = math.NormalizeAngle(ang.y) 	
 		ang.p = math.NormalizeAngle(ang.p) 	
 		eyeang = LocalPlayer():EyeAngles() 	
@@ -4543,7 +4750,7 @@ local function Aimbot(pCmd)
 		if (gBool("Aim Assist", "Aimbot", "Auto Zoom")) then
 			AutoZoom(pCmd)
 		end
-		if (gBool("Aim Assist", "Aimbot", "Silent")) then
+		if (gBool("Aim Assist", "Aimbot", "Silent Aim")) then
 			FixMovement(pCmd)
 		else
 			fa = ang
@@ -4558,7 +4765,7 @@ local function Aimbot(pCmd)
 		if (gBool("Aim Assist", "Aimbot", "Auto Zoom")) then
 			AutoZoom(pCmd)
 		end
-		if (gBool("Aim Assist", "Aimbot", "Silent")) then
+		if (gBool("Aim Assist", "Aimbot", "Silent Aim")) then
 			FixMovement(pCmd)
 		else
 			fa = ang
@@ -4595,40 +4802,40 @@ local function Triggerbot(pCmd)
 		if gBool("Aim Assist", "Aim Priorities", "Velocity Limit") then
 			if (v:GetVelocity():Length() > vel) then return false end
 		end
-		if !gBool("Aim Assist", "Aim Priorities", "Team:") then
+		if !gBool("Aim Assist", "Aim Priorities", "Target Team:") then
 			if pm.Team(v) == pm.Team(me) then return false end
 		end
-		if !gBool("Aim Assist", "Aim Priorities", "Enemies:") then
+		if !gBool("Aim Assist", "Aim Priorities", "Target Enemies:") then
 			if pm.Team(v) != pm.Team(me) then return false end
 		end
-		if !gBool("Aim Assist", "Aim Priorities", "Transparent Players:") then
+		if !gBool("Aim Assist", "Aim Priorities", "Target Transparent Players:") then
 			if em.GetColor(v).a < 255 then return false end
 		end
-		if !gBool("Aim Assist", "Aim Priorities", "Friends:") then
+		if !gBool("Aim Assist", "Aim Priorities", "Target Friends:") then
 			if pm.GetFriendStatus(v) == "friend" then return false end
 		end
-		if !gBool("Aim Assist", "Aim Priorities", "Bots:") then
+		if !gBool("Aim Assist", "Aim Priorities", "Target Bots:") then
 			if pm.IsBot(v) then return false end
 		end
-		if !gBool("Aim Assist", "Aim Priorities", "Admins:") then
+		if !gBool("Aim Assist", "Aim Priorities", "Target Admins:") then
 			if pm.IsAdmin(v) then return false end
 		end
-		if !gBool("Aim Assist", "Aim Priorities", "Frozen Players:") then
+		if !gBool("Aim Assist", "Aim Priorities", "Target Frozen Players:") then
 			if pm.IsFrozen(v) then return false end
 		end
-		if !gBool("Aim Assist", "Aim Priorities", "Driving Players:") then
+		if !gBool("Aim Assist", "Aim Priorities", "Target Driving Players:") then
 			if pm.InVehicle(v) then return false end
 		end
-		if !gBool("Aim Assist", "Aim Priorities", "Noclipping Players:") then
+		if !gBool("Aim Assist", "Aim Priorities", "Target Noclipping Players:") then
 			if em.GetMoveType(v) == MOVETYPE_NOCLIP then return false end
 		end
-		if gBool("Aim Assist", "Aim Priorities", "Disable in Noclip") then
+		if gBool("Aim Assist", "Aim Priorities", "Target Disable in Noclip") then
 			if em.GetMoveType(me) == MOVETYPE_NOCLIP then return false end
 		end
-		if !gBool("Aim Assist", "Aim Priorities", "Spectators:") then
+		if !gBool("Aim Assist", "Aim Priorities", "Target Spectators:") then
 			if pm.Team(v) == TEAM_SPECTATOR then return false end
 		end
-		if !gBool("Aim Assist", "Aim Priorities", "Overhealed Players:") then
+		if !gBool("Aim Assist", "Aim Priorities", "Target Overhealed Players:") then
 			if v:Health() > maxhealth then return false end
 		end
 		if (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Aim Assist", "Aim Priorities", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID())) then
