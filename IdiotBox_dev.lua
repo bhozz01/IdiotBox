@@ -1053,6 +1053,80 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 		if not input.IsMouseDown(MOUSE_LEFT) then
 			surface.DrawRect(5 + posx + 15 + 5 + dist + 2 + var[4], 61 + posy + maxy + 2, 10, 10)
 		end
+		local feat = var[1]
+		if feat == "Enabled" then
+			info = "Toggles this feature."
+		elseif feat == "Silent" then
+			info = "Makes the Aimbot invisible for you."
+		elseif feat == "Auto Fire" then
+			info = "Makes the Aimbot automatically shoot at your target for you."
+		elseif feat == "Auto Zoom" then
+			info = "Automatically scope/ zoom in with your weapon while targeting."
+		elseif feat == "Auto Stop" then
+			info = "Force-stops you from moving while targeting."
+		elseif feat == "Auto Crouch" then
+			info = "Force-crouches you while targeting."
+		elseif feat == "Target Lock" then
+			info = "Locks onto a specific target, until the target is no longer in your line of sight, or after it was eliminated."
+		elseif feat == "Smooth Aim" then
+			info = "Slows your mouse speed when triggering to improve accuracy."
+		elseif feat == "Priority Targets Only" then
+			info = "Players selected as priority targets will be the only ones targeted by this feature."
+		elseif feat == "Disable in Noclip" then
+			info = "Disables this feature when noclipping."
+		elseif feat == "Players:" then
+			info = "Makes the Aim Assist target players."
+		elseif feat == "Bots:" then
+			info = "Makes the Aim Assist target bots."
+		elseif feat == "NPCs:" then
+			info = "Makes the Aim Assist target NPCs."
+		elseif feat == "Team:" then
+			info = "Makes the Aim Assist target teammates."
+		elseif feat == "Enemies:" then
+			info = "Makes the Aim Assist target enemies."
+		elseif feat == "Friends:" then
+			info = "Makes the Aim Assist target Steam friends."
+		elseif feat == "Admins:" then
+			info = "Makes the Aim Assist target server admins."
+		elseif feat == "Spectators:" then
+			info = "Makes the Aim Assist target spectators."
+		elseif feat == "Frozen Players:" then
+			info = "Makes the Aim Assist target frozen players."
+		elseif feat == "Noclipping Players:" then
+			info = "Makes the Aim Assist target noclipping players."
+		elseif feat == "Driving Players:" then
+			info = "Makes the Aim Assist target driving players."
+		elseif feat == "Transparent Players:" then
+			info = "Makes the Aim Assist target transparent players."
+		elseif feat == "Overhealed Players:" then
+			info = "Makes the Aim Assist target overhealed players."
+		elseif feat == "Distance Limit" then
+			info = "Sets a specific rendering limit for this feature."
+		elseif feat == "Velocity Limit" then
+			info = "Sets a specific velocity limit to avoid lightning-fast players from being targeted."
+		elseif feat == "Remove Weapon Recoil" then
+			info = "Removes weapon recoil."
+		elseif feat == "Remove Bullet Spread" then
+			info = "Creates a perfectly still bullet spread."
+		elseif feat == "Projectile Prediction" then
+			info = "Aimbot calculates your and your target's speed and compensates for non-hitscan weapons."
+		elseif feat == "Auto Reload" then
+			info = "Automatically reloads your weapon after firing it."
+		elseif feat == "Manipulate Interpolation" then
+			info = "Lag exploit, could be used to your advantage. Do not use if unfamiliar."
+		elseif feat == "Manipulate Bullet Time" then
+			info = "Creates a tiny delay between each gunshot for better efficiency."
+		elseif feat == "Disable in 'Use' Toggle" then
+			info = "Disables your Anti-Aim when pressing the 'E' key."
+		elseif feat == "Detect Walls" then
+			info = "Changes your angles based on your position relative to the world."
+		elseif feat == "Lock View" then
+			info = "Finds optimal angle to cover your head with a different part of the body."
+		elseif feat == "Emote Resolver" then
+			info = "Instead of resolving another player's angles, it will make the Aimbot automatically shoot emoters in their torso."
+		elseif feat == "Disable on Attack" then
+			info = "Disables fake lagging when shooting to improve accuracy when using this feature."
+		end
 	end
 	surface.DrawText(var[1])
 	surface.DrawOutlinedRect(posx + 25 + dist + var[4], 61 + posy + maxy , 13, 13)
@@ -1912,6 +1986,7 @@ local function Menu()
 		if (candoslider and not mousedown and not drawlast and not input.IsMouseDown(MOUSE_LEFT)) then
 			candoslider = false
 		end
+		info = ""
 		draw.RoundedBox(gInt("Colors & Adjustments", "Others", "Roundness:"), 0, 0, w, h, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Colors & Adjustments", "Others", "BG Opacity:")))
 		DrawUpperText(w, h)
 		DrawOptions(self, w, h)
@@ -1921,6 +1996,9 @@ local function Menu()
 			candoslider = true
 		end
 		mousedown = input.IsMouseDown(MOUSE_LEFT)
+		if info ~= "" then
+			draw.SimpleText(info, "MenuFont", w / 2, h / 1.05, Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Colors & Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
 	end
 	frame.Think = function()
 		if (gBool("Miscellaneous", "Sounds", "Reset Sounds")) then
