@@ -1,4 +1,4 @@
-  //----IdiotBox v6.8.b5----//
+  //----IdiotBox v6.8.b7----//
  //--------By Phizz--------//
 //------------------------//
 
@@ -135,10 +135,10 @@ local options = {
 					{"Save Configuration", "Button", "", 92}, 
 					{"Load Configuration", "Button", "", 92}, 
 					{"Delete Configuration", "Button", "", 92}, 
-					{"Configuration:", "Selection", "Config #1", {"Config #1", "Config #2", "Config #3", "Config #4", "Config #5"}, 92}, 
+					{"Configuration:", "Selection", "Config #1", {"Config #1", "Config #2", "Config #3", "Config #4", "Config #5", "Config #6", "Config #7", "Config #8", "Config #9", "Config #10"}, 92}, 
           		}, 
 				{
-          			{"Others", 736, 409, 347, 125, 218}, 
+          			{"Others", 736, 409, 347, 130, 218}, 
 					{"Run the 'idiot_changename' command to set a custom name.", "Checkbox", false, 9999}, 
 					{"Apply custom name", "Checkbox", false, 78}, 
 					{"Print Changelog", "Button", "", 92}, 
@@ -149,7 +149,7 @@ local options = {
 				{
 					{"Aimbot", 16, 20, 347, 275, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
-					{"Aim Key:", "Toggle", 0, 92, 0}, 
+					{"Toggle Key:", "Toggle", 0, 92, 0}, 
 					{"Aim FoV Value:", "Slider", 0, 180, 92}, 
 					{"Aim Smoothness:", "Slider", 0, 50, 92}, 
 					{"Silent", "Checkbox", false, 78}, 
@@ -162,16 +162,15 @@ local options = {
 				{
 					{"Triggerbot", 16, 310, 347, 175, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
-					{"Trigger Key:", "Toggle", 0, 92, 0}, 
+					{"Toggle Key:", "Toggle", 0, 92, 0}, 
 					{"Smooth Aim", "Checkbox", false, 78}, 
 					{"Auto Zoom", "Checkbox", false, 78}, 
 					{"Auto Stop", "Checkbox", false, 78}, 
 					{"Auto Crouch", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Aim Priorities", 376, 20, 347, 610, 218}, 
+					{"Aim Priorities", 376, 20, 347, 590, 218}, 
 					{"Priority Targets Only", "Checkbox", false, 78}, 
-					{"Projectile Prediction", "Checkbox", false, 78}, 
 					{"Disable in Noclip", "Checkbox", false, 78}, 
 					{"Hitbox:", "Selection", "Head", {"Head", "Body"}, 92}, 
 					{"Aim Priority:", "Selection", "Crosshair", {"Crosshair", "Distance", "Health", "Random"}, 92}, 
@@ -195,29 +194,27 @@ local options = {
 					{"Velocity:", "Slider", 1000, 5000, 92}, 
                 }, 
 				{
-					{"Miscellaneous", 736, 20, 347, 285, 218}, 
+					{"Miscellaneous", 736, 20, 347, 260, 218}, 
 					{"Remove Weapon Recoil", "Checkbox", false, 78}, 
 					{"Remove Bullet Spread", "Checkbox", false, 78}, 
-					{"Rapid Fire:", "Selection", "Off", {"Off", "Primary Fire", "Alt Fire"}, 92}, 
-					{"Line of Sight Check", "Checkbox", true, 78}, -- Enabled by default
-					{"Auto Wallbang", "Checkbox", false, 78}, 
-					{"No Lerp", "Checkbox", false, 78}, 
-					{"Bullet Time", "Checkbox", false, 78}, 
-					{"Fire Delay:", "Slider", 0, 100, 92}, 
+					{"Projectile Prediction", "Checkbox", false, 78}, 
 					{"Auto Reload", "Checkbox", false, 78}, 
-                	{"Auto Reload at:", "Slider", 0, 99, 92}, 
+					{"Rapid Fire:", "Selection", "Off", {"Off", "Primary Fire", "Alt Fire"}, 92}, 
+					{"Line of Sight Check:", "Selection", "Default", {"Off", "Default", "Auto Wallbang"}, 92}, -- Enabled by default
+					{"Manipulate Interpolation", "Checkbox", false, 78}, 
+					{"Manipulate Bullet Time", "Checkbox", false, 78}, 
+					{"Bullet Fire Delay:", "Slider", 0, 100, 92}, 
                 }, 
         }, 
 		["Hack vs. Hack"] = {
 				{
-					{"Anti-Aim", 16, 20, 347, 410, 218}, 
+					{"Anti-Aim", 16, 20, 347, 390, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Disable in Noclip", "Checkbox", true, 78}, -- Enabled by default
 					{"Disable in 'Use' Toggle", "Checkbox", true, 78}, -- Enabled by default
-					{"Wall Detect", "Checkbox", false, 78}, 
-					{"View Lock", "Checkbox", false, 78}, 
-					{"Static", "Checkbox", false, 78}, 
-					{"Adaptive", "Checkbox", false, 78}, 
+					{"Detect Walls", "Checkbox", false, 78}, 
+					{"Lock View", "Checkbox", false, 78}, 
+					{"Mode:", "Selection", "Default", {"Default", "Static", "Adaptive"}, 92}, 
 					{"X-Axis:", "Selection", "Off", {"Off", "Down", "Up", "Center", "Fake-Down", "Fake-Up", "Jitter", "Semi-Jitter Down", "Semi-Jitter Up", "Emotion", "Spinbot"}, 92}, 
 					{"Y-Axis:", "Selection", "Off", {"Off", "Forwards", "Backwards", "Sideways", "Fake-Forwards", "Fake-Backwards", "Fake-Sideways", "Jitter", "Backwards Jitter", "Sideways Jitter", "Semi-Jitter", "Back Semi-Jitter", "Side Semi-Jitter", "Side Switch", "Emotion", "Spinbot"}, 92}, 
 					{"Anti-Aim Direction:", "Selection", "Left", {"Left", "Right", "Manual Switch"}, 92}, 
@@ -239,7 +236,7 @@ local options = {
 					{"Fake Lag", 736, 184, 347, 109, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Disable on Attack", "Checkbox", false, 78}, 
-					{"Lag Factor:", "Slider", 7, 14, 92}, 
+					{"Lag Factor:", "Slider", 14, 14, 92}, 
                 }, 
 		}, 
         ["Visuals"] = {
@@ -323,24 +320,26 @@ local options = {
 					{"Dark Mode", "Checkbox", false, 78}, 
                 }, 
 				{
-                	{"Point of View", 376, 20, 347, 130, 218}, 
+                	{"Point of View", 376, 20, 347, 160, 218}, 
 					{"Custom FoV", "Checkbox", false, 78}, 
-					{"FoV Range:", "Slider", 110, 360, 92}, 
+					{"FoV Value:", "Slider", 110, 360, 92}, 
 					{"Thirdperson", "Checkbox", false, 78}, 
 					{"Thirdperson Range:", "Slider", 15, 100, 92}, 
+					{"Thirdperson FoV Value:", "Slider", 110, 360, 92}, 
                 }, 
 				{
-					{"Viewmodel", 376, 163, 347, 120, 218}, 
+					{"Viewmodel", 376, 193, 347, 120, 218}, 
 					{"Viewmodel Chams:", "Selection", "Off", {"Off", "Normal", "Rainbow"}, 92}, 
 					{"Viewmodel Wireframe:", "Selection", "Off", {"Off", "Normal", "Rainbow"}, 92}, 
 					{"No Viewmodel", "Checkbox", false, 78}, 
 					{"No Hands", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Free Roaming", 376, 297, 347, 105, 218}, 
+					{"Free Roaming", 376, 327, 347, 135, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
-					{"Free Roaming Key:", "Toggle", 0, 92, 0}, 
-					{"Free Roaming Speed:", "Slider", 30, 100, 92}, 
+					{"Toggle Key:", "Toggle", 0, 92, 0}, 
+					{"Speed:", "Slider", 30, 100, 92}, 
+					{"FoV Value:", "Slider", 110, 360, 92}, 
                 }, 
 				{
 					{"Movement", 736, 20, 347, 172, 218}, 
@@ -729,7 +728,7 @@ local function UpdateVar(men, sub, lookup, new)
 end
 
 local folder = "IdiotBox"
-local version = "6.8.b5"
+local version = "6.8.b7"
 
 if not file.IsDir(folder, "DATA") then
 	file.CreateDir(folder)
@@ -777,6 +776,26 @@ end
 
 local function SaveConfig5()
 	file.Write(folder.."/config5.txt", util.TableToJSON(options))
+end
+
+local function SaveConfig6()
+	file.Write(folder.."/config6.txt", util.TableToJSON(options))
+end
+
+local function SaveConfig7()
+	file.Write(folder.."/config7.txt", util.TableToJSON(options))
+end
+
+local function SaveConfig8()
+	file.Write(folder.."/config8.txt", util.TableToJSON(options))
+end
+
+local function SaveConfig9()
+	file.Write(folder.."/config9.txt", util.TableToJSON(options))
+end
+
+local function SaveConfig10()
+	file.Write(folder.."/config10.txt", util.TableToJSON(options))
 end
 
 local function LoadConfig1()
@@ -859,6 +878,86 @@ local function LoadConfig5()
 	end
 end
 
+local function LoadConfig6()
+	if file.Exists(folder.."/config6.txt", "DATA") then
+	local tab = util.JSONToTable(file.Read(folder.."/config6.txt", "DATA"))
+	local cursub
+		for k, v in next, tab do
+			if (not options[k]) then continue end
+			for men, subtab in next, v do
+				for key, val in next, subtab do
+					if (key == 1) then cursub = val[1] continue end
+					UpdateVar(k, cursub, val[1], val[3])
+				end
+			end
+		end
+	end
+end
+
+local function LoadConfig7()
+	if file.Exists(folder.."/config7.txt", "DATA") then
+	local tab = util.JSONToTable(file.Read(folder.."/config7.txt", "DATA"))
+	local cursub
+		for k, v in next, tab do
+			if (not options[k]) then continue end
+			for men, subtab in next, v do
+				for key, val in next, subtab do
+					if (key == 1) then cursub = val[1] continue end
+					UpdateVar(k, cursub, val[1], val[3])
+				end
+			end
+		end
+	end
+end
+
+local function LoadConfig8()
+	if file.Exists(folder.."/config8.txt", "DATA") then
+	local tab = util.JSONToTable(file.Read(folder.."/config8.txt", "DATA"))
+	local cursub
+		for k, v in next, tab do
+			if (not options[k]) then continue end
+			for men, subtab in next, v do
+				for key, val in next, subtab do
+					if (key == 1) then cursub = val[1] continue end
+					UpdateVar(k, cursub, val[1], val[3])
+				end
+			end
+		end
+	end
+end
+
+local function LoadConfig9()
+	if file.Exists(folder.."/config9.txt", "DATA") then
+	local tab = util.JSONToTable(file.Read(folder.."/config9.txt", "DATA"))
+	local cursub
+		for k, v in next, tab do
+			if (not options[k]) then continue end
+			for men, subtab in next, v do
+				for key, val in next, subtab do
+					if (key == 1) then cursub = val[1] continue end
+					UpdateVar(k, cursub, val[1], val[3])
+				end
+			end
+		end
+	end
+end
+
+local function LoadConfig10()
+	if file.Exists(folder.."/config10.txt", "DATA") then
+	local tab = util.JSONToTable(file.Read(folder.."/config10.txt", "DATA"))
+	local cursub
+		for k, v in next, tab do
+			if (not options[k]) then continue end
+			for men, subtab in next, v do
+				for key, val in next, subtab do
+					if (key == 1) then cursub = val[1] continue end
+					UpdateVar(k, cursub, val[1], val[3])
+				end
+			end
+		end
+	end
+end
+
 local menukeydown, menukeydown2, menuopen
 
 local mousedown
@@ -879,11 +978,11 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(503, 15 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g, maintextcol.b, 255)
 	surface.SetFont("MainFont")
-	surface.DrawText("IdiotBox v6.8.b5")
+	surface.DrawText("IdiotBox v6.8.b7")
 	surface.SetTextPos(613, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: March 8th 2023")
+	surface.DrawText("Latest build: March 14th 2023")
 	surface.SetFont("MenuFont")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -1149,6 +1248,16 @@ local function Unload()
 				SaveConfig4()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
 				SaveConfig5()
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #6" then
+				SaveConfig6()
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #7" then
+				SaveConfig7()
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #8" then
+				SaveConfig8()
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #9" then
+				SaveConfig9()
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #10" then
+				SaveConfig10()
 			end
 		end
 	me:ConCommand("M9KGasEffect 1 cl_interp 0 cl_interp_ratio 2 cl_updaterate 30")
@@ -1160,9 +1269,9 @@ end
 
 local function Changelog()
 	print("===========================================================\n\n")
-	print("IdiotBox v6.8.b5 bugfixes (in no particular order)")
+	print("IdiotBox v6.8.b7 bugfixes (in no particular order)")
 	print("")
-	print("Total bugfix count: ~50 bugs have been found and fixed in the v6.8.b5 update;")
+	print("Total bugfix count: ~50 bugs have been found and fixed in the v6.8.b7 update;")
 	print("\n")
 	print("- The 'readme.txt' file is finally up-to-date and only contains the important information;")
 	print("- Aim Smoothness will automatically disable itself if Silent aim is turned on;")
@@ -1195,14 +1304,14 @@ local function Changelog()
 	print("- Fixed Free Roaming not working with Anti-Aim;")
 	print("- Fixed Cheater Callout clearing chat when it should not;")
 	print("- Fixed Thirdperson, Custom FoV and Free Roaming working incorrectly when the user is dead;")
-	print("- Fixed Fire Delay not working correctly;")
+	print("- Fixed Bullet Fire Delay not working correctly;")
 	print("- Fixed Prop Kill giving script errors when toggled;")
 	print("- Fixed Anti-Aim X-Axis Jitter, Semi-Jitter Down and Semi-Jitter Up breaking the Anti-Aim Y-Axis;")
 	print("- Fixed Triggerbot Smooth Aim slowing your overall mouse speed;")
 	print("- Fixed certain outlines and fonts not having the proper dimensions;")
 	print("- Fixed the menu not being large enough for certain outlines;")
 	print("- Fixed a Projectile Prediction bug where dying would cause script errors;")
-	print("- Fixed No Lerp and Dark Mode not resetting when disabled;")
+	print("- Fixed Manipulate Interpolation and Dark Mode not resetting when disabled;")
 	print("- Reworked script for slightly better performance;")
 	print("- Reworked user visibility of IdiotBox developers on servers;")
 	print("- Reorganized certain out-of-place functions and menu options;")
@@ -1215,9 +1324,9 @@ local function Changelog()
 	print("- Removed old and unused message pop-up function;")
 	print("- Removed 'aaa' module as 'IdiotBox_alpha1.lua' was replaced by 'IdiotBox_dev.lua' and had no use.")
 	print("\n")
-	print("IdiotBox v6.8.b5 new features (in no particular order)")
+	print("IdiotBox v6.8.b7 new features (in no particular order)")
 	print("")
-	print("Total feature count: ~50 features have been added in the v6.8.b5 update;")
+	print("Total feature count: ~50 features have been added in the v6.8.b7 update;")
 	print("\n")
 	print("- Added 'Projectile Prediction' and 'Line of Sight Check' to Aimbot;")
 	print("- Added 'Emote Resolver' to Resolver;")
@@ -1229,7 +1338,7 @@ local function Changelog()
 	print("- Added 'Players List', 'Show Entities', 'Conditions', 'Velocity', 'Dormant Check', 'Show Spectators', 'Hide Ignored Targets', 'Bystander Name', 'NPCs' and 'Clientside' and priority statuses to Visuals;")
 	print("- Added 'Panic Mode', 'Entity Menu', 'Plugin Loader', 'Optimize Game' and TTT/ Murder/ DarkRP specific features to Main Menu;")
 	print("- Added 'Spectators', 'Players', 'Frozen Players' and 'Enemies' to Aim Priorities;")
-	print("- Added 'Free Roaming Key' and 'Free Roaming Speed' to Free Roaming;")
+	print("- Added 'Toggle Key' and 'Speed' to Free Roaming;")
 	print("- Added 'Strafe Key' and 'Fake Crouch' to Movement;")
 	print("- Added 'Arabic Spam' and 'Hebrew Spam' to Chat Spam;")
 	print("- Added 'Priority Targets Only' to Priority List;")
@@ -1544,6 +1653,16 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 				SaveConfig4()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
 				SaveConfig5()
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #6" then
+				SaveConfig6()
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #7" then
+				SaveConfig7()
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #8" then
+				SaveConfig8()
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #9" then
+				SaveConfig9()
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #10" then
+				SaveConfig10()
 			end
 			timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Configuration Saved!") end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
@@ -1558,6 +1677,16 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 				LoadConfig4()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
 				LoadConfig5()
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #6" then
+				LoadConfig6()
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #7" then
+				LoadConfig7()
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #8" then
+				LoadConfig8()
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #9" then
+				LoadConfig9()
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #10" then
+				LoadConfig10()
 			end
 			timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Configuration Loaded!") end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
@@ -1572,6 +1701,16 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 				file.Delete(folder.."/config4.txt")
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
 				file.Delete(folder.."/config5.txt")
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #6" then
+				file.Delete(folder.."/config6.txt")
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #7" then
+				file.Delete(folder.."/config7.txt")
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #8" then
+				file.Delete(folder.."/config8.txt")
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #9" then
+				file.Delete(folder.."/config9.txt")
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #10" then
+				file.Delete(folder.."/config10.txt")
 			end
 			timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Configuration Deleted!") end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
@@ -1588,6 +1727,16 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 					SaveConfig4()
 				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
 					SaveConfig5()
+				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #6" then
+					SaveConfig6()
+				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #7" then
+					SaveConfig7()
+				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #8" then
+					SaveConfig8()
+				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #9" then
+					SaveConfig9()
+				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #10" then
+					SaveConfig10()
 				end
 			end
 			PluginLoader()
@@ -1606,6 +1755,16 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 						SaveConfig4()
 					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
 						SaveConfig5()
+					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #6" then
+						SaveConfig6()
+					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #7" then
+						SaveConfig7()
+					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #8" then
+						SaveConfig8()
+					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #9" then
+						SaveConfig9()
+					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #10" then
+						SaveConfig10()
 					end
 				end
 			EntityFinder()
@@ -1901,6 +2060,16 @@ local function Menu()
 				SaveConfig4()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
 				SaveConfig5()
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #6" then
+				SaveConfig6()
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #7" then
+				SaveConfig7()
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #8" then
+				SaveConfig8()
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #9" then
+				SaveConfig9()
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #10" then
+				SaveConfig10()
 				end
 			end
 		end
@@ -2696,8 +2865,8 @@ local function ChatSpam()
 	local messagespam = {"GET FUCKED BY IDIOTBOX KIDDIE", "YOU SUCK SHIT LMAO", "STOP BEING SUCH A WORTHLESS CUMSTAIN AND GET IDIOTBOX NOW", "MONEY WASTER LOL", "YOU FUCKING FATASS, GET IDIOTBOX AND LOSE ALL THAT WEIGHT YOU INCEL", "ARE ALL THE GIRLS IGNORING YOU? GET IDIOTBOX AND YOU'LL BE FLOODED WITH PUSSY", "DO YOU FEEL WORTHLESS? WELL, YOU ARE LOL", "GET IDIOTBOX IF YOU WANT SOME OF THAT CLOUT", "STOP WASTING YOUR TIME ON SOUNDCLOUD BECAUSE YOU AIN'T GONNA GET NOWHERE WITH IT", "GET IDIOTBOX AND YOUR DICK WILL GROW 4 TIMES ITS SIZE", "LITTLE KID LMAO",}
 	local offensivespam = {"fuck niggers like fr", "who else here hates black people lmao", "all niggers should be locked in cages and fed bananas", "black people are some sub-human slaves imo", "i've never met an intelligent black person", "why tf are all niggers so ugly lol", "all the black dudes i've seen look like monkeys", "ooga booga black rights", "my grandpa died in ww2, he was the best german pilot", "white people are genetically superior to every othe race", "all jews can do is hide the truth, steal money and start wars",}
 	local insultspam = {" is shit at building", " is no older than 13", " looks like a 2 month old corpse", " really thinks gmod is a good game", " can't afford a better pc lmao", ", so how do you like your 40 fps?", " will definitely kill himself before his 30's ", " is a fucking virgin lmao", " is a script kiddie", " thinks his 12cm penis is big lmfao", ", how does it feel when you've never seen a naked woman in person?", ", what do you like not being able to do a single push-up?", ", tell me how it feels to be shorter than every girl you've met", " is a fatass who only spends his time in front of a monitor like an incel", "'s parents have a lower than average income", " lives under a bridge lmao", " vapes because is too afraid to smoke an actual ciggarette", ", your low self esteem really pays off you loser", ", make sure you tell me what unemployment feels like", " lives off of his parents' money", ", you're a dissapointment to your entire family, fatass", " has probably fried all of his dopamine receptors by masturbating this much",}
-	local advertise = {"IdiotBox - https://phizzofficial.wixsite.com/idiotbox4gmod/", "IdiotBox - Destroying everyone since '16.", "IdiotBox - Easy to use, free Garry's Mod cheat.", "IdiotBox - Now you can forget that negative KD's can be possible.", "IdiotBox - Beats all of your other cheats.", "IdiotBox - IdiotBox came back, and it came back with a vengeance.", "IdiotBox - Join the Discord server if you have a high IQ.", "IdiotBox - The only high-quality free cheat, out for Garry's Mod.", "IdiotBox - Best cheat, created by Phizz & more.", "IdiotBox - Always updated, never dead.", "IdiotBox - A highly reliable and optimised cheating software.", "IdiotBox - Top class, free cheat for Garry's Mod.", "IdiotBox - Makes noobs cry waves of tears since forever!", "IdiotBox - Say goodbye to the respawn room!", "IdiotBox - Download the highest quality Garry's Mod cheat for free now!", "IdiotBox - A reliable way to go!", "IdiotBox - Make Garry's Mod great again!", "IdiotBox - Visit our website for fresh Discord invite links!", "IdiotBox - Monthly bugfixes & updates. It never gets outdated!", "IdiotBox - Download IdiotBox v6.8.b5 right now!", "IdiotBox - Bug-free and fully customizable!", "IdiotBox - Join our Steam group and Discord server to stay up-to-date!", "IdiotBox - Refund all your cheats, use this better and free alternative!", "IdiotBox - Now with more features than ever!", "IdiotBox - The best Garry's Mod cheat, with 24/7 support, for free!", "IdiotBox - Bypasses most anti-cheats and screengrabbers!",}
-	local toxicadvertise = {"Get IdiotBox you fucking smelly niggers", "IdiotBox is the best fucking cheat and that is a fact", "All of you are fucking autistic for not having IdiotBox", "Why the fuck don't you get IdiotBox lol", "Stay being gay or get IdiotBox", "Your moms should know that you play grown-up games, join our Discord to prove you are not under-aged", "I have your IPs you dumb niggers, I will delete the IPs if you get IdiotBox", "You all fucking smell like shit for not using IdiotBox", "IdiotBox makes kiddos cry and piss their pants maybe and maybe shit and cum", "IdiotBox is the best free cheat in the history of the entire world so get it faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ or you're retarded", "Join our fucking Discord or else you are literally an unpriviledged niggers", "IdiotBox is a cheat for people with high IQ only, use IdiotBox to prove you're smart", "Don't wanna get fucking raped? Get IdiotBox and shit on them skids", "This is the best free paste around, no other paste is better than IdiotBox", "How the fuck are you not using IdiotBox in a shitty dying game lmfao", "IdiotBox is the best and most popular Garry's Mod cheat ever, why are you not using it lol", "May cause a bit of lag but it's worth it for the fuckton of features that it has", "You're all faggots if you don't cheat with IdiotBox", "You literally go to pride month parades if you don't use IdiotBox", "Idiotbox is the highest quality, most popular free cheat, just get it already", "Shit on all of the virgins that unironically play this game with this high-quality cheat", "Get good, get IdiotBox you fucking retards", "You're mad retarded if you are not using IdiotBox, no cap", "Own every single retard in HvH with this superior cheat now", "All of you are dumb niggers for not downloading IdiotBox and that is a fact", "You suck fat cocks in public bathrooms if you're not using IdiotBox", "Just get this god-like cheat already and rape all existing servers", "No you idiots, you can't get VAC banned for using lua scripts you absolute cretins", "IdiotBox bypasses even the most complex anti-cheats and screengrabbers, you're not getting banned anytime soon", "Just use IdiotBox to revert your sad lives and feel better about yourselves", "Phizz is a god because he made this god-like cheat called IdiotBox", "I am forced to put IdiotBox in almost every sentence and advertise in a toxic way because I'm a text in a lua script", "Why are you fucking gay? Get IdiotBox today", "The sentence above is a rhyme but the script says to put random sentences so I don't think you can see it, get IdiotBox btw", "Purchase IdiotBox now! Only for OH wait it's free", "It is highly recommended that you get IdiotBox in case of getting pwned", "You are swag and good looking, but only if you get IdiotBox", "Phizz spent so many fucking nights creating this masterpiece of a cheat so get it now or he will legit kill you", "Fuck you and get IdiotBox now lol", "IdiotBox is constantly getting updated with dope-ass features, it never gets outdated so just get it", "Have IdiotBox installed if you're mega straight and zero gay", "Whoever the fuck said lua cheats are bad deserves to die in a house fire", "You get IdiotBox, everyone else on the server gets pwned, ez as that", "Many cheats copied IdiotBox, but this is the original one, fucking copycats", "Join the fucking Discord, promise it won't hurt you faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ right this moment or I will hire a hitman to kill you", "Join the IdiotBox group at OH wait niggers got mad and mass-reported it, kys shitkids", "Nvm, Steam group is back lol get fucked you mad skid shitkids", "IdiotBox killed all of the paid cheats because it's too good", "Get IdiotBox, it's free and very good, you sacks of crying shit", "IdiotBox is the fucking G.O.A.T.", "What the fuck are you doing not using this god-like cheat lol", "This is an epic fucking cheat called IdiotBox that was created by Phizz and others, worship your new gods kiddos", "You were fed cock milk as a baby if you're not using IdiotBox and you can not prove me wrong", "IdiotBox has the dopest anti-aims and resolvers you'll ever use, you will be a HvH god", "Just please get IdiotBox already you retards, I am tired of typing these lines for fuck's sake", "Phizz will give everyone IdiotBox v6.9 soon so quit your shit", "IdiotBox needs no Steam group, we're too chad for one", "Our Discord was tapped at some point but IdiotBox is back and stronger than ever", "IdiotBox came back to kill silly niggers, and it came back with a vengeance", "Download Idiotbox v6.8.b5 now, you dont even know what you're missing you mongoloids", "Have I told you about IdiotBox, the best Garry's Mod cheat ever made??", "Holy shit, IdiotBox for Garry's Mod is the best cheat that I have ever used!!",}
+	local advertise = {"IdiotBox - https://phizzofficial.wixsite.com/idiotbox4gmod/", "IdiotBox - Destroying everyone since '16.", "IdiotBox - Easy to use, free Garry's Mod cheat.", "IdiotBox - Now you can forget that negative KD's can be possible.", "IdiotBox - Beats all of your other cheats.", "IdiotBox - IdiotBox came back, and it came back with a vengeance.", "IdiotBox - Join the Discord server if you have a high IQ.", "IdiotBox - The only high-quality free cheat, out for Garry's Mod.", "IdiotBox - Best cheat, created by Phizz & more.", "IdiotBox - Always updated, never dead.", "IdiotBox - A highly reliable and optimised cheating software.", "IdiotBox - Top class, free cheat for Garry's Mod.", "IdiotBox - Makes noobs cry waves of tears since forever!", "IdiotBox - Say goodbye to the respawn room!", "IdiotBox - Download the highest quality Garry's Mod cheat for free now!", "IdiotBox - A reliable way to go!", "IdiotBox - Make Garry's Mod great again!", "IdiotBox - Visit our website for fresh Discord invite links!", "IdiotBox - Monthly bugfixes & updates. It never gets outdated!", "IdiotBox - Download IdiotBox v6.8.b7 right now!", "IdiotBox - Bug-free and fully customizable!", "IdiotBox - Join our Steam group and Discord server to stay up-to-date!", "IdiotBox - Refund all your cheats, use this better and free alternative!", "IdiotBox - Now with more features than ever!", "IdiotBox - The best Garry's Mod cheat, with 24/7 support, for free!", "IdiotBox - Bypasses most anti-cheats and screengrabbers!",}
+	local toxicadvertise = {"Get IdiotBox you fucking smelly niggers", "IdiotBox is the best fucking cheat and that is a fact", "All of you are fucking autistic for not having IdiotBox", "Why the fuck don't you get IdiotBox lol", "Stay being gay or get IdiotBox", "Your moms should know that you play grown-up games, join our Discord to prove you are not under-aged", "I have your IPs you dumb niggers, I will delete the IPs if you get IdiotBox", "You all fucking smell like shit for not using IdiotBox", "IdiotBox makes kiddos cry and piss their pants maybe and maybe shit and cum", "IdiotBox is the best free cheat in the history of the entire world so get it faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ or you're retarded", "Join our fucking Discord or else you are literally an unpriviledged niggers", "IdiotBox is a cheat for people with high IQ only, use IdiotBox to prove you're smart", "Don't wanna get fucking raped? Get IdiotBox and shit on them skids", "This is the best free paste around, no other paste is better than IdiotBox", "How the fuck are you not using IdiotBox in a shitty dying game lmfao", "IdiotBox is the best and most popular Garry's Mod cheat ever, why are you not using it lol", "May cause a bit of lag but it's worth it for the fuckton of features that it has", "You're all faggots if you don't cheat with IdiotBox", "You literally go to pride month parades if you don't use IdiotBox", "Idiotbox is the highest quality, most popular free cheat, just get it already", "Shit on all of the virgins that unironically play this game with this high-quality cheat", "Get good, get IdiotBox you fucking retards", "You're mad retarded if you are not using IdiotBox, no cap", "Own every single retard in HvH with this superior cheat now", "All of you are dumb niggers for not downloading IdiotBox and that is a fact", "You suck fat cocks in public bathrooms if you're not using IdiotBox", "Just get this god-like cheat already and rape all existing servers", "No you idiots, you can't get VAC banned for using lua scripts you absolute cretins", "IdiotBox bypasses even the most complex anti-cheats and screengrabbers, you're not getting banned anytime soon", "Just use IdiotBox to revert your sad lives and feel better about yourselves", "Phizz is a god because he made this god-like cheat called IdiotBox", "I am forced to put IdiotBox in almost every sentence and advertise in a toxic way because I'm a text in a lua script", "Why are you fucking gay? Get IdiotBox today", "The sentence above is a rhyme but the script says to put random sentences so I don't think you can see it, get IdiotBox btw", "Purchase IdiotBox now! Only for OH wait it's free", "It is highly recommended that you get IdiotBox in case of getting pwned", "You are swag and good looking, but only if you get IdiotBox", "Phizz spent so many fucking nights creating this masterpiece of a cheat so get it now or he will legit kill you", "Fuck you and get IdiotBox now lol", "IdiotBox is constantly getting updated with dope-ass features, it never gets outdated so just get it", "Have IdiotBox installed if you're mega straight and zero gay", "Whoever the fuck said lua cheats are bad deserves to die in a house fire", "You get IdiotBox, everyone else on the server gets pwned, ez as that", "Many cheats copied IdiotBox, but this is the original one, fucking copycats", "Join the fucking Discord, promise it won't hurt you faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ right this moment or I will hire a hitman to kill you", "Join the IdiotBox group at OH wait niggers got mad and mass-reported it, kys shitkids", "Nvm, Steam group is back lol get fucked you mad skid shitkids", "IdiotBox killed all of the paid cheats because it's too good", "Get IdiotBox, it's free and very good, you sacks of crying shit", "IdiotBox is the fucking G.O.A.T.", "What the fuck are you doing not using this god-like cheat lol", "This is an epic fucking cheat called IdiotBox that was created by Phizz and others, worship your new gods kiddos", "You were fed cock milk as a baby if you're not using IdiotBox and you can not prove me wrong", "IdiotBox has the dopest anti-aims and resolvers you'll ever use, you will be a HvH god", "Just please get IdiotBox already you retards, I am tired of typing these lines for fuck's sake", "Phizz will give everyone IdiotBox v6.9 soon so quit your shit", "IdiotBox needs no Steam group, we're too chad for one", "Our Discord was tapped at some point but IdiotBox is back and stronger than ever", "IdiotBox came back to kill silly niggers, and it came back with a vengeance", "Download Idiotbox v6.8.b7 now, you dont even know what you're missing you mongoloids", "Have I told you about IdiotBox, the best Garry's Mod cheat ever made??", "Holy shit, IdiotBox for Garry's Mod is the best cheat that I have ever used!!",}
 	local lmaoboxadvertise = {"www.IB4G.net - https://phizzofficial.wixsite.com/idiotbox4gmod/", "www.IB4G.net - WORST FRAMERATE, BEST FEATURES!", "www.IB4G.net - WHAT ARE YOU WAITING FOR?", "www.IB4G.net - BEST GARRY'S MOD CHEAT OUT RIGHT NOW!", "www.IB4G.net - SAY GOODBYE TO THE RESPAWN ROOM!", "www.IB4G.net - NO SKILL REQUIRED!", "www.IB4G.net - NEVER DIE AGAIN WITH THIS!", "www.IB4G.net - ONLY HIGH IQ NIGGAS' USE IDIOTBOX!", "www.IB4G.net - THE GAME IS NOT ACTUALLY DYING, I JUST LIKE TO ANNOY KIDS LOL!", "www.IB4G.net - DOWNLOAD THE CHEAT FOR FREE!", "www.IB4G.net - NOW WITH AUTOMATIC UPDATES!", "www.IB4G.net - GUARANTEED SWAG AND RESPECT ON EVERY SERVER!", "www.IB4G.net - IDIOTBOX COMING SOON TO TETIRS!", "www.IB4G.net - VISIT OUR WEBSITE FOR A FRESH INVITE LINK TO OUR DISCORD!", "www.IB4G.net - PHIZZ IS A GOD FOR MAKING THIS!", "www.IB4G.net - BECOME THE SERVER MVP IN NO TIME!", "www.IB4G.net - 100% NO SKILL REQUIRED!", "www.IB4G.net - BEST CHEAT, MADE BY THE CHINESE COMMUNIST PARTY!", "www.IB4G.net - MAKE IDIOTBOX GREAT AGAIN!", "www.IB4G.net - WHY ARE YOU NOT CHEATING IN A DYING GAME?", "www.IB4G.net - RUINING EVERYONE'S FUN SINCE 2016!", "www.IB4G.net - IT'S PASTED, BUT IT'S THE BEST PASTE YOU WILL EVER USE!", "www.IB4G.net - A VERY CLEAN, HIGH-QUALITY AND BUG-FREE PASTE!", "www.IB4G.net - ALWAYS UPDATED! NEVER GETS OUTDATED!", "www.IB4G.net - WITH A FUCK TON OF NEW FEATURES!", "www.IB4G.net - ONCE YOU GO BLACK, YOU NEVER GO BACK. GET IDIOTBOX NOW!", "www.IB4G.net - SACRIFICE A FEW FRAMES FOR THE BEST EXPERIENCE OF YOUR LIFE!", "www.IB4G.net - STEAM GROUP WAS TAKEN DOWN, BUT IT'S BACK BABY!", "www.IB4G.net - BEST GARRY'S MOD CHEAT, NO CAP!", "www.IB4G.net - WITH IDIOTBOX, YOU'LL NEVER GET BANNED FOR CHEATING AGAIN!", "www.IB4G.net - DISCORD SERVER WAS TAKEN DOWN MANY TIMES, BUT WE ALWAYS COME BACK!",}
 	local horstwessellied = {"Die Fahne hoch! Die Reihen fest geschlossen", "SA marschiert mit ruhig festem Schritt", "Kam'raden, die Rotfront und Reaktion erschossen", "Marschier'n im Geist in unser'n Reihen mit", "Die Straße frei den braunen Bataillonen", "Die Straße frei dem Sturmabteilungsmann", "Es schau'n aufs Hakenkreuz voll Hoffnung schon Millionen", "Der Tag für Freiheit und für Brot bricht an", "Zum letzten Mal wird Sturmalarm geblasen", "Zum Kampfe steh'n wir alle schon bereit", "Schon flattern Hitlerfahnen über allen Straßen", "Die Knechtschaft dauert nur noch kurze Zeit", "Die Fahne hoch! Die Reihen fest geschlossen", "SA marschiert mit ruhig festem Schritt", "Kam'raden, die Rotfront und Reaktion erschossen", "Marschier'n im Geist in unser'n Reihen mit",}
 	local ssmarschiertinfeindesland = {"SS marschiert in Feindesland", "Und singt ein Teufelslied", "Ein Schütze steht am Wolgastrand", "Und leise summt er mit", "Wir pfeifen auf Unten und Oben", "Und uns kann die ganze Welt", "Verfluchen oder auch loben", "Grad wie es jedem gefällt", "Wo wir sind da geht's immer vorwärts", "Und der Teufel, der lacht nur dazu", "Ha, ha, ha, ha, ha, ha", "Wir kämpfen für Deutschland", "Wir kämpfen für Hitler", "Der Rote kommt niemehr zur Ruh'", "Wir kämpften schon in mancher Schlacht", "In Nord, Süd, Ost und West", "Und stehen nun zum Kampf bereit", "Gegen die rote Pest", "SS wird nicht ruh'n, wir vernichten", "Bis niemand mehr stört Deutschlands Glück", "Und wenn sich die Reihen auch lichten", "Für uns gibt es nie ein Zurück", "Wo wir sind da geht's immer vorwärts", "Und der Teufel, der lacht nur dazu", "Ha, ha, ha, ha, ha, ha", "Wir kämpfen für Deutschland", "Wir kämpfen für Hitler", "Der Rote kommt niemehr zur Ruh'",}
@@ -3331,7 +3500,7 @@ hook.Add("Think", "Hook8", function()
 		optimized = false
 		end
 	end
-	if gBool("Aim Assist", "Miscellaneous", "No Lerp") then
+	if gBool("Aim Assist", "Miscellaneous", "Manipulate Interpolation") then
 		if not applied then
 			me:ConCommand("cl_interp 0; cl_interp_ratio 0; cl_updaterate 99999")
 		applied = true
@@ -3471,9 +3640,9 @@ end)
 
 local function AutoReload(pCmd)
 	local wep = me:GetActiveWeapon()
-	if (not gBool("Aim Assist", "Miscellaneous", "Auto Reload")) then return end
+	if not gBool("Aim Assist", "Miscellaneous", "Auto Reload") then return end
 	if (me:Alive() or me:Health() > 0) and idiot.IsValid(wep) then
-		if (wep:Clip1() <= (gInt("Aim Assist", "Miscellaneous", "Auto Reload at:")) and wep:GetMaxClip1() > 0 and idiot.CurTime() > wep:GetNextPrimaryFire()) then
+		if (wep:Clip1() <= (wep:GetMaxClip1() - 1) and wep:GetMaxClip1() > 0 and idiot.CurTime() > wep:GetNextPrimaryFire()) then
 			pCmd:SetButtons(pCmd:GetButtons() + IN_RELOAD)
 		end
 	end
@@ -4143,16 +4312,18 @@ local function Valid(v)
         tr.start = me
         tr.endpos = v
         tr.filter = {me, v}
-	if gBool("Aim Assist", "Miscellaneous", "Auto Wallbang") then
-		tr.start = em.EyePos(me)
-        tr.endpos = AimPos(v)
-		tr.mask = MASK_SHOT
-		tr.filter = {me, v}
-	elseif gBool("Aim Assist", "Miscellaneous", "Line of Sight Check") then
-		tr.start = em.EyePos(me)
-        tr.endpos = AimPos(v)
-		tr.mask = MASK_VISIBLE_AND_NPCS
-		tr.filter = {me, v}
+	if gOption("Aim Assist", "Miscellaneous", "Line of Sight Check:") ~= "Off" then
+		if gOption("Aim Assist", "Miscellaneous", "Line of Sight Check:") == "Auto Wallbang" then
+			tr.start = em.EyePos(me)
+			tr.endpos = AimPos(v)
+			tr.mask = MASK_VISIBLE_AND_NPCS
+			tr.filter = {me, v}
+		elseif gOption("Aim Assist", "Miscellaneous", "Line of Sight Check:") == "Default" then
+			tr.start = em.EyePos(me)
+			tr.endpos = AimPos(v)
+			tr.mask = MASK_SHOT
+			tr.filter = {me, v}
+		end
 	end
 	if util.TraceLine(tr).Fraction == 1 then
         return true
@@ -4224,9 +4395,9 @@ hook.Add("Move", "Hook16", function()
     if (IsFirstTimePredicted()) then
         servertime = CurTime() + engine.TickInterval()
     end
-	if gBool("Aim Assist", "Miscellaneous", "Bullet Time") then
-		if gBool("Aim Assist", "Aimbot", "Auto Fire") and gInt("Aim Assist", "Miscellaneous", "Fire Delay:") ~= 1 then
-			servertime = CurTime() - gInt("Aim Assist", "Miscellaneous", "Fire Delay:") / 100
+	if gBool("Aim Assist", "Miscellaneous", "Manipulate Bullet Time") then
+		if gBool("Aim Assist", "Aimbot", "Auto Fire") and gInt("Aim Assist", "Miscellaneous", "Bullet Fire Delay:") ~= 1 then
+			servertime = CurTime() - gInt("Aim Assist", "Miscellaneous", "Bullet Fire Delay:") / 100
 		else
 			servertime = CurTime()
 		end
@@ -4235,7 +4406,7 @@ end)
 
 local function WeaponCanFire()
 	local w = pm.GetActiveWeapon(me)
-		if (!w || !em.IsValid(w) || !gBool("Aim Assist", "Miscellaneous", "Bullet Time")) then return true end
+		if (!w || !em.IsValid(w) || !gBool("Aim Assist", "Miscellaneous", "Manipulate Bullet Time")) then return true end
 	return(servertime >= wm.GetNextPrimaryFire(w))
 end
 
@@ -4284,7 +4455,7 @@ end
 
 local function PredictPos(aimtarget)
 	local wep = me:GetActiveWeapon()
-	if gBool("Aim Assist", "Aim Priorities", "Projectile Prediction") and me:GetActiveWeapon():IsValid() and me:Alive() and me:Health() > 0 then
+	if gBool("Aim Assist", "Miscellaneous", "Projectile Prediction") and me:GetActiveWeapon():IsValid() and me:Alive() and me:Health() > 0 then
 		if string.find(string.lower(wep:GetClass()), "crossbow") then
 			if vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) <= 1100 then
 				return (em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)) + em.GetVelocity(aimtarget) * ((vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 1600) + me:Ping() / 950) + Vector(0, 0, vm.Distance(em.GetPos(aimtarget), em.GetPos(me)) / 110) - em.GetVelocity(me) / 50) - em.EyePos(me)
@@ -4343,7 +4514,7 @@ local function PredictPos(aimtarget)
 			return AimPos(aimtarget) - em.EyePos(me)
 		end
 	end
-	if not gBool("Aim Assist", "Aim Priorities", "Projectile Prediction") then
+	if not gBool("Aim Assist", "Miscellaneous", "Projectile Prediction") then
 		return AimPos(aimtarget) - em.EyePos(me)
 	end
 end
@@ -4355,7 +4526,7 @@ local function Aimbot(pCmd)
 	end
 	GetTarget()
     aa = false
-    if (aimtarget && aimtarget:IsValid() && gKey("Aim Assist", "Aimbot", "Aim Key:") && WeaponCanFire()) then
+    if (aimtarget && aimtarget:IsValid() && gKey("Aim Assist", "Aimbot", "Toggle Key:") && WeaponCanFire()) then
 	local pos = PredictPos(aimtarget)
 	local ang = vm.Angle(PredictSpread(pCmd, vm.Angle(pos)))
 	local ady = math.abs(math.NormalizeAngle(ang.y - fa.y))
@@ -4409,7 +4580,7 @@ local function TriggerFilter(hitbox)
 end
 
 local function Triggerbot(pCmd)
-	if cm.CommandNumber(pCmd) == 0 or not gBool("Aim Assist", "Triggerbot", "Enabled") or not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Triggerbot", "Spectators:")) or not gKey("Aim Assist", "Triggerbot", "Trigger Key:") or pCmd:KeyDown(IN_ATTACK) or FixTools() then return end
+	if cm.CommandNumber(pCmd) == 0 or not gBool("Aim Assist", "Triggerbot", "Enabled") or not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Triggerbot", "Spectators:")) or not gKey("Aim Assist", "Triggerbot", "Toggle Key:") or pCmd:KeyDown(IN_ATTACK) or FixTools() then return end
 	local dist = gBool("Aim Assist", "Aim Priorities", "Distance:")
 	local vel = gBool("Aim Assist", "Aim Priorities", "Velocity:")
 	local maxhealth = gInt("Aim Assist", "Aim Priorities", "Max Player Health:") 
@@ -4503,8 +4674,8 @@ local function GetClosest()
 	return(pos.y)
 end
 
-local function ViewLock()
-	if (gBool("Hack vs. Hack", "Anti-Aim", "View Lock") and me:Alive() and me:Health() > 0) then
+local function LockView()
+	if (gBool("Hack vs. Hack", "Anti-Aim", "Lock View") and me:Alive() and me:Health() > 0) then
 		local wep = pm.GetActiveWeapon(me)
 		if !IsValid(wep) then return end
 		local n = string.lower(wep:GetPrintName())
@@ -4572,49 +4743,50 @@ local function GetY()
     local right = gOption("Hack vs. Hack", "Anti-Aim", "Anti-Aim Direction:") == "Right"
 	local randcoin = gInt("Hack vs. Hack", "Anti-Aim", "Emotion Y-Axis Speed:")
 	local opt = gOption("Hack vs. Hack", "Anti-Aim", "Y-Axis:")
-	local adapt = gBool("Hack vs. Hack", "Anti-Aim", "Adaptive")
-	local static = gBool("Hack vs. Hack", "Anti-Aim", "Static")
+	local default = gOption("Hack vs. Hack", "Anti-Aim", "Mode:") == "Default"
+	local adapt = gOption("Hack vs. Hack", "Anti-Aim", "Mode:") == "Adaptive"
+	local static = gOption("Hack vs. Hack", "Anti-Aim", "Mode:") == "Static"
 	if (opt == "Off") then
         oy = fa.y
 	elseif (opt == "Emotion") then
 	if (math.random(100) < randcoin) then
 		oy = fa.y + math.random( - 180, 180)
 	end
-	elseif (opt == "Forwards" && !adapt && !static) then
+	elseif (opt == "Forwards" && default) then
 		oy = fa.y
-	elseif (opt == "Forwards" && adapt && !static) then
+	elseif (opt == "Forwards" && adapt) then
 		oy = GetClosest()
 	elseif (opt == "Forwards" && static) then
 		oy = 180
-	elseif (opt == "Backwards" && !adapt && !static) then
+	elseif (opt == "Backwards" && default) then
 		oy = fa.y - 180
-	elseif (opt == "Backwards" && adapt && !static) then
+	elseif (opt == "Backwards" && adapt) then
 		oy = GetClosest() - 180
 	elseif (opt == "Backwards" && static) then
 		oy = 0
-	elseif (opt == "Jitter" && !adapt && !static) then
+	elseif (opt == "Jitter" && default) then
 		oy = fa.y + math.random( - 90, 90)
-	elseif (opt == "Jitter" && adapt && !static) then
+	elseif (opt == "Jitter" && adapt) then
 		oy = GetClosest() + math.random( - 90, 90)
 	elseif (opt == "Jitter" && static) then
 		oy = 180 + math.random( - 90, 90)
-	elseif (opt == "Backwards Jitter" && !adapt && !static) then
+	elseif (opt == "Backwards Jitter" && default) then
 		oy = fa.y - 180 + math.random( - 90, 90)
-	elseif (opt == "Backwards Jitter" && adapt && !static) then
+	elseif (opt == "Backwards Jitter" && adapt) then
 		oy = GetClosest() - 180 + math.random( - 90, 90)
 	elseif (opt == "Backwards Jitter" && static) then
 		oy = 0 + math.random( - 90, 90)
 	elseif (opt == "Side Switch") then
 		oy = math.random( - 631, 631)
-	elseif (opt == "Semi-Jitter" && !adapt && !static) then
+	elseif (opt == "Semi-Jitter" && default) then
 		oy = fa.y + math.random (25, - 25)
-	elseif (opt == "Semi-Jitter" && adapt && !static) then
+	elseif (opt == "Semi-Jitter" && adapt) then
 		oy = GetClosest() + math.random (25, - 25)
 	elseif (opt == "Semi-Jitter" && static) then
 		oy = 180 + math.random (25, - 25)
-	elseif (opt == "Back Semi-Jitter" && !adapt && !static) then
+	elseif (opt == "Back Semi-Jitter" && default) then
 		oy = fa.y - 180 + math.random (25, - 25)
-	elseif (opt == "Back Semi-Jitter" && adapt && !static) then
+	elseif (opt == "Back Semi-Jitter" && adapt) then
 		oy = GetClosest() - 180 + math.random (25, - 25)
 	elseif (opt == "Back Semi-Jitter" && static) then
 		oy = 0 + math.random (25, - 25)
@@ -4628,7 +4800,7 @@ local function GetY()
 		else
 		oy = (idiot.CurTime() * gInt("Hack vs. Hack", "Anti-Aim", "Spinbot Y-Axis Speed:") * 23) % 350, 1
 	    end
-	elseif (opt == "Sideways" && !adapt && !static) then
+	elseif (opt == "Sideways" && default) then
 		if right then
 		oy = fa.y - 90
 		elseif left then
@@ -4638,7 +4810,7 @@ local function GetY()
 		else
 		oy = fa.y + 90
 	end
-	elseif (opt == "Sideways" && adapt && !static) then
+	elseif (opt == "Sideways" && adapt) then
 		if right then
 		oy = GetClosest() - 90
 		elseif left then
@@ -4658,7 +4830,7 @@ local function GetY()
 		else
 		oy = 270
 	end
-	elseif (opt == "Side Semi-Jitter" && !adapt && !static) then
+	elseif (opt == "Side Semi-Jitter" && default) then
         if left then
         oy = fa.y + 90 + math.random(0, 40)
         elseif right then
@@ -4668,7 +4840,7 @@ local function GetY()
 		else
 		oy = fa.y + 90 + math.random(0, 40) 
         end
-	elseif (opt == "Side Semi-Jitter" && adapt && !static) then
+	elseif (opt == "Side Semi-Jitter" && adapt) then
         if left then
         oy = GetClosest() + 90 + math.random(0, 40)
         elseif right then
@@ -4688,7 +4860,7 @@ local function GetY()
 		else
 		oy = 270 + math.random(0, 40)
         end
-	elseif (opt == "Sideways Jitter" && !adapt && !static) then
+	elseif (opt == "Sideways Jitter" && default) then
 		if left then
         oy = fa.y + math.random(1, 180, 1, 80, 1)
    		elseif right then
@@ -4698,7 +4870,7 @@ local function GetY()
 		else
 		oy = fa.y + math.random(1, 180, 1, 80, 1)
 	    end
-	elseif (opt == "Sideways Jitter" && adapt && !static) then
+	elseif (opt == "Sideways Jitter" && adapt) then
 		if left then
         oy = GetClosest() + math.random(1, 180, 1, 80, 1)
    		elseif right then
@@ -4718,7 +4890,7 @@ local function GetY()
 		else
 		oy = 270 + math.random( - 90, 90)
 	    end
-	elseif (opt == "Fake-Forwards" && !adapt && !static) then
+	elseif (opt == "Fake-Forwards" && default) then
 		if left then
         oy = fa.y - math.sin(CurTime() * 10) * 5
         elseif right then
@@ -4728,7 +4900,7 @@ local function GetY()
 		else
 		oy = fa.y - math.sin(CurTime() * 10) * 5
         end
-	elseif (opt == "Fake-Forwards" && adapt && !static) then
+	elseif (opt == "Fake-Forwards" && adapt) then
         if left then
         oy = GetClosest() - math.sin(CurTime() * 10) * 5
         elseif right then
@@ -4748,7 +4920,7 @@ local function GetY()
 		else
 		oy = 180 - math.sin(CurTime() * 10) * 5
         end
-	elseif (opt == "Fake-Backwards" && !adapt && !static) then
+	elseif (opt == "Fake-Backwards" && default) then
 		if right then
 		oy = fa.y + 180 + math.sin(CurTime() * 10) * 5
 		elseif left then
@@ -4758,7 +4930,7 @@ local function GetY()
 		else
 		oy = fa.y + 180 - math.sin(CurTime() * 10) * 5
 		end
-	elseif (opt == "Fake-Backwards" && adapt && !static) then
+	elseif (opt == "Fake-Backwards" && adapt) then
 		if right then
 		oy = GetClosest() + 180 + math.sin(CurTime() * 10) * 5
 		elseif left then
@@ -4778,7 +4950,7 @@ local function GetY()
 		else
 		oy = 0 - math.sin(CurTime() * 10) * 5
 		end
-	elseif (opt == "Fake-Sideways" && !adapt && !static) then
+	elseif (opt == "Fake-Sideways" && default) then
 		if left then
         oy = fa.y + 90 + math.sin(CurTime() * 10) * 5
    		elseif right then
@@ -4788,7 +4960,7 @@ local function GetY()
 		else
 		oy = fa.y + 90 + math.sin(CurTime() * 10) * 5
 	    end
-	elseif (opt == "Fake-Sideways" && adapt && !static) then
+	elseif (opt == "Fake-Sideways" && adapt) then
 		if left then
         oy = GetClosest() + 90 + math.sin(CurTime() * 10) * 5
    		elseif right then
@@ -4811,8 +4983,8 @@ local function GetY()
 	end
 end
 
-local function WallDetect()
-	if (gBool("Hack vs. Hack", "Anti-Aim", "Wall Detect")) then
+local function DetectWalls()
+	if (gBool("Hack vs. Hack", "Anti-Aim", "Detect Walls")) then
 		local eye = em.EyePos(me)
 		local tr = util.TraceLine({
 		start = eye, 
@@ -4831,7 +5003,7 @@ local function AntiAim(pCmd)
 	if (gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Anti-Aim" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me) then return end
 	end
 	local wep = pm.GetActiveWeapon(me)
-	if (gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP || me:Team() == TEAM_SPECTATOR || triggering == true || (cm.CommandNumber(pCmd) == 0 && !gBool("Miscellaneous", "Point of View", "Thirdperson")) || cm.KeyDown(pCmd, 1) || gBool("Miscellaneous", "Point of View", "Custom FoV") && gBool("Miscellaneous", "Free Roaming", "Enabled") && gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") && !gBool("Miscellaneous", "Point of View", "Thirdperson") || me:WaterLevel() > 1 || input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable in 'Use' Toggle") && !me:IsTyping() || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aim Assist", "Aimbot", "Enabled") && (gInt("Aim Assist", "Aimbot", "Aim FoV Value:") > 0 or gInt("Aim Assist", "Aimbot", "Aim Smoothness:") > 0) || gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" && idiot.engine.ActiveGamemode() == "terrortown") then return end
+	if (gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP || me:Team() == TEAM_SPECTATOR || triggering == true || (cm.CommandNumber(pCmd) == 0 && !gBool("Miscellaneous", "Point of View", "Thirdperson")) || cm.KeyDown(pCmd, 1) || gBool("Miscellaneous", "Point of View", "Custom FoV") && gBool("Miscellaneous", "Free Roaming", "Enabled") && gKey("Miscellaneous", "Free Roaming", "Toggle Key:") && !gBool("Miscellaneous", "Point of View", "Thirdperson") || me:WaterLevel() > 1 || input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable in 'Use' Toggle") && !me:IsTyping() || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aim Assist", "Aimbot", "Enabled") && (gInt("Aim Assist", "Aimbot", "Aim FoV Value:") > 0 or gInt("Aim Assist", "Aimbot", "Aim Smoothness:") > 0) || gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" && idiot.engine.ActiveGamemode() == "terrortown") then return end
 	if gOption("Hack vs. Hack", "Anti-Aim", "Anti-Aim Direction:") == "Manual Switch" then
 	if gKey("Hack vs. Hack", "Anti-Aim", "Switch Key:") and not manualpressed then
 	manualpressed = true
@@ -4842,8 +5014,8 @@ local function AntiAim(pCmd)
 	end
 	GetX()
 	GetY()
-	ViewLock()
-	WallDetect()
+	LockView()
+	DetectWalls()
 	local aaang = Angle(ox, oy, 0)
 	cm.SetViewAngles(pCmd, aaang)
 	FixMovement(pCmd, true)
@@ -4926,7 +5098,7 @@ local function PropKill(pCmd)
 end
 
 local function AutoStop(pCmd)
-	if (gBool("Aim Assist", "Aimbot", "Enabled") && gBool("Aim Assist", "Aimbot", "Auto Stop") && aimtarget && gKey("Aim Assist", "Aimbot", "Aim Key:") && WeaponCanFire() or gBool("Aim Assist", "Triggerbot", "Enabled") && gBool("Aim Assist", "Triggerbot", "Auto Stop") && gKey("Aim Assist", "Triggerbot", "Trigger Key:") && triggering && WeaponCanFire()) then
+	if (gBool("Aim Assist", "Aimbot", "Enabled") && gBool("Aim Assist", "Aimbot", "Auto Stop") && aimtarget && gKey("Aim Assist", "Aimbot", "Toggle Key:") && WeaponCanFire() or gBool("Aim Assist", "Triggerbot", "Enabled") && gBool("Aim Assist", "Triggerbot", "Auto Stop") && gKey("Aim Assist", "Triggerbot", "Toggle Key:") && triggering && WeaponCanFire()) then
 		pCmd:SetForwardMove(0)
 		pCmd:SetSideMove(0)
 		pCmd:SetUpMove(0)
@@ -4935,7 +5107,7 @@ local function AutoStop(pCmd)
 end
 
 local function AutoCrouch(pCmd)	
-	if (gBool("Aim Assist", "Aimbot", "Enabled") && gBool("Aim Assist", "Aimbot", "Auto Crouch") && aimtarget && gKey("Aim Assist", "Aimbot", "Aim Key:") && WeaponCanFire() or gBool("Aim Assist", "Triggerbot", "Enabled") && gBool("Aim Assist", "Triggerbot", "Auto Crouch") && gKey("Aim Assist", "Triggerbot", "Trigger Key:") && triggering && WeaponCanFire()) then
+	if (gBool("Aim Assist", "Aimbot", "Enabled") && gBool("Aim Assist", "Aimbot", "Auto Crouch") && aimtarget && gKey("Aim Assist", "Aimbot", "Toggle Key:") && WeaponCanFire() or gBool("Aim Assist", "Triggerbot", "Enabled") && gBool("Aim Assist", "Triggerbot", "Auto Crouch") && gKey("Aim Assist", "Triggerbot", "Toggle Key:") && triggering && WeaponCanFire()) then
 		pCmd:SetButtons(pCmd:GetButtons() + IN_DUCK)
 	return
 	end
@@ -4989,8 +5161,8 @@ local roampos, roamang, roamon, roamx, roamy, roamduck, roamjump = LocalPlayer()
 
 hook.Add("CalcView", "Hook17", function(me, pos, ang, fov)
 	local view = {}
-		if gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) and (me:Alive() or me:Health() > 0) then
-			local speed = gInt("Miscellaneous", "Free Roaming", "Free Roaming Speed:") / 5
+		if gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) and (me:Alive() or me:Health() > 0) then
+			local speed = gInt("Miscellaneous", "Free Roaming", "Speed:") / 5
 			local mouseang = Angle(roamy, roamx, 0)
 			if LocalPlayer():KeyDown(IN_SPEED) then
 				speed = speed * 3
@@ -5015,24 +5187,25 @@ hook.Add("CalcView", "Hook17", function(me, pos, ang, fov)
 			end
 			view.origin = roampos
 			view.angles = mouseang
-			view.fov = fov
+			view.fov = gInt("Miscellaneous", "Free Roaming", "FoV Value:")
 			view.drawviewer = true
 		end
-		if gBool("Miscellaneous", "Point of View", "Custom FoV") and not gBool("Miscellaneous", "Point of View", "Thirdperson") and not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:")) and (me:Alive() or me:Health() > 0) then
+		if gBool("Miscellaneous", "Point of View", "Custom FoV") and not gBool("Miscellaneous", "Point of View", "Thirdperson") and not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:")) and (me:Alive() or me:Health() > 0) then
 			view.origin = pos
 			view.angles = angles
-			view.fov = gInt("Miscellaneous", "Point of View", "FoV Range:")
+			view.fov = gInt("Miscellaneous", "Point of View", "FoV Value:")
 		end
 		if gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil") and (me:Alive() or me:Health() > 0) and me:GetMoveType() ~= 10 and me:GetObserverTarget() == nil then
 			view.origin = me:EyePos()
 			view.angles = me:EyeAngles()
 		end
-		if gBool("Miscellaneous", "Point of View", "Thirdperson") and not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:")) and (me:Alive() or me:Health() > 0) then
+		if gBool("Miscellaneous", "Point of View", "Thirdperson") and not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:")) and (me:Alive() or me:Health() > 0) then
 			view.angles = GetAngle(fa)
 			view.origin = gBool("Miscellaneous", "Point of View", "Thirdperson") and pos + am.Forward(fa) * (gInt("Miscellaneous", "Point of View", "Thirdperson Range:") * - 10)
+			view.fov = gInt("Miscellaneous", "Point of View", "Thirdperson FoV Value:")
 			return view
 		end
-		if not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:")) and (me:Alive() or me:Health() > 0) then
+		if not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:")) and (me:Alive() or me:Health() > 0) then
 			view.angles = GetAngle(fa)
 			view.origin = pos
 		end
@@ -5040,7 +5213,7 @@ hook.Add("CalcView", "Hook17", function(me, pos, ang, fov)
 end)
 
 local function FreeRoam(pCmd)
-	if (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) and (me:Alive() or me:Health() > 0)) then
+	if (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) and (me:Alive() or me:Health() > 0)) then
 		if roamon == false then
 			roampos, roamang = LocalPlayer():EyePos(), pCmd:GetViewAngles()
 			roamy, roamx = pCmd:GetViewAngles().x, pCmd:GetViewAngles().y
@@ -5068,12 +5241,12 @@ local function FreeRoam(pCmd)
 end
 
 hook.Add("AdjustMouseSensitivity", "Hook18", function()
-	if not gBool("Aim Assist", "Triggerbot", "Smooth Aim") or not gKey("Aim Assist", "Triggerbot", "Trigger Key:") or not triggering or FixTools() then return end
+	if not gBool("Aim Assist", "Triggerbot", "Smooth Aim") or not gKey("Aim Assist", "Triggerbot", "Toggle Key:") or not triggering or FixTools() then return end
 	return .10
 end)
 
 hook.Add("ShouldDrawLocalPlayer", "Hook19", function()
-	if not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Free Roaming Key:")) then return(gBool("Miscellaneous", "Point of View", "Thirdperson")) end
+	if not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:")) then return(gBool("Miscellaneous", "Point of View", "Thirdperson")) end
 end)
 
 hook.Add("CreateMove", "Hook20", function(pCmd)
