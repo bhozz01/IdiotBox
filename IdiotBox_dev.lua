@@ -340,7 +340,7 @@ local options = {
 					{""}, 
                 }, 
 				{
-                	{"Chat", 506, 20, 235, 220, 218}, 
+                	{"Chat", 506, 20, 232, 220, 218}, 
 					{"Log Kills in Chat", "Checkbox", false, 78}, 
 					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Chat Spam:", "Selection", "Off", {"Off", "Advertising 1", "Advertising 2", "Advertising 3", "Nazi 1", "Nazi 2", "Nazi 3", "Arabic Spam", "Hebrew Spam", "Offensive Spam", "Insult Spam", "Message Spam", "N-Word Spam", "N-WORD SPAM", "'H' Spam", "Clear Chat", "OOC Clear Chat"}, 92}, 
@@ -363,85 +363,67 @@ local options = {
         }, 
 		["Adjustments"] = {
 				{
-          			{"Main Text Color", 16, 20, 232, 105, 218}, 
+          			{"Main Text Color", 16, 20, 232, 105, 88}, 
           			{"Red:", "SliderOld", 0, 255, 92}, 
 					{"Green:", "SliderOld", 205, 255, 92}, 
 					{"Blue:", "SliderOld", 255, 255, 92}, 
           		}, 
 				{
-					{"Menu Text Color", 16, 140, 232, 105, 218}, 
+					{"Menu Text Color", 16, 140, 232, 105, 88}, 
 					{"Red:", "SliderOld", 255, 255, 92}, 
 					{"Green:", "SliderOld", 255, 255, 92}, 
 					{"Blue:", "SliderOld", 255, 255, 92}, 
 				}, 
 				{
-          			{"Background Menu Color", 16, 260, 232, 105, 218}, 
+          			{"Background Menu Color", 16, 260, 232, 105, 88}, 
           			{"Red:", "SliderOld", 30, 255, 92}, 
 					{"Green:", "SliderOld", 30, 255, 92}, 
 					{"Blue:", "SliderOld", 45, 255, 92}, 
           		}, 
 				{
-					{"Border Color", 16, 380, 232, 105, 218}, 
+					{"Border Color", 16, 380, 232, 105, 88}, 
 					{"Red:", "SliderOld", 0, 255, 92}, 
 					{"Green:", "SliderOld", 155, 255, 92}, 
 					{"Blue:", "SliderOld", 255, 255, 92}, 
                 }, 
 				{
-					{"Team Visuals Color", 60, 140, 250, 105, 218}, 
+					{"Viewmodel Color", 16, 500, 232, 105, 88}, 
+					{"Red:", "SliderOld", 0, 255, 92}, 
+					{"Green:", "SliderOld", 235, 255, 92}, 
+					{"Blue:", "SliderOld", 255, 255, 92}, 
+                }, 
+				{
+					{"Crosshair Color", 16, 620, 232, 105, 88}, 
+					{"Red:", "SliderOld", 0, 255, 92}, 
+					{"Green:", "SliderOld", 235, 255, 92}, 
+					{"Blue:", "SliderOld", 255, 255, 92}, 
+                }, 
+				{
+					{"Team Visuals Color", 261, 20, 232, 105, 88}, 
 					{"Red:", "SliderOld", 255, 255, 92}, 
 					{"Green:", "SliderOld", 255, 255, 92}, 
 					{"Blue:", "SliderOld", 0, 255, 92}, 
                 }, 
 				{
-					{"Enemy Visuals Color", 321, 140, 205, 105, 218}, 
+					{"Enemy Visuals Color", 261, 140, 232, 105, 88}, 
 					{"Red:", "SliderOld", 255, 255, 92}, 
 					{"Green:", "SliderOld", 125, 255, 92}, 
 					{"Blue:", "SliderOld", 255, 255, 92}, 
                 }, 
 				{
-					{"Priority Targets Color", 535, 140, 245, 105, 218}, 
+					{"Priority Targets Color", 261, 260, 232, 105, 88}, 
 					{"Red:", "SliderOld", 255, 255, 92}, 
 					{"Green:", "SliderOld", 0, 255, 92}, 
 					{"Blue:", "SliderOld", 100, 255, 92}, 
                 }, 
 				{
-					{"Ignored Targets Color", 790, 140, 250, 105, 218}, 
+					{"Ignored Targets Color", 261, 380, 232, 105, 88}, 
 					{"Red:", "SliderOld", 175, 255, 92}, 
 					{"Green:", "SliderOld", 175, 255, 92}, 
 					{"Blue:", "SliderOld", 175, 255, 92}, 
                 }, 
 				{
-					{"Misc Visuals Color", 60, 260, 250, 105, 218}, 
-					{"Red:", "SliderOld", 0, 255, 92}, 
-					{"Green:", "SliderOld", 255, 255, 92}, 
-					{"Blue:", "SliderOld", 255, 255, 92}, 
-                }, 
-				{
-					{"Team Chams Color", 321, 260, 205, 105, 218}, 
-					{"Red:", "SliderOld", 255, 255, 92}, 
-					{"Green:", "SliderOld", 215, 255, 92}, 
-					{"Blue:", "SliderOld", 0, 255, 92}, 
-                }, 
-				{
-					{"Enemy Chams Color", 535, 260, 245, 105, 218}, 
-					{"Red:", "SliderOld", 255, 255, 92}, 
-					{"Green:", "SliderOld", 70, 255, 92}, 
-					{"Blue:", "SliderOld", 255, 255, 92}, 
-                }, 
-				{
-					{"Crosshair Color", 790, 260, 250, 105, 218}, 
-					{"Red:", "SliderOld", 0, 255, 92}, 
-					{"Green:", "SliderOld", 235, 255, 92}, 
-					{"Blue:", "SliderOld", 255, 255, 92}, 
-                }, 
-				{
-					{"Viewmodel Color", 60, 380, 250, 105, 218}, 
-					{"Red:", "SliderOld", 0, 255, 92}, 
-					{"Green:", "SliderOld", 235, 255, 92}, 
-					{"Blue:", "SliderOld", 255, 255, 92}, 
-                }, 
-				{
-					{"Others", 321, 380, 205, 157, 218}, 
+					{"Others", 261, 500, 232, 157, 88}, 
 					{"T Opacity:", "SliderOld", 255, 255, 92}, 
 					{"B Opacity:", "SliderOld", 255, 255, 92}, 
 					{"BG Opacity:", "SliderOld", 255, 255, 92}, 
@@ -449,7 +431,25 @@ local options = {
 					{"Roundness:", "SliderOld", 57, 67, 92}, 
                 }, 
 				{
-					{"Window Positions", 535, 380, 245, 157, 218}, 
+					{"Misc Visuals Color", 506, 20, 232, 105, 88}, 
+					{"Red:", "SliderOld", 0, 255, 92}, 
+					{"Green:", "SliderOld", 255, 255, 92}, 
+					{"Blue:", "SliderOld", 255, 255, 92}, 
+                }, 
+				{
+					{"Team Chams Color", 506, 140, 232, 105, 88}, 
+					{"Red:", "SliderOld", 255, 255, 92}, 
+					{"Green:", "SliderOld", 215, 255, 92}, 
+					{"Blue:", "SliderOld", 0, 255, 92}, 
+                }, 
+				{
+					{"Enemy Chams Color", 506, 260, 232, 105, 88}, 
+					{"Red:", "SliderOld", 255, 255, 92}, 
+					{"Green:", "SliderOld", 70, 255, 92}, 
+					{"Blue:", "SliderOld", 255, 255, 92}, 
+                }, 
+				{
+					{"Window Positions", 506, 380, 232, 157, 88}, 
 					{"Spectators X:", "SliderOld", 12, 2000, 92}, 
 					{"Spectators Y:", "SliderOld", 12, 2000, 92}, 
 					{"Radar X:", "SliderOld", 225, 2000, 92}, 
@@ -457,7 +457,7 @@ local options = {
 					{"Roundness:", "SliderOld", 16, 42, 92}, 
                 }, 
 				{
-					{"List Positions", 790, 380, 250, 157, 218}, 
+					{"List Positions", 506, 553, 232, 157, 88}, 
 					{"Custom Status X:", "SliderOld", 17, 2000, 92}, 
 					{"Custom Status Y:", "SliderOld", 250, 2000, 92}, 
 					{"Players List X:", "SliderOld", 17, 2000, 92}, 
@@ -2758,7 +2758,7 @@ local function Priority(v)
 end
 
 local function PlayerList()
-	local pos_x, pos_y = ScrW() / 1.26, ScrH() / 5.5
+	local pos_x, pos_y = ScrW() / 1.41, ScrH() / 7.2
 	local number = 1
 	local offset = 14 + gInt("Miscellaneous", "Priority List", "List Spacing:")
 	surface.SetDrawColor(maintextcol.r, maintextcol.g, maintextcol.b, 100)
@@ -5618,16 +5618,16 @@ hook.Add("PreDrawOpaqueRenderables", "Hook23", function()
 			local pitch = v:EyeAngles().x
 			local yaw = v:EyeAngles().y
 			local roll = 0
-			if gOption("Hack vs. Hack", "Resolver", "X-Axis:") ~= "Off" then
-				if gOption("Hack vs. Hack", "Resolver", "X-Axis:") == "Down" then
+			if gOption("Hack vs. Hack", "Resolver", "Y-Axis:") ~= "Off" then
+				if gOption("Hack vs. Hack", "Resolver", "Y-Axis:") == "Down" then
 					pitch = 90
-				elseif gOption("Hack vs. Hack", "Resolver", "X-Axis:") == "Up" then
+				elseif gOption("Hack vs. Hack", "Resolver", "Y-Axis:") == "Up" then
 					pitch = - 90
-				elseif gOption("Hack vs. Hack", "Resolver", "X-Axis:") == "Center" then
+				elseif gOption("Hack vs. Hack", "Resolver", "Y-Axis:") == "Center" then
 					pitch = 0
-				elseif gOption("Hack vs. Hack", "Resolver", "X-Axis:") == "Invert" then
+				elseif gOption("Hack vs. Hack", "Resolver", "Y-Axis:") == "Invert" then
 					pitch = - pitch
-				elseif gOption("Hack vs. Hack", "Resolver", "X-Axis:") == "Random" then
+				elseif gOption("Hack vs. Hack", "Resolver", "Y-Axis:") == "Random" then
 					pitch = math.random( - 90, 90)
 				else
 					if pitch <= 20 and pitch >= - 10 then
@@ -5635,14 +5635,14 @@ hook.Add("PreDrawOpaqueRenderables", "Hook23", function()
 					end
 				end
 			end
-			if gOption("Hack vs. Hack", "Resolver", "Y-Axis:") ~= "Off" then
-				if gOption("Hack vs. Hack", "Resolver", "Y-Axis:") == "Left" then
+			if gOption("Hack vs. Hack", "Resolver", "X-Axis:") ~= "Off" then
+				if gOption("Hack vs. Hack", "Resolver", "X-Axis:") == "Left" then
 					yaw = yaw + 90
-				elseif gOption("Hack vs. Hack", "Resolver", "Y-Axis:") == "Right" then
+				elseif gOption("Hack vs. Hack", "Resolver", "X-Axis:") == "Right" then
 					yaw = yaw - 90
-				elseif gOption("Hack vs. Hack", "Resolver", "Y-Axis:") == "Invert" then
+				elseif gOption("Hack vs. Hack", "Resolver", "X-Axis:") == "Invert" then
 					yaw = yaw + 180
-				elseif gOption("Hack vs. Hack", "Resolver", "Y-Axis:") == "Random" then
+				elseif gOption("Hack vs. Hack", "Resolver", "X-Axis:") == "Random" then
 					yaw = math.random( - 180, 180)
 				else
 					roll = v:EyeAngles().z
