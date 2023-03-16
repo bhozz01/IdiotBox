@@ -1038,7 +1038,7 @@ local function DrawOptions(self, w, h)
 			end
 			visible[v] = not nb
 		end
-		surface.SetFont("MainFont")
+		surface.SetFont("MenuFont")
 		surface.SetTextColor(maintextcol.r, maintextcol.g, maintextcol.b, 255)
 		local tw, th = surface.GetTextSize(v)
 		surface.SetTextPos(5 + maxx + sizeper / 2 - tw / 2, 31 + 15 - th / 2)
