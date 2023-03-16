@@ -64,13 +64,7 @@ local options = {
 					{"No Black Screens", "Checkbox", false, 78}, 
 				}, 
 				{
-					{"Panic Mode", 506, 20, 232, 100, 218}, 
-					{"Enabled", "Checkbox", false, 78}, 
-					{"Mode:", "Selection", "Disable All", {"Disable Aimbot", "Disable Anti-Aim", "Disable All"}, 92}, 
-					{""}, 
-                }, 
-				{
-          			{"Menus", 506, 134, 232, 175, 218}, 
+          			{"Menus", 261, 20, 232, 175, 218}, 
 					{"Entity Menu", "Button", "", 92}, 
 					{"Plugin Loader", "Button", "", 92}, 
 					{"Menu Style:", "Selection", "Borders", {"Borders", "Borderless"}, 92}, 
@@ -79,7 +73,7 @@ local options = {
 					{""}, 
           		}, 
 				{
-          			{"Configurations", 506, 323, 232, 175, 218}, 
+          			{"Configurations", 261, 209, 232, 175, 218}, 
 					{"Automatically Save", "Checkbox", false, 78}, 
 					{"Save Configuration", "Button", "", 92}, 
 					{"Load Configuration", "Button", "", 92}, 
@@ -88,7 +82,13 @@ local options = {
 					{""}, 
           		}, 
 				{
-          			{"Others", 506, 513, 232, 130, 218}, 
+					{"Panic Mode", 506, 20, 232, 100, 218}, 
+					{"Enabled", "Checkbox", false, 78}, 
+					{"Mode:", "Selection", "Disable All", {"Disable Aimbot", "Disable Anti-Aim", "Disable All"}, 92}, 
+					{""}, 
+                }, 
+				{
+          			{"Others", 506, 133, 232, 130, 218}, 
 					{"Apply custom name", "Checkbox", false, 78}, 
 					{"Feature Tooltips", "Checkbox", true, 78}, -- Enabled by default
 					{"Print Changelog", "Button", "", 92}, 
@@ -196,7 +196,7 @@ local options = {
 					{""}, 
                 }, 
 				{
-					{"Resolver", 506, 20, 232, 200, 218}, 
+					{"Resolver", 261, 20, 232, 200, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"X-Axis:", "Selection", "Off", {"Off", "Left", "Right", "Invert", "Random", "Auto"}, 92}, 
@@ -206,7 +206,7 @@ local options = {
 					{"Emote Resolver", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Fake Lag", 506, 234, 232, 130, 218}, 
+					{"Fake Lag", 506, 20, 232, 130, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Disable on Attack", "Checkbox", false, 78}, 
 					{"Lag Factor:", "Slider", 14, 14, 92}, 
@@ -241,6 +241,33 @@ local options = {
 					{"Steam ID", "Checkbox", false, 78}, 
 					{"Ping", "Checkbox", false, 78}, 
 					{"DarkRP Money", "Checkbox", false, 78}, 
+                }, 
+				{
+                	{"Point of View", 261, 20, 232, 225, 218}, 
+					{"Custom FoV", "Checkbox", false, 78}, 
+					{"FoV Value:", "Slider", 110, 360, 92}, 
+					{""}, 
+					{"Thirdperson", "Checkbox", false, 78}, 
+					{"Thirdperson Range:", "Slider", 15, 100, 92}, 
+					{""}, 
+					{"Thirdperson FoV Value:", "Slider", 110, 360, 92}, 
+					{""}, 
+                }, 
+				{
+					{"Viewmodel", 261, 258, 232, 165, 218}, 
+					{"Viewmodel Chams:", "Selection", "Off", {"Off", "Normal", "Rainbow"}, 92}, 
+					{""}, 
+					{"Viewmodel Wireframe:", "Selection", "Off", {"Off", "Normal", "Rainbow"}, 92}, 
+					{""}, 
+					{"No Viewmodel", "Checkbox", false, 78}, 
+					{"No Hands", "Checkbox", false, 78}, 
+                }, 
+				{
+					{"Textures", 261, 437, 232, 120, 218}, 
+					{"Transparent Walls", "Checkbox", false, 78}, 
+					{"No Sky", "Checkbox", false, 78}, 
+					{"Bright Mode", "Checkbox", false, 78}, 
+					{"Dark Mode", "Checkbox", false, 78}, 
                 }, 
                 {
 					{"Miscellaneous", 506, 20, 232, 680, 218}, 
@@ -291,54 +318,7 @@ local options = {
 					{""}, 
                 }, 
 				{
-					{"Sounds", 16, 370, 232, 192, 218}, 
-					{"Hitsounds:", "Selection", "Off", {"Off", "Default", "Headshot 1", "Headshot 2", "Metal", "Blip", "Eggcrack", "Balloon Pop"}, 92}, 
-					{""}, 
-					{"Killsounds:", "Selection", "Off", {"Off", "Default", "Headshot 1", "Headshot 2", "Metal", "Blip", "Eggcrack", "Balloon Pop"}, 92}, 
-					{""}, 
-					{"Music Player:", "Selection", "Off", {"Off", "Rust", "Resonance", "Daisuke", "A Burning M...", "Libet's Delay", "Lullaby Of T...", "Erectin' a River", "Fleeting Love", "Malo Tebya", "Vermilion", "Gravity", "Remorse", "Hold", "Green Valleys", "FP3", "Random"}, 92}, 
-					{""}, 
-					{"Reset Sounds", "Checkbox", false, 78}, 
-                }, 
-				{
-					{"Textures", 16, 577, 232, 120, 218}, 
-					{"Transparent Walls", "Checkbox", false, 78}, 
-					{"No Sky", "Checkbox", false, 78}, 
-					{"Bright Mode", "Checkbox", false, 78}, 
-					{"Dark Mode", "Checkbox", false, 78}, 
-                }, 
-				{
-                	{"Point of View", 261, 20, 232, 225, 218}, 
-					{"Custom FoV", "Checkbox", false, 78}, 
-					{"FoV Value:", "Slider", 110, 360, 92}, 
-					{""}, 
-					{"Thirdperson", "Checkbox", false, 78}, 
-					{"Thirdperson Range:", "Slider", 15, 100, 92}, 
-					{""}, 
-					{"Thirdperson FoV Value:", "Slider", 110, 360, 92}, 
-					{""}, 
-                }, 
-				{
-					{"Viewmodel", 261, 258, 232, 165, 218}, 
-					{"Viewmodel Chams:", "Selection", "Off", {"Off", "Normal", "Rainbow"}, 92}, 
-					{""}, 
-					{"Viewmodel Wireframe:", "Selection", "Off", {"Off", "Normal", "Rainbow"}, 92}, 
-					{""}, 
-					{"No Viewmodel", "Checkbox", false, 78}, 
-					{"No Hands", "Checkbox", false, 78}, 
-                }, 
-				{
-					{"Free Roaming", 261, 437, 232, 200, 218}, 
-					{"Enabled", "Checkbox", false, 78}, 
-					{"Toggle Key:", "Toggle", 0, 92, 0}, 
-					{""}, 
-					{"Speed:", "Slider", 30, 100, 92}, 
-					{""}, 
-					{"FoV Value:", "Slider", 110, 360, 92}, 
-					{""}, 
-                }, 
-				{
-					{"Movement", 506, 20, 232, 240, 218}, 
+					{"Movement", 261, 20, 232, 240, 218}, 
 					{"Bunny Hop", "Checkbox", false, 78}, 
 					{"Auto Strafe:", "Selection", "Off", {"Off", "Legit", "Rage", "Circle", "Directional"}, 92}, -- Directional strafing is a 'work-in-progress' feature
 					{""}, 
@@ -350,7 +330,17 @@ local options = {
 					{"Fake Crouch", "Checkbox", false, 78}, 
                 }, 
 				{
-                	{"Chat", 506, 273, 232, 220, 218}, 
+					{"Free Roaming", 261, 274, 232, 200, 218}, 
+					{"Enabled", "Checkbox", false, 78}, 
+					{"Toggle Key:", "Toggle", 0, 92, 0}, 
+					{""}, 
+					{"Speed:", "Slider", 30, 100, 92}, 
+					{""}, 
+					{"FoV Value:", "Slider", 110, 360, 92}, 
+					{""}, 
+                }, 
+				{
+                	{"Chat", 506, 20, 235, 220, 218}, 
 					{"Log Kills in Chat", "Checkbox", false, 78}, 
 					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Chat Spam:", "Selection", "Off", {"Off", "Advertising 1", "Advertising 2", "Advertising 3", "Nazi 1", "Nazi 2", "Nazi 3", "Arabic Spam", "Hebrew Spam", "Offensive Spam", "Insult Spam", "Message Spam", "N-Word Spam", "N-WORD SPAM", "'H' Spam", "Clear Chat", "OOC Clear Chat"}, 92}, 
@@ -359,6 +349,16 @@ local options = {
 					{""}, 
 					{"Reply Spam:", "Selection", "Off", {"Off", "shut up", "ok", "who", "nobody cares", "where", "stop spamming", "what", "yea", "lol", "english please", "lmao", "shit", "fuck", "Random", "Disconnect Spam", "Cheater Callout", "Copy Messages"}, 92}, 
 					{""}, 
+                }, 
+				{
+					{"Sounds", 506, 254, 232, 192, 218}, 
+					{"Hitsounds:", "Selection", "Off", {"Off", "Default", "Headshot 1", "Headshot 2", "Metal", "Blip", "Eggcrack", "Balloon Pop"}, 92}, 
+					{""}, 
+					{"Killsounds:", "Selection", "Off", {"Off", "Default", "Headshot 1", "Headshot 2", "Metal", "Blip", "Eggcrack", "Balloon Pop"}, 92}, 
+					{""}, 
+					{"Music Player:", "Selection", "Off", {"Off", "Rust", "Resonance", "Daisuke", "A Burning M...", "Libet's Delay", "Lullaby Of T...", "Erectin' a River", "Fleeting Love", "Malo Tebya", "Vermilion", "Gravity", "Remorse", "Hold", "Green Valleys", "FP3", "Random"}, 92}, 
+					{""}, 
+					{"Reset Sounds", "Checkbox", false, 78}, 
                 }, 
         }, 
 		["Adjustments"] = {
@@ -2334,7 +2334,7 @@ local function Menu()
 end
 
 local function FixTools()
-	if gBool("Hack vs. Hack", "Anti-Aim", "Enabled") or gBool("Miscellaneous", "Point of View", "Thirdperson") or not me:Alive() or me:Health() < 1 then
+	if gBool("Hack vs. Hack", "Anti-Aim", "Enabled") or gBool("Visuals", "Point of View", "Thirdperson") or not me:Alive() or me:Health() < 1 then
 		return false
 	end
 	if me:GetActiveWeapon():IsValid() and (me:GetActiveWeapon():GetClass() == "weapon_physgun" or me:GetActiveWeapon():GetClass() == "gmod_camera") then
@@ -2891,7 +2891,7 @@ end
 local fake = GetRenderTarget("fake"..os.time(), ScrW(), ScrH())
 
 hook.Add("RenderScene", "Hook0", function(origin, angle, fov)
-	if gBool("Miscellaneous", "Textures", "Dark Mode") then
+	if gBool("Visuals", "Textures", "Dark Mode") then
 		for k, v in pairs(game.GetWorld():GetMaterials()) do
 		Material(v):SetVector("$color", Vector(0.05, 0.05, 0.05))
 		end
@@ -2904,7 +2904,7 @@ hook.Add("RenderScene", "Hook0", function(origin, angle, fov)
 		render.SuppressEngineLighting(false)
 		render.ResetModelLighting(1, 1, 1)
 	end
-	render.SetLightingMode(gBool("Miscellaneous", "Textures", "Bright Mode") and 1 or 0)
+	render.SetLightingMode(gBool("Visuals", "Textures", "Bright Mode") and 1 or 0)
 	local view = {
 		x = 0,
 		y = 0,
@@ -3296,7 +3296,7 @@ local function TransparentWalls()
     local mats = em.GetMaterials(game.GetWorld())
         for k, v in next, mats do
             local material = Material(v)
-            if (!gBool("Miscellaneous", "Textures", "Transparent Walls")) then
+            if (!gBool("Visuals", "Textures", "Transparent Walls")) then
                 im.SetFloat(material, "$alpha", 1)
 			continue
         end
@@ -3853,33 +3853,33 @@ hook.Add("Think", "Hook8", function()
 end)
 
 hook.Add("PreDrawSkyBox", "Hook9", function()
-	if (!gBool("Miscellaneous", "Textures", "No Sky")) then return end
+	if (!gBool("Visuals", "Textures", "No Sky")) then return end
 		render.Clear(0, 0, 0, 255)
 	return true
 end)
 
 hook.Add("PreDrawViewModel", "Hook10", function()
-	if (gBool("Miscellaneous", "Point of View", "Thirdperson")) then return end
+	if (gBool("Visuals", "Point of View", "Thirdperson")) then return end
 	local rainbow = HSVToColor(RealTime() * 45 % 360, 1, 1)
 	local WepMat1 = Material("models/wireframe")
-	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Wireframe:") == "Normal") then
+	if (gOption("Visuals", "Viewmodel", "Viewmodel Wireframe:") == "Normal") then
 	render.MaterialOverride(WepMat1)
 	render.SetColorModulation(viewmodelcol.r / 255, viewmodelcol.g / 255, viewmodelcol.b / 255)
 	end
-	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Wireframe:") == "Rainbow") then
+	if (gOption("Visuals", "Viewmodel", "Viewmodel Wireframe:") == "Rainbow") then
 	render.MaterialOverride(WepMat1)
 	render.SetColorModulation(rainbow.r / 255, rainbow.g / 255, rainbow.b / 255)
 	end
 	local WepMat2 = Material("models/debug/debugwhite")
-	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Chams:") == "Normal") then
+	if (gOption("Visuals", "Viewmodel", "Viewmodel Chams:") == "Normal") then
 	render.MaterialOverride(WepMat2)
 	render.SetColorModulation(viewmodelcol.r / 255, viewmodelcol.g / 255, viewmodelcol.b / 255)
 	end
-	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Chams:") == "Rainbow") then
+	if (gOption("Visuals", "Viewmodel", "Viewmodel Chams:") == "Rainbow") then
 	render.MaterialOverride(WepMat2)
 	render.SetColorModulation(rainbow.r / 255, rainbow.g / 255, rainbow.b / 255)
 	end
-	if (gBool("Miscellaneous", "Viewmodel", "No Viewmodel") or gBool("Miscellaneous", "Point of View", "Thirdperson")) then
+	if (gBool("Visuals", "Viewmodel", "No Viewmodel") or gBool("Visuals", "Point of View", "Thirdperson")) then
 	return true
 	else
 	return false
@@ -3887,7 +3887,7 @@ hook.Add("PreDrawViewModel", "Hook10", function()
 end)
 
 hook.Add("PreDrawPlayerHands", "Hook11", function()
-	if (gBool("Miscellaneous", "Viewmodel", "No Hands") or gBool("Miscellaneous", "Point of View", "Thirdperson")) then
+	if (gBool("Visuals", "Viewmodel", "No Hands") or gBool("Visuals", "Point of View", "Thirdperson")) then
 		return true
 	else
 		return false
@@ -3931,7 +3931,7 @@ local function Visuals(v)
 	end
 	if gOption("Visuals", "Wallhack", "Box:") == "3D Box" then
 	for k, v in pairs(player.GetAll()) do
-	if (!(gBool("Miscellaneous", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID()))) then continue end
+	if (!(gBool("Visuals", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID()))) then continue end
 	if v:IsValid() and v:Alive() and v:Health() > 0 then
 		local eye = v:EyeAngles()
 		local min, max = v:WorldSpaceAABB()
@@ -4213,7 +4213,7 @@ local function Visuals(v)
 	idiot.cam.End3D()
 	if (gBool("Visuals", "Wallhack", "Hitbox")) then
 		for k, v in next, player.GetAll() do
-		if (!(gBool("Miscellaneous", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID()))) then continue end
+		if (!(gBool("Visuals", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignore_list, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(priority_list, v:UniqueID()))) then continue end
 		if v:IsValid() and v:Alive() and v:Health() > 0 then
 			for i = 0, v:GetHitBoxGroupCount() - 1 do
 			for _i = 0, v:GetHitBoxCount(i) - 1 do
@@ -4254,7 +4254,7 @@ end
 hook.Add("RenderScreenspaceEffects", "Hook12", function()
 	if not gBool("Visuals", "Wallhack", "Enabled") or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or menuopen then return end
 		for k, v in next, player.GetAll() do
-		if (not em.IsValid(v) or em.Health(v) < 1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (!(gBool("Miscellaneous", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not WallhackFilter(v) or not EnemyWallhackFilter(v) then continue end
+		if (not em.IsValid(v) or em.Health(v) < 1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (!(gBool("Visuals", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not WallhackFilter(v) or not EnemyWallhackFilter(v) then continue end
 		Chams(v)
 	end
 end)
@@ -4312,7 +4312,7 @@ end
 hook.Add("DrawOverlay", "Hook13", function()
 	if gBool("Visuals", "Wallhack", "Enabled") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) && !menuopen then
 		for k, v in next, player.GetAll() do
-		if ((!(gBool("Miscellaneous", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or not em.IsValid(v) or em.Health(v) < 0.1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not WallhackFilter(v) or not EnemyWallhackFilter(v) then continue end
+		if ((!(gBool("Visuals", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or not em.IsValid(v) or em.Health(v) < 0.1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not WallhackFilter(v) or not EnemyWallhackFilter(v) then continue end
 			Visuals(v)
 		end
 	end
@@ -4326,7 +4326,7 @@ hook.Add("DrawOverlay", "Hook13", function()
 		ShowNPCs()
 	end
 	for k, v in next, ents.GetAll() do
-	if (v:IsDormant() and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or not v:IsValid() or not WallhackFilter(v) or not OnScreen(v) or (!(gBool("Miscellaneous", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) then continue end
+	if (v:IsDormant() and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or not v:IsValid() or not WallhackFilter(v) or not OnScreen(v) or (!(gBool("Visuals", "Point of View", "Thirdperson") and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) then continue end
 	if gBool("Visuals", "Miscellaneous", "Show Entities") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) && !menuopen then
 	if table.HasValue(drawn_ents, v:GetClass()) and v:IsValid() and v:GetPos():Distance(me:GetPos()) > 40 then
 				local pos = em.GetPos(v) + Vector(0, 0, 0)
@@ -5259,7 +5259,7 @@ local function AntiAim(pCmd)
 	if (gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me || gBool("Main Menu", "Panic Mode", "Enabled") && gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Anti-Aim" && IsValid(v:GetObserverTarget()) and v:GetObserverTarget() == me) then return end
 	end
 	local wep = pm.GetActiveWeapon(me)
-	if (gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP || me:Team() == TEAM_SPECTATOR || triggering == true || (cm.CommandNumber(pCmd) == 0 && !gBool("Miscellaneous", "Point of View", "Thirdperson")) || cm.KeyDown(pCmd, 1) || gBool("Miscellaneous", "Point of View", "Custom FoV") && gBool("Miscellaneous", "Free Roaming", "Enabled") && gKey("Miscellaneous", "Free Roaming", "Toggle Key:") && !gBool("Miscellaneous", "Point of View", "Thirdperson") || me:WaterLevel() > 1 || input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable in 'Use' Toggle") && !me:IsTyping() || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aim Assist", "Aimbot", "Enabled") && (gInt("Aim Assist", "Aimbot", "Aim FoV Value:") > 0 or gInt("Aim Assist", "Aimbot", "Aim Smoothness:") > 0) || gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" && idiot.engine.ActiveGamemode() == "terrortown") then return end
+	if (gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP || me:Team() == TEAM_SPECTATOR || triggering == true || (cm.CommandNumber(pCmd) == 0 && !gBool("Visuals", "Point of View", "Thirdperson")) || cm.KeyDown(pCmd, 1) || gBool("Visuals", "Point of View", "Custom FoV") && gBool("Miscellaneous", "Free Roaming", "Enabled") && gKey("Miscellaneous", "Free Roaming", "Toggle Key:") && !gBool("Visuals", "Point of View", "Thirdperson") || me:WaterLevel() > 1 || input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable in 'Use' Toggle") && !me:IsTyping() || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aim Assist", "Aimbot", "Enabled") && (gInt("Aim Assist", "Aimbot", "Aim FoV Value:") > 0 or gInt("Aim Assist", "Aimbot", "Aim Smoothness:") > 0) || gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" && idiot.engine.ActiveGamemode() == "terrortown") then return end
 	if gOption("Hack vs. Hack", "Anti-Aim", "Anti-Aim Direction:") == "Manual Switch" then
 	if gKey("Hack vs. Hack", "Anti-Aim", "Switch Key:") and not manualpressed then
 	manualpressed = true
@@ -5320,9 +5320,9 @@ local prop_delay = 0
 
 local function PropKill(pCmd)
 	if menuopen or me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) or not me:Alive() or me:Health() < 1 then return end
-	if (cm.CommandNumber(pCmd) == 0 && !gBool("Miscellaneous", "Point of View", "Thirdperson")) then
+	if (cm.CommandNumber(pCmd) == 0 && !gBool("Visuals", "Point of View", "Thirdperson")) then
 		return
-	elseif (cm.CommandNumber(pCmd) == 0 && gBool("Miscellaneous", "Point of View", "Thirdperson")) then
+	elseif (cm.CommandNumber(pCmd) == 0 && gBool("Visuals", "Point of View", "Thirdperson")) then
 		return
 	end
 	if gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:") then
@@ -5446,19 +5446,19 @@ hook.Add("CalcView", "Hook17", function(me, pos, ang, fov)
 			view.fov = gInt("Miscellaneous", "Free Roaming", "FoV Value:")
 			view.drawviewer = true
 		end
-		if gBool("Miscellaneous", "Point of View", "Custom FoV") and not gBool("Miscellaneous", "Point of View", "Thirdperson") and not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:")) and (me:Alive() or me:Health() > 0) then
+		if gBool("Visuals", "Point of View", "Custom FoV") and not gBool("Visuals", "Point of View", "Thirdperson") and not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:")) and (me:Alive() or me:Health() > 0) then
 			view.origin = pos
 			view.angles = angles
-			view.fov = gInt("Miscellaneous", "Point of View", "FoV Value:")
+			view.fov = gInt("Visuals", "Point of View", "FoV Value:")
 		end
 		if gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil") and (me:Alive() or me:Health() > 0) and me:GetMoveType() ~= 10 and me:GetObserverTarget() == nil then
 			view.origin = me:EyePos()
 			view.angles = me:EyeAngles()
 		end
-		if gBool("Miscellaneous", "Point of View", "Thirdperson") and not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:")) and (me:Alive() or me:Health() > 0) then
+		if gBool("Visuals", "Point of View", "Thirdperson") and not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:")) and (me:Alive() or me:Health() > 0) then
 			view.angles = GetAngle(fa)
-			view.origin = gBool("Miscellaneous", "Point of View", "Thirdperson") and pos + am.Forward(fa) * (gInt("Miscellaneous", "Point of View", "Thirdperson Range:") * - 10)
-			view.fov = gInt("Miscellaneous", "Point of View", "Thirdperson FoV Value:")
+			view.origin = gBool("Visuals", "Point of View", "Thirdperson") and pos + am.Forward(fa) * (gInt("Visuals", "Point of View", "Thirdperson Range:") * - 10)
+			view.fov = gInt("Visuals", "Point of View", "Thirdperson FoV Value:")
 			return view
 		end
 		if not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:")) and (me:Alive() or me:Health() > 0) then
@@ -5502,7 +5502,7 @@ hook.Add("AdjustMouseSensitivity", "Hook18", function()
 end)
 
 hook.Add("ShouldDrawLocalPlayer", "Hook19", function()
-	if not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:")) then return(gBool("Miscellaneous", "Point of View", "Thirdperson")) end
+	if not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:")) then return(gBool("Visuals", "Point of View", "Thirdperson")) end
 end)
 
 hook.Add("CreateMove", "Hook20", function(pCmd)
