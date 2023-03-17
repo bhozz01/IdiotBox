@@ -1366,6 +1366,7 @@ local function DrawSelect(self, w, h, var, maxy, posx, posy, dist)
 		drawlast = function()
 			local maxy2 = 14
 			for k, v in next, var[4] do
+				surface.SetFont("MenuFont2")
 				surface.SetTextColor(menutextcol.r - 65, menutextcol.g - 65, menutextcol.b - 50, gInt("Adjustments", "Others", "T Opacity:"))
 				surface.SetDrawColor(bgmenucol.r + 75, bgmenucol.g + 75, bgmenucol.b + 75, 222)
 				surface.DrawRect(posx - 191 + dist, 81 + posy + maxy + maxy2, size - 3, 14)
