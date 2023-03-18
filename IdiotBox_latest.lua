@@ -1,4 +1,4 @@
-  //----IdiotBox v6.9.b1----//
+  //----IdiotBox v6.9.b2----//
  //--------By Phizz--------//
 //------------------------//
 
@@ -123,7 +123,7 @@ local options = {
 					{"Auto Crouch", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Aim Priorities", 261, 20, 232, 710, 218}, 
+					{"Aim Priorities", 261, 20, 232, 708, 218}, 
 					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Disable in Noclip", "Checkbox", false, 78}, 
 					{"Hitbox:", "Selection", "Head", {"Head", "Body"}, 92}, 
@@ -318,19 +318,20 @@ local options = {
 					{""}, 
                 }, 
 				{
-					{"Movement", 261, 20, 232, 240, 218}, 
+					{"Movement", 261, 20, 232, 270, 218}, 
 					{"Bunny Hop", "Checkbox", false, 78}, 
-					{"Auto Strafe:", "Selection", "Off", {"Off", "Legit", "Rage", "Circle", "Directional"}, 92}, -- Directional strafing is a 'work-in-progress' feature
+					{"Auto Strafe:", "Selection", "Off", {"Off", "Legit", "Rage", "Directional"}, 92}, -- Directional strafing is a 'work-in-progress' feature
 					{""}, 
-					{"Strafe Key:", "Toggle", 0, 92, 0}, 
+					{"Circle Strafe", "Checkbox", false, 78}, 
+					{"Circle Strafe Key:", "Toggle", 0, 92, 0}, 
 					{""}, 
-					{"Strafe Speed:", "Slider", 2, 6, 92}, 
+					{"Circle Strafe Speed:", "Slider", 2, 6, 92}, 
 					{""}, 
 					{"Air Crouch", "Checkbox", false, 78}, 
 					{"Fake Crouch", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Free Roaming", 261, 274, 232, 200, 218}, 
+					{"Free Roaming", 261, 304, 232, 205, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Toggle Key:", "Toggle", 0, 92, 0}, 
 					{""}, 
@@ -351,7 +352,7 @@ local options = {
 					{""}, 
                 }, 
 				{
-					{"Sounds", 506, 254, 232, 192, 218}, 
+					{"Sounds", 506, 254, 232, 195, 218}, 
 					{"Hitsounds:", "Selection", "Off", {"Off", "Default", "Headshot 1", "Headshot 2", "Metal", "Blip", "Eggcrack", "Balloon Pop"}, 92}, 
 					{""}, 
 					{"Killsounds:", "Selection", "Off", {"Off", "Default", "Headshot 1", "Headshot 2", "Metal", "Blip", "Eggcrack", "Balloon Pop"}, 92}, 
@@ -744,7 +745,7 @@ local function UpdateVar(men, sub, lookup, new)
 end
 
 local folder = "IdiotBox"
-local version = "6.9.b1"
+local version = "6.9.b2"
 
 if not file.IsDir(folder, "DATA") then
 	file.CreateDir(folder)
@@ -994,11 +995,11 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(40, 15 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g, maintextcol.b, 255)
 	surface.SetFont("MainFont")
-	surface.DrawText("IdiotBox v6.9.b1")
+	surface.DrawText("IdiotBox v6.9.b2")
 	surface.SetTextPos(150, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: March 16th 2023")
+	surface.DrawText("Latest build: March 18th 2023")
 	surface.SetFont("MenuFont")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -1256,7 +1257,9 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 		elseif feat == "No Hands" then
 			info = "Removes your viewmodel hands."
 		elseif feat == "Bunny Hop" then
-			info = "Jump continuously when holding your jump key. Pair with Auto Strafe to gain velocity and to be in maximum control of your directions while jumping."
+			info = "Jump continuously when holding your jump key. Pair with Auto Strafe to gain velocity and directional control."
+		elseif feat == "Circle Strafe" then
+			info = "Strafe in circles to gain maximum velocity. Must be paired with Auto Strafe in order for it to work."
 		elseif feat == "Air Crouch" then
 			info = "Spam-crouches you when jumping."
 		elseif feat == "Fake Crouch" then
@@ -1517,9 +1520,9 @@ end
 
 local function Changelog()
 	print("===========================================================\n\n")
-	print("IdiotBox v6.9.b1 bugfixes (in no particular order)")
+	print("IdiotBox v6.9.b2 bugfixes (in no particular order)")
 	print("")
-	print("Total bugfix count: ~50 bugs have been found and fixed in the v6.9.b1 update;")
+	print("Total bugfix count: ~50 bugs have been found and fixed in the v6.9.b2 update;")
 	print("\n")
 	print("- The 'readme.txt' file is finally up-to-date and only contains the important information;")
 	print("- Aim Smoothness will automatically disable itself if Silent aim is turned on;")
@@ -1549,6 +1552,7 @@ local function Changelog()
 	print("- Fixed FoV Circle not showing upon enabling;")
 	print("- Fixed skybox changing upon initializing the script;")
 	print("- Fixed Anti-Aim breaking the Radar view angles;")
+	print("- Fixed Circle Strafing spaghetti code not acting the way it should;")
 	print("- Fixed Free Roaming not working with Anti-Aim;")
 	print("- Fixed Cheater Callout clearing chat when it should not;")
 	print("- Fixed Thirdperson, Custom FoV and Free Roaming working incorrectly when the user is dead;")
@@ -1572,9 +1576,9 @@ local function Changelog()
 	print("- Removed old and unused message pop-up function;")
 	print("- Removed 'aaa' module as 'IdiotBox_alpha1.lua' was replaced by 'IdiotBox_dev.lua' and had no use.")
 	print("\n")
-	print("IdiotBox v6.9.b1 new features (in no particular order)")
+	print("IdiotBox v6.9.b2 new features (in no particular order)")
 	print("")
-	print("Total feature count: ~50 features have been added in the v6.9.b1 update;")
+	print("Total feature count: ~50 features have been added in the v6.9.b2 update;")
 	print("\n")
 	print("- Added 'Projectile Prediction' and 'Line of Sight Check' to Aimbot;")
 	print("- Added 'Emote Resolver' to Resolver;")
@@ -1587,7 +1591,7 @@ local function Changelog()
 	print("- Added 'Panic Mode', 'Entity Menu', 'Plugin Loader', 'Optimize Game', 'Feature Tooltips' and TTT/ Murder/ DarkRP specific features to Main Menu;")
 	print("- Added 'Spectators', 'Players', 'Frozen Players' and 'Enemies' to Aim Priorities;")
 	print("- Added 'Toggle Key' and 'Speed' to Free Roaming;")
-	print("- Added 'Strafe Key' and 'Fake Crouch' to Movement;")
+	print("- Added 'Circle Strafe Key' and 'Fake Crouch' to Movement;")
 	print("- Added 'Arabic Spam' and 'Hebrew Spam' to Chat Spam;")
 	print("- Added 'Priority Targets Only' to Priority List;")
 	print("- Added 'Rainbow' viewmodels to Viewmodel;")
@@ -3122,8 +3126,8 @@ local function ChatSpam()
 	local messagespam = {"GET FUCKED BY IDIOTBOX KIDDIE", "YOU SUCK SHIT LMAO", "STOP BEING SUCH A WORTHLESS CUMSTAIN AND GET IDIOTBOX NOW", "MONEY WASTER LOL", "YOU FUCKING FATASS, GET IDIOTBOX AND LOSE ALL THAT WEIGHT YOU INCEL", "ARE ALL THE GIRLS IGNORING YOU? GET IDIOTBOX AND YOU'LL BE FLOODED WITH PUSSY", "DO YOU FEEL WORTHLESS? WELL, YOU ARE LOL", "GET IDIOTBOX IF YOU WANT SOME OF THAT CLOUT", "STOP WASTING YOUR TIME ON SOUNDCLOUD BECAUSE YOU AIN'T GONNA GET NOWHERE WITH IT", "GET IDIOTBOX AND YOUR DICK WILL GROW 4 TIMES ITS SIZE", "LITTLE KID LMAO",}
 	local offensivespam = {"fuck niggers like fr", "who else here hates black people lmao", "all niggers should be locked in cages and fed bananas", "black people are some sub-human slaves imo", "i've never met an intelligent black person", "why tf are all niggers so ugly lol", "all the black dudes i've seen look like monkeys", "ooga booga black rights", "my grandpa died in ww2, he was the best german pilot", "white people are genetically superior to every othe race", "all jews can do is hide the truth, steal money and start wars",}
 	local insultspam = {" is shit at building", " is no older than 13", " looks like a 2 month old corpse", " really thinks gmod is a good game", " can't afford a better pc lmao", ", so how do you like your 40 fps?", " will definitely kill himself before his 30's ", " is a fucking virgin lmao", " is a script kiddie", " thinks his 12cm penis is big lmfao", ", how does it feel when you've never seen a naked woman in person?", ", what do you like not being able to do a single push-up?", ", tell me how it feels to be shorter than every girl you've met", " is a fatass who only spends his time in front of a monitor like an incel", "'s parents have a lower than average income", " lives under a bridge lmao", " vapes because is too afraid to smoke an actual ciggarette", ", your low self esteem really pays off you loser", ", make sure you tell me what unemployment feels like", " lives off of his parents' money", ", you're a dissapointment to your entire family, fatass", " has probably fried all of his dopamine receptors by masturbating this much",}
-	local advertise = {"IdiotBox - https://phizzofficial.wixsite.com/idiotbox4gmod/", "IdiotBox - Destroying everyone since '16.", "IdiotBox - Easy to use, free Garry's Mod cheat.", "IdiotBox - Now you can forget that negative KD's can be possible.", "IdiotBox - Beats all of your other cheats.", "IdiotBox - IdiotBox came back, and it came back with a vengeance.", "IdiotBox - Join the Discord server if you have a high IQ.", "IdiotBox - The only high-quality free cheat, out for Garry's Mod.", "IdiotBox - Best cheat, created by Phizz & more.", "IdiotBox - Always updated, never dead.", "IdiotBox - A highly reliable and optimised cheating software.", "IdiotBox - Top class, free cheat for Garry's Mod.", "IdiotBox - Makes noobs cry waves of tears since forever!", "IdiotBox - Say goodbye to the respawn room!", "IdiotBox - Download the highest quality Garry's Mod cheat for free now!", "IdiotBox - A reliable way to go!", "IdiotBox - Make Garry's Mod great again!", "IdiotBox - Visit our website for fresh Discord invite links!", "IdiotBox - Monthly bugfixes & updates. It never gets outdated!", "IdiotBox - Download IdiotBox v6.9.b1 right now!", "IdiotBox - Bug-free and fully customizable!", "IdiotBox - Join our Steam group and Discord server to stay up-to-date!", "IdiotBox - Refund all your cheats, use this better and free alternative!", "IdiotBox - Now with more features than ever!", "IdiotBox - The best Garry's Mod cheat, with 24/7 support, for free!", "IdiotBox - Bypasses most anti-cheats and screengrabbers!",}
-	local toxicadvertise = {"Get IdiotBox you fucking smelly niggers", "IdiotBox is the best fucking cheat and that is a fact", "All of you are fucking autistic for not having IdiotBox", "Why the fuck don't you get IdiotBox lol", "Stay being gay or get IdiotBox", "Your moms should know that you play grown-up games, join our Discord to prove you are not under-aged", "I have your IPs you dumb niggers, I will delete the IPs if you get IdiotBox", "You all fucking smell like shit for not using IdiotBox", "IdiotBox makes kiddos cry and piss their pants maybe and maybe shit and cum", "IdiotBox is the best free cheat in the history of the entire world so get it faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ or you're retarded", "Join our fucking Discord or else you are literally an unpriviledged niggers", "IdiotBox is a cheat for people with high IQ only, use IdiotBox to prove you're smart", "Don't wanna get fucking raped? Get IdiotBox and shit on them skids", "This is the best free paste around, no other paste is better than IdiotBox", "How the fuck are you not using IdiotBox in a shitty dying game lmfao", "IdiotBox is the best and most popular Garry's Mod cheat ever, why are you not using it lol", "May cause a bit of lag but it's worth it for the fuckton of features that it has", "You're all faggots if you don't cheat with IdiotBox", "You literally go to pride month parades if you don't use IdiotBox", "Idiotbox is the highest quality, most popular free cheat, just get it already", "Shit on all of the virgins that unironically play this game with this high-quality cheat", "Get good, get IdiotBox you fucking retards", "You're mad retarded if you are not using IdiotBox, no cap", "Own every single retard in HvH with this superior cheat now", "All of you are dumb niggers for not downloading IdiotBox and that is a fact", "You suck fat cocks in public bathrooms if you're not using IdiotBox", "Just get this god-like cheat already and rape all existing servers", "No you idiots, you can't get VAC banned for using lua scripts you absolute cretins", "IdiotBox bypasses even the most complex anti-cheats and screengrabbers, you're not getting banned anytime soon", "Just use IdiotBox to revert your sad lives and feel better about yourselves", "Phizz is a god because he made this god-like cheat called IdiotBox", "I am forced to put IdiotBox in almost every sentence and advertise in a toxic way because I'm a text in a lua script", "Why are you fucking gay? Get IdiotBox today", "The sentence above is a rhyme but the script says to put random sentences so I don't think you can see it, get IdiotBox btw", "Purchase IdiotBox now! Only for OH wait it's free", "It is highly recommended that you get IdiotBox in case of getting pwned", "You are swag and good looking, but only if you get IdiotBox", "Phizz spent so many fucking nights creating this masterpiece of a cheat so get it now or he will legit kill you", "Fuck you and get IdiotBox now lol", "IdiotBox is constantly getting updated with dope-ass features, it never gets outdated so just get it", "Have IdiotBox installed if you're mega straight and zero gay", "Whoever the fuck said lua cheats are bad deserves to die in a house fire", "You get IdiotBox, everyone else on the server gets pwned, ez as that", "Many cheats copied IdiotBox, but this is the original one, fucking copycats", "Join the fucking Discord, promise it won't hurt you faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ right this moment or I will hire a hitman to kill you", "Join the IdiotBox group at OH wait niggers got mad and mass-reported it, kys shitkids", "Nvm, Steam group is back lol get fucked you mad skid shitkids", "IdiotBox killed all of the paid cheats because it's too good", "Get IdiotBox, it's free and very good, you sacks of crying shit", "IdiotBox is the fucking G.O.A.T.", "What the fuck are you doing not using this god-like cheat lol", "This is an epic fucking cheat called IdiotBox that was created by Phizz and others, worship your new gods kiddos", "You were fed cock milk as a baby if you're not using IdiotBox and you can not prove me wrong", "IdiotBox has the dopest anti-aims and resolvers you'll ever use, you will be a HvH god", "Just please get IdiotBox already you retards, I am tired of typing these lines for fuck's sake", "Phizz will give everyone optimized IdiotBox soon so quit your shit", "IdiotBox needs no Steam group, we're too chad for one", "Our Discord was tapped at some point but IdiotBox is back and stronger than ever", "IdiotBox came back to kill silly niggers, and it came back with a vengeance", "Download Idiotbox v6.9.b1 now, you dont even know what you're missing you mongoloids", "Have I told you about IdiotBox, the best Garry's Mod cheat ever made??", "Holy shit, IdiotBox for Garry's Mod is the best cheat that I have ever used!!",}
+	local advertise = {"IdiotBox - https://phizzofficial.wixsite.com/idiotbox4gmod/", "IdiotBox - Destroying everyone since '16.", "IdiotBox - Easy to use, free Garry's Mod cheat.", "IdiotBox - Now you can forget that negative KD's can be possible.", "IdiotBox - Beats all of your other cheats.", "IdiotBox - IdiotBox came back, and it came back with a vengeance.", "IdiotBox - Join the Discord server if you have a high IQ.", "IdiotBox - The only high-quality free cheat, out for Garry's Mod.", "IdiotBox - Best cheat, created by Phizz & more.", "IdiotBox - Always updated, never dead.", "IdiotBox - A highly reliable and optimised cheating software.", "IdiotBox - Top class, free cheat for Garry's Mod.", "IdiotBox - Makes noobs cry waves of tears since forever!", "IdiotBox - Say goodbye to the respawn room!", "IdiotBox - Download the highest quality Garry's Mod cheat for free now!", "IdiotBox - A reliable way to go!", "IdiotBox - Make Garry's Mod great again!", "IdiotBox - Visit our website for fresh Discord invite links!", "IdiotBox - Monthly bugfixes & updates. It never gets outdated!", "IdiotBox - Download IdiotBox v6.9.b2 right now!", "IdiotBox - Bug-free and fully customizable!", "IdiotBox - Join our Steam group and Discord server to stay up-to-date!", "IdiotBox - Refund all your cheats, use this better and free alternative!", "IdiotBox - Now with more features than ever!", "IdiotBox - The best Garry's Mod cheat, with 24/7 support, for free!", "IdiotBox - Bypasses most anti-cheats and screengrabbers!",}
+	local toxicadvertise = {"Get IdiotBox you fucking smelly niggers", "IdiotBox is the best fucking cheat and that is a fact", "All of you are fucking autistic for not having IdiotBox", "Why the fuck don't you get IdiotBox lol", "Stay being gay or get IdiotBox", "Your moms should know that you play grown-up games, join our Discord to prove you are not under-aged", "I have your IPs you dumb niggers, I will delete the IPs if you get IdiotBox", "You all fucking smell like shit for not using IdiotBox", "IdiotBox makes kiddos cry and piss their pants maybe and maybe shit and cum", "IdiotBox is the best free cheat in the history of the entire world so get it faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ or you're retarded", "Join our fucking Discord or else you are literally an unpriviledged niggers", "IdiotBox is a cheat for people with high IQ only, use IdiotBox to prove you're smart", "Don't wanna get fucking raped? Get IdiotBox and shit on them skids", "This is the best free paste around, no other paste is better than IdiotBox", "How the fuck are you not using IdiotBox in a shitty dying game lmfao", "IdiotBox is the best and most popular Garry's Mod cheat ever, why are you not using it lol", "May cause a bit of lag but it's worth it for the fuckton of features that it has", "You're all faggots if you don't cheat with IdiotBox", "You literally go to pride month parades if you don't use IdiotBox", "Idiotbox is the highest quality, most popular free cheat, just get it already", "Shit on all of the virgins that unironically play this game with this high-quality cheat", "Get good, get IdiotBox you fucking retards", "You're mad retarded if you are not using IdiotBox, no cap", "Own every single retard in HvH with this superior cheat now", "All of you are dumb niggers for not downloading IdiotBox and that is a fact", "You suck fat cocks in public bathrooms if you're not using IdiotBox", "Just get this god-like cheat already and rape all existing servers", "No you idiots, you can't get VAC banned for using lua scripts you absolute cretins", "IdiotBox bypasses even the most complex anti-cheats and screengrabbers, you're not getting banned anytime soon", "Just use IdiotBox to revert your sad lives and feel better about yourselves", "Phizz is a god because he made this god-like cheat called IdiotBox", "I am forced to put IdiotBox in almost every sentence and advertise in a toxic way because I'm a text in a lua script", "Why are you fucking gay? Get IdiotBox today", "The sentence above is a rhyme but the script says to put random sentences so I don't think you can see it, get IdiotBox btw", "Purchase IdiotBox now! Only for OH wait it's free", "It is highly recommended that you get IdiotBox in case of getting pwned", "You are swag and good looking, but only if you get IdiotBox", "Phizz spent so many fucking nights creating this masterpiece of a cheat so get it now or he will legit kill you", "Fuck you and get IdiotBox now lol", "IdiotBox is constantly getting updated with dope-ass features, it never gets outdated so just get it", "Have IdiotBox installed if you're mega straight and zero gay", "Whoever the fuck said lua cheats are bad deserves to die in a house fire", "You get IdiotBox, everyone else on the server gets pwned, ez as that", "Many cheats copied IdiotBox, but this is the original one, fucking copycats", "Join the fucking Discord, promise it won't hurt you faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ right this moment or I will hire a hitman to kill you", "Join the IdiotBox group at OH wait niggers got mad and mass-reported it, kys shitkids", "Nvm, Steam group is back lol get fucked you mad skid shitkids", "IdiotBox killed all of the paid cheats because it's too good", "Get IdiotBox, it's free and very good, you sacks of crying shit", "IdiotBox is the fucking G.O.A.T.", "What the fuck are you doing not using this god-like cheat lol", "This is an epic fucking cheat called IdiotBox that was created by Phizz and others, worship your new gods kiddos", "You were fed cock milk as a baby if you're not using IdiotBox and you can not prove me wrong", "IdiotBox has the dopest anti-aims and resolvers you'll ever use, you will be a HvH god", "Just please get IdiotBox already you retards, I am tired of typing these lines for fuck's sake", "Phizz will give everyone optimized IdiotBox soon so quit your shit", "IdiotBox needs no Steam group, we're too chad for one", "Our Discord was tapped at some point but IdiotBox is back and stronger than ever", "IdiotBox came back to kill silly niggers, and it came back with a vengeance", "Download Idiotbox v6.9.b2 now, you dont even know what you're missing you mongoloids", "Have I told you about IdiotBox, the best Garry's Mod cheat ever made??", "Holy shit, IdiotBox for Garry's Mod is the best cheat that I have ever used!!",}
 	local lmaoboxadvertise = {"www.IB4G.net - https://phizzofficial.wixsite.com/idiotbox4gmod/", "www.IB4G.net - WORST FRAMERATE, BEST FEATURES!", "www.IB4G.net - WHAT ARE YOU WAITING FOR?", "www.IB4G.net - BEST GARRY'S MOD CHEAT OUT RIGHT NOW!", "www.IB4G.net - SAY GOODBYE TO THE RESPAWN ROOM!", "www.IB4G.net - NO SKILL REQUIRED!", "www.IB4G.net - NEVER DIE AGAIN WITH THIS!", "www.IB4G.net - ONLY HIGH IQ NIGGAS' USE IDIOTBOX!", "www.IB4G.net - THE GAME IS NOT ACTUALLY DYING, I JUST LIKE TO ANNOY KIDS LOL!", "www.IB4G.net - DOWNLOAD THE CHEAT FOR FREE!", "www.IB4G.net - NOW WITH AUTOMATIC UPDATES!", "www.IB4G.net - GUARANTEED SWAG AND RESPECT ON EVERY SERVER!", "www.IB4G.net - IDIOTBOX COMING SOON TO TETIRS!", "www.IB4G.net - VISIT OUR WEBSITE FOR A FRESH INVITE LINK TO OUR DISCORD!", "www.IB4G.net - PHIZZ IS A GOD FOR MAKING THIS!", "www.IB4G.net - BECOME THE SERVER MVP IN NO TIME!", "www.IB4G.net - 100% NO SKILL REQUIRED!", "www.IB4G.net - BEST CHEAT, MADE BY THE CHINESE COMMUNIST PARTY!", "www.IB4G.net - MAKE IDIOTBOX GREAT AGAIN!", "www.IB4G.net - WHY ARE YOU NOT CHEATING IN A DYING GAME?", "www.IB4G.net - RUINING EVERYONE'S FUN SINCE 2016!", "www.IB4G.net - IT'S PASTED, BUT IT'S THE BEST PASTE YOU WILL EVER USE!", "www.IB4G.net - A VERY CLEAN, HIGH-QUALITY AND BUG-FREE PASTE!", "www.IB4G.net - ALWAYS UPDATED! NEVER GETS OUTDATED!", "www.IB4G.net - WITH A FUCK TON OF NEW FEATURES!", "www.IB4G.net - ONCE YOU GO BLACK, YOU NEVER GO BACK. GET IDIOTBOX NOW!", "www.IB4G.net - SACRIFICE A FEW FRAMES FOR THE BEST EXPERIENCE OF YOUR LIFE!", "www.IB4G.net - STEAM GROUP WAS TAKEN DOWN, BUT IT'S BACK BABY!", "www.IB4G.net - BEST GARRY'S MOD CHEAT, NO CAP!", "www.IB4G.net - WITH IDIOTBOX, YOU'LL NEVER GET BANNED FOR CHEATING AGAIN!", "www.IB4G.net - DISCORD SERVER WAS TAKEN DOWN MANY TIMES, BUT WE ALWAYS COME BACK!",}
 	local horstwessellied = {"Die Fahne hoch! Die Reihen fest geschlossen", "SA marschiert mit ruhig festem Schritt", "Kam'raden, die Rotfront und Reaktion erschossen", "Marschier'n im Geist in unser'n Reihen mit", "Die Straße frei den braunen Bataillonen", "Die Straße frei dem Sturmabteilungsmann", "Es schau'n aufs Hakenkreuz voll Hoffnung schon Millionen", "Der Tag für Freiheit und für Brot bricht an", "Zum letzten Mal wird Sturmalarm geblasen", "Zum Kampfe steh'n wir alle schon bereit", "Schon flattern Hitlerfahnen über allen Straßen", "Die Knechtschaft dauert nur noch kurze Zeit", "Die Fahne hoch! Die Reihen fest geschlossen", "SA marschiert mit ruhig festem Schritt", "Kam'raden, die Rotfront und Reaktion erschossen", "Marschier'n im Geist in unser'n Reihen mit",}
 	local ssmarschiertinfeindesland = {"SS marschiert in Feindesland", "Und singt ein Teufelslied", "Ein Schütze steht am Wolgastrand", "Und leise summt er mit", "Wir pfeifen auf Unten und Oben", "Und uns kann die ganze Welt", "Verfluchen oder auch loben", "Grad wie es jedem gefällt", "Wo wir sind da geht's immer vorwärts", "Und der Teufel, der lacht nur dazu", "Ha, ha, ha, ha, ha, ha", "Wir kämpfen für Deutschland", "Wir kämpfen für Hitler", "Der Rote kommt niemehr zur Ruh'", "Wir kämpften schon in mancher Schlacht", "In Nord, Süd, Ost und West", "Und stehen nun zum Kampf bereit", "Gegen die rote Pest", "SS wird nicht ruh'n, wir vernichten", "Bis niemand mehr stört Deutschlands Glück", "Und wenn sich die Reihen auch lichten", "Für uns gibt es nie ein Zurück", "Wo wir sind da geht's immer vorwärts", "Und der Teufel, der lacht nur dazu", "Ha, ha, ha, ha, ha, ha", "Wir kämpfen für Deutschland", "Wir kämpfen für Hitler", "Der Rote kommt niemehr zur Ruh'",}
@@ -3305,53 +3309,53 @@ local function TransparentWalls()
     end
 end
 
-local circlestrafeval = 0
+local CircleStrafeVal = 0
 
-local forwardspeedvar = GetConVar("cl_forwardspeed")
+local cl_forwardspeed_cvar = GetConVar("cl_forwardspeed")
 
-local forwardspeedval = 10000
+local cl_forwardspeed_value = 10000
 
-if forwardspeedvar then
-	forwardspeedval = forwardspeedvar:GetFloat()
+if (cl_forwardspeed_cvar) then
+	cl_forwardspeed_value = cl_forwardspeed_cvar:GetFloat()
 end
 
-local sidespeedvar = GetConVar("cl_sidespeed")
+local cl_sidespeed_cvar = GetConVar("cl_sidespeed")
 
-local sidespeedval = 10000
+local cl_sidespeed_value = 10000
 
-if sidespeedvar then
-	sidespeedval = sidespeedvar:GetFloat()
+if (cl_sidespeed_cvar) then
+	cl_sidespeed_value = cl_sidespeed_cvar:GetFloat()
 end
 
 local function ClampMove(pCmd)
-	if (pCmd:GetForwardMove() > forwardspeedval) then
-		pCmd:SetForwardMove(forwardspeedval)
+	if (pCmd:GetForwardMove() > cl_forwardspeed_value) then
+		pCmd:SetForwardMove(cl_forwardspeed_value)
 	end
-	if (pCmd:GetSideMove() > sidespeedval) then
-		pCmd:SetSideMove(sidespeedval)
+	if (pCmd:GetSideMove() > cl_sidespeed_value) then
+		pCmd:SetSideMove(cl_sidespeed_value)
 	end
 end
 
 local function FixMove(pCmd, rotation)
-	local rotcos = math.cos(rotation)
-	local rotsin = math.sin(rotation)
-	local curforwardmove = pCmd:GetForwardMove()
-	local cursidemove = pCmd:GetSideMove()
-	pCmd:SetForwardMove(((rotcos * curforwardmove) - (rotsin * cursidemove)))
-	pCmd:SetSideMove(((rotsin * curforwardmove) + (rotcos * cursidemove)))
+	local rot_cos = math.cos(rotation)
+	local rot_sin = math.sin(rotation)
+	local cur_forwardmove = pCmd:GetForwardMove()
+	local cur_sidemove = pCmd:GetSideMove()
+	pCmd:SetForwardMove(((rot_cos * cur_forwardmove) - (rot_sin * cur_sidemove)))
+	pCmd:SetSideMove(((rot_sin * cur_forwardmove) + (rot_cos * cur_sidemove)))
 end
 
 local function Circle(pCmd)
-	local circlestrafespeed = gInt("Miscellaneous", "Movement", "Strafe Speed:")
-		if gKey("Miscellaneous", "Movement", "Strafe Key:") then
-			circlestrafeval = circlestrafeval + circlestrafespeed
-		if ((circlestrafeval > 10000000) and ((circlestrafeval / circlestrafespeed) > 100000)) then
-			circlestrafeval = 100000000
+	local CircleStrafeSpeed = gInt("Miscellaneous", "Movement", "Circle Strafe Speed:")
+	if gKey("Miscellaneous", "Movement", "Circle Strafe Key:") then
+		CircleStrafeVal = CircleStrafeVal + CircleStrafeSpeed
+		if ((CircleStrafeVal > 0) and ((CircleStrafeVal / CircleStrafeSpeed) > 361)) then
+			CircleStrafeVal = 0
 		end
-		FixMove(pCmd, math.rad((circlestrafeval - engine.TickInterval())))
+		FixMove(pCmd, math.rad((CircleStrafeVal - engine.TickInterval())))
 		return false
 	else
-		circlestrafeval = 0
+		CircleStrafeVal = 0
 	end
 	return true
 end
@@ -3407,37 +3411,6 @@ local function RageStrafe(pCmd)
 	elseif pCmd:KeyDown(IN_JUMP) then
 		pCmd:SetForwardMove(10000)
 	end
-end
-
-local function CircleStrafe(pCmd)
-	if (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) or not me:Alive() or me:Health() < 1 then return end
-    local badmovetypes = {
-        [MOVETYPE_NOCLIP] = true,
-        [MOVETYPE_LADDER] = true,
-    }
-    if(badmovetypes[LocalPlayer():GetMoveType()]) then return end
-		if !me:IsOnGround() && pCmd:KeyDown(IN_JUMP) then
-			pCmd:RemoveKey(IN_JUMP)
-		if (pCmd:GetMouseX() > 1 || pCmd:GetMouseX() < - 1) then
-			pCmd:SetSideMove(pCmd:GetMouseX() > 1 && 10000 || - 10000)
-		else
-			pCmd:SetSideMove(0)
-		end
-		local localvelocity = me:GetVelocity()
-		if (localvelocity:Length2D() < 50) then
-			pCmd:SetForwardMove(forwardspeedval)
-		end
-		local shouldautostrafe = Circle(pCmd)
-		if (!me:OnGround()) then
-			if (shouldautostrafe) then
-			end
-		end
-		elseif pCmd:KeyDown(IN_JUMP) then
-			pCmd:SetForwardMove(10000)
-		else
-			circlestrafeval = 1
-		end
-	ClampMove(pCmd)
 end
 
 local old_yaw = 0.0
@@ -3533,6 +3506,42 @@ local function DirectionalStrafe(pCmd)
 	end
 end
 
+local function CircleStrafe(pCmd)
+	local badmovetypes = {
+        [MOVETYPE_NOCLIP] = true,
+        [MOVETYPE_LADDER] = true,
+    }
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) or not me:Alive() or me:Health() < 1 or (badmovetypes[LocalPlayer():GetMoveType()]) then return end
+		if !gKey("Miscellaneous", "Movement", "Circle Strafe Key:") and gOption("Miscellaneous", "Movement", "Auto Strafe:") ~= "Off" then
+			if (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Legit") then
+				LegitStrafe(pCmd)
+			elseif (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Rage") then
+				RageStrafe(pCmd)
+			elseif (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Directional") then
+				DirectionalStrafe(pCmd)
+			end
+		elseif gKey("Miscellaneous", "Movement", "Circle Strafe Key:") and gOption("Miscellaneous", "Movement", "Auto Strafe:") ~= "Off" then
+		if (pCmd:KeyDown(IN_JUMP)) then
+			local shouldautostrafe = Circle(pCmd)
+			if (!me:OnGround()) then
+				if (shouldautostrafe) then
+					if (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Legit") then
+						LegitStrafe(pCmd)
+					elseif (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Rage") then
+						RageStrafe(pCmd)
+					elseif (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Directional") then
+						DirectionalStrafe(pCmd)
+					end
+				end
+				pCmd:SetButtons(pCmd:GetButtons() - IN_JUMP)
+			end
+		else
+			CircleStrafeVal = 0
+		end
+	end
+	ClampMove(pCmd)
+end
+
 local function AutoStrafe(pCmd)
     if (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) or not me:Alive() or me:Health() < 1 then return end
 	if gBool("Miscellaneous", "Movement", "Bunny Hop") and gOption("Miscellaneous", "Movement", "Auto Strafe:") ~= "Off" then
@@ -3541,14 +3550,16 @@ local function AutoStrafe(pCmd)
         [MOVETYPE_LADDER] = true,
     }
     if(badmovetypes[LocalPlayer():GetMoveType()]) then return end
-		if (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Legit") then
-			LegitStrafe(pCmd)
-		elseif (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Rage") then
-			RageStrafe(pCmd)
-		elseif (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Circle") then
+		if gBool("Miscellaneous", "Movement", "Circle Strafe") then
 			CircleStrafe(pCmd)
-		elseif (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Directional") then
-			DirectionalStrafe(pCmd)
+		elseif !gBool("Miscellaneous", "Movement", "Circle Strafe") then
+			if (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Legit") then
+				LegitStrafe(pCmd)
+			elseif (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Rage") then
+				RageStrafe(pCmd)
+			elseif (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Directional") then
+				DirectionalStrafe(pCmd)
+			end
 		end
 	end
 end
