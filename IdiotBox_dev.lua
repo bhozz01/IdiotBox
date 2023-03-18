@@ -1216,7 +1216,7 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			info = "Draws a radar box."
 		elseif feat == "Custom Status" then
 			info = "Draws your ping, framerate, current date and time etc."
-		elseif feat == "Player List" then
+		elseif feat == "Players List" then
 			info = "Draws a list of the players present on a server, along with their ranks."
 		elseif feat == "Show NPCs" then
 			info = "Shows NPCs on Visuals."
