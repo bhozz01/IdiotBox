@@ -2532,7 +2532,7 @@ local function Status()
 	local hp = em.Health(me)
 	local velocity = me:GetVelocity():Length()
 	if hp < 0 then
-		hp = 0
+	hp = 0
 	end
 	surface.SetFont("MiscFont")
 	hh = hh + 12
@@ -2541,18 +2541,18 @@ local function Status()
 	surface.DrawText("Health: "..hp)
 	if (em.IsValid(wep)) then
 	local daclip = wep:Clip1()
-		if daclip < 0 then
-			daclip = 0
-		end
-		surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
-		hh = hh + 12
-		surface.SetTextPos(gInt("Adjustments", "List Positions", "Custom Status X:") + 3, hh + gInt("Adjustments", "List Positions", "Custom Status Y:"))
-		surface.DrawText("Ammo: "..daclip.."/"..me:GetAmmoCount(wep:GetPrimaryAmmoType()))
+	if daclip < 0 then
+	daclip = 0
+	end
+	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
+	hh = hh + 12
+	surface.SetTextPos(gInt("Adjustments", "List Positions", "Custom Status X:") + 3, hh + gInt("Adjustments", "List Positions", "Custom Status Y:"))
+	surface.DrawText("Ammo: "..daclip.."/"..me:GetAmmoCount(wep:GetPrimaryAmmoType()))
 	else
-		surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
-		hh = hh + 12
-		surface.SetTextPos(gInt("Adjustments", "List Positions", "Custom Status X:") + 3, hh + gInt("Adjustments", "List Positions", "Custom Status Y:"))
-		surface.DrawText("Ammo: ".."0".."/".."0")
+	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
+	hh = hh + 12
+	surface.SetTextPos(gInt("Adjustments", "List Positions", "Custom Status X:") + 3, hh + gInt("Adjustments", "List Positions", "Custom Status Y:"))
+	surface.DrawText("Ammo: ".."0".."/".."0")
 	end
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Positions", "Custom Status X:") + 3, hh + gInt("Adjustments", "List Positions", "Custom Status Y:"))
@@ -2577,7 +2577,7 @@ local function Status()
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Positions", "Custom Status X:") + 3, hh + gInt("Adjustments", "List Positions", "Custom Status Y:"))
 	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
-	surface.DrawText("Entities: "..math.Round(ents.GetCount() - player.GetCount() * 12))
+	surface.DrawText("Entities: "..math.Round(ents.GetCount()))
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Positions", "Custom Status X:") + 3, hh + gInt("Adjustments", "List Positions", "Custom Status Y:"))
 	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
