@@ -715,8 +715,9 @@ local creator = creator or {}
 
 local devs = devs or {}
 
-creator["STEAM_0:0:63644275"] = {} -- go figure #1
-creator["STEAM_0:0:162667998"] = {} -- go figure #2
+creator["STEAM_0:0:63644275"] = {} -- me
+creator["STEAM_0:0:162667998"] = {} -- my alt
+devs["STEAM_0:0:196578290"] = {} -- pinged (code dev, likely the most important one, helped me out with optimization and many others)
 devs["STEAM_0:1:126050820"] = {} -- papertek (dev & discord manager)
 devs["STEAM_0:1:193781969"] = {} -- paradox (code dev)
 devs["STEAM_0:0:109145007"] = {} -- scottpott (code dev)
@@ -1534,10 +1535,12 @@ local function Changelog()
 	print("- Fixed Bunny Hop breaking the movement when in water;")
 	print("- Fixed Entities not using the correct Visuals color;")
 	print("- Fixed entity list not showing props and being too cluttered;")
+	print("- Fixed menu border bug, where if you clicked the border, the entire menu would turn blue;")
 	print("- Fixed buttons spamming the 'click' sound when holding them down;")
 	print("- Fixed Reply Spam and Copy Messages not ignoring friends;")
 	print("- Fixed being unable to fly WAC planes and rotate props or camera angles;")
 	print("- Fixed Kill Spam giving script errors when an NPC was killed;")
+	print("- Fixed Entities Menu bug breaking the menu after closing it;")
 	print("- Fixed Chat Spam and Kill Spam still using IdiotBox Alpha variables;")
 	print("- Fixed 3D Box and Hitbox rendering issues;")
 	print("- Fixed Bunny Hop and Auto Strafe breaking Free Roaming;")
@@ -1640,7 +1643,7 @@ end
 
 local function EntityFinder()
 	local finder = vgui.Create("DFrame")
-	finder:SetSize(765, 845)
+	finder:SetSize(769, 849)
 	finder:Center()
 	finder:SetTitle("")
 	finder:MakePopup()
@@ -1773,18 +1776,6 @@ local function EntityFinder()
 			end
 		end
 	end
-	finder.Paint = function(self, w, h)
-		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 0, 0, w, h, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "Others", "BG Opacity:")))
-		DrawUpperText(w, h)
-		draw.SimpleText("Search Entity:", "MenuFont", 15, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-		draw.SimpleText("Add Entity:", "MenuFont", 459, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-	end
-	ent_list.Paint = function(self, w, h)
-		draw.RoundedBox(15, 0, 0, w, h, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:")))
-	end
-	draw_list.Paint = function(self, w, h)
-		draw.RoundedBox(15, 0, 0, w, h, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:")))
-	end
 	for k, v in next, ents.GetAll() do
 		if not table.HasValue(added, v:GetClass()) and not table.HasValue(drawn_ents, v:GetClass()) and BadEntities(v) and v:GetClass() ~= "player" then
 			ent_list:AddLine(v:GetClass())
@@ -1798,11 +1789,29 @@ local function EntityFinder()
 	for k, v in next, drawn_ents do
 		draw_list:AddLine(v)
 	end
+	ent_list.Paint = function(self, w, h)
+		draw.RoundedBox(15, 0, 0, w, h, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:")))
+	end
+	draw_list.Paint = function(self, w, h)
+		draw.RoundedBox(15, 0, 0, w, h, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:")))
+	end
+	finder.Paint = function(self, w, h)
+		if gOption("Main Menu", "Menus", "Menu Style:") == "Borders" then -- Thank you for fixing my mess, Pinged
+            draw.RoundedBox(57, 0, 0, w, h, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:")))
+		end
+		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 2, 2, w - 4, h - 4, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "Others", "BG Opacity:")))
+		DrawUpperText(w, h)
+		draw.SimpleText("Search Entity:", "MenuFont", 15, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		draw.SimpleText("Add Entity:", "MenuFont", 459, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+	end
 	finder.Think = function()
 		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or unloaded == true) then
 			finder:SlideUp(0.5)
 			timer.Simple(0.5, function()
 			finder:Remove()
+			menuopen = false
+			candoslider = false
+			drawlast = nil
 			file.Write(folder.."/entities.txt", util.TableToJSON(drawn_ents))
 			end)
 		end
@@ -1854,7 +1863,10 @@ local function PluginLoader()
 		draw.RoundedBox(16, 0, 0, w, h, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:")))
 	end
 	plugin.Paint = function(self, w, h)
-		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 0, 0, w, h, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "Others", "BG Opacity:")))
+		if gOption("Main Menu", "Menus", "Menu Style:") == "Borders" then -- Thank you for fixing my mess, Pinged
+            draw.RoundedBox(57, 0, 0, w, h, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:")))
+		end
+		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 2, 2, w - 4, h - 4, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "Others", "BG Opacity:")))
 		DrawUpperText(w, h)
 	end
 	plugin.Think = function()
@@ -2110,35 +2122,6 @@ local function DrawSub(self, w, h)
 	end
 end
 
-local function MenuBorder() -- Probably a dumb way of doing this but still
-	local frame = vgui.Create("DFrame")
-	frame:SetSize(769, 849)
-	frame:Center()
-	frame:SlideDown(0.5)
-	frame:SetTitle("")
-	frame:MakePopup()
-	frame:ShowCloseButton(false)
-		frame.Paint = function(self, w, h)
-			if gOption("Main Menu", "Menus", "Menu Style:") == "Borders" then
-				draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 0, 0, w, h, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:")))
-			elseif gOption("Main Menu", "Menus", "Menu Style:") == "Borderless" then
-				draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 0, 0, w, h, Color(bordercol.r, bordercol.g, bordercol.b, 0))
-			end
-		end
-	frame.Think = function()
-		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or unloaded == true) then
-			frame:SlideUp(0.5)
-			timer.Simple(0.5, function()
-			frame:Remove()
-			menuopen = false
-			end)
-		end
-		if unloaded == true then
-			frame:Remove()
-		end
-	end
-end
-
 local function CacheColors()
 	maintextcol = Color(gInt("Adjustments", "Main Text Color", "Red:"), gInt("Adjustments", "Main Text Color", "Green:"), gInt("Adjustments", "Main Text Color", "Blue:"))
 	menutextcol = Color(gInt("Adjustments", "Menu Text Color", "Red:"), gInt("Adjustments", "Menu Text Color", "Green:"), gInt("Adjustments", "Menu Text Color", "Blue:"))
@@ -2159,7 +2142,7 @@ local menusongs = {"https://dl.dropbox.com/s/0m22ytfia8qoy4m/Daisuke%20-%20El%20
 
 local function Menu()
 	local frame = vgui.Create("DFrame")
-	frame:SetSize(765, 845)
+	frame:SetSize(769, 849)
 	frame:Center()
 	frame:SlideDown(0.5)
 	frame:SetTitle("")
@@ -2170,7 +2153,10 @@ local function Menu()
 			candoslider = false
 		end
 		info = ""
-		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 0, 0, w, h, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "Others", "BG Opacity:")))
+		if gOption("Main Menu", "Menus", "Menu Style:") == "Borders" then -- Thank you for fixing my mess, Pinged
+            draw.RoundedBox(57, 0, 0, w, h, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:")))
+		end
+		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 2, 2, w - 4, h - 4, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "Others", "BG Opacity:")))
 		DrawUpperText(w, h)
 		DrawOptions(self, w, h)
 		DrawSub(self, w, h)
@@ -3643,7 +3629,6 @@ local function Think()
 	if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menuopen and not menukeydown) then
 		menuopen = true
 		menukeydown = true
-		MenuBorder()
 		Menu()
 	elseif (not (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menuopen) then
 		menukeydown = false
