@@ -538,6 +538,7 @@ surface.CreateFont("MenuFont", {font = "Tahoma", size = 12, weight = 674, antial
 surface.CreateFont("MenuFont2", {font = "Tahoma", size = 12, antialias = true, outline = true})
 surface.CreateFont("MainFont", {font = "Tahoma", size = 16, weight = 1300, antialias = false, outline = false})
 surface.CreateFont("MainFont2", {font = "Tahoma", size = 11, weight = 640, antialias = false, outline = true})
+surface.CreateFont("MainFont3", {font = "Tahoma", size = 13, weight = 800, antialias = false, outline = true})
 surface.CreateFont("MiscFont", {font = "Tahoma", size = 12, weight = 900, antialias = false, outline = true})
 surface.CreateFont("MiscFont2", {font = "Tahoma", size = 12, weight = 900, antialias = false, outline = false})
 surface.CreateFont("MiscFont3", {font = "Tahoma", size = 13, weight = 674, antialias = false, outline = true})
@@ -1022,17 +1023,15 @@ local function DrawOptions(self, w, h)
 		local bMouse = MouseInArea(mx + 5 + maxx, my + 31, mx + 5 + maxx + sizeper, my + 31 + 30)
 		if (visible[v]) then
 			local curcol = Color(bordercol.r, bordercol.g, bordercol.b, 255)
-			for i = 0, 0 do
+			for i = 0, 1 do
 				surface.SetDrawColor(curcol)
-				curcol.r, curcol.g, curcol.b = curcol.r + 3, curcol.g + 3, curcol.b + 3
-				surface.DrawLine(0.9 + maxx, 60 + i, 0.9 + maxx + sizeper, 60 + i)
+				surface.DrawLine(5 + maxx, 60 + i, 5 + maxx + sizeper, 60 + i)
 			end
-			elseif (bMouse) then
-			local curcol = Color(bordercol.r, bordercol.g, bordercol.b, 155)
-			for i = 0, 0 do
+		elseif (bMouse) then
+			local curcol = Color(bordercol.r, bordercol.g, bordercol.b, 100)
+			for i = 0, 1 do
 				surface.SetDrawColor(curcol)
-				curcol.r, curcol.g, curcol.b = curcol.r + 3, curcol.g + 3, curcol.b + 3
-				surface.DrawLine(0.9 + maxx, 60 + i, 0.9 + maxx + sizeper, 60 + i)
+				surface.DrawLine(5 + maxx, 60 + i, 5 + maxx + sizeper, 60 + i)
 			end
 		end
 		if (bMouse and input.IsMouseDown(MOUSE_LEFT) and not mousedown and not visible[v]) then
@@ -1042,7 +1041,7 @@ local function DrawOptions(self, w, h)
 			end
 			visible[v] = not nb
 		end
-		surface.SetFont("MenuFont")
+		surface.SetFont("MainFont3")
 		surface.SetTextColor(maintextcol.r, maintextcol.g, maintextcol.b, 255)
 		local tw, th = surface.GetTextSize(v)
 		surface.SetTextPos(5 + maxx + sizeper / 2 - tw / 2, 31 + 15 - th / 2)
@@ -1621,6 +1620,7 @@ local function Changelog()
 	print("- Fixed toggle keys activating when browsing game menus/ typing;")
 	print("- Fixed Hide Round Report and Panel Remover not working correctly;")
 	print("- Fixed Edged Box contrast issues;")
+	print("- Fixed misplaced tab selection lines;")
 	print("- Fixed poorly placed checkboxes/ sliders/ selections;")
 	print("- Fixed Anti-Ads not working correctly;")
 	print("- Fixed Anti-Aim Resolver continuing to resolve angles when set to 'Off';")
@@ -4052,8 +4052,7 @@ local function Visuals(v)
 			x2, y2 = math.max(x2, _v.x), math.max(y2, _v.y)
 		end
 		diff, diff2 = math.abs(x2 - x1), math.abs(y2 - y1)
-		
-		surface.SetDrawColor(0,0,0)
+		surface.SetDrawColor(colThree)
 		surface.DrawLine(x1, y1, x1 + (diff * 0.225), y1)
 		surface.DrawLine(x1, y1, x1, y1 + (diff2 * 0.225))
 		surface.DrawLine(x1, y2, x1 + (diff * 0.225), y2)
@@ -4062,16 +4061,6 @@ local function Visuals(v)
 		surface.DrawLine(x2, y1, x2, y1 + (diff2 * 0.225))
 		surface.DrawLine(x2, y2, x2 - (diff * 0.225), y2)
 		surface.DrawLine(x2, y2, x2, y2 - (diff2 * 0.225))
-		
-		surface.SetDrawColor(colThree)
-		surface.DrawLine(x1 + 1, y1 + 1, x1 + (diff * 0.225), y1 + 1)
-		surface.DrawLine(x1 + 1, y1 + 1, x1 + 1, y1 + (diff2 * 0.225))
-		surface.DrawLine(x1 + 1, y2 - 1, x1 + (diff * 0.225), y2 - 1)
-		surface.DrawLine(x1 + 1, y2 - 1, x1 + 1, y2 - (diff2 * 0.225))
-		surface.DrawLine(x2 - 1, y1 + 1, x2 - (diff * 0.225), y1 + 1)
-		surface.DrawLine(x2 - 1, y1 + 1, x2 - 1, y1 + (diff2 * 0.225))
-		surface.DrawLine(x2 - 1, y2 - 1, x2 - (diff * 0.225), y2 - 1)
-		surface.DrawLine(x2 - 1, y2 - 1, x2 - 1, y2 - (diff2 * 0.225))
     end
 	surface.SetFont("VisualsFont")
 	surface.SetTextColor(255, 255, 255)
