@@ -698,12 +698,6 @@ if gui.IsGameUIVisible() then
 	gui.HideGameUI()
 end
 
-chat.AddText(Color(255, 255, 0), "Loading script...")
-surface.PlaySound("buttons/bell1.wav")
-
-chat.AddText(Color(255, 255, 0), "Verifying modules...")
-surface.PlaySound("buttons/bell1.wav")
-
 do
 	if (idiot.game.SinglePlayer()) then
 		MsgR(4.3, "Attention! Not going to load in Singleplayer Mode!") 
@@ -5660,19 +5654,23 @@ hook.Add("OnPlayerChat", "Hook24", function(chatPlayer, text, teamChat)
     end
 end)
 
-if not file.Exists(folder.."/version.txt", "DATA") then
-	file.Write(folder.."/version.txt", version)
-else
-	if file.Read(folder.."/version.txt", "DATA") ~= version then
-		Changelog()
-		chat.AddText(Color(0, 255, 0), "IdiotBox has been updated from v"..file.Read(folder.."/version.txt", "DATA").." to v"..version.."! Changelog is printed in the console.")
-		surface.PlaySound("buttons/lightswitch2.wav")
-		file.Write(folder.."/version.txt", version)
-	end
-end
+timer.Simple(0.5, function()
+	chat.AddText(Color(0, 255, 0), "Successfully loaded IdiotBox!")
+	surface.PlaySound("buttons/bell1.wav")
+end)
 
-chat.AddText(Color(0, 255, 0), "Successfully loaded IdiotBox!")
-surface.PlaySound("buttons/lightswitch2.wav")
+timer.Simple(0.5, function()
+	if not file.Exists(folder.."/version.txt", "DATA") then
+		file.Write(folder.."/version.txt", version)
+	else
+		if file.Read(folder.."/version.txt", "DATA") ~= version then
+			Changelog()
+			chat.AddText(Color(0, 255, 0), "IdiotBox has been updated from v"..file.Read(folder.."/version.txt", "DATA").." to v"..version.."! Changelog is printed in the console.")
+			surface.PlaySound("buttons/lightswitch2.wav")
+			file.Write(folder.."/version.txt", version)
+		end
+	end
+end)
 
 MsgG(5.3, "Welcome, "..me:Nick()..". Press 'Insert', 'F11' or 'Home' to toggle.")
 surface.PlaySound("buttons/lightswitch2.wav")
