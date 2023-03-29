@@ -698,11 +698,11 @@ if gui.IsGameUIVisible() then
 	gui.HideGameUI()
 end
 
-chat.AddText(Color(255, 255, 0), "Loading script...")
-surface.PlaySound("buttons/bell1.wav")
-
-chat.AddText(Color(255, 255, 0), "Verifying modules...")
-surface.PlaySound("buttons/bell1.wav")
+timer.Simple(0.5, function()
+	chat.AddText(Color(255, 255, 0), "Loading script...")
+	chat.AddText(Color(255, 255, 0), "Verifying modules...")
+	surface.PlaySound("buttons/bell1.wav")
+)
 
 do
 	if (idiot.game.SinglePlayer()) then
@@ -5671,8 +5671,10 @@ else
 	end
 end
 
-chat.AddText(Color(0, 255, 0), "Successfully loaded IdiotBox!")
-surface.PlaySound("buttons/lightswitch2.wav")
+timer.Simple(0.5, function()
+	chat.AddText(Color(0, 255, 0), "Successfully loaded IdiotBox!")
+	surface.PlaySound("buttons/lightswitch2.wav")
+)
 
 MsgG(5.3, "Welcome, "..me:Nick()..". Press 'Insert', 'F11' or 'Home' to toggle.")
 surface.PlaySound("buttons/lightswitch2.wav")
