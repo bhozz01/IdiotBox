@@ -702,7 +702,7 @@ timer.Simple(0.5, function()
 	chat.AddText(Color(255, 255, 0), "Loading script...")
 	chat.AddText(Color(255, 255, 0), "Verifying modules...")
 	surface.PlaySound("buttons/bell1.wav")
-)
+end)
 
 do
 	if (idiot.game.SinglePlayer()) then
@@ -5674,7 +5674,7 @@ end
 timer.Simple(0.5, function()
 	chat.AddText(Color(0, 255, 0), "Successfully loaded IdiotBox!")
 	surface.PlaySound("buttons/lightswitch2.wav")
-)
+end)
 
 MsgG(5.3, "Welcome, "..me:Nick()..". Press 'Insert', 'F11' or 'Home' to toggle.")
 surface.PlaySound("buttons/lightswitch2.wav")
