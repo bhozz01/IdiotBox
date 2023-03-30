@@ -61,6 +61,8 @@ local ox, oy = - 181, 0
 local fixmovement = fixmovement or nil
 local nullvec = Vector() * - 1
 
+local fake = GetRenderTarget("fake"..os.time(), ScrW(), ScrH())
+
 local em = FindMetaTable("Entity")
 local pm = FindMetaTable("Player")
 local cm = FindMetaTable("CUserCmd")
@@ -90,24 +92,24 @@ surface.CreateFont("MiscFont2", {font = "Tahoma", size = 12, weight = 900, antia
 surface.CreateFont("MiscFont3", {font = "Tahoma", size = 13, weight = 674, antialias = false, outline = true})
 
 local creator = creator or {}
-local devs = devs or {}
+local contributors = contributors or {}
 
 creator["STEAM_0:0:63644275"] = {} -- me
 creator["STEAM_0:0:162667998"] = {} -- my alt
-devs["STEAM_0:0:196578290"] = {} -- pinged (code dev, likely the most important one, helped me out with optimization and many others)
-devs["STEAM_0:1:126050820"] = {} -- papertek (dev & discord manager)
-devs["STEAM_0:1:193781969"] = {} -- paradox (code dev)
-devs["STEAM_0:0:109145007"] = {} -- scottpott (code dev)
-devs["STEAM_0:0:205376238"] = {} -- vectivus (code dev)
-devs["STEAM_0:1:188710062"] = {} -- uucka (code tester)
-devs["STEAM_0:1:191270548"] = {} -- cal1nxd (code tester)
-devs["STEAM_0:1:404757"] = {} -- xvcaligo (code tester)
-devs["STEAM_0:1:69536635"] = {} -- tryhard (code tester)
-devs["STEAM_0:0:150101893"] = {} -- derpos (code tester)
-devs["STEAM_0:1:75441355"] = {} -- zergo (code tester)
-devs["STEAM_0:1:4375194"] = {} -- ohhstyle (advertiser)
-devs["STEAM_0:1:59798110"] = {} -- mrsquid (advertiser)
-devs["STEAM_0:1:101813068"] = {} -- sdunken (first user)
+contributors["STEAM_0:0:196578290"] = {} -- pinged (code dev, likely the most important one, helped me out with optimization and many others)
+contributors["STEAM_0:1:126050820"] = {} -- papertek (dev & discord manager)
+contributors["STEAM_0:1:193781969"] = {} -- paradox (code dev)
+contributors["STEAM_0:0:109145007"] = {} -- scottpott (code dev)
+contributors["STEAM_0:0:205376238"] = {} -- vectivus (code dev)
+contributors["STEAM_0:1:188710062"] = {} -- uucka (code tester)
+contributors["STEAM_0:1:191270548"] = {} -- cal1nxd (code tester)
+contributors["STEAM_0:1:404757"] = {} -- xvcaligo (code tester)
+contributors["STEAM_0:1:69536635"] = {} -- tryhard (code tester)
+contributors["STEAM_0:0:150101893"] = {} -- derpos (code tester)
+contributors["STEAM_0:1:75441355"] = {} -- zergo (code tester)
+contributors["STEAM_0:1:4375194"] = {} -- ohhstyle (advertiser)
+contributors["STEAM_0:1:59798110"] = {} -- mrsquid (advertiser)
+contributors["STEAM_0:1:101813068"] = {} -- sdunken (first user)
 
 --NOTE-- I want to mention that these are not the only people that helped me with the development of IdiotBox, but they are the ones who helped me the most and that is why they are credited here.
 
@@ -741,17 +743,6 @@ box.Predict = dickwrap.Predict
 
 idiot.TickCount = 0
 
-local function UpdateVar(men, sub, lookup, new)
-	for aa, aaa in next, options[men] do
-		for key, val in next, aaa do
-			if (aaa[1][1] ~= sub) then continue end
-				if (val[1] == lookup) then
-				val[3] = new
-			end
-		end
-	end
-end
-
 if not file.IsDir(folder, "DATA") then
 	file.CreateDir(folder)
 end
@@ -764,7 +755,7 @@ end
 
 if file.Exists(folder.."/priority.txt", "DATA") then
 	prioritylist = util.JSONToTable(file.Read(folder.."/priority.txt", "DATA"))
-else
+		else
 	file.Write(folder.."/priority.txt", "[]")
 end
 	
@@ -812,6 +803,17 @@ end
 
 function SaveConfig10()
 	file.Write(folder.."/config10.txt", util.TableToJSON(options))
+end
+
+function UpdateVar(men, sub, lookup, new)
+	for aa, aaa in next, options[men] do
+		for key, val in next, aaa do
+			if (aaa[1][1] ~= sub) then continue end
+				if (val[1] == lookup) then
+				val[3] = new
+			end
+		end
+	end
 end
 
 function LoadConfig1()
@@ -1597,6 +1599,7 @@ local function Changelog()
 	print("- Fixed Entities Menu bug breaking the menu after closing it;")
 	print("- Fixed Chat Spam and Kill Spam still using IdiotBox Alpha variables;")
 	print("- Fixed 3D Box and Hitbox rendering issues;")
+	print("- Fixed extreme bug where the anti-screengrabber would make you run out of VRAM and crash your system;")
 	print("- Fixed Bunny Hop and Auto Strafe breaking Free Roaming;")
 	print("- Fixed Hitbox spamming the console with error messages;")
 	print("- Fixed Snap Lines still showing when Aimbot is not enabled;")
@@ -2721,7 +2724,7 @@ local function Radar()
 	for k = 1, #everything do
 		local v = everything[k]
 		if (v != me and v:IsPlayer() and v:Health() > 0 and not (em.IsDormant(v) and gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All") and not (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) and not ((gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) or (v:IsNPC() and v:Health() > 0)) then
-			color = (v:IsPlayer() and ((devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b))) || pm.GetFriendStatus(v) == "friend" && Color(0, 255, 255) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v))) or Color(255, 255, 255)
+			color = (v:IsPlayer() and ((contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b))) || pm.GetFriendStatus(v) == "friend" && Color(0, 255, 255) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v))) or Color(255, 255, 255)
 			surface.SetDrawColor(color)
 			local myPos = me:GetPos()
 			local theirPos = v:GetPos()
@@ -2936,7 +2939,6 @@ local function Crosshair()
 end
 
 hook.Add("RenderScene", "Hook0", function(origin, angle, fov)
-	local fake = GetRenderTarget("fake"..os.time(), ScrW(), ScrH())
 	if gBool("Visuals", "Textures", "Dark Mode") then
 		for k, v in pairs(game.GetWorld():GetMaterials()) do
 		Material(v):SetVector("$color", Vector(0.05, 0.05, 0.05))
@@ -3291,7 +3293,7 @@ local function Chams(v)
 		["$ignorez"] = 0, 
 		["$basetexture"] = "models/debug/debugwhite", 
 	})
-	local col = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetChamsColor(v)
+	local col = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetChamsColor(v)
 	local wep = v:GetActiveWeapon()
 	if (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then
 		return false
@@ -3930,10 +3932,10 @@ local function Visuals(v)
 	local h = pos.y - pos2.y
 	local w = h / 2
 	local ww = h / 4
-	local colOne = (devs[v:SteamID()] || creator[v:SteamID()]) && Color(0, 0, 0) || ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
-	local colTwo = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || Color(0, 0, 0)
-	local colThree = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
-	local colFour = (devs[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
+	local colOne = (contributors[v:SteamID()] || creator[v:SteamID()]) && Color(0, 0, 0) || ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
+	local colTwo = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || Color(0, 0, 0)
+	local colThree = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
+	local colFour = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
 	local colFive = gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
 	local healthcol = Color((100 - em.Health(v)) * 2.55, em.Health(v) * 2.55, 0)
 	local armorcol = Color((100 - v:Armor()) * 2.55, v:Armor() * 2.55, v:Armor() * 2.55)
@@ -3962,23 +3964,23 @@ local function Visuals(v)
 		local eye = v:EyeAngles()
 		local min, max = v:WorldSpaceAABB()
 		local origin = v:GetPos()
-		if table.HasValue(ignorelist, v:UniqueID()) and !(devs[v:SteamID()] || creator[v:SteamID()]) then
+		if table.HasValue(ignorelist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, ignoredcol)
 			cam.End3D()
-		elseif table.HasValue(prioritylist, v:UniqueID()) and !(devs[v:SteamID()] || creator[v:SteamID()]) then
+		elseif table.HasValue(prioritylist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, prioritycol)
 			cam.End3D()
-		elseif gBool("Visuals", "Miscellaneous", "Team Colors") and !(devs[v:SteamID()] || creator[v:SteamID()]) then
+		elseif gBool("Visuals", "Miscellaneous", "Team Colors") and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, team.GetColor(pm.Team(v)))
 			cam.End3D()
-		elseif (devs[v:SteamID()] || creator[v:SteamID()]) then
+		elseif (contributors[v:SteamID()] || creator[v:SteamID()]) then
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, devcol)
 			cam.End3D()
-		elseif !(devs[v:SteamID()] || creator[v:SteamID()]) then
+		elseif !(contributors[v:SteamID()] || creator[v:SteamID()]) then
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, GetColor(v))
 			cam.End3D()
@@ -4040,19 +4042,19 @@ local function Visuals(v)
 			if creator[v:SteamID()] then
 				draw.SimpleText("IdiotBox Creator", "VisualsFont", pos.x, pos.y - h - 26 - 13, devcol, 1, 1)
 			end
-			if devs[v:SteamID()] then
-				draw.SimpleText("IdiotBox Developer", "VisualsFont", pos.x, pos.y - h - 26 - 13, devcol, 1, 1)
+			if contributors[v:SteamID()] then
+				draw.SimpleText("IdiotBox Contributor", "VisualsFont", pos.x, pos.y - h - 26 - 13, devcol, 1, 1)
 			end
 		end
 		if (friendstatus ~= "friend") then
 			if creator[v:SteamID()] then
 				draw.SimpleText("IdiotBox Creator", "VisualsFont", pos.x, pos.y - h - 13 - 13, devcol, 1, 1)
 			end
-			if devs[v:SteamID()] then
-				draw.SimpleText("IdiotBox Developer", "VisualsFont", pos.x, pos.y - h - 13 - 13, devcol, 1, 1)
+			if contributors[v:SteamID()] then
+				draw.SimpleText("IdiotBox Contributor", "VisualsFont", pos.x, pos.y - h - 13 - 13, devcol, 1, 1)
 			end
 		end
-		if (friendstatus == "friend") and (creator[v:SteamID()] or devs[v:SteamID()]) then
+		if (friendstatus == "friend") and (creator[v:SteamID()] or contributors[v:SteamID()]) then
 			if table.HasValue(ignorelist, v:UniqueID()) then
 				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 39 - 13, ignoredcol, 1, 1)
 			end
@@ -4060,7 +4062,7 @@ local function Visuals(v)
 				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 39 - 13, prioritycol, 1, 1)
 			end
 		end
-		if (friendstatus == "friend") and not (creator[v:SteamID()] or devs[v:SteamID()]) then
+		if (friendstatus == "friend") and not (creator[v:SteamID()] or contributors[v:SteamID()]) then
 			if table.HasValue(ignorelist, v:UniqueID()) then
 				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, ignoredcol, 1, 1)
 			end
@@ -4068,7 +4070,7 @@ local function Visuals(v)
 				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, prioritycol, 1, 1)
 			end
 		end
-		if (friendstatus ~= "friend") and (creator[v:SteamID()] or devs[v:SteamID()]) then
+		if (friendstatus ~= "friend") and (creator[v:SteamID()] or contributors[v:SteamID()]) then
 			if table.HasValue(ignorelist, v:UniqueID()) then
 				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, ignoredcol, 1, 1)
 			end
@@ -4076,7 +4078,7 @@ local function Visuals(v)
 				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, prioritycol, 1, 1)
 			end
 		end
-		if (friendstatus ~= "friend") and not (creator[v:SteamID()] or devs[v:SteamID()]) then
+		if (friendstatus ~= "friend") and not (creator[v:SteamID()] or contributors[v:SteamID()]) then
 			if table.HasValue(ignorelist, v:UniqueID()) then
 				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 13 - 13, ignoredcol, 1, 1)
 			end
@@ -4225,23 +4227,23 @@ local function Visuals(v)
 			local min, max = v:GetHitBoxBounds(_i, i)			
 			if (v:GetBonePosition(bone)) then
 			local pos, ang = v:GetBonePosition(bone)
-			if table.HasValue(ignorelist, v:UniqueID()) and !(devs[v:SteamID()] || creator[v:SteamID()]) then
+			if table.HasValue(ignorelist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
 				cam.Start3D()
 					render.DrawWireframeBox(pos, ang, min, max, ignoredcol)
 				cam.End3D()
-			elseif table.HasValue(prioritylist, v:UniqueID()) and !(devs[v:SteamID()] || creator[v:SteamID()]) then
+			elseif table.HasValue(prioritylist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
 				cam.Start3D()
 					render.DrawWireframeBox(pos, ang, min, max, prioritycol)
 				cam.End3D()
-			elseif gBool("Visuals", "Miscellaneous", "Team Colors") and !(devs[v:SteamID()] || creator[v:SteamID()]) then
+			elseif gBool("Visuals", "Miscellaneous", "Team Colors") and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
 				cam.Start3D()
 					render.DrawWireframeBox(pos, ang, min, max, team.GetColor(pm.Team(v)))
 				cam.End3D()
-			elseif (devs[v:SteamID()] || creator[v:SteamID()]) then
+			elseif (contributors[v:SteamID()] || creator[v:SteamID()]) then
 				cam.Start3D()
 					render.DrawWireframeBox(pos, ang, min, max, devcol)
 				cam.End3D()
-			elseif !(devs[v:SteamID()] || creator[v:SteamID()]) then
+			elseif !(contributors[v:SteamID()] || creator[v:SteamID()]) then
 				cam.Start3D()
 					render.DrawWireframeBox(pos, ang, min, max, misccol)
 				cam.End3D()
@@ -5680,7 +5682,7 @@ if ac != true then
 	timer.Create("PlaySound", 5.7, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 end
 
-if (idiot.QAC or idiot.qac or idiot.CAC or idiot.cac or idiot.SAC or idiot.sac or idiot.DAC or idiot.dac or idiot.TAC or idiot.tac or idiot.LSAC or idiot.lsac or idiot.simplicity or idiot.Simplicity or idiot.swiftAC or idiot.swiftac or idiot.SwiftAC or idiot.Swiftac or idiot.SMAC or idiot.smac or idiot.MAC or idiot.mac or idiot.GAC or idiot.gac or idiot.GS or idiot.gs or idiot.GTS or idiot.gts or idiot.AE or idiot.ae or idiot.CardinalLib or idiot.cardinallib or idiot.cardinalLib or idiot.Cardinallib) then
+if (idiot.QAC or idiot.qac or idiot.CAC or idiot.cac or idiot.SAC or idiot.sac or idiot.DAC or idiot.dac or idiot.ZAC or idiot.zac or idiot.TAC or idiot.tac or idiot.LSAC or idiot.lsac or idiot.simplicity or idiot.Simplicity or idiot.ZARP or idiot.Zarp or idiot.zarp or idiot.swiftAC or idiot.swiftac or idiot.SwiftAC or idiot.Swiftac or idiot.SMAC or idiot.smac or idiot.MAC or idiot.mac or idiot.GAC or idiot.gac or idiot.GS or idiot.gs or idiot.GTS or idiot.gts or idiot.AE or idiot.ae or idiot.CardinalLib or idiot.cardinallib or idiot.cardinalLib or idiot.Cardinallib) then
 	timer.Create("ChatPrint", 5.7, 1, function() MsgR(5.3, "An anti-cheat has been detected. Use with caution to avoid getting banned!") end)
 	timer.Create("PlaySound", 5.7, 1, function() surface.PlaySound("npc/scanner/combat_scan1.wav") end)
 	ac = true
