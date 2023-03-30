@@ -12,15 +12,15 @@
 
 
 
-detours = {}
+local detours = {}
 
-protectedfiles = {
+local protectedfiles = {
     "IdiotBox_latest.lua", 
     "IdiotBox_backup.lua", 
 	"IdiotBox_dev.lua", 
 }
 
-function DetourFunction(originalFunction, newFunction)
+local function DetourFunction(originalFunction, newFunction)
     detours[newFunction] = originalFunction
     return newFunction
 end
@@ -39,7 +39,7 @@ local folder = "IdiotBox"
 local version = "6.9.b4"
 
 local me = LocalPlayer()
-local wep = me:GetActiveWeapon() -- Trying to localize this causes many issues for whatever reason, but I'll figure it out at one point
+--[[local wep = me:GetActiveWeapon()]]-- Trying to localize this causes many issues for whatever reason, but I'll figure it out at one point
 
 local menukeydown, menukeydown2, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -62,6 +62,9 @@ local fixmovement = fixmovement or nil
 local nullvec = Vector() * - 1
 
 local fake = GetRenderTarget("fake"..os.time(), ScrW(), ScrH())
+
+local hide = {CHudHealth = true, CHudAmmo = true, CHudBattery = true, CHudSecondaryAmmo = true, CHudDamageIndicator = true, CHudCrosshair = true, }
+local crosshairhide = {CHudCrosshair = true, }
 
 local em = FindMetaTable("Entity")
 local pm = FindMetaTable("Player")
@@ -1579,7 +1582,7 @@ local function Unload()
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 end
 
-local function Changelog()
+function Changelog() -- Local variables, again
 	print("===========================================================\n\n")
 	print("IdiotBox v6.9.b4 bugfixes (in no particular order)")
 	print("")
@@ -3014,19 +3017,6 @@ end)
 hook.Add("PreDrawEffects", "Hook3", function()
 	render.SetLightingMode(0)
 end)
-
-local hide = {
-	CHudHealth = true, 
-	CHudAmmo = true, 
-	CHudBattery = true, 
-	CHudSecondaryAmmo = true, 
-	CHudDamageIndicator = true, 
-	CHudCrosshair = true, 
-}
-
-local crosshairhide = {
-	CHudCrosshair = true, 
-}
 
 hook.Add("HUDShouldDraw", "Hook4", function(name)
 	if gBool("Visuals", "Miscellaneous", "Hide HUD") and hide[name] then
@@ -4838,10 +4828,6 @@ local function Aimbot(cmd)
 	end
 end
 
-local function TriggerValid(v)
-	return (v and idiot.IsValid(v) and v:Health() > 0 and not v:IsDormant() and me:GetObserverTarget() ~= v and AimAssistPriorities(v))
-end
-
 local function TriggerFilter(hitbox)
 	if gOption("Aim Assist", "Aim Priorities", "Hitbox:") == "Head" then
 		return hitbox == 0
@@ -4857,7 +4843,7 @@ local function Triggerbot(cmd)
 	local trace = me:GetEyeTraceNoCursor()
 	local v = trace.Entity
 	local hitbox = trace.HitBox
-	if TriggerValid(v) and TriggerFilter(hitbox) then
+	if (v and idiot.IsValid(v) and v:Health() > 0 and not v:IsDormant() and me:GetObserverTarget() ~= v and AimAssistPriorities(v)) and TriggerFilter(hitbox) then
 	if v:IsPlayer() then
 		if gBool("Aim Assist", "Aim Priorities", "Distance Limit") then
 			if (vm.Distance(em.GetPos(v), em.GetPos(me)) > (dist * 5)) then return false end
@@ -4908,7 +4894,7 @@ local function Triggerbot(cmd)
 	if (gBool("Aim Assist", "Triggerbot", "Auto Zoom")) then
 		cmd:SetButtons(cmd:GetButtons() + IN_ATTACK2)
 	end
-	if not TriggerValid(v) then return end
+	if not (v and idiot.IsValid(v) and v:Health() > 0 and not v:IsDormant() and me:GetObserverTarget() ~= v and AimAssistPriorities(v)) then return end
 	triggering = true
 	if WeaponCanFire() then
 		cmd:SetButtons(cmd:GetButtons() + IN_ATTACK)
