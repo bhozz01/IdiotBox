@@ -3487,7 +3487,7 @@ end
 
 local function TraitorDetector()
 	if engine.ActiveGamemode() ~= "terrortown" then return end
-	if gBool("Visuals", "Miscellaneous", "Traitor Finder") then
+	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Traitor Finder") then
 	for k, v in idiot.ipairs(idiot.ents.GetAll()) do
 		local _v = v:GetOwner()
 		if (_v == me) then continue end
@@ -3505,7 +3505,7 @@ local function TraitorDetector()
 end
 
 local function MurdererDetector()
-	if not gBool("Visuals", "Miscellaneous", "Murderer Finder") or engine.ActiveGamemode() ~= "murder" then return end
+	if not gBool("Main Menu", "Murder Utilities", "Murderer Finder") or engine.ActiveGamemode() ~= "murder" then return end
 	for k, v in idiot.ipairs(idiot.player.GetAll()) do
 		if (v == me) then continue end
 		if (GAMEMODE.RoundStage == 1 and not v.Detected and not v.Magnum) then
@@ -3685,7 +3685,7 @@ hook.Add("Think", "Hook8", function()
 					if not me:IsTraitor() and v:GetOwner():IsPlayer() and table.HasValue(v.CanBuy, 1) and not table.HasValue(tweps, v:GetClass()) and not table.HasValue(traitors, v:GetOwner():UniqueID()) then
 						table.insert(traitors, v:GetOwner():UniqueID())
 						table.insert(tweps, v:GetClass())
-							chat.AddText(Color(255, 255, 0), " "..v:GetOwner():Nick().." is a traitor and their health is at "..v:GetOwner():Health().."%. There are "..(#traitors).." traitors. Item: "..v:GetPrintName())
+							chat.AddText(Color(255, 0, 0), v:GetOwner():Nick(), Color(255, 255, 0), " is a traitor. There are ", Color(255, 0, 0), (#traitors) " traitors. Item: ", Color(255, 0, 0), v:GetPrintName())
 							surface.PlaySound("buttons/lightswitch2.wav")
 					elseif gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Traitor Finder") and me:IsTraitor() and v:GetOwner():IsPlayer() and v:GetOwner():IsTraitor() then
 						table.insert(traitors, v:GetOwner():UniqueID())
