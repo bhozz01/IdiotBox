@@ -39,11 +39,11 @@ local folder = "IdiotBox"
 local version = "6.9.b4"
 
 local me = LocalPlayer()
---[[local wep = me:GetActiveWeapon()]]-- Trying to localize this causes many issues for whatever reason, but I'll figure it out at one point
+--[[ local wep = me:GetActiveWeapon() ]]-- Trying to localize this causes many issues for whatever reason, but I'll figure it out at one point
 
 local menukeydown, menukeydown2, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
-local box, drawnents, prioritylist, ignorelist, visible, added, dists, cones = {}, {}, {}, {}, {}, {}, {}, {}
+local box, drawnents, prioritylist, ignorelist, visible, added, dists, cones, traitors, tweps = {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
 
 local toggler, playerkills, namechangeTime, circlestrafeval, timeHoldingSpaceOnGround, servertime, faketick, propval, propdelay, crouched = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 local maintextcol, menutextcol, bgmenucol, bordercol, teamvisualscol, enemyvisualscol, prioritytargetscol, ignoredtargetscol, miscvisualscol, teamchamscol, enemychamscol, crosshaircol, viewmodelcol = Color(0, 205, 255), Color(255, 255, 255), Color(30, 30, 45), Color(0, 155, 255), Color(255, 255, 255), Color(255, 255, 255), Color(255, 0, 100), Color(175, 175, 175), Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 235, 255), Color(0, 235, 255)
@@ -119,28 +119,33 @@ contributors["STEAM_0:1:101813068"] = {} -- sdunken (first user)
 local options = {
 		["Main Menu"] = {
 				{
-					{"General Utilities", 16, 20, 232, 124, 218}, 
+					{"General Utilities", 16, 20, 232, 144, 218}, 
 					{"Optimize Game", "Checkbox", false, 78}, 
+					{"Spectator Mode", "Checkbox", false, 78}, 
 					{"Anti-AFK", "Checkbox", false, 78}, 
 					{"Anti-Ads", "Checkbox", false, 78}, 
 					{"Anti-Blind", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Trouble in Terrorist Town Utilities", 16, 158, 232, 150, 218}, 
+					{"Trouble in Terrorist Town Utilities", 16, 178, 232, 222, 218}, 
 					{"Hide Round Report", "Checkbox", false, 78}, 
 					{"Panel Remover", "Checkbox", false, 78}, 
+					{"Traitor Finder", "Checkbox", false, 78}, 
+					{"Ignore Detectives as Innocent", "Checkbox", false, 78}, 
+					{"Ignore Fellow Traitors", "Checkbox", false, 78}, 
 					{"Prop Kill", "Checkbox", false, 78}, 
 					{"Prop Kill Key:", "Toggle", 0, 92, 0}, 
 				}, 
 				{
-					{"DarkRP Utilities", 16, 323, 232, 133, 218}, 
+					{"DarkRP Utilities", 16, 415, 232, 128, 218}, 
 					{"Suicide Near Arrest Batons", "Checkbox", false, 78}, 
 					{"Transparent Props", "Checkbox", false, 78}, 
 					{"Transparency:", "Slider", 175, 255, 92}, 
 					{""}, 
 				}, 
 				{
-					{"Murder Utilities", 16, 470, 232, 100, 218}, 
+					{"Murder Utilities", 16, 557, 232, 123, 218}, 
+					{"Murderer Finder", "Checkbox", false, 78}, 
 					{"Hide End Round Board", "Checkbox", false, 78}, 
 					{"Hide Footprints", "Checkbox", false, 78}, 
 					{"No Black Screens", "Checkbox", false, 78}, 
@@ -356,9 +361,10 @@ local options = {
 					{"Dark Mode", "Checkbox", false, 78}, 
                 }, 
                 {
-					{"Miscellaneous", 506, 20, 232, 680, 218}, 
+					{"Miscellaneous", 506, 20, 232, 655, 218}, 
 					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Hide Ignored Targets", "Checkbox", false, 78}, 
+					{"Target Priority Colors", "Checkbox", true, 78}, -- Enabled by default
 					{"Show Enemies Only", "Checkbox", false, 78}, 
 					{"Show Spectators", "Checkbox", false, 78}, 
 					{"Team Colors", "Checkbox", false, 78}, 
@@ -372,8 +378,6 @@ local options = {
 					{"Show Entities", "Checkbox", false, 78}, 
 					{"Hide HUD", "Checkbox", false, 78}, 
 					{"Witness Finder", "Checkbox", false, 78}, 
-					{"Traitor Finder", "Checkbox", false, 78}, 
-					{"Murderer Finder", "Checkbox", false, 78}, 
 					{"Dormant Check:", "Selection", "All", {"None", "Players", "Entities", "All"}, 92}, 
 					{""}, 
 					{"Show FoV Circle", "Checkbox", false, 78}, 
@@ -1066,6 +1070,8 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			info = "Toggles this feature."
 		elseif feat == "Optimize Game" then
 			info = "Clears decals and other effects to improve framerate."
+		elseif feat == "Spectator Mode" then
+			info = "Enables all IdiotBox features while in spectator mode too. Useful only for Spectator Deathmatch."
 		elseif feat == "Anti-AFK" then
 			info = "Makes you move from left to right in order to avoid getting kicked for being inactive on certain servers."
 		elseif feat == "Anti-Ads" then
@@ -1076,12 +1082,20 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			info = "Hides the report at the end of a round."
 		elseif feat == "Panel Remover" then
 			info = "Removes panels, such as RDM reports, by pressing the 'G' key."
+		elseif feat == "Traitor Finder" then
+			info = "Draws TTT traitor-specific weapons, and sends alerts whenever a player buys one."
+		elseif feat == "Ignore Detectives as Innocent" then
+			info = "Ignores detectives if you're innocent."
+		elseif feat == "Ignore Fellow Traitors" then
+			info = "Ignores your traitor teammates if you're a traitor."
 		elseif feat == "Prop Kill" then
 			info = "Allows you to prop kill with the Magneto-stick upon toggling the prop kill key."
 		elseif feat == "Suicide Near Arrest Batons" then
 			info = "Automatically die when nearing an arrest baton to avoid being jailed."
 		elseif feat == "Transparent Props" then
 			info = "Changes prop opacity in DarkRP."
+		elseif feat == "Murderer Finder" then
+			info = "Draws Murder weapons, and sends alerts about who the murderer is."
 		elseif feat == "Hide End Round Board" then
 			info = "Hides the board at the end of a round."
 		elseif feat == "Hide Footprints" then
@@ -1202,6 +1216,8 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			info = "Draws the player's money value in DarkRP."
 		elseif feat == "Hide Ignored Targets" then
 			info = "Makes ignored targets not show up on your Visuals."
+		elseif feat == "Target Priority Colors" then
+			info = "Changes the player's Wallhack color, based on their target priority."
 		elseif feat == "Show Enemies Only" then
 			info = "Only shows players that are not on your team."
 		elseif feat == "Show Spectators" then
@@ -1224,10 +1240,6 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			info = "Hides the original HUD, for example: health value, ammo value, crosshair etc."
 		elseif feat == "Witness Finder" then
 			info = "Shows how many people can currently see you."
-		elseif feat == "Traitor Finder" then
-			info = "Draws TTT traitor-specific weapons, and sends alerts whenever a player buys one."
-		elseif feat == "Murderer Finder" then
-			info = "Draws Murder weapons, and sends alerts about who the murderer is."
 		elseif feat == "Show FoV Circle" then
 			info = "Draws an FoV circle for your Aimbot's FoV value."
 		elseif feat == "Snap Lines" then
@@ -1473,13 +1485,15 @@ local function DrawToggle(self, w, h, var, maxy, posx, posy, dist)
 		surface.DrawRect(posx - 193 + dist + 2, 81 + posy + maxy + 2, size - 3, 14)
 		local feat = var[1]
 		if feat == "Prop Kill Key:" then
-			info = "Toggle Prop Kill by pressing your desired key."
+			info = "Toggle Prop Kill by holding down your desired key."
 		elseif feat == "Toggle Key:" then
-			info = "Toggle this feature by pressing your desired key."
+			info = "Toggle this feature by holding down your desired key."
 		elseif feat == "Switch Key:" then
 			info = "Switch between Anti-Aim yaw directions by pressing your desired key."
+		elseif feat == "Thirdperson Key:" then
+			info = "Switch between firstperson and thirdperson by pressing your desired key."
 		elseif feat == "Circle Strafe Key:" then
-			info = "Toggle Circle Strafe by pressing your desired key."
+			info = "Toggle Circle Strafe by holding down your desired key."
 		end
 	end
       	if bMouse then
@@ -1582,7 +1596,7 @@ local function Unload()
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 end
 
-function Changelog() -- Local variables, again
+function Changelog() -- Ran out of local variables, again
 	print("===========================================================\n\n")
 	print("IdiotBox v6.9.b4 bugfixes (in no particular order)")
 	print("")
@@ -1592,7 +1606,7 @@ function Changelog() -- Local variables, again
 	print("- Aim Smoothness will automatically disable itself if Silent aim is turned on;")
 	print("- Merged Ragebot and Legitbot into a single function;")
 	print("- Cheat menu/ game menus will no longer be covered by Visuals/ windows/ lists and others;")
-	print("- Show Entities, Traitor Finder and Murderer Finder can only be used if Visuals is turned on;")
+	print("- Show Entities can only be used if Visuals is turned on;")
 	print("- Added missing space between the Custom Status rank and username;")
 	print("- Fixed dimension of the Armor Bar not matching the dimension of the Health Bar;")
 	print("- Fixed Bunny Hop breaking the movement when in water;")
@@ -1614,6 +1628,7 @@ function Changelog() -- Local variables, again
 	print("- Fixed Snap Lines still showing when Aimbot is not enabled;")
 	print("- Fixed toggle keys activating when browsing game menus/ typing;")
 	print("- Fixed Hide Round Report and Panel Remover not working correctly;")
+	print("- Fixed Aimbot and Triggerbot targeting spawning players;")
 	print("- Fixed Edged Box contrast issues;")
 	print("- Fixed misplaced tab selection lines;")
 	print("- Fixed poorly placed checkboxes/ sliders/ selections;")
@@ -1625,6 +1640,7 @@ function Changelog() -- Local variables, again
 	print("- Fixed Anti-Aim breaking the Radar view angles;")
 	print("- Fixed Circle Strafing spaghetti code not acting the way it should;")
 	print("- Fixed Free Roaming not working with Anti-Aim;")
+	print("- Fixed Visuals causing severe lag;")
 	print("- Fixed Cheater Callout clearing chat when it should not;")
 	print("- Fixed Thirdperson, Custom FoV and Free Roaming working incorrectly when the user is dead;")
 	print("- Fixed Bullet Fire Delay not working correctly;")
@@ -1658,7 +1674,7 @@ function Changelog() -- Local variables, again
 	print("- Added 'Cheater Callout', 'Copy Messages', 'Disconnect Spam', 'lol', 'english please', 'lmao', 'shit' and 'fuck' to Reply Spam;")
 	print("- Added 'Border Color', 'Misc Visuals Color' and 'B Opacity' to Adjustments;")
 	print("- Added 'Fake-Forwards/ Backwards/ Sideways', Yaw Spinbot, 'Static', 'Adaptive' and 'Disable in Use Toggle' to Anti-Aim;")
-	print("- Added 'Players List', 'Show Entities', 'Conditions', 'Velocity', 'Dormant Check', 'Show Spectators', 'Hide Ignored Targets', 'Bystander Name', 'NPCs' and 'Clientside' and priority statuses to Visuals;")
+	print("- Added 'Players List', 'Show Entities', 'Conditions', 'Velocity', 'Dormant Check', 'Show Spectators', 'Hide Ignored Targets', 'Bystander Name', 'NPCs', 'Clientside', 'Target Priority Colors' and priority statuses to Visuals;")
 	print("- Added 'Panic Mode', 'Entity Finder Menu', 'Plugin Loader Menu', 'Optimize Game', 'Feature Tooltips' and TTT/ Murder/ DarkRP specific features to Main Menu;")
 	print("- Added 'Spectators', 'Players', 'Frozen Players' and 'Enemies' to Aim Priorities;")
 	print("- Added 'Toggle Key' and 'Speed' to Free Roaming;")
@@ -1670,6 +1686,7 @@ function Changelog() -- Local variables, again
 	print("- Added 'Random' to Emotes;")
 	print("- Added 'Murder Taunts' to Taunting;")
 	print("- Added 'Legit', 'Rage', 'Circle' and 'Directional' to Auto Strafe;")
+	print("- Added 'Spectator Mode', 'Ignore Detectives as Innocent' and 'Ignore Fellow Traitors' to Main Menu;")
 	print("- Added customizable list positions to Priority List;")
 	print("- Added engine prediction module (big.dll);")
 	print("- Added custom key binds;")
@@ -1680,10 +1697,11 @@ function Changelog() -- Local variables, again
 	print("- Added a custom configurations menu;")
 	print("- Reworked 'Bunny Hop' and 'Auto Strafe' from scratch;")
 	print("- Reworked 'Auto Wallbang' from Aimbot;")
-	print("- Reworked 'Ignores' and 'Max Player Health' from Aim Priorities;")
 	print("- Reworked 'Resolver' from Hack vs. Hack;")
 	print("- Reworked 'Radar', 'Spectators' and 'Status' from Visuals;")
 	print("- Reworked 'Free Roaming' from Miscellaneous;")
+	print("- Reworked 'Traitor Finder' and 'Murderer Finder' from Main Menu;")
+	print("- Reworked priorities from Aim Priorities;")
 	print("- Reworked anti-screengrabber from scratch;")
 	print("- Reworked the menu's design from scratch;")
 	print("- Reworked old 'file.Read' blocker from scratch;")
@@ -2751,7 +2769,7 @@ local function Radar()
 	for k = 1, #everything do
 		local v = everything[k]
 		if (v != me and v:IsPlayer() and v:Health() > 0 and not (em.IsDormant(v) and gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All") and not (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) and not ((gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) or (v:IsNPC() and v:Health() > 0)) then
-			color = (v:IsPlayer() and ((contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b))) || pm.GetFriendStatus(v) == "friend" && Color(0, 255, 255) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v))) or Color(255, 255, 255)
+			color = (v:IsPlayer() and ((contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || pm.GetFriendStatus(v) == "friend" && Color(0, 255, 255) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v))) or Color(255, 255, 255)
 			surface.SetDrawColor(color)
 			local myPos = me:GetPos()
 			local theirPos = v:GetPos()
@@ -2897,7 +2915,7 @@ local function PlayerList()
 end
 
 local function Crosshair()
-	if menuopen or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Spectators:") and gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not me:Alive() or me:Health() < 1 then return end
+	if menuopen or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
 	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Box") then
 	local x1, y1 = ScrW() * 0.5, ScrH() * 0.5
 		surface.SetDrawColor(0, 0, 0, gInt("Adjustments", "Others", "T Opacity:"))
@@ -3026,156 +3044,6 @@ hook.Add("HUDShouldDraw", "Hook4", function(name)
 		return false
 	end
 end)
-
-local function TraitorFinder()
-	for k, v in pairs(ents.FindByClass("weapon_ttt_c4")) do
-	local pos = em.GetPos(v) + Vector(1, 0, - 6)
-	local pos2 = pos + Vector(0, 0, 70)
-	local pos = vm.ToScreen(pos)
-	local pos2 = vm.ToScreen(pos2)
-	local h = pos.y - pos2.y
-	local w = h / 1.3
-	local h = h/ 1.8
-	local Ent = v
-	local Dist = math.floor(Ent:GetPos():Distance(me:GetShootPos())/40)
-	draw.DrawText("Traitor C4", "MiscFont", pos.x + w/50, pos.y + h /11, Color(255, 0, 100), 1)
-	end
-	for k, v in pairs(ents.FindByClass("weapon_ttt_knife")) do
-	local pos = em.GetPos(v) + Vector(1, 0, - 6)
-	local pos2 = pos + Vector(0, 0, 70)
-	local pos = vm.ToScreen(pos)
-	local pos2 = vm.ToScreen(pos2)
-	local h = pos.y - pos2.y
-	local w = h / 1.3
-	local h = h/ 1.8
-	local Ent = v
-	local Dist = math.floor(Ent:GetPos():Distance(me:GetShootPos())/40)
-	draw.DrawText("Traitor Knife", "MiscFont", pos.x + w/50, pos.y + h /11, Color(255, 0, 100), 1)
-	end
-	for k, v in pairs(ents.FindByClass("weapon_ttt_phammer")) do
-	local pos = em.GetPos(v) + Vector(1, 0, - 6)
-	local pos2 = pos + Vector(0, 0, 70)
-	local pos = vm.ToScreen(pos)
-	local pos2 = vm.ToScreen(pos2)
-	local h = pos.y - pos2.y
-	local w = h / 1.3
-	local h = h/ 1.8
-	local Ent = v
-	local Dist = math.floor(Ent:GetPos():Distance(me:GetShootPos())/40)
-	draw.DrawText("Traitor Poltergeist", "MiscFont", pos.x + w/50, pos.y + h /11, Color(255, 0, 100), 1)
-	end
-	for k, v in pairs(ents.FindByClass("weapon_ttt_sipistol")) do
-	local pos = em.GetPos(v) + Vector(1, 0, - 6)
-	local pos2 = pos + Vector(0, 0, 70)
-	local pos = vm.ToScreen(pos)
-	local pos2 = vm.ToScreen(pos2)
-	local h = pos.y - pos2.y
-	local w = h / 1.3
-	local h = h/ 1.8
-	local Ent = v
-	local Dist = math.floor(Ent:GetPos():Distance(me:GetShootPos())/40)
-	draw.DrawText("Traitor Silenced Pistol", "MiscFont", pos.x + w/50, pos.y + h /11, Color(255, 0, 100), 1)
-	end
-	for k, v in pairs(ents.FindByClass("weapon_ttt_pain_station")) do
-	local pos = em.GetPos(v) + Vector(1, 0, - 6)
-	local pos2 = pos + Vector(0, 0, 70)
-	local pos = vm.ToScreen(pos)
-	local pos2 = vm.ToScreen(pos2)
-	local h = pos.y - pos2.y
-	local w = h / 1.3
-	local h = h/ 1.8
-	local Ent = v
-	local Dist = math.floor(Ent:GetPos():Distance(me:GetShootPos())/40)
-	draw.DrawText("Traitor Pain Station", "MiscFont", pos.x + w/50, pos.y + h /11, Color(255, 0, 100), 1)
-	end
-	for k, v in pairs(ents.FindByClass("weapon_ttt_flaregun")) do
-	local pos = em.GetPos(v) + Vector(1, 0, - 6)
-	local pos2 = pos + Vector(0, 0, 70)
-	local pos = vm.ToScreen(pos)
-	local pos2 = vm.ToScreen(pos2)
-	local h = pos.y - pos2.y
-	local w = h / 1.3
-	local h = h/ 1.8
-	local Ent = v
-	local Dist = math.floor(Ent:GetPos():Distance(me:GetShootPos())/40)
-	draw.DrawText("Traitor Flaregun", "MiscFont", pos.x + w/50, pos.y + h /11, Color(255, 0, 100), 1)
-	end
-	for k, v in pairs(ents.FindByClass("weapon_ttt_push")) do
-	local pos = em.GetPos(v) + Vector(1, 0, - 6)
-	local pos2 = pos + Vector(0, 0, 70)
-	local pos = vm.ToScreen(pos)
-	local pos2 = vm.ToScreen(pos2)
-	local h = pos.y - pos2.y
-	local w = h / 1.3
-	local h = h/ 1.8
-	local Ent = v
-	local Dist = math.floor(Ent:GetPos():Distance(me:GetShootPos())/40)
-	draw.DrawText("Traitor Newton Launcher", "MiscFont", pos.x + w/50, pos.y + h /11, Color(255, 0, 100), 1)
-	end
-	for k, v in pairs(ents.FindByClass("weapon_ttt_radio")) do
-	local pos = em.GetPos(v) + Vector(1, 0, - 6)
-	local pos2 = pos + Vector(0, 0, 70)
-	local pos = vm.ToScreen(pos)
-	local pos2 = vm.ToScreen(pos2)
-	local h = pos.y - pos2.y
-	local w = h / 1.3
-	local h = h/ 1.8
-	local Ent = v
-	local Dist = math.floor(Ent:GetPos():Distance(me:GetShootPos())/40)
-	draw.DrawText("Traitor Radio", "MiscFont", pos.x + w/50, pos.y + h /11, Color(255, 0, 100), 1)
-	end
-	for k, v in pairs(ents.FindByClass("weapon_ttt_teleport")) do
-	local pos = em.GetPos(v) + Vector(1, 0, - 6)
-	local pos2 = pos + Vector(0, 0, 70)
-	local pos = vm.ToScreen(pos)
-	local pos2 = vm.ToScreen(pos2)
-	local h = pos.y - pos2.y
-	local w = h / 1.3
-	local h = h/ 1.8
-	local Ent = v
-	local Dist = math.floor(Ent:GetPos():Distance(me:GetShootPos())/40)
-	draw.DrawText("Traitor Teleport", "MiscFont", pos.x + w/50, pos.y + h /11, Color(255, 0, 100), 1)
-	end
-	for k, v in pairs(ents.FindByClass("(Disguise)")) do
-	local pos = em.GetPos(v) + Vector(1, 0, - 6)
-	local pos2 = pos + Vector(0, 0, 70)
-	local pos = vm.ToScreen(pos)
-	local pos2 = vm.ToScreen(pos2)
-	local h = pos.y - pos2.y
-	local w = h / 1.3
-	local h = h/ 1.8
-	local Ent = v
-	local Dist = math.floor(Ent:GetPos():Distance(me:GetShootPos())/40)
-	draw.DrawText("Traitor", "MiscFont", pos.x + w/50, pos.y + h /11, Color(255, 0, 100), 1)
-	end
-end
-
-local function MurdererFinder()
-	for k, v in pairs(ents.FindByClass("weapon_mu_knife")) do
-	local pos = em.GetPos(v) + Vector(1, 0, - 6)
-	local pos2 = pos + Vector(0, 0, 70)
-	local pos = vm.ToScreen(pos)
-	local pos2 = vm.ToScreen(pos2)
-	local h = pos.y - pos2.y
-	local w = h / 1.3
-	local h = h /  1.8
-	local Ent = v
-	local Dist = math.floor(Ent:GetPos():Distance(me:GetShootPos()) / 40)
-	draw.DrawText("Murderer Knife", "MiscFont", pos.x + w / 50, pos.y + h  / 11, Color(100, 0, 255), 1)
-	end
-	for k, v in pairs(ents.FindByClass("weapon_mu_magnum")) do
-	local pos = em.GetPos(v) + Vector(1, 0, - 6)
-	local pos2 = pos + Vector(0, 0, 70)
-	local pos = vm.ToScreen(pos)
-	local pos2 = vm.ToScreen(pos2)
-	local h = pos.y - pos2.y
-	local w = h / 1.3
-	local h = h /  1.8
-	local Ent = v
-	local Dist = math.floor(Ent:GetPos():Distance(me:GetShootPos()) / 40)
-	draw.DrawText("Magnum Pistol", "MiscFont", pos.x + w / 50, pos.y + h  / 11, Color(100, 0, 255), 1)
-	end
-end
 
 local function ChatSpam()
 	local ArabFunni = {"يمارس الجنس مع السلطة العربية سنة عظيمة", "رائحة مثل البظر دون السن القانونية هنا اسمحوا لي أن اللعنة", "ازدهار مسحوق الطاقة العربية سنة جيدة", "نحن نكره اليهو", "يمارس الجنس مع الأطفال الماعز نعم الجنس", "الله أكبر نعم رجل تفجير طفل", "هذه لحظة بره لحظة ارهابية سنة", "في تلك اللحظة التي يبدأ فيها أخاك في المغازلة مع والدتك", "الحصول على صندوق احمق نعم العربية غش كازاخستان", "يمارس الجنس مع نيغا الكلبة دا قرن الطفل", "ترك العرب باكستاني لحظة برمة تجميع كرمة", "حرق اليهود ، يمارس الجنس مع المسيح ، قتل الأطفال ، أصبح الله",}
@@ -3307,7 +3175,7 @@ local function Chams(v)
 		["$ignorez"] = 0, 
 		["$basetexture"] = "models/debug/debugwhite", 
 	})
-	local col = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetChamsColor(v)
+	local col = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetChamsColor(v)
 	local wep = v:GetActiveWeapon()
 	if (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then
 		return false
@@ -3404,7 +3272,7 @@ local function Circle(cmd)
 end
 
 local function BunnyHop(cmd)
-	if (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) or not me:Alive() or me:Health() < 1 then return end
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
 	if gBool("Miscellaneous", "Movement", "Bunny Hop") and gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Off" then
     local badmovetypes = {
         [MOVETYPE_NOCLIP] = true,
@@ -3548,7 +3416,7 @@ local function CircleStrafe(cmd)
         [MOVETYPE_NOCLIP] = true,
         [MOVETYPE_LADDER] = true,
     }
-	if (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) or not me:Alive() or me:Health() < 1 or (badmovetypes[me:GetMoveType()]) then return end
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or (badmovetypes[me:GetMoveType()]) then return end
 		if !gKey("Miscellaneous", "Movement", "Circle Strafe Key:") and gOption("Miscellaneous", "Movement", "Auto Strafe:") ~= "Off" then
 			if (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Legit") then
 				LegitStrafe(cmd)
@@ -3580,7 +3448,7 @@ local function CircleStrafe(cmd)
 end
 
 local function AutoStrafe(cmd)
-    if (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) or not me:Alive() or me:Health() < 1 then return end
+    if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
 	if gBool("Miscellaneous", "Movement", "Bunny Hop") and gOption("Miscellaneous", "Movement", "Auto Strafe:") ~= "Off" then
     local badmovetypes = {
         [MOVETYPE_NOCLIP] = true,
@@ -3602,7 +3470,7 @@ local function AutoStrafe(cmd)
 end
 
 local function AirCrouch(cmd)
-	if em.GetMoveType(me) == MOVETYPE_NOCLIP or (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) or not me:Alive() or me:Health() < 1 or me:IsFlagSet(1024) then return end
+	if em.GetMoveType(me) == MOVETYPE_NOCLIP or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or me:IsFlagSet(1024) then return end
 	if gBool("Miscellaneous", "Movement", "Air Crouch") then
 	local pos = me:GetPos()
 	local trace = {
@@ -3620,14 +3488,14 @@ end
 
 local function TraitorDetector()
 	if engine.ActiveGamemode() ~= "terrortown" then return end
-	if gBool("Visuals", "Miscellaneous", "Traitor Finder") then
+	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Traitor Finder") then
 	for k, v in idiot.ipairs(idiot.ents.GetAll()) do
 		local _v = v:GetOwner()
 		if (_v == me) then continue end
 		if (idiot.GetRoundState() == 3 and v:IsWeapon() and _v:IsPlayer() and not _v.Detected and idiot.table.HasValue(v.CanBuy, 1)) then
 			if (_v:GetRole() ~= 2) then
 				_v.Detected = true
-				MsgY(4.3, _v:Nick().." is a Traitor. He just bought: "..v:GetPrintName())
+				MsgY(4.3, _v:Nick().." is a Traitor. They just bought: "..v:GetPrintName())
 				surface.PlaySound("npc/scanner/combat_scan1.wav")
 			end
 		elseif (idiot.GetRoundState() ~= 3) then
@@ -3638,7 +3506,7 @@ local function TraitorDetector()
 end
 
 local function MurdererDetector()
-	if not gBool("Visuals", "Miscellaneous", "Murderer Finder") or engine.ActiveGamemode() ~= "murder" then return end
+	if not gBool("Main Menu", "Murder Utilities", "Murderer Finder") or engine.ActiveGamemode() ~= "murder" then return end
 	for k, v in idiot.ipairs(idiot.player.GetAll()) do
 		if (v == me) then continue end
 		if (GAMEMODE.RoundStage == 1 and not v.Detected and not v.Magnum) then
@@ -3649,7 +3517,7 @@ local function MurdererDetector()
 			end
 			if (v:HasWeapon("weapon_mu_magnum")) then
 				v.Magnum = true
-				timer.Create("ChatPrint", 4.8, 1, function() MsgY (4.3, (v:Nick().." ("..v:GetNWString("bystanderName")..") has a magnum.")) end)
+				timer.Create("ChatPrint", 4.8, 1, function() MsgY (4.3, (v:Nick().." ("..v:GetNWString("bystanderName")..") has a Magnum.")) end)
 				timer.Create("PlaySound", 4.8, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 			else
 				v.Magnum = false
@@ -3799,74 +3667,100 @@ hook.Add("Think", "Hook8", function()
 		applied = false
 		end
 	end
-	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Hide Round Report") and engine.ActiveGamemode() == "terrortown" then
-		if not displayed then
-			function CLSCORE:ShowPanel() return end
-		displayed = true
-		end
-	end
-	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Panel Remover") and engine.ActiveGamemode() == "terrortown" then
-		local pan = vgui.GetHoveredPanel()
-		CheckChild(pan)
-	end
-	if gBool("Main Menu", "Murder Utilities", "Hide End Round Board") and engine.ActiveGamemode() == "murder" then
-		if not displayed then
-			function GAMEMODE:DisplayEndRoundBoard(data) return end
+	if engine.ActiveGamemode() == "terrortown" then
+		if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Hide Round Report") then
+			if not displayed then
+				function CLSCORE:ShowPanel() return end
 			displayed = true
-		end
-	end
-	if gBool("Main Menu", "Murder Utilities", "Hide Footprints") and engine.ActiveGamemode() == "murder" then
-		if not footprints then
-			function GAMEMODE:DrawFootprints() return end
-			footprints = true
-		end
-	end
-	if gBool("Main Menu", "Murder Utilities", "No Black Screens") and engine.ActiveGamemode() == "murder" then
-		if not blackscreen then
-			function GAMEMODE:RenderScreenspaceEffects() return end
-			function GAMEMODE:PostDrawHUD() return end
-			blackscreen = true
-		end
-	end
-	if engine.ActiveGamemode() == "murder" and (me:Alive() or me:Health() > 0) then
-	local tauntspam = {"funny", "help", "scream", "morose",}
-		if gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Funny" then
-			RunConsoleCommand("mu_taunt", "funny")
-		elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Funny" == "Help" then
-			RunConsoleCommand("mu_taunt", "help")
-		elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Funny" == "Scream" then
-			RunConsoleCommand("mu_taunt", "scream")
-		elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Funny" == "Morose" then
-			RunConsoleCommand("mu_taunt", "morose")
-		elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Funny" == "Random" then
-			RunConsoleCommand("mu_taunt", tauntspam[math.random(#tauntspam)])
-		end
-	end
-	if gBool("Main Menu", "DarkRP Utilities", "Suicide Near Arrest Batons") and engine.ActiveGamemode() == "darkrp" and (me:Alive() or me:Health() > 0) then
-		for k, v in next, player.GetAll() do
-			if not v:IsValid() or v:Health() < 1 or v:IsDormant() or v == me or (gBool("Aim Assist", "Aim Priorities", "Ignore Friends") and v:GetFriendStatus() == "friend") then continue end
-			if v:GetPos():Distance(me:GetPos()) < 95 and v:GetActiveWeapon():GetClass() == "arrest_stick" and me:GetPos():Distance(v:GetEyeTrace().HitPos) < 105 then
-				me:ConCommand("kill")
 			end
 		end
-	end
-	if gBool("Main Menu", "DarkRP Utilities", "Transparent Props") and engine.ActiveGamemode() == "darkrp" then
-		for k, v in next, ents.FindByClass("prop_physics") do
-			v:SetRenderMode(RENDERMODE_TRANSCOLOR)
-			v:SetKeyValue("renderfx", 0)
-			v:SetColor(Color(255, 255, 255, gInt("Main Menu", "DarkRP Utilities", "Transparency:")))
+		if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Panel Remover") then
+			local pan = vgui.GetHoveredPanel()
+			CheckChild(pan)
 		end
-		if loopedprops then
-			loopedprops = false
+		if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Traitor Finder") then
+			if GetRoundState() == ROUND_ACTIVE then
+				for k, v in next, ents.GetAll() do
+					if not v:IsWeapon() or not v:IsValid() then continue end
+					if (v:GetOwner():IsPlayer() and v:GetOwner():IsDetective()) or v:GetOwner() == me then continue end
+					if not me:IsTraitor() and v:GetOwner():IsPlayer() and table.HasValue(v.CanBuy, 1) and not table.HasValue(tweps, v:GetClass()) and not table.HasValue(traitors, v:GetOwner():UniqueID()) then
+						table.insert(traitors, v:GetOwner():UniqueID())
+						table.insert(tweps, v:GetClass())
+							chat.AddText(Color(255, 255, 255), "\n[TRAITOR FINDER LOGS]")
+							chat.AddText(Color(255, 255, 255), "Detected traitor: ", Color(255, 0, 0), v:GetOwner():Nick())
+							chat.AddText(Color(255, 255, 255), "Item purchased: ", Color(255, 0, 0), v:GetPrintName().."\n")
+							surface.PlaySound("buttons/lightswitch2.wav")
+					elseif gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Traitor Finder") and me:IsTraitor() and v:GetOwner():IsPlayer() and v:GetOwner():IsTraitor() then
+						table.insert(traitors, v:GetOwner():UniqueID())
+						table.insert(tweps, v:GetClass())
+					end
+				end
+			elseif GetRoundState() == ROUND_POST and #traitors > 0 then
+				table.Empty(traitors)
+				table.Empty(tweps)
+			end
 		end
-	else
-		if not loopedprops then
+	elseif engine.ActiveGamemode() == "murder" then
+		if gBool("Main Menu", "Murder Utilities", "Hide End Round Board") then
+			if not displayed then
+				function GAMEMODE:DisplayEndRoundBoard(data) return end
+				displayed = true
+			end
+		end
+		if gBool("Main Menu", "Murder Utilities", "Hide Footprints") then
+			if not footprints then
+				function GAMEMODE:DrawFootprints() return end
+				footprints = true
+			end
+		end
+		if gBool("Main Menu", "Murder Utilities", "No Black Screens") then
+			if not blackscreen then
+				function GAMEMODE:RenderScreenspaceEffects() return end
+				function GAMEMODE:PostDrawHUD() return end
+				blackscreen = true
+			end
+		end
+		if me:Alive() or me:Health() > 0 then
+		local tauntspam = {"funny", "help", "scream", "morose",}
+			if gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Funny" then
+				RunConsoleCommand("mu_taunt", "funny")
+			elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Funny" == "Help" then
+				RunConsoleCommand("mu_taunt", "help")
+			elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Funny" == "Scream" then
+				RunConsoleCommand("mu_taunt", "scream")
+			elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Funny" == "Morose" then
+				RunConsoleCommand("mu_taunt", "morose")
+			elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Funny" == "Random" then
+				RunConsoleCommand("mu_taunt", tauntspam[math.random(#tauntspam)])
+			end
+		end
+	elseif engine.ActiveGamemode() == "darkrp" then
+		if gBool("Main Menu", "DarkRP Utilities", "Suicide Near Arrest Batons") and (me:Alive() or me:Health() > 0) then
+			for k, v in next, player.GetAll() do
+				if not v:IsValid() or v:Health() < 1 or v:IsDormant() or v == me or (gBool("Aim Assist", "Aim Priorities", "Ignore Friends") and v:GetFriendStatus() == "friend") then continue end
+				if v:GetPos():Distance(me:GetPos()) < 95 and v:GetActiveWeapon():GetClass() == "arrest_stick" and me:GetPos():Distance(v:GetEyeTrace().HitPos) < 105 then
+					me:ConCommand("kill")
+				end
+			end
+		end
+		if gBool("Main Menu", "DarkRP Utilities", "Transparent Props") then
 			for k, v in next, ents.FindByClass("prop_physics") do
-				v:SetColor(Color(255, 255, 255, 255))
+				v:SetRenderMode(RENDERMODE_TRANSCOLOR)
+				v:SetKeyValue("renderfx", 0)
+				v:SetColor(Color(255, 255, 255, gInt("Main Menu", "DarkRP Utilities", "Transparency:")))
 			end
-			loopedprops = true
+			if loopedprops then
+				loopedprops = false
+			end
+		else
+			if not loopedprops then
+				for k, v in next, ents.FindByClass("prop_physics") do
+					v:SetColor(Color(255, 255, 255, 255))
+				end
+					loopedprops = true
+				end
+			end
 		end
-	end
 	if (gBool("Main Menu", "General Utilities", "Anti-Blind")) then
 		if (HookExist("HUDPaint", "ulx_blind")) then
 			MsgR(4.3, "IdiotBox successfully blocked a blinding attempt.")
@@ -3946,10 +3840,10 @@ local function Visuals(v)
 	local h = pos.y - pos2.y
 	local w = h / 2
 	local ww = h / 4
-	local colOne = (contributors[v:SteamID()] || creator[v:SteamID()]) && Color(0, 0, 0) || ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
+	local colOne = (contributors[v:SteamID()] || creator[v:SteamID()]) && Color(0, 0, 0) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
 	local colTwo = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || Color(0, 0, 0)
-	local colThree = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
-	local colFour = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
+	local colThree = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
+	local colFour = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
 	local colFive = gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
 	local healthcol = Color((100 - em.Health(v)) * 2.55, em.Health(v) * 2.55, 0)
 	local armorcol = Color((100 - v:Armor()) * 2.55, v:Armor() * 2.55, v:Armor() * 2.55)
@@ -3978,11 +3872,11 @@ local function Visuals(v)
 		local eye = v:EyeAngles()
 		local min, max = v:WorldSpaceAABB()
 		local origin = v:GetPos()
-		if table.HasValue(ignorelist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+		if gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(ignorelist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, ignoredcol)
 			cam.End3D()
-		elseif table.HasValue(prioritylist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+		elseif gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(prioritylist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, prioritycol)
 			cam.End3D()
@@ -4241,11 +4135,11 @@ local function Visuals(v)
 			local min, max = v:GetHitBoxBounds(_i, i)			
 			if (v:GetBonePosition(bone)) then
 			local pos, ang = v:GetBonePosition(bone)
-			if table.HasValue(ignorelist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+			if gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(ignorelist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
 				cam.Start3D()
 					render.DrawWireframeBox(pos, ang, min, max, ignoredcol)
 				cam.End3D()
-			elseif table.HasValue(prioritylist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+			elseif gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(prioritylist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
 				cam.Start3D()
 					render.DrawWireframeBox(pos, ang, min, max, prioritycol)
 				cam.End3D()
@@ -4333,16 +4227,34 @@ hook.Add("DrawOverlay", "Hook13", function()
 			Visuals(v)
 		end
 	end
-	if gBool("Visuals", "Wallhack", "Enabled") && gBool("Visuals", "Miscellaneous", "Traitor Finder") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) && !menuopen then
-		TraitorFinder()
-	end
-	if gBool("Visuals", "Wallhack", "Enabled") && gBool("Visuals", "Miscellaneous", "Murderer Finder") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) && !menuopen then
-		MurdererFinder()
-	end
 	if gBool("Visuals", "Miscellaneous", "Show NPCs") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) && !menuopen then
 		ShowNPCs()
 	end
 	for k, v in next, ents.GetAll() do
+	if engine.ActiveGamemode() == "terrortown" && gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Traitor Finder") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) && !menuopen then
+	local titems = {"weapon_ttt_turtlenade", "weapon_ttt_death_station", "weapon_ttt_tripmine", "weapon_ttt_silencedsniper", "(Disguise)", "spiderman's_swep", "weapon_ttt_trait_defilibrator", "weapon_ttt_xbow", "weapon_ttt_dhook", "weapon_awp", "weapon_ttt_ak47", "weapon_jihadbomb", "weapon_ttt_knife", "weapon_ttt_c4", "weapon_ttt_decoy", "weapon_ttt_flaregun", "weapon_ttt_phammer", "weapon_ttt_push", "weapon_ttt_radio", "weapon_ttt_sipistol", "weapon_ttt_teleport", "weapon_ttt_awp", "weapon_mad_awp", "weapon_real_cs_g3sg1", "weapon_ttt_cvg_g3sg1", "weapon_ttt_healthstation5", "weapon_ttt_sentry", "weapon_ttt_poison_dart", "weapon_ttt_trait_defibrillator", "weapon_ttt_tmp_s"}
+		if table.HasValue(titems, v:GetClass()) then
+			pos = v:GetPos()
+			pos = pos:ToScreen()
+			draw.DrawText(v:GetPrintName(), "MiscFont", pos.x, pos.y, Color(255,75,75), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
+	elseif engine.ActiveGamemode() == "murder" && gBool("Main Menu", "Murder Utilities", "Murderer Finder") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) && !menuopen then
+		if string.find(v:GetClass(), "weapon_mu_magnum") then
+			pos = v:GetPos()
+			pos = pos:ToScreen()
+			draw.DrawText("Magnum", "MiscFont", pos.x, pos.y, Color(50,150,255), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
+		if string.find(v:GetClass(), "weapon_mu_knife") then
+			pos = v:GetPos()
+			pos = pos:ToScreen()
+			draw.DrawText("Knife", "MiscFont", pos.x, pos.y, Color(255,75,75), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
+		if string.find(v:GetClass(), "mu_loot") then
+			pos = v:GetPos()
+			pos = pos:ToScreen()
+			draw.DrawText("Loot", "MiscFont", pos.x, pos.y, Color(50,255,50), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+		end
+	end
 	if (v:IsDormant() and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or not v:IsValid() or not OnScreen(v) or not WallhackFilter(v) or (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) then continue end
 	if gBool("Visuals", "Miscellaneous", "Show Entities") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) && !menuopen then
 	if table.HasValue(drawnents, v:GetClass()) and v:IsValid() and v:GetPos():Distance(me:GetPos()) > 40 then
@@ -4380,9 +4292,9 @@ hook.Add("DrawOverlay", "Hook13", function()
 	if gOption("Visuals", "Miscellaneous", "Crosshair:") ~= "Off" && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
 		Crosshair()
 	end
-	if gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or me:IsTyping() or menuopen or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Spectators:") and gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not me:Alive() or me:Health() < 1 or (gBool("Aim Assist", "Triggerbot", "Enabled") and not gBool("Aim Assist", "Aimbot", "Enabled")) then return end
+	if gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or me:IsTyping() or menuopen or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not me:Alive() or me:Health() < 1 or (gBool("Aim Assist", "Triggerbot", "Enabled") and not gBool("Aim Assist", "Aimbot", "Enabled")) then return end
 	for k, v in pairs(player.GetAll()) do
-	if (gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me then return end
+		if (gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me then return end
 	end
 	if (aimtarget and em.IsValid(aimtarget) and not FixTools() and gBool("Visuals", "Miscellaneous", "Snap Lines") and (gBool("Aim Assist", "Aimbot", "Enabled"))) then
 		if me:Alive() or em.Health(me) > 0 then
@@ -4570,7 +4482,16 @@ local function Valid(v)
 	if !gBool("Aim Assist", "Aim Priorities", "Target Spectators") then
 		if v:Team() == TEAM_SPECTATOR then return false end
 	end
+	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Ignore Detectives as Innocent") and engine.ActiveGamemode() == "terrortown" and GetRoundState() ~= ROUND_POST and not me:IsTraitor() then
+		if v:IsDetective() then return false end
+	end
+	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Ignore Fellow Traitors") and engine.ActiveGamemode() == "terrortown" and GetRoundState() ~= ROUND_POST and me:IsTraitor() and not table.HasValue(prioritylist, v:UniqueID()) then
+		if v:IsTraitor() then return false end
+	end
 	if (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignorelist, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Aim Assist", "Aim Priorities", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then
+		return false
+	end
+	if v:Team() == TEAM_CONNECTING then
 		return false
 	end
 	end
@@ -4780,7 +4701,7 @@ local function PredictPos(aimtarget)
 end
 
 local function Aimbot(cmd)
-	if cm.CommandNumber(cmd) == 0 or not gBool("Aim Assist", "Aimbot", "Enabled") or not me:Alive() or me:Health() < 1 or not me:GetActiveWeapon():IsValid() or (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) then return end
+	if cm.CommandNumber(cmd) == 0 or not gBool("Aim Assist", "Aimbot", "Enabled") or not me:Alive() or me:Health() < 1 or not me:GetActiveWeapon():IsValid() or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) then return end
 	for k, v in pairs(player.GetAll()) do
 	if ((gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me) || FixTools() then return end
 	end
@@ -4836,7 +4757,7 @@ local function TriggerFilter(hitbox)
 end
 
 local function Triggerbot(cmd)
-	if cm.CommandNumber(cmd) == 0 or not gBool("Aim Assist", "Triggerbot", "Enabled") or not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Triggerbot", "Spectators:")) or not gKey("Aim Assist", "Triggerbot", "Toggle Key:") or cmd:KeyDown(IN_ATTACK) or FixTools() then return end
+	if cm.CommandNumber(cmd) == 0 or not gBool("Aim Assist", "Triggerbot", "Enabled") or not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Triggerbot", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not gKey("Aim Assist", "Triggerbot", "Toggle Key:") or cmd:KeyDown(IN_ATTACK) or FixTools() then return end
 	local dist = gBool("Aim Assist", "Aim Priorities", "Distance:")
 	local vel = gBool("Aim Assist", "Aim Priorities", "Velocity:")
 	local maxhealth = gInt("Aim Assist", "Aim Priorities", "Max Player Health:") 
@@ -4878,7 +4799,7 @@ local function Triggerbot(cmd)
 		if !gBool("Aim Assist", "Aim Priorities", "Target Noclipping Players") then
 			if em.GetMoveType(v) == MOVETYPE_NOCLIP then return false end
 		end
-		if gBool("Aim Assist", "Aim Priorities", "Target Disable in Noclip") then
+		if gBool("Aim Assist", "Aim Priorities", "Disable in Noclip") then
 			if em.GetMoveType(me) == MOVETYPE_NOCLIP then return false end
 		end
 		if !gBool("Aim Assist", "Aim Priorities", "Target Spectators") then
@@ -4887,7 +4808,16 @@ local function Triggerbot(cmd)
 		if !gBool("Aim Assist", "Aim Priorities", "Target Overhealed Players") then
 			if v:Health() > maxhealth then return false end
 		end
+		if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Ignore Detectives as Innocent") and engine.ActiveGamemode() == "terrortown" and GetRoundState() ~= ROUND_POST and not me:IsTraitor() then
+			if v:IsDetective() then return false end
+		end
+		if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Ignore Fellow Traitors") and engine.ActiveGamemode() == "terrortown" and GetRoundState() ~= ROUND_POST and me:IsTraitor() and not table.HasValue(prioritylist, v:UniqueID()) then
+			if v:IsTraitor() then return false end
+		end
 		if (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignorelist, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Aim Assist", "Aim Priorities", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then
+			return false
+		end
+		if v:Team() == TEAM_CONNECTING then
 			return false
 		end
 	end
@@ -5251,7 +5181,7 @@ local function AntiAim(cmd)
 	if (gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Anti-Aim")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me then return end
 	end
 	local wep = pm.GetActiveWeapon(me)
-	if (gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP || me:Team() == TEAM_SPECTATOR || triggering == true || (cm.CommandNumber(cmd) == 0 && !ThirdpersonCheck()) || cm.KeyDown(cmd, 1) || gBool("Visuals", "Point of View", "Custom FoV") && gBool("Miscellaneous", "Free Roaming", "Enabled") && gKey("Miscellaneous", "Free Roaming", "Toggle Key:") && !ThirdpersonCheck() || me:WaterLevel() > 1 || input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable in 'Use' Toggle") && !me:IsTyping() || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aim Assist", "Aimbot", "Enabled") && (gInt("Aim Assist", "Aimbot", "Aim FoV Value:") > 0 or gInt("Aim Assist", "Aimbot", "Aim Smoothness:") > 0) || gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && engine.ActiveGamemode() == "terrortown" && wep:IsValid() && wep:GetClass() == "weapon_zm_carry") then return end
+	if ((gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP) || me:Team() == TEAM_SPECTATOR || triggering == true || (cm.CommandNumber(cmd) == 0 && !ThirdpersonCheck()) || cm.KeyDown(cmd, 1) || gBool("Visuals", "Point of View", "Custom FoV") && gBool("Miscellaneous", "Free Roaming", "Enabled") && gKey("Miscellaneous", "Free Roaming", "Toggle Key:") && !ThirdpersonCheck() || me:WaterLevel() > 1 || (input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable in 'Use' Toggle") && !(me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible())) || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aim Assist", "Aimbot", "Enabled") && (gInt("Aim Assist", "Aimbot", "Aim FoV Value:") > 0 || gInt("Aim Assist", "Aimbot", "Aim Smoothness:") > 0) || gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && engine.ActiveGamemode() == "terrortown" && wep:IsValid() && wep:GetClass() == "weapon_zm_carry") then return end
 	if gOption("Hack vs. Hack", "Anti-Aim", "Anti-Aim Direction:") == "Manual Switch" then
 	if gKey("Hack vs. Hack", "Anti-Aim", "Switch Key:") and not manualpressed then
 	manualpressed = true
@@ -5306,7 +5236,7 @@ end
 
 local function PropKill(cmd)
 	local wep = pm.GetActiveWeapon(me)
-	if !gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") or engine.ActiveGamemode() ~= "terrortown" or !wep:IsValid() or !wep:GetClass() == "weapon_zm_carry" or menuopen or me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) or not me:Alive() or me:Health() < 1 then return end
+	if !gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") or engine.ActiveGamemode() ~= "terrortown" or !wep:IsValid() or !wep:GetClass() == "weapon_zm_carry" or menuopen or me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
 	if (cm.CommandNumber(cmd) == 0 && !ThirdpersonCheck()) then
 		return
 	elseif (cm.CommandNumber(cmd) == 0 && ThirdpersonCheck()) then
@@ -5378,7 +5308,7 @@ local function FakeAngles(cmd)
 end
 
 local function FakeCrouch(cmd)
-	if em.GetMoveType(me) == MOVETYPE_NOCLIP or (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) or not me:Alive() or me:Health() < 1 or me:IsFlagSet(1024) then return end
+	if em.GetMoveType(me) == MOVETYPE_NOCLIP or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or me:IsFlagSet(1024) then return end
 	if gBool("Miscellaneous", "Movement", "Fake Crouch") then
 		if me:KeyDown(IN_DUCK) then
 			if crouched <= 5 then
@@ -5400,7 +5330,7 @@ end
 
 hook.Add("CalcView", "Hook17", function(me, pos, ang, fov)
 	local view = {}
-		if gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) and (me:Alive() or me:Health() > 0) then
+		if gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) and (me:Alive() or me:Health() > 0) then
 			local speed = gInt("Miscellaneous", "Free Roaming", "Speed:") / 5
 			local mouseang = Angle(roamy, roamx, 0)
 			if me:KeyDown(IN_SPEED) then
@@ -5452,7 +5382,7 @@ hook.Add("CalcView", "Hook17", function(me, pos, ang, fov)
 end)
 
 local function FreeRoam(cmd)
-	if (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) and (me:Alive() or me:Health() > 0)) then
+	if (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) and (me:Alive() or me:Health() > 0)) then
 		if roamon == false then
 			roampos, roamang = me:EyePos(), cmd:GetViewAngles()
 			roamy, roamx = cmd:GetViewAngles().x, cmd:GetViewAngles().y
@@ -5528,7 +5458,7 @@ hook.Add("HUDPaint2", "Hook22", function()
 		surface.SetDrawColor(0, 0, 0, gInt("Adjustments", "Others", "BG Darkness:") * 10)
 		surface.DrawRect(0, 0, ScrW(), ScrH())
 	end
-	if gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Spectators:") and gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not me:Alive() or me:Health() < 1 or (v == me and not em.IsValid(v)) then return end
+	if gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or (v == me and not em.IsValid(v)) then return end
 	local cap = math.cos(math.rad(45))
 	local offset = Vector(0, 0, 32)
 	local trace = {}
@@ -5565,8 +5495,8 @@ hook.Add("HUDPaint2", "Hook22", function()
     	surface.SetDrawColor(witnesscolor)
     	surface.DrawRect((ScrW() / 2) - 73, 55, 152, 5)
     end
-	if menuopen or me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or (me:Team() == TEAM_SPECTATOR and not gBool("Aim Assist", "Aim Priorities", "Spectators:")) or not me:Alive() or me:Health() < 1 then return end
 	local wep = pm.GetActiveWeapon(me)
+	if menuopen or me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
 	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:") && engine.ActiveGamemode() == "terrortown" && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" then
 		if propval >= 180 then
 			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(255, 0, 0))
@@ -5574,6 +5504,7 @@ hook.Add("HUDPaint2", "Hook22", function()
 			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
 		end
 	end
+	if menuopen or me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not me:Alive() or me:Health() < 1 then return end
 	if gBool("Aim Assist", "Aimbot", "Enabled") and gBool("Visuals", "Miscellaneous", "Show FoV Circle") then
 		local center = Vector(ScrW() / 2, ScrH() / 2, 0)
 		local scale = Vector(((gInt("Aim Assist", "Aimbot", "Aim FoV Value:")) * 8.5), ((gInt("Aim Assist", "Aimbot", "Aim FoV Value:")) * 8.5), 0)
