@@ -3685,9 +3685,10 @@ hook.Add("Think", "Hook8", function()
 					if not me:IsTraitor() and v:GetOwner():IsPlayer() and table.HasValue(v.CanBuy, 1) and not table.HasValue(tweps, v:GetClass()) and not table.HasValue(traitors, v:GetOwner():UniqueID()) then
 						table.insert(traitors, v:GetOwner():UniqueID())
 						table.insert(tweps, v:GetClass())
-							chat.AddText(Color(255, 0, 0), "\n"..v:GetOwner():Nick(), Color(255, 255, 0), " is a traitor.")
-							chat.AddText(Color(255, 255, 0), "They bought: ", Color(255, 0, 0), v:GetPrintName())
-							chat.AddText(Color(255, 255, 0), "There are ", Color(255, 0, 0), (#traitors), Color(255, 255, 0) " traitors.\n")
+							chat.AddText(Color(255, 255, 0), "\n[TRAITOR FINDER LOGS]")
+							chat.AddText(Color(255, 0, 0), v:GetOwner():Nick(), Color(255, 255, 255), " is a traitor.")
+							chat.AddText(Color(255, 255, 255), "They bought: ", Color(255, 0, 0), v:GetPrintName())
+							chat.AddText(Color(255, 255, 255), "There are ", Color(255, 0, 0), #traitors, Color(255, 255, 0) " traitors.\n")
 							surface.PlaySound("buttons/lightswitch2.wav")
 					elseif gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Traitor Finder") and me:IsTraitor() and v:GetOwner():IsPlayer() and v:GetOwner():IsTraitor() then
 						table.insert(traitors, v:GetOwner():UniqueID())
