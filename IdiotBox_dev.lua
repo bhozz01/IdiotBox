@@ -1640,6 +1640,7 @@ function Changelog() -- Ran out of local variables, again
 	print("- Fixed Anti-Aim breaking the Radar view angles;")
 	print("- Fixed Circle Strafing spaghetti code not acting the way it should;")
 	print("- Fixed Free Roaming not working with Anti-Aim;")
+	print("- Fixed Visuals causing severe lag;")
 	print("- Fixed Cheater Callout clearing chat when it should not;")
 	print("- Fixed Thirdperson, Custom FoV and Free Roaming working incorrectly when the user is dead;")
 	print("- Fixed Bullet Fire Delay not working correctly;")
