@@ -170,6 +170,13 @@ local options = {
 					{""}, 
           		}, 
 				{
+          			{"Others", 261, 400, 232, 130, 218}, 
+					{"Apply custom name", "Checkbox", false, 78}, 
+					{"Feature Tooltips", "Checkbox", true, 78}, -- Enabled by default
+					{"Print Changelog", "Button", "", 92}, 
+					{"Unload Cheat", "Button", "", 92}, 
+          		}, 
+				{
 					{"Priority List", 506, 20, 232, 205, 218}, 
 					{"Enabled", "Checkbox", true, 78}, -- Enabled by default
 					{"List Position X:", "Slider", 1356, 2000, 92}, 
@@ -185,13 +192,6 @@ local options = {
 					{"Mode:", "Selection", "Disable All", {"Disable Aimbot", "Disable Anti-Aim", "Disable All"}, 92}, 
 					{""}, 
                 }, 
-				{
-          			{"Others", 506, 355, 232, 130, 218}, 
-					{"Apply custom name", "Checkbox", false, 78}, 
-					{"Feature Tooltips", "Checkbox", true, 78}, -- Enabled by default
-					{"Print Changelog", "Button", "", 92}, 
-					{"Unload Cheat", "Button", "", 92}, 
-          		}, 
         }, 
         ["Aim Assist"] = {
 				{
