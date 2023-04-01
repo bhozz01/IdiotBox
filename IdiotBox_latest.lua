@@ -43,7 +43,7 @@ local me = LocalPlayer()
 
 local menukeydown, menukeydown2, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
-local box, drawnents, prioritylist, ignorelist, visible, added, dists, cones, traitors, tweps = {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
+local box, drawnents, prioritylist, ignorelist, visible, dists, cones, traitors, tweps = {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
 
 local toggler, playerkills, namechangeTime, circlestrafeval, timeHoldingSpaceOnGround, servertime, faketick, propval, propdelay, crouched = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 local maintextcol, menutextcol, bgmenucol, bordercol, teamvisualscol, enemyvisualscol, prioritytargetscol, ignoredtargetscol, miscvisualscol, teamchamscol, enemychamscol, crosshaircol, viewmodelcol = Color(0, 205, 255), Color(255, 255, 255), Color(30, 30, 45), Color(0, 155, 255), Color(255, 255, 255), Color(255, 255, 255), Color(255, 0, 100), Color(175, 175, 175), Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 235, 255), Color(0, 235, 255)
@@ -110,6 +110,7 @@ contributors["STEAM_0:1:404757"] = {} -- xvcaligo (code tester)
 contributors["STEAM_0:1:69536635"] = {} -- tryhard (code tester)
 contributors["STEAM_0:0:150101893"] = {} -- derpos (code tester)
 contributors["STEAM_0:1:75441355"] = {} -- zergo (code tester)
+contributors["STEAM_0:0:453611223"] = {} -- naxut (code tester & advertiser and really good friend)
 contributors["STEAM_0:1:4375194"] = {} -- ohhstyle (advertiser)
 contributors["STEAM_0:1:59798110"] = {} -- mrsquid (advertiser)
 contributors["STEAM_0:1:101813068"] = {} -- sdunken (first user)
@@ -273,7 +274,7 @@ local options = {
 					{"Disable in 'Use' Toggle", "Checkbox", true, 78}, -- Enabled by default
 					{"Detect Walls", "Checkbox", false, 78}, 
 					{"Lock View", "Checkbox", false, 78}, 
-					{"Mode:", "Selection", "Default", {"Default", "Static", "Adaptive"}, 92}, 
+					{"Mode:", "Selection", "Default", {"Default", "Static", "Distance Adapt", "Crosshair Adapt"}, 92}, 
 					{""}, 
 					{"Pitch:", "Selection", "Off", {"Off", "Down", "Up", "Center", "Fake-Down", "Fake-Up", "Jitter", "Semi-Jitter Down", "Semi-Jitter Up", "Emotion", "Spinbot"}, 92}, 
 					{""}, 
@@ -1691,7 +1692,7 @@ function Changelog() -- Ran out of local variables, again
 	print("- Added 'Priority List' and 'Use Spam' to Miscellaneous;")
 	print("- Added 'Cheater Callout', 'Copy Messages', 'Disconnect Spam', 'lol', 'english please', 'lmao', 'shit' and 'fuck' to Reply Spam;")
 	print("- Added 'Border Color', 'Misc Visuals Color' and 'B Opacity' to Adjustments;")
-	print("- Added 'Fake-Forwards/ Backwards/ Sideways', Yaw Spinbot, 'Static', 'Adaptive' and 'Disable in Use Toggle' to Anti-Aim;")
+	print("- Added 'Fake-Forwards/ Backwards/ Sideways', Yaw Spinbot, 'Static', 'Adapt' and 'Disable in Use Toggle' to Anti-Aim;")
 	print("- Added 'Players List', 'Show Entities', 'Conditions', 'Velocity', 'Dormant Check', 'Show Spectators', 'Hide Ignored Targets', 'Bystander Name', 'NPCs', 'Clientside', 'Target Priority Colors' and priority statuses to Visuals;")
 	print("- Added 'Panic Mode', 'Entity Finder Menu', 'Plugin Loader Menu', 'Optimize Game', 'Feature Tooltips', 'Spectator Mode' and more TTT/ Murder/ DarkRP specific features to Main Menu;")
 	print("- Added 'Spectators', 'Players', 'Frozen Players' and 'Enemies' to Aim Priorities;")
@@ -1747,6 +1748,7 @@ local function BadEntities(v)
 end
 
 local function EntityFinder()
+	local added = {}
 	local finder = vgui.Create("DFrame")
 	finder:SetSize(769, 859)
 	finder:Center()
@@ -4872,7 +4874,7 @@ local function RandCoin()
 	if (randcoin == 1) then return 1 else return - 1 end
 end
 
-local function GetClosest()
+local function GetClosestDistance()
 	local ddists = {}
 	local closest
 	for k, v in next, player.GetAll() do
@@ -4885,6 +4887,26 @@ local function GetClosest()
 	closest = ddists[1] && ddists[1][2] || nil
 	if (!closest) then return fa.y end
 	local pos = em.GetPos(closest)
+	local pos = vm.Angle(pos - em.EyePos(me))
+	return(pos.y)
+end
+
+local function GetClosestCrosshair()
+	local dfov = {}
+	local crosshairclosest
+	local x, y = ScrW(), ScrH()
+	local AngA, AngB = 0
+	for k, v in next, ents.GetAll() do
+	if (!Valid(v)) then continue end
+	local EyePos = v:EyePos():ToScreen()
+	dfov[#dfov + 1] = {math.Dist(x / 2, y / 2, EyePos.x, EyePos.y), v}
+	end
+	table.sort(dfov, function(a, b)
+	return(a[1] < b[1])
+	end)
+	crosshairclosest = dfov[1] && dfov[1][2] || nil
+	if (!crosshairclosest) then return fa.y end
+	local pos = em.GetPos(crosshairclosest)
 	local pos = vm.Angle(pos - em.EyePos(me))
 	return(pos.y)
 end
@@ -4955,7 +4977,8 @@ local function Yaw()
 	local randcoin = gInt("Hack vs. Hack", "Anti-Aim", "Emotion Yaw Speed:")
 	local opt = gOption("Hack vs. Hack", "Anti-Aim", "Yaw:")
 	local default = gOption("Hack vs. Hack", "Anti-Aim", "Mode:") == "Default"
-	local adapt = gOption("Hack vs. Hack", "Anti-Aim", "Mode:") == "Adaptive"
+	local distadapt = gOption("Hack vs. Hack", "Anti-Aim", "Mode:") == "Distance Adapt"
+	local crossadapt = gOption("Hack vs. Hack", "Anti-Aim", "Mode:") == "Crosshair Adapt"
 	local static = gOption("Hack vs. Hack", "Anti-Aim", "Mode:") == "Static"
 	if (opt == "Off") then
         oy = fa.y
@@ -4965,40 +4988,52 @@ local function Yaw()
 	end
 	elseif (opt == "Forwards" && default) then
 		oy = fa.y
-	elseif (opt == "Forwards" && adapt) then
-		oy = GetClosest()
+	elseif (opt == "Forwards" && distadapt) then
+		oy = GetClosestDistance()
+	elseif (opt == "Forwards" && crossadapt) then
+		oy = GetClosestCrosshair()
 	elseif (opt == "Forwards" && static) then
 		oy = 180
 	elseif (opt == "Backwards" && default) then
 		oy = fa.y - 180
-	elseif (opt == "Backwards" && adapt) then
-		oy = GetClosest() - 180
+	elseif (opt == "Backwards" && distadapt) then
+		oy = GetClosestDistance() - 180
+	elseif (opt == "Backwards" && crossadapt) then
+		oy = GetClosestCrosshair() - 180
 	elseif (opt == "Backwards" && static) then
 		oy = 0
 	elseif (opt == "Jitter" && default) then
 		oy = fa.y + math.random( - 90, 90)
-	elseif (opt == "Jitter" && adapt) then
-		oy = GetClosest() + math.random( - 90, 90)
+	elseif (opt == "Jitter" && distadapt) then
+		oy = GetClosestDistance() + math.random( - 90, 90)
+	elseif (opt == "Jitter" && crossadapt) then
+		oy = GetClosestCrosshair() + math.random( - 90, 90)
 	elseif (opt == "Jitter" && static) then
 		oy = 180 + math.random( - 90, 90)
 	elseif (opt == "Backwards Jitter" && default) then
 		oy = fa.y - 180 + math.random( - 90, 90)
-	elseif (opt == "Backwards Jitter" && adapt) then
-		oy = GetClosest() - 180 + math.random( - 90, 90)
+	elseif (opt == "Backwards Jitter" && distadapt) then
+		oy = GetClosestDistance() - 180 + math.random( - 90, 90)
+	elseif (opt == "Backwards Jitter" && crossadapt) then
+		oy = GetClosestCrosshair() - 180 + math.random( - 90, 90)
 	elseif (opt == "Backwards Jitter" && static) then
 		oy = 0 + math.random( - 90, 90)
 	elseif (opt == "Side Switch") then
 		oy = math.random( - 631, 631)
 	elseif (opt == "Semi-Jitter" && default) then
 		oy = fa.y + math.random (25, - 25)
-	elseif (opt == "Semi-Jitter" && adapt) then
-		oy = GetClosest() + math.random (25, - 25)
+	elseif (opt == "Semi-Jitter" && distadapt) then
+		oy = GetClosestDistance() + math.random (25, - 25)
+	elseif (opt == "Semi-Jitter" && crossadapt) then
+		oy = GetClosestCrosshair() + math.random (25, - 25)
 	elseif (opt == "Semi-Jitter" && static) then
 		oy = 180 + math.random (25, - 25)
 	elseif (opt == "Back Semi-Jitter" && default) then
 		oy = fa.y - 180 + math.random (25, - 25)
-	elseif (opt == "Back Semi-Jitter" && adapt) then
-		oy = GetClosest() - 180 + math.random (25, - 25)
+	elseif (opt == "Back Semi-Jitter" && distadapt) then
+		oy = GetClosestDistance() - 180 + math.random (25, - 25)
+	elseif (opt == "Back Semi-Jitter" && crossadapt) then
+		oy = GetClosestCrosshair() - 180 + math.random (25, - 25)
 	elseif (opt == "Back Semi-Jitter" && static) then
 		oy = 0 + math.random (25, - 25)
 	elseif (opt == "Spinbot") then
@@ -5021,15 +5056,25 @@ local function Yaw()
 		else
 		oy = fa.y + 90
 	end
-	elseif (opt == "Sideways" && adapt) then
+	elseif (opt == "Sideways" && distadapt) then
 		if right then
-		oy = GetClosest() - 90
+		oy = GetClosestDistance() - 90
 		elseif left then
-		oy = GetClosest() + 90
+		oy = GetClosestDistance() + 90
 		elseif manual then
-		oy = GetClosest() - 90
+		oy = GetClosestDistance() - 90
 		else
-		oy = GetClosest() + 90
+		oy = GetClosestDistance() + 90
+	end
+	elseif (opt == "Sideways" && crossadapt) then
+		if right then
+		oy = GetClosestCrosshair() - 90
+		elseif left then
+		oy = GetClosestCrosshair() + 90
+		elseif manual then
+		oy = GetClosestCrosshair() - 90
+		else
+		oy = GetClosestCrosshair() + 90
 	end
 	elseif (opt == "Sideways" && static) then
 		if right then
@@ -5051,15 +5096,25 @@ local function Yaw()
 		else
 		oy = fa.y + 90 + math.random(0, 40) 
         end
-	elseif (opt == "Side Semi-Jitter" && adapt) then
+	elseif (opt == "Side Semi-Jitter" && distadapt) then
         if left then
-        oy = GetClosest() + 90 + math.random(0, 40)
+        oy = GetClosestDistance() + 90 + math.random(0, 40)
         elseif right then
-        oy = GetClosest() + 270 + math.random(0, - 40)
+        oy = GetClosestDistance() + 270 + math.random(0, - 40)
 		elseif manual then
-		oy = GetClosest() + 270 + math.random(0, - 40)
+		oy = GetClosestDistance() + 270 + math.random(0, - 40)
 		else
-		oy = GetClosest() + 90 + math.random(0, 40) 
+		oy = GetClosestDistance() + 90 + math.random(0, 40) 
+        end
+	elseif (opt == "Side Semi-Jitter" && crossadapt) then
+        if left then
+        oy = GetClosestCrosshair() + 90 + math.random(0, 40)
+        elseif right then
+        oy = GetClosestCrosshair() + 270 + math.random(0, - 40)
+		elseif manual then
+		oy = GetClosestCrosshair() + 270 + math.random(0, - 40)
+		else
+		oy = GetClosestCrosshair() + 90 + math.random(0, 40) 
         end
 	elseif (opt == "Side Semi-Jitter" && static) then
         if left then
@@ -5081,15 +5136,25 @@ local function Yaw()
 		else
 		oy = fa.y + math.random(1, 180, 1, 80, 1)
 	    end
-	elseif (opt == "Sideways Jitter" && adapt) then
+	elseif (opt == "Sideways Jitter" && distadapt) then
 		if left then
-        oy = GetClosest() + math.random(1, 180, 1, 80, 1)
+        oy = GetClosestDistance() + math.random(1, 180, 1, 80, 1)
    		elseif right then
-        oy = GetClosest() + math.random(181, 361) 
+        oy = GetClosestDistance() + math.random(181, 361) 
 		elseif manual then
-		oy = GetClosest() + math.random(181, 361)
+		oy = GetClosestDistance() + math.random(181, 361)
 		else
-		oy = GetClosest() + math.random(1, 180, 1, 80, 1)
+		oy = GetClosestDistance() + math.random(1, 180, 1, 80, 1)
+	    end
+	elseif (opt == "Sideways Jitter" && crossadapt) then
+		if left then
+        oy = GetClosestCrosshair() + math.random(1, 180, 1, 80, 1)
+   		elseif right then
+        oy = GetClosestCrosshair() + math.random(181, 361) 
+		elseif manual then
+		oy = GetClosestCrosshair() + math.random(181, 361)
+		else
+		oy = GetClosestCrosshair() + math.random(1, 180, 1, 80, 1)
 	    end
 	elseif (opt == "Sideways Jitter" && static) then
 		if left then
@@ -5111,15 +5176,25 @@ local function Yaw()
 		else
 		oy = fa.y - math.sin(CurTime() * 10) * 5
         end
-	elseif (opt == "Fake-Forwards" && adapt) then
+	elseif (opt == "Fake-Forwards" && distadapt) then
         if left then
-        oy = GetClosest() - math.sin(CurTime() * 10) * 5
+        oy = GetClosestDistance() - math.sin(CurTime() * 10) * 5
         elseif right then
-        oy = GetClosest() + math.sin(CurTime() * 10) * 5
+        oy = GetClosestDistance() + math.sin(CurTime() * 10) * 5
 		elseif manual then
-		oy = GetClosest() + math.sin(CurTime() * 10) * 5
+		oy = GetClosestDistance() + math.sin(CurTime() * 10) * 5
 		else
-		oy = GetClosest() - math.sin(CurTime() * 10) * 5
+		oy = GetClosestDistance() - math.sin(CurTime() * 10) * 5
+        end
+	elseif (opt == "Fake-Forwards" && crossadapt) then
+        if left then
+        oy = GetClosestCrosshair() - math.sin(CurTime() * 10) * 5
+        elseif right then
+        oy = GetClosestCrosshair() + math.sin(CurTime() * 10) * 5
+		elseif manual then
+		oy = GetClosestCrosshair() + math.sin(CurTime() * 10) * 5
+		else
+		oy = GetClosestCrosshair() - math.sin(CurTime() * 10) * 5
         end
 	elseif (opt == "Fake-Forwards" && static) then
         if left then
@@ -5141,15 +5216,25 @@ local function Yaw()
 		else
 		oy = fa.y + 180 - math.sin(CurTime() * 10) * 5
 		end
-	elseif (opt == "Fake-Backwards" && adapt) then
+	elseif (opt == "Fake-Backwards" && distadapt) then
 		if right then
-		oy = GetClosest() + 180 + math.sin(CurTime() * 10) * 5
+		oy = GetClosestDistance() + 180 + math.sin(CurTime() * 10) * 5
 		elseif left then
-		oy = GetClosest() + 180 - math.sin(CurTime() * 10) * 5
+		oy = GetClosestDistance() + 180 - math.sin(CurTime() * 10) * 5
 		elseif manual then
-		oy = GetClosest() + 180 + math.sin(CurTime() * 10) * 5
+		oy = GetClosestDistance() + 180 + math.sin(CurTime() * 10) * 5
 		else
-		oy = GetClosest() + 180 - math.sin(CurTime() * 10) * 5
+		oy = GetClosestDistance() + 180 - math.sin(CurTime() * 10) * 5
+		end
+	elseif (opt == "Fake-Backwards" && crossadapt) then
+		if right then
+		oy = GetClosestCrosshair() + 180 + math.sin(CurTime() * 10) * 5
+		elseif left then
+		oy = GetClosestCrosshair() + 180 - math.sin(CurTime() * 10) * 5
+		elseif manual then
+		oy = GetClosestCrosshair() + 180 + math.sin(CurTime() * 10) * 5
+		else
+		oy = GetClosestCrosshair() + 180 - math.sin(CurTime() * 10) * 5
 		end
 	elseif (opt == "Fake-Backwards" && static) then
 		if right then
@@ -5171,15 +5256,25 @@ local function Yaw()
 		else
 		oy = fa.y + 90 + math.sin(CurTime() * 10) * 5
 	    end
-	elseif (opt == "Fake-Sideways" && adapt) then
+	elseif (opt == "Fake-Sideways" && distadapt) then
 		if left then
-        oy = GetClosest() + 90 + math.sin(CurTime() * 10) * 5
+        oy = GetClosestDistance() + 90 + math.sin(CurTime() * 10) * 5
    		elseif right then
-        oy = GetClosest() - 90 - math.sin(CurTime() * 10) * 5
+        oy = GetClosestDistance() - 90 - math.sin(CurTime() * 10) * 5
 		elseif manual then
-		oy = GetClosest() - 90 - math.sin(CurTime() * 10) * 5
+		oy = GetClosestDistance() - 90 - math.sin(CurTime() * 10) * 5
 		else
-		oy = GetClosest() + 90 + math.sin(CurTime() * 10) * 5
+		oy = GetClosestDistance() + 90 + math.sin(CurTime() * 10) * 5
+	    end
+	elseif (opt == "Fake-Sideways" && crossadapt) then
+		if left then
+        oy = GetClosestCrosshair() + 90 + math.sin(CurTime() * 10) * 5
+   		elseif right then
+        oy = GetClosestCrosshair() - 90 - math.sin(CurTime() * 10) * 5
+		elseif manual then
+		oy = GetClosestCrosshair() - 90 - math.sin(CurTime() * 10) * 5
+		else
+		oy = GetClosestCrosshair() + 90 + math.sin(CurTime() * 10) * 5
 	    end
 	elseif (opt == "Fake-Sideways" && static) then
 		if left then
