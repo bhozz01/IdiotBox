@@ -169,13 +169,23 @@ local options = {
 					{""}, 
           		}, 
 				{
-					{"Panic Mode", 506, 20, 232, 100, 218}, 
+					{"Priority List", 506, 20, 232, 205, 218}, 
+					{"Enabled", "Checkbox", true, 78}, -- Enabled by default
+					{"List Position X:", "Slider", 1356, 2000, 92}, 
+					{""}, 
+					{"List Position Y:", "Slider", 134, 2000, 92}, 
+					{""}, 
+					{"List Spacing:", "Slider", 0, 10, 92}, 
+					{""}, 
+                }, 
+				{
+					{"Panic Mode", 506, 240, 232, 100, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Mode:", "Selection", "Disable All", {"Disable Aimbot", "Disable Anti-Aim", "Disable All"}, 92}, 
 					{""}, 
                 }, 
 				{
-          			{"Others", 506, 133, 232, 130, 218}, 
+          			{"Others", 506, 355, 232, 130, 218}, 
 					{"Apply custom name", "Checkbox", false, 78}, 
 					{"Feature Tooltips", "Checkbox", true, 78}, -- Enabled by default
 					{"Print Changelog", "Button", "", 92}, 
@@ -345,16 +355,7 @@ local options = {
 					{""}, 
                 }, 
 				{
-					{"Viewmodel", 261, 308, 232, 165, 218}, 
-					{"Viewmodel Chams:", "Selection", "Off", {"Off", "Normal", "Rainbow"}, 92}, 
-					{""}, 
-					{"Viewmodel Wireframe:", "Selection", "Off", {"Off", "Normal", "Rainbow"}, 92}, 
-					{""}, 
-					{"No Viewmodel", "Checkbox", false, 78}, 
-					{"No Hands", "Checkbox", false, 78}, 
-                }, 
-				{
-					{"Textures", 261, 487, 232, 120, 218}, 
+					{"Textures", 261, 308, 232, 120, 218}, 
 					{"Transparent Walls", "Checkbox", false, 78}, 
 					{"No Sky", "Checkbox", false, 78}, 
 					{"Bright Mode", "Checkbox", false, 78}, 
@@ -402,13 +403,25 @@ local options = {
 					{""}, 
                 }, 
 				{
-					{"Priority List", 16, 253, 232, 205, 218}, 
-					{"Enabled", "Checkbox", true, 78}, -- Enabled by default
-					{"List Position X:", "Slider", 1356, 2000, 92}, 
+					{"Viewmodel", 16, 253, 232, 500, 218}, 
+					{"Viewmodel Chams:", "Selection", "Off", {"Off", "Normal", "Rainbow"}, 92}, 
 					{""}, 
-					{"List Position Y:", "Slider", 134, 2000, 92}, 
+					{"Viewmodel Wireframe:", "Selection", "Off", {"Off", "Normal", "Rainbow"}, 92}, 
 					{""}, 
-					{"List Spacing:", "Slider", 0, 10, 92}, 
+					{"No Viewmodel", "Checkbox", false, 78}, 
+					{"No Hands", "Checkbox", false, 78}, 
+					{"Custom Positions", "Checkbox", false, 78}, 
+					{"Viewmodel X:", "Slider", 50, 100, 92}, 
+					{""}, 
+					{"Viewmodel Y:", "Slider", 30, 60, 92}, 
+					{""}, 
+					{"Viewmodel Z:", "Slider", 20, 40, 92}, 
+					{""}, 
+					{"Viewmodel Pitch:", "Slider", 90, 180, 92}, 
+					{""}, 
+					{"Viewmodel Yaw:", "Slider", 90, 180, 92}, 
+					{""}, 
+					{"Viewmodel Roll:", "Slider", 90, 180, 92}, 
 					{""}, 
                 }, 
 				{
@@ -724,8 +737,8 @@ do
 			surface.PlaySound("buttons/lightswitch2.wav")
 			return
 		end
-	if ScrW() <= 769 or ScrH() <= 849 then
-		MsgR(4.3, "The cheat menu has a resolution of 769x849. Please use a resolution larger than that!")
+	if ScrW() <= 769 or ScrH() <= 859 then
+		MsgR(4.3, "The cheat menu has a resolution of 769x859. Please use a resolution larger than that!")
 		surface.PlaySound("buttons/lightswitch2.wav")
 		return
 	end
@@ -1066,7 +1079,7 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			surface.DrawRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, 9, 9)
 		end
 		local feat = var[1]
-		if feat == "Enabled" then
+		if feat == "Enabled" then -- The tooltips listed here may not be correctly ordered because of feature placement changes I'm constantly making - basically fucking up your configs B))))
 			info = "Toggles this feature."
 		elseif feat == "Optimize Game" then
 			info = "Clears decals and other effects to improve framerate."
@@ -1257,7 +1270,7 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 		elseif feat == "Bright Mode" then
 			info = "Creates uniform lighting throughout the whole map. Useful for dark maps."
 		elseif feat == "Dark Mode" then
-			info = "Gives the map a night-like feeling."
+			info = "Gives the map a night-like aspect."
 		elseif feat == "Custom FoV" then
 			info = "Allows you to set a custom FoV, outside of the default boundaries."
 		elseif feat == "Thirdperson" then
@@ -1266,6 +1279,8 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			info = "Removes your entire viewmodel."
 		elseif feat == "No Hands" then
 			info = "Removes your viewmodel hands."
+		elseif feat == "Custom Positions" then
+			info = "Allows you to completely customize your viewmodel positions and angles."
 		elseif feat == "Bunny Hop" then
 			info = "Jump continuously when holding your jump key."
 		elseif feat == "Circle Strafe" then
@@ -1541,31 +1556,32 @@ end
 local function Unload()
 	RunConsoleCommand("stopsound")
 	unloaded = true
-	hook.Remove("RenderScene", "Hook0")
-	hook.Remove("ShutDown", "Hook1")
-	hook.Remove("PostDrawViewModel", "Hook2")
-	hook.Remove("PreDrawEffects", "Hook3")
-	hook.Remove("HUDShouldDraw", "Hook4")
-	hook.Remove("Think", "Hook5")
-	hook.Remove("Think", "Hook6")
-	hook.Remove("Think", "Hook7")
-	hook.Remove("Think", "Hook8")
-	hook.Remove("PreDrawSkyBox", "Hook9")
-	hook.Remove("PreDrawViewModel", "Hook10")
-	hook.Remove("PreDrawPlayerHands", "Hook11")
-	hook.Remove("RenderScreenspaceEffects", "Hook12")
-	hook.Remove("DrawOverlay", "Hook13")
-	hook.Remove("player_hurt", "Hook14")
-	hook.Remove("entity_killed", "Hook15")
-	hook.Remove("Move", "Hook16")
-	hook.Remove("CalcView", "Hook17")
-	hook.Remove("AdjustMouseSensitivity", "Hook18")
-	hook.Remove("ShouldDrawLocalPlayer", "Hook19")
-	hook.Remove("CreateMove", "Hook20")
-	hook.Remove("player_disconnect", "Hook21")
-	hook.Remove("HUDPaint2", "Hook22")
-	hook.Remove("PreDrawOpaqueRenderables", "Hook23")
-	hook.Remove("OnPlayerChat", "Hook24")
+	hook.Remove("RenderScene", "RenderScene")
+	hook.Remove("ShutDown", "ShutDown")
+	hook.Remove("PostDrawViewModel", "PostDrawViewModel")
+	hook.Remove("PreDrawEffects", "PreDrawEffects")
+	hook.Remove("HUDShouldDraw", "HUDShouldDraw")
+	hook.Remove("Think", "Think1")
+	hook.Remove("Think", "Think2")
+	hook.Remove("Think", "Think3")
+	hook.Remove("Think", "Think4")
+	hook.Remove("CalcViewModelView", "CalcViewModelView")
+	hook.Remove("PreDrawSkyBox", "PreDrawSkyBox")
+	hook.Remove("PreDrawViewModel", "PreDrawViewModel")
+	hook.Remove("PreDrawPlayerHands", "PreDrawPlayerHands")
+	hook.Remove("RenderScreenspaceEffects", "RenderScreenspaceEffects")
+	hook.Remove("DrawOverlay", "DrawOverlay")
+	hook.Remove("player_hurt", "player_hurt")
+	hook.Remove("entity_killed", "entity_killed")
+	hook.Remove("Move", "Move")
+	hook.Remove("CalcView", "CalcView")
+	hook.Remove("AdjustMouseSensitivity", "AdjustMouseSensitivity")
+	hook.Remove("ShouldDrawLocalPlayer", "ShouldDrawLocalPlayer")
+	hook.Remove("CreateMove", "CreateMove")
+	hook.Remove("player_disconnect", "player_disconnect")
+	hook.Remove("HUDPaint2", "HUDPaint2")
+	hook.Remove("PreDrawOpaqueRenderables", "PreDrawOpaqueRenderables")
+	hook.Remove("OnPlayerChat", "OnPlayerChat")
 		if gBool("Main Menu", "Configurations", "Automatically Save") then
 			if gOption("Main Menu", "Configurations", "Configuration:") == "Config #1" then
 				SaveConfig1()
@@ -1651,11 +1667,13 @@ function Changelog() -- Ran out of local variables, again
 	print("- Fixed the menu not being large enough for certain outlines;")
 	print("- Fixed a Projectile Prediction bug where dying would cause script errors;")
 	print("- Fixed Manipulate Interpolation and Dark Mode not resetting when disabled;")
+	print("- Fixed local variable limit and timer issues;")
 	print("- Reworked script for slightly better performance;")
 	print("- Reworked user visibility of IdiotBox developers on servers;")
 	print("- Reorganized certain out-of-place functions and menu options;")
 	print("- Reorganized the developer list;")
 	print("- Renamed certain misspelled or broken functions and menu options;")
+	print("- Renamed hooks for better anticheat protection;")
 	print("- Removed calls and variables that had no use;")
 	print("- Removed unusable DarkRP names from the Name Changer;")
 	print("- Removed cloned hooks and combined them all into one for better performance;")
@@ -1681,7 +1699,7 @@ function Changelog() -- Ran out of local variables, again
 	print("- Added 'Circle Strafe Key' and 'Fake Crouch' to Movement;")
 	print("- Added 'Arabic Spam' and 'Hebrew Spam' to Chat Spam;")
 	print("- Added 'Priority Targets Only' to Priority List;")
-	print("- Added 'Rainbow' viewmodels to Viewmodel;")
+	print("- Added 'Custom Positions' and 'Rainbow' viewmodels to Viewmodel;")
 	print("- Added 'Thirdperson Key' to Point of View;")
 	print("- Added 'Random' to Emotes;")
 	print("- Added 'Murder Taunts' to Taunting;")
@@ -1730,7 +1748,7 @@ end
 
 local function EntityFinder()
 	local finder = vgui.Create("DFrame")
-	finder:SetSize(769, 849)
+	finder:SetSize(769, 859)
 	finder:Center()
 	finder:SetTitle("")
 	finder:MakePopup()
@@ -1908,7 +1926,7 @@ end
 
 local function PluginLoader()
 	local plugin = vgui.Create("DFrame")
-	plugin:SetSize(769, 849)
+	plugin:SetSize(769, 859)
 	plugin:Center()
 	plugin:SetTitle("")
 	plugin:MakePopup()
@@ -2244,7 +2262,7 @@ end
 local function Menu()
 	local menusongs = {"https://dl.dropbox.com/s/0m22ytfia8qoy4m/Daisuke%20-%20El%20Huervo.mp3?dl=1", "https://dl.dropbox.com/s/0fdgaj0ry8uummf/Rust_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/vsz77wdjqy1xf83/HOME%20-%20Resonance.mp3?dl=1", "https://dl.dropbox.com/s/ovh8xt0nn6wjgjj/The%20Caretaker%20-%20It%27s%20just%20a%20burning%20memory%20%282016%29.mp3?dl=1", "https://dl.dropbox.com/s/8bg55iwowf2jtv8/cuckoid%20-%20ponyinajar.mp3?dl=1", "https://dl.dropbox.com/s/0uly6phlgpoj4ss/1932_George_Olsen_-_Lullaby_Of_The_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/qfl7mu39us5hzn4/Erectin_a_River_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/stkat6jlp4jhpxo/Monrroe_-_Fleeting_Love_%28getmp3.pro%29.mp3?dl=1","https://dl.dropbox.com/s/vhd3il20d8ephb4/DJ_Spizdil_-_malo_tebyaHardstyle_m_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/2vf1lx9cnd5g9pq/Maduk_-_Vermilion_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/wcoo6cov1iatcao/Metrik_-_Gravity_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/8a91zs6woqz9bb4/Scattle_Remorse_REUPLOAD_CHECK_DE_%28getmp3.pro%29.mp3?dl=1","https://dl.dropbox.com/s/bqt4dcjoziezdjk/The_Caretaker_-_Libets_Delay_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/12ztoyw2rc2q0z0/HOME_-_Hold_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/xlk7wuel56bwrr3/T_Sugah_-_Green_Valleys_LAOS_%28getmp3.pro%29.mp3?dl=1",}
 	local frame = vgui.Create("DFrame")
-	frame:SetSize(769, 849)
+	frame:SetSize(769, 859)
 	frame:Center()
 	frame:SlideDown(0.5)
 	frame:SetTitle("")
@@ -2492,7 +2510,7 @@ end
 local function KillSpam(data)
 	local killer = Entity(data.entindex_attacker)
 	local killed = Entity(data.entindex_killed)
-	if (not killer:IsValid() or not killed:IsValid() or not killer:IsPlayer() or not killed:IsPlayer()) or (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignorelist, killed:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignorelist, killer:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and (killed ~= me and killer == me and not table.HasValue(prioritylist, killed:UniqueID()))) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and (killed == me and killer ~= me and not table.HasValue(prioritylist, killer:UniqueID()))) then return end
+	if (not killer:IsValid() or not killed:IsValid() or not killer:IsPlayer() or not killed:IsPlayer()) or (gBool("Main Menu", "Priority List", "Enabled") and table.HasValue(ignorelist, killed:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and table.HasValue(ignorelist, killer:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and (killed ~= me and killer == me and not table.HasValue(prioritylist, killed:UniqueID()))) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and (killed == me and killer ~= me and not table.HasValue(prioritylist, killer:UniqueID()))) then return end
 	local playerphrases = {"Owned", "Bodied", "Smashed", "Fucked", "Destroyed", "Annihilated", "Decimated", "Wrecked", "Demolished", "Trashed", "Ruined", "Murdered", "Exterminated", "Slaughtered", "Butchered", "Genocided", "Executed", "Bamboozled", "IdiotBox'd",}
 	local excuses = {"i lagged out wtf", "bad ping wtf", "lol wasnt looking at you", "was alt tabbed", "luck", "wow", "nice one", "i think ur hacking m8", "my cat was on the keyboard", "my dog was on the keyboard", "my fps is trash", "my ping is trash", "ouch", "wtf", "ok",}
 	local hvhexcuses = {"forgot to press aimkey lol", "give me a minute to configurate", "wtf it didnt save my Adjustments wait", "lol my hvh Adjustments are gone, wait", "luck lol", "my fps is trash", "my ping is trash", "what are you using?",}
@@ -2768,7 +2786,7 @@ local function Radar()
 	surface.SetDrawColor(team.GetColor(me:Team()))
 	for k = 1, #everything do
 		local v = everything[k]
-		if (v != me and v:IsPlayer() and v:Health() > 0 and not (em.IsDormant(v) and gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All") and not (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) and not ((gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) or (v:IsNPC() and v:Health() > 0)) then
+		if (v != me and v:IsPlayer() and v:Health() > 0 and not (em.IsDormant(v) and gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All") and not (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) and not ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) or (v:IsNPC() and v:Health() > 0)) then
 			color = (v:IsPlayer() and ((contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || pm.GetFriendStatus(v) == "friend" && Color(0, 255, 255) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v))) or Color(255, 255, 255)
 			surface.SetDrawColor(color)
 			local myPos = me:GetPos()
@@ -2853,9 +2871,9 @@ local function Priority(v)
 end
 
 local function PlayerList()
-	local pos_x, pos_y = gInt("Miscellaneous", "Priority List", "List Position X:") - 0.25, gInt("Miscellaneous", "Priority List", "List Position Y:") - 1.75
+	local pos_x, pos_y = gInt("Main Menu", "Priority List", "List Position X:") - 0.25, gInt("Main Menu", "Priority List", "List Position Y:") - 1.75
 	local number = 1
-	local offset = 14 + gInt("Miscellaneous", "Priority List", "List Spacing:")
+	local offset = 14 + gInt("Main Menu", "Priority List", "List Spacing:")
 	surface.SetDrawColor(maintextcol.r, maintextcol.g, maintextcol.b, 100)
 	surface.DrawRect(pos_x, pos_y, 350, 15)
 	surface.SetDrawColor(0, 0, 0)
@@ -2909,7 +2927,7 @@ local function PlayerList()
 		draw.SimpleText(number, "MiscFont", pos_x + 5, pos_y + offset, Color(255, 255, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
 		draw.SimpleText(v:Nick(), "MiscFont", pos_x + 35, pos_y + offset, Color(255, 255, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
 		draw.SimpleText(Priority(v), "MiscFont", pos_x + 214, pos_y + offset, Color(255, 255, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-		offset = offset + 14 + gInt("Miscellaneous", "Priority List", "List Spacing:")
+		offset = offset + 14 + gInt("Main Menu", "Priority List", "List Spacing:")
 		number = number + 1
 	end
 end
@@ -2983,7 +3001,7 @@ local function Crosshair()
 	end
 end
 
-hook.Add("RenderScene", "Hook0", function(origin, angle, fov)
+hook.Add("RenderScene", "RenderScene", function(origin, angle, fov)
 	if gBool("Visuals", "Textures", "Dark Mode") then
 		for k, v in pairs(game.GetWorld():GetMaterials()) do
 		Material(v):SetVector("$color", Vector(0.05, 0.05, 0.05))
@@ -3020,11 +3038,11 @@ hook.Add("RenderScene", "Hook0", function(origin, angle, fov)
 	return true
 end)
 
-hook.Add("ShutDown", "Hook1", function()
+hook.Add("ShutDown", "ShutDown", function()
 	render.SetRenderTarget()
 end)
 
-hook.Add("PostDrawViewModel", "Hook2", function(vm)
+hook.Add("PostDrawViewModel", "PostDrawViewModel", function(vm)
 	if (!vm) then return end
 	render.SetLightingMode(0)
 	for k, v in next, vm:GetMaterials() do
@@ -3032,11 +3050,11 @@ hook.Add("PostDrawViewModel", "Hook2", function(vm)
 	end
 end)
 
-hook.Add("PreDrawEffects", "Hook3", function()
+hook.Add("PreDrawEffects", "PreDrawEffects", function()
 	render.SetLightingMode(0)
 end)
 
-hook.Add("HUDShouldDraw", "Hook4", function(name)
+hook.Add("HUDShouldDraw", "HUDShouldDraw", function(name)
 	if gBool("Visuals", "Miscellaneous", "Hide HUD") and hide[name] then
 		return false
 	end
@@ -3088,11 +3106,11 @@ local function ChatSpam()
 	elseif (gOption("Miscellaneous", "Chat", "Chat Spam:") == "Insult Spam") then
 	local randply = player.GetAll()[math.random(#player.GetAll())]
 	local friendstatus = pm.GetFriendStatus(randply)
-	if (!randply:IsValid() || randply == me || (friendstatus == "friend") || (gBool("Miscellaneous", "Priority List", "Enabled") && table.HasValue(ignorelist, randply:UniqueID())) || (gBool("Miscellaneous", "Priority List", "Enabled") && gBool("Miscellaneous", "Chat", "Priority Targets Only") && !table.HasValue(prioritylist, randply:UniqueID()))) then return end
+	if (!randply:IsValid() || randply == me || (friendstatus == "friend") || (gBool("Main Menu", "Priority List", "Enabled") && table.HasValue(ignorelist, randply:UniqueID())) || (gBool("Main Menu", "Priority List", "Enabled") && gBool("Miscellaneous", "Chat", "Priority Targets Only") && !table.HasValue(prioritylist, randply:UniqueID()))) then return end
 		RunConsoleCommand("say", randply:Name()..insultspam[math.random(#insultspam)])
 	elseif (gOption("Miscellaneous", "Chat", "Chat Spam:") == "Message Spam") then
 		local v = player.GetAll()[math.random(#player.GetAll())]
-		if (gBool("Miscellaneous", "Priority List", "Enabled") && table.HasValue(ignorelist, v:UniqueID())) || (gBool("Miscellaneous", "Priority List", "Enabled") && gBool("Miscellaneous", "Chat", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then return end
+		if (gBool("Main Menu", "Priority List", "Enabled") && table.HasValue(ignorelist, v:UniqueID())) || (gBool("Main Menu", "Priority List", "Enabled") && gBool("Miscellaneous", "Chat", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then return end
 		if (v != me && v:GetFriendStatus() != "friend" && !pm.IsAdmin(v)) then
 			me:ConCommand("ulx psay \""..v:Nick().."\" "..messagespam[math.random(#messagespam)])
 		end
@@ -3177,7 +3195,7 @@ local function Chams(v)
 	})
 	local col = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetChamsColor(v)
 	local wep = v:GetActiveWeapon()
-	if (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then
+	if (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then
 		return false
 	end
 	if gOption("Visuals", "Wallhack", "Chams:") == "Playermodel" then
@@ -3566,14 +3584,14 @@ local function Think()
 	if gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Normal" or gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Priority Targets" then
 	local randply = player.GetAll()[math.random(#player.GetAll())]
 	local friendstatus = pm.GetFriendStatus(randply)
-	hook.Remove("Think", "Hook6")
-	hook.Add("Think", "Hook5", function()
-	if (!randply:IsValid() || randply == me || friendstatus == "friend" || (gBool("Miscellaneous", "Priority List", "Enabled") && table.HasValue(ignorelist, randply:UniqueID())) || (gBool("Miscellaneous", "Priority List", "Enabled") && gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Priority Targets" && !table.HasValue(prioritylist, randply:UniqueID()))) then return end
+	hook.Remove("Think", "Think2")
+	hook.Add("Think", "Think1", function()
+	if (!randply:IsValid() || randply == me || friendstatus == "friend" || (gBool("Main Menu", "Priority List", "Enabled") && table.HasValue(ignorelist, randply:UniqueID())) || (gBool("Main Menu", "Priority List", "Enabled") && gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Priority Targets" && !table.HasValue(prioritylist, randply:UniqueID()))) then return end
 		box.ChangeName(randply:Name().." ")
 	end)
 	elseif !gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "DarkRP Name" then
-	hook.Remove("Think", "Hook5")
-	hook.Add("Think", "Hook6", function()
+	hook.Remove("Think", "Think1")
+	hook.Add("Think", "Think2", function()
 		box.ChangeName(myName)
 		end)
 	end
@@ -3585,7 +3603,7 @@ local function Think()
 		end
 	end
 	if (gBool("Main Menu", "Others", "Apply custom name")) then
-		hook.Add("Think", "Hook7", function()
+		hook.Add("Think", "Think3", function()
 		box.ChangeName(GetConVarString("idiot_changename"))
 		if not Confirmed1 then
 		MsgG(3.2, "Successfully applied custom name.")
@@ -3640,7 +3658,7 @@ local function CheckChild(pan)
 	end
 end
 
-hook.Add("Think", "Hook8", function()
+hook.Add("Think", "Think4", function()
 	TraitorDetector()
 	MurdererDetector()
 	TransparentWalls()
@@ -3779,42 +3797,57 @@ hook.Add("Think", "Hook8", function()
 	end
 end)
 
-hook.Add("PreDrawSkyBox", "Hook9", function()
+hook.Add("CalcViewModelView", "CalcViewModelView", function(wep, vm, oldPos, oldAng, pos, ang)
+	if gBool("Miscellaneous", "Viewmodel", "Custom Positions") then
+		local overridepos = Vector(gInt("Miscellaneous", "Viewmodel", "Viewmodel X:") - 50, gInt("Miscellaneous", "Viewmodel", "Viewmodel Y:") - 30, gInt("Miscellaneous", "Viewmodel", "Viewmodel Z:") - 20)
+		local overrideang = Angle(gInt("Miscellaneous", "Viewmodel", "Viewmodel Pitch:") - 90, gInt("Miscellaneous", "Viewmodel", "Viewmodel Yaw:") - 90, gInt("Miscellaneous", "Viewmodel", "Viewmodel Roll:") - 90)
+		ang = ang * 1
+		ang:RotateAroundAxis(ang:Right(), overrideang.x * 1.0)
+		ang:RotateAroundAxis(ang:Up(), overrideang.y * 1.0)
+		ang:RotateAroundAxis(ang:Forward(), overrideang.z * 1.0)
+		pos = pos + overridepos.x * ang:Right() * 1.0
+		pos = pos + overridepos.y * ang:Forward() * 1.0
+		pos = pos + overridepos.z * ang:Up() * 1.0 
+    end
+	return pos, ang
+end)
+
+hook.Add("PreDrawSkyBox", "PreDrawSkyBox", function()
 	if (!gBool("Visuals", "Textures", "No Sky")) then return end
 		render.Clear(0, 0, 0, 255)
 	return true
 end)
 
-hook.Add("PreDrawViewModel", "Hook10", function()
+hook.Add("PreDrawViewModel", "PreDrawViewModel", function()
 	if ThirdpersonCheck() then return end
 	local rainbow = HSVToColor(RealTime() * 45 % 360, 1, 1)
 	local wepmat1 = Material("models/wireframe")
-	if (gOption("Visuals", "Viewmodel", "Viewmodel Wireframe:") == "Normal") then
+	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Wireframe:") == "Normal") then
 	render.MaterialOverride(wepmat1)
 	render.SetColorModulation(viewmodelcol.r / 255, viewmodelcol.g / 255, viewmodelcol.b / 255)
 	end
-	if (gOption("Visuals", "Viewmodel", "Viewmodel Wireframe:") == "Rainbow") then
+	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Wireframe:") == "Rainbow") then
 	render.MaterialOverride(wepmat1)
 	render.SetColorModulation(rainbow.r / 255, rainbow.g / 255, rainbow.b / 255)
 	end
 	local wepmat2 = Material("models/debug/debugwhite")
-	if (gOption("Visuals", "Viewmodel", "Viewmodel Chams:") == "Normal") then
+	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Chams:") == "Normal") then
 	render.MaterialOverride(wepmat2)
 	render.SetColorModulation(viewmodelcol.r / 255, viewmodelcol.g / 255, viewmodelcol.b / 255)
 	end
-	if (gOption("Visuals", "Viewmodel", "Viewmodel Chams:") == "Rainbow") then
+	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Chams:") == "Rainbow") then
 	render.MaterialOverride(wepmat2)
 	render.SetColorModulation(rainbow.r / 255, rainbow.g / 255, rainbow.b / 255)
 	end
-	if (gBool("Visuals", "Viewmodel", "No Viewmodel") or ThirdpersonCheck()) then
+	if (gBool("Miscellaneous", "Viewmodel", "No Viewmodel") or ThirdpersonCheck()) then
 	return true
 	else
 	return false
 	end
 end)
 
-hook.Add("PreDrawPlayerHands", "Hook11", function()
-	if (gBool("Visuals", "Viewmodel", "No Hands") or ThirdpersonCheck()) then
+hook.Add("PreDrawPlayerHands", "PreDrawPlayerHands", function()
+	if (gBool("Miscellaneous", "Viewmodel", "No Hands") or ThirdpersonCheck()) then
 		return true
 	else
 		return false
@@ -3856,7 +3889,7 @@ local function Visuals(v)
 	local prioritycol = Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)
 	local misccol = Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
 	local hh = 0
-	if (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then
+	if (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then
 		return false
 	end
 	if gOption("Visuals", "Wallhack", "Box:") == "2D Box" then
@@ -3867,7 +3900,7 @@ local function Visuals(v)
 		surface.DrawOutlinedRect(pos.x - w / 2 + 1, pos.y - h + 1, w - 2, h - 2)
 	elseif gOption("Visuals", "Wallhack", "Box:") == "3D Box" then
 	for k, v in pairs(player.GetAll()) do
-	if (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) then continue end
+	if (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) then continue end
 	if v:IsValid() and v:Alive() and v:Health() > 0 then
 		local eye = v:EyeAngles()
 		local min, max = v:WorldSpaceAABB()
@@ -4126,7 +4159,7 @@ local function Visuals(v)
 	idiot.cam.End3D()
 	if (gBool("Visuals", "Wallhack", "Hitbox")) then
 		for k, v in next, player.GetAll() do
-		if (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) then continue end
+		if (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) then continue end
 		if v:IsValid() and v:Alive() and v:Health() > 0 then
 			for i = 0, v:GetHitBoxGroupCount() - 1 do
 			for _i = 0, v:GetHitBoxCount(i) - 1 do
@@ -4172,7 +4205,7 @@ local function OnScreen(v)
 	end
 end
 
-hook.Add("RenderScreenspaceEffects", "Hook12", function()
+hook.Add("RenderScreenspaceEffects", "RenderScreenspaceEffects", function()
 	if not gBool("Visuals", "Wallhack", "Enabled") or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or menuopen then return end
 		for k, v in next, player.GetAll() do
 		if (not em.IsValid(v) or em.Health(v) < 1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not OnScreen(v) or not WallhackFilter(v) or not EnemyWallhackFilter(v) then continue end
@@ -4220,7 +4253,7 @@ local function ShowNPCs()
 	end
 end
 
-hook.Add("DrawOverlay", "Hook13", function()
+hook.Add("DrawOverlay", "DrawOverlay", function()
 	if gBool("Visuals", "Wallhack", "Enabled") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) && !menuopen then
 		for k, v in next, player.GetAll() do
 		if ((!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or not em.IsValid(v) or em.Health(v) < 0.1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not OnScreen(v) or not WallhackFilter(v) or not EnemyWallhackFilter(v) then continue end
@@ -4271,7 +4304,7 @@ hook.Add("DrawOverlay", "Hook13", function()
 			end
 		end
 	end
-	if gBool("Miscellaneous", "Priority List", "Enabled") and menuopen and ScrW() >= 1600 or ScrH() >= 1400 then
+	if gBool("Main Menu", "Priority List", "Enabled") and menuopen and ScrW() >= 1600 or ScrH() >= 1400 then
 		PlayerList()
 	end
 	if v == me and not em.IsValid(v) then return end
@@ -4338,7 +4371,7 @@ local function AimPos(v)
 	return(pos.Pos)
 end
 
-hook.Add("player_hurt", "Hook14", function(data)
+hook.Add("player_hurt", "player_hurt", function(data)
 	local attacker = data.attacker
 	if attacker == me:UserID() then
 		if gOption("Miscellaneous", "Sounds", "Hitsounds:") ~= "Off" then
@@ -4409,7 +4442,7 @@ local function LogKills(data)
 	end
 end
 
-hook.Add("entity_killed", "Hook15", function(data)
+hook.Add("entity_killed", "entity_killed", function(data)
 	if gOption("Miscellaneous", "Sounds", "Killsounds:") ~= "Off" then
 		Killsounds(data)
 	end
@@ -4488,7 +4521,7 @@ local function Valid(v)
 	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Ignore Fellow Traitors") and engine.ActiveGamemode() == "terrortown" and GetRoundState() ~= ROUND_POST and me:IsTraitor() and not table.HasValue(prioritylist, v:UniqueID()) then
 		if v:IsTraitor() then return false end
 	end
-	if (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignorelist, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Aim Assist", "Aim Priorities", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then
+	if (gBool("Main Menu", "Priority List", "Enabled") and table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Aim Assist", "Aim Priorities", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then
 		return false
 	end
 	if v:Team() == TEAM_CONNECTING then
@@ -4572,7 +4605,7 @@ local function GetTarget()
 	end
 end
 
-hook.Add("Move", "Hook16", function()
+hook.Add("Move", "Move", function()
     if (IsFirstTimePredicted()) then
         servertime = CurTime() + engine.TickInterval()
     end
@@ -4814,7 +4847,7 @@ local function Triggerbot(cmd)
 		if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Ignore Fellow Traitors") and engine.ActiveGamemode() == "terrortown" and GetRoundState() ~= ROUND_POST and me:IsTraitor() and not table.HasValue(prioritylist, v:UniqueID()) then
 			if v:IsTraitor() then return false end
 		end
-		if (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignorelist, v:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Aim Assist", "Aim Priorities", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then
+		if (gBool("Main Menu", "Priority List", "Enabled") and table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Aim Assist", "Aim Priorities", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then
 			return false
 		end
 		if v:Team() == TEAM_CONNECTING then
@@ -5328,7 +5361,7 @@ local function FakeCrouch(cmd)
 	end
 end
 
-hook.Add("CalcView", "Hook17", function(me, pos, ang, fov)
+hook.Add("CalcView", "CalcView", function(me, pos, ang, fov)
 	local view = {}
 		if gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) and (me:Alive() or me:Health() > 0) then
 			local speed = gInt("Miscellaneous", "Free Roaming", "Speed:") / 5
@@ -5409,16 +5442,16 @@ local function FreeRoam(cmd)
 	end
 end
 
-hook.Add("AdjustMouseSensitivity", "Hook18", function()
+hook.Add("AdjustMouseSensitivity", "AdjustMouseSensitivity", function()
 	if not gBool("Aim Assist", "Triggerbot", "Smooth Aim") or not gKey("Aim Assist", "Triggerbot", "Toggle Key:") or not triggering or FixTools() then return end
 	return .10
 end)
 
-hook.Add("ShouldDrawLocalPlayer", "Hook19", function()
+hook.Add("ShouldDrawLocalPlayer", "ShouldDrawLocalPlayer", function()
 	if not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:")) then return ThirdpersonCheck() end
 end)
 
-hook.Add("CreateMove", "Hook20", function(cmd)
+hook.Add("CreateMove", "CreateMove", function(cmd)
 	bSendPacket = true
 	FakeLag(cmd)
 	AntiAFK(cmd)
@@ -5442,7 +5475,7 @@ hook.Add("CreateMove", "Hook20", function(cmd)
 	big.FinishPrediction()
 end)
 
-hook.Add("player_disconnect", "Hook21", function(v, data)
+hook.Add("player_disconnect", "player_disconnect", function(v, data)
 	local quit = {"rage quit", "rage quit lol", "he raged", "he raged lmao", "he left", "he left lmfao"}
 	if gOption("Miscellaneous", "Chat", "Reply Spam:") == "Disconnect Spam" then
 		if (engine.ActiveGamemode() == "darkrp") then
@@ -5453,7 +5486,7 @@ hook.Add("player_disconnect", "Hook21", function(v, data)
 	end
 end)
 
-hook.Add("HUDPaint2", "Hook22", function()
+hook.Add("HUDPaint2", "HUDPaint2", function()
 	if gInt("Adjustments", "Others", "BG Darkness:") > 0 and menuopen then
 		surface.SetDrawColor(0, 0, 0, gInt("Adjustments", "Others", "BG Darkness:") * 10)
 		surface.DrawRect(0, 0, ScrW(), ScrH())
@@ -5516,11 +5549,11 @@ hook.Add("HUDPaint2", "Hook22", function()
 	end
 end)
 
-hook.Add("PreDrawOpaqueRenderables", "Hook23", function()
+hook.Add("PreDrawOpaqueRenderables", "PreDrawOpaqueRenderables", function()
 	if gBool("Hack vs. Hack", "Resolver", "Enabled") then
 		for k, v in next, player.GetAll() do
-			if v == me or not v:IsValid() or (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignorelist, v:UniqueID())) then continue end
-			if gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Hack vs. Hack", "Resolver", "Priority Targets Only") then
+			if v == me or not v:IsValid() or (gBool("Main Menu", "Priority List", "Enabled") and table.HasValue(ignorelist, v:UniqueID())) then continue end
+			if gBool("Main Menu", "Priority List", "Enabled") and gBool("Hack vs. Hack", "Resolver", "Priority Targets Only") then
 				if not table.HasValue(prioritylist, v:UniqueID()) then continue end
 			end
 			local pitch = v:EyeAngles().x
@@ -5566,12 +5599,12 @@ hook.Add("PreDrawOpaqueRenderables", "Hook23", function()
 	end
 end)
 
-hook.Add("OnPlayerChat", "Hook24", function(chatPlayer, text, teamChat)
+hook.Add("OnPlayerChat", "OnPlayerChat", function(chatPlayer, text, teamChat)
 	local randomresponse = {"shut up", "ok", "who", "nobody cares", "where", "stop spamming", "what", "yea", "lol", "english please", "lmao", "shit", "fuck",}
 	local cheatcallouts = {"hac", "h4c", "h@c", "hak", "h4k", "h@k", "hck", "hax", "h4x", "h@x", "hask", "h4sk", "h@sk", "ha$k", "h4$k", "h@$k", "cheat", "ch3at", "che4t", "che@t", "ch34t", "ch3@t", "chet", "ch3t", "wall", "w4ll", "w@ll", "wa11", "w@11", "w411", "aim", "a1m", "4im", "@im", "@1m", "41m", "trigg", "tr1gg", "spin", "sp1n", "bot", "b0t", "esp", "3sp", "e$p", "3$p", "lua", "1ua", "lu4", "lu@", "1u4", "1u@", "scr", "skr", "$cr", "$kr", "skid", "sk1d", "$kid", "$k1d", "bunny", "buny", "h0p", "hop", "kick", "k1ck", "kik", "k1k", "ban", "b4n", "b@n", "fake", "f4ke", "f@ke", "fak3", "f4k3", "f@k3",}
 	local replyspam = gOption("Miscellaneous", "Chat", "Reply Spam:")
     if replyspam ~= "Off" then
-        if chatPlayer == me or not chatPlayer:IsValid() or (gBool("Miscellaneous", "Priority List", "Enabled") and table.HasValue(ignorelist, chatPlayer:UniqueID())) or (gBool("Miscellaneous", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and not table.HasValue(prioritylist, chatPlayer:UniqueID())) then return false end
+        if chatPlayer == me or not chatPlayer:IsValid() or (gBool("Main Menu", "Priority List", "Enabled") and table.HasValue(ignorelist, chatPlayer:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and not table.HasValue(prioritylist, chatPlayer:UniqueID())) then return false end
         if pm.GetFriendStatus(chatPlayer) ~= "friend" then
             if teamChat and replyspam == "Random" then
                 RunConsoleCommand("say_team", randomresponse[math.random(#randomresponse)])
