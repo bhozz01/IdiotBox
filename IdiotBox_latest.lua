@@ -177,7 +177,7 @@ local options = {
 					{""}, 
           		}, 
 				{
-          			{"Others", 261, 400, 232, 130, 218}, 
+          			{"Others", 261, 399, 232, 130, 218}, 
 					{"Apply custom name", "Checkbox", false, 78}, 
 					{"Feature Tooltips", "Checkbox", true, 78}, -- Enabled by default
 					{"Print Changelog", "Button", "", 92}, 
@@ -1652,7 +1652,7 @@ function Changelog() -- Ran out of local variables, again
 	print("- Fixed Chat Spam and Kill Spam still using IdiotBox Alpha variables;")
 	print("- Fixed 3D Box and Hitbox rendering issues;")
 	print("- Fixed extreme bug where the anti-screengrabber would make you run out of VRAM and crash your system;")
-	print("- Fixed Bunny Hop and Auto Strafe breaking Free Roaming;")
+	print("- Fixed Bunny Hop and Auto Strafe breaking Free Roaming and breaking player movement when in water;")
 	print("- Fixed Hitbox spamming the console with error messages;")
 	print("- Fixed Snap Lines still showing when Aimbot is not enabled;")
 	print("- Fixed toggle keys activating when browsing game menus/ typing;")
@@ -1665,11 +1665,11 @@ function Changelog() -- Ran out of local variables, again
 	print("- Fixed FoV Circle not showing upon enabling;")
 	print("- Fixed skybox changing upon initializing the script;")
 	print("- Fixed Anti-Aim breaking the Radar view angles;")
-	print("- Fixed Circle Strafing spaghetti code not acting the way it should;")
+	print("- Fixed Circle Strafe spaghetti code not functioning the way it should;")
 	print("- Fixed Free Roaming not working with Anti-Aim;")
 	print("- Fixed Visuals causing severe lag;")
 	print("- Fixed Cheater Callout clearing chat when it should not;")
-	print("- Fixed Thirdperson, Custom FoV and Free Roaming working improperly when the user is dead;")
+	print("- Fixed Thirdperson, Custom FoV and Free Roaming functioning improperly when the user is dead;")
 	print("- Fixed Prop Kill giving script errors when toggled;")
 	print("- Fixed Anti-Aim Yaw Jitter, Semi-Jitter Down and Semi-Jitter Up breaking the Anti-Aim Pitch;")
 	print("- Fixed Triggerbot Smooth Aim slowing down your overall mouse speed;")
@@ -3341,13 +3341,13 @@ local function BunnyHop(cmd)
         [MOVETYPE_NOCLIP] = true,
         [MOVETYPE_LADDER] = true,
     }
-    if(badmovetypes[me:GetMoveType()]) then return end
-    if(me:IsOnGround()) then
+    if (badmovetypes[me:GetMoveType()] or me:IsFlagSet(1024)) then return end
+    if (me:IsOnGround()) then
         if(timeHoldingSpaceOnGround > 1) then
             timeHoldingSpaceOnGround = 0
             cmd:RemoveKey(IN_JUMP)
         end
-        if(cmd:KeyDown(IN_JUMP)) then
+        if (cmd:KeyDown(IN_JUMP)) then
             timeHoldingSpaceOnGround = timeHoldingSpaceOnGround + 1
         end
         return
@@ -3479,7 +3479,7 @@ local function CircleStrafe(cmd)
         [MOVETYPE_NOCLIP] = true,
         [MOVETYPE_LADDER] = true,
     }
-	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or (badmovetypes[me:GetMoveType()]) then return end
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or badmovetypes[me:GetMoveType()] or me:IsFlagSet(1024) then return end
 		if !gKey("Miscellaneous", "Movement", "Circle Strafe Key:") and gOption("Miscellaneous", "Movement", "Auto Strafe:") ~= "Off" then
 			if (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Legit") then
 				LegitStrafe(cmd)
@@ -3517,7 +3517,7 @@ local function AutoStrafe(cmd)
         [MOVETYPE_NOCLIP] = true,
         [MOVETYPE_LADDER] = true,
     }
-    if(badmovetypes[me:GetMoveType()]) then return end
+    if (badmovetypes[me:GetMoveType()] or me:IsFlagSet(1024)) then return end
 		if gBool("Miscellaneous", "Movement", "Circle Strafe") then
 			CircleStrafe(cmd)
 		elseif !gBool("Miscellaneous", "Movement", "Circle Strafe") then
