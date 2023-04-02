@@ -94,6 +94,13 @@ surface.CreateFont("MiscFont", {font = "Tahoma", size = 12, weight = 900, antial
 surface.CreateFont("MiscFont2", {font = "Tahoma", size = 12, weight = 900, antialias = false, outline = false})
 surface.CreateFont("MiscFont3", {font = "Tahoma", size = 13, weight = 674, antialias = false, outline = true})
 
+chamsmat1 = CreateMaterial("normalmat1", "VertexLitGeneric", {["$ignorez"] = 1, ["$basetexture"] = "models/debug/debugwhite", })
+chamsmat2 = CreateMaterial("normalmat2", "VertexLitGeneric", {["$ignorez"] = 0, ["$basetexture"] = "models/debug/debugwhite", })
+chamsmat3 = CreateMaterial("flatmat1", "UnLitGeneric", {["$ignorez"] = 1, ["$basetexture"] = "models/debug/debugwhite", })
+chamsmat4 = CreateMaterial("flatmat2", "UnLitGeneric", {["$ignorez"] = 0, ["$basetexture"] = "models/debug/debugwhite", })
+chamsmat5 = CreateMaterial("wiremat1", "UnLitGeneric", {["$ignorez"] = 1, ["$wireframe"] = 1, })
+chamsmat6 = CreateMaterial("wiremat2", "UnLitGeneric", {["$ignorez"] = 0, ["$wireframe"] = 1, })
+
 local creator = creator or {}
 local contributors = contributors or {}
 
@@ -321,7 +328,7 @@ local options = {
 					{""}, 
 					{"Box:", "Selection", "Off", {"Off", "2D Box", "3D Box", "Edged Box"}, 92}, 
 					{""}, 
-					{"Chams:", "Selection", "Off", {"Off", "Normal", "Playermodel"}, 92}, 
+					{"Chams:", "Selection", "Off", {"Off", "Normal", "Flat", "Wireframe", "Playermodel"}, 92}, 
 					{""}, 
 					{"Skeleton", "Checkbox", false, 78}, 
 					{"Glow", "Checkbox", false, 78}, 
@@ -408,11 +415,10 @@ local options = {
 					{""}, 
                 }, 
 				{
-					{"Viewmodel", 16, 253, 232, 500, 218}, 
-					{"Viewmodel Chams:", "Selection", "Off", {"Off", "Normal", "Rainbow"}, 92}, 
+					{"Viewmodel", 16, 253, 232, 476, 218}, 
+					{"Viewmodel Chams:", "Selection", "Off", {"Off", "Normal", "Flat", "Wireframe"}, 92}, 
 					{""}, 
-					{"Viewmodel Wireframe:", "Selection", "Off", {"Off", "Normal", "Rainbow"}, 92}, 
-					{""}, 
+					{"Rainbow Mode", "Checkbox", false, 78}, 
 					{"No Viewmodel", "Checkbox", false, 78}, 
 					{"No Hands", "Checkbox", false, 78}, 
 					{"Custom Positions", "Checkbox", false, 78}, 
@@ -1084,7 +1090,7 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			surface.DrawRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, 9, 9)
 		end
 		local feat = var[1]
-		if feat == "Enabled" then -- The tooltips listed here may not be correctly ordered because of feature placement changes I'm constantly making - basically fucking up your configs B))))
+		if feat == "Enabled" then -- The tooltips listed below may not be correctly ordered because of feature placement changes I'm constantly making - basically fucking up your configs B))))
 			info = "Toggles this feature."
 		elseif feat == "Optimize Game" then
 			info = "Clears decals and other effects to improve framerate."
@@ -1177,7 +1183,7 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 		elseif feat == "Remove Weapon Recoil" then
 			info = "Removes weapon recoil."
 		elseif feat == "Remove Bullet Spread" then
-			info = "Creates a perfectly still bullet spread."
+			info = "Creates a laser-accurate bullet spread. Not compatible with all weapon bases yet."
 		elseif feat == "Projectile Prediction" then
 			info = "Aimbot calculates your and your target's speed and compensates for non-hitscan weapons."
 		elseif feat == "Auto Reload" then
@@ -1282,6 +1288,8 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			info = "Allows you to set a custom FoV, outside of the default boundaries."
 		elseif feat == "Thirdperson" then
 			info = "Allows you to toggle thirdperson."
+		elseif feat == "Rainbow Mode" then
+			info = "Makes your viewmodel's texture RGB."
 		elseif feat == "No Viewmodel" then
 			info = "Removes your entire viewmodel."
 		elseif feat == "No Hands" then
@@ -1420,9 +1428,7 @@ local function DrawSelect(self, w, h, var, maxy, posx, posy, dist)
 		elseif feat == "Chams:" then
 			info = "Draws playermodels through walls, either as a solid color or as regular playermodels."
 		elseif feat == "Viewmodel Chams:" then
-			info = "Replaces your viewmodel textures with a solid color."
-		elseif feat == "Viewmodel Wireframe:" then
-			info = "Replaces your viewmodel textures with a colored wireframe."
+			info = "Replaces your viewmodel's default textures with a colored texture of your choice."
 		elseif feat == "Dormant Check:" then
 			info = "Choose whether or not to draw dormant entities."
 		elseif feat == "Crosshair:" then
@@ -1631,7 +1637,7 @@ function Changelog() -- Ran out of local variables, again
 	print("- Cheat menu/ game menus will no longer be covered by Visuals/ windows/ lists and others;")
 	print("- Show Entities can only be used if Visuals is turned on;")
 	print("- Added missing space between the Custom Status rank and username;")
-	print("- Fixed dimension of the Armor Bar not matching the dimension of the Health Bar;")
+	print("- Fixed dimensions of the Armor Bar not matching the dimensions of the Health Bar;")
 	print("- Fixed Bunny Hop breaking the movement when in water;")
 	print("- Fixed Entities not using the correct Visuals color;")
 	print("- Fixed entity list not showing props and being too cluttered;")
@@ -1650,12 +1656,10 @@ function Changelog() -- Ran out of local variables, again
 	print("- Fixed Hitbox spamming the console with error messages;")
 	print("- Fixed Snap Lines still showing when Aimbot is not enabled;")
 	print("- Fixed toggle keys activating when browsing game menus/ typing;")
-	print("- Fixed Hide Round Report and Panel Remover not working correctly;")
+	print("- Fixed Bullet Fire Delay, Anti-Ads, Hide Round Report and Panel Remover not working correctly;")
 	print("- Fixed Aimbot and Triggerbot targeting spawning players;")
-	print("- Fixed Edged Box contrast issues;")
 	print("- Fixed misplaced tab selection lines;")
 	print("- Fixed poorly placed checkboxes/ sliders/ selections;")
-	print("- Fixed Anti-Ads not working correctly;")
 	print("- Fixed Anti-Aim Resolver continuing to resolve angles when set to 'Off';")
 	print("- Fixed Thirdperson showing in spectator mode;")
 	print("- Fixed FoV Circle not showing upon enabling;")
@@ -1665,17 +1669,16 @@ function Changelog() -- Ran out of local variables, again
 	print("- Fixed Free Roaming not working with Anti-Aim;")
 	print("- Fixed Visuals causing severe lag;")
 	print("- Fixed Cheater Callout clearing chat when it should not;")
-	print("- Fixed Thirdperson, Custom FoV and Free Roaming working incorrectly when the user is dead;")
-	print("- Fixed Bullet Fire Delay not working correctly;")
+	print("- Fixed Thirdperson, Custom FoV and Free Roaming working improperly when the user is dead;")
 	print("- Fixed Prop Kill giving script errors when toggled;")
 	print("- Fixed Anti-Aim Yaw Jitter, Semi-Jitter Down and Semi-Jitter Up breaking the Anti-Aim Pitch;")
 	print("- Fixed Triggerbot Smooth Aim slowing down your overall mouse speed;")
 	print("- Fixed certain outlines and fonts not having the proper dimensions;")
 	print("- Fixed the menu not being large enough for certain outlines;")
 	print("- Fixed a Projectile Prediction bug where dying would cause script errors;")
-	print("- Fixed Manipulate Interpolation and Dark Mode not resetting when disabled;")
+	print("- Fixed Manipulate Interpolation, Optimize Game and Dark Mode not resetting when disabled;")
 	print("- Fixed local variable limit and timer issues;")
-	print("- Reworked script for slightly better performance;")
+	print("- Reworked localizations and overall script for better performance;")
 	print("- Reworked user visibility of IdiotBox developers on servers;")
 	print("- Reorganized certain out-of-place functions and menu options;")
 	print("- Reorganized the developer list;")
@@ -1699,7 +1702,7 @@ function Changelog() -- Ran out of local variables, again
 	print("- Added 'Cheater Callout', 'Copy Messages', 'Disconnect Spam', 'lol', 'english please', 'lmao', 'shit' and 'fuck' to Reply Spam;")
 	print("- Added 'Border Color', 'Misc Visuals Color' and 'B Opacity' to Adjustments;")
 	print("- Added 'Fake-Forwards/ Backwards/ Sideways', Yaw Spinbot, 'Static', 'Adapt' and 'Disable in Use Toggle' to Anti-Aim;")
-	print("- Added 'Players List', 'Show Entities', 'Conditions', 'Velocity', 'Dormant Check', 'Show Spectators', 'Hide Ignored Targets', 'Bystander Name', 'NPCs', 'Clientside', 'Target Priority Colors' and priority statuses to Visuals;")
+	print("- Added 'Players List', 'Show Entities', 'Conditions', 'Velocity', 'Dormant Check', 'Show Spectators', 'Hide Ignored Targets', 'Bystander Name', 'NPCs', 'Flat' & 'Wireframe' chams, clientside visibility and 'Target Priority Colors' & priority statuses to Visuals;")
 	print("- Added 'Remove 3D Skybox' to Textures;")
 	print("- Added 'Panic Mode', 'Entity Finder Menu', 'Plugin Loader Menu', 'Optimize Game', 'Feature Tooltips', 'Spectator Mode' and more TTT/ Murder/ DarkRP specific features to Main Menu;")
 	print("- Added 'Spectators', 'Players', 'Frozen Players' and 'Enemies' to Aim Priorities;")
@@ -1707,7 +1710,7 @@ function Changelog() -- Ran out of local variables, again
 	print("- Added 'Circle Strafe Key' and 'Fake Crouch' to Movement;")
 	print("- Added 'Arabic Spam' and 'Hebrew Spam' to Chat Spam;")
 	print("- Added 'Priority Targets Only' to Priority List;")
-	print("- Added 'Custom Positions' and 'Rainbow' viewmodels to Viewmodel;")
+	print("- Added 'Custom Positions', 'Rainbow Mode' and 'Flat' & 'Wireframe' chams to Viewmodel;")
 	print("- Added 'Thirdperson Key' to Point of View;")
 	print("- Added 'Random' to Emotes;")
 	print("- Added 'Murder Taunts' to Taunting;")
@@ -1729,14 +1732,12 @@ function Changelog() -- Ran out of local variables, again
 	print("- Reworked anti-screengrabber from scratch;")
 	print("- Reworked the menu's design from scratch;")
 	print("- Reworked old 'file.Read' blocker from scratch;")
-	print("- Reworked localizations for better performance;")
 	print("- Renamed 'Aim Assist', 'Hack vs. Hack' and 'Main Menu' tabs;")
 	print("- Removed 'Triggerbot' tab and merged it with the 'Aim Assist' tab;")
 	print("- Removed 'Shoutout' and 'Drop Money' from Chat Spam;")
 	print("- Removed 'Screengrab Notifications' from Miscellaneous;")
 	print("- Removed 'Mirror' from Point of View;")
 	print("- Removed useless information from Anti-Aim and Miscellaneous;")
-	print("- Removed old 'Traitor Finder' junk code;")
 	print("- Changed the Armor Bar and Armor Value colors from bright green to bright blue.")
 	print("- Changed the default colors, menu size and others;")
 	print("- Changed the entity finder menu;")
@@ -3193,14 +3194,6 @@ local function GetChamsColor(v)
 end
 
 local function Chams(v)
-	local chamsmat = CreateMaterial("a", "VertexLitGeneric", {
-		["$ignorez"] = 1, 
-		["$basetexture"] = "models/debug/debugwhite", 
-	})
-	local chamsmat2 = CreateMaterial("aa", "VertexLitGeneric", {
-		["$ignorez"] = 0, 
-		["$basetexture"] = "models/debug/debugwhite", 
-	})
 	local col = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetChamsColor(v)
 	local wep = v:GetActiveWeapon()
 	if (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then
@@ -3209,41 +3202,85 @@ local function Chams(v)
 	if gOption("Visuals", "Wallhack", "Chams:") == "Playermodel" then
 	if wep:IsValid() then
 	cam.Start3D()
-	cam.IgnoreZ(true)
+		cam.IgnoreZ(true)
 	em.DrawModel(wep)
-	cam.IgnoreZ(false)
+		cam.IgnoreZ(false)
 	cam.End3D()
 	end
 	cam.Start3D()
-	cam.IgnoreZ(true)
+		cam.IgnoreZ(true)
 	em.DrawModel(v)
-	cam.IgnoreZ(false)
+		cam.IgnoreZ(false)
 	cam.End3D()
 	end
 	if gOption("Visuals", "Wallhack", "Chams:") == "Normal" then
 	if wep:IsValid() then
 	cam.Start3D()
-	render.MaterialOverride(chamsmat)
-	render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
+		render.MaterialOverride(chamsmat1)
+		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
 	em.DrawModel(wep)
-	render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
-	render.MaterialOverride(chamsmat2)
+		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
+		render.MaterialOverride(chamsmat2)
 	em.DrawModel(wep)
-	render.SetColorModulation(1, 1, 1)
+		render.SetColorModulation(1, 1, 1)
 	cam.End3D()
 	end
 	cam.Start3D()
-	render.MaterialOverride(chamsmat)
-	render.SetColorModulation(col.b / 255, col.r / 255, col.g / 255)
+		render.MaterialOverride(chamsmat1)
+		render.SetColorModulation(col.b / 255, col.r / 255, col.g / 255)
 	em.DrawModel(v)
-	render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
-	render.MaterialOverride(chamsmat2)
+		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
+		render.MaterialOverride(chamsmat2)
 	em.DrawModel(v)
-	render.SetColorModulation(1, 1, 1)
+		render.SetColorModulation(1, 1, 1)
+	cam.End3D()
+	end
+	if gOption("Visuals", "Wallhack", "Chams:") == "Flat" then
+	if wep:IsValid() then
+	cam.Start3D()
+		render.MaterialOverride(chamsmat3)
+		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
+	em.DrawModel(wep)
+		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
+		render.MaterialOverride(chamsmat4)
+	em.DrawModel(wep)
+		render.SetColorModulation(1, 1, 1)
+	cam.End3D()
+	end
+	cam.Start3D()
+		render.MaterialOverride(chamsmat3)
+		render.SetColorModulation(col.b / 255, col.r / 255, col.g / 255)
+	em.DrawModel(v)
+		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
+		render.MaterialOverride(chamsmat4)
+	em.DrawModel(v)
+		render.SetColorModulation(1, 1, 1)
+	cam.End3D()
+	end
+	if gOption("Visuals", "Wallhack", "Chams:") == "Wireframe" then
+	if wep:IsValid() then
+	cam.Start3D()
+		render.MaterialOverride(chamsmat5)
+		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
+	em.DrawModel(wep)
+		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
+		render.MaterialOverride(chamsmat6)
+	em.DrawModel(wep)
+		render.SetColorModulation(1, 1, 1)
+	cam.End3D()
+	end
+	cam.Start3D()
+		render.MaterialOverride(chamsmat5)
+		render.SetColorModulation(col.b / 255, col.r / 255, col.g / 255)
+	em.DrawModel(v)
+		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
+		render.MaterialOverride(chamsmat6)
+	em.DrawModel(v)
+		render.SetColorModulation(1, 1, 1)
 	cam.End3D()
 	end
 end
-	
+
 local function TransparentWalls()
     local mats = em.GetMaterials(game.GetWorld())
         for k, v in next, mats do
@@ -3835,28 +3872,34 @@ end)
 hook.Add("PreDrawViewModel", "PreDrawViewModel", function()
 	if ThirdpersonCheck() then return end
 	local rainbow = HSVToColor(RealTime() * 45 % 360, 1, 1)
-	local wepmat1 = Material("models/wireframe")
-	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Wireframe:") == "Normal") then
-	render.MaterialOverride(wepmat1)
-	render.SetColorModulation(viewmodelcol.r / 255, viewmodelcol.g / 255, viewmodelcol.b / 255)
-	end
-	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Wireframe:") == "Rainbow") then
-	render.MaterialOverride(wepmat1)
-	render.SetColorModulation(rainbow.r / 255, rainbow.g / 255, rainbow.b / 255)
-	end
-	local wepmat2 = Material("models/debug/debugwhite")
 	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Chams:") == "Normal") then
-	render.MaterialOverride(wepmat2)
-	render.SetColorModulation(viewmodelcol.r / 255, viewmodelcol.g / 255, viewmodelcol.b / 255)
+		render.MaterialOverride(chamsmat2)
+		render.SetColorModulation(viewmodelcol.r / 255, viewmodelcol.g / 255, viewmodelcol.b / 255)
 	end
-	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Chams:") == "Rainbow") then
-	render.MaterialOverride(wepmat2)
-	render.SetColorModulation(rainbow.r / 255, rainbow.g / 255, rainbow.b / 255)
+	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Chams:") == "Normal") and gBool("Miscellaneous", "Viewmodel", "Rainbow Mode") then
+		render.MaterialOverride(chamsmat2)
+		render.SetColorModulation(rainbow.r / 255, rainbow.g / 255, rainbow.b / 255)
+	end
+	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Chams:") == "Flat") then
+		render.MaterialOverride(chamsmat4)
+		render.SetColorModulation(viewmodelcol.r / 255, viewmodelcol.g / 255, viewmodelcol.b / 255)
+	end
+	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Chams:") == "Flat") and gBool("Miscellaneous", "Viewmodel", "Rainbow Mode") then
+		render.MaterialOverride(chamsmat4)
+		render.SetColorModulation(rainbow.r / 255, rainbow.g / 255, rainbow.b / 255)
+	end
+	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Chams:") == "Wireframe") then
+		render.MaterialOverride(chamsmat6)
+		render.SetColorModulation(viewmodelcol.r / 255, viewmodelcol.g / 255, viewmodelcol.b / 255)
+	end
+	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Chams:") == "Wireframe") and gBool("Miscellaneous", "Viewmodel", "Rainbow Mode") then
+		render.MaterialOverride(chamsmat6)
+		render.SetColorModulation(rainbow.r / 255, rainbow.g / 255, rainbow.b / 255)
 	end
 	if (gBool("Miscellaneous", "Viewmodel", "No Viewmodel") or ThirdpersonCheck()) then
-	return true
+		return true
 	else
-	return false
+		return false
 	end
 end)
 
