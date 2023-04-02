@@ -362,20 +362,23 @@ local options = {
 					{"Bright Mode", "Checkbox", false, 78}, 
 					{"Dark Mode", "Checkbox", false, 78}, 
                 }, 
-                {
-					{"Miscellaneous", 506, 20, 232, 655, 218}, 
-					{"Priority Targets Only", "Checkbox", false, 78}, 
-					{"Hide Ignored Targets", "Checkbox", false, 78}, 
-					{"Target Priority Colors", "Checkbox", true, 78}, -- Enabled by default
-					{"Show Enemies Only", "Checkbox", false, 78}, 
-					{"Show Spectators", "Checkbox", false, 78}, 
-					{"Team Colors", "Checkbox", false, 78}, 
+				{
+					{"Panels", 261, 442, 232, 175, 218}, 
 					{"Spectators Box", "Checkbox", false, 78}, 
 					{"Radar Box", "Checkbox", false, 78}, 
 					{"Radar Distance:", "Slider", 50, 100, 92}, 
 					{""}, 
 					{"Custom Status", "Checkbox", false, 78}, 
 					{"Players List", "Checkbox", false, 78}, 
+                }, 
+                {
+					{"Miscellaneous", 506, 20, 232, 510, 218}, 
+					{"Priority Targets Only", "Checkbox", false, 78}, 
+					{"Hide Ignored Targets", "Checkbox", false, 78}, 
+					{"Target Priority Colors", "Checkbox", true, 78}, -- Enabled by default
+					{"Show Enemies Only", "Checkbox", false, 78}, 
+					{"Show Spectators", "Checkbox", false, 78}, 
+					{"Team Colors", "Checkbox", false, 78}, 
 					{"Show NPCs", "Checkbox", false, 78}, 
 					{"Show Entities", "Checkbox", false, 78}, 
 					{"Hide HUD", "Checkbox", false, 78}, 
@@ -2793,8 +2796,8 @@ local function Radar()
 			surface.SetDrawColor(color)
 			local myPos = me:GetPos()
 			local theirPos = v:GetPos()
-			local theirX = (radarX + (radarW / 2)) + ((theirPos.x - myPos.x) / gInt("Visuals", "Miscellaneous", "Radar Distance:"))
-			local theirY = (radarY + (radarH / 2)) + ((myPos.y - theirPos.y) / gInt("Visuals", "Miscellaneous", "Radar Distance:"))
+			local theirX = (radarX + (radarW / 2)) + ((theirPos.x - myPos.x) / gInt("Visuals", "Panels", "Radar Distance:"))
+			local theirY = (radarY + (radarH / 2)) + ((myPos.y - theirPos.y) / gInt("Visuals", "Panels", "Radar Distance:"))
 			local myRotation = math.rad(fa.y - 90)
 			theirX = theirX - (radarX + (radarW / 2))
 			theirY = theirY - (radarY + (radarH / 2))
@@ -4310,17 +4313,17 @@ hook.Add("DrawOverlay", "DrawOverlay", function()
 		PlayerList()
 	end
 	if v == me and not em.IsValid(v) then return end
-	if gBool("Visuals", "Miscellaneous", "Spectators Box") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
+	if gBool("Visuals", "Panels", "Spectators Box") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
 		Spectator()
 	end
-	if gBool("Visuals", "Miscellaneous", "Radar Box") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
+	if gBool("Visuals", "Panels", "Radar Box") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
 		Radar()
 	end
-	if gBool("Visuals", "Miscellaneous", "Custom Status") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
+	if gBool("Visuals", "Panels", "Custom Status") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
 		Logo()
 		Status()
 	end
-	if gBool("Visuals", "Miscellaneous", "Players List") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
+	if gBool("Visuals", "Panels", "Players List") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
 		Logo2()
 		Players()
 	end
