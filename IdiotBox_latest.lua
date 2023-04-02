@@ -356,14 +356,15 @@ local options = {
 					{""}, 
                 }, 
 				{
-					{"Textures", 261, 308, 232, 120, 218}, 
+					{"Textures", 261, 308, 232, 145, 218}, 
 					{"Transparent Walls", "Checkbox", false, 78}, 
-					{"No Sky", "Checkbox", false, 78}, 
+					{"Remove Sky", "Checkbox", false, 78}, 
+					{"Remove 3D Skybox", "Checkbox", false, 78}, 
 					{"Bright Mode", "Checkbox", false, 78}, 
 					{"Dark Mode", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Panels", 261, 442, 232, 175, 218}, 
+					{"Panels", 261, 467, 232, 175, 218}, 
 					{"Spectators Box", "Checkbox", false, 78}, 
 					{"Radar Box", "Checkbox", false, 78}, 
 					{"Radar Distance:", "Slider", 50, 100, 92}, 
@@ -1269,8 +1270,10 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			info = "Clears all sounds that are currently playing on your server."
 		elseif feat == "Transparent Walls" then
 			info = "Makes the walls see-through."
-		elseif feat == "No Sky" then
-			info = "Removes the skybox."
+		elseif feat == "Remove Sky" then
+			info = "Makes the sky completely black."
+		elseif feat == "Remove 3D Skybox" then
+			info = "Removes the 3D skybox. May improve framerate."
 		elseif feat == "Bright Mode" then
 			info = "Creates uniform lighting throughout the whole map. Useful for dark maps."
 		elseif feat == "Dark Mode" then
@@ -1697,6 +1700,7 @@ function Changelog() -- Ran out of local variables, again
 	print("- Added 'Border Color', 'Misc Visuals Color' and 'B Opacity' to Adjustments;")
 	print("- Added 'Fake-Forwards/ Backwards/ Sideways', Yaw Spinbot, 'Static', 'Adapt' and 'Disable in Use Toggle' to Anti-Aim;")
 	print("- Added 'Players List', 'Show Entities', 'Conditions', 'Velocity', 'Dormant Check', 'Show Spectators', 'Hide Ignored Targets', 'Bystander Name', 'NPCs', 'Clientside', 'Target Priority Colors' and priority statuses to Visuals;")
+	print("- Added 'Remove 3D Skybox' to Textures;")
 	print("- Added 'Panic Mode', 'Entity Finder Menu', 'Plugin Loader Menu', 'Optimize Game', 'Feature Tooltips', 'Spectator Mode' and more TTT/ Murder/ DarkRP specific features to Main Menu;")
 	print("- Added 'Spectators', 'Players', 'Frozen Players' and 'Enemies' to Aim Priorities;")
 	print("- Added 'Toggle Key' and 'Speed' to Free Roaming;")
@@ -1714,7 +1718,6 @@ function Changelog() -- Ran out of local variables, again
 	print("- Added bordered menu styles;")
 	print("- Added sliding menu;")
 	print("- Added more hitsounds, killsounds, more music and a custom music player to Sounds;")
-	print("- Added solid color to buttons;")
 	print("- Added a custom configurations menu;")
 	print("- Reworked 'Bunny Hop' and 'Auto Strafe' from scratch;")
 	print("- Reworked 'Auto Wallbang' from Aimbot;")
@@ -3249,7 +3252,7 @@ local function TransparentWalls()
                 im.SetFloat(material, "$alpha", 1)
 			continue
         end
-        im.SetFloat(material, "$alpha", 0.75)
+        im.SetFloat(material, "$alpha", 0.83)
     end
 end
 
@@ -3800,6 +3803,12 @@ hook.Add("Think", "Think4", function()
 			end
 		end
 	end
+	local skycvar = GetConVar("r_3dsky")
+	if (gBool("Visuals", "Textures", "Remove 3D Skybox") and skycvar:GetBool() == true) then
+        RunConsoleCommand("r_3dsky", "0")
+    elseif (!gBool("Visuals", "Textures", "Remove 3D Skybox") and skycvar:GetBool() == false) then
+        RunConsoleCommand("r_3dsky", "1")
+    end
 end)
 
 hook.Add("CalcViewModelView", "CalcViewModelView", function(wep, vm, oldPos, oldAng, pos, ang)
@@ -3818,7 +3827,7 @@ hook.Add("CalcViewModelView", "CalcViewModelView", function(wep, vm, oldPos, old
 end)
 
 hook.Add("PreDrawSkyBox", "PreDrawSkyBox", function()
-	if (!gBool("Visuals", "Textures", "No Sky")) then return end
+	if (!gBool("Visuals", "Textures", "Remove Sky")) then return end
 		render.Clear(0, 0, 0, 255)
 	return true
 end)
