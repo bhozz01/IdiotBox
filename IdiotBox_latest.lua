@@ -1671,6 +1671,7 @@ function Changelog() -- Ran out of local variables, again
 	print("- Fixed Entities not using the correct Visuals color;")
 	print("- Fixed entity list not showing props and being too cluttered;")
 	print("- Fixed Fake Lag Send not showing up;")
+	print("- Fixed visual bug, where weapons would display a weird name on Wallhack;")
 	print("- Fixed menu border bug, where if you clicked the border, the entire menu would turn blue;")
 	print("- Fixed buttons spamming the 'click' sound when holding them down;")
 	print("- Fixed Reply Spam and Copy Messages not ignoring friends;")
@@ -4383,7 +4384,7 @@ hook.Add("RenderScreenspaceEffects", "RenderScreenspaceEffects", function()
 		end
 	end
 	for k, v in pairs(ents.FindByClass("npc_*")) do
-		if (not gBool("Visuals", "Miscellaneous", "Show NPCs") or not em.IsValid(v) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All"))) or not OnScreen(v) or not WallhackFilter(v) then continue end
+		if (not gBool("Visuals", "Miscellaneous", "Show NPCs") or not em.IsValid(v) or em.Health(v) < 1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All"))) or not OnScreen(v) or not WallhackFilter(v) then continue end
 		NPCChams(v)
 	end
 end)
