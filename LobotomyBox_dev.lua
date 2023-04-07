@@ -10,7 +10,22 @@
 
 --NOTE-- This script is perfect - there's no room for improvement. It started off as a very good, random script that I made for fun from scratch, then it somehow turned into one of the most optimized cheats in Garry's Mod. We try to make LobotomyBox a better cheat with each update that gets released, and so far, it seems to go pretty well - but we're nowhere near the end.
 
-local braindamage = {}
+braindamage = {}
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
 table.Add(braindamage, _G)
 table.Add(braindamage, _G)
 table.Add(braindamage, _G)
@@ -27,15 +42,16 @@ table.Add(braindamage, _G)
 table.Add(braindamage, _G)
 table.Add(braindamage, _G)
 
-local detours = {}
 
-local protectedfiles = {
+detours = {}
+
+protectedfiles = {
     "LobotomyBox_latest.lua", 
     "LobotomyBox_backup.lua", 
 	"LobotomyBox_dev.lua", 
 }
 
-local function DetourFunction(originalFunction, newFunction)
+function DetourFunction(originalFunction, newFunction)
     detours[newFunction] = originalFunction
     return newFunction
 end
@@ -49,7 +65,7 @@ file.Read = DetourFunction(file.Read, function(fileName, path)
     return detours[file.Read](fileName, path)
 end)
 
-local idiot	= (_G)
+idiot = (_G)
 local folder = "LobotomyBox"
 local version = "6.9.b5"
 
@@ -3743,6 +3759,16 @@ timer.Create("usespam", 0, 0, function()
 end)
 
 local function Think()
+	model = ClientsideModel("models/props_phx/wheels/metal_wheel1.mdl")
+	model:SetPos(Vector(0,0,0))
+	model:Spawn()
+	for i = 0, 500, 1 do
+		local tr = util.TraceLine( {
+			start = LocalPlayer():EyePos(),
+			endpos = LocalPlayer():EyePos() + EyeAngles():Forward() * 10000,
+			filter = function( ent ) return ( ent:GetClass() == "prop_physics" ) end
+		} )
+	end //more obfuscation this time to bypass GAC
 	local randomname = {"Mike Hawk", "Moe Lester", "Mike Hunt", "Ben Dover", "Harold Kundt", "Peter Pain", "Dusan Mandic", "Harry Gooch", "Mike Oxlong", "Ivana Dooyu", "Slim Shader", "Dead Walker", "Mike Oxbig", "Mike Rotch", "Hugh Jass", "Robin Banks", "Mike Litt", "Harry Wang", "Harry Cox", "Moss Cular", "Amanda Reen", "Major Kumm", "Willie Wang", "Hugh Blackstuff", "Mike Rap", "Al Coholic", "Cole Kutz", "Mike Litoris", "Dixie Normous", "Dick Pound", "Mike Ock", "Sum Ting Wong", "Ho Lee Fuk", "Harry Azcrac", "Jay L. Bate", "Hugh G. Rection", "Long Wang", "Wayne King",}
 	if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menuopen and not menukeydown) then
 		menuopen = true
@@ -4383,6 +4409,337 @@ local function Visuals(v)
 			end
 		end
 	end
+	local pos = em.GetPos(v)
+	local min, max = em.GetCollisionBounds(v)
+	local pos2 = pos + Vector(0, 0, max.z)
+	local pos = vm.ToScreen(pos)
+	local pos2 = vm.ToScreen(pos2)
+	local h = pos.y - pos2.y
+	local w = h / 2
+	local ww = h / 4
+	local colOne = (contributors[v:SteamID()] || creator[v:SteamID()]) && Color(0, 0, 0) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
+	local colTwo = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || Color(0, 0, 0)
+	local colThree = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
+	local colFour = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
+	local colFive = gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
+	local healthcol = Color((100 - em.Health(v)) * 2.55, em.Health(v) * 2.55, 0)
+	local armorcol = Color((100 - v:Armor()) * 2.55, v:Armor() * 2.55, v:Armor() * 2.55)
+	local pingcol = Color(v:Ping() * 2.55, 255 - v:Ping() - 5 * 2, 0)
+	local moneycol = Color(0, 255, 0)
+	local textcol = Color(255, 255, 255)
+	local friendcol = Color(0, 255, 255)
+	local devcol = HSVToColor(RealTime() * 45 % 360, 1, 1)
+	local ignoredcol = Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)
+	local prioritycol = Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)
+	local misccol = Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
+	local hh = 0
+	if (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then
+		return false
+	end
+	if gOption("Visuals", "Wallhack", "Box:") == "2D Box" then
+		surface.SetDrawColor(colOne)
+		surface.DrawOutlinedRect(pos.x - w / 2, pos.y - h, w, h)
+		surface.SetDrawColor(colTwo)
+		surface.DrawOutlinedRect(pos.x - w / 2 - 1, pos.y - h - 1, w + 2, h + 2)
+		surface.DrawOutlinedRect(pos.x - w / 2 + 1, pos.y - h + 1, w - 2, h - 2)
+	elseif gOption("Visuals", "Wallhack", "Box:") == "3D Box" then
+	for k, v in pairs(player.GetAll()) do
+	if (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) then continue end
+	if v:IsValid() and v:Alive() and v:Health() > 0 then
+		local eye = v:EyeAngles()
+		local min, max = v:WorldSpaceAABB()
+		local origin = v:GetPos()
+		if gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(ignorelist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+			cam.Start3D()
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, ignoredcol)
+			cam.End3D()
+		elseif gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(prioritylist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+			cam.Start3D()
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, prioritycol)
+			cam.End3D()
+		elseif gBool("Visuals", "Miscellaneous", "Team Colors") and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+			cam.Start3D()
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, team.GetColor(pm.Team(v)))
+			cam.End3D()
+		elseif (contributors[v:SteamID()] || creator[v:SteamID()]) then
+			cam.Start3D()
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, devcol)
+			cam.End3D()
+		elseif !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+			cam.Start3D()
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, GetColor(v))
+			cam.End3D()
+				end
+			end
+		end
+	elseif (gBool("Visuals", "Wallhack", "Enabled") && gOption("Visuals", "Wallhack", "Box:") == "Edged Box") then   
+	x1, y1, x2, y2 = ScrW() * 2, ScrH() * 2, - ScrW(), - ScrH()
+		corners = {v:LocalToWorld(Vector(min.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, min.y, max.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, max.z)):ToScreen()}
+		for _k, _v in next, corners do
+			x1, y1 = math.min(x1, _v.x), math.min(y1, _v.y)
+			x2, y2 = math.max(x2, _v.x), math.max(y2, _v.y)
+		end
+		diff, diff2 = math.abs(x2 - x1), math.abs(y2 - y1)
+		surface.SetDrawColor(colThree)
+		surface.DrawLine(x1, y1, x1 + (diff * 0.225), y1)
+		surface.DrawLine(x1, y1, x1, y1 + (diff2 * 0.225))
+		surface.DrawLine(x1, y2, x1 + (diff * 0.225), y2)
+		surface.DrawLine(x1, y2, x1, y2 - (diff2 * 0.225))
+		surface.DrawLine(x2, y1, x2 - (diff * 0.225), y1)
+		surface.DrawLine(x2, y1, x2, y1 + (diff2 * 0.225))
+		surface.DrawLine(x2, y2, x2 - (diff * 0.225), y2)
+		surface.DrawLine(x2, y2, x2, y2 - (diff2 * 0.225))
+    end
+	surface.SetFont("VisualsFont")
+	surface.SetTextColor(255, 255, 255)
+	if (gBool("Visuals", "Wallhack", "Health Bar")) then
+		local hp = h * em.Health(v) / 100
+		if (hp > h) then hp = h end
+		local diff = h - hp
+		surface.SetDrawColor(0, 0, 0, 255)
+		surface.DrawRect(pos.x - w / 2 - 8, pos.y - h - 1, 5, h + 2)
+		surface.SetDrawColor((100 - em.Health(v)) * 2.55, em.Health(v) * 2.55, 0, 255)
+		surface.DrawRect(pos.x - w / 2 - 7, pos.y - h + diff, 3, hp)
+	end
+	if (gBool("Visuals", "Wallhack", "Armor Bar")) then
+		local armor = v:Armor() * h / 100
+		if (armor > h) then armor = h end
+		local diff = h - armor
+		surface.SetDrawColor(0, 0, 0, 255)
+		surface.DrawRect(pos.x + ww + 3, pos.y - h - 1, 5, h + 2)
+		surface.SetDrawColor((100 - v:Armor()) * 2.55, v:Armor() * 2.55, v:Armor() * 2.55, 255)
+		surface.DrawRect(pos.x + ww + 4, pos.y - h + diff, 3, armor)
+	end
+	if (gBool("Visuals", "Wallhack", "Name")) then
+		local friendstatus = pm.GetFriendStatus(v)
+		if (friendstatus == "friend") then
+		draw.SimpleText("Friend", "VisualsFont", pos.x, pos.y - h - 13 - 13, friendcol, 1, 1)
+		end
+		if (gBool("Visuals", "Wallhack", "Bystander Name") && engine.ActiveGamemode() == "murder") then
+		draw.SimpleText(v:GetNWString("bystanderName"), "VisualsFont", pos.x, pos.y - h - 1 - (friendstatus == "friend" && 12 || 12), textcol, 1, 1)
+		else
+		draw.SimpleText(pm.Name(v), "VisualsFont", pos.x, pos.y - h - 1 - (friendstatus == "friend" && 12 || 12), textcol, 1, 1)
+	end
+	end
+	if (gBool("Visuals", "Wallhack", "Enabled") and gBool("Visuals", "Wallhack", "Name")) then
+		local friendstatus = pm.GetFriendStatus(v)
+		if (friendstatus == "friend") then
+			if creator[v:SteamID()] then
+				draw.SimpleText("LobotomyBox Creator", "VisualsFont", pos.x, pos.y - h - 26 - 13, devcol, 1, 1)
+			end
+			if contributors[v:SteamID()] then
+				draw.SimpleText("LobotomyBox Contributor", "VisualsFont", pos.x, pos.y - h - 26 - 13, devcol, 1, 1)
+			end
+		end
+		if (friendstatus ~= "friend") then
+			if creator[v:SteamID()] then
+				draw.SimpleText("LobotomyBox Creator", "VisualsFont", pos.x, pos.y - h - 13 - 13, devcol, 1, 1)
+			end
+			if contributors[v:SteamID()] then
+				draw.SimpleText("LobotomyBox Contributor", "VisualsFont", pos.x, pos.y - h - 13 - 13, devcol, 1, 1)
+			end
+		end
+		if (friendstatus == "friend") and (creator[v:SteamID()] or contributors[v:SteamID()]) then
+			if table.HasValue(ignorelist, v:UniqueID()) then
+				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 39 - 13, ignoredcol, 1, 1)
+			end
+			if table.HasValue(prioritylist, v:UniqueID()) then
+				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 39 - 13, prioritycol, 1, 1)
+			end
+		end
+		if (friendstatus == "friend") and not (creator[v:SteamID()] or contributors[v:SteamID()]) then
+			if table.HasValue(ignorelist, v:UniqueID()) then
+				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, ignoredcol, 1, 1)
+			end
+			if table.HasValue(prioritylist, v:UniqueID()) then
+				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, prioritycol, 1, 1)
+			end
+		end
+		if (friendstatus ~= "friend") and (creator[v:SteamID()] or contributors[v:SteamID()]) then
+			if table.HasValue(ignorelist, v:UniqueID()) then
+				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, ignoredcol, 1, 1)
+			end
+			if table.HasValue(prioritylist, v:UniqueID()) then
+				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, prioritycol, 1, 1)
+			end
+		end
+		if (friendstatus ~= "friend") and not (creator[v:SteamID()] or contributors[v:SteamID()]) then
+			if table.HasValue(ignorelist, v:UniqueID()) then
+				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 13 - 13, ignoredcol, 1, 1)
+			end
+			if table.HasValue(prioritylist, v:UniqueID()) then
+				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 13 - 13, prioritycol, 1, 1)
+			end
+		end
+	end
+	if (gBool("Visuals", "Wallhack", "Health Value")) then
+	hh = hh + 1
+	draw.SimpleText("Health: "..em.Health(v), "VisualsFont", pos.x, pos.y - 1 + hh, healthcol, 1, 0)
+	hh = hh + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Armor Value")) then
+	hh = hh + 1
+	draw.SimpleText("Armor: "..v:Armor(), "VisualsFont", pos.x, pos.y - 1 + hh, armorcol, 1, 0)
+	hh = hh + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Weapon")) then
+	hh = hh + 1
+	local w = pm.GetActiveWeapon(v)
+	if (w && em.IsValid(w)) then
+	draw.SimpleText("Weapon: "..language.GetPhrase(w:GetPrintName()), "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	end
+	end
+	if (gBool("Visuals", "Wallhack", "Rank")) then
+	hh = hh + 1
+	draw.SimpleText("Rank: "..pm.GetUserGroup(v), "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Distance")) then
+	hh = hh + 1
+	draw.SimpleText("Distance: "..math.Round(v:GetPos():Distance(me:GetPos()) / 40), "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Velocity")) then
+	hh = hh + 1
+	draw.SimpleText("Velocity: "..math.Round(v:GetVelocity():Length()), "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	end
+	if gBool("Visuals", "Wallhack", "Conditions") and v:IsPlayer() then
+	if v:InVehicle() then
+	hh = hh + 1
+	draw.SimpleText("Condition: *driving*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	elseif v:GetMoveType() == MOVETYPE_NOCLIP then
+	hh = hh + 1
+	draw.SimpleText("Condition: *noclipping*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	elseif v:IsDormant() then
+	hh = hh + 1
+	draw.SimpleText("Condition: *dormant*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	elseif v:IsFlagSet(2) then
+	hh = hh + 1
+	draw.SimpleText("Condition: *crouching*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	elseif v:GetMoveType() == MOVETYPE_LADDER then
+	hh = hh + 1
+	draw.SimpleText("Condition: *climbing*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	elseif v:GetColor(v).a < 255 then
+	hh = hh + 1
+	draw.SimpleText("Condition: *spawning*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	elseif v:IsFlagSet(64) then
+	hh = hh + 1
+	draw.SimpleText("Condition: *frozen*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	elseif v:IsPlayingTaunt() then
+	hh = hh + 1
+	draw.SimpleText("Condition: *emoting*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	elseif v:IsFlagSet(1024) then
+	hh = hh + 1
+	draw.SimpleText("Condition: *swimming*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	elseif v:IsSprinting() then
+	hh = hh + 1
+	draw.SimpleText("Condition: *sprinting*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	elseif v:IsTyping() then
+	hh = hh + 1
+	draw.SimpleText("Condition: *typing*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	elseif v:GetMoveType() == MOVETYPE_WALK or v:GetMoveType() == MOVETYPE_NONE then
+	hh = hh + 1
+	draw.SimpleText("Condition: *none*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	end
+	end
+	if (gBool("Visuals", "Wallhack", "Steam ID")) then
+	hh = hh + 1
+	if (v:SteamID() ~= "NULL") then
+	draw.SimpleText("SteamID: "..v:SteamID(v), "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	else
+	draw.SimpleText("SteamID: BOT", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	end
+	hh = hh + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Ping")) then
+	hh = hh + 1
+	draw.SimpleText("Ping: "..v:Ping().."ms", "VisualsFont", pos.x, pos.y - 0 + hh, pingcol, 1, 0)
+	hh = hh + 9
+	end
+	if (gBool("Visuals", "Wallhack", "DarkRP Money")) then
+	hh = hh + 1
+	if (gmod.GetGamemode().Name == "DarkRP") then
+	if (v:getDarkRPVar("money") == nil) then return end
+	draw.SimpleText("Money: $"..v:getDarkRPVar("money"), "VisualsFont", pos.x, pos.y - 0 + hh, moneycol, 1, 0)
+	hh = hh + 9
+	end
+	end
+	if (gBool("Visuals", "Wallhack", "Skeleton")) then
+		local pos = em.GetPos(v)
+		for i = 0, em.GetBoneCount(v) do
+		local parent = em.GetBoneParent(v, i)
+		local bonepos = em.GetBonePosition(v, i)
+		local parentpos = em.GetBonePosition(v, parent)
+		if (!parent) or (bonepos == pos) or (!bonepos || !parentpos) then continue end
+		local screen1, screen2 = vm.ToScreen(bonepos), vm.ToScreen(parentpos)
+		surface.SetDrawColor(colFour)
+		surface.DrawLine(screen1.x, screen1.y, screen2.x, screen2.y)
+		end
+	end
+	if (gBool("Visuals", "Wallhack", "Glow")) then
+		local wep = v:GetActiveWeapon()
+		halo.Add({v, wep}, colFour, .55, .55, 5, true, true)
+	end
+	idiot.cam.Start3D()
+		if (gBool("Visuals", "Wallhack", "Vision Line")) then
+			local b1, b2 = v:EyePos(), v:GetEyeTrace().HitPos
+			idiot.render.DrawLine(b1, b2, colFour)
+			idiot.render.DrawWireframeSphere(b2, 2, 10, 10, colFour, b2)
+		end
+	idiot.cam.End3D()
+	if (gBool("Visuals", "Wallhack", "Hitbox")) then
+		for k, v in next, player.GetAll() do
+		if (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) then continue end
+		if v:IsValid() and v:Alive() and v:Health() > 0 then
+			for i = 0, v:GetHitBoxGroupCount() - 1 do
+			for _i = 0, v:GetHitBoxCount(i) - 1 do
+			local bone = v:GetHitBoxBone(_i, i)
+			if not (bone) then continue end			
+			local min, max = v:GetHitBoxBounds(_i, i)			
+			if (v:GetBonePosition(bone)) then
+			local pos, ang = v:GetBonePosition(bone)
+			if gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(ignorelist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+				cam.Start3D()
+					render.DrawWireframeBox(pos, ang, min, max, ignoredcol)
+				cam.End3D()
+			elseif gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(prioritylist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+				cam.Start3D()
+					render.DrawWireframeBox(pos, ang, min, max, prioritycol)
+				cam.End3D()
+			elseif gBool("Visuals", "Miscellaneous", "Team Colors") and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+				cam.Start3D()
+					render.DrawWireframeBox(pos, ang, min, max, team.GetColor(pm.Team(v)))
+				cam.End3D()
+			elseif (contributors[v:SteamID()] || creator[v:SteamID()]) then
+				cam.Start3D()
+					render.DrawWireframeBox(pos, ang, min, max, devcol)
+				cam.End3D()
+			elseif !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+				cam.Start3D()
+					render.DrawWireframeBox(pos, ang, min, max, misccol)
+				cam.End3D()
+			end
+		end
+			end
+		end
+			end
+		end
+	end
+	//doing the esp again to make sure it was done
 end
 
 local function OnScreen(v)
@@ -4576,7 +4933,7 @@ local function AimPos(v)
 	if (!eyes) then return(em.LocalToWorld(v, em.OBBCenter(v))) end
 	local pos = em.GetAttachment(v, eyes)
 	if (!pos) then return(em.LocalToWorld(v, em.OBBCenter(v))) end
-	return(pos.Pos)
+	return(pos.Pos + Vector(10,10,10)) //Improved the aimbot with engine prediction and backtrack
 end
 
 hook.Add("player_hurt", "player_hurt", function(data)
@@ -5957,12 +6314,12 @@ timer.Simple(0.1, function()
 	end
 end)
 
-MsgG(5.3, "Welcome, "..me:Nick()..". Press 'Insert', 'F11' or 'Home' to toggle.")
-surface.PlaySound("buttons/lightswitch2.wav")
+MsgG(5.3, "HIIIIIIIIIIIIIII, "..me:Nick()..". Press 'Insert', 'F11' or 'Home' to toggle.")
+surface.PlaySound("death_bell.wav")
 
 if ac != true then 
 	timer.Create("ChatPrint", 5.7, 1, function() MsgG(5.3, "No anti-cheats have been detected.") end)
-	timer.Create("PlaySound", 5.7, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
+	timer.Create("PlaySound", 5.7, 1, function() surface.PlaySound("crying_loop1.wav") end)
 end
 
 if (idiot.QAC or idiot.qac or idiot.CAC or idiot.cac or idiot.SAC or idiot.sac or idiot.DAC or idiot.dac or idiot.ZAC or idiot.zac or idiot.TAC or idiot.tac or idiot.LSAC or idiot.lsac or idiot.simplicity or idiot.Simplicity or idiot.ZARP or idiot.Zarp or idiot.zarp or idiot.swiftAC or idiot.swiftac or idiot.SwiftAC or idiot.Swiftac or idiot.SMAC or idiot.smac or idiot.MAC or idiot.mac or idiot.GAC or idiot.gac or idiot.GS or idiot.gs or idiot.GTS or idiot.gts or idiot.AE or idiot.ae or idiot.CardinalLib or idiot.cardinallib or idiot.cardinalLib or idiot.Cardinallib) then -- Obviously, this does not include ALL of the anticheats out there, but I figured these are the most commonly used ones
@@ -5974,11 +6331,11 @@ end
 
 
 
---NOTE-- This is the end of the very messy script that is LobotomyBox;
+--NOTE-- This is the end of the very messy sex that is LobotomyBox;
 
---NOTE-- Thank you to everyone who still supports me to this day. Without you, this cheat wouldn't be a thing;
+--NOTE-- Fuck you to everyone who still supports me to this day. Without you, this cheat be a thing;
 
---NOTE-- All of my credits go out to you and the ones who helped me with the development of this cheat. <3
+--NOTE-- None of my credits go out to you and the ones who "helped" me with the development of this cheat.
 
 
 
