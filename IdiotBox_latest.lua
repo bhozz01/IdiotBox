@@ -135,7 +135,7 @@ local options = {
 					{"Anti-Blind", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Trouble in Terrorist Town Utilities", 16, 178, 232, 222, 218}, 
+					{"Trouble in Terrorist Town Utilities", 16, 177, 232, 222, 218}, 
 					{"Hide Round Report", "Checkbox", false, 78}, 
 					{"Panel Remover", "Checkbox", false, 78}, 
 					{"Traitor Finder", "Checkbox", false, 78}, 
@@ -145,14 +145,14 @@ local options = {
 					{"Prop Kill Key:", "Toggle", 0, 92, 0}, 
 				}, 
 				{
-					{"DarkRP Utilities", 16, 415, 232, 128, 218}, 
+					{"DarkRP Utilities", 16, 413, 232, 128, 218}, 
 					{"Suicide Near Arrest Batons", "Checkbox", false, 78}, 
 					{"Transparent Props", "Checkbox", false, 78}, 
 					{"Transparency:", "Slider", 175, 255, 92}, 
 					{""}, 
 				}, 
 				{
-					{"Murder Utilities", 16, 557, 232, 123, 218}, 
+					{"Murder Utilities", 16, 554, 232, 123, 218}, 
 					{"Murderer Finder", "Checkbox", false, 78}, 
 					{"Hide End Round Board", "Checkbox", false, 78}, 
 					{"Hide Footprints", "Checkbox", false, 78}, 
@@ -168,7 +168,7 @@ local options = {
 					{""}, 
           		}, 
 				{
-          			{"Configurations", 261, 209, 232, 175, 218}, 
+          			{"Configurations", 261, 208, 232, 175, 218}, 
 					{"Automatically Save", "Checkbox", false, 78}, 
 					{"Save Configuration", "Button", "", 92}, 
 					{"Load Configuration", "Button", "", 92}, 
@@ -177,7 +177,7 @@ local options = {
 					{""}, 
           		}, 
 				{
-          			{"Others", 261, 399, 232, 130, 218}, 
+          			{"Others", 261, 397, 232, 130, 218}, 
 					{"Apply custom name", "Checkbox", false, 78}, 
 					{"Feature Tooltips", "Checkbox", true, 78}, -- Enabled by default
 					{"Print Changelog", "Button", "", 92}, 
@@ -194,7 +194,7 @@ local options = {
 					{""}, 
                 }, 
 				{
-					{"Panic Mode", 506, 240, 232, 100, 218}, 
+					{"Panic Mode", 506, 239, 232, 100, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Mode:", "Selection", "Disable All", {"Disable Aimbot", "Disable Anti-Aim", "Disable All"}, 92}, 
 					{""}, 
@@ -218,7 +218,7 @@ local options = {
 					{"Target Lock", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Triggerbot", 16, 380, 232, 200, 218}, 
+					{"Triggerbot", 16, 378, 232, 200, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
 					{"Toggle Key:", "Toggle", 0, 92, 0}, 
 					{""}, 
@@ -352,7 +352,7 @@ local options = {
 					{"DarkRP Money", "Checkbox", false, 78}, 
                 }, 
 				{
-                	{"Point of View", 261, 20, 232, 275, 218}, 
+                	{"Point of View", 261, 20, 232, 270, 218}, 
 					{"Custom FoV", "Checkbox", false, 78}, 
 					{"FoV Value:", "Slider", 110, 360, 92}, 
 					{""}, 
@@ -365,15 +365,17 @@ local options = {
 					{""}, 
                 }, 
 				{
-					{"Textures", 261, 308, 232, 145, 218}, 
+					{"Textures", 261, 304, 232, 192, 218}, 
 					{"Transparent Walls", "Checkbox", false, 78}, 
+					{"Transparency:", "Slider", 82, 100, 92}, 
+					{""}, 
 					{"Remove Sky", "Checkbox", false, 78}, 
 					{"Remove 3D Skybox", "Checkbox", false, 78}, 
 					{"Bright Mode", "Checkbox", false, 78}, 
 					{"Dark Mode", "Checkbox", false, 78}, 
                 }, 
 				{
-					{"Panels", 261, 467, 232, 250, 218}, 
+					{"Panels", 261, 510, 232, 244, 218}, 
 					{"Spectators Window", "Checkbox", false, 78}, 
 					{"Radar Window", "Checkbox", false, 78}, 
 					{"Radar Distance:", "Slider", 50, 100, 92}, 
@@ -500,31 +502,31 @@ local options = {
 					{"Blue:", "SliderOld", 255, 255, 92}, 
           		}, 
 				{
-					{"Menu Text Color", 16, 140, 232, 105, 88}, 
+					{"Menu Text Color", 16, 138, 232, 105, 88}, 
 					{"Red:", "SliderOld", 255, 255, 92}, 
 					{"Green:", "SliderOld", 255, 255, 92}, 
 					{"Blue:", "SliderOld", 255, 255, 92}, 
 				}, 
 				{
-          			{"Background Menu Color", 16, 260, 232, 105, 88}, 
+          			{"Background Menu Color", 16, 256, 232, 105, 88}, 
           			{"Red:", "SliderOld", 30, 255, 92}, 
 					{"Green:", "SliderOld", 30, 255, 92}, 
 					{"Blue:", "SliderOld", 45, 255, 92}, 
           		}, 
 				{
-					{"Border Color", 16, 380, 232, 105, 88}, 
+					{"Border Color", 16, 374, 232, 105, 88}, 
 					{"Red:", "SliderOld", 0, 255, 92}, 
 					{"Green:", "SliderOld", 155, 255, 92}, 
 					{"Blue:", "SliderOld", 255, 255, 92}, 
                 }, 
 				{
-					{"Viewmodel Color", 16, 500, 232, 105, 88}, 
+					{"Viewmodel Color", 16, 492, 232, 105, 88}, 
 					{"Red:", "SliderOld", 0, 255, 92}, 
 					{"Green:", "SliderOld", 235, 255, 92}, 
 					{"Blue:", "SliderOld", 255, 255, 92}, 
                 }, 
 				{
-					{"Crosshair Color", 16, 620, 232, 105, 88}, 
+					{"Crosshair Color", 16, 610, 232, 105, 88}, 
 					{"Red:", "SliderOld", 0, 255, 92}, 
 					{"Green:", "SliderOld", 235, 255, 92}, 
 					{"Blue:", "SliderOld", 255, 255, 92}, 
@@ -536,25 +538,25 @@ local options = {
 					{"Blue:", "SliderOld", 0, 255, 92}, 
                 }, 
 				{
-					{"Enemy Visuals Color", 261, 140, 232, 105, 88}, 
+					{"Enemy Visuals Color", 261, 138, 232, 105, 88}, 
 					{"Red:", "SliderOld", 255, 255, 92}, 
 					{"Green:", "SliderOld", 125, 255, 92}, 
 					{"Blue:", "SliderOld", 255, 255, 92}, 
                 }, 
 				{
-					{"Priority Targets Color", 261, 260, 232, 105, 88}, 
+					{"Priority Targets Color", 261, 256, 232, 105, 88}, 
 					{"Red:", "SliderOld", 255, 255, 92}, 
 					{"Green:", "SliderOld", 0, 255, 92}, 
 					{"Blue:", "SliderOld", 100, 255, 92}, 
                 }, 
 				{
-					{"Ignored Targets Color", 261, 380, 232, 105, 88}, 
+					{"Ignored Targets Color", 261, 374, 232, 105, 88}, 
 					{"Red:", "SliderOld", 175, 255, 92}, 
 					{"Green:", "SliderOld", 175, 255, 92}, 
 					{"Blue:", "SliderOld", 175, 255, 92}, 
                 }, 
 				{
-					{"Others", 261, 500, 232, 157, 88}, 
+					{"Others", 261, 492, 232, 157, 88}, 
 					{"T Opacity:", "SliderOld", 255, 255, 92}, 
 					{"B Opacity:", "SliderOld", 255, 255, 92}, 
 					{"BG Opacity:", "SliderOld", 255, 255, 92}, 
@@ -568,19 +570,19 @@ local options = {
 					{"Blue:", "SliderOld", 255, 255, 92}, 
                 }, 
 				{
-					{"Team Chams Color", 506, 140, 232, 105, 88}, 
+					{"Team Chams Color", 506, 138, 232, 105, 88}, 
 					{"Red:", "SliderOld", 255, 255, 92}, 
 					{"Green:", "SliderOld", 215, 255, 92}, 
 					{"Blue:", "SliderOld", 0, 255, 92}, 
                 }, 
 				{
-					{"Enemy Chams Color", 506, 260, 232, 105, 88}, 
+					{"Enemy Chams Color", 506, 256, 232, 105, 88}, 
 					{"Red:", "SliderOld", 255, 255, 92}, 
 					{"Green:", "SliderOld", 70, 255, 92}, 
 					{"Blue:", "SliderOld", 255, 255, 92}, 
                 }, 
 				{
-					{"Window Adjustments", 506, 380, 232, 180, 88}, 
+					{"Window Adjustments", 506, 374, 232, 180, 88}, 
 					{"Spectators X:", "SliderOld", 12, 2000, 92}, 
 					{"Spectators Y:", "SliderOld", 12, 2000, 92}, 
 					{"Radar X:", "SliderOld", 225, 2000, 92}, 
@@ -589,7 +591,7 @@ local options = {
 					{"Roundness:", "SliderOld", 16, 42, 92}, 
                 }, 
 				{
-					{"List Adjustments", 506, 576, 232, 180, 88}, 
+					{"List Adjustments", 506, 568, 232, 180, 88}, 
 					{"Custom Status X:", "SliderOld", 17, 2000, 92}, 
 					{"Custom Status Y:", "SliderOld", 250, 2000, 92}, 
 					{"Players List X:", "SliderOld", 17, 2000, 92}, 
@@ -1681,6 +1683,7 @@ function Changelog() -- Ran out of local variables, again
 	print("- Fixed Entities Menu bug breaking the menu after closing it;")
 	print("- Fixed Chat Spam and Kill Spam still using IdiotBox Alpha variables;")
 	print("- Fixed 3D Box and Hitbox rendering issues;")
+	print("- Fixed colliding options in the drop-down selecion tabs;")
 	print("- Fixed extreme bug where the anti-screengrabber would make you run out of VRAM and crash your system;")
 	print("- Fixed Bunny Hop and Auto Strafe breaking Free Roaming and breaking player movement when in water;")
 	print("- Fixed Hitbox spamming the console with error messages;")
@@ -3409,7 +3412,7 @@ local function TransparentWalls()
                 im.SetFloat(material, "$alpha", 1)
 			continue
         end
-        im.SetFloat(material, "$alpha", 0.83)
+        im.SetFloat(material, "$alpha", gInt("Visuals", "Textures", "Transparency:") / 100 + 0.01)
     end
 end
 
@@ -5935,7 +5938,7 @@ if ac != true then
 	timer.Create("PlaySound", 5.7, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 end
 
-if (idiot.QAC or idiot.qac or idiot.CAC or idiot.cac or idiot.SAC or idiot.sac or idiot.DAC or idiot.dac or idiot.ZAC or idiot.zac or idiot.TAC or idiot.tac or idiot.LSAC or idiot.lsac or idiot.simplicity or idiot.Simplicity or idiot.ZARP or idiot.Zarp or idiot.zarp or idiot.swiftAC or idiot.swiftac or idiot.SwiftAC or idiot.Swiftac or idiot.SMAC or idiot.smac or idiot.MAC or idiot.mac or idiot.GAC or idiot.gac or idiot.GS or idiot.gs or idiot.GTS or idiot.gts or idiot.AE or idiot.ae or idiot.CardinalLib or idiot.cardinallib or idiot.cardinalLib or idiot.Cardinallib) then
+if (idiot.QAC or idiot.qac or idiot.CAC or idiot.cac or idiot.SAC or idiot.sac or idiot.DAC or idiot.dac or idiot.ZAC or idiot.zac or idiot.TAC or idiot.tac or idiot.LSAC or idiot.lsac or idiot.simplicity or idiot.Simplicity or idiot.ZARP or idiot.Zarp or idiot.zarp or idiot.swiftAC or idiot.swiftac or idiot.SwiftAC or idiot.Swiftac or idiot.SMAC or idiot.smac or idiot.MAC or idiot.mac or idiot.GAC or idiot.gac or idiot.GS or idiot.gs or idiot.GTS or idiot.gts or idiot.AE or idiot.ae or idiot.CardinalLib or idiot.cardinallib or idiot.cardinalLib or idiot.Cardinallib) then -- Obviously, this does not include ALL of the anticheats out there, but I figured these are the most commonly used ones
 	timer.Create("ChatPrint", 5.7, 1, function() MsgR(5.3, "An anti-cheat has been detected. Use with caution to avoid getting banned!") end)
 	timer.Create("PlaySound", 5.7, 1, function() surface.PlaySound("npc/scanner/combat_scan1.wav") end)
 	ac = true
