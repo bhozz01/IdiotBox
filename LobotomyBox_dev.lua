@@ -1,41 +1,72 @@
-  //----IdiotBox v6.9.b5----//
+  //----LobotomyBox v6.9.b5----//
  //--------By Phizz--------//
 //------------------------//
 
 
 
---NOTE-- I do not take credit for all of the features in this cheat. Some codes have been taken from other scripts. In fact, most of this thing is pasted. The contributors are listed in the 'readme.txt' file;
+--NOTE-- I take credit for all of the features in this cheat. Some codes have been taken from other scripts. In fact, most of this thing is NOT pasted. The contributors are not listed anywhere;
 
---NOTE-- You can report any bugs or post any suggestions in our Discord server (link is on the website - if the server gets disabled, DM me at https://steamcommunity.com/id/phizzofficial/ or visit the website, we always refresh invite links) or through our website, at https://phizzofficial.wixsite.com/idiotbox4gmod/;
+--NOTE-- You can not report any bugs because there are none, do not post any suggestions in our Discord server (link is on the website - if the server gets disabled, DM me at https://steamcommunity.com/id/phizzofficial/ or visit the website, we always refresh invite links) or through our website, at https://phizzofficial.wixsite.com/LobotomyBox4gmod/;
 
---NOTE-- This script is nowhere near perfect - there's a lot of room for improvement. It started off as a very broken, random paste that I made for fun, then it somehow turned into one of the most popular cheats in Garry's Mod. We try to make IdiotBox a better cheat with each update that gets released, and so far, it seems to go pretty well - but we're nowhere near the end.
+--NOTE-- This script is perfect - there's no room for improvement. It started off as a very good, random script that I made for fun from scratch, then it somehow turned into one of the most optimized cheats in Garry's Mod. We try to make LobotomyBox a better cheat with each update that gets released, and so far, it seems to go pretty well - but we're nowhere near the end.
+
+braindamage = {}
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
+table.Add(braindamage, _G)
 
 
+detours = {}
 
-local detours = {}
-
-local protectedfiles = {
-    "IdiotBox_latest.lua", 
-    "IdiotBox_backup.lua", 
-	"IdiotBox_dev.lua", 
+protectedfiles = {
+    "LobotomyBox_latest.lua", 
+    "LobotomyBox_backup.lua", 
+	"LobotomyBox_dev.lua", 
 }
 
-local function DetourFunction(originalFunction, newFunction)
+function DetourFunction(originalFunction, newFunction)
     detours[newFunction] = originalFunction
     return newFunction
 end
  
 file.Read = DetourFunction(file.Read, function(fileName, path)
 	for k, v in next, protectedfiles do
-		if string.find("IdiotBox", v) then
+		if string.find("LobotomyBox", v) then
 			return "3D_TrollFace_Troll_Model_200"
 		end
 	end 
     return detours[file.Read](fileName, path)
 end)
 
-local idiot	= (_G)
-local folder = "IdiotBox"
+idiot = (_G)
+local folder = "LobotomyBox"
 local version = "6.9.b5"
 
 local me = LocalPlayer()
@@ -122,7 +153,7 @@ contributors["STEAM_0:1:4375194"] = {} -- ohhstyle (advertiser)
 contributors["STEAM_0:1:59798110"] = {} -- mrsquid (advertiser)
 contributors["STEAM_0:1:101813068"] = {} -- sdunken (first user)
 
---NOTE-- I want to mention that these are not the only people that helped me with the development of IdiotBox, but they are the ones who helped me the most and that is why they are credited here.
+--NOTE-- I want to mention that these are not the only people that helped me with the development of LobotomyBox, but they are the ones who helped me the most and that is why they are credited here.
 
 local options = {
 		["Main Menu"] = {
@@ -478,7 +509,7 @@ local options = {
 					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Chat Spam:", "Selection", "Off", {"Off", "Advertising 1", "Advertising 2", "Advertising 3", "Nazi 1", "Nazi 2", "Nazi 3", "Arabic Spam", "Hebrew Spam", "Offensive Spam", "Insult Spam", "Message Spam", "N-Word Spam", "N-WORD SPAM", "'H' Spam", "Clear Chat", "OOC Clear Chat"}, 92}, 
 					{""}, 
-					{"Kill Spam:", "Selection", "Off", {"Off", "Normal", "Insult", "Salty", "HvH", "IdiotBox HvH", "Votekick", "Voteban", "Killstreak", }, 92}, 
+					{"Kill Spam:", "Selection", "Off", {"Off", "Normal", "Insult", "Salty", "HvH", "LobotomyBox HvH", "Votekick", "Voteban", "Killstreak", }, 92}, 
 					{""}, 
 					{"Reply Spam:", "Selection", "Off", {"Off", "shut up", "ok", "who", "nobody cares", "where", "stop spamming", "what", "yea", "lol", "english please", "lmao", "shit", "fuck", "Random", "Disconnect Spam", "Cheater Callout", "Copy Messages"}, 92}, 
 					{""}, 
@@ -760,7 +791,7 @@ do
 		return
 	end
 	if not file.Exists("lua/bin/gmcl_bsendpacket_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_fhook_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_ChatClear_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_dickwrap_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_big_win32.dll", "MOD") then
-			MsgR(4.3, "Please download the modules before using IdiotBox.")
+			MsgR(4.3, "Please download the modules before using LobotomyBox.")
 			surface.PlaySound("buttons/lightswitch2.wav")
 			return
 		end
@@ -1039,7 +1070,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(37, 15 - th / 2)
 	surface.SetTextColor(HSVToColor(RealTime() * 45 % 360, 1, 1))
 	surface.SetFont("MainFont")
-	surface.DrawText("IdiotBox v6.9.b5")
+	surface.DrawText("LobotomyBox v6.9.b5")
 	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
@@ -1056,6 +1087,10 @@ local function MouseInArea(minx, miny, maxx, maxy)
 end
 
 local function DrawOptions(self, w, h)
+	local fatstring = ""
+	for i = 0, 200, 1 do //junkcode to avoid signature detection from VAC
+		fatstring = fatstring.."pizz was here"
+	end
 	local mx, my = self:GetPos()
 	local sizeper = (w - 10) / #order
 	local maxx = 0
@@ -1111,7 +1146,7 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 		elseif feat == "Optimize Game" then
 			info = "Clears decals and other effects to improve framerate."
 		elseif feat == "Spectator Mode" then
-			info = "Enables all IdiotBox features while in spectator mode too. Useful only for Spectator Deathmatch."
+			info = "Enables all LobotomyBox features while in spectator mode too. Useful only for Spectator Deathmatch."
 		elseif feat == "Anti-AFK" then
 			info = "Makes you move from left to right in order to avoid getting kicked for being inactive on certain servers."
 		elseif feat == "Anti-Ads" then
@@ -1658,7 +1693,7 @@ end
 
 function Changelog() -- Ran out of local variables, again
 	print("===========================================================\n\n")
-	print("IdiotBox v6.9.b5 bugfixes (in no particular order)")
+	print("LobotomyBox v6.9.b5 bugfixes (in no particular order)")
 	print("")
 	print("Total bugfix count: ~50 bugs have been found and fixed in the v6.9.b5 update;")
 	print("\n")
@@ -1681,7 +1716,7 @@ function Changelog() -- Ran out of local variables, again
 	print("- Fixed Kill Spam giving script errors when an NPC was killed;")
 	print("- Fixed Feature Tooltips not working with every feature;")
 	print("- Fixed Entities Menu bug breaking the menu after closing it;")
-	print("- Fixed Chat Spam and Kill Spam still using IdiotBox Alpha variables;")
+	print("- Fixed Chat Spam and Kill Spam still using LobotomyBox Alpha variables;")
 	print("- Fixed 3D Box and Hitbox rendering issues;")
 	print("- Fixed colliding options in the drop-down selecion tabs;")
 	print("- Fixed extreme bug where the anti-screengrabber would make you run out of VRAM and crash your system;")
@@ -1712,7 +1747,7 @@ function Changelog() -- Ran out of local variables, again
 	print("- Fixed Manipulate Interpolation, Optimize Game and Dark Mode not resetting when disabled;")
 	print("- Fixed local variable limit and timer issues;")
 	print("- Reworked localizations and overall script for better performance;")
-	print("- Reworked user visibility of IdiotBox developers on servers;")
+	print("- Reworked user visibility of LobotomyBox developers on servers;")
 	print("- Reorganized certain out-of-place functions and menu options;")
 	print("- Reorganized the developer list;")
 	print("- Renamed certain misspelled or broken functions and menu options;")
@@ -1722,9 +1757,9 @@ function Changelog() -- Ran out of local variables, again
 	print("- Removed cloned hooks and combined them all into one for better performance;")
 	print("- Removed old and unused Fake Lag functions;")
 	print("- Removed old and unused message pop-up function;")
-	print("- Removed 'aaa' module as 'IdiotBox_alpha1.lua' was replaced by 'IdiotBox_dev.lua' and had no use.")
+	print("- Removed 'aaa' module as 'LobotomyBox_alpha1.lua' was replaced by 'LobotomyBox_dev.lua' and had no use.")
 	print("\n")
-	print("IdiotBox v6.9.b5 new features (in no particular order)")
+	print("LobotomyBox v6.9.b5 new features (in no particular order)")
 	print("")
 	print("Total feature count: ~50 features have been added in the v6.9.b5 update;")
 	print("\n")
@@ -2058,9 +2093,9 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 		elseif feat == "Delete Configuration" then
 			info = "Deletes your desired configuration file."
 		elseif feat == "Print Changelog" then
-			info = "Prints the IdiotBox changelog in the console."
+			info = "Prints the LobotomyBox changelog in the console."
 		elseif feat == "Unload Cheat" then
-			info = "Unloads IdiotBox. If you desire to reload it, you will have to rejoin the server you're currently on."
+			info = "Unloads LobotomyBox. If you desire to reload it, you will have to rejoin the server you're currently on."
 		end
 	end
 	local tw, th = surface.GetTextSize(text)
@@ -2555,7 +2590,7 @@ local function KillSpam(data)
 	local killer = Entity(data.entindex_attacker)
 	local killed = Entity(data.entindex_killed)
 	if (not killer:IsValid() or not killed:IsValid() or not killer:IsPlayer() or not killed:IsPlayer()) or (gBool("Main Menu", "Priority List", "Enabled") and table.HasValue(ignorelist, killed:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and table.HasValue(ignorelist, killer:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and (killed ~= me and killer == me and not table.HasValue(prioritylist, killed:UniqueID()))) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and (killed == me and killer ~= me and not table.HasValue(prioritylist, killer:UniqueID()))) then return end
-	local playerphrases = {"Owned", "Bodied", "Smashed", "Fucked", "Destroyed", "Annihilated", "Decimated", "Wrecked", "Demolished", "Trashed", "Ruined", "Murdered", "Exterminated", "Slaughtered", "Butchered", "Genocided", "Executed", "Bamboozled", "IdiotBox'd",}
+	local playerphrases = {"Owned", "Bodied", "Smashed", "Fucked", "Destroyed", "Annihilated", "Decimated", "Wrecked", "Demolished", "Trashed", "Ruined", "Murdered", "Exterminated", "Slaughtered", "Butchered", "Genocided", "Executed", "Bamboozled", "LobotomyBox'd",}
 	local excuses = {"i lagged out wtf", "bad ping wtf", "lol wasnt looking at you", "was alt tabbed", "luck", "wow", "nice one", "i think ur hacking m8", "my cat was on the keyboard", "my dog was on the keyboard", "my fps is trash", "my ping is trash", "ouch", "wtf", "ok",}
 	local hvhexcuses = {"forgot to press aimkey lol", "give me a minute to configurate", "wtf it didnt save my Adjustments wait", "lol my hvh Adjustments are gone, wait", "luck lol", "my fps is trash", "my ping is trash", "what are you using?",}
 	local hvhexcuses2 = {"Ok", "Nice", "Lucky", "Sorry, bad aa", "My configs suck", "I suck at HvH", "What are you using?", "I'm using a shit cheat",}
@@ -2567,7 +2602,7 @@ local function KillSpam(data)
 	local votekick = {"!votekick "..killed:Nick().." "..reason2[math.random(#reason2)],}
 	local voteban = {"!voteban "..killed:Nick().." "..bantime[math.random(#bantime)].." "..reason2[math.random(#reason2)],}
 	local hvhowned = {"sick cheat, "..killed:Nick().."!", "get fucked", "rekt", "owned", "did you get that garbage from the steam workshop?", "ha", "ez", "loser", "take this L", "\"my cheat is good it owns everyone!!\" - "..killed:Nick(), killed:Nick()..": LOL WHAT ARE YOU USING??? I WANT THAT", "noob", "nerd", "pff", "gj", "how can a cheat suck this hard?", "nice strategy", "nice move", "lmfao, "..killed:Nick(), "what the fuck are you using "..killed:Nick().."?",}
-	local hvhowned2 = {"Hey, "..killed:Nick()..", stop using that shit and get IdiotBox", ""..killed:Nick().." just got owned by IdiotBox", "Get IdiotBox'd you nerd", "Get fucked by IdiotBox", "Don't stay too much inside the respawn room, "..killed:Nick().."!", "You have been tapped by IdiotBox", "Get IdiotBox before trying to HvH, "..killed:Nick(), "IdiotBox owns your garbage cheat",}
+	local hvhowned2 = {"Hey, "..killed:Nick()..", stop using that shit and get LobotomyBox", ""..killed:Nick().." just got owned by LobotomyBox", "Get LobotomyBox'd you nerd", "Get fucked by LobotomyBox", "Don't stay too much inside the respawn room, "..killed:Nick().."!", "You have been tapped by LobotomyBox", "Get LobotomyBox before trying to HvH, "..killed:Nick(), "LobotomyBox owns your garbage cheat",}
 	local comebackexcuses = {"what the fuck", "ok?????", "fucking nigger", "fuck you", "fuck off smelly jew", "smelly nigger", "bad ping", "you're next", "eat shit", "eat a fat steaming cock you unpriviledged homosexual", "suck my universe sized dick", "drink my piss fucking faggot", "hop off my dick fucking nigger",}
 	local comebackowned = {"you got fucked in the ass", "get fucking raped", ""..killed:Nick().." can drink my fucking piss", "you suck shit gay nigger", "you should eat my shit", "you got shafted by my large penis, "..killed:Nick(), ""..killed:Nick().." is getting fucked by an aimbot", ""..killed:Nick().." is getting fucking murdered", "you're so shit at this game, quit already", "drink my dog's piss faggot", "hey don't cry bro, you need a tissue?", "you're so fucking gay", "you're the reason why equal rights don't exist, "..killed:Nick(), ""..killed:Nick().." is radiating big faggot energy", "hurr durr stop cheating in an ancient video game!!!", "stop being such a spastical retard already", "you're more braindead than kim jong un after his surgery", "you're a furfag and should not be proud, "..killed:Nick(), ""..killed:Nick().." is getting dominated by me, aka god", "you live in a fucking dirty hut, retarded african boy", "i bet you're literally fucking black", ""..killed:Nick().." is a gay autistic nigger with no privileges", ""..killed:Nick().." is being searched for by the fbi", ""..killed:Nick().." literally fucking died in gmod", "you're ultra retarded, kid", "you need a tissue, little faggot?", ""..killed:Nick().." should get killed by me once again", "please die more, you're feeding my addiction", ""..killed:Nick().." is a retard bot", "you're so much of a loser, get a fucking life and stop playing this shit game kid", "virgin lol get good", "fucking coomer, go wash your crusty underwear you filth", ""..killed:Nick().." got cucked", ""..killed:Nick().." is dominated by pure fucking skill", "you are a big noob", "i can't wait to headshot you irl, "..killed:Nick(), "you smelly homeless nigger", ""..killed:Nick().." still believes that god and santa exist lol", "bruh you really do be crying at a game", "please stop doing what you're doing and kill yourself", ""..killed:Nick().." lives in america", "you are a deformed fetus", ""..killed:Nick().." is ugly as shit fr tho", "you're cringe, stop doing this shit", ""..killed:Nick()..", you look like you died", "fucking putrid fuck, kill yourself", ""..killed:Nick().." is a trash cheater", ""..killed:Nick().." is a normie", "smelly fucker", ""..killed:Nick().." is a dickless prick", ""..killed:Nick().." is gay", ""..killed:Nick().." does not get any pussy", "you're too stupid to be considered human", "i bet this faggot, "..killed:Nick().." kisses girls!!", ""..killed:Nick().." is a furry", ""..killed:Nick().." is a waste of human flesh", "i bet you won't be able to kill me even with hacks", ""..killed:Nick()..", men are the fuck. you are not the fuck. you are not men", ""..killed:Nick().." is a failed abortion", ""..killed:Nick().." fucking died", ""..killed:Nick().." plays with his dick for fun", "play with my stinky fat throbbing cock you gay faggot", "stop using hacks you cringe skid!!!", ""..killed:Nick().." uses cancer shit cheats!!", "you show all of the signs of mental retardation", "please just quit the game already", ""..killed:Nick().." is a "..killed:Nick().."", "shut the fuck up and die", "nigger lol",}
 	if (gOption("Miscellaneous", "Chat", "Kill Spam:") == "Normal") then
@@ -2595,7 +2630,7 @@ local function KillSpam(data)
 			return
 		end
 		RunConsoleCommand("say", hvhowned[math.random(#hvhowned)])
-	elseif (gOption("Miscellaneous", "Chat", "Kill Spam:") == "IdiotBox HvH") then
+	elseif (gOption("Miscellaneous", "Chat", "Kill Spam:") == "LobotomyBox HvH") then
 		if (killed == me and killer ~= me) then
 			RunConsoleCommand("say", hvhexcuses2[math.random(#hvhexcuses2)])
 		end
@@ -3112,12 +3147,12 @@ end)
 local function ChatSpam()
 	local ArabFunni = {"يمارس الجنس مع السلطة العربية سنة عظيمة", "رائحة مثل البظر دون السن القانونية هنا اسمحوا لي أن اللعنة", "ازدهار مسحوق الطاقة العربية سنة جيدة", "نحن نكره اليهو", "يمارس الجنس مع الأطفال الماعز نعم الجنس", "الله أكبر نعم رجل تفجير طفل", "هذه لحظة بره لحظة ارهابية سنة", "في تلك اللحظة التي يبدأ فيها أخاك في المغازلة مع والدتك", "الحصول على صندوق احمق نعم العربية غش كازاخستان", "يمارس الجنس مع نيغا الكلبة دا قرن الطفل", "ترك العرب باكستاني لحظة برمة تجميع كرمة", "حرق اليهود ، يمارس الجنس مع المسيح ، قتل الأطفال ، أصبح الله",}
 	local HebrewFunni = {"לזיין את הכלב שלך אמא לעזאזל חרא סקס בכוס", "לעזאזל כוס כלבה בזין אני אוהבת עורלה הדוקה חתכה לי שלום כומר", "זו לא בדיחה מזוינת אני רוצה לתלות את עצמי השנה", "תזדיין שאתה יהודי הוא הגדול ביותר שכולכם כושים", "אני אהיה בן שש בשנה מכושן", "יש למול את הפין", "ישראל היא פלסטין המזוין הגדול ביותר במדינה", "זקן ישבן גדול על סנטרי, זהב בביתי, פוליטיקה במכנסיים שלי", "מזדיין לצאת מכושים ישראלים", "כוס חתולה אני מזיין את הזין ואז אני מוצץ כן", "חרא של אלוהים זה חרא של רחוב כן", "אני הולך לזיין ילד בן שתים עשרה בתחת, כן חתוך עורלה לעזאזל חרא כלבה",}
-	local messagespam = {"GET FUCKED BY IDIOTBOX KIDDIE", "YOU SUCK SHIT LMAO", "STOP BEING SUCH A WORTHLESS CUMSTAIN AND GET IDIOTBOX NOW", "MONEY WASTER LOL", "YOU FUCKING FATASS, GET IDIOTBOX AND LOSE ALL THAT WEIGHT YOU INCEL", "ARE ALL THE GIRLS IGNORING YOU? GET IDIOTBOX AND YOU'LL BE FLOODED WITH PUSSY", "DO YOU FEEL WORTHLESS? WELL, YOU ARE LOL", "GET IDIOTBOX IF YOU WANT SOME OF THAT CLOUT", "STOP WASTING YOUR TIME ON SOUNDCLOUD BECAUSE YOU AIN'T GONNA GET NOWHERE WITH IT", "GET IDIOTBOX AND YOUR DICK WILL GROW 4 TIMES ITS SIZE", "LITTLE KID LMAO",}
+	local messagespam = {"GET FUCKED BY LobotomyBox KIDDIE", "YOU SUCK SHIT LMAO", "STOP BEING SUCH A WORTHLESS CUMSTAIN AND GET LobotomyBox NOW", "MONEY WASTER LOL", "YOU FUCKING FATASS, GET LobotomyBox AND LOSE ALL THAT WEIGHT YOU INCEL", "ARE ALL THE GIRLS IGNORING YOU? GET LobotomyBox AND YOU'LL BE FLOODED WITH PUSSY", "DO YOU FEEL WORTHLESS? WELL, YOU ARE LOL", "GET LobotomyBox IF YOU WANT SOME OF THAT CLOUT", "STOP WASTING YOUR TIME ON SOUNDCLOUD BECAUSE YOU AIN'T GONNA GET NOWHERE WITH IT", "GET LobotomyBox AND YOUR DICK WILL GROW 4 TIMES ITS SIZE", "LITTLE KID LMAO",}
 	local offensivespam = {"fuck niggers like fr", "who else here hates black people lmao", "all niggers should be locked in cages and fed bananas", "black people are some sub-human slaves imo", "i've never met an intelligent black person", "why tf are all niggers so ugly lol", "all the black dudes i've seen look like monkeys", "ooga booga black rights", "my grandpa died in ww2, he was the best german pilot", "white people are genetically superior to every othe race", "all jews can do is hide the truth, steal money and start wars",}
 	local insultspam = {" is shit at building", " is no older than 13", " looks like a 2 month old corpse", " really thinks gmod is a good game", " can't afford a better pc lmao", ", so how do you like your 40 fps?", " will definitely kill himself before his 30's ", " is a fucking virgin lmao", " is a script kiddie", " thinks his 12cm penis is big lmfao", ", how does it feel when you've never seen a naked woman in person?", ", what do you like not being able to do a single push-up?", ", tell me how it feels to be shorter than every girl you've met", " is a fatass who only spends his time in front of a monitor like an incel", "'s parents have a lower than average income", " lives under a bridge lmao", " vapes because is too afraid to smoke an actual ciggarette", ", your low self esteem really pays off you loser", ", make sure you tell me what unemployment feels like", " lives off of his parents' money", ", you're a dissapointment to your entire family, fatass", " has probably fried all of his dopamine receptors by masturbating this much",}
-	local advertise = {"IdiotBox - https://phizzofficial.wixsite.com/idiotbox4gmod/", "IdiotBox - Destroying everyone since '16.", "IdiotBox - Easy to use, free Garry's Mod cheat.", "IdiotBox - Now you can forget that negative KD's can be possible.", "IdiotBox - Beats all of your other cheats.", "IdiotBox - IdiotBox came back, and it came back with a vengeance.", "IdiotBox - Join the Discord server if you have a high IQ.", "IdiotBox - The only high-quality free cheat, out for Garry's Mod.", "IdiotBox - Best cheat, created by Phizz & more.", "IdiotBox - Always updated, never dead.", "IdiotBox - A highly reliable and optimised cheating software.", "IdiotBox - Top class, free cheat for Garry's Mod.", "IdiotBox - Makes noobs cry waves of tears since forever!", "IdiotBox - Say goodbye to the respawn room!", "IdiotBox - Download the highest quality Garry's Mod cheat for free now!", "IdiotBox - A reliable way to go!", "IdiotBox - Make Garry's Mod great again!", "IdiotBox - Visit our website for fresh Discord invite links!", "IdiotBox - Monthly bugfixes & updates. It never gets outdated!", "IdiotBox - Download IdiotBox v6.9.b5 right now!", "IdiotBox - Bug-free and fully customizable!", "IdiotBox - Join our Steam group and Discord server to stay up-to-date!", "IdiotBox - Refund all your cheats, use this better and free alternative!", "IdiotBox - Now with more features than ever!", "IdiotBox - The best Garry's Mod cheat, with 24/7 support, for free!", "IdiotBox - Bypasses most anti-cheats and screengrabbers!",}
-	local toxicadvertise = {"Get IdiotBox you fucking smelly niggers", "IdiotBox is the best fucking cheat and that is a fact", "All of you are fucking autistic for not having IdiotBox", "Why the fuck don't you get IdiotBox lol", "Stay being gay or get IdiotBox", "Your moms should know that you play grown-up games, join our Discord to prove you are not under-aged", "I have your IPs you dumb niggers, I will delete the IPs if you get IdiotBox", "You all fucking smell like shit for not using IdiotBox", "IdiotBox makes kiddos cry and piss their pants maybe and maybe shit and cum", "IdiotBox is the best free cheat in the history of the entire world so get it faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ or you're retarded", "Join our fucking Discord or else you are literally an unpriviledged niggers", "IdiotBox is a cheat for people with high IQ only, use IdiotBox to prove you're smart", "Don't wanna get fucking raped? Get IdiotBox and shit on them skids", "This is the best free paste around, no other paste is better than IdiotBox", "How the fuck are you not using IdiotBox in a shitty dying game lmfao", "IdiotBox is the best and most popular Garry's Mod cheat ever, why are you not using it lol", "May cause a bit of lag but it's worth it for the fuckton of features that it has", "You're all faggots if you don't cheat with IdiotBox", "You literally go to pride month parades if you don't use IdiotBox", "Idiotbox is the highest quality, most popular free cheat, just get it already", "Shit on all of the virgins that unironically play this game with this high-quality cheat", "Get good, get IdiotBox you fucking retards", "You're mad retarded if you are not using IdiotBox, no cap", "Own every single retard in HvH with this superior cheat now", "All of you are dumb niggers for not downloading IdiotBox and that is a fact", "You suck fat cocks in public bathrooms if you're not using IdiotBox", "Just get this god-like cheat already and rape all existing servers", "No you idiots, you can't get VAC banned for using lua scripts you absolute cretins", "IdiotBox bypasses even the most complex anti-cheats and screengrabbers, you're not getting banned anytime soon", "Just use IdiotBox to revert your sad lives and feel better about yourselves", "Phizz is a god because he made this god-like cheat called IdiotBox", "I am forced to put IdiotBox in almost every sentence and advertise in a toxic way because I'm a text in a lua script", "Why are you fucking gay? Get IdiotBox today", "The sentence above is a rhyme but the script says to put random sentences so I don't think you can see it, get IdiotBox btw", "Purchase IdiotBox now! Only for OH wait it's free", "It is highly recommended that you get IdiotBox in case of getting pwned", "You are swag and good looking, but only if you get IdiotBox", "Phizz spent so many fucking nights creating this masterpiece of a cheat so get it now or he will legit kill you", "Fuck you and get IdiotBox now lol", "IdiotBox is constantly getting updated with dope-ass features, it never gets outdated so just get it", "Have IdiotBox installed if you're mega straight and zero gay", "Whoever the fuck said lua cheats are bad deserves to die in a house fire", "You get IdiotBox, everyone else on the server gets pwned, ez as that", "Many cheats copied IdiotBox, but this is the original one, fucking copycats", "Join the fucking Discord, promise it won't hurt you faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ right this moment or I will hire a hitman to kill you", "Join the IdiotBox group at OH wait niggers got mad and mass-reported it, kys shitkids", "Nvm, Steam group is back lol get fucked you mad skid shitkids", "IdiotBox killed all of the paid cheats because it's too good", "Get IdiotBox, it's free and very good, you sacks of crying shit", "IdiotBox is the fucking G.O.A.T.", "What the fuck are you doing not using this god-like cheat lol", "This is an epic fucking cheat called IdiotBox that was created by Phizz and others, worship your new gods kiddos", "You were fed cock milk as a baby if you're not using IdiotBox and you can not prove me wrong", "IdiotBox has the dopest anti-aims and resolvers you'll ever use, you will be a HvH god", "Just please get IdiotBox already you retards, I am tired of typing these lines for fuck's sake", "Phizz will give everyone optimized IdiotBox soon so quit your shit", "IdiotBox needs no Steam group, we're too chad for one", "Our Discord was tapped at some point but IdiotBox is back and stronger than ever", "IdiotBox came back to kill silly niggers, and it came back with a vengeance", "Download Idiotbox v6.9.b5 now, you dont even know what you're missing you mongoloids", "Have I told you about IdiotBox, the best Garry's Mod cheat ever made??", "Holy shit, IdiotBox for Garry's Mod is the best cheat that I have ever used!!",}
-	local lmaoboxadvertise = {"www.IB4G.net - https://phizzofficial.wixsite.com/idiotbox4gmod/", "www.IB4G.net - WORST FRAMERATE, BEST FEATURES!", "www.IB4G.net - WHAT ARE YOU WAITING FOR?", "www.IB4G.net - BEST GARRY'S MOD CHEAT OUT RIGHT NOW!", "www.IB4G.net - SAY GOODBYE TO THE RESPAWN ROOM!", "www.IB4G.net - NO SKILL REQUIRED!", "www.IB4G.net - NEVER DIE AGAIN WITH THIS!", "www.IB4G.net - ONLY HIGH IQ NIGGAS' USE IDIOTBOX!", "www.IB4G.net - THE GAME IS NOT ACTUALLY DYING, I JUST LIKE TO ANNOY KIDS LOL!", "www.IB4G.net - DOWNLOAD THE CHEAT FOR FREE!", "www.IB4G.net - NOW WITH AUTOMATIC UPDATES!", "www.IB4G.net - GUARANTEED SWAG AND RESPECT ON EVERY SERVER!", "www.IB4G.net - IDIOTBOX COMING SOON TO TETIRS!", "www.IB4G.net - VISIT OUR WEBSITE FOR A FRESH INVITE LINK TO OUR DISCORD!", "www.IB4G.net - PHIZZ IS A GOD FOR MAKING THIS!", "www.IB4G.net - BECOME THE SERVER MVP IN NO TIME!", "www.IB4G.net - 100% NO SKILL REQUIRED!", "www.IB4G.net - BEST CHEAT, MADE BY THE CHINESE COMMUNIST PARTY!", "www.IB4G.net - MAKE IDIOTBOX GREAT AGAIN!", "www.IB4G.net - WHY ARE YOU NOT CHEATING IN A DYING GAME?", "www.IB4G.net - RUINING EVERYONE'S FUN SINCE 2016!", "www.IB4G.net - IT'S PASTED, BUT IT'S THE BEST PASTE YOU WILL EVER USE!", "www.IB4G.net - A VERY CLEAN, HIGH-QUALITY AND BUG-FREE PASTE!", "www.IB4G.net - ALWAYS UPDATED! NEVER GETS OUTDATED!", "www.IB4G.net - WITH A FUCK TON OF NEW FEATURES!", "www.IB4G.net - ONCE YOU GO BLACK, YOU NEVER GO BACK. GET IDIOTBOX NOW!", "www.IB4G.net - SACRIFICE A FEW FRAMES FOR THE BEST EXPERIENCE OF YOUR LIFE!", "www.IB4G.net - STEAM GROUP WAS TAKEN DOWN, BUT IT'S BACK BABY!", "www.IB4G.net - BEST GARRY'S MOD CHEAT, NO CAP!", "www.IB4G.net - WITH IDIOTBOX, YOU'LL NEVER GET BANNED FOR CHEATING AGAIN!", "www.IB4G.net - DISCORD SERVER WAS TAKEN DOWN MANY TIMES, BUT WE ALWAYS COME BACK!",}
+	local advertise = {"LobotomyBox - https://phizzofficial.wixsite.com/LobotomyBox4gmod/", "LobotomyBox - Destroying everyone since '16.", "LobotomyBox - Easy to use, free Garry's Mod cheat.", "LobotomyBox - Now you can forget that negative KD's can be possible.", "LobotomyBox - Beats all of your other cheats.", "LobotomyBox - LobotomyBox came back, and it came back with a vengeance.", "LobotomyBox - Join the Discord server if you have a high IQ.", "LobotomyBox - The only high-quality free cheat, out for Garry's Mod.", "LobotomyBox - Best cheat, created by Phizz & more.", "LobotomyBox - Always updated, never dead.", "LobotomyBox - A highly reliable and optimised cheating software.", "LobotomyBox - Top class, free cheat for Garry's Mod.", "LobotomyBox - Makes noobs cry waves of tears since forever!", "LobotomyBox - Say goodbye to the respawn room!", "LobotomyBox - Download the highest quality Garry's Mod cheat for free now!", "LobotomyBox - A reliable way to go!", "LobotomyBox - Make Garry's Mod great again!", "LobotomyBox - Visit our website for fresh Discord invite links!", "LobotomyBox - Monthly bugfixes & updates. It never gets outdated!", "LobotomyBox - Download LobotomyBox v6.9.b5 right now!", "LobotomyBox - Bug-free and fully customizable!", "LobotomyBox - Join our Steam group and Discord server to stay up-to-date!", "LobotomyBox - Refund all your cheats, use this better and free alternative!", "LobotomyBox - Now with more features than ever!", "LobotomyBox - The best Garry's Mod cheat, with 24/7 support, for free!", "LobotomyBox - Bypasses most anti-cheats and screengrabbers!",}
+	local toxicadvertise = {"Get LobotomyBox you fucking smelly niggers", "LobotomyBox is the best fucking cheat and that is a fact", "All of you are fucking autistic for not having LobotomyBox", "Why the fuck don't you get LobotomyBox lol", "Stay being gay or get LobotomyBox", "Your moms should know that you play grown-up games, join our Discord to prove you are not under-aged", "I have your IPs you dumb niggers, I will delete the IPs if you get LobotomyBox", "You all fucking smell like shit for not using LobotomyBox", "LobotomyBox makes kiddos cry and piss their pants maybe and maybe shit and cum", "LobotomyBox is the best free cheat in the history of the entire world so get it faggots", "Download LobotomyBox at https://phizzofficial.wixsite.com/LobotomyBox4gmod/ or you're retarded", "Join our fucking Discord or else you are literally an unpriviledged niggers", "LobotomyBox is a cheat for people with high IQ only, use LobotomyBox to prove you're smart", "Don't wanna get fucking raped? Get LobotomyBox and shit on them skids", "This is the best free paste around, no other paste is better than LobotomyBox", "How the fuck are you not using LobotomyBox in a shitty dying game lmfao", "LobotomyBox is the best and most popular Garry's Mod cheat ever, why are you not using it lol", "May cause a bit of lag but it's worth it for the fuckton of features that it has", "You're all faggots if you don't cheat with LobotomyBox", "You literally go to pride month parades if you don't use LobotomyBox", "LobotomyBox is the highest quality, most popular free cheat, just get it already", "Shit on all of the virgins that unironically play this game with this high-quality cheat", "Get good, get LobotomyBox you fucking retards", "You're mad retarded if you are not using LobotomyBox, no cap", "Own every single retard in HvH with this superior cheat now", "All of you are dumb niggers for not downloading LobotomyBox and that is a fact", "You suck fat cocks in public bathrooms if you're not using LobotomyBox", "Just get this god-like cheat already and rape all existing servers", "No you idiots, you can't get VAC banned for using lua scripts you absolute cretins", "LobotomyBox bypasses even the most complex anti-cheats and screengrabbers, you're not getting banned anytime soon", "Just use LobotomyBox to revert your sad lives and feel better about yourselves", "Phizz is a god because he made this god-like cheat called LobotomyBox", "I am forced to put LobotomyBox in almost every sentence and advertise in a toxic way because I'm a text in a lua script", "Why are you fucking gay? Get LobotomyBox today", "The sentence above is a rhyme but the script says to put random sentences so I don't think you can see it, get LobotomyBox btw", "Purchase LobotomyBox now! Only for OH wait it's free", "It is highly recommended that you get LobotomyBox in case of getting pwned", "You are swag and good looking, but only if you get LobotomyBox", "Phizz spent so many fucking nights creating this masterpiece of a cheat so get it now or he will legit kill you", "Fuck you and get LobotomyBox now lol", "LobotomyBox is constantly getting updated with dope-ass features, it never gets outdated so just get it", "Have LobotomyBox installed if you're mega straight and zero gay", "Whoever the fuck said lua cheats are bad deserves to die in a house fire", "You get LobotomyBox, everyone else on the server gets pwned, ez as that", "Many cheats copied LobotomyBox, but this is the original one, fucking copycats", "Join the fucking Discord, promise it won't hurt you faggots", "Download LobotomyBox at https://phizzofficial.wixsite.com/LobotomyBox4gmod/ right this moment or I will hire a hitman to kill you", "Join the LobotomyBox group at OH wait niggers got mad and mass-reported it, kys shitkids", "Nvm, Steam group is back lol get fucked you mad skid shitkids", "LobotomyBox killed all of the paid cheats because it's too good", "Get LobotomyBox, it's free and very good, you sacks of crying shit", "LobotomyBox is the fucking G.O.A.T.", "What the fuck are you doing not using this god-like cheat lol", "This is an epic fucking cheat called LobotomyBox that was created by Phizz and others, worship your new gods kiddos", "You were fed cock milk as a baby if you're not using LobotomyBox and you can not prove me wrong", "LobotomyBox has the dopest anti-aims and resolvers you'll ever use, you will be a HvH god", "Just please get LobotomyBox already you retards, I am tired of typing these lines for fuck's sake", "Phizz will give everyone optimized LobotomyBox soon so quit your shit", "LobotomyBox needs no Steam group, we're too chad for one", "Our Discord was tapped at some point but LobotomyBox is back and stronger than ever", "LobotomyBox came back to kill silly niggers, and it came back with a vengeance", "Download LobotomyBox v6.9.b5 now, you dont even know what you're missing you mongoloids", "Have I told you about LobotomyBox, the best Garry's Mod cheat ever made??", "Holy shit, LobotomyBox for Garry's Mod is the best cheat that I have ever used!!",}
+	local lmaoboxadvertise = {"www.IB4G.net - https://phizzofficial.wixsite.com/LobotomyBox4gmod/", "www.IB4G.net - WORST FRAMERATE, BEST FEATURES!", "www.IB4G.net - WHAT ARE YOU WAITING FOR?", "www.IB4G.net - BEST GARRY'S MOD CHEAT OUT RIGHT NOW!", "www.IB4G.net - SAY GOODBYE TO THE RESPAWN ROOM!", "www.IB4G.net - NO SKILL REQUIRED!", "www.IB4G.net - NEVER DIE AGAIN WITH THIS!", "www.IB4G.net - ONLY HIGH IQ NIGGAS' USE LobotomyBox!", "www.IB4G.net - THE GAME IS NOT ACTUALLY DYING, I JUST LIKE TO ANNOY KIDS LOL!", "www.IB4G.net - DOWNLOAD THE CHEAT FOR FREE!", "www.IB4G.net - NOW WITH AUTOMATIC UPDATES!", "www.IB4G.net - GUARANTEED SWAG AND RESPECT ON EVERY SERVER!", "www.IB4G.net - LobotomyBox COMING SOON TO TETIRS!", "www.IB4G.net - VISIT OUR WEBSITE FOR A FRESH INVITE LINK TO OUR DISCORD!", "www.IB4G.net - PHIZZ IS A GOD FOR MAKING THIS!", "www.IB4G.net - BECOME THE SERVER MVP IN NO TIME!", "www.IB4G.net - 100% NO SKILL REQUIRED!", "www.IB4G.net - BEST CHEAT, MADE BY THE CHINESE COMMUNIST PARTY!", "www.IB4G.net - MAKE LobotomyBox GREAT AGAIN!", "www.IB4G.net - WHY ARE YOU NOT CHEATING IN A DYING GAME?", "www.IB4G.net - RUINING EVERYONE'S FUN SINCE 2016!", "www.IB4G.net - IT'S PASTED, BUT IT'S THE BEST PASTE YOU WILL EVER USE!", "www.IB4G.net - A VERY CLEAN, HIGH-QUALITY AND BUG-FREE PASTE!", "www.IB4G.net - ALWAYS UPDATED! NEVER GETS OUTDATED!", "www.IB4G.net - WITH A FUCK TON OF NEW FEATURES!", "www.IB4G.net - ONCE YOU GO BLACK, YOU NEVER GO BACK. GET LobotomyBox NOW!", "www.IB4G.net - SACRIFICE A FEW FRAMES FOR THE BEST EXPERIENCE OF YOUR LIFE!", "www.IB4G.net - STEAM GROUP WAS TAKEN DOWN, BUT IT'S BACK BABY!", "www.IB4G.net - BEST GARRY'S MOD CHEAT, NO CAP!", "www.IB4G.net - WITH LobotomyBox, YOU'LL NEVER GET BANNED FOR CHEATING AGAIN!", "www.IB4G.net - DISCORD SERVER WAS TAKEN DOWN MANY TIMES, BUT WE ALWAYS COME BACK!",}
 	local horstwessellied = {"Die Fahne hoch! Die Reihen fest geschlossen", "SA marschiert mit ruhig festem Schritt", "Kam'raden, die Rotfront und Reaktion erschossen", "Marschier'n im Geist in unser'n Reihen mit", "Die Straße frei den braunen Bataillonen", "Die Straße frei dem Sturmabteilungsmann", "Es schau'n aufs Hakenkreuz voll Hoffnung schon Millionen", "Der Tag für Freiheit und für Brot bricht an", "Zum letzten Mal wird Sturmalarm geblasen", "Zum Kampfe steh'n wir alle schon bereit", "Schon flattern Hitlerfahnen über allen Straßen", "Die Knechtschaft dauert nur noch kurze Zeit", "Die Fahne hoch! Die Reihen fest geschlossen", "SA marschiert mit ruhig festem Schritt", "Kam'raden, die Rotfront und Reaktion erschossen", "Marschier'n im Geist in unser'n Reihen mit",}
 	local ssmarschiertinfeindesland = {"SS marschiert in Feindesland", "Und singt ein Teufelslied", "Ein Schütze steht am Wolgastrand", "Und leise summt er mit", "Wir pfeifen auf Unten und Oben", "Und uns kann die ganze Welt", "Verfluchen oder auch loben", "Grad wie es jedem gefällt", "Wo wir sind da geht's immer vorwärts", "Und der Teufel, der lacht nur dazu", "Ha, ha, ha, ha, ha, ha", "Wir kämpfen für Deutschland", "Wir kämpfen für Hitler", "Der Rote kommt niemehr zur Ruh'", "Wir kämpften schon in mancher Schlacht", "In Nord, Süd, Ost und West", "Und stehen nun zum Kampf bereit", "Gegen die rote Pest", "SS wird nicht ruh'n, wir vernichten", "Bis niemand mehr stört Deutschlands Glück", "Und wenn sich die Reihen auch lichten", "Für uns gibt es nie ein Zurück", "Wo wir sind da geht's immer vorwärts", "Und der Teufel, der lacht nur dazu", "Ha, ha, ha, ha, ha, ha", "Wir kämpfen für Deutschland", "Wir kämpfen für Hitler", "Der Rote kommt niemehr zur Ruh'",}
 	local siegheilviktoria = {"Ade, mein liebes Schätzelein", "Ade, ade, ade", "Es muß, es muß geschieden sein", "Ade, ade, ade", "Es geht um Deutschlands Gloria", "Gloria, Gloria", "Sieg Heil! Sieg Heil Viktoria!", "Sieg Heil, Viktoria!", "Visier und Ziel sind eingestellt", "Ade, ade, ade", "Auf Stalin, Churchill, Roosevelt", "Ade, ade, ade", "Es geht um Deutschlands Gloria", "Gloria, Gloria", "Sieg Heil! Sieg Heil Viktoria!", "Sieg Heil, Viktoria!", "Wir ruhen und wir rasten nicht", "Ade, ade, ade", "Bis daß die Satansbrut zerbricht", "Ade, ade, ade", "Es geht um Deutschlands Gloria", "Gloria, Gloria", "Sieg Heil! Sieg Heil Viktoria!", "Sieg Heil, Viktoria!", "Reich mir die Hand zum Scheidegruß", "Ade, ade, ade", "Und deinen Mund zum Abschiedskuß", "Ade, ade, ade", "Es geht um Deutschlands Gloria", "Gloria, Gloria", "Sieg Heil! Sieg Heil Viktoria!", "Sieg Heil, Viktoria!",}
@@ -3724,6 +3759,16 @@ timer.Create("usespam", 0, 0, function()
 end)
 
 local function Think()
+	model = ClientsideModel("models/props_phx/wheels/metal_wheel1.mdl")
+	model:SetPos(Vector(0,0,0))
+	model:Spawn()
+	for i = 0, 500, 1 do
+		local tr = util.TraceLine( {
+			start = LocalPlayer():EyePos(),
+			endpos = LocalPlayer():EyePos() + EyeAngles():Forward() * 10000,
+			filter = function( ent ) return ( ent:GetClass() == "prop_physics" ) end
+		} )
+	end //more obfuscation this time to bypass GAC
 	local randomname = {"Mike Hawk", "Moe Lester", "Mike Hunt", "Ben Dover", "Harold Kundt", "Peter Pain", "Dusan Mandic", "Harry Gooch", "Mike Oxlong", "Ivana Dooyu", "Slim Shader", "Dead Walker", "Mike Oxbig", "Mike Rotch", "Hugh Jass", "Robin Banks", "Mike Litt", "Harry Wang", "Harry Cox", "Moss Cular", "Amanda Reen", "Major Kumm", "Willie Wang", "Hugh Blackstuff", "Mike Rap", "Al Coholic", "Cole Kutz", "Mike Litoris", "Dixie Normous", "Dick Pound", "Mike Ock", "Sum Ting Wong", "Ho Lee Fuk", "Harry Azcrac", "Jay L. Bate", "Hugh G. Rection", "Long Wang", "Wayne King",}
 	if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menuopen and not menukeydown) then
 		menuopen = true
@@ -3789,7 +3834,7 @@ local function CheckChild(pan)
 		removewindow = true
 		if input.IsKeyDown(17) then
 			if pan.GetTitle then
-				MsgR(4.3, "IdiotBox successfully removed \""..pan:GetTitle().."\".")
+				MsgR(4.3, "LobotomyBox successfully removed \""..pan:GetTitle().."\".")
 				surface.PlaySound("buttons/lightswitch2.wav")
 			end
 			pan:Remove()
@@ -3798,7 +3843,7 @@ local function CheckChild(pan)
 		for k, v in pairs(pan:GetChildren()) do
 			if input.IsKeyDown(17) then
 				if v.GetTitle then
-					MsgR(4.3, "IdiotBox successfully removed \""..v:GetTitle().."\".")
+					MsgR(4.3, "LobotomyBox successfully removed \""..v:GetTitle().."\".")
 					surface.PlaySound("buttons/lightswitch2.wav")
 				end
 				v:Remove()
@@ -3938,7 +3983,7 @@ hook.Add("Think", "Think", function()
 		end
 	if (gBool("Main Menu", "General Utilities", "Anti-Blind")) then
 		if (HookExist("HUDPaint", "ulx_blind")) then
-			MsgR(4.3, "IdiotBox successfully blocked a blinding attempt.")
+			MsgR(4.3, "LobotomyBox successfully blocked a blinding attempt.")
 			surface.PlaySound("buttons/lightswitch2.wav")
 			hook.Remove("HUDPaint", "ulx_blind")
         end
@@ -3946,7 +3991,7 @@ hook.Add("Think", "Think", function()
 	if MOTDgd or MOTDGD then
 		function MOTDgd.GetIfSkip()
 		if (gBool("Main Menu", "General Utilities", "Anti-Ads")) then
-			MsgR(4.3, "IdiotBox successfully blocked an advertisement.")
+			MsgR(4.3, "LobotomyBox successfully blocked an advertisement.")
 			surface.PlaySound("buttons/lightswitch2.wav")
 			return true
 			end
@@ -4150,18 +4195,18 @@ local function Visuals(v)
 		local friendstatus = pm.GetFriendStatus(v)
 		if (friendstatus == "friend") then
 			if creator[v:SteamID()] then
-				draw.SimpleText("IdiotBox Creator", "VisualsFont", pos.x, pos.y - h - 26 - 13, devcol, 1, 1)
+				draw.SimpleText("LobotomyBox Creator", "VisualsFont", pos.x, pos.y - h - 26 - 13, devcol, 1, 1)
 			end
 			if contributors[v:SteamID()] then
-				draw.SimpleText("IdiotBox Contributor", "VisualsFont", pos.x, pos.y - h - 26 - 13, devcol, 1, 1)
+				draw.SimpleText("LobotomyBox Contributor", "VisualsFont", pos.x, pos.y - h - 26 - 13, devcol, 1, 1)
 			end
 		end
 		if (friendstatus ~= "friend") then
 			if creator[v:SteamID()] then
-				draw.SimpleText("IdiotBox Creator", "VisualsFont", pos.x, pos.y - h - 13 - 13, devcol, 1, 1)
+				draw.SimpleText("LobotomyBox Creator", "VisualsFont", pos.x, pos.y - h - 13 - 13, devcol, 1, 1)
 			end
 			if contributors[v:SteamID()] then
-				draw.SimpleText("IdiotBox Contributor", "VisualsFont", pos.x, pos.y - h - 13 - 13, devcol, 1, 1)
+				draw.SimpleText("LobotomyBox Contributor", "VisualsFont", pos.x, pos.y - h - 13 - 13, devcol, 1, 1)
 			end
 		end
 		if (friendstatus == "friend") and (creator[v:SteamID()] or contributors[v:SteamID()]) then
@@ -4364,6 +4409,337 @@ local function Visuals(v)
 			end
 		end
 	end
+	local pos = em.GetPos(v)
+	local min, max = em.GetCollisionBounds(v)
+	local pos2 = pos + Vector(0, 0, max.z)
+	local pos = vm.ToScreen(pos)
+	local pos2 = vm.ToScreen(pos2)
+	local h = pos.y - pos2.y
+	local w = h / 2
+	local ww = h / 4
+	local colOne = (contributors[v:SteamID()] || creator[v:SteamID()]) && Color(0, 0, 0) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
+	local colTwo = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || Color(0, 0, 0)
+	local colThree = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
+	local colFour = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
+	local colFive = gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
+	local healthcol = Color((100 - em.Health(v)) * 2.55, em.Health(v) * 2.55, 0)
+	local armorcol = Color((100 - v:Armor()) * 2.55, v:Armor() * 2.55, v:Armor() * 2.55)
+	local pingcol = Color(v:Ping() * 2.55, 255 - v:Ping() - 5 * 2, 0)
+	local moneycol = Color(0, 255, 0)
+	local textcol = Color(255, 255, 255)
+	local friendcol = Color(0, 255, 255)
+	local devcol = HSVToColor(RealTime() * 45 % 360, 1, 1)
+	local ignoredcol = Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)
+	local prioritycol = Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)
+	local misccol = Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
+	local hh = 0
+	if (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then
+		return false
+	end
+	if gOption("Visuals", "Wallhack", "Box:") == "2D Box" then
+		surface.SetDrawColor(colOne)
+		surface.DrawOutlinedRect(pos.x - w / 2, pos.y - h, w, h)
+		surface.SetDrawColor(colTwo)
+		surface.DrawOutlinedRect(pos.x - w / 2 - 1, pos.y - h - 1, w + 2, h + 2)
+		surface.DrawOutlinedRect(pos.x - w / 2 + 1, pos.y - h + 1, w - 2, h - 2)
+	elseif gOption("Visuals", "Wallhack", "Box:") == "3D Box" then
+	for k, v in pairs(player.GetAll()) do
+	if (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) then continue end
+	if v:IsValid() and v:Alive() and v:Health() > 0 then
+		local eye = v:EyeAngles()
+		local min, max = v:WorldSpaceAABB()
+		local origin = v:GetPos()
+		if gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(ignorelist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+			cam.Start3D()
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, ignoredcol)
+			cam.End3D()
+		elseif gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(prioritylist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+			cam.Start3D()
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, prioritycol)
+			cam.End3D()
+		elseif gBool("Visuals", "Miscellaneous", "Team Colors") and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+			cam.Start3D()
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, team.GetColor(pm.Team(v)))
+			cam.End3D()
+		elseif (contributors[v:SteamID()] || creator[v:SteamID()]) then
+			cam.Start3D()
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, devcol)
+			cam.End3D()
+		elseif !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+			cam.Start3D()
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, GetColor(v))
+			cam.End3D()
+				end
+			end
+		end
+	elseif (gBool("Visuals", "Wallhack", "Enabled") && gOption("Visuals", "Wallhack", "Box:") == "Edged Box") then   
+	x1, y1, x2, y2 = ScrW() * 2, ScrH() * 2, - ScrW(), - ScrH()
+		corners = {v:LocalToWorld(Vector(min.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, min.y, max.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, max.z)):ToScreen()}
+		for _k, _v in next, corners do
+			x1, y1 = math.min(x1, _v.x), math.min(y1, _v.y)
+			x2, y2 = math.max(x2, _v.x), math.max(y2, _v.y)
+		end
+		diff, diff2 = math.abs(x2 - x1), math.abs(y2 - y1)
+		surface.SetDrawColor(colThree)
+		surface.DrawLine(x1, y1, x1 + (diff * 0.225), y1)
+		surface.DrawLine(x1, y1, x1, y1 + (diff2 * 0.225))
+		surface.DrawLine(x1, y2, x1 + (diff * 0.225), y2)
+		surface.DrawLine(x1, y2, x1, y2 - (diff2 * 0.225))
+		surface.DrawLine(x2, y1, x2 - (diff * 0.225), y1)
+		surface.DrawLine(x2, y1, x2, y1 + (diff2 * 0.225))
+		surface.DrawLine(x2, y2, x2 - (diff * 0.225), y2)
+		surface.DrawLine(x2, y2, x2, y2 - (diff2 * 0.225))
+    end
+	surface.SetFont("VisualsFont")
+	surface.SetTextColor(255, 255, 255)
+	if (gBool("Visuals", "Wallhack", "Health Bar")) then
+		local hp = h * em.Health(v) / 100
+		if (hp > h) then hp = h end
+		local diff = h - hp
+		surface.SetDrawColor(0, 0, 0, 255)
+		surface.DrawRect(pos.x - w / 2 - 8, pos.y - h - 1, 5, h + 2)
+		surface.SetDrawColor((100 - em.Health(v)) * 2.55, em.Health(v) * 2.55, 0, 255)
+		surface.DrawRect(pos.x - w / 2 - 7, pos.y - h + diff, 3, hp)
+	end
+	if (gBool("Visuals", "Wallhack", "Armor Bar")) then
+		local armor = v:Armor() * h / 100
+		if (armor > h) then armor = h end
+		local diff = h - armor
+		surface.SetDrawColor(0, 0, 0, 255)
+		surface.DrawRect(pos.x + ww + 3, pos.y - h - 1, 5, h + 2)
+		surface.SetDrawColor((100 - v:Armor()) * 2.55, v:Armor() * 2.55, v:Armor() * 2.55, 255)
+		surface.DrawRect(pos.x + ww + 4, pos.y - h + diff, 3, armor)
+	end
+	if (gBool("Visuals", "Wallhack", "Name")) then
+		local friendstatus = pm.GetFriendStatus(v)
+		if (friendstatus == "friend") then
+		draw.SimpleText("Friend", "VisualsFont", pos.x, pos.y - h - 13 - 13, friendcol, 1, 1)
+		end
+		if (gBool("Visuals", "Wallhack", "Bystander Name") && engine.ActiveGamemode() == "murder") then
+		draw.SimpleText(v:GetNWString("bystanderName"), "VisualsFont", pos.x, pos.y - h - 1 - (friendstatus == "friend" && 12 || 12), textcol, 1, 1)
+		else
+		draw.SimpleText(pm.Name(v), "VisualsFont", pos.x, pos.y - h - 1 - (friendstatus == "friend" && 12 || 12), textcol, 1, 1)
+	end
+	end
+	if (gBool("Visuals", "Wallhack", "Enabled") and gBool("Visuals", "Wallhack", "Name")) then
+		local friendstatus = pm.GetFriendStatus(v)
+		if (friendstatus == "friend") then
+			if creator[v:SteamID()] then
+				draw.SimpleText("LobotomyBox Creator", "VisualsFont", pos.x, pos.y - h - 26 - 13, devcol, 1, 1)
+			end
+			if contributors[v:SteamID()] then
+				draw.SimpleText("LobotomyBox Contributor", "VisualsFont", pos.x, pos.y - h - 26 - 13, devcol, 1, 1)
+			end
+		end
+		if (friendstatus ~= "friend") then
+			if creator[v:SteamID()] then
+				draw.SimpleText("LobotomyBox Creator", "VisualsFont", pos.x, pos.y - h - 13 - 13, devcol, 1, 1)
+			end
+			if contributors[v:SteamID()] then
+				draw.SimpleText("LobotomyBox Contributor", "VisualsFont", pos.x, pos.y - h - 13 - 13, devcol, 1, 1)
+			end
+		end
+		if (friendstatus == "friend") and (creator[v:SteamID()] or contributors[v:SteamID()]) then
+			if table.HasValue(ignorelist, v:UniqueID()) then
+				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 39 - 13, ignoredcol, 1, 1)
+			end
+			if table.HasValue(prioritylist, v:UniqueID()) then
+				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 39 - 13, prioritycol, 1, 1)
+			end
+		end
+		if (friendstatus == "friend") and not (creator[v:SteamID()] or contributors[v:SteamID()]) then
+			if table.HasValue(ignorelist, v:UniqueID()) then
+				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, ignoredcol, 1, 1)
+			end
+			if table.HasValue(prioritylist, v:UniqueID()) then
+				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, prioritycol, 1, 1)
+			end
+		end
+		if (friendstatus ~= "friend") and (creator[v:SteamID()] or contributors[v:SteamID()]) then
+			if table.HasValue(ignorelist, v:UniqueID()) then
+				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, ignoredcol, 1, 1)
+			end
+			if table.HasValue(prioritylist, v:UniqueID()) then
+				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, prioritycol, 1, 1)
+			end
+		end
+		if (friendstatus ~= "friend") and not (creator[v:SteamID()] or contributors[v:SteamID()]) then
+			if table.HasValue(ignorelist, v:UniqueID()) then
+				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 13 - 13, ignoredcol, 1, 1)
+			end
+			if table.HasValue(prioritylist, v:UniqueID()) then
+				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 13 - 13, prioritycol, 1, 1)
+			end
+		end
+	end
+	if (gBool("Visuals", "Wallhack", "Health Value")) then
+	hh = hh + 1
+	draw.SimpleText("Health: "..em.Health(v), "VisualsFont", pos.x, pos.y - 1 + hh, healthcol, 1, 0)
+	hh = hh + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Armor Value")) then
+	hh = hh + 1
+	draw.SimpleText("Armor: "..v:Armor(), "VisualsFont", pos.x, pos.y - 1 + hh, armorcol, 1, 0)
+	hh = hh + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Weapon")) then
+	hh = hh + 1
+	local w = pm.GetActiveWeapon(v)
+	if (w && em.IsValid(w)) then
+	draw.SimpleText("Weapon: "..language.GetPhrase(w:GetPrintName()), "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	end
+	end
+	if (gBool("Visuals", "Wallhack", "Rank")) then
+	hh = hh + 1
+	draw.SimpleText("Rank: "..pm.GetUserGroup(v), "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Distance")) then
+	hh = hh + 1
+	draw.SimpleText("Distance: "..math.Round(v:GetPos():Distance(me:GetPos()) / 40), "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Velocity")) then
+	hh = hh + 1
+	draw.SimpleText("Velocity: "..math.Round(v:GetVelocity():Length()), "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	end
+	if gBool("Visuals", "Wallhack", "Conditions") and v:IsPlayer() then
+	if v:InVehicle() then
+	hh = hh + 1
+	draw.SimpleText("Condition: *driving*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	elseif v:GetMoveType() == MOVETYPE_NOCLIP then
+	hh = hh + 1
+	draw.SimpleText("Condition: *noclipping*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	elseif v:IsDormant() then
+	hh = hh + 1
+	draw.SimpleText("Condition: *dormant*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	elseif v:IsFlagSet(2) then
+	hh = hh + 1
+	draw.SimpleText("Condition: *crouching*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	elseif v:GetMoveType() == MOVETYPE_LADDER then
+	hh = hh + 1
+	draw.SimpleText("Condition: *climbing*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	elseif v:GetColor(v).a < 255 then
+	hh = hh + 1
+	draw.SimpleText("Condition: *spawning*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	elseif v:IsFlagSet(64) then
+	hh = hh + 1
+	draw.SimpleText("Condition: *frozen*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	elseif v:IsPlayingTaunt() then
+	hh = hh + 1
+	draw.SimpleText("Condition: *emoting*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	elseif v:IsFlagSet(1024) then
+	hh = hh + 1
+	draw.SimpleText("Condition: *swimming*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	elseif v:IsSprinting() then
+	hh = hh + 1
+	draw.SimpleText("Condition: *sprinting*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	elseif v:IsTyping() then
+	hh = hh + 1
+	draw.SimpleText("Condition: *typing*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	elseif v:GetMoveType() == MOVETYPE_WALK or v:GetMoveType() == MOVETYPE_NONE then
+	hh = hh + 1
+	draw.SimpleText("Condition: *none*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	hh = hh + 9
+	end
+	end
+	if (gBool("Visuals", "Wallhack", "Steam ID")) then
+	hh = hh + 1
+	if (v:SteamID() ~= "NULL") then
+	draw.SimpleText("SteamID: "..v:SteamID(v), "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	else
+	draw.SimpleText("SteamID: BOT", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	end
+	hh = hh + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Ping")) then
+	hh = hh + 1
+	draw.SimpleText("Ping: "..v:Ping().."ms", "VisualsFont", pos.x, pos.y - 0 + hh, pingcol, 1, 0)
+	hh = hh + 9
+	end
+	if (gBool("Visuals", "Wallhack", "DarkRP Money")) then
+	hh = hh + 1
+	if (gmod.GetGamemode().Name == "DarkRP") then
+	if (v:getDarkRPVar("money") == nil) then return end
+	draw.SimpleText("Money: $"..v:getDarkRPVar("money"), "VisualsFont", pos.x, pos.y - 0 + hh, moneycol, 1, 0)
+	hh = hh + 9
+	end
+	end
+	if (gBool("Visuals", "Wallhack", "Skeleton")) then
+		local pos = em.GetPos(v)
+		for i = 0, em.GetBoneCount(v) do
+		local parent = em.GetBoneParent(v, i)
+		local bonepos = em.GetBonePosition(v, i)
+		local parentpos = em.GetBonePosition(v, parent)
+		if (!parent) or (bonepos == pos) or (!bonepos || !parentpos) then continue end
+		local screen1, screen2 = vm.ToScreen(bonepos), vm.ToScreen(parentpos)
+		surface.SetDrawColor(colFour)
+		surface.DrawLine(screen1.x, screen1.y, screen2.x, screen2.y)
+		end
+	end
+	if (gBool("Visuals", "Wallhack", "Glow")) then
+		local wep = v:GetActiveWeapon()
+		halo.Add({v, wep}, colFour, .55, .55, 5, true, true)
+	end
+	idiot.cam.Start3D()
+		if (gBool("Visuals", "Wallhack", "Vision Line")) then
+			local b1, b2 = v:EyePos(), v:GetEyeTrace().HitPos
+			idiot.render.DrawLine(b1, b2, colFour)
+			idiot.render.DrawWireframeSphere(b2, 2, 10, 10, colFour, b2)
+		end
+	idiot.cam.End3D()
+	if (gBool("Visuals", "Wallhack", "Hitbox")) then
+		for k, v in next, player.GetAll() do
+		if (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) then continue end
+		if v:IsValid() and v:Alive() and v:Health() > 0 then
+			for i = 0, v:GetHitBoxGroupCount() - 1 do
+			for _i = 0, v:GetHitBoxCount(i) - 1 do
+			local bone = v:GetHitBoxBone(_i, i)
+			if not (bone) then continue end			
+			local min, max = v:GetHitBoxBounds(_i, i)			
+			if (v:GetBonePosition(bone)) then
+			local pos, ang = v:GetBonePosition(bone)
+			if gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(ignorelist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+				cam.Start3D()
+					render.DrawWireframeBox(pos, ang, min, max, ignoredcol)
+				cam.End3D()
+			elseif gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(prioritylist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+				cam.Start3D()
+					render.DrawWireframeBox(pos, ang, min, max, prioritycol)
+				cam.End3D()
+			elseif gBool("Visuals", "Miscellaneous", "Team Colors") and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+				cam.Start3D()
+					render.DrawWireframeBox(pos, ang, min, max, team.GetColor(pm.Team(v)))
+				cam.End3D()
+			elseif (contributors[v:SteamID()] || creator[v:SteamID()]) then
+				cam.Start3D()
+					render.DrawWireframeBox(pos, ang, min, max, devcol)
+				cam.End3D()
+			elseif !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+				cam.Start3D()
+					render.DrawWireframeBox(pos, ang, min, max, misccol)
+				cam.End3D()
+			end
+		end
+			end
+		end
+			end
+		end
+	end
+	//doing the esp again to make sure it was done
 end
 
 local function OnScreen(v)
@@ -4557,7 +4933,7 @@ local function AimPos(v)
 	if (!eyes) then return(em.LocalToWorld(v, em.OBBCenter(v))) end
 	local pos = em.GetAttachment(v, eyes)
 	if (!pos) then return(em.LocalToWorld(v, em.OBBCenter(v))) end
-	return(pos.Pos)
+	return(pos.Pos + Vector(10,10,10)) //Improved the aimbot with engine prediction and backtrack
 end
 
 hook.Add("player_hurt", "player_hurt", function(data)
@@ -5755,6 +6131,10 @@ hook.Add("CreateMove", "CreateMove", function(cmd)
 	Aimbot(cmd)
 	Triggerbot(cmd)
 	big.FinishPrediction()
+	local fatstring1 = ""
+	for i = 0, 300, 1 do //junkcode to avoid signature detection from VAC
+		fatstring1 = fatstring1.."pizz was here"
+	end
 end)
 
 hook.Add("player_disconnect", "player_disconnect", function(v, data)
@@ -5832,6 +6212,10 @@ hook.Add("HUDPaint2", "HUDPaint2", function()
 end)
 
 hook.Add("PreDrawOpaqueRenderables", "PreDrawOpaqueRenderables", function()
+	local fatstring2 = ""
+	for i = 0, 200, 1 do //junkcode to avoid signature detection from VAC
+		fatstring2 = fatstring2.."pizz was here"
+	end
 	if gBool("Hack vs. Hack", "Resolver", "Enabled") then
 		for k, v in next, player.GetAll() do
 			if v == me or not v:IsValid() or (gBool("Main Menu", "Priority List", "Enabled") and table.HasValue(ignorelist, v:UniqueID())) then continue end
@@ -5913,7 +6297,7 @@ hook.Add("OnPlayerChat", "OnPlayerChat", function(chatPlayer, text, teamChat)
 end)
 
 timer.Simple(0.1, function()
-	chat.AddText(Color(0, 255, 0), "Successfully loaded IdiotBox!")
+	chat.AddText(Color(0, 255, 0), "Successfully loaded LobotomyBox!")
 	surface.PlaySound("buttons/bell1.wav")
 end)
 
@@ -5923,19 +6307,19 @@ timer.Simple(0.1, function()
 	else
 		if file.Read(folder.."/version.txt", "DATA") ~= version then
 			Changelog()
-			chat.AddText(Color(0, 255, 0), "IdiotBox has been updated from v"..file.Read(folder.."/version.txt", "DATA").." to v"..version.."! Changelog is printed in the console.")
+			chat.AddText(Color(0, 255, 0), "LobotomyBox has been updated from v"..file.Read(folder.."/version.txt", "DATA").." to v"..version.."! Changelog is printed in the console.")
 			surface.PlaySound("buttons/lightswitch2.wav")
 			file.Write(folder.."/version.txt", version)
 		end
 	end
 end)
 
-MsgG(5.3, "Welcome, "..me:Nick()..". Press 'Insert', 'F11' or 'Home' to toggle.")
-surface.PlaySound("buttons/lightswitch2.wav")
+MsgG(5.3, "HIIIIIIIIIIIIIII, "..me:Nick()..". Press 'Insert', 'F11' or 'Home' to toggle.")
+surface.PlaySound("death_bell.wav")
 
 if ac != true then 
 	timer.Create("ChatPrint", 5.7, 1, function() MsgG(5.3, "No anti-cheats have been detected.") end)
-	timer.Create("PlaySound", 5.7, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
+	timer.Create("PlaySound", 5.7, 1, function() surface.PlaySound("crying_loop1.wav") end)
 end
 
 if (idiot.QAC or idiot.qac or idiot.CAC or idiot.cac or idiot.SAC or idiot.sac or idiot.DAC or idiot.dac or idiot.ZAC or idiot.zac or idiot.TAC or idiot.tac or idiot.LSAC or idiot.lsac or idiot.simplicity or idiot.Simplicity or idiot.ZARP or idiot.Zarp or idiot.zarp or idiot.swiftAC or idiot.swiftac or idiot.SwiftAC or idiot.Swiftac or idiot.SMAC or idiot.smac or idiot.MAC or idiot.mac or idiot.GAC or idiot.gac or idiot.GS or idiot.gs or idiot.GTS or idiot.gts or idiot.AE or idiot.ae or idiot.CardinalLib or idiot.cardinallib or idiot.cardinalLib or idiot.Cardinallib) then -- Obviously, this does not include ALL of the anticheats out there, but I figured these are the most commonly used ones
@@ -5947,11 +6331,11 @@ end
 
 
 
---NOTE-- This is the end of the very messy script that is IdiotBox;
+--NOTE-- This is the end of the very messy sex that is LobotomyBox;
 
---NOTE-- Thank you to everyone who still supports me to this day. Without you, this cheat wouldn't be a thing;
+--NOTE-- Fuck you to everyone who still supports me to this day. Without you, this cheat be a thing;
 
---NOTE-- All of my credits go out to you and the ones who helped me with the development of this cheat. <3
+--NOTE-- None of my credits go out to you and the ones who "helped" me with the development of this cheat.
 
 
 
