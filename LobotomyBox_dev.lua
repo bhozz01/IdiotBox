@@ -5323,7 +5323,7 @@ local function Aimbot(cmd)
 			AutoZoom(cmd)
 		end
 		if (gBool("Aim Assist", "Aimbot", "Silent Aim")) then
-			FixMovement(cmd)
+			//FixMovement(cmd)
 		else
 			fa = ang
 		end
@@ -5338,7 +5338,7 @@ local function Aimbot(cmd)
 			AutoZoom(cmd)
 		end
 		if (gBool("Aim Assist", "Aimbot", "Silent Aim")) then
-			FixMovement(cmd)
+			//FixMovement(cmd)
 		else
 			fa = ang
 		end
@@ -5944,7 +5944,7 @@ local function PropKill(cmd)
 		end
 		local aaang = Angle(ox, oy, 0)
 		cm.SetViewAngles(cmd, aaang)
-		FixMovement(cmd, true)
+		//FixMovement(cmd, true)
 	else
 		if propval > 0 then
 			propval = 0
@@ -5955,7 +5955,7 @@ local function PropKill(cmd)
 			oy = fa.y
 			local aaang = Angle(ox, oy, 0)
 			cm.SetViewAngles(cmd, aaang)
-			FixMovement(cmd, true)
+			//FixMovement(cmd, true)
 		else
 			propdelay = 0
 		end
