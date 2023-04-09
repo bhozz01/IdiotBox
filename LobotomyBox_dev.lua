@@ -5887,7 +5887,8 @@ local function AntiAim(cmd)
 	DetectWalls()
 	local aaang = Angle(ox, oy, 0)
 	cm.SetViewAngles(cmd, aaang)
-	FixMovement(cmd, true)
+	//FixMovement(cmd, true)
+	//Fix movement is bad and unoptimized
 end
 
 local function FakeLag(cmd, Choke, Send)
