@@ -15,8 +15,8 @@
 local detours = {}
 
 local protectedfiles = {
-    "IdiotBox_latest.lua", 
-    "IdiotBox_backup.lua", 
+	"IdiotBox_latest.lua", 
+	"IdiotBox_backup.lua", 
 	"IdiotBox_dev.lua", 
 }
 
@@ -34,7 +34,7 @@ file.Read = DetourFunction(file.Read, function(fileName, path)
     return detours[file.Read](fileName, path)
 end)
 
-local idiot	= (_G)
+local global = (_G)
 local folder = "IdiotBox"
 local version = "6.9.b5"
 
@@ -43,7 +43,7 @@ local me = LocalPlayer()
 
 local menukeydown, menukeydown2, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
-local box, drawnents, prioritylist, ignorelist, visible, dists, cones, traitors, tweps = {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
+local idiot, drawnents, prioritylist, ignorelist, visible, dists, cones, traitors, tweps = {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
 
 local toggler, playerkills, namechangeTime, circlestrafeval, timeHoldingSpaceOnGround, servertime, faketick, propval, propdelay, crouched = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 local maintextcol, menutextcol, bgmenucol, bordercol, teamvisualscol, enemyvisualscol, prioritytargetscol, ignoredtargetscol, miscvisualscol, teamchamscol, enemychamscol, crosshaircol, viewmodelcol = Color(0, 205, 255), Color(255, 255, 255), Color(30, 30, 45), Color(0, 155, 255), Color(255, 255, 255), Color(255, 255, 255), Color(255, 0, 100), Color(175, 175, 175), Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 235, 255), Color(0, 235, 255)
@@ -94,33 +94,33 @@ surface.CreateFont("MiscFont", {font = "Tahoma", size = 12, weight = 900, antial
 surface.CreateFont("MiscFont2", {font = "Tahoma", size = 12, weight = 900, antialias = false, outline = false})
 surface.CreateFont("MiscFont3", {font = "Tahoma", size = 13, weight = 674, antialias = false, outline = true})
 
-chamsmat1 = CreateMaterial("normalmat1", "VertexLitGeneric", {["$ignorez"] = 1, ["$basetexture"] = "models/debug/debugwhite", })
-chamsmat2 = CreateMaterial("normalmat2", "VertexLitGeneric", {["$ignorez"] = 0, ["$basetexture"] = "models/debug/debugwhite", })
-chamsmat3 = CreateMaterial("flatmat1", "UnLitGeneric", {["$ignorez"] = 1, ["$basetexture"] = "models/debug/debugwhite", })
-chamsmat4 = CreateMaterial("flatmat2", "UnLitGeneric", {["$ignorez"] = 0, ["$basetexture"] = "models/debug/debugwhite", })
-chamsmat5 = CreateMaterial("wiremat1", "UnLitGeneric", {["$ignorez"] = 1, ["$wireframe"] = 1, })
-chamsmat6 = CreateMaterial("wiremat2", "UnLitGeneric", {["$ignorez"] = 0, ["$wireframe"] = 1, })
+idiot.chamsmat1 = CreateMaterial("normalmat1", "VertexLitGeneric", {["$ignorez"] = 1, ["$basetexture"] = "models/debug/debugwhite", })
+idiot.chamsmat2 = CreateMaterial("normalmat2", "VertexLitGeneric", {["$ignorez"] = 0, ["$basetexture"] = "models/debug/debugwhite", })
+idiot.chamsmat3 = CreateMaterial("flatmat1", "UnLitGeneric", {["$ignorez"] = 1, ["$basetexture"] = "models/debug/debugwhite", })
+idiot.chamsmat4 = CreateMaterial("flatmat2", "UnLitGeneric", {["$ignorez"] = 0, ["$basetexture"] = "models/debug/debugwhite", })
+idiot.chamsmat5 = CreateMaterial("wiremat1", "UnLitGeneric", {["$ignorez"] = 1, ["$wireframe"] = 1, })
+idiot.chamsmat6 = CreateMaterial("wiremat2", "UnLitGeneric", {["$ignorez"] = 0, ["$wireframe"] = 1, })
 
-creator = creator or {}
-contributors = contributors or {}
+idiot.creator = idiot.creator or {}
+idiot.contributors = idiot.contributors or {}
 
-creator["STEAM_0:0:63644275"] = {} -- me
-creator["STEAM_0:0:162667998"] = {} -- my alt
-contributors["STEAM_0:0:196578290"] = {} -- pinged (code dev, likely the most important one, helped me out with optimization and many others)
-contributors["STEAM_0:1:126050820"] = {} -- papertek (dev & discord manager)
-contributors["STEAM_0:1:193781969"] = {} -- paradox (code dev)
-contributors["STEAM_0:0:109145007"] = {} -- scottpott (code dev)
-contributors["STEAM_0:0:205376238"] = {} -- vectivus (code dev)
-contributors["STEAM_0:1:188710062"] = {} -- uucka (code tester)
-contributors["STEAM_0:1:191270548"] = {} -- cal1nxd (code tester)
-contributors["STEAM_0:1:404757"] = {} -- xvcaligo (code tester)
-contributors["STEAM_0:1:69536635"] = {} -- tryhard (code tester)
-contributors["STEAM_0:0:150101893"] = {} -- derpos (code tester)
-contributors["STEAM_0:1:75441355"] = {} -- zergo (code tester)
-contributors["STEAM_0:0:453611223"] = {} -- naxut (code tester & advertiser and really good friend)
-contributors["STEAM_0:1:4375194"] = {} -- ohhstyle (advertiser)
-contributors["STEAM_0:1:59798110"] = {} -- mrsquid (advertiser)
-contributors["STEAM_0:1:101813068"] = {} -- sdunken (first user)
+idiot.creator["STEAM_0:0:63644275"] = {} -- me
+idiot.creator["STEAM_0:0:162667998"] = {} -- my alt
+idiot.contributors["STEAM_0:0:196578290"] = {} -- pinged (code dev, likely the most important one, helped me out with optimization and many others)
+idiot.contributors["STEAM_0:1:126050820"] = {} -- papertek (dev & discord manager)
+idiot.contributors["STEAM_0:1:193781969"] = {} -- paradox (code dev)
+idiot.contributors["STEAM_0:0:109145007"] = {} -- scottpott (code dev)
+idiot.contributors["STEAM_0:0:205376238"] = {} -- vectivus (code dev)
+idiot.contributors["STEAM_0:1:188710062"] = {} -- uucka (code tester)
+idiot.contributors["STEAM_0:1:191270548"] = {} -- cal1nxd (code tester)
+idiot.contributors["STEAM_0:1:404757"] = {} -- xvcaligo (code tester)
+idiot.contributors["STEAM_0:1:69536635"] = {} -- tryhard (code tester)
+idiot.contributors["STEAM_0:0:150101893"] = {} -- derpos (code tester)
+idiot.contributors["STEAM_0:1:75441355"] = {} -- zergo (code tester)
+idiot.contributors["STEAM_0:0:453611223"] = {} -- naxut (code tester & advertiser and really good friend)
+idiot.contributors["STEAM_0:1:59798110"] = {} -- mrsquid (old advertiser)
+idiot.contributors["STEAM_0:1:4375194"] = {} -- ohhstyle (old advertiser)
+idiot.contributors["STEAM_0:1:101813068"] = {} -- sdunken (first user)
 
 --NOTE-- I want to mention that these are not the only people that helped me with the development of IdiotBox, but they are the ones who helped me the most and that is why they are credited here.
 
@@ -352,7 +352,7 @@ local options = {
 					{"DarkRP Money", "Checkbox", false, 78}, 
                 }, 
 				{
-                	{"Point of View", 261, 20, 232, 270, 218}, 
+                	{"Point of View", 261, 20, 232, 730, 218}, 
 					{"Custom FoV", "Checkbox", false, 78}, 
 					{"FoV Value:", "Slider", 110, 360, 92}, 
 					{""}, 
@@ -363,27 +363,23 @@ local options = {
 					{""}, 
 					{"Thirdperson FoV Value:", "Slider", 110, 360, 92}, 
 					{""}, 
-                }, 
-				{
-					{"Textures", 261, 304, 232, 192, 218}, 
-					{"Transparent Walls", "Checkbox", false, 78}, 
-					{"Transparency:", "Slider", 82, 100, 92}, 
+					{"Viewmodel Chams:", "Selection", "Off", {"Off", "Normal", "Flat", "Wireframe"}, 92}, 
 					{""}, 
-					{"Remove Sky", "Checkbox", false, 78}, 
-					{"Remove 3D Skybox", "Checkbox", false, 78}, 
-					{"Bright Mode", "Checkbox", false, 78}, 
-					{"Dark Mode", "Checkbox", false, 78}, 
-                }, 
-				{
-					{"Panels", 261, 510, 232, 244, 218}, 
-					{"Spectators Window", "Checkbox", false, 78}, 
-					{"Radar Window", "Checkbox", false, 78}, 
-					{"Radar Distance:", "Slider", 50, 100, 92}, 
+					{"Rainbow Mode", "Checkbox", false, 78}, 
+					{"No Viewmodel", "Checkbox", false, 78}, 
+					{"No Hands", "Checkbox", false, 78}, 
+					{"Custom Positions", "Checkbox", false, 78}, 
+					{"Viewmodel X:", "Slider", 50, 100, 92}, 
 					{""}, 
-					{"Custom Status", "Checkbox", false, 78}, 
-					{"Players List", "Checkbox", false, 78}, 
-					{"Show List Titles", "Checkbox", true, 78}, -- Enabled by default
-					{"Panels Style:", "Selection", "Borders", {"Borders", "Borderless"}, 92}, 
+					{"Viewmodel Y:", "Slider", 30, 60, 92}, 
+					{""}, 
+					{"Viewmodel Z:", "Slider", 20, 40, 92}, 
+					{""}, 
+					{"Viewmodel Pitch:", "Slider", 90, 180, 92}, 
+					{""}, 
+					{"Viewmodel Yaw:", "Slider", 90, 180, 92}, 
+					{""}, 
+					{"Viewmodel Roll:", "Slider", 90, 180, 92}, 
 					{""}, 
                 }, 
                 {
@@ -429,24 +425,25 @@ local options = {
 					{""}, 
                 }, 
 				{
-					{"Viewmodel", 16, 253, 232, 476, 218}, 
-					{"Viewmodel Chams:", "Selection", "Off", {"Off", "Normal", "Flat", "Wireframe"}, 92}, 
+					{"Textures", 16, 253, 232, 192, 218}, 
+					{"Transparent Walls", "Checkbox", false, 78}, 
+					{"Transparency:", "Slider", 82, 100, 92}, 
 					{""}, 
-					{"Rainbow Mode", "Checkbox", false, 78}, 
-					{"No Viewmodel", "Checkbox", false, 78}, 
-					{"No Hands", "Checkbox", false, 78}, 
-					{"Custom Positions", "Checkbox", false, 78}, 
-					{"Viewmodel X:", "Slider", 50, 100, 92}, 
+					{"Remove Sky", "Checkbox", false, 78}, 
+					{"Remove 3D Skybox", "Checkbox", false, 78}, 
+					{"Bright Mode", "Checkbox", false, 78}, 
+					{"Dark Mode", "Checkbox", false, 78}, 
+                }, 
+				{
+					{"Panels", 16, 459, 232, 244, 218}, 
+					{"Spectators Window", "Checkbox", false, 78}, 
+					{"Radar Window", "Checkbox", false, 78}, 
+					{"Radar Distance:", "Slider", 50, 100, 92}, 
 					{""}, 
-					{"Viewmodel Y:", "Slider", 30, 60, 92}, 
-					{""}, 
-					{"Viewmodel Z:", "Slider", 20, 40, 92}, 
-					{""}, 
-					{"Viewmodel Pitch:", "Slider", 90, 180, 92}, 
-					{""}, 
-					{"Viewmodel Yaw:", "Slider", 90, 180, 92}, 
-					{""}, 
-					{"Viewmodel Roll:", "Slider", 90, 180, 92}, 
+					{"Custom Status", "Checkbox", false, 78}, 
+					{"Players List", "Checkbox", false, 78}, 
+					{"Show List Titles", "Checkbox", true, 78}, -- Enabled by default
+					{"Panels Style:", "Selection", "Borders", {"Borders", "Borderless"}, 92}, 
 					{""}, 
                 }, 
 				{
@@ -754,7 +751,7 @@ if gui.IsGameUIVisible() then
 end
 
 do
-	if (idiot.game.SinglePlayer()) then
+	if (global.game.SinglePlayer()) then
 		MsgR(4.3, "Attention! Not going to load in Singleplayer Mode!") 
 		surface.PlaySound("buttons/lightswitch2.wav")
 		return
@@ -769,17 +766,17 @@ do
 		surface.PlaySound("buttons/lightswitch2.wav")
 		return
 	end
-	if (idiot.Loaded) then
+	if (global.Loaded) then
 		MsgR(4.3, "Already initialized the cheat. Reloading it will cause major module bugs!")
 		surface.PlaySound("buttons/lightswitch2.wav")
 		return
 	end
-	if unloaded == true then
+	if global.unloaded == true then
 		MsgR(4.3, "You unloaded the cheat. Reloading it will cause major module bugs!")
 		surface.PlaySound("buttons/lightswitch2.wav")
 		return
 	end
-	idiot.Loaded = true
+	global.Loaded = true
 end
 
 require("bsendpacket")
@@ -788,13 +785,13 @@ require("ChatClear")
 require("dickwrap")
 require("big")
 
-bSendPacket = true
-unloaded = false
+global.bSendPacket = true
+global.unloaded = false
 
-box.ChangeName = _fhook_changename
-box.Predict = dickwrap.Predict
+idiot.ChangeName = _fhook_changename
+idiot.Predict = dickwrap.Predict
 
-idiot.TickCount = 0
+global.TickCount = 0
 
 if not file.IsDir(folder, "DATA") then
 	file.CreateDir(folder)
@@ -818,47 +815,47 @@ else
 	file.Write(folder.."/ignored.txt", "[]")
 end
 
-function SaveConfig1()
+function idiot.SaveConfig1()
 	file.Write(folder.."/config1.txt", util.TableToJSON(options))
 end
 
-function SaveConfig2()
+function idiot.SaveConfig2()
 	file.Write(folder.."/config2.txt", util.TableToJSON(options))
 end
 
-function SaveConfig3()
+function idiot.SaveConfig3()
 	file.Write(folder.."/config3.txt", util.TableToJSON(options))
 end
 
-function SaveConfig4()
+function idiot.SaveConfig4()
 	file.Write(folder.."/config4.txt", util.TableToJSON(options))
 end
 
-function SaveConfig5()
+function idiot.SaveConfig5()
 	file.Write(folder.."/config5.txt", util.TableToJSON(options))
 end
 
-function SaveConfig6()
+function idiot.SaveConfig6()
 	file.Write(folder.."/config6.txt", util.TableToJSON(options))
 end
 
-function SaveConfig7()
+function idiot.SaveConfig7()
 	file.Write(folder.."/config7.txt", util.TableToJSON(options))
 end
 
-function SaveConfig8()
+function idiot.SaveConfig8()
 	file.Write(folder.."/config8.txt", util.TableToJSON(options))
 end
 
-function SaveConfig9()
+function idiot.SaveConfig9()
 	file.Write(folder.."/config9.txt", util.TableToJSON(options))
 end
 
-function SaveConfig10()
+function idiot.SaveConfig10()
 	file.Write(folder.."/config10.txt", util.TableToJSON(options))
 end
 
-function UpdateVar(men, sub, lookup, new)
+function idiot.UpdateVar(men, sub, lookup, new)
 	for aa, aaa in next, options[men] do
 		for key, val in next, aaa do
 			if (aaa[1][1] ~= sub) then continue end
@@ -869,7 +866,7 @@ function UpdateVar(men, sub, lookup, new)
 	end
 end
 
-function LoadConfig1()
+function idiot.LoadConfig1()
 	if file.Exists(folder.."/config1.txt", "DATA") then
 	local tab = util.JSONToTable(file.Read(folder.."/config1.txt", "DATA"))
 	local cursub
@@ -878,14 +875,14 @@ function LoadConfig1()
 			for men, subtab in next, v do
 				for key, val in next, subtab do
 					if (key == 1) then cursub = val[1] continue end
-					UpdateVar(k, cursub, val[1], val[3])
+					idiot.UpdateVar(k, cursub, val[1], val[3])
 				end
 			end
 		end
 	end
 end
 
-function LoadConfig2()
+function idiot.LoadConfig2()
 	if file.Exists(folder.."/config2.txt", "DATA") then
 	local tab = util.JSONToTable(file.Read(folder.."/config2.txt", "DATA"))
 	local cursub
@@ -894,14 +891,14 @@ function LoadConfig2()
 			for men, subtab in next, v do
 				for key, val in next, subtab do
 					if (key == 1) then cursub = val[1] continue end
-					UpdateVar(k, cursub, val[1], val[3])
+					idiot.UpdateVar(k, cursub, val[1], val[3])
 				end
 			end
 		end
 	end
 end
 
-function LoadConfig3()
+function idiot.LoadConfig3()
 	if file.Exists(folder.."/config3.txt", "DATA") then
 	local tab = util.JSONToTable(file.Read(folder.."/config3.txt", "DATA"))
 	local cursub
@@ -910,14 +907,14 @@ function LoadConfig3()
 			for men, subtab in next, v do
 				for key, val in next, subtab do
 					if (key == 1) then cursub = val[1] continue end
-					UpdateVar(k, cursub, val[1], val[3])
+					idiot.UpdateVar(k, cursub, val[1], val[3])
 				end
 			end
 		end
 	end
 end
 
-function LoadConfig4()
+function idiot.LoadConfig4()
 	if file.Exists(folder.."/config4.txt", "DATA") then
 	local tab = util.JSONToTable(file.Read(folder.."/config4.txt", "DATA"))
 	local cursub
@@ -926,14 +923,14 @@ function LoadConfig4()
 			for men, subtab in next, v do
 				for key, val in next, subtab do
 					if (key == 1) then cursub = val[1] continue end
-					UpdateVar(k, cursub, val[1], val[3])
+					idiot.UpdateVar(k, cursub, val[1], val[3])
 				end
 			end
 		end
 	end
 end
 
-function LoadConfig5()
+function idiot.LoadConfig5()
 	if file.Exists(folder.."/config5.txt", "DATA") then
 	local tab = util.JSONToTable(file.Read(folder.."/config5.txt", "DATA"))
 	local cursub
@@ -942,14 +939,14 @@ function LoadConfig5()
 			for men, subtab in next, v do
 				for key, val in next, subtab do
 					if (key == 1) then cursub = val[1] continue end
-					UpdateVar(k, cursub, val[1], val[3])
+					idiot.UpdateVar(k, cursub, val[1], val[3])
 				end
 			end
 		end
 	end
 end
 
-function LoadConfig6()
+function idiot.LoadConfig6()
 	if file.Exists(folder.."/config6.txt", "DATA") then
 	local tab = util.JSONToTable(file.Read(folder.."/config6.txt", "DATA"))
 	local cursub
@@ -958,14 +955,14 @@ function LoadConfig6()
 			for men, subtab in next, v do
 				for key, val in next, subtab do
 					if (key == 1) then cursub = val[1] continue end
-					UpdateVar(k, cursub, val[1], val[3])
+					idiot.UpdateVar(k, cursub, val[1], val[3])
 				end
 			end
 		end
 	end
 end
 
-function LoadConfig7()
+function idiot.LoadConfig7()
 	if file.Exists(folder.."/config7.txt", "DATA") then
 	local tab = util.JSONToTable(file.Read(folder.."/config7.txt", "DATA"))
 	local cursub
@@ -974,14 +971,14 @@ function LoadConfig7()
 			for men, subtab in next, v do
 				for key, val in next, subtab do
 					if (key == 1) then cursub = val[1] continue end
-					UpdateVar(k, cursub, val[1], val[3])
+					idiot.UpdateVar(k, cursub, val[1], val[3])
 				end
 			end
 		end
 	end
 end
 
-function LoadConfig8()
+function idiot.LoadConfig8()
 	if file.Exists(folder.."/config8.txt", "DATA") then
 	local tab = util.JSONToTable(file.Read(folder.."/config8.txt", "DATA"))
 	local cursub
@@ -990,14 +987,14 @@ function LoadConfig8()
 			for men, subtab in next, v do
 				for key, val in next, subtab do
 					if (key == 1) then cursub = val[1] continue end
-					UpdateVar(k, cursub, val[1], val[3])
+					idiot.UpdateVar(k, cursub, val[1], val[3])
 				end
 			end
 		end
 	end
 end
 
-function LoadConfig9()
+function idiot.LoadConfig9()
 	if file.Exists(folder.."/config9.txt", "DATA") then
 	local tab = util.JSONToTable(file.Read(folder.."/config9.txt", "DATA"))
 	local cursub
@@ -1006,14 +1003,14 @@ function LoadConfig9()
 			for men, subtab in next, v do
 				for key, val in next, subtab do
 					if (key == 1) then cursub = val[1] continue end
-					UpdateVar(k, cursub, val[1], val[3])
+					idiot.UpdateVar(k, cursub, val[1], val[3])
 				end
 			end
 		end
 	end
 end
 
-function LoadConfig10()
+function idiot.LoadConfig10()
 	if file.Exists(folder.."/config10.txt", "DATA") then
 	local tab = util.JSONToTable(file.Read(folder.."/config10.txt", "DATA"))
 	local cursub
@@ -1022,7 +1019,7 @@ function LoadConfig10()
 			for men, subtab in next, v do
 				for key, val in next, subtab do
 					if (key == 1) then cursub = val[1] continue end
-					UpdateVar(k, cursub, val[1], val[3])
+					idiot.UpdateVar(k, cursub, val[1], val[3])
 				end
 			end
 		end
@@ -1379,7 +1376,7 @@ local function DrawSlider(self, w, h, var, maxy, posx, posy, dist)
 	end
 end
 
-function DrawOldSlider(self, w, h, var, maxy, posx, posy, dist) -- I fucking ran out of local variables (you have never seen such good optimization)
+function idiot.DrawOldSlider(self, w, h, var, maxy, posx, posy, dist) -- I fucking ran out of local variables (you have never seen such good optimization)
 	local curnum = var[3]
 	local max = var[4]
 	local size = var[5]
@@ -1602,7 +1599,7 @@ end
 
 local function Unload()
 	RunConsoleCommand("stopsound")
-	unloaded = true
+	global.unloaded = true
 	hook.Remove("RenderScene", "RenderScene")
 	hook.Remove("ShutDown", "ShutDown")
 	hook.Remove("PostDrawViewModel", "PostDrawViewModel")
@@ -1628,35 +1625,35 @@ local function Unload()
 	hook.Remove("OnPlayerChat", "OnPlayerChat")
 		if gBool("Main Menu", "Configurations", "Automatically Save") then
 			if gOption("Main Menu", "Configurations", "Configuration:") == "Config #1" then
-				SaveConfig1()
+				idiot.SaveConfig1()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #2" then
-				SaveConfig2()
+				idiot.SaveConfig2()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #3" then
-				SaveConfig3()
+				idiot.SaveConfig3()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #4" then
-				SaveConfig4()
+				idiot.SaveConfig4()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
-				SaveConfig5()
+				idiot.SaveConfig5()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #6" then
-				SaveConfig6()
+				idiot.SaveConfig6()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #7" then
-				SaveConfig7()
+				idiot.SaveConfig7()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #8" then
-				SaveConfig8()
+				idiot.SaveConfig8()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #9" then
-				SaveConfig9()
+				idiot.SaveConfig9()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #10" then
-				SaveConfig10()
+				idiot.SaveConfig10()
 			end
 		end
 	me:ConCommand("M9KGasEffect 1 cl_interp 0 cl_interp_ratio 2 cl_updaterate 30")
-	bSendPacket = true
-	idiot.Loaded = false
+	global.bSendPacket = true
+	global.Loaded = false
 	timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Successfully unloaded the cheat.") end)
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 end
 
-function Changelog() -- Ran out of local variables, again
+function idiot.Changelog() -- Ran out of local variables, again
 	print("===========================================================\n\n")
 	print("IdiotBox v6.9.b5 bugfixes (in no particular order)")
 	print("")
@@ -1692,6 +1689,7 @@ function Changelog() -- Ran out of local variables, again
 	print("- Fixed Bullet Fire Delay, Anti-Ads, Hide Round Report and Panel Remover not working correctly;")
 	print("- Fixed Aimbot and Triggerbot targeting spawning players;")
 	print("- Fixed misplaced tab selection lines;")
+	print("- Fixed Viewmodel Chams not always covering the viewmodel hands;")
 	print("- Fixed poorly placed checkboxes/ sliders/ selections;")
 	print("- Fixed Anti-Aim Resolver continuing to resolve angles when set to 'Off';")
 	print("- Fixed Thirdperson showing in spectator mode;")
@@ -1807,7 +1805,7 @@ local function EntityFinder()
 	drawlist:SetSize(300, 500)
 	drawlist:SetMultiSelect(false)
 	drawlist:AddColumn("Drawn entities"):SetFixedWidth(300)
-	function RefreshEntities()
+	function idiot.RefreshEntities()
 		entlist:Clear()
 		drawlist:Clear()
 			for k, v in next, ents.GetAll() do
@@ -1835,7 +1833,7 @@ local function EntityFinder()
 	refresh:SetSize(100, 30)
 	refresh.DoClick = function()
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
-	RefreshEntities()
+	idiot.RefreshEntities()
 	end
 	local add = vgui.Create("DButton", finder)
 	add:SetText(">>")
@@ -1851,7 +1849,7 @@ local function EntityFinder()
 				drawlist:AddLine(ent)
 			end
 		end
-		RefreshEntities()
+		idiot.RefreshEntities()
 	end
 	local remove = vgui.Create("DButton", finder)
 	remove:SetText("<<")
@@ -1871,7 +1869,7 @@ local function EntityFinder()
 				entlist:AddLine(ent)
 			end
 		end
-		RefreshEntities()
+		idiot.RefreshEntities()
 	end
 	local addcustom = vgui.Create("DTextEntry", finder)
 	addcustom:SetPos(531, 600)
@@ -1888,7 +1886,7 @@ local function EntityFinder()
 			table.insert(drawnents, ent)
 			drawlist:AddLine(ent)
 		end
-		RefreshEntities()
+		idiot.RefreshEntities()
 	end
 	local find = vgui.Create("DTextEntry", finder)
 	find:SetPos(91, 600)
@@ -1954,7 +1952,7 @@ local function EntityFinder()
 		draw.SimpleText("Add Entity:", "MenuFont", 461, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 	end
 	finder.Think = function()
-		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or unloaded == true) then
+		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or global.unloaded == true) then
 			finder:SlideUp(0.5)
 			timer.Simple(0.5, function()
 			finder:Remove()
@@ -1965,7 +1963,7 @@ local function EntityFinder()
 			end)
 		end
 	end
-	RefreshEntities()
+	idiot.RefreshEntities()
 end
 
 local function PluginLoader()
@@ -2019,7 +2017,7 @@ local function PluginLoader()
 		DrawUpperText(w, h)
 	end
 	plugin.Think = function()
-		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or unloaded == true) then
+		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or global.unloaded == true) then
 			plugin:SlideUp(0.5)
 			timer.Simple(0.5, function()
 			plugin:Remove()
@@ -2071,52 +2069,52 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 			self:Remove()
 			Unload()
 		elseif text == "Print Changelog" then
-			Changelog()
+			idiot.Changelog()
 		elseif text == "Save Configuration" then
 			if gOption("Main Menu", "Configurations", "Configuration:") == "Config #1" then
-				SaveConfig1()
+				idiot.SaveConfig1()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #2" then
-				SaveConfig2()
+				idiot.SaveConfig2()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #3" then
-				SaveConfig3()
+				idiot.SaveConfig3()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #4" then
-				SaveConfig4()
+				idiot.SaveConfig4()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
-				SaveConfig5()
+				idiot.SaveConfig5()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #6" then
-				SaveConfig6()
+				idiot.SaveConfig6()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #7" then
-				SaveConfig7()
+				idiot.SaveConfig7()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #8" then
-				SaveConfig8()
+				idiot.SaveConfig8()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #9" then
-				SaveConfig9()
+				idiot.SaveConfig9()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #10" then
-				SaveConfig10()
+				idiot.SaveConfig10()
 			end
 			timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Configuration Saved!") end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Load Configuration" then
 			if gOption("Main Menu", "Configurations", "Configuration:") == "Config #1" then
-				LoadConfig1()
+				idiot.LoadConfig1()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #2" then
-				LoadConfig2()
+				idiot.LoadConfig2()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #3" then
-				LoadConfig3()
+				idiot.LoadConfig3()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #4" then
-				LoadConfig4()
+				idiot.LoadConfig4()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
-				LoadConfig5()
+				idiot.LoadConfig5()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #6" then
-				LoadConfig6()
+				idiot.LoadConfig6()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #7" then
-				LoadConfig7()
+				idiot.LoadConfig7()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #8" then
-				LoadConfig8()
+				idiot.LoadConfig8()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #9" then
-				LoadConfig9()
+				idiot.LoadConfig9()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #10" then
-				LoadConfig10()
+				idiot.LoadConfig10()
 			end
 			timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Configuration Loaded!") end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
@@ -2148,25 +2146,25 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 			self:Remove()
 			if gBool("Main Menu", "Configurations", "Automatically Save") then
 				if gOption("Main Menu", "Configurations", "Configuration:") == "Config #1" then
-					SaveConfig1()
+					idiot.SaveConfig1()
 				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #2" then
-					SaveConfig2()
+					idiot.SaveConfig2()
 				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #3" then
-					SaveConfig3()
+					idiot.SaveConfig3()
 				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #4" then
-					SaveConfig4()
+					idiot.SaveConfig4()
 				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
-					SaveConfig5()
+					idiot.SaveConfig5()
 				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #6" then
-					SaveConfig6()
+					idiot.SaveConfig6()
 				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #7" then
-					SaveConfig7()
+					idiot.SaveConfig7()
 				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #8" then
-					SaveConfig8()
+					idiot.SaveConfig8()
 				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #9" then
-					SaveConfig9()
+					idiot.SaveConfig9()
 				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #10" then
-					SaveConfig10()
+					idiot.SaveConfig10()
 				end
 			end
 			PluginLoader()
@@ -2176,25 +2174,25 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 				self:Remove()
 				if gBool("Main Menu", "Configurations", "Automatically Save") then
 					if gOption("Main Menu", "Configurations", "Configuration:") == "Config #1" then
-						SaveConfig1()
+						idiot.SaveConfig1()
 					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #2" then
-						SaveConfig2()
+						idiot.SaveConfig2()
 					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #3" then
-						SaveConfig3()
+						idiot.SaveConfig3()
 					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #4" then
-						SaveConfig4()
+						idiot.SaveConfig4()
 					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
-						SaveConfig5()
+						idiot.SaveConfig5()
 					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #6" then
-						SaveConfig6()
+						idiot.SaveConfig6()
 					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #7" then
-						SaveConfig7()
+						idiot.SaveConfig7()
 					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #8" then
-						SaveConfig8()
+						idiot.SaveConfig8()
 					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #9" then
-						SaveConfig9()
+						idiot.SaveConfig9()
 					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #10" then
-						SaveConfig10()
+						idiot.SaveConfig10()
 					end
 				end
 			EntityFinder()
@@ -2230,7 +2228,7 @@ local function DrawSubSub(self, w, h, k, var)
 			elseif (v[2] == "Slider") then
 				DrawSlider(self, w, h, v, maxy, posx, posy, dist)
 			elseif (v[2] == "SliderOld") then
-				DrawOldSlider(self, w, h, v, maxy, posx, posy, dist)
+				idiot.DrawOldSlider(self, w, h, v, maxy, posx, posy, dist)
 			elseif (v[2] == "Selection") then
 				DrawSelect(self, w, h, v, maxy, posx, posy, dist)
 			elseif(v[2] == "Toggle") then
@@ -2265,7 +2263,7 @@ local function DrawSubSub(self, w, h, k, var)
 			elseif (v[2] == "Slider") then
 				DrawSlider(self, w, h, v, maxy, posx, posy, dist)
 			elseif (v[2] == "SliderOld") then
-				DrawOldSlider(self, w, h, v, maxy, posx, posy, dist)
+				idiot.DrawOldSlider(self, w, h, v, maxy, posx, posy, dist)
 			elseif (v[2] == "Selection") then
 				DrawSelect(self, w, h, v, maxy, posx, posy, dist)
 			elseif(v[2] == "Toggle") then
@@ -2337,117 +2335,117 @@ local function Menu()
 		if (gBool("Miscellaneous", "Sounds", "Reset Sounds")) then
 			RunConsoleCommand("stopsound")
 		end
-		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or unloaded == true) then
+		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or global.unloaded == true) then
 		if gOption("Miscellaneous", "Sounds", "Music Player:") ~= "Off" then
 			if gOption("Miscellaneous", "Sounds", "Music Player:") == "Random" then
 				RunConsoleCommand("stopsound")
-				idiot.sound.PlayURL(menusongs[math.random(#menusongs)], "mono", function(station)
-				if (idiot.IsValid(station)) then
+				global.sound.PlayURL(menusongs[math.random(#menusongs)], "mono", function(station)
+				if (global.IsValid(station)) then
 					station:Play()
 					end
 				end)
 			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Rust" then
 				RunConsoleCommand("stopsound")
-				idiot.sound.PlayURL("https://dl.dropbox.com/s/0fdgaj0ry8uummf/Rust_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
-				if (idiot.IsValid(station)) then
+				global.sound.PlayURL("https://dl.dropbox.com/s/0fdgaj0ry8uummf/Rust_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
+				if (global.IsValid(station)) then
 					station:Play()
 					end
 				end)
 			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Resonance" then
 				RunConsoleCommand("stopsound")
-				idiot.sound.PlayURL("https://dl.dropbox.com/s/vsz77wdjqy1xf83/HOME%20-%20Resonance.mp3?dl=1", "mono", function(station)
-				if (idiot.IsValid(station)) then
+				global.sound.PlayURL("https://dl.dropbox.com/s/vsz77wdjqy1xf83/HOME%20-%20Resonance.mp3?dl=1", "mono", function(station)
+				if (global.IsValid(station)) then
 					station:Play()
 					end
 				end)
 			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Daisuke" then
 				RunConsoleCommand("stopsound")
-				idiot.sound.PlayURL("https://dl.dropbox.com/s/0m22ytfia8qoy4m/Daisuke%20-%20El%20Huervo.mp3?dl=1", "mono", function(station)
-				if (idiot.IsValid(station)) then
+				global.sound.PlayURL("https://dl.dropbox.com/s/0m22ytfia8qoy4m/Daisuke%20-%20El%20Huervo.mp3?dl=1", "mono", function(station)
+				if (global.IsValid(station)) then
 					station:Play()
 					end
 				end)
 			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "A Burning M..." then
 				RunConsoleCommand("stopsound")
-				idiot.sound.PlayURL("https://dl.dropbox.com/s/ovh8xt0nn6wjgjj/The%20Caretaker%20-%20It%27s%20just%20a%20burning%20memory%20%282016%29.mp3?dl=1", "mono", function(station)
-				if (idiot.IsValid(station)) then
+				global.sound.PlayURL("https://dl.dropbox.com/s/ovh8xt0nn6wjgjj/The%20Caretaker%20-%20It%27s%20just%20a%20burning%20memory%20%282016%29.mp3?dl=1", "mono", function(station)
+				if (global.IsValid(station)) then
 					station:Play()
 					end
 				end)
 			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Libet's Delay" then
 				RunConsoleCommand("stopsound")
-				idiot.sound.PlayURL("https://dl.dropbox.com/s/bqt4dcjoziezdjk/The_Caretaker_-_Libets_Delay_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
-				if (idiot.IsValid(station)) then
+				global.sound.PlayURL("https://dl.dropbox.com/s/bqt4dcjoziezdjk/The_Caretaker_-_Libets_Delay_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
+				if (global.IsValid(station)) then
 					station:Play()
 					end
 				end)
 			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Lullaby Of T..." then
 				RunConsoleCommand("stopsound")
-				idiot.sound.PlayURL("https://dl.dropbox.com/s/0uly6phlgpoj4ss/1932_George_Olsen_-_Lullaby_Of_The_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
-				if (idiot.IsValid(station)) then
+				global.sound.PlayURL("https://dl.dropbox.com/s/0uly6phlgpoj4ss/1932_George_Olsen_-_Lullaby_Of_The_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
+				if (global.IsValid(station)) then
 					station:Play()
 					end
 				end)
 			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Erectin' a River" then
 				RunConsoleCommand("stopsound")
-				idiot.sound.PlayURL("https://dl.dropbox.com/s/qfl7mu39us5hzn4/Erectin_a_River_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
-				if (idiot.IsValid(station)) then
+				global.sound.PlayURL("https://dl.dropbox.com/s/qfl7mu39us5hzn4/Erectin_a_River_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
+				if (global.IsValid(station)) then
 					station:Play()
 					end
 				end)
 			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Fleeting Love" then
 				RunConsoleCommand("stopsound")
-				idiot.sound.PlayURL("https://dl.dropbox.com/s/stkat6jlp4jhpxo/Monrroe_-_Fleeting_Love_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
-				if (idiot.IsValid(station)) then
+				global.sound.PlayURL("https://dl.dropbox.com/s/stkat6jlp4jhpxo/Monrroe_-_Fleeting_Love_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
+				if (global.IsValid(station)) then
 					station:Play()
 					end
 				end)
 			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Malo Tebya" then
 				RunConsoleCommand("stopsound")
-				idiot.sound.PlayURL("https://dl.dropbox.com/s/vhd3il20d8ephb4/DJ_Spizdil_-_malo_tebyaHardstyle_m_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
-				if (idiot.IsValid(station)) then
+				global.sound.PlayURL("https://dl.dropbox.com/s/vhd3il20d8ephb4/DJ_Spizdil_-_malo_tebyaHardstyle_m_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
+				if (global.IsValid(station)) then
 					station:Play()
 					end
 				end)
 			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Vermilion" then
 				RunConsoleCommand("stopsound")
-				idiot.sound.PlayURL("https://dl.dropbox.com/s/2vf1lx9cnd5g9pq/Maduk_-_Vermilion_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
-				if (idiot.IsValid(station)) then
+				global.sound.PlayURL("https://dl.dropbox.com/s/2vf1lx9cnd5g9pq/Maduk_-_Vermilion_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
+				if (global.IsValid(station)) then
 					station:Play()
 					end
 				end)
 			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Gravity" then
 				RunConsoleCommand("stopsound")
-				idiot.sound.PlayURL("https://dl.dropbox.com/s/wcoo6cov1iatcao/Metrik_-_Gravity_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
-				if (idiot.IsValid(station)) then
+				global.sound.PlayURL("https://dl.dropbox.com/s/wcoo6cov1iatcao/Metrik_-_Gravity_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
+				if (global.IsValid(station)) then
 					station:Play()
 					end
 				end)
 			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Remorse" then
 				RunConsoleCommand("stopsound")
-				idiot.sound.PlayURL("https://dl.dropbox.com/s/8a91zs6woqz9bb4/Scattle_Remorse_REUPLOAD_CHECK_DE_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
-				if (idiot.IsValid(station)) then
+				global.sound.PlayURL("https://dl.dropbox.com/s/8a91zs6woqz9bb4/Scattle_Remorse_REUPLOAD_CHECK_DE_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
+				if (global.IsValid(station)) then
 					station:Play()
 					end
 				end)
 			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Hold" then
 				RunConsoleCommand("stopsound")
-				idiot.sound.PlayURL("https://dl.dropbox.com/s/12ztoyw2rc2q0z0/HOME_-_Hold_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
-				if (idiot.IsValid(station)) then
+				global.sound.PlayURL("https://dl.dropbox.com/s/12ztoyw2rc2q0z0/HOME_-_Hold_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
+				if (global.IsValid(station)) then
 					station:Play()
 					end
 				end)
 			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "Green Valleys" then
 				RunConsoleCommand("stopsound")
-				idiot.sound.PlayURL("https://dl.dropbox.com/s/xlk7wuel56bwrr3/T_Sugah_-_Green_Valleys_LAOS_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
-				if (idiot.IsValid(station)) then
+				global.sound.PlayURL("https://dl.dropbox.com/s/xlk7wuel56bwrr3/T_Sugah_-_Green_Valleys_LAOS_%28getmp3.pro%29.mp3?dl=1", "mono", function(station)
+				if (global.IsValid(station)) then
 					station:Play()
 					end
 				end)
 			elseif gOption("Miscellaneous", "Sounds", "Music Player:") == "FP3" then
 				RunConsoleCommand("stopsound")
-				idiot.sound.PlayURL("https://dl.dropbox.com/s/8bg55iwowf2jtv8/cuckoid%20-%20ponyinajar.mp3?dl=1", "mono", function(station)
-				if (idiot.IsValid(station)) then
+				global.sound.PlayURL("https://dl.dropbox.com/s/8bg55iwowf2jtv8/cuckoid%20-%20ponyinajar.mp3?dl=1", "mono", function(station)
+				if (global.IsValid(station)) then
 					station:Play()
 					end
 				end)
@@ -2462,25 +2460,25 @@ local function Menu()
 		end)
 		if gBool("Main Menu", "Configurations", "Automatically Save") then
 			if gOption("Main Menu", "Configurations", "Configuration:") == "Config #1" then
-				SaveConfig1()
+				idiot.SaveConfig1()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #2" then
-				SaveConfig2()
+				idiot.SaveConfig2()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #3" then
-				SaveConfig3()
+				idiot.SaveConfig3()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #4" then
-				SaveConfig4()
+				idiot.SaveConfig4()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
-				SaveConfig5()
+				idiot.SaveConfig5()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #6" then
-				SaveConfig6()
+				idiot.SaveConfig6()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #7" then
-				SaveConfig7()
+				idiot.SaveConfig7()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #8" then
-				SaveConfig8()
+				idiot.SaveConfig8()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #9" then
-				SaveConfig9()
+				idiot.SaveConfig9()
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #10" then
-				SaveConfig10()
+				idiot.SaveConfig10()
 				end
 			end
 		end
@@ -2673,10 +2671,10 @@ local function EntityName()
 end
 
 local function StausTitle()
-	if !gBool("Visuals", "Panels", "Show List Titles") then return end
-	if gOption("Visuals", "Panels", "Panels Style:") == "Borders" then
+	if !gBool("Miscellaneous", "Panels", "Show List Titles") then return end
+	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Borders" then
 		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Custom Status X:") - 1, gInt("Adjustments", "List Adjustments", "Custom Status Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:")))
-	elseif gOption("Visuals", "Panels", "Panels Style:") == "Borderless" then
+	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
 		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Custom Status X:") - 1, gInt("Adjustments", "List Adjustments", "Custom Status Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, 0))
 	end
 	draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Custom Status X:") + 1, gInt("Adjustments", "List Adjustments", "Custom Status Y:") - 23, 88, 20, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "List Adjustments", "List Opacity:")))
@@ -2774,9 +2772,9 @@ local function Spectator()
 	local color4 = (Color(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:")))
 	local hudspecslength = 150
 	specscount = 0
-	if gOption("Visuals", "Panels", "Panels Style:") == "Borders" then
+	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Borders" then
 		draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Spectators X:") - 0.25, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 1.75, radarW + 4, radarH + 4, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:")))
-	elseif gOption("Visuals", "Panels", "Panels Style:") == "Borderless" then
+	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
 		draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Spectators X:") - 0.25, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 1.75, radarW + 4, radarH + 4, Color(bordercol.r, bordercol.g, bordercol.b, 0))
 	end
 	draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Spectators X:") + 2, gInt("Adjustments", "Window Adjustments", "Spectators Y:"), radarW, radarH, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "Window Adjustments", "Window Opacity:")))
@@ -2817,9 +2815,9 @@ end
 local function Radar()
 	local col = Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Adjustments", "Others", "T Opacity:"))
 	local everything = ents.GetAll()
-	if gOption("Visuals", "Panels", "Panels Style:") == "Borders" then
+	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Borders" then
 		draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Radar X:") - 0.25, gInt("Adjustments", "Window Adjustments", "Radar Y:") - 1.75, radarW + 4, radarH + 4, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:")))
-	elseif gOption("Visuals", "Panels", "Panels Style:") == "Borderless" then
+	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
 		draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Radar X:") - 0.25, gInt("Adjustments", "Window Adjustments", "Radar Y:") - 1.75, radarW + 4, radarH + 4, Color(bordercol.r, bordercol.g, bordercol.b, 0))
 	end
 	draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Radar X:") + 2, gInt("Adjustments", "Window Adjustments", "Radar Y:"), radarW, radarH, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "Window Adjustments", "Window Opacity:")))
@@ -2832,12 +2830,12 @@ local function Radar()
 	for k = 1, #everything do
 		local v = everything[k]
 		if (v != me and v:IsPlayer() and v:Health() > 0 and not (em.IsDormant(v) and gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All") and not (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) and not ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) or (v:IsNPC() and v:Health() > 0)) then
-			color = (v:IsPlayer() and ((contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || pm.GetFriendStatus(v) == "friend" && Color(0, 255, 255) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v))) or Color(255, 255, 255)
+			color = (v:IsPlayer() and ((idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || pm.GetFriendStatus(v) == "friend" && Color(0, 255, 255) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v))) or Color(255, 255, 255)
 			surface.SetDrawColor(color)
 			local myPos = me:GetPos()
 			local theirPos = v:GetPos()
-			local theirX = (radarX + (radarW / 2)) + ((theirPos.x - myPos.x) / gInt("Visuals", "Panels", "Radar Distance:"))
-			local theirY = (radarY + (radarH / 2)) + ((myPos.y - theirPos.y) / gInt("Visuals", "Panels", "Radar Distance:"))
+			local theirX = (radarX + (radarW / 2)) + ((theirPos.x - myPos.x) / gInt("Miscellaneous", "Panels", "Radar Distance:"))
+			local theirY = (radarY + (radarH / 2)) + ((myPos.y - theirPos.y) / gInt("Miscellaneous", "Panels", "Radar Distance:"))
 			local myRotation = math.rad(fa.y - 90)
 			theirX = theirX - (radarX + (radarW / 2))
 			theirY = theirY - (radarY + (radarH / 2))
@@ -2854,10 +2852,10 @@ local function Radar()
 end
 
 local function PlayersTitle()
-	if !gBool("Visuals", "Panels", "Show List Titles") then return end
-	if gOption("Visuals", "Panels", "Panels Style:") == "Borders" then
+	if !gBool("Miscellaneous", "Panels", "Show List Titles") then return end
+	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Borders" then
 		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Players List X:") - 1, gInt("Adjustments", "List Adjustments", "Players List Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:")))
-	elseif gOption("Visuals", "Panels", "Panels Style:") == "Borderless" then
+	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
 		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Players List X:") - 1, gInt("Adjustments", "List Adjustments", "Players List Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, 0))
 	end
 	draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Players List X:") + 1, gInt("Adjustments", "List Adjustments", "Players List Y:") - 23, 88, 20, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "List Adjustments", "List Opacity:")))
@@ -3048,7 +3046,7 @@ local function Crosshair()
 end
 
 hook.Add("RenderScene", "RenderScene", function(origin, angle, fov)
-	if gBool("Visuals", "Textures", "Dark Mode") then
+	if gBool("Miscellaneous", "Textures", "Dark Mode") then
 		for k, v in pairs(game.GetWorld():GetMaterials()) do
 		Material(v):SetVector("$color", Vector(0.05, 0.05, 0.05))
 		end
@@ -3061,7 +3059,7 @@ hook.Add("RenderScene", "RenderScene", function(origin, angle, fov)
 		render.SuppressEngineLighting(false)
 		render.ResetModelLighting(1, 1, 1)
 	end
-	render.SetLightingMode(gBool("Visuals", "Textures", "Bright Mode") and 1 or 0)
+	render.SetLightingMode(gBool("Miscellaneous", "Textures", "Bright Mode") and 1 or 0)
 	local view = {
 		x = 0,
 		y = 0,
@@ -3231,7 +3229,7 @@ local function GetChamsColor(v)
 end
 
 local function PlayerChams(v)
-	local col = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetChamsColor(v)
+	local col = (idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetChamsColor(v)
 	local wep = v:GetActiveWeapon()
 	if (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then
 		return false
@@ -3253,21 +3251,21 @@ local function PlayerChams(v)
 	if gOption("Visuals", "Wallhack", "Chams:") == "Normal" then
 	if wep:IsValid() then
 	cam.Start3D()
-		render.MaterialOverride(chamsmat1)
+		render.MaterialOverride(idiot.chamsmat1)
 		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
 	em.DrawModel(wep)
 		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
-		render.MaterialOverride(chamsmat2)
+		render.MaterialOverride(idiot.chamsmat2)
 	em.DrawModel(wep)
 		render.SetColorModulation(1, 1, 1)
 	cam.End3D()
 	end
 	cam.Start3D()
-		render.MaterialOverride(chamsmat1)
+		render.MaterialOverride(idiot.chamsmat1)
 		render.SetColorModulation(col.b / 255, col.r / 255, col.g / 255)
 	em.DrawModel(v)
 		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
-		render.MaterialOverride(chamsmat2)
+		render.MaterialOverride(idiot.chamsmat2)
 	em.DrawModel(v)
 		render.SetColorModulation(1, 1, 1)
 	cam.End3D()
@@ -3275,21 +3273,21 @@ local function PlayerChams(v)
 	if gOption("Visuals", "Wallhack", "Chams:") == "Flat" then
 	if wep:IsValid() then
 	cam.Start3D()
-		render.MaterialOverride(chamsmat3)
+		render.MaterialOverride(idiot.chamsmat3)
 		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
 	em.DrawModel(wep)
 		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
-		render.MaterialOverride(chamsmat4)
+		render.MaterialOverride(idiot.chamsmat4)
 	em.DrawModel(wep)
 		render.SetColorModulation(1, 1, 1)
 	cam.End3D()
 	end
 	cam.Start3D()
-		render.MaterialOverride(chamsmat3)
+		render.MaterialOverride(idiot.chamsmat3)
 		render.SetColorModulation(col.b / 255, col.r / 255, col.g / 255)
 	em.DrawModel(v)
 		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
-		render.MaterialOverride(chamsmat4)
+		render.MaterialOverride(idiot.chamsmat4)
 	em.DrawModel(v)
 		render.SetColorModulation(1, 1, 1)
 	cam.End3D()
@@ -3297,21 +3295,21 @@ local function PlayerChams(v)
 	if gOption("Visuals", "Wallhack", "Chams:") == "Wireframe" then
 	if wep:IsValid() then
 	cam.Start3D()
-		render.MaterialOverride(chamsmat5)
+		render.MaterialOverride(idiot.chamsmat5)
 		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
 	em.DrawModel(wep)
 		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
-		render.MaterialOverride(chamsmat6)
+		render.MaterialOverride(idiot.chamsmat6)
 	em.DrawModel(wep)
 		render.SetColorModulation(1, 1, 1)
 	cam.End3D()
 	end
 	cam.Start3D()
-		render.MaterialOverride(chamsmat5)
+		render.MaterialOverride(idiot.chamsmat5)
 		render.SetColorModulation(col.b / 255, col.r / 255, col.g / 255)
 	em.DrawModel(v)
 		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
-		render.MaterialOverride(chamsmat6)
+		render.MaterialOverride(idiot.chamsmat6)
 	em.DrawModel(v)
 		render.SetColorModulation(1, 1, 1)
 	cam.End3D()
@@ -3328,33 +3326,33 @@ local function EntityChams(v)
 	end
 	if gOption("Visuals", "Miscellaneous", "Entity Chams:") == "Normal" then
 	cam.Start3D()
-		render.MaterialOverride(chamsmat1)
+		render.MaterialOverride(idiot.chamsmat1)
 		render.SetColorModulation(miscvisualscol.b / 255, miscvisualscol.r / 255, miscvisualscol.g / 255)
 	em.DrawModel(v)
 		render.SetColorModulation(miscvisualscol.r / 255, miscvisualscol.g / 255, miscvisualscol.b / 255)
-		render.MaterialOverride(chamsmat2)
+		render.MaterialOverride(idiot.chamsmat2)
 	em.DrawModel(v)
 		render.SetColorModulation(1, 1, 1)
 	cam.End3D()
 	end
 	if gOption("Visuals", "Miscellaneous", "Entity Chams:") == "Flat" then
 	cam.Start3D()
-		render.MaterialOverride(chamsmat3)
+		render.MaterialOverride(idiot.chamsmat3)
 		render.SetColorModulation(miscvisualscol.b / 255, miscvisualscol.r / 255, miscvisualscol.g / 255)
 	em.DrawModel(v)
 		render.SetColorModulation(miscvisualscol.r / 255, miscvisualscol.g / 255, miscvisualscol.b / 255)
-		render.MaterialOverride(chamsmat4)
+		render.MaterialOverride(idiot.chamsmat4)
 	em.DrawModel(v)
 		render.SetColorModulation(1, 1, 1)
 	cam.End3D()
 	end
 	if gOption("Visuals", "Miscellaneous", "Entity Chams:") == "Wireframe" then
 	cam.Start3D()
-		render.MaterialOverride(chamsmat5)
+		render.MaterialOverride(idiot.chamsmat5)
 		render.SetColorModulation(miscvisualscol.b / 255, miscvisualscol.r / 255, miscvisualscol.g / 255)
 	em.DrawModel(v)
 		render.SetColorModulation(miscvisualscol.r / 255, miscvisualscol.g / 255, miscvisualscol.b / 255)
-		render.MaterialOverride(chamsmat6)
+		render.MaterialOverride(idiot.chamsmat6)
 	em.DrawModel(v)
 		render.SetColorModulation(1, 1, 1)
 	cam.End3D()
@@ -3371,33 +3369,33 @@ local function NPCChams(v)
 	end
 	if gOption("Visuals", "Miscellaneous", "NPC Chams:") == "Normal" then
 	cam.Start3D()
-		render.MaterialOverride(chamsmat1)
+		render.MaterialOverride(idiot.chamsmat1)
 		render.SetColorModulation(miscvisualscol.b / 255, miscvisualscol.r / 255, miscvisualscol.g / 255)
 	em.DrawModel(v)
 		render.SetColorModulation(miscvisualscol.r / 255, miscvisualscol.g / 255, miscvisualscol.b / 255)
-		render.MaterialOverride(chamsmat2)
+		render.MaterialOverride(idiot.chamsmat2)
 	em.DrawModel(v)
 		render.SetColorModulation(1, 1, 1)
 	cam.End3D()
 	end
 	if gOption("Visuals", "Miscellaneous", "NPC Chams:") == "Flat" then
 	cam.Start3D()
-		render.MaterialOverride(chamsmat3)
+		render.MaterialOverride(idiot.chamsmat3)
 		render.SetColorModulation(miscvisualscol.b / 255, miscvisualscol.r / 255, miscvisualscol.g / 255)
 	em.DrawModel(v)
 		render.SetColorModulation(miscvisualscol.r / 255, miscvisualscol.g / 255, miscvisualscol.b / 255)
-		render.MaterialOverride(chamsmat4)
+		render.MaterialOverride(idiot.chamsmat4)
 	em.DrawModel(v)
 		render.SetColorModulation(1, 1, 1)
 	cam.End3D()
 	end
 	if gOption("Visuals", "Miscellaneous", "NPC Chams:") == "Wireframe" then
 	cam.Start3D()
-		render.MaterialOverride(chamsmat5)
+		render.MaterialOverride(idiot.chamsmat5)
 		render.SetColorModulation(miscvisualscol.b / 255, miscvisualscol.r / 255, miscvisualscol.g / 255)
 	em.DrawModel(v)
 		render.SetColorModulation(miscvisualscol.r / 255, miscvisualscol.g / 255, miscvisualscol.b / 255)
-		render.MaterialOverride(chamsmat6)
+		render.MaterialOverride(idiot.chamsmat6)
 	em.DrawModel(v)
 		render.SetColorModulation(1, 1, 1)
 	cam.End3D()
@@ -3408,11 +3406,11 @@ local function TransparentWalls()
     local mats = em.GetMaterials(game.GetWorld())
         for k, v in next, mats do
             local material = Material(v)
-            if (!gBool("Visuals", "Textures", "Transparent Walls")) then
+            if (!gBool("Miscellaneous", "Textures", "Transparent Walls")) then
                 im.SetFloat(material, "$alpha", 1)
 			continue
         end
-        im.SetFloat(material, "$alpha", gInt("Visuals", "Textures", "Transparency:") / 100 + 0.01)
+        im.SetFloat(material, "$alpha", gInt("Miscellaneous", "Textures", "Transparency:") / 100 + 0.01)
     end
 end
 
@@ -3661,7 +3659,7 @@ local function AirCrouch(cmd)
 	local pos = me:GetPos()
 	local trace = {
 		start = pos, 
-		endpos = pos - idiot.Vector(0, 0, 50), 
+		endpos = pos - global.Vector(0, 0, 50), 
 		mask = MASK_PLAYERSOLID, 
 	}
 	local trace = util.TraceLine(trace)
@@ -3675,16 +3673,16 @@ end
 local function TraitorDetector()
 	if engine.ActiveGamemode() ~= "terrortown" then return end
 	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Traitor Finder") then
-	for k, v in idiot.ipairs(idiot.ents.GetAll()) do
+	for k, v in global.ipairs(global.ents.GetAll()) do
 		local _v = v:GetOwner()
 		if (_v == me) then continue end
-		if (idiot.GetRoundState() == 3 and v:IsWeapon() and _v:IsPlayer() and not _v.Detected and idiot.table.HasValue(v.CanBuy, 1)) then
+		if (global.GetRoundState() == 3 and v:IsWeapon() and _v:IsPlayer() and not _v.Detected and global.table.HasValue(v.CanBuy, 1)) then
 			if (_v:GetRole() ~= 2) then
 				_v.Detected = true
 				MsgY(4.3, _v:Nick().." is a Traitor. They just bought: "..v:GetPrintName())
 				surface.PlaySound("npc/scanner/combat_scan1.wav")
 			end
-		elseif (idiot.GetRoundState() ~= 3) then
+		elseif (global.GetRoundState() ~= 3) then
 				v.Detected = false
 			end
 		end
@@ -3693,7 +3691,7 @@ end
 
 local function MurdererDetector()
 	if not gBool("Main Menu", "Murder Utilities", "Murderer Finder") or engine.ActiveGamemode() ~= "murder" then return end
-	for k, v in idiot.ipairs(idiot.player.GetAll()) do
+	for k, v in global.ipairs(global.player.GetAll()) do
 		if (v == me) then continue end
 		if (GAMEMODE.RoundStage == 1 and not v.Detected and not v.Magnum) then
 			if (v:HasWeapon("weapon_mu_knife")) then
@@ -3753,7 +3751,7 @@ local function Think()
 	local randply = player.GetAll()[math.random(#player.GetAll())]
 	local friendstatus = pm.GetFriendStatus(randply)
 	if (!randply:IsValid() || randply == me || friendstatus == "friend" || (gBool("Main Menu", "Priority List", "Enabled") && table.HasValue(ignorelist, randply:UniqueID())) || (gBool("Main Menu", "Priority List", "Enabled") && gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Priority Targets" && !table.HasValue(prioritylist, randply:UniqueID()))) then return end
-		box.ChangeName(randply:Name().." ")
+		idiot.ChangeName(randply:Name().." ")
 	elseif gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "DarkRP Name" then
 		namechangeTime = namechangeTime + 1
 		if namechangeTime > 500 then
@@ -3762,7 +3760,7 @@ local function Think()
 		end
 	end
 	if (gBool("Main Menu", "Others", "Apply custom name")) then
-		box.ChangeName(GetConVarString("idiot_changename"))
+		idiot.ChangeName(GetConVarString("idiot_changename"))
 		if not Confirmed1 then
 			MsgG(3.2, "Successfully applied custom name.")
 			surface.PlaySound("buttons/lightswitch2.wav")
@@ -3953,17 +3951,17 @@ hook.Add("Think", "Think", function()
 		end
 	end
 	local skycvar = GetConVar("r_3dsky")
-	if (gBool("Visuals", "Textures", "Remove 3D Skybox") and skycvar:GetBool() == true) then
+	if (gBool("Miscellaneous", "Textures", "Remove 3D Skybox") and skycvar:GetBool() == true) then
         RunConsoleCommand("r_3dsky", "0")
-    elseif (!gBool("Visuals", "Textures", "Remove 3D Skybox") and skycvar:GetBool() == false) then
+    elseif (!gBool("Miscellaneous", "Textures", "Remove 3D Skybox") and skycvar:GetBool() == false) then
         RunConsoleCommand("r_3dsky", "1")
     end
 end)
 
 hook.Add("CalcViewModelView", "CalcViewModelView", function(wep, vm, oldPos, oldAng, pos, ang)
-	if gBool("Miscellaneous", "Viewmodel", "Custom Positions") then
-		local overridepos = Vector(gInt("Miscellaneous", "Viewmodel", "Viewmodel X:") - 50, gInt("Miscellaneous", "Viewmodel", "Viewmodel Y:") - 30, gInt("Miscellaneous", "Viewmodel", "Viewmodel Z:") - 20)
-		local overrideang = Angle(gInt("Miscellaneous", "Viewmodel", "Viewmodel Pitch:") - 90, gInt("Miscellaneous", "Viewmodel", "Viewmodel Yaw:") - 90, gInt("Miscellaneous", "Viewmodel", "Viewmodel Roll:") - 90)
+	if gBool("Visuals", "Point of View", "Custom Positions") then
+		local overridepos = Vector(gInt("Visuals", "Point of View", "Viewmodel X:") - 50, gInt("Visuals", "Point of View", "Viewmodel Y:") - 30, gInt("Visuals", "Point of View", "Viewmodel Z:") - 20)
+		local overrideang = Angle(gInt("Visuals", "Point of View", "Viewmodel Pitch:") - 90, gInt("Visuals", "Point of View", "Viewmodel Yaw:") - 90, gInt("Visuals", "Point of View", "Viewmodel Roll:") - 90)
 		ang = ang * 1
 		ang:RotateAroundAxis(ang:Right(), overrideang.x * 1.0)
 		ang:RotateAroundAxis(ang:Up(), overrideang.y * 1.0)
@@ -3976,39 +3974,43 @@ hook.Add("CalcViewModelView", "CalcViewModelView", function(wep, vm, oldPos, old
 end)
 
 hook.Add("PreDrawSkyBox", "PreDrawSkyBox", function()
-	if (!gBool("Visuals", "Textures", "Remove Sky")) then return end
+	if (!gBool("Miscellaneous", "Textures", "Remove Sky")) then return end
 		render.Clear(0, 0, 0, 255)
 	return true
 end)
 
-hook.Add("PreDrawViewModel", "PreDrawViewModel", function()
+function idiot.ViewmodelChams()
 	if ThirdpersonCheck() then return end
 	local rainbow = HSVToColor(RealTime() * 45 % 360, 1, 1)
-	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Chams:") == "Normal") then
-		render.MaterialOverride(chamsmat2)
+	if (gOption("Visuals", "Point of View", "Viewmodel Chams:") == "Normal") then
+		render.MaterialOverride(idiot.chamsmat2)
 		render.SetColorModulation(viewmodelcol.r / 255, viewmodelcol.g / 255, viewmodelcol.b / 255)
 	end
-	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Chams:") == "Normal") and gBool("Miscellaneous", "Viewmodel", "Rainbow Mode") then
-		render.MaterialOverride(chamsmat2)
+	if (gOption("Visuals", "Point of View", "Viewmodel Chams:") == "Normal") and gBool("Visuals", "Point of View", "Rainbow Mode") then
+		render.MaterialOverride(idiot.chamsmat2)
 		render.SetColorModulation(rainbow.r / 255, rainbow.g / 255, rainbow.b / 255)
 	end
-	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Chams:") == "Flat") then
-		render.MaterialOverride(chamsmat4)
+	if (gOption("Visuals", "Point of View", "Viewmodel Chams:") == "Flat") then
+		render.MaterialOverride(idiot.chamsmat4)
 		render.SetColorModulation(viewmodelcol.r / 255, viewmodelcol.g / 255, viewmodelcol.b / 255)
 	end
-	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Chams:") == "Flat") and gBool("Miscellaneous", "Viewmodel", "Rainbow Mode") then
-		render.MaterialOverride(chamsmat4)
+	if (gOption("Visuals", "Point of View", "Viewmodel Chams:") == "Flat") and gBool("Visuals", "Point of View", "Rainbow Mode") then
+		render.MaterialOverride(idiot.chamsmat4)
 		render.SetColorModulation(rainbow.r / 255, rainbow.g / 255, rainbow.b / 255)
 	end
-	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Chams:") == "Wireframe") then
-		render.MaterialOverride(chamsmat6)
+	if (gOption("Visuals", "Point of View", "Viewmodel Chams:") == "Wireframe") then
+		render.MaterialOverride(idiot.chamsmat6)
 		render.SetColorModulation(viewmodelcol.r / 255, viewmodelcol.g / 255, viewmodelcol.b / 255)
 	end
-	if (gOption("Miscellaneous", "Viewmodel", "Viewmodel Chams:") == "Wireframe") and gBool("Miscellaneous", "Viewmodel", "Rainbow Mode") then
-		render.MaterialOverride(chamsmat6)
+	if (gOption("Visuals", "Point of View", "Viewmodel Chams:") == "Wireframe") and gBool("Visuals", "Point of View", "Rainbow Mode") then
+		render.MaterialOverride(idiot.chamsmat6)
 		render.SetColorModulation(rainbow.r / 255, rainbow.g / 255, rainbow.b / 255)
 	end
-	if (gBool("Miscellaneous", "Viewmodel", "No Viewmodel") or ThirdpersonCheck()) then
+end
+
+hook.Add("PreDrawViewModel", "PreDrawViewModel", function()
+	idiot.ViewmodelChams()
+	if (gBool("Visuals", "Point of View", "No Viewmodel") or ThirdpersonCheck()) then
 		return true
 	else
 		return false
@@ -4016,7 +4018,8 @@ hook.Add("PreDrawViewModel", "PreDrawViewModel", function()
 end)
 
 hook.Add("PreDrawPlayerHands", "PreDrawPlayerHands", function()
-	if (gBool("Miscellaneous", "Viewmodel", "No Hands") or ThirdpersonCheck()) then
+	idiot.ViewmodelChams()
+	if (gBool("Visuals", "Point of View", "No Hands") or ThirdpersonCheck()) then
 		return true
 	else
 		return false
@@ -4026,8 +4029,8 @@ end)
 local function AutoReload(cmd)
 	local wep = me:GetActiveWeapon()
 	if not gBool("Aim Assist", "Miscellaneous", "Auto Reload") then return end
-	if (me:Alive() or me:Health() > 0) and idiot.IsValid(wep) then
-		if (wep:Clip1() <= (wep:GetMaxClip1() - 1) and wep:GetMaxClip1() > 0 and idiot.CurTime() > wep:GetNextPrimaryFire()) then
+	if (me:Alive() or me:Health() > 0) and global.IsValid(wep) then
+		if (wep:Clip1() <= (wep:GetMaxClip1() - 1) and wep:GetMaxClip1() > 0 and global.CurTime() > wep:GetNextPrimaryFire()) then
 			cmd:SetButtons(cmd:GetButtons() + IN_RELOAD)
 		end
 	end
@@ -4042,10 +4045,10 @@ local function Visuals(v)
 	local h = pos.y - pos2.y
 	local w = h / 2
 	local ww = h / 4
-	local colOne = (contributors[v:SteamID()] || creator[v:SteamID()]) && Color(0, 0, 0) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
-	local colTwo = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || Color(0, 0, 0)
-	local colThree = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
-	local colFour = (contributors[v:SteamID()] || creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
+	local colOne = (idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) && Color(0, 0, 0) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
+	local colTwo = (idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || Color(0, 0, 0)
+	local colThree = (idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
+	local colFour = (idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
 	local colFive = gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
 	local healthcol = Color((100 - em.Health(v)) * 2.55, em.Health(v) * 2.55, 0)
 	local armorcol = Color((100 - v:Armor()) * 2.55, v:Armor() * 2.55, v:Armor() * 2.55)
@@ -4074,23 +4077,23 @@ local function Visuals(v)
 		local eye = v:EyeAngles()
 		local min, max = v:WorldSpaceAABB()
 		local origin = v:GetPos()
-		if gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(ignorelist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+		if gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(ignorelist, v:UniqueID()) and !(idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) then
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, ignoredcol)
 			cam.End3D()
-		elseif gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(prioritylist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+		elseif gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(prioritylist, v:UniqueID()) and !(idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) then
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, prioritycol)
 			cam.End3D()
-		elseif gBool("Visuals", "Miscellaneous", "Team Colors") and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+		elseif gBool("Visuals", "Miscellaneous", "Team Colors") and !(idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) then
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, team.GetColor(pm.Team(v)))
 			cam.End3D()
-		elseif (contributors[v:SteamID()] || creator[v:SteamID()]) then
+		elseif (idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) then
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, devcol)
 			cam.End3D()
-		elseif !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+		elseif !(idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) then
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, GetColor(v))
 			cam.End3D()
@@ -4149,22 +4152,22 @@ local function Visuals(v)
 	if (gBool("Visuals", "Wallhack", "Enabled") and gBool("Visuals", "Wallhack", "Name")) then
 		local friendstatus = pm.GetFriendStatus(v)
 		if (friendstatus == "friend") then
-			if creator[v:SteamID()] then
+			if idiot.creator[v:SteamID()] then
 				draw.SimpleText("IdiotBox Creator", "VisualsFont", pos.x, pos.y - h - 26 - 13, devcol, 1, 1)
 			end
-			if contributors[v:SteamID()] then
+			if idiot.contributors[v:SteamID()] then
 				draw.SimpleText("IdiotBox Contributor", "VisualsFont", pos.x, pos.y - h - 26 - 13, devcol, 1, 1)
 			end
 		end
 		if (friendstatus ~= "friend") then
-			if creator[v:SteamID()] then
+			if idiot.creator[v:SteamID()] then
 				draw.SimpleText("IdiotBox Creator", "VisualsFont", pos.x, pos.y - h - 13 - 13, devcol, 1, 1)
 			end
-			if contributors[v:SteamID()] then
+			if idiot.contributors[v:SteamID()] then
 				draw.SimpleText("IdiotBox Contributor", "VisualsFont", pos.x, pos.y - h - 13 - 13, devcol, 1, 1)
 			end
 		end
-		if (friendstatus == "friend") and (creator[v:SteamID()] or contributors[v:SteamID()]) then
+		if (friendstatus == "friend") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()]) then
 			if table.HasValue(ignorelist, v:UniqueID()) then
 				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 39 - 13, ignoredcol, 1, 1)
 			end
@@ -4172,7 +4175,7 @@ local function Visuals(v)
 				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 39 - 13, prioritycol, 1, 1)
 			end
 		end
-		if (friendstatus == "friend") and not (creator[v:SteamID()] or contributors[v:SteamID()]) then
+		if (friendstatus == "friend") and not (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()]) then
 			if table.HasValue(ignorelist, v:UniqueID()) then
 				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, ignoredcol, 1, 1)
 			end
@@ -4180,7 +4183,7 @@ local function Visuals(v)
 				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, prioritycol, 1, 1)
 			end
 		end
-		if (friendstatus ~= "friend") and (creator[v:SteamID()] or contributors[v:SteamID()]) then
+		if (friendstatus ~= "friend") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()]) then
 			if table.HasValue(ignorelist, v:UniqueID()) then
 				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, ignoredcol, 1, 1)
 			end
@@ -4188,7 +4191,7 @@ local function Visuals(v)
 				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, prioritycol, 1, 1)
 			end
 		end
-		if (friendstatus ~= "friend") and not (creator[v:SteamID()] or contributors[v:SteamID()]) then
+		if (friendstatus ~= "friend") and not (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()]) then
 			if table.HasValue(ignorelist, v:UniqueID()) then
 				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 13 - 13, ignoredcol, 1, 1)
 			end
@@ -4319,13 +4322,13 @@ local function Visuals(v)
 		local wep = v:GetActiveWeapon()
 		halo.Add({v, wep}, colFour, .55, .55, 5, true, true)
 	end
-	idiot.cam.Start3D()
+	global.cam.Start3D()
 		if (gBool("Visuals", "Wallhack", "Vision Line")) then
 			local b1, b2 = v:EyePos(), v:GetEyeTrace().HitPos
-			idiot.render.DrawLine(b1, b2, colFour)
-			idiot.render.DrawWireframeSphere(b2, 2, 10, 10, colFour, b2)
+			global.render.DrawLine(b1, b2, colFour)
+			global.render.DrawWireframeSphere(b2, 2, 10, 10, colFour, b2)
 		end
-	idiot.cam.End3D()
+	global.cam.End3D()
 	if (gBool("Visuals", "Wallhack", "Hitbox")) then
 		for k, v in next, player.GetAll() do
 		if (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) then continue end
@@ -4337,23 +4340,23 @@ local function Visuals(v)
 			local min, max = v:GetHitBoxBounds(_i, i)			
 			if (v:GetBonePosition(bone)) then
 			local pos, ang = v:GetBonePosition(bone)
-			if gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(ignorelist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+			if gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(ignorelist, v:UniqueID()) and !(idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) then
 				cam.Start3D()
 					render.DrawWireframeBox(pos, ang, min, max, ignoredcol)
 				cam.End3D()
-			elseif gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(prioritylist, v:UniqueID()) and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+			elseif gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(prioritylist, v:UniqueID()) and !(idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) then
 				cam.Start3D()
 					render.DrawWireframeBox(pos, ang, min, max, prioritycol)
 				cam.End3D()
-			elseif gBool("Visuals", "Miscellaneous", "Team Colors") and !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+			elseif gBool("Visuals", "Miscellaneous", "Team Colors") and !(idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) then
 				cam.Start3D()
 					render.DrawWireframeBox(pos, ang, min, max, team.GetColor(pm.Team(v)))
 				cam.End3D()
-			elseif (contributors[v:SteamID()] || creator[v:SteamID()]) then
+			elseif (idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) then
 				cam.Start3D()
 					render.DrawWireframeBox(pos, ang, min, max, devcol)
 				cam.End3D()
-			elseif !(contributors[v:SteamID()] || creator[v:SteamID()]) then
+			elseif !(idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) then
 				cam.Start3D()
 					render.DrawWireframeBox(pos, ang, min, max, misccol)
 				cam.End3D()
@@ -4497,17 +4500,17 @@ hook.Add("DrawOverlay", "DrawOverlay", function()
 		PlayerList()
 	end
 	if v == me and not em.IsValid(v) then return end
-	if gBool("Visuals", "Panels", "Spectators Window") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
+	if gBool("Miscellaneous", "Panels", "Spectators Window") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
 		Spectator()
 	end
-	if gBool("Visuals", "Panels", "Radar Window") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
+	if gBool("Miscellaneous", "Panels", "Radar Window") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
 		Radar()
 	end
-	if gBool("Visuals", "Panels", "Custom Status") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
+	if gBool("Miscellaneous", "Panels", "Custom Status") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
 		StausTitle()
 		Status()
 	end
-	if gBool("Visuals", "Panels", "Players List") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
+	if gBool("Miscellaneous", "Panels", "Players List") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
 		PlayersTitle()
 		Players()
 	end
@@ -4538,7 +4541,7 @@ local function AntiAFK(cmd)
 		local commands = {"moveleft", "moveright", "moveup", "movedown"}
 		local command1 = table.Random(commands)
 		local command2 = table.Random(commands)
-		if unloaded == true or !gBool("Main Menu", "General Utilities", "Anti-AFK") then return end
+		if global.unloaded == true or !gBool("Main Menu", "General Utilities", "Anti-AFK") then return end
 		timer.Create("afk2", 1, 1, function()
 		RunConsoleCommand("+"..command1)
 		RunConsoleCommand("+"..command2)
@@ -4587,9 +4590,9 @@ local function Killsounds(data)
 	local headshot1 = {"playerfx/headshot1.wav", "playerfx/headshot2.wav",}
 	local headshot2 = {"player/headshot1.wav", "player/headshot2.wav", "player/headshot3.wav",}
 	local metal = {"phx/hmetal1.wav", "phx/hmetal2.wav", "phx/hmetal3.wav",}
-	local killer = idiot.Entity(data.entindex_attacker)
-	local victim = idiot.Entity(data.entindex_killed)
-	if (idiot.IsValid(killer) and idiot.IsValid(victim) and killer:IsPlayer() and victim:IsPlayer()) then
+	local killer = global.Entity(data.entindex_attacker)
+	local victim = global.Entity(data.entindex_killed)
+	if (global.IsValid(killer) and global.IsValid(victim) and killer:IsPlayer() and victim:IsPlayer()) then
 		if (killer == me and victim ~= me) then
 			if gOption("Miscellaneous", "Sounds", "Killsounds:") ~= "Off" then
 				if gOption("Miscellaneous", "Sounds", "Killsounds:") == "Default" then
@@ -4613,10 +4616,10 @@ local function Killsounds(data)
 end
 
 local function LogKills(data)
-	local killer = idiot.Entity(data.entindex_attacker)
-	local victim = idiot.Entity(data.entindex_killed)
-	if (idiot.IsValid(killer) and idiot.IsValid(victim) and killer:IsPlayer() and victim:IsPlayer()) then
-	idiot.surface.PlaySound("buttons/lightswitch2.wav")
+	local killer = global.Entity(data.entindex_attacker)
+	local victim = global.Entity(data.entindex_killed)
+	if (global.IsValid(killer) and global.IsValid(victim) and killer:IsPlayer() and victim:IsPlayer()) then
+	global.surface.PlaySound("buttons/lightswitch2.wav")
 		if (killer == victim and victim ~= me) then
 			chat.AddText(Color(255, 255, 0), victim:Nick().." killed themself.")
 		elseif (killer == victim and victim == me) then
@@ -4824,7 +4827,7 @@ end
 local function PredictSpread(cmd, ang)
 	local w = pm.GetActiveWeapon(me)
 	if (not w or not em.IsValid(w) or not cones[em.GetClass(w)] or not gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread")) then return am.Forward(ang) end
-	return (box.Predict(cmd, am.Forward(ang), cones[em.GetClass(w)]))
+	return (idiot.Predict(cmd, am.Forward(ang), cones[em.GetClass(w)]))
 end
 
 local function AutoFire(cmd)
@@ -4986,7 +4989,7 @@ local function Triggerbot(cmd)
 	local trace = me:GetEyeTraceNoCursor()
 	local v = trace.Entity
 	local hitbox = trace.HitBox
-	if (v and idiot.IsValid(v) and v:Health() > 0 and not v:IsDormant() and me:GetObserverTarget() ~= v and AimAssistPriorities(v)) and TriggerFilter(hitbox) then
+	if (v and global.IsValid(v) and v:Health() > 0 and not v:IsDormant() and me:GetObserverTarget() ~= v and AimAssistPriorities(v)) and TriggerFilter(hitbox) then
 	if v:IsPlayer() then
 		if gBool("Aim Assist", "Aim Priorities", "Distance Limit") then
 			if (vm.Distance(em.GetPos(v), em.GetPos(me)) > (dist * 5)) then return false end
@@ -5046,7 +5049,7 @@ local function Triggerbot(cmd)
 	if (gBool("Aim Assist", "Triggerbot", "Auto Zoom")) then
 		cmd:SetButtons(cmd:GetButtons() + IN_ATTACK2)
 	end
-	if not (v and idiot.IsValid(v) and v:Health() > 0 and not v:IsDormant() and me:GetObserverTarget() ~= v and AimAssistPriorities(v)) then return end
+	if not (v and global.IsValid(v) and v:Health() > 0 and not v:IsDormant() and me:GetObserverTarget() ~= v and AimAssistPriorities(v)) then return end
 	triggering = true
 	if WeaponCanFire() then
 		cmd:SetButtons(cmd:GetButtons() + IN_ATTACK)
@@ -5225,13 +5228,13 @@ local function Yaw()
 		oy = 0 + math.random (25, - 25)
 	elseif (opt == "Spinbot") then
 		if left then
-        oy = (idiot.CurTime() * gInt("Hack vs. Hack", "Anti-Aim", "Spinbot Yaw Speed:") * 23) % 350, 1
+        oy = (global.CurTime() * gInt("Hack vs. Hack", "Anti-Aim", "Spinbot Yaw Speed:") * 23) % 350, 1
    		elseif right then
-        oy = (idiot.CurTime() * - gInt("Hack vs. Hack", "Anti-Aim", "Spinbot Yaw Speed:") * 23) % 350, 1
+        oy = (global.CurTime() * - gInt("Hack vs. Hack", "Anti-Aim", "Spinbot Yaw Speed:") * 23) % 350, 1
 		elseif manual then
-		oy = (idiot.CurTime() * - gInt("Hack vs. Hack", "Anti-Aim", "Spinbot Yaw Speed:") * 23) % 350, 1
+		oy = (global.CurTime() * - gInt("Hack vs. Hack", "Anti-Aim", "Spinbot Yaw Speed:") * 23) % 350, 1
 		else
-		oy = (idiot.CurTime() * gInt("Hack vs. Hack", "Anti-Aim", "Spinbot Yaw Speed:") * 23) % 350, 1
+		oy = (global.CurTime() * gInt("Hack vs. Hack", "Anti-Aim", "Spinbot Yaw Speed:") * 23) % 350, 1
 	    end
 	elseif (opt == "Sideways" && default) then
 		if right then
@@ -5533,7 +5536,7 @@ local function FakeLag(cmd, Choke, Send)
 		faketick = 0
 	end
 	if not (send >= faketick) then
-		bSendPacket = false
+		global.bSendPacket = false
 	end
 		flsend = send
 	return true
@@ -5734,7 +5737,7 @@ hook.Add("ShouldDrawLocalPlayer", "ShouldDrawLocalPlayer", function()
 end)
 
 hook.Add("CreateMove", "CreateMove", function(cmd)
-	bSendPacket = true
+	global.bSendPacket = true
 	FakeLag(cmd)
 	AntiAFK(cmd)
 	BunnyHop(cmd)
@@ -5922,7 +5925,7 @@ timer.Simple(0.1, function()
 		file.Write(folder.."/version.txt", version)
 	else
 		if file.Read(folder.."/version.txt", "DATA") ~= version then
-			Changelog()
+			idiot.Changelog()
 			chat.AddText(Color(0, 255, 0), "IdiotBox has been updated from v"..file.Read(folder.."/version.txt", "DATA").." to v"..version.."! Changelog is printed in the console.")
 			surface.PlaySound("buttons/lightswitch2.wav")
 			file.Write(folder.."/version.txt", version)
@@ -5938,7 +5941,7 @@ if ac != true then
 	timer.Create("PlaySound", 5.7, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 end
 
-if (idiot.QAC or idiot.qac or idiot.CAC or idiot.cac or idiot.SAC or idiot.sac or idiot.DAC or idiot.dac or idiot.ZAC or idiot.zac or idiot.TAC or idiot.tac or idiot.LSAC or idiot.lsac or idiot.simplicity or idiot.Simplicity or idiot.ZARP or idiot.Zarp or idiot.zarp or idiot.swiftAC or idiot.swiftac or idiot.SwiftAC or idiot.Swiftac or idiot.SMAC or idiot.smac or idiot.MAC or idiot.mac or idiot.GAC or idiot.gac or idiot.GS or idiot.gs or idiot.GTS or idiot.gts or idiot.AE or idiot.ae or idiot.CardinalLib or idiot.cardinallib or idiot.cardinalLib or idiot.Cardinallib) then -- Obviously, this does not include ALL of the anticheats out there, but I figured these are the most commonly used ones
+if (global.QAC or global.qac or global.CAC or global.cac or global.SAC or global.sac or global.DAC or global.dac or global.ZAC or global.zac or global.TAC or global.tac or global.LSAC or global.lsac or global.simplicity or global.Simplicity or global.ZARP or global.Zarp or global.zarp or global.swiftAC or global.swiftac or global.SwiftAC or global.Swiftac or global.SMAC or global.smac or global.MAC or global.mac or global.GAC or global.gac or global.GS or global.gs or global.GTS or global.gts or global.AE or global.ae or global.CardinalLib or global.cardinallib or global.cardinalLib or global.Cardinallib) then -- Obviously, this does not include ALL of the anticheats out there, but I figured these are the most commonly used ones
 	timer.Create("ChatPrint", 5.7, 1, function() MsgR(5.3, "An anti-cheat has been detected. Use with caution to avoid getting banned!") end)
 	timer.Create("PlaySound", 5.7, 1, function() surface.PlaySound("npc/scanner/combat_scan1.wav") end)
 	ac = true
