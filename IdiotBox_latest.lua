@@ -173,7 +173,7 @@ local options = {
 					{"Save Configuration", "Button", "", 92}, 
 					{"Load Configuration", "Button", "", 92}, 
 					{"Delete Configuration", "Button", "", 92}, 
-					{"Configuration:", "Selection", "Config #1", {"Config #1", "Config #2", "Config #3", "Config #4", "Config #5", "Config #6", "Config #7", "Config #8", "Config #9", "Config #10"}, 92}, 
+					{"Configuration:", "Selection", "Legit Config", {"Legit Config", "Rage Config", "HvH Config", "Misc Config #1", "Misc Config #2", "Misc Config #3", "Misc Config #4", "Misc Config #5", "Misc Config #6", "Misc Config #7"}, 92}, 
 					{""}, 
           		}, 
 				{
@@ -1624,25 +1624,25 @@ local function Unload()
 	hook.Remove("PreDrawOpaqueRenderables", "PreDrawOpaqueRenderables")
 	hook.Remove("OnPlayerChat", "OnPlayerChat")
 		if gBool("Main Menu", "Configurations", "Automatically Save") then
-			if gOption("Main Menu", "Configurations", "Configuration:") == "Config #1" then
+			if gOption("Main Menu", "Configurations", "Configuration:") == "Legit Config" then
 				idiot.SaveConfig1()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #2" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Rage Config" then
 				idiot.SaveConfig2()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #3" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "HvH Config" then
 				idiot.SaveConfig3()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #4" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #1" then
 				idiot.SaveConfig4()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #2" then
 				idiot.SaveConfig5()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #6" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #3" then
 				idiot.SaveConfig6()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #7" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #4" then
 				idiot.SaveConfig7()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #8" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #5" then
 				idiot.SaveConfig8()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #9" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #6" then
 				idiot.SaveConfig9()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #10" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #7" then
 				idiot.SaveConfig10()
 			end
 		end
@@ -2071,73 +2071,73 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 		elseif text == "Print Changelog" then
 			idiot.Changelog()
 		elseif text == "Save Configuration" then
-			if gOption("Main Menu", "Configurations", "Configuration:") == "Config #1" then
+			if gOption("Main Menu", "Configurations", "Configuration:") == "Legit Config" then
 				idiot.SaveConfig1()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #2" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Rage Config" then
 				idiot.SaveConfig2()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #3" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "HvH Config" then
 				idiot.SaveConfig3()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #4" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #1" then
 				idiot.SaveConfig4()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #2" then
 				idiot.SaveConfig5()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #6" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #3" then
 				idiot.SaveConfig6()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #7" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #4" then
 				idiot.SaveConfig7()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #8" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #5" then
 				idiot.SaveConfig8()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #9" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #6" then
 				idiot.SaveConfig9()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #10" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #7" then
 				idiot.SaveConfig10()
 			end
 			timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Configuration Saved!") end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Load Configuration" then
-			if gOption("Main Menu", "Configurations", "Configuration:") == "Config #1" then
+			if gOption("Main Menu", "Configurations", "Configuration:") == "Legit Config" then
 				idiot.LoadConfig1()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #2" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Rage Config" then
 				idiot.LoadConfig2()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #3" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "HvH Config" then
 				idiot.LoadConfig3()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #4" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #1" then
 				idiot.LoadConfig4()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #2" then
 				idiot.LoadConfig5()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #6" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #3" then
 				idiot.LoadConfig6()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #7" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #4" then
 				idiot.LoadConfig7()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #8" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #5" then
 				idiot.LoadConfig8()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #9" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #6" then
 				idiot.LoadConfig9()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #10" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #7" then
 				idiot.LoadConfig10()
 			end
 			timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Configuration Loaded!") end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Delete Configuration" then
-			if gOption("Main Menu", "Configurations", "Configuration:") == "Config #1" then
+			if gOption("Main Menu", "Configurations", "Configuration:") == "Legit Config" then
 				file.Delete(folder.."/config1.txt")
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #2" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Rage Config" then
 				file.Delete(folder.."/config2.txt")
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #3" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "HvH Config" then
 				file.Delete(folder.."/config3.txt")
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #4" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #1" then
 				file.Delete(folder.."/config4.txt")
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #2" then
 				file.Delete(folder.."/config5.txt")
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #6" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #3" then
 				file.Delete(folder.."/config6.txt")
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #7" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #4" then
 				file.Delete(folder.."/config7.txt")
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #8" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #5" then
 				file.Delete(folder.."/config8.txt")
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #9" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #6" then
 				file.Delete(folder.."/config9.txt")
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #10" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #7" then
 				file.Delete(folder.."/config10.txt")
 			end
 			timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Configuration Deleted!") end)
@@ -2145,25 +2145,25 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 		elseif text == "Plugin Loader Menu" then
 			self:Remove()
 			if gBool("Main Menu", "Configurations", "Automatically Save") then
-				if gOption("Main Menu", "Configurations", "Configuration:") == "Config #1" then
+				if gOption("Main Menu", "Configurations", "Configuration:") == "Legit Config" then
 					idiot.SaveConfig1()
-				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #2" then
+				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Rage Config" then
 					idiot.SaveConfig2()
-				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #3" then
+				elseif gOption("Main Menu", "Configurations", "Configuration:") == "HvH Config" then
 					idiot.SaveConfig3()
-				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #4" then
+				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #1" then
 					idiot.SaveConfig4()
-				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
+				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #2" then
 					idiot.SaveConfig5()
-				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #6" then
+				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #3" then
 					idiot.SaveConfig6()
-				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #7" then
+				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #4" then
 					idiot.SaveConfig7()
-				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #8" then
+				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #5" then
 					idiot.SaveConfig8()
-				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #9" then
+				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #6" then
 					idiot.SaveConfig9()
-				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #10" then
+				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #7" then
 					idiot.SaveConfig10()
 				end
 			end
@@ -2173,25 +2173,25 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 		elseif text == "Entity Finder Menu" then
 				self:Remove()
 				if gBool("Main Menu", "Configurations", "Automatically Save") then
-					if gOption("Main Menu", "Configurations", "Configuration:") == "Config #1" then
+					if gOption("Main Menu", "Configurations", "Configuration:") == "Legit Config" then
 						idiot.SaveConfig1()
-					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #2" then
+					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Rage Config" then
 						idiot.SaveConfig2()
-					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #3" then
+					elseif gOption("Main Menu", "Configurations", "Configuration:") == "HvH Config" then
 						idiot.SaveConfig3()
-					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #4" then
+					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #1" then
 						idiot.SaveConfig4()
-					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
+					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #2" then
 						idiot.SaveConfig5()
-					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #6" then
+					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #3" then
 						idiot.SaveConfig6()
-					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #7" then
+					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #4" then
 						idiot.SaveConfig7()
-					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #8" then
+					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #5" then
 						idiot.SaveConfig8()
-					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #9" then
+					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #6" then
 						idiot.SaveConfig9()
-					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #10" then
+					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #7" then
 						idiot.SaveConfig10()
 					end
 				end
@@ -2459,25 +2459,25 @@ local function Menu()
 		drawlast = nil
 		end)
 		if gBool("Main Menu", "Configurations", "Automatically Save") then
-			if gOption("Main Menu", "Configurations", "Configuration:") == "Config #1" then
+			if gOption("Main Menu", "Configurations", "Configuration:") == "Legit Config" then
 				idiot.SaveConfig1()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #2" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Rage Config" then
 				idiot.SaveConfig2()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #3" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "HvH Config" then
 				idiot.SaveConfig3()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #4" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #1" then
 				idiot.SaveConfig4()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #5" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #2" then
 				idiot.SaveConfig5()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #6" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #3" then
 				idiot.SaveConfig6()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #7" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #4" then
 				idiot.SaveConfig7()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #8" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #5" then
 				idiot.SaveConfig8()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #9" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #6" then
 				idiot.SaveConfig9()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Config #10" then
+			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #7" then
 				idiot.SaveConfig10()
 				end
 			end
