@@ -4121,10 +4121,10 @@ local function Visuals(v)
 	end
 	if (gBool("Visuals", "Wallhack", "Armor Bar")) then
 		surface.SetDrawColor(0, 0, 0)
-		surface.DrawRect(8 + x1, y1, 3, diff2)
-		surface.DrawRect(7 + x1, y1 - 1, 5, diff2 + 2)
+		surface.DrawRect(x1 + diff + 3, y1, 3, diff2)
+		surface.DrawRect(x1 + diff + 2, y1 - 1, 5, diff2 + 2)
 		surface.SetDrawColor(Color(255 - 155 / v:GetMaxArmor() * v:Armor(), 255 / v:GetMaxArmor() * v:Armor(), 255 / v:GetMaxArmor() * v:Armor()))
-		surface.DrawRect(8 + x1, y2 - math.Clamp(diff2 / v:GetMaxArmor() * v:Armor(), 0, diff2), 3, math.Clamp(diff2 / v:GetMaxArmor() * v:Armor(), 0, diff2))
+		surface.DrawRect(x1 + diff + 3, y2 - math.Clamp(diff2 / v:GetMaxArmor() * v:Armor(), 0, diff2), 3, math.Clamp(diff2 / v:GetMaxArmor() * v:Armor(), 0, diff2))
 	end
 	if (gBool("Visuals", "Wallhack", "Name")) then
 		local friendstatus = pm.GetFriendStatus(v)
