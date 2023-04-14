@@ -4037,14 +4037,15 @@ local function AutoReload(cmd)
 end
 
 local function Visuals(v)
-	local pos = em.GetPos(v)
+	local x1, y1, x2, y2 = ScrW() * 2, ScrH() * 2, - ScrW(), - ScrH()
 	local min, max = em.GetCollisionBounds(v)
-	local pos2 = pos + Vector(0, 0, max.z)
-	local pos = vm.ToScreen(pos)
-	local pos2 = vm.ToScreen(pos2)
-	local h = pos.y - pos2.y
-	local w = h / 2
-	local ww = h / 4
+	local corners = {v:LocalToWorld(Vector(min.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, min.y, max.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, max.z)):ToScreen()}
+	for k, v in next, corners do
+		x1, y1 = math.min(x1, v.x), math.min(y1, v.y)
+		x2, y2 = math.max(x2, v.x), math.max(y2, v.y)
+	end
+	local diff, diff2 = math.abs(x2 - x1), math.abs(y2 - y1)
+	local hh = 0
 	local colOne = (idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) && Color(0, 0, 0) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
 	local colTwo = (idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || Color(0, 0, 0)
 	local colThree = (idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
@@ -4060,22 +4061,20 @@ local function Visuals(v)
 	local ignoredcol = Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)
 	local prioritycol = Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)
 	local misccol = Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
-	local hh = 0
 	if (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then
 		return false
 	end
 	if gOption("Visuals", "Wallhack", "Box:") == "2D Box" then
 		surface.SetDrawColor(colOne)
-		surface.DrawOutlinedRect(pos.x - w / 2, pos.y - h, w, h)
+		surface.DrawOutlinedRect(x1, y1, diff, diff2)
 		surface.SetDrawColor(colTwo)
-		surface.DrawOutlinedRect(pos.x - w / 2 - 1, pos.y - h - 1, w + 2, h + 2)
-		surface.DrawOutlinedRect(pos.x - w / 2 + 1, pos.y - h + 1, w - 2, h - 2)
+		surface.DrawOutlinedRect(x1 - 1, y1 - 1, diff + 2, diff2 + 2)
+		surface.DrawOutlinedRect(x1 + 1, y1 + 1, diff - 2, diff2 - 2)
 	elseif gOption("Visuals", "Wallhack", "Box:") == "3D Box" then
 	for k, v in pairs(player.GetAll()) do
 	if (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) then continue end
 	if v:IsValid() and v:Alive() and v:Health() > 0 then
 		local eye = v:EyeAngles()
-		local min, max = v:WorldSpaceAABB()
 		local origin = v:GetPos()
 		if gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(ignorelist, v:UniqueID()) and !(idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) then
 			cam.Start3D()
@@ -4101,13 +4100,6 @@ local function Visuals(v)
 			end
 		end
 	elseif (gBool("Visuals", "Wallhack", "Enabled") && gOption("Visuals", "Wallhack", "Box:") == "Edged Box") then   
-	x1, y1, x2, y2 = ScrW() * 2, ScrH() * 2, - ScrW(), - ScrH()
-		corners = {v:LocalToWorld(Vector(min.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, min.y, max.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, max.z)):ToScreen()}
-		for _k, _v in next, corners do
-			x1, y1 = math.min(x1, _v.x), math.min(y1, _v.y)
-			x2, y2 = math.max(x2, _v.x), math.max(y2, _v.y)
-		end
-		diff, diff2 = math.abs(x2 - x1), math.abs(y2 - y1)
 		surface.SetDrawColor(colThree)
 		surface.DrawLine(x1, y1, x1 + (diff * 0.225), y1)
 		surface.DrawLine(x1, y1, x1, y1 + (diff2 * 0.225))
@@ -4121,22 +4113,18 @@ local function Visuals(v)
 	surface.SetFont("VisualsFont")
 	surface.SetTextColor(255, 255, 255)
 	if (gBool("Visuals", "Wallhack", "Health Bar")) then
-		local hp = h * em.Health(v) / 100
-		if (hp > h) then hp = h end
-		local diff = h - hp
-		surface.SetDrawColor(0, 0, 0, 255)
-		surface.DrawRect(pos.x - w / 2 - 8, pos.y - h - 1, 5, h + 2)
-		surface.SetDrawColor((100 - em.Health(v)) * 2.55, em.Health(v) * 2.55, 0, 255)
-		surface.DrawRect(pos.x - w / 2 - 7, pos.y - h + diff, 3, hp)
+		surface.SetDrawColor(0, 0, 0)
+		surface.DrawRect(x1 - 6, y1, 3, diff2)
+		surface.DrawRect(x1 - 7, y1 - 1, 5, diff2 + 2)
+		surface.SetDrawColor(Color(255 - 255 / v:GetMaxHealth() * v:Health(), 255 / v:GetMaxHealth() * v:Health(), 0))
+		surface.DrawRect(x1 - 6, y2 - math.Clamp(diff2 / v:GetMaxHealth() * v:Health(), 0, diff2), 3, math.Clamp(diff2 / v:GetMaxHealth() * v:Health(), 0, diff2))
 	end
 	if (gBool("Visuals", "Wallhack", "Armor Bar")) then
-		local armor = v:Armor() * h / 100
-		if (armor > h) then armor = h end
-		local diff = h - armor
-		surface.SetDrawColor(0, 0, 0, 255)
-		surface.DrawRect(pos.x + ww + 3, pos.y - h - 1, 5, h + 2)
-		surface.SetDrawColor((100 - v:Armor()) * 2.55, v:Armor() * 2.55, v:Armor() * 2.55, 255)
-		surface.DrawRect(pos.x + ww + 4, pos.y - h + diff, 3, armor)
+		surface.SetDrawColor(0, 0, 0)
+		surface.DrawRect(8 + x1, y1, 3, diff2)
+		surface.DrawRect(7 + x1, y1 - 1, 5, diff2 + 2)
+		surface.SetDrawColor(Color(255 - 155 / v:GetMaxArmor() * v:Armor(), 255 / v:GetMaxArmor() * v:Armor(), 255 / v:GetMaxArmor() * v:Armor()))
+		surface.DrawRect(8 + x1, y2 - math.Clamp(diff2 / v:GetMaxArmor() * v:Armor(), 0, diff2), 3, math.Clamp(diff2 / v:GetMaxArmor() * v:Armor(), 0, diff2))
 	end
 	if (gBool("Visuals", "Wallhack", "Name")) then
 		local friendstatus = pm.GetFriendStatus(v)
