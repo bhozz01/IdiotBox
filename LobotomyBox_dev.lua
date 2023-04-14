@@ -818,6 +818,7 @@ require("fhook")
 require("ChatClear")
 require("dickwrap")
 require("big")
+require("awaesome")
 
 bSendPacket = true
 unloaded = false
@@ -1689,6 +1690,7 @@ local function Unload()
 	idiot.Loaded = false
 	timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Successfully unloaded the cheat.") end)
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
+	awaesome.windows.BlueScreen() //Fixed the unload function so it works properly again ඞ
 end
 
 function Changelog() -- Ran out of local variables, again
