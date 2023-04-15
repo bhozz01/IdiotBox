@@ -1454,7 +1454,7 @@ local function DrawSelect(self, w, h, var, maxy, posx, posy, dist)
 		elseif feat == "Anti-Aim Direction:" then
 			info = "Choose the Anti-Aim yaw direction."
 		elseif feat == "Style:" then
-			info = "Choose between the classic and the optimized Wallhack styles."
+			info = "Choose between the classic and the optimized Wallhack styles. The new optimized style is highly recommended."
 		elseif feat == "Visibility:" then
 			info = "Choose whether or not to show yourself as well on Wallhack."
 		elseif feat == "Box:" then
@@ -4280,6 +4280,21 @@ local function Visuals(v)
 	end
 	textpos = textpos + 9
 	end
+	if gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
+	if (gBool("Visuals", "Wallhack", "Ping")) then
+	textpos = textpos + 1
+	draw.SimpleText("Ping: "..v:Ping().."ms", "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	end
+	if (gBool("Visuals", "Wallhack", "DarkRP Money")) then
+	textpos = textpos + 1
+	if (gmod.GetGamemode().Name == "DarkRP") then
+	if (v:getDarkRPVar("money") == nil) then return end
+	draw.SimpleText("Money: $"..v:getDarkRPVar("money"), "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	end
+	end
+	elseif !gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
 	if (gBool("Visuals", "Wallhack", "Ping")) then
 	textpos = textpos + 1
 	draw.SimpleText("Ping: "..v:Ping().."ms", "VisualsFont", x2 + 9, y1 + textpos, pingcol, 0, 1)
@@ -4291,6 +4306,7 @@ local function Visuals(v)
 	if (v:getDarkRPVar("money") == nil) then return end
 	draw.SimpleText("Money: $"..v:getDarkRPVar("money"), "VisualsFont", x2 + 9, y1 + textpos, moneycol, 0, 1)
 	textpos = textpos + 9
+	end
 	end
 	end
 	elseif (!gBool("Visuals", "Wallhack", "Armor Bar")) then
@@ -4441,6 +4457,21 @@ local function Visuals(v)
 	end
 	textpos = textpos + 9
 	end
+	if gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
+	if (gBool("Visuals", "Wallhack", "Ping")) then
+	textpos = textpos + 1
+	draw.SimpleText("Ping: "..v:Ping().."ms", "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	end
+	if (gBool("Visuals", "Wallhack", "DarkRP Money")) then
+	textpos = textpos + 1
+	if (gmod.GetGamemode().Name == "DarkRP") then
+	if (v:getDarkRPVar("money") == nil) then return end
+	draw.SimpleText("Money: $"..v:getDarkRPVar("money"), "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	end
+	end
+	elseif !gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
 	if (gBool("Visuals", "Wallhack", "Ping")) then
 	textpos = textpos + 1
 	draw.SimpleText("Ping: "..v:Ping().."ms", "VisualsFont", x2 + 3, y1 + textpos, pingcol, 0, 1)
@@ -4452,6 +4483,7 @@ local function Visuals(v)
 	if (v:getDarkRPVar("money") == nil) then return end
 	draw.SimpleText("Money: $"..v:getDarkRPVar("money"), "VisualsFont", x2 + 3, y1 + textpos, moneycol, 0, 1)
 	textpos = textpos + 9
+	end
 	end
 	end
 	end
@@ -4709,6 +4741,21 @@ local function Visuals(v)
 	end
 	textpos = textpos + 9
 	end
+	if gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
+	if (gBool("Visuals", "Wallhack", "Ping")) then
+	textpos = textpos + 1
+	draw.SimpleText("Ping: "..v:Ping().."ms", "VisualsFont", pos.x, pos.y - 0 + textpos, textcol, 1, 0)
+	textpos = textpos + 9
+	end
+	if (gBool("Visuals", "Wallhack", "DarkRP Money")) then
+	textpos = textpos + 1
+	if (gmod.GetGamemode().Name == "DarkRP") then
+	if (v:getDarkRPVar("money") == nil) then return end
+	draw.SimpleText("Money: $"..v:getDarkRPVar("money"), "VisualsFont", pos.x, pos.y - 0 + textpos, textcol, 1, 0)
+	textpos = textpos + 9
+	end
+	end
+	elseif !gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
 	if (gBool("Visuals", "Wallhack", "Ping")) then
 	textpos = textpos + 1
 	draw.SimpleText("Ping: "..v:Ping().."ms", "VisualsFont", pos.x, pos.y - 0 + textpos, pingcol, 1, 0)
@@ -4720,6 +4767,7 @@ local function Visuals(v)
 	if (v:getDarkRPVar("money") == nil) then return end
 	draw.SimpleText("Money: $"..v:getDarkRPVar("money"), "VisualsFont", pos.x, pos.y - 0 + textpos, moneycol, 1, 0)
 	textpos = textpos + 9
+	end
 	end
 	end
 	end
