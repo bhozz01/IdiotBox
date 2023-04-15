@@ -6228,34 +6228,85 @@ hook.Add("PreDrawOpaqueRenderables", "PreDrawOpaqueRenderables", function()
 			local pitch = v:EyeAngles().x
 			local yaw = v:EyeAngles().y
 			local roll = 0
-			if gOption("Hack vs. Hack", "Resolver", "Pitch:") ~= "Off" then
-				if gOption("Hack vs. Hack", "Resolver", "Pitch:") == "Down" then
+			for i=0, 100, 1 do --hi mum
+				Angle(0,0,0) --helps
+		
+				if pitch <= 20 and pitch >= - 10 then
 					pitch = 90
-				elseif gOption("Hack vs. Hack", "Resolver", "Pitch:") == "Up" then
-					pitch = - 90
-				elseif gOption("Hack vs. Hack", "Resolver", "Pitch:") == "Center" then
-					pitch = 0
-				elseif gOption("Hack vs. Hack", "Resolver", "Pitch:") == "Invert" then
-					pitch = - pitch
-				elseif gOption("Hack vs. Hack", "Resolver", "Pitch:") == "Random" then
-					pitch = math.random( - 90, 90)
-				else
-					if pitch <= 20 and pitch >= - 10 then
-						pitch = 90
-					end
-				end
-			end
-			if gOption("Hack vs. Hack", "Resolver", "Yaw:") ~= "Off" then
-				if gOption("Hack vs. Hack", "Resolver", "Yaw:") == "Left" then
-					yaw = yaw + 90
-				elseif gOption("Hack vs. Hack", "Resolver", "Yaw:") == "Right" then
-					yaw = yaw - 90
-				elseif gOption("Hack vs. Hack", "Resolver", "Yaw:") == "Invert" then
-					yaw = yaw + 180
-				elseif gOption("Hack vs. Hack", "Resolver", "Yaw:") == "Random" then
-					yaw = math.random( - 180, 180)
-				else
-					roll = v:EyeAngles().z
+				elseif pitch <= 21 and pitch >= - 11 then
+					pitch = 89
+				elseif pitch <= 22 and pitch >= - 11 then
+					pitch = 88
+				elseif pitch <= 23 and pitch >= - 11 then
+					pitch = 87
+				elseif pitch <= 24 and pitch >= - 11 then
+					pitch = 86
+				elseif pitch <= 25 and pitch >= - 11 then
+					pitch = 85
+				elseif pitch <= 26 and pitch >= - 11 then
+					pitch = 84
+				elseif pitch <= 27 and pitch >= - 11 then
+					pitch = 83
+				elseif pitch <= 28 and pitch >= - 11 then
+					pitch = 82
+				elseif pitch <= 29 and pitch >= - 11 then
+					pitch = 81
+				elseif pitch <= 30 and pitch >= - 11 then
+					pitch = 80
+				elseif pitch <= 31 and pitch >= - 11 then
+					pitch = 79
+				elseif pitch <= 32 and pitch >= - 11 then
+					pitch = 78
+				elseif pitch <= 33 and pitch >= - 11 then
+					pitch = 76
+				elseif pitch <= 34 and pitch >= - 11 then
+					pitch = 75
+				elseif pitch <= 35 and pitch >= - 11 then
+					pitch = 74
+				elseif pitch <= 36 and pitch >= - 11 then
+					pitch = 73
+				elseif pitch <= 37 and pitch >= - 11 then
+					pitch = 72
+				elseif pitch <= 38 and pitch >= - 11 then
+					pitch = 71
+				elseif pitch <= 39 and pitch >= - 11 then
+					pitch = 70
+				elseif pitch <= 40 and pitch >= - 11 then
+					pitch = 69
+				elseif pitch <= 41 and pitch >= - 11 then
+					pitch = 69
+				elseif pitch <= 93 and pitch >= - 11 then
+					pitch = 44
+				elseif pitch <= 92 and pitch >= - 12 then
+					pitch = 2
+				elseif pitch <= 88 and pitch >= - 13 then
+					pitch = 55
+				elseif pitch <= 77 and pitch >= - 14 then
+					pitch = 44
+				elseif pitch <= 66 and pitch >= - 15 then
+					pitch = 33
+				elseif pitch <= 55 and pitch >= - 16 then
+					pitch = 55
+				elseif pitch <= 44 and pitch >= - 17 then
+					pitch = 33
+				elseif pitch <= 33 and pitch >= - 18 then
+					pitch = 96
+				elseif pitch <= 22 and pitch >= - 19 then
+					pitch = 88
+				elseif pitch <= 1 and pitch >= - 20 then
+					pitch = 77
+				elseif pitch <= 22 and pitch >= - 21 then
+					pitch = 66
+				elseif pitch <= 77 and pitch >= - 22 then
+					pitch = 55
+				elseif pitch <= 23 and pitch >= - 23 then
+					pitch = 44
+				elseif pitch <= 54 and pitch >= - 24 then
+					pitch = 44
+				elseif pitch <= 33 and pitch >= - 25 then
+					pitch = 32
+				elseif pitch <= 74 and pitch >= - 26 then
+					pitch = 54
 				end
 			end
 			v:SetPoseParameter("aim_pitch", math.NormalizeAngle(pitch))
