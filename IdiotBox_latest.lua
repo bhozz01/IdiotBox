@@ -1,4 +1,4 @@
-  //----IdiotBox v6.9.b5----//
+  //----IdiotBox v6.9.b7----//
  //--------By Phizz--------//
 //------------------------//
 
@@ -36,7 +36,7 @@ end)
 
 local global = (_G)
 local folder = "IdiotBox"
-local version = "6.9.b5"
+local version = "6.9.b7"
 
 local me = LocalPlayer()
 --[[ local wep = me:GetActiveWeapon() ]]-- Trying to localize this causes many issues for whatever reason, but I'll figure it out at one point
@@ -324,8 +324,10 @@ local options = {
 		}, 
         ["Visuals"] = {
                 {
-					{"Wallhack", 16, 20, 232, 650, 218}, 
+					{"Wallhack", 16, 20, 232, 700, 218}, 
 					{"Enabled", "Checkbox", false, 78}, 
+					{"Style:", "Selection", "Optimized", {"Classic", "Optimized"}, 92}, 
+					{""}, 
 					{"Visibility:", "Selection", "Global", {"Global", "Clientside"}, 92}, 
 					{""}, 
 					{"Box:", "Selection", "Off", {"Off", "2D Box", "3D Box", "Edged Box"}, 92}, 
@@ -352,7 +354,7 @@ local options = {
 					{"DarkRP Money", "Checkbox", false, 78}, 
                 }, 
 				{
-                	{"Point of View", 261, 20, 232, 730, 218}, 
+                	{"Point of View", 261, 20, 232, 725, 218}, 
 					{"Custom FoV", "Checkbox", false, 78}, 
 					{"FoV Value:", "Slider", 110, 360, 92}, 
 					{""}, 
@@ -383,13 +385,14 @@ local options = {
 					{""}, 
                 }, 
                 {
-					{"Miscellaneous", 506, 20, 232, 680, 218}, 
+					{"Miscellaneous", 506, 20, 232, 700, 218}, 
 					{"Priority Targets Only", "Checkbox", false, 78}, 
 					{"Hide Ignored Targets", "Checkbox", false, 78}, 
 					{"Target Priority Colors", "Checkbox", true, 78}, -- Enabled by default
 					{"Show Enemies Only", "Checkbox", false, 78}, 
 					{"Show Spectators", "Checkbox", false, 78}, 
-					{"Team Colors", "Checkbox", false, 78}, 
+					{"Team Colors", "Checkbox", true, 78}, -- Enabled by default
+					{"Adaptive Text Color", "Checkbox", true, 78}, -- Enabled by default
 					{"Show NPCs", "Checkbox", false, 78}, 
 					{"NPC Name", "Checkbox", false, 78}, 
 					{"NPC Box", "Checkbox", false, 78}, 
@@ -1036,11 +1039,11 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(37, 15 - th / 2)
 	surface.SetTextColor(HSVToColor(RealTime() * 45 % 360, 1, 1))
 	surface.SetFont("MainFont")
-	surface.DrawText("IdiotBox v6.9.b5")
+	surface.DrawText("IdiotBox v6.9.b7")
 	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: April 6th 2023")
+	surface.DrawText("Latest build: April 15th 2023")
 	surface.SetFont("MenuFont")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -1261,6 +1264,8 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			info = "Shows players that are in spectator mode on your Visuals."
 		elseif feat == "Team Colors" then
 			info = "Visuals will draw with each player's assigned team color."
+		elseif feat == "Adaptive Text Color" then
+			info = "Changes the Wallhack text color to the current Wallhack color."
 		elseif feat == "Spectators Window" then
 			info = "Draws a spectator box, where you will be alerted if anyone is currently spectating you."
 		elseif feat == "Radar Window" then
@@ -1272,7 +1277,7 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 		elseif feat == "Show List Titles" then
 			info = "Shows the titles for both Custom Status and Players List."
 		elseif feat == "Show NPCs" then
-			info = "Shows NPCs on Visuals."
+			info = "Shows NPCs on Visuals. This feature uses the classic Wallhack style by default."
 		elseif feat == "NPC Name" then
 			info = "Draws the NPC's name."
 		elseif feat == "NPC Box" then
@@ -1280,7 +1285,7 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 		elseif feat == "NPC Health" then
 			info = "Draws a health bar to the left side of the NPC alongside their health value."
 		elseif feat == "Show Entities" then
-			info = "Draws the selected entities from the Entity Finder Menu."
+			info = "Draws the selected entities from the Entity Finder Menu. This feature uses the classic Wallhack style by default."
 		elseif feat == "Entity Name" then
 			info = "Draws the names of the selected entities from the Entity Finder Menu."
 		elseif feat == "Entity Box" then
@@ -1448,6 +1453,8 @@ local function DrawSelect(self, w, h, var, maxy, posx, posy, dist)
 			info = "Modifies the player yaw (left/ right)."
 		elseif feat == "Anti-Aim Direction:" then
 			info = "Choose the Anti-Aim yaw direction."
+		elseif feat == "Style:" then
+			info = "Choose between the classic and the optimized Wallhack styles."
 		elseif feat == "Visibility:" then
 			info = "Choose whether or not to show yourself as well on Wallhack."
 		elseif feat == "Box:" then
@@ -1655,9 +1662,9 @@ end
 
 function idiot.Changelog() -- Ran out of local variables, again
 	print("===========================================================\n\n")
-	print("IdiotBox v6.9.b5 bugfixes (in no particular order)")
+	print("IdiotBox v6.9.b7 bugfixes (in no particular order)")
 	print("")
-	print("Total bugfix count: ~50 bugs have been found and fixed in the v6.9.b5 update;")
+	print("Total bugfix count: ~50 bugs have been found and fixed in the v6.9.b7 update;")
 	print("\n")
 	print("- The 'readme.txt' file is finally up-to-date and only contains the important information;")
 	print("- Aim Smoothness will automatically disable itself if Silent aim is turned on;")
@@ -1722,9 +1729,9 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Removed old and unused message pop-up function;")
 	print("- Removed 'aaa' module as 'IdiotBox_alpha1.lua' was replaced by 'IdiotBox_dev.lua' and had no use.")
 	print("\n")
-	print("IdiotBox v6.9.b5 new features (in no particular order)")
+	print("IdiotBox v6.9.b7 new features (in no particular order)")
 	print("")
-	print("Total feature count: ~50 features have been added in the v6.9.b5 update;")
+	print("Total feature count: ~50 features have been added in the v6.9.b7 update;")
 	print("\n")
 	print("- Added 'Projectile Prediction' and 'Line-of-Sight Check' to Aimbot;")
 	print("- Added 'Emote Resolver' to Resolver;")
@@ -1755,6 +1762,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Added more customization options to Panels;")
 	print("- Added a custom configurations menu;")
 	print("- Reworked 'Bunny Hop' and 'Auto Strafe' from scratch;")
+	print("- Reworked 'Wallhack' from scratch;")
 	print("- Reworked 'Auto Wallbang' from Aimbot;")
 	print("- Reworked 'Resolver' from Hack vs. Hack;")
 	print("- Reworked 'Radar', 'Spectators', 'Custom Status' and 'Players List' from Panels;")
@@ -3113,8 +3121,8 @@ local function ChatSpam()
 	local messagespam = {"GET FUCKED BY IDIOTBOX KIDDIE", "YOU SUCK SHIT LMAO", "STOP BEING SUCH A WORTHLESS CUMSTAIN AND GET IDIOTBOX NOW", "MONEY WASTER LOL", "YOU FUCKING FATASS, GET IDIOTBOX AND LOSE ALL THAT WEIGHT YOU INCEL", "ARE ALL THE GIRLS IGNORING YOU? GET IDIOTBOX AND YOU'LL BE FLOODED WITH PUSSY", "DO YOU FEEL WORTHLESS? WELL, YOU ARE LOL", "GET IDIOTBOX IF YOU WANT SOME OF THAT CLOUT", "STOP WASTING YOUR TIME ON SOUNDCLOUD BECAUSE YOU AIN'T GONNA GET NOWHERE WITH IT", "GET IDIOTBOX AND YOUR DICK WILL GROW 4 TIMES ITS SIZE", "LITTLE KID LMAO",}
 	local offensivespam = {"fuck niggers like fr", "who else here hates black people lmao", "all niggers should be locked in cages and fed bananas", "black people are some sub-human slaves imo", "i've never met an intelligent black person", "why tf are all niggers so ugly lol", "all the black dudes i've seen look like monkeys", "ooga booga black rights", "my grandpa died in ww2, he was the best german pilot", "white people are genetically superior to every othe race", "all jews can do is hide the truth, steal money and start wars",}
 	local insultspam = {" is shit at building", " is no older than 13", " looks like a 2 month old corpse", " really thinks gmod is a good game", " can't afford a better pc lmao", ", so how do you like your 40 fps?", " will definitely kill himself before his 30's ", " is a fucking virgin lmao", " is a script kiddie", " thinks his 12cm penis is big lmfao", ", how does it feel when you've never seen a naked woman in person?", ", what do you like not being able to do a single push-up?", ", tell me how it feels to be shorter than every girl you've met", " is a fatass who only spends his time in front of a monitor like an incel", "'s parents have a lower than average income", " lives under a bridge lmao", " vapes because is too afraid to smoke an actual ciggarette", ", your low self esteem really pays off you loser", ", make sure you tell me what unemployment feels like", " lives off of his parents' money", ", you're a dissapointment to your entire family, fatass", " has probably fried all of his dopamine receptors by masturbating this much",}
-	local advertise = {"IdiotBox - https://phizzofficial.wixsite.com/idiotbox4gmod/", "IdiotBox - Destroying everyone since '16.", "IdiotBox - Easy to use, free Garry's Mod cheat.", "IdiotBox - Now you can forget that negative KD's can be possible.", "IdiotBox - Beats all of your other cheats.", "IdiotBox - IdiotBox came back, and it came back with a vengeance.", "IdiotBox - Join the Discord server if you have a high IQ.", "IdiotBox - The only high-quality free cheat, out for Garry's Mod.", "IdiotBox - Best cheat, created by Phizz & more.", "IdiotBox - Always updated, never dead.", "IdiotBox - A highly reliable and optimised cheating software.", "IdiotBox - Top class, free cheat for Garry's Mod.", "IdiotBox - Makes noobs cry waves of tears since forever!", "IdiotBox - Say goodbye to the respawn room!", "IdiotBox - Download the highest quality Garry's Mod cheat for free now!", "IdiotBox - A reliable way to go!", "IdiotBox - Make Garry's Mod great again!", "IdiotBox - Visit our website for fresh Discord invite links!", "IdiotBox - Monthly bugfixes & updates. It never gets outdated!", "IdiotBox - Download IdiotBox v6.9.b5 right now!", "IdiotBox - Bug-free and fully customizable!", "IdiotBox - Join our Steam group and Discord server to stay up-to-date!", "IdiotBox - Refund all your cheats, use this better and free alternative!", "IdiotBox - Now with more features than ever!", "IdiotBox - The best Garry's Mod cheat, with 24/7 support, for free!", "IdiotBox - Bypasses most anti-cheats and screengrabbers!",}
-	local toxicadvertise = {"Get IdiotBox you fucking smelly niggers", "IdiotBox is the best fucking cheat and that is a fact", "All of you are fucking autistic for not having IdiotBox", "Why the fuck don't you get IdiotBox lol", "Stay being gay or get IdiotBox", "Your moms should know that you play grown-up games, join our Discord to prove you are not under-aged", "I have your IPs you dumb niggers, I will delete the IPs if you get IdiotBox", "You all fucking smell like shit for not using IdiotBox", "IdiotBox makes kiddos cry and piss their pants maybe and maybe shit and cum", "IdiotBox is the best free cheat in the history of the entire world so get it faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ or you're retarded", "Join our fucking Discord or else you are literally an unpriviledged niggers", "IdiotBox is a cheat for people with high IQ only, use IdiotBox to prove you're smart", "Don't wanna get fucking raped? Get IdiotBox and shit on them skids", "This is the best free paste around, no other paste is better than IdiotBox", "How the fuck are you not using IdiotBox in a shitty dying game lmfao", "IdiotBox is the best and most popular Garry's Mod cheat ever, why are you not using it lol", "May cause a bit of lag but it's worth it for the fuckton of features that it has", "You're all faggots if you don't cheat with IdiotBox", "You literally go to pride month parades if you don't use IdiotBox", "Idiotbox is the highest quality, most popular free cheat, just get it already", "Shit on all of the virgins that unironically play this game with this high-quality cheat", "Get good, get IdiotBox you fucking retards", "You're mad retarded if you are not using IdiotBox, no cap", "Own every single retard in HvH with this superior cheat now", "All of you are dumb niggers for not downloading IdiotBox and that is a fact", "You suck fat cocks in public bathrooms if you're not using IdiotBox", "Just get this god-like cheat already and rape all existing servers", "No you idiots, you can't get VAC banned for using lua scripts you absolute cretins", "IdiotBox bypasses even the most complex anti-cheats and screengrabbers, you're not getting banned anytime soon", "Just use IdiotBox to revert your sad lives and feel better about yourselves", "Phizz is a god because he made this god-like cheat called IdiotBox", "I am forced to put IdiotBox in almost every sentence and advertise in a toxic way because I'm a text in a lua script", "Why are you fucking gay? Get IdiotBox today", "The sentence above is a rhyme but the script says to put random sentences so I don't think you can see it, get IdiotBox btw", "Purchase IdiotBox now! Only for OH wait it's free", "It is highly recommended that you get IdiotBox in case of getting pwned", "You are swag and good looking, but only if you get IdiotBox", "Phizz spent so many fucking nights creating this masterpiece of a cheat so get it now or he will legit kill you", "Fuck you and get IdiotBox now lol", "IdiotBox is constantly getting updated with dope-ass features, it never gets outdated so just get it", "Have IdiotBox installed if you're mega straight and zero gay", "Whoever the fuck said lua cheats are bad deserves to die in a house fire", "You get IdiotBox, everyone else on the server gets pwned, ez as that", "Many cheats copied IdiotBox, but this is the original one, fucking copycats", "Join the fucking Discord, promise it won't hurt you faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ right this moment or I will hire a hitman to kill you", "Join the IdiotBox group at OH wait niggers got mad and mass-reported it, kys shitkids", "Nvm, Steam group is back lol get fucked you mad skid shitkids", "IdiotBox killed all of the paid cheats because it's too good", "Get IdiotBox, it's free and very good, you sacks of crying shit", "IdiotBox is the fucking G.O.A.T.", "What the fuck are you doing not using this god-like cheat lol", "This is an epic fucking cheat called IdiotBox that was created by Phizz and others, worship your new gods kiddos", "You were fed cock milk as a baby if you're not using IdiotBox and you can not prove me wrong", "IdiotBox has the dopest anti-aims and resolvers you'll ever use, you will be a HvH god", "Just please get IdiotBox already you retards, I am tired of typing these lines for fuck's sake", "Phizz will give everyone optimized IdiotBox soon so quit your shit", "IdiotBox needs no Steam group, we're too chad for one", "Our Discord was tapped at some point but IdiotBox is back and stronger than ever", "IdiotBox came back to kill silly niggers, and it came back with a vengeance", "Download Idiotbox v6.9.b5 now, you dont even know what you're missing you mongoloids", "Have I told you about IdiotBox, the best Garry's Mod cheat ever made??", "Holy shit, IdiotBox for Garry's Mod is the best cheat that I have ever used!!",}
+	local advertise = {"IdiotBox - https://phizzofficial.wixsite.com/idiotbox4gmod/", "IdiotBox - Destroying everyone since '16.", "IdiotBox - Easy to use, free Garry's Mod cheat.", "IdiotBox - Now you can forget that negative KD's can be possible.", "IdiotBox - Beats all of your other cheats.", "IdiotBox - IdiotBox came back, and it came back with a vengeance.", "IdiotBox - Join the Discord server if you have a high IQ.", "IdiotBox - The only high-quality free cheat, out for Garry's Mod.", "IdiotBox - Best cheat, created by Phizz & more.", "IdiotBox - Always updated, never dead.", "IdiotBox - A highly reliable and optimised cheating software.", "IdiotBox - Top class, free cheat for Garry's Mod.", "IdiotBox - Makes noobs cry waves of tears since forever!", "IdiotBox - Say goodbye to the respawn room!", "IdiotBox - Download the highest quality Garry's Mod cheat for free now!", "IdiotBox - A reliable way to go!", "IdiotBox - Make Garry's Mod great again!", "IdiotBox - Visit our website for fresh Discord invite links!", "IdiotBox - Monthly bugfixes & updates. It never gets outdated!", "IdiotBox - Download IdiotBox v6.9.b7 right now!", "IdiotBox - Bug-free and fully customizable!", "IdiotBox - Join our Steam group and Discord server to stay up-to-date!", "IdiotBox - Refund all your cheats, use this better and free alternative!", "IdiotBox - Now with more features than ever!", "IdiotBox - The best Garry's Mod cheat, with 24/7 support, for free!", "IdiotBox - Bypasses most anti-cheats and screengrabbers!",}
+	local toxicadvertise = {"Get IdiotBox you fucking smelly niggers", "IdiotBox is the best fucking cheat and that is a fact", "All of you are fucking autistic for not having IdiotBox", "Why the fuck don't you get IdiotBox lol", "Stay being gay or get IdiotBox", "Your moms should know that you play grown-up games, join our Discord to prove you are not under-aged", "I have your IPs you dumb niggers, I will delete the IPs if you get IdiotBox", "You all fucking smell like shit for not using IdiotBox", "IdiotBox makes kiddos cry and piss their pants maybe and maybe shit and cum", "IdiotBox is the best free cheat in the history of the entire world so get it faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ or you're retarded", "Join our fucking Discord or else you are literally an unpriviledged niggers", "IdiotBox is a cheat for people with high IQ only, use IdiotBox to prove you're smart", "Don't wanna get fucking raped? Get IdiotBox and shit on them skids", "This is the best free paste around, no other paste is better than IdiotBox", "How the fuck are you not using IdiotBox in a shitty dying game lmfao", "IdiotBox is the best and most popular Garry's Mod cheat ever, why are you not using it lol", "May cause a bit of lag but it's worth it for the fuckton of features that it has", "You're all faggots if you don't cheat with IdiotBox", "You literally go to pride month parades if you don't use IdiotBox", "Idiotbox is the highest quality, most popular free cheat, just get it already", "Shit on all of the virgins that unironically play this game with this high-quality cheat", "Get good, get IdiotBox you fucking retards", "You're mad retarded if you are not using IdiotBox, no cap", "Own every single retard in HvH with this superior cheat now", "All of you are dumb niggers for not downloading IdiotBox and that is a fact", "You suck fat cocks in public bathrooms if you're not using IdiotBox", "Just get this god-like cheat already and rape all existing servers", "No you idiots, you can't get VAC banned for using lua scripts you absolute cretins", "IdiotBox bypasses even the most complex anti-cheats and screengrabbers, you're not getting banned anytime soon", "Just use IdiotBox to revert your sad lives and feel better about yourselves", "Phizz is a god because he made this god-like cheat called IdiotBox", "I am forced to put IdiotBox in almost every sentence and advertise in a toxic way because I'm a text in a lua script", "Why are you fucking gay? Get IdiotBox today", "The sentence above is a rhyme but the script says to put random sentences so I don't think you can see it, get IdiotBox btw", "Purchase IdiotBox now! Only for OH wait it's free", "It is highly recommended that you get IdiotBox in case of getting pwned", "You are swag and good looking, but only if you get IdiotBox", "Phizz spent so many fucking nights creating this masterpiece of a cheat so get it now or he will legit kill you", "Fuck you and get IdiotBox now lol", "IdiotBox is constantly getting updated with dope-ass features, it never gets outdated so just get it", "Have IdiotBox installed if you're mega straight and zero gay", "Whoever the fuck said lua cheats are bad deserves to die in a house fire", "You get IdiotBox, everyone else on the server gets pwned, ez as that", "Many cheats copied IdiotBox, but this is the original one, fucking copycats", "Join the fucking Discord, promise it won't hurt you faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ right this moment or I will hire a hitman to kill you", "Join the IdiotBox group at OH wait niggers got mad and mass-reported it, kys shitkids", "Nvm, Steam group is back lol get fucked you mad skid shitkids", "IdiotBox killed all of the paid cheats because it's too good", "Get IdiotBox, it's free and very good, you sacks of crying shit", "IdiotBox is the fucking G.O.A.T.", "What the fuck are you doing not using this god-like cheat lol", "This is an epic fucking cheat called IdiotBox that was created by Phizz and others, worship your new gods kiddos", "You were fed cock milk as a baby if you're not using IdiotBox and you can not prove me wrong", "IdiotBox has the dopest anti-aims and resolvers you'll ever use, you will be a HvH god", "Just please get IdiotBox already you retards, I am tired of typing these lines for fuck's sake", "Phizz will give everyone optimized IdiotBox soon so quit your shit", "IdiotBox needs no Steam group, we're too chad for one", "Our Discord was tapped at some point but IdiotBox is back and stronger than ever", "IdiotBox came back to kill silly niggers, and it came back with a vengeance", "Download Idiotbox v6.9.b7 now, you dont even know what you're missing you mongoloids", "Have I told you about IdiotBox, the best Garry's Mod cheat ever made??", "Holy shit, IdiotBox for Garry's Mod is the best cheat that I have ever used!!",}
 	local lmaoboxadvertise = {"www.IB4G.net - https://phizzofficial.wixsite.com/idiotbox4gmod/", "www.IB4G.net - WORST FRAMERATE, BEST FEATURES!", "www.IB4G.net - WHAT ARE YOU WAITING FOR?", "www.IB4G.net - BEST GARRY'S MOD CHEAT OUT RIGHT NOW!", "www.IB4G.net - SAY GOODBYE TO THE RESPAWN ROOM!", "www.IB4G.net - NO SKILL REQUIRED!", "www.IB4G.net - NEVER DIE AGAIN WITH THIS!", "www.IB4G.net - ONLY HIGH IQ NIGGAS' USE IDIOTBOX!", "www.IB4G.net - THE GAME IS NOT ACTUALLY DYING, I JUST LIKE TO ANNOY KIDS LOL!", "www.IB4G.net - DOWNLOAD THE CHEAT FOR FREE!", "www.IB4G.net - NOW WITH AUTOMATIC UPDATES!", "www.IB4G.net - GUARANTEED SWAG AND RESPECT ON EVERY SERVER!", "www.IB4G.net - IDIOTBOX COMING SOON TO TETIRS!", "www.IB4G.net - VISIT OUR WEBSITE FOR A FRESH INVITE LINK TO OUR DISCORD!", "www.IB4G.net - PHIZZ IS A GOD FOR MAKING THIS!", "www.IB4G.net - BECOME THE SERVER MVP IN NO TIME!", "www.IB4G.net - 100% NO SKILL REQUIRED!", "www.IB4G.net - BEST CHEAT, MADE BY THE CHINESE COMMUNIST PARTY!", "www.IB4G.net - MAKE IDIOTBOX GREAT AGAIN!", "www.IB4G.net - WHY ARE YOU NOT CHEATING IN A DYING GAME?", "www.IB4G.net - RUINING EVERYONE'S FUN SINCE 2016!", "www.IB4G.net - IT'S PASTED, BUT IT'S THE BEST PASTE YOU WILL EVER USE!", "www.IB4G.net - A VERY CLEAN, HIGH-QUALITY AND BUG-FREE PASTE!", "www.IB4G.net - ALWAYS UPDATED! NEVER GETS OUTDATED!", "www.IB4G.net - WITH A FUCK TON OF NEW FEATURES!", "www.IB4G.net - ONCE YOU GO BLACK, YOU NEVER GO BACK. GET IDIOTBOX NOW!", "www.IB4G.net - SACRIFICE A FEW FRAMES FOR THE BEST EXPERIENCE OF YOUR LIFE!", "www.IB4G.net - STEAM GROUP WAS TAKEN DOWN, BUT IT'S BACK BABY!", "www.IB4G.net - BEST GARRY'S MOD CHEAT, NO CAP!", "www.IB4G.net - WITH IDIOTBOX, YOU'LL NEVER GET BANNED FOR CHEATING AGAIN!", "www.IB4G.net - DISCORD SERVER WAS TAKEN DOWN MANY TIMES, BUT WE ALWAYS COME BACK!",}
 	local horstwessellied = {"Die Fahne hoch! Die Reihen fest geschlossen", "SA marschiert mit ruhig festem Schritt", "Kam'raden, die Rotfront und Reaktion erschossen", "Marschier'n im Geist in unser'n Reihen mit", "Die Straße frei den braunen Bataillonen", "Die Straße frei dem Sturmabteilungsmann", "Es schau'n aufs Hakenkreuz voll Hoffnung schon Millionen", "Der Tag für Freiheit und für Brot bricht an", "Zum letzten Mal wird Sturmalarm geblasen", "Zum Kampfe steh'n wir alle schon bereit", "Schon flattern Hitlerfahnen über allen Straßen", "Die Knechtschaft dauert nur noch kurze Zeit", "Die Fahne hoch! Die Reihen fest geschlossen", "SA marschiert mit ruhig festem Schritt", "Kam'raden, die Rotfront und Reaktion erschossen", "Marschier'n im Geist in unser'n Reihen mit",}
 	local ssmarschiertinfeindesland = {"SS marschiert in Feindesland", "Und singt ein Teufelslied", "Ein Schütze steht am Wolgastrand", "Und leise summt er mit", "Wir pfeifen auf Unten und Oben", "Und uns kann die ganze Welt", "Verfluchen oder auch loben", "Grad wie es jedem gefällt", "Wo wir sind da geht's immer vorwärts", "Und der Teufel, der lacht nur dazu", "Ha, ha, ha, ha, ha, ha", "Wir kämpfen für Deutschland", "Wir kämpfen für Hitler", "Der Rote kommt niemehr zur Ruh'", "Wir kämpften schon in mancher Schlacht", "In Nord, Süd, Ost und West", "Und stehen nun zum Kampf bereit", "Gegen die rote Pest", "SS wird nicht ruh'n, wir vernichten", "Bis niemand mehr stört Deutschlands Glück", "Und wenn sich die Reihen auch lichten", "Für uns gibt es nie ein Zurück", "Wo wir sind da geht's immer vorwärts", "Und der Teufel, der lacht nur dazu", "Ha, ha, ha, ha, ha, ha", "Wir kämpfen für Deutschland", "Wir kämpfen für Hitler", "Der Rote kommt niemehr zur Ruh'",}
@@ -4037,14 +4045,6 @@ local function AutoReload(cmd)
 end
 
 local function Visuals(v)
-	local pos = em.GetPos(v)
-	local min, max = em.GetCollisionBounds(v)
-	local pos2 = pos + Vector(0, 0, max.z)
-	local pos = vm.ToScreen(pos)
-	local pos2 = vm.ToScreen(pos2)
-	local h = pos.y - pos2.y
-	local w = h / 2
-	local ww = h / 4
 	local colOne = (idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) && Color(0, 0, 0) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
 	local colTwo = (idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || Color(0, 0, 0)
 	local colThree = (idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
@@ -4054,29 +4054,38 @@ local function Visuals(v)
 	local armorcol = Color((100 - v:Armor()) * 2.55, v:Armor() * 2.55, v:Armor() * 2.55)
 	local pingcol = Color(v:Ping() * 2.55, 255 - v:Ping() - 5 * 2, 0)
 	local moneycol = Color(0, 255, 0)
-	local textcol = Color(255, 255, 255)
+	local textcol = !gBool("Visuals", "Miscellaneous", "Adaptive Text Color") && Color(255, 255, 255) || (idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
 	local friendcol = Color(0, 255, 255)
 	local devcol = HSVToColor(RealTime() * 45 % 360, 1, 1)
 	local ignoredcol = Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)
 	local prioritycol = Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)
 	local misccol = Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
-	local hh = 0
 	if (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then
 		return false
 	end
-	if gOption("Visuals", "Wallhack", "Box:") == "2D Box" then
+	if gOption("Visuals", "Wallhack", "Style:") == "Optimized" then
+	local x1, y1, x2, y2 = ScrW() * 2, ScrH() * 2, - ScrW(), - ScrH()
+	local min, max = em.GetCollisionBounds(v)
+	local corners = {v:LocalToWorld(Vector(min.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, min.y, max.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, max.z)):ToScreen()}
+	for k, v in next, corners do
+		x1, y1 = math.min(x1, v.x), math.min(y1, v.y)
+		x2, y2 = math.max(x2, v.x), math.max(y2, v.y)
+	end
+	local diff, diff2 = math.abs(x2 - x1), math.abs(y2 - y1)
+	local textpos = 5
+	if (gOption("Visuals", "Wallhack", "Box:") == "2D Box") then
 		surface.SetDrawColor(colOne)
-		surface.DrawOutlinedRect(pos.x - w / 2, pos.y - h, w, h)
+		surface.DrawOutlinedRect(x1, y1, diff, diff2)
 		surface.SetDrawColor(colTwo)
-		surface.DrawOutlinedRect(pos.x - w / 2 - 1, pos.y - h - 1, w + 2, h + 2)
-		surface.DrawOutlinedRect(pos.x - w / 2 + 1, pos.y - h + 1, w - 2, h - 2)
-	elseif gOption("Visuals", "Wallhack", "Box:") == "3D Box" then
+		surface.DrawOutlinedRect(x1 - 1, y1 - 1, diff + 2, diff2 + 2)
+		surface.DrawOutlinedRect(x1 + 1, y1 + 1, diff - 2, diff2 - 2)
+	elseif (gOption("Visuals", "Wallhack", "Box:") == "3D Box") then
 	for k, v in pairs(player.GetAll()) do
 	if (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) then continue end
 	if v:IsValid() and v:Alive() and v:Health() > 0 then
 		local eye = v:EyeAngles()
-		local min, max = v:WorldSpaceAABB()
 		local origin = v:GetPos()
+		local min, max = v:WorldSpaceAABB()
 		if gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(ignorelist, v:UniqueID()) and !(idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) then
 			cam.Start3D()
 				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, ignoredcol)
@@ -4100,14 +4109,406 @@ local function Visuals(v)
 				end
 			end
 		end
-	elseif (gBool("Visuals", "Wallhack", "Enabled") && gOption("Visuals", "Wallhack", "Box:") == "Edged Box") then   
-	x1, y1, x2, y2 = ScrW() * 2, ScrH() * 2, - ScrW(), - ScrH()
-		corners = {v:LocalToWorld(Vector(min.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, min.y, max.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, max.z)):ToScreen()}
+	elseif (gOption("Visuals", "Wallhack", "Box:") == "Edged Box") then   
+		surface.SetDrawColor(colThree)
+		surface.DrawLine(x1, y1, x1 + (diff * 0.225), y1)
+		surface.DrawLine(x1, y1, x1, y1 + (diff2 * 0.225))
+		surface.DrawLine(x1, y2, x1 + (diff * 0.225), y2)
+		surface.DrawLine(x1, y2, x1, y2 - (diff2 * 0.225))
+		surface.DrawLine(x2, y1, x2 - (diff * 0.225), y1)
+		surface.DrawLine(x2, y1, x2, y1 + (diff2 * 0.225))
+		surface.DrawLine(x2, y2, x2 - (diff * 0.225), y2)
+		surface.DrawLine(x2, y2, x2, y2 - (diff2 * 0.225))
+    end
+	if (gBool("Visuals", "Wallhack", "Health Bar")) then
+		surface.SetDrawColor(0, 0, 0)
+		surface.DrawRect(x1 - 6, y1, 3, diff2)
+		surface.DrawRect(x1 - 7, y1 - 1, 5, diff2 + 2)
+		surface.SetDrawColor(Color(255 - 255 / v:GetMaxHealth() * v:Health(), 255 / v:GetMaxHealth() * v:Health(), 0))
+		surface.DrawRect(x1 - 6, y2 - math.Clamp(diff2 / v:GetMaxHealth() * v:Health(), 0, diff2), 3, math.Clamp(diff2 / v:GetMaxHealth() * v:Health(), 0, diff2))
+	end
+	if (gBool("Visuals", "Wallhack", "Armor Bar")) then
+		surface.SetDrawColor(0, 0, 0)
+		surface.DrawRect(x1 + diff + 3, y1, 3, diff2)
+		surface.DrawRect(x1 + diff + 2, y1 - 1, 5, diff2 + 2)
+		surface.SetDrawColor(Color(255 - 155 / v:GetMaxArmor() * v:Armor(), 255 / v:GetMaxArmor() * v:Armor(), 255 / v:GetMaxArmor() * v:Armor()))
+		surface.DrawRect(x1 + diff + 3, y2 - math.Clamp(diff2 / v:GetMaxArmor() * v:Armor(), 0, diff2), 3, math.Clamp(diff2 / v:GetMaxArmor() * v:Armor(), 0, diff2))
+	if (gBool("Visuals", "Wallhack", "Name")) then
+		local friendstatus = pm.GetFriendStatus(v)
+		if table.HasValue(ignorelist, v:UniqueID()) then
+			textpos = textpos + 1
+			draw.SimpleText("Ignored Target", "VisualsFont", x2 + 9, y1 + textpos, ignoredcol, 0, 1)
+			textpos = textpos + 9
+		end
+		if table.HasValue(prioritylist, v:UniqueID()) then
+			textpos = textpos + 1
+			draw.SimpleText("Priority Target", "VisualsFont", x2 + 9, y1 + textpos, prioritycol, 0, 1)
+			textpos = textpos + 9
+		end
+		if idiot.creator[v:SteamID()] then
+			textpos = textpos + 1
+			draw.SimpleText("IdiotBox Creator", "VisualsFont", x2 + 9, y1 + textpos, devcol, 0, 1)
+			textpos = textpos + 9
+		end
+		if idiot.contributors[v:SteamID()] then
+			textpos = textpos + 1
+			draw.SimpleText("IdiotBox Contributor", "VisualsFont", x2 + 9, y1 + textpos, devcol, 0, 1)
+			textpos = textpos + 9
+		end
+		if (gBool("Visuals", "Wallhack", "Bystander Name") && engine.ActiveGamemode() == "murder") then
+			textpos = textpos + 1
+			draw.SimpleText("Bystander name: "..v:GetNWString("bystanderName"), "VisualsFont", x2 + 9, y1 + textpos, colThree, 0, 1)
+			textpos = textpos + 9
+		else
+			textpos = textpos + 1
+			draw.SimpleText("Name: "..pm.Name(v), "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+			textpos = textpos + 9
+		end
+		if (friendstatus == "friend") and not gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
+			textpos = textpos + 1
+			draw.SimpleText("Steam Friend", "VisualsFont", x2 + 9, y1 + textpos, friendcol, 0, 1)
+			textpos = textpos + 9
+		elseif (friendstatus == "friend") and gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
+			textpos = textpos + 1
+			draw.SimpleText("Steam Friend", "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+			textpos = textpos + 9
+		end
+	end
+	if gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
+	if (gBool("Visuals", "Wallhack", "Health Value")) then
+	textpos = textpos + 1
+	draw.SimpleText("Health: "..em.Health(v), "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Armor Value")) then
+	textpos = textpos + 1
+	draw.SimpleText("Armor: "..v:Armor(), "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	end
+	elseif !gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
+	if (gBool("Visuals", "Wallhack", "Health Value")) then
+	textpos = textpos + 1
+	draw.SimpleText("Health: "..em.Health(v), "VisualsFont", x2 + 9, y1 + textpos, healthcol, 0, 1)
+	textpos = textpos + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Armor Value")) then
+	textpos = textpos + 1
+	draw.SimpleText("Armor: "..v:Armor(), "VisualsFont", x2 + 9, y1 + textpos, armorcol, 0, 1)
+	textpos = textpos + 9
+	end
+	end
+	if (gBool("Visuals", "Wallhack", "Weapon")) then
+	textpos = textpos + 1
+	local w = pm.GetActiveWeapon(v)
+	if (w && em.IsValid(w)) then
+	draw.SimpleText("Weapon: "..language.GetPhrase(w:GetPrintName()), "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	end
+	end
+	if (gBool("Visuals", "Wallhack", "Rank")) then
+	textpos = textpos + 1
+	draw.SimpleText("Rank: "..pm.GetUserGroup(v), "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Distance")) then
+	textpos = textpos + 1
+	draw.SimpleText("Distance: "..math.Round(v:GetPos():Distance(me:GetPos()) / 40), "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Velocity")) then
+	textpos = textpos + 1
+	draw.SimpleText("Velocity: "..math.Round(v:GetVelocity():Length()), "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	end
+	if gBool("Visuals", "Wallhack", "Conditions") and v:IsPlayer() then
+	if v:InVehicle() then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *driving*", "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	elseif v:GetMoveType() == MOVETYPE_NOCLIP then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *noclipping*", "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	elseif v:IsDormant() then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *dormant*", "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	elseif v:IsFlagSet(2) then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *crouching*", "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	elseif v:GetMoveType() == MOVETYPE_LADDER then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *climbing*", "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	elseif v:GetColor(v).a < 255 then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *spawning*", "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	elseif v:IsFlagSet(64) then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *frozen*", "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	elseif v:IsPlayingTaunt() then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *emoting*", "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	elseif v:IsFlagSet(1024) then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *swimming*", "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	elseif v:IsSprinting() then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *sprinting*", "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	elseif v:IsTyping() then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *typing*", "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	elseif v:GetMoveType() == MOVETYPE_WALK or v:GetMoveType() == MOVETYPE_NONE then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *none*", "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	end
+	end
+	if (gBool("Visuals", "Wallhack", "Steam ID")) then
+	textpos = textpos + 1
+	if (v:SteamID() ~= "NULL") then
+	draw.SimpleText("SteamID: "..v:SteamID(v), "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+	else
+	draw.SimpleText("SteamID: BOT", "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+	end
+	textpos = textpos + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Ping")) then
+	textpos = textpos + 1
+	draw.SimpleText("Ping: "..v:Ping().."ms", "VisualsFont", x2 + 9, y1 + textpos, pingcol, 0, 1)
+	textpos = textpos + 9
+	end
+	if (gBool("Visuals", "Wallhack", "DarkRP Money")) then
+	textpos = textpos + 1
+	if (gmod.GetGamemode().Name == "DarkRP") then
+	if (v:getDarkRPVar("money") == nil) then return end
+	draw.SimpleText("Money: $"..v:getDarkRPVar("money"), "VisualsFont", x2 + 9, y1 + textpos, moneycol, 0, 1)
+	textpos = textpos + 9
+	end
+	end
+	elseif (!gBool("Visuals", "Wallhack", "Armor Bar")) then
+	if (gBool("Visuals", "Wallhack", "Name")) then
+		local friendstatus = pm.GetFriendStatus(v)
+		if table.HasValue(ignorelist, v:UniqueID()) then
+			textpos = textpos + 1
+			draw.SimpleText("Ignored Target", "VisualsFont", x2 + 3, y1 + textpos, ignoredcol, 0, 1)
+			textpos = textpos + 9
+		end
+		if table.HasValue(prioritylist, v:UniqueID()) then
+			textpos = textpos + 1
+			draw.SimpleText("Priority Target", "VisualsFont", x2 + 3, y1 + textpos, prioritycol, 0, 1)
+			textpos = textpos + 9
+		end
+		if idiot.creator[v:SteamID()] then
+			textpos = textpos + 1
+			draw.SimpleText("IdiotBox Creator", "VisualsFont", x2 + 3, y1 + textpos, devcol, 0, 1)
+			textpos = textpos + 9
+		end
+		if idiot.contributors[v:SteamID()] then
+			textpos = textpos + 1
+			draw.SimpleText("IdiotBox Contributor", "VisualsFont", x2 + 3, y1 + textpos, devcol, 0, 1)
+			textpos = textpos + 9
+		end
+		if (gBool("Visuals", "Wallhack", "Bystander Name") && engine.ActiveGamemode() == "murder") then
+			textpos = textpos + 1
+			draw.SimpleText("Bystander name: "..v:GetNWString("bystanderName"), "VisualsFont", x2 + 3, y1 + textpos, colThree, 0, 1)
+			textpos = textpos + 9
+		else
+			textpos = textpos + 1
+			draw.SimpleText("Name: "..pm.Name(v), "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+			textpos = textpos + 9
+		end
+		if (friendstatus == "friend") and not gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
+			textpos = textpos + 1
+			draw.SimpleText("Steam Friend", "VisualsFont", x2 + 3, y1 + textpos, friendcol, 0, 1)
+			textpos = textpos + 9
+		elseif (friendstatus == "friend") and gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
+			textpos = textpos + 1
+			draw.SimpleText("Steam Friend", "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+			textpos = textpos + 9
+		end
+	end
+	if gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
+	if (gBool("Visuals", "Wallhack", "Health Value")) then
+	textpos = textpos + 1
+	draw.SimpleText("Health: "..em.Health(v), "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Armor Value")) then
+	textpos = textpos + 1
+	draw.SimpleText("Armor: "..v:Armor(), "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	end
+	elseif !gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
+	if (gBool("Visuals", "Wallhack", "Health Value")) then
+	textpos = textpos + 1
+	draw.SimpleText("Health: "..em.Health(v), "VisualsFont", x2 + 3, y1 + textpos, healthcol, 0, 1)
+	textpos = textpos + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Armor Value")) then
+	textpos = textpos + 1
+	draw.SimpleText("Armor: "..v:Armor(), "VisualsFont", x2 + 3, y1 + textpos, armorcol, 0, 1)
+	textpos = textpos + 9
+	end
+	end
+	if (gBool("Visuals", "Wallhack", "Weapon")) then
+	textpos = textpos + 1
+	local w = pm.GetActiveWeapon(v)
+	if (w && em.IsValid(w)) then
+	draw.SimpleText("Weapon: "..language.GetPhrase(w:GetPrintName()), "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	end
+	end
+	if (gBool("Visuals", "Wallhack", "Rank")) then
+	textpos = textpos + 1
+	draw.SimpleText("Rank: "..pm.GetUserGroup(v), "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Distance")) then
+	textpos = textpos + 1
+	draw.SimpleText("Distance: "..math.Round(v:GetPos():Distance(me:GetPos()) / 40), "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Velocity")) then
+	textpos = textpos + 1
+	draw.SimpleText("Velocity: "..math.Round(v:GetVelocity():Length()), "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	end
+	if gBool("Visuals", "Wallhack", "Conditions") and v:IsPlayer() then
+	if v:InVehicle() then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *driving*", "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	elseif v:GetMoveType() == MOVETYPE_NOCLIP then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *noclipping*", "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	elseif v:IsDormant() then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *dormant*", "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	elseif v:IsFlagSet(2) then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *crouching*", "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	elseif v:GetMoveType() == MOVETYPE_LADDER then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *climbing*", "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	elseif v:GetColor(v).a < 255 then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *spawning*", "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	elseif v:IsFlagSet(64) then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *frozen*", "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	elseif v:IsPlayingTaunt() then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *emoting*", "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	elseif v:IsFlagSet(1024) then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *swimming*", "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	elseif v:IsSprinting() then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *sprinting*", "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	elseif v:IsTyping() then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *typing*", "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	elseif v:GetMoveType() == MOVETYPE_WALK or v:GetMoveType() == MOVETYPE_NONE then
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *none*", "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+	textpos = textpos + 9
+	end
+	end
+	if (gBool("Visuals", "Wallhack", "Steam ID")) then
+	textpos = textpos + 1
+	if (v:SteamID() ~= "NULL") then
+	draw.SimpleText("SteamID: "..v:SteamID(v), "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+	else
+	draw.SimpleText("SteamID: BOT", "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+	end
+	textpos = textpos + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Ping")) then
+	textpos = textpos + 1
+	draw.SimpleText("Ping: "..v:Ping().."ms", "VisualsFont", x2 + 3, y1 + textpos, pingcol, 0, 1)
+	textpos = textpos + 9
+	end
+	if (gBool("Visuals", "Wallhack", "DarkRP Money")) then
+	textpos = textpos + 1
+	if (gmod.GetGamemode().Name == "DarkRP") then
+	if (v:getDarkRPVar("money") == nil) then return end
+	draw.SimpleText("Money: $"..v:getDarkRPVar("money"), "VisualsFont", x2 + 3, y1 + textpos, moneycol, 0, 1)
+	textpos = textpos + 9
+	end
+	end
+	end
+	elseif gOption("Visuals", "Wallhack", "Style:") == "Classic" then
+	local min, max = em.GetCollisionBounds(v)
+	local pos = em.GetPos(v)
+	local pos2 = pos + Vector(0, 0, max.z)
+	local pos = vm.ToScreen(pos)
+	local pos2 = vm.ToScreen(pos2)
+	local h = pos.y - pos2.y
+	local w = h / 2
+	local ww = h / 4
+	local textpos = 0
+	if (gOption("Visuals", "Wallhack", "Box:") == "2D Box") then
+		surface.SetDrawColor(colOne)
+		surface.DrawOutlinedRect(pos.x - w / 2, pos.y - h, w, h)
+		surface.SetDrawColor(colTwo)
+		surface.DrawOutlinedRect(pos.x - w / 2 - 1, pos.y - h - 1, w + 2, h + 2)
+		surface.DrawOutlinedRect(pos.x - w / 2 + 1, pos.y - h + 1, w - 2, h - 2)
+	elseif (gOption("Visuals", "Wallhack", "Box:") == "3D Box") then
+	for k, v in pairs(player.GetAll()) do
+	if (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) then continue end
+	if v:IsValid() and v:Alive() and v:Health() > 0 then
+		local eye = v:EyeAngles()
+		local origin = v:GetPos()
+		local min, max = v:WorldSpaceAABB()
+		if gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(ignorelist, v:UniqueID()) and !(idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) then
+			cam.Start3D()
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, ignoredcol)
+			cam.End3D()
+		elseif gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(prioritylist, v:UniqueID()) and !(idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) then
+			cam.Start3D()
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, prioritycol)
+			cam.End3D()
+		elseif gBool("Visuals", "Miscellaneous", "Team Colors") and !(idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) then
+			cam.Start3D()
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, team.GetColor(pm.Team(v)))
+			cam.End3D()
+		elseif (idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) then
+			cam.Start3D()
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, devcol)
+			cam.End3D()
+		elseif !(idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) then
+			cam.Start3D()
+				render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, GetColor(v))
+			cam.End3D()
+				end
+			end
+		end
+	elseif (gOption("Visuals", "Wallhack", "Box:") == "Edged Box") then   
+	local x1, y1, x2, y2 = ScrW() * 2, ScrH() * 2, - ScrW(), - ScrH()
+	local corners = {v:LocalToWorld(Vector(min.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, min.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, min.z)):ToScreen(), v:LocalToWorld(Vector(min.x, min.y, max.z)):ToScreen(), v:LocalToWorld(Vector(min.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, max.y, max.z)):ToScreen(), v:LocalToWorld(Vector(max.x, min.y, max.z)):ToScreen()}
+	local diff, diff2 = math.abs(x2 - x1), math.abs(y2 - y1)
 		for _k, _v in next, corners do
 			x1, y1 = math.min(x1, _v.x), math.min(y1, _v.y)
 			x2, y2 = math.max(x2, _v.x), math.max(y2, _v.y)
 		end
-		diff, diff2 = math.abs(x2 - x1), math.abs(y2 - y1)
 		surface.SetDrawColor(colThree)
 		surface.DrawLine(x1, y1, x1 + (diff * 0.225), y1)
 		surface.DrawLine(x1, y1, x1, y1 + (diff2 * 0.225))
@@ -4140,8 +4541,10 @@ local function Visuals(v)
 	end
 	if (gBool("Visuals", "Wallhack", "Name")) then
 		local friendstatus = pm.GetFriendStatus(v)
-		if (friendstatus == "friend") then
-		draw.SimpleText("Friend", "VisualsFont", pos.x, pos.y - h - 13 - 13, friendcol, 1, 1)
+		if (friendstatus == "friend") and not gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
+		draw.SimpleText("Steam Friend", "VisualsFont", pos.x, pos.y - h - 13 - 13, friendcol, 1, 1)
+		elseif (friendstatus == "friend") and gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
+		draw.SimpleText("Steam Friend", "VisualsFont", pos.x, pos.y - h - 13 - 13, textcol, 1, 1)
 		end
 		if (gBool("Visuals", "Wallhack", "Bystander Name") && engine.ActiveGamemode() == "murder") then
 		draw.SimpleText(v:GetNWString("bystanderName"), "VisualsFont", pos.x, pos.y - h - 1 - (friendstatus == "friend" && 12 || 12), textcol, 1, 1)
@@ -4149,7 +4552,7 @@ local function Visuals(v)
 		draw.SimpleText(pm.Name(v), "VisualsFont", pos.x, pos.y - h - 1 - (friendstatus == "friend" && 12 || 12), textcol, 1, 1)
 	end
 	end
-	if (gBool("Visuals", "Wallhack", "Enabled") and gBool("Visuals", "Wallhack", "Name")) then
+	if gBool("Visuals", "Wallhack", "Name") then
 		local friendstatus = pm.GetFriendStatus(v)
 		if (friendstatus == "friend") then
 			if idiot.creator[v:SteamID()] then
@@ -4200,110 +4603,124 @@ local function Visuals(v)
 			end
 		end
 	end
+	if gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
 	if (gBool("Visuals", "Wallhack", "Health Value")) then
-	hh = hh + 1
-	draw.SimpleText("Health: "..em.Health(v), "VisualsFont", pos.x, pos.y - 1 + hh, healthcol, 1, 0)
-	hh = hh + 9
+	textpos = textpos + 1
+	draw.SimpleText("Health: "..em.Health(v), "VisualsFont", pos.x, pos.y - 1 + textpos, textcol, 1, 0)
+	textpos = textpos + 9
 	end
 	if (gBool("Visuals", "Wallhack", "Armor Value")) then
-	hh = hh + 1
-	draw.SimpleText("Armor: "..v:Armor(), "VisualsFont", pos.x, pos.y - 1 + hh, armorcol, 1, 0)
-	hh = hh + 9
+	textpos = textpos + 1
+	draw.SimpleText("Armor: "..v:Armor(), "VisualsFont", pos.x, pos.y - 1 + textpos, textcol, 1, 0)
+	textpos = textpos + 9
+	end
+	elseif !gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
+	if (gBool("Visuals", "Wallhack", "Health Value")) then
+	textpos = textpos + 1
+	draw.SimpleText("Health: "..em.Health(v), "VisualsFont", pos.x, pos.y - 1 + textpos, healthcol, 1, 0)
+	textpos = textpos + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Armor Value")) then
+	textpos = textpos + 1
+	draw.SimpleText("Armor: "..v:Armor(), "VisualsFont", pos.x, pos.y - 1 + textpos, armorcol, 1, 0)
+	textpos = textpos + 9
+	end
 	end
 	if (gBool("Visuals", "Wallhack", "Weapon")) then
-	hh = hh + 1
+	textpos = textpos + 1
 	local w = pm.GetActiveWeapon(v)
 	if (w && em.IsValid(w)) then
-	draw.SimpleText("Weapon: "..language.GetPhrase(w:GetPrintName()), "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
-	hh = hh + 9
+	draw.SimpleText("Weapon: "..language.GetPhrase(w:GetPrintName()), "VisualsFont", pos.x, pos.y - 0 + textpos, textcol, 1, 0)
+	textpos = textpos + 9
 	end
 	end
 	if (gBool("Visuals", "Wallhack", "Rank")) then
-	hh = hh + 1
-	draw.SimpleText("Rank: "..pm.GetUserGroup(v), "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
-	hh = hh + 9
+	textpos = textpos + 1
+	draw.SimpleText("Rank: "..pm.GetUserGroup(v), "VisualsFont", pos.x, pos.y - 0 + textpos, textcol, 1, 0)
+	textpos = textpos + 9
 	end
 	if (gBool("Visuals", "Wallhack", "Distance")) then
-	hh = hh + 1
-	draw.SimpleText("Distance: "..math.Round(v:GetPos():Distance(me:GetPos()) / 40), "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
-	hh = hh + 9
+	textpos = textpos + 1
+	draw.SimpleText("Distance: "..math.Round(v:GetPos():Distance(me:GetPos()) / 40), "VisualsFont", pos.x, pos.y - 0 + textpos, textcol, 1, 0)
+	textpos = textpos + 9
 	end
 	if (gBool("Visuals", "Wallhack", "Velocity")) then
-	hh = hh + 1
-	draw.SimpleText("Velocity: "..math.Round(v:GetVelocity():Length()), "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
-	hh = hh + 9
+	textpos = textpos + 1
+	draw.SimpleText("Velocity: "..math.Round(v:GetVelocity():Length()), "VisualsFont", pos.x, pos.y - 0 + textpos, textcol, 1, 0)
+	textpos = textpos + 9
 	end
 	if gBool("Visuals", "Wallhack", "Conditions") and v:IsPlayer() then
 	if v:InVehicle() then
-	hh = hh + 1
-	draw.SimpleText("Condition: *driving*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
-	hh = hh + 9
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *driving*", "VisualsFont", pos.x, pos.y - 0 + textpos, textcol, 1, 0)
+	textpos = textpos + 9
 	elseif v:GetMoveType() == MOVETYPE_NOCLIP then
-	hh = hh + 1
-	draw.SimpleText("Condition: *noclipping*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
-	hh = hh + 9
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *noclipping*", "VisualsFont", pos.x, pos.y - 0 + textpos, textcol, 1, 0)
+	textpos = textpos + 9
 	elseif v:IsDormant() then
-	hh = hh + 1
-	draw.SimpleText("Condition: *dormant*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
-	hh = hh + 9
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *dormant*", "VisualsFont", pos.x, pos.y - 0 + textpos, textcol, 1, 0)
+	textpos = textpos + 9
 	elseif v:IsFlagSet(2) then
-	hh = hh + 1
-	draw.SimpleText("Condition: *crouching*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
-	hh = hh + 9
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *crouching*", "VisualsFont", pos.x, pos.y - 0 + textpos, textcol, 1, 0)
+	textpos = textpos + 9
 	elseif v:GetMoveType() == MOVETYPE_LADDER then
-	hh = hh + 1
-	draw.SimpleText("Condition: *climbing*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
-	hh = hh + 9
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *climbing*", "VisualsFont", pos.x, pos.y - 0 + textpos, textcol, 1, 0)
+	textpos = textpos + 9
 	elseif v:GetColor(v).a < 255 then
-	hh = hh + 1
-	draw.SimpleText("Condition: *spawning*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
-	hh = hh + 9
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *spawning*", "VisualsFont", pos.x, pos.y - 0 + textpos, textcol, 1, 0)
+	textpos = textpos + 9
 	elseif v:IsFlagSet(64) then
-	hh = hh + 1
-	draw.SimpleText("Condition: *frozen*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
-	hh = hh + 9
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *frozen*", "VisualsFont", pos.x, pos.y - 0 + textpos, textcol, 1, 0)
+	textpos = textpos + 9
 	elseif v:IsPlayingTaunt() then
-	hh = hh + 1
-	draw.SimpleText("Condition: *emoting*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
-	hh = hh + 9
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *emoting*", "VisualsFont", pos.x, pos.y - 0 + textpos, textcol, 1, 0)
+	textpos = textpos + 9
 	elseif v:IsFlagSet(1024) then
-	hh = hh + 1
-	draw.SimpleText("Condition: *swimming*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
-	hh = hh + 9
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *swimming*", "VisualsFont", pos.x, pos.y - 0 + textpos, textcol, 1, 0)
+	textpos = textpos + 9
 	elseif v:IsSprinting() then
-	hh = hh + 1
-	draw.SimpleText("Condition: *sprinting*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
-	hh = hh + 9
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *sprinting*", "VisualsFont", pos.x, pos.y - 0 + textpos, textcol, 1, 0)
+	textpos = textpos + 9
 	elseif v:IsTyping() then
-	hh = hh + 1
-	draw.SimpleText("Condition: *typing*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
-	hh = hh + 9
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *typing*", "VisualsFont", pos.x, pos.y - 0 + textpos, textcol, 1, 0)
+	textpos = textpos + 9
 	elseif v:GetMoveType() == MOVETYPE_WALK or v:GetMoveType() == MOVETYPE_NONE then
-	hh = hh + 1
-	draw.SimpleText("Condition: *none*", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
-	hh = hh + 9
+	textpos = textpos + 1
+	draw.SimpleText("Condition: *none*", "VisualsFont", pos.x, pos.y - 0 + textpos, textcol, 1, 0)
+	textpos = textpos + 9
 	end
 	end
 	if (gBool("Visuals", "Wallhack", "Steam ID")) then
-	hh = hh + 1
+	textpos = textpos + 1
 	if (v:SteamID() ~= "NULL") then
-	draw.SimpleText("SteamID: "..v:SteamID(v), "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	draw.SimpleText("SteamID: "..v:SteamID(v), "VisualsFont", pos.x, pos.y - 0 + textpos, textcol, 1, 0)
 	else
-	draw.SimpleText("SteamID: BOT", "VisualsFont", pos.x, pos.y - 0 + hh, textcol, 1, 0)
+	draw.SimpleText("SteamID: BOT", "VisualsFont", pos.x, pos.y - 0 + textpos, textcol, 1, 0)
 	end
-	hh = hh + 9
+	textpos = textpos + 9
 	end
 	if (gBool("Visuals", "Wallhack", "Ping")) then
-	hh = hh + 1
-	draw.SimpleText("Ping: "..v:Ping().."ms", "VisualsFont", pos.x, pos.y - 0 + hh, pingcol, 1, 0)
-	hh = hh + 9
+	textpos = textpos + 1
+	draw.SimpleText("Ping: "..v:Ping().."ms", "VisualsFont", pos.x, pos.y - 0 + textpos, pingcol, 1, 0)
+	textpos = textpos + 9
 	end
 	if (gBool("Visuals", "Wallhack", "DarkRP Money")) then
-	hh = hh + 1
+	textpos = textpos + 1
 	if (gmod.GetGamemode().Name == "DarkRP") then
 	if (v:getDarkRPVar("money") == nil) then return end
-	draw.SimpleText("Money: $"..v:getDarkRPVar("money"), "VisualsFont", pos.x, pos.y - 0 + hh, moneycol, 1, 0)
-	hh = hh + 9
+	draw.SimpleText("Money: $"..v:getDarkRPVar("money"), "VisualsFont", pos.x, pos.y - 0 + textpos, moneycol, 1, 0)
+	textpos = textpos + 9
+	end
 	end
 	end
 	if (gBool("Visuals", "Wallhack", "Skeleton")) then
