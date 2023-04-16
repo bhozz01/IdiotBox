@@ -136,27 +136,29 @@ local options = {
                 }, 
 				{
 					{"Trouble in Terrorist Town Utilities", 16, 177, 232, 222, 218}, 
-					{"Hide Round Report", "Checkbox", false, 78}, 
-					{"Panel Remover", "Checkbox", false, 78}, 
 					{"Traitor Finder", "Checkbox", false, 78}, 
 					{"Ignore Detectives as Innocent", "Checkbox", false, 78}, 
 					{"Ignore Fellow Traitors", "Checkbox", false, 78}, 
+					{"Hide Round Report", "Checkbox", false, 78}, 
+					{"Panel Remover", "Checkbox", false, 78}, 
 					{"Prop Kill", "Checkbox", false, 78}, 
 					{"Prop Kill Key:", "Toggle", 0, 92, 0}, 
 				}, 
 				{
-					{"DarkRP Utilities", 16, 413, 232, 128, 218}, 
+					{"DarkRP Utilities", 16, 412, 232, 148, 218}, 
 					{"Suicide Near Arrest Batons", "Checkbox", false, 78}, 
 					{"Transparent Props", "Checkbox", false, 78}, 
 					{"Transparency:", "Slider", 175, 255, 92}, 
 					{""}, 
+					{"Money Value", "Checkbox", false, 78}, 
 				}, 
 				{
-					{"Murder Utilities", 16, 554, 232, 123, 218}, 
+					{"Murder Utilities", 16, 573, 232, 145, 218}, 
 					{"Murderer Finder", "Checkbox", false, 78}, 
 					{"Hide End Round Board", "Checkbox", false, 78}, 
 					{"Hide Footprints", "Checkbox", false, 78}, 
 					{"No Black Screens", "Checkbox", false, 78}, 
+					{"Bystander Name", "Checkbox", false, 78}, 
 				}, 
 				{
           			{"Menus", 261, 20, 232, 175, 218}, 
@@ -177,7 +179,7 @@ local options = {
 					{""}, 
           		}, 
 				{
-          			{"Others", 261, 397, 232, 130, 218}, 
+          			{"Others", 261, 396, 232, 130, 218}, 
 					{"Apply custom name", "Checkbox", false, 78}, 
 					{"Feature Tooltips", "Checkbox", true, 78}, -- Enabled by default
 					{"Print Changelog", "Button", "", 92}, 
@@ -338,8 +340,9 @@ local options = {
 					{"Glow", "Checkbox", false, 78}, 
 					{"Hitbox", "Checkbox", false, 78}, 
 					{"Vision Line", "Checkbox", false, 78}, 
+					{"Position Lines:", "Selection", "Off", {"Off", "Top", "Center", "Bottom"}, 92}, 
+					{""}, 
 					{"Name", "Checkbox", false, 78}, 
-					{"Bystander Name", "Checkbox", false, 78}, 
 					{"Health Bar", "Checkbox", false, 78}, 
 					{"Health Value", "Checkbox", false, 78}, 
 					{"Armor Bar", "Checkbox", false, 78}, 
@@ -351,7 +354,6 @@ local options = {
 					{"Conditions", "Checkbox", false, 78}, 
 					{"Steam ID", "Checkbox", false, 78}, 
 					{"Ping", "Checkbox", false, 78}, 
-					{"DarkRP Money", "Checkbox", false, 78}, 
                 }, 
 				{
                 	{"Point of View", 261, 20, 232, 725, 218}, 
@@ -1229,7 +1231,7 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 		elseif feat == "Name" then
 			info = "Draws the player's name, along with the priority status."
 		elseif feat == "Bystander Name" then
-			info = "Draws the player's bystander name in Murder."
+			info = "Draws the player's bystander name in Murder. Enable Wallhack for this feature to work."
 		elseif feat == "Health Bar" then
 			info = "Draws a health bar to the left side of the player."
 		elseif feat == "Health Value" then
@@ -1252,8 +1254,8 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			info = "Draws the player's Steam ID. Bots will appear as 'BOT'."
 		elseif feat == "Ping" then
 			info = "Draws the player's ping."
-		elseif feat == "DarkRP Money" then
-			info = "Draws the player's money value in DarkRP."
+		elseif feat == "Money Value" then
+			info = "Draws the player's money value in DarkRP. Enable Wallhack for this feature to work."
 		elseif feat == "Hide Ignored Targets" then
 			info = "Makes ignored targets not show up on your Visuals."
 		elseif feat == "Target Priority Colors" then
@@ -1461,6 +1463,8 @@ local function DrawSelect(self, w, h, var, maxy, posx, posy, dist)
 			info = "Draws different types of boxes around the player."
 		elseif feat == "Chams:" then
 			info = "Draws playermodels through walls, either as custom models or regular playermodels."
+		elseif feat == "Position Lines:" then
+			info = "Draws lines that indicate player positions."
 		elseif feat == "NPC Chams:" then
 			info = "Draws the models of NPCs through walls, either as custom or regular models."
 		elseif feat == "Entity Chams:" then
@@ -1664,7 +1668,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("===========================================================\n\n")
 	print("IdiotBox v6.9.b7 bugfixes (in no particular order)")
 	print("")
-	print("Total bugfix count: ~50 bugs have been found and fixed in the v6.9.b7 update;")
+	print("PLEASE NOTE: This changelog includes bugfixes from previous updates as well.")
 	print("\n")
 	print("- The 'readme.txt' file is finally up-to-date and only contains the important information;")
 	print("- Aim Smoothness will automatically disable itself if Silent aim is turned on;")
@@ -1679,13 +1683,11 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Fixed Fake Lag Send not showing up;")
 	print("- Fixed visual bug, where weapons would display a weird name on Wallhack;")
 	print("- Fixed menu border bug, where if you clicked the border, the entire menu would turn blue;")
-	print("- Fixed buttons spamming the 'click' sound when holding them down;")
 	print("- Fixed Reply Spam and Copy Messages not ignoring friends;")
 	print("- Fixed being unable to fly WAC planes and rotate props or camera angles;")
 	print("- Fixed Kill Spam giving script errors when an NPC was killed;")
 	print("- Fixed Feature Tooltips not working with every feature;")
-	print("- Fixed Entities Menu bug breaking the menu after closing it;")
-	print("- Fixed Chat Spam and Kill Spam still using IdiotBox Alpha variables;")
+	print("- Fixed Entity Loader Menu breaking the cheat menu after closing it;")
 	print("- Fixed 3D Box and Hitbox rendering issues;")
 	print("- Fixed colliding options in the drop-down selecion tabs;")
 	print("- Fixed extreme bug where the anti-screengrabber would make you run out of VRAM and crash your system;")
@@ -1712,48 +1714,45 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Fixed Anti-Aim Yaw Jitter, Semi-Jitter Down and Semi-Jitter Up breaking the Anti-Aim Pitch;")
 	print("- Fixed Triggerbot Smooth Aim slowing down your overall mouse speed;")
 	print("- Fixed certain outlines and fonts not having the proper dimensions;")
-	print("- Fixed the menu not being large enough for certain outlines;")
 	print("- Fixed a Projectile Prediction bug where dying would cause script errors;")
 	print("- Fixed Manipulate Interpolation, Optimize Game and Dark Mode not resetting when disabled;")
 	print("- Fixed local variable limit and timer issues;")
 	print("- Reworked localizations and overall script for better performance;")
-	print("- Reworked user visibility of IdiotBox developers on servers;")
+	print("- Reworked visibility of IdiotBox developers on servers;")
 	print("- Reorganized certain out-of-place functions and menu options;")
 	print("- Reorganized the developer list;")
 	print("- Renamed certain misspelled or broken functions and menu options;")
 	print("- Renamed hooks for better anticheat protection;")
 	print("- Removed calls and variables that had no use;")
-	print("- Removed unusable DarkRP names from the Name Changer;")
-	print("- Removed cloned hooks and combined them all into one for better performance;")
+	print("- Removed unusable DarkRP names from the Name Stealer;")
+	print("- Removed cloned hooks for better performance;")
 	print("- Removed old and unused Fake Lag functions;")
 	print("- Removed old and unused message pop-up function;")
-	print("- Removed 'aaa' module as 'IdiotBox_alpha1.lua' was replaced by 'IdiotBox_dev.lua' and had no use.")
+	print("- Removed old resolver module (aaa.dll).")
 	print("\n")
 	print("IdiotBox v6.9.b7 new features (in no particular order)")
 	print("")
-	print("Total feature count: ~50 features have been added in the v6.9.b7 update;")
+	print("PLEASE NOTE: This changelog includes feature changes from previous updates as well.")
 	print("\n")
 	print("- Added 'Projectile Prediction' and 'Line-of-Sight Check' to Aimbot;")
 	print("- Added 'Emote Resolver' to Resolver;")
 	print("- Added 'Distance Limit', 'Velocity Limit' and NPC targeting to Aim Assist;")
 	print("- Added 'Priority List' and 'Use Spam' to Miscellaneous;")
 	print("- Added 'Cheater Callout', 'Copy Messages', 'Disconnect Spam', 'lol', 'english please', 'lmao', 'shit' and 'fuck' to Reply Spam;")
-	print("- Added 'Border Color', 'Misc Visuals Color' and 'B Opacity' to Adjustments;")
+	print("- Added 'Border Color', 'Misc Visuals Color' and 'Opacity' sliders to Adjustments;")
 	print("- Added 'Fake-Forwards/ Backwards/ Sideways', Yaw Spinbot, 'Static', 'Adapt' and 'Disable in Use Toggle' to Anti-Aim;")
-	print("- Added 'Players List', 'Show Entities', 'Conditions', 'Velocity', 'Dormant Check', 'Show Spectators', 'Hide Ignored Targets', 'Bystander Name', 'Show NPCs', 'Entity' & 'NPC' Chams, 'Flat' & 'Wireframe' chams materials, clientside visibility and 'Target Priority Colors' & priority statuses to Visuals;")
+	print("- Added 'Players List', 'Show Entities', 'Conditions', 'Velocity', 'Dormant Check', 'Show Spectators', 'Hide Ignored Targets', 'Position Lines', 'Show NPCs', 'Entity' & 'NPC' Chams, 'Flat' & 'Wireframe' chams materials, clientside visibility and 'Target Priority Colors' & priority statuses to Visuals;")
 	print("- Added 'Remove 3D Skybox' to Textures;")
-	print("- Added 'Panic Mode', 'Entity Finder Menu', 'Plugin Loader Menu', 'Optimize Game', 'Feature Tooltips', 'Spectator Mode' and more TTT/ Murder/ DarkRP specific features to Main Menu;")
-	print("- Added 'Spectators', 'Players', 'Frozen Players' and 'Enemies' to Aim Priorities;")
+	print("- Added 'Panic Mode', 'Entity Finder Menu', 'Plugin Loader Menu', 'Optimize Game', 'Feature Tooltips', 'Spectator Mode' and more gamemode specific features to Main Menu;")
+	print("- Added 'Target Spectators', 'Target Players', 'Target Frozen Players' and 'Target Enemies' to Aim Priorities;")
 	print("- Added 'Toggle Key' and 'Speed' to Free Roaming;")
 	print("- Added 'Circle Strafe Key' and 'Fake Crouch' to Movement;")
-	print("- Added 'Arabic Spam' and 'Hebrew Spam' to Chat Spam;")
+	print("- Added 'Arabic Spam' and 'Hebrew Spam' to Chat Spam;") -- Old, but gold
 	print("- Added 'Priority Targets Only' to Priority List;")
-	print("- Added 'Custom Positions', 'Rainbow Mode' and 'Flat' & 'Wireframe' chams to Viewmodel;")
-	print("- Added 'Thirdperson Key' to Point of View;")
-	print("- Added 'Random' to Emotes;")
-	print("- Added 'Murder Taunts' to Taunting;")
-	print("- Added 'Legit', 'Rage', 'Circle' and 'Directional' to Auto Strafe;")
-	print("- Added customizable List Adjustments to Priority List;")
+	print("- Added 'Thirdperson Key', 'Custom Positions', 'Rainbow Mode' and 'Flat' & 'Wireframe' chams to Point of View;")
+	print("- Added 'Murder Taunts' to Miscellaneous;")
+	print("- Added 'Legit', 'Rage' and 'Directional' to Auto Strafe;")
+	print("- Added customizable list adjustments to Priority List;")
 	print("- Added engine prediction module (big.dll);")
 	print("- Added custom key binds;")
 	print("- Added bordered menu styles;")
@@ -1779,6 +1778,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Removed 'Screengrab Notifications' from Miscellaneous;")
 	print("- Removed 'Mirror' from Point of View;")
 	print("- Removed useless information from Anti-Aim and Miscellaneous;")
+	print("- Removed old and irrelevant changes from this changelog, ironically enough;")
 	print("- Changed the Armor Bar and Armor Value colors from bright green to bright blue.")
 	print("- Changed the default colors, menu size and others;")
 	print("- Changed the entity finder menu;")
@@ -4155,7 +4155,7 @@ local function Visuals(v)
 			draw.SimpleText("IdiotBox Contributor", "VisualsFont", x2 + 9, y1 + textpos, devcol, 0, 1)
 			textpos = textpos + 9
 		end
-		if (gBool("Visuals", "Wallhack", "Bystander Name") && engine.ActiveGamemode() == "murder") then
+		if (gBool("Main Menu", "Murder Utilities", "Bystander Name") && engine.ActiveGamemode() == "murder") then
 			textpos = textpos + 1
 			draw.SimpleText("Bystander name: "..v:GetNWString("bystanderName"), "VisualsFont", x2 + 9, y1 + textpos, colThree, 0, 1)
 			textpos = textpos + 9
@@ -4286,7 +4286,7 @@ local function Visuals(v)
 	draw.SimpleText("Ping: "..v:Ping().."ms", "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
 	textpos = textpos + 9
 	end
-	if (gBool("Visuals", "Wallhack", "DarkRP Money")) then
+	if (gBool("Main Menu", "DarkRP Utilities", "Money Value")) then
 	textpos = textpos + 1
 	if (gmod.GetGamemode().Name == "DarkRP") then
 	if (v:getDarkRPVar("money") == nil) then return end
@@ -4300,7 +4300,7 @@ local function Visuals(v)
 	draw.SimpleText("Ping: "..v:Ping().."ms", "VisualsFont", x2 + 9, y1 + textpos, pingcol, 0, 1)
 	textpos = textpos + 9
 	end
-	if (gBool("Visuals", "Wallhack", "DarkRP Money")) then
+	if (gBool("Main Menu", "DarkRP Utilities", "Money Value")) then
 	textpos = textpos + 1
 	if (gmod.GetGamemode().Name == "DarkRP") then
 	if (v:getDarkRPVar("money") == nil) then return end
@@ -4332,7 +4332,7 @@ local function Visuals(v)
 			draw.SimpleText("IdiotBox Contributor", "VisualsFont", x2 + 3, y1 + textpos, devcol, 0, 1)
 			textpos = textpos + 9
 		end
-		if (gBool("Visuals", "Wallhack", "Bystander Name") && engine.ActiveGamemode() == "murder") then
+		if (gBool("Main Menu", "Murder Utilities", "Bystander Name") && engine.ActiveGamemode() == "murder") then
 			textpos = textpos + 1
 			draw.SimpleText("Bystander name: "..v:GetNWString("bystanderName"), "VisualsFont", x2 + 3, y1 + textpos, colThree, 0, 1)
 			textpos = textpos + 9
@@ -4463,7 +4463,7 @@ local function Visuals(v)
 	draw.SimpleText("Ping: "..v:Ping().."ms", "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
 	textpos = textpos + 9
 	end
-	if (gBool("Visuals", "Wallhack", "DarkRP Money")) then
+	if (gBool("Main Menu", "DarkRP Utilities", "Money Value")) then
 	textpos = textpos + 1
 	if (gmod.GetGamemode().Name == "DarkRP") then
 	if (v:getDarkRPVar("money") == nil) then return end
@@ -4477,7 +4477,7 @@ local function Visuals(v)
 	draw.SimpleText("Ping: "..v:Ping().."ms", "VisualsFont", x2 + 3, y1 + textpos, pingcol, 0, 1)
 	textpos = textpos + 9
 	end
-	if (gBool("Visuals", "Wallhack", "DarkRP Money")) then
+	if (gBool("Main Menu", "DarkRP Utilities", "Money Value")) then
 	textpos = textpos + 1
 	if (gmod.GetGamemode().Name == "DarkRP") then
 	if (v:getDarkRPVar("money") == nil) then return end
@@ -4578,7 +4578,7 @@ local function Visuals(v)
 		elseif (friendstatus == "friend") and gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
 		draw.SimpleText("Steam Friend", "VisualsFont", pos.x, pos.y - h - 13 - 13, textcol, 1, 1)
 		end
-		if (gBool("Visuals", "Wallhack", "Bystander Name") && engine.ActiveGamemode() == "murder") then
+		if (gBool("Main Menu", "Murder Utilities", "Bystander Name") && engine.ActiveGamemode() == "murder") then
 		draw.SimpleText(v:GetNWString("bystanderName"), "VisualsFont", pos.x, pos.y - h - 1 - (friendstatus == "friend" && 12 || 12), textcol, 1, 1)
 		else
 		draw.SimpleText(pm.Name(v), "VisualsFont", pos.x, pos.y - h - 1 - (friendstatus == "friend" && 12 || 12), textcol, 1, 1)
@@ -4747,7 +4747,7 @@ local function Visuals(v)
 	draw.SimpleText("Ping: "..v:Ping().."ms", "VisualsFont", pos.x, pos.y - 0 + textpos, textcol, 1, 0)
 	textpos = textpos + 9
 	end
-	if (gBool("Visuals", "Wallhack", "DarkRP Money")) then
+	if (gBool("Main Menu", "DarkRP Utilities", "Money Value")) then
 	textpos = textpos + 1
 	if (gmod.GetGamemode().Name == "DarkRP") then
 	if (v:getDarkRPVar("money") == nil) then return end
@@ -4761,7 +4761,7 @@ local function Visuals(v)
 	draw.SimpleText("Ping: "..v:Ping().."ms", "VisualsFont", pos.x, pos.y - 0 + textpos, pingcol, 1, 0)
 	textpos = textpos + 9
 	end
-	if (gBool("Visuals", "Wallhack", "DarkRP Money")) then
+	if (gBool("Main Menu", "DarkRP Utilities", "Money Value")) then
 	textpos = textpos + 1
 	if (gmod.GetGamemode().Name == "DarkRP") then
 	if (v:getDarkRPVar("money") == nil) then return end
@@ -4832,6 +4832,17 @@ local function Visuals(v)
 			end
 		end
 	end
+	if gOption("Visuals", "Wallhack", "Position Lines:") ~= "Off" then
+		local pos = v:LocalToWorld(v:OBBCenter()):ToScreen()
+			surface.SetDrawColor(colThree)
+		if gBool("Visuals", "Wallhack", "Position Lines:") == "Bottom" then
+			surface.DrawLine(ScrW() / 2, ScrH(), pos.x, pos.y)
+		elseif gBool("Visuals", "Wallhack", "Position Lines:") == "Top" then
+			surface.DrawLine(ScrW() / 2, 0, pos.x, pos.y)
+		else
+			surface.DrawLine(ScrW() / 2, ScrH() / 2, pos.x, pos.y)
+		end
+	end
 end
 
 local function OnScreen(v)
@@ -4891,6 +4902,17 @@ local function ShowNPCs()
 	if gBool("Visuals", "Miscellaneous", "NPC Name") then
 		draw.SimpleText(v:GetClass(), "VisualsFont", pos.x, pos.y - h - 2 - 7, Color(255, 255, 255), 1, 1)
 		surface.SetDrawColor(Color(0, 0, 0))
+	end
+	if gOption("Visuals", "Wallhack", "Position Lines:") ~= "Off" then
+		local pos = v:LocalToWorld(v:OBBCenter()):ToScreen()
+			surface.SetDrawColor(colOne)
+		if gBool("Visuals", "Wallhack", "Position Lines:") == "Bottom" then
+			surface.DrawLine(ScrW() / 2, ScrH(), pos.x, pos.y)
+		elseif gBool("Visuals", "Wallhack", "Position Lines:") == "Top" then
+			surface.DrawLine(ScrW() / 2, 0, pos.x, pos.y)
+		else
+			surface.DrawLine(ScrW() / 2, ScrH() / 2, pos.x, pos.y)
+		end
 	end
 	local colOne = Color((100 - em.Health(v)) * 2.55, em.Health(v) * 2.55, 0)
 	if gBool("Visuals", "Miscellaneous", "NPC Health") then
