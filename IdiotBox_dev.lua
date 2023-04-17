@@ -751,11 +751,10 @@ local function MsgR(time, text)
 	print("\n"..text.."\n")
 end
 
-if gui.IsGameUIVisible() then
-	gui.HideGameUI()
-end
-
 do
+	if gui.IsGameUIVisible() then
+		gui.HideGameUI()
+	end
 	if (global.game.SinglePlayer()) then
 		MsgR(4.3, "Attention! Not going to load in Singleplayer Mode!") 
 		surface.PlaySound("buttons/lightswitch2.wav")
@@ -1631,9 +1630,11 @@ local function Unload()
 	hook.Remove("ShouldDrawLocalPlayer", "ShouldDrawLocalPlayer")
 	hook.Remove("CreateMove", "CreateMove")
 	hook.Remove("player_disconnect", "player_disconnect")
-	hook.Remove("HUDPaint2", "HUDPaint2")
+	hook.Remove("MiscPaint", "MiscPaint")
 	hook.Remove("PreDrawOpaqueRenderables", "PreDrawOpaqueRenderables")
 	hook.Remove("OnPlayerChat", "OnPlayerChat")
+	concommand.Remove("idiot_changename")
+	concommand.Remove("idiot_usespam")
 		if gBool("Main Menu", "Configurations", "Automatically Save") then
 			if gOption("Main Menu", "Configurations", "Configuration:") == "Legit Config" then
 				idiot.SaveConfig1()
@@ -1683,6 +1684,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Fixed Fake Lag Send not showing up;")
 	print("- Fixed visual bug, where weapons would display a weird name on Wallhack;")
 	print("- Fixed menu border bug, where if you clicked the border, the entire menu would turn blue;")
+	print("- Fixed alignment issues with the window borders;")
 	print("- Fixed Reply Spam and Copy Messages not ignoring friends;")
 	print("- Fixed being unable to fly WAC planes and rotate props or camera angles;")
 	print("- Fixed Kill Spam giving script errors when an NPC was killed;")
@@ -2798,7 +2800,7 @@ local function Spectator()
 	end
 	hudspecslength = specscount + 19
 end
---cock
+
 local function Arrow(x, y, myRotation)
 	local arrow = {}
 	arrow[1] = {x = x, y = y}
@@ -3084,8 +3086,8 @@ hook.Add("RenderScene", "RenderScene", function(origin, angle, fov)
 	render.RenderView(view)
 	render.CopyTexture(nil, fake)
 	cam.Start2D()
-    hook.Run("HUDPaint2")
-    cam.End2D()
+		hook.Run("MiscPaint")
+	cam.End2D()
 	render.SetRenderTarget(fake)
 	return true
 end)
@@ -6258,7 +6260,7 @@ hook.Add("player_disconnect", "player_disconnect", function(v, data)
 	end
 end)
 
-hook.Add("HUDPaint2", "HUDPaint2", function()
+hook.Add("MiscPaint", "MiscPaint", function()
 	if gInt("Adjustments", "Others", "BG Darkness:") > 0 and menuopen then
 		surface.SetDrawColor(0, 0, 0, gInt("Adjustments", "Others", "BG Darkness:") * 10)
 		surface.DrawRect(0, 0, ScrW(), ScrH())
