@@ -751,11 +751,10 @@ local function MsgR(time, text)
 	print("\n"..text.."\n")
 end
 
-if gui.IsGameUIVisible() then
-	gui.HideGameUI()
-end
-
 do
+	if gui.IsGameUIVisible() then
+		gui.HideGameUI()
+	end
 	if (global.game.SinglePlayer()) then
 		MsgR(4.3, "Attention! Not going to load in Singleplayer Mode!") 
 		surface.PlaySound("buttons/lightswitch2.wav")
@@ -1631,9 +1630,11 @@ local function Unload()
 	hook.Remove("ShouldDrawLocalPlayer", "ShouldDrawLocalPlayer")
 	hook.Remove("CreateMove", "CreateMove")
 	hook.Remove("player_disconnect", "player_disconnect")
-	hook.Remove("HUDPaint2", "HUDPaint2")
+	hook.Remove("MiscPaint", "MiscPaint")
 	hook.Remove("PreDrawOpaqueRenderables", "PreDrawOpaqueRenderables")
 	hook.Remove("OnPlayerChat", "OnPlayerChat")
+	concommand.Remove("idiot_changename")
+	concommand.Remove("idiot_usespam")
 		if gBool("Main Menu", "Configurations", "Automatically Save") then
 			if gOption("Main Menu", "Configurations", "Configuration:") == "Legit Config" then
 				idiot.SaveConfig1()
@@ -1683,6 +1684,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Fixed Fake Lag Send not showing up;")
 	print("- Fixed visual bug, where weapons would display a weird name on Wallhack;")
 	print("- Fixed menu border bug, where if you clicked the border, the entire menu would turn blue;")
+	print("- Fixed alignment issues with the window borders;")
 	print("- Fixed Reply Spam and Copy Messages not ignoring friends;")
 	print("- Fixed being unable to fly WAC planes and rotate props or camera angles;")
 	print("- Fixed Kill Spam giving script errors when an NPC was killed;")
@@ -2781,9 +2783,9 @@ local function Spectator()
 	local hudspecslength = 150
 	specscount = 0
 	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Borders" then
-		draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Spectators X:") - 0.25, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 1.75, radarW + 4, radarH + 4, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:")))
+		draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Spectators X:"), gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 1.75, radarW + 4, radarH + 4, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:")))
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
-		draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Spectators X:") - 0.25, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 1.75, radarW + 4, radarH + 4, Color(bordercol.r, bordercol.g, bordercol.b, 0))
+		draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Spectators X:"), gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 1.75, radarW + 4, radarH + 4, Color(bordercol.r, bordercol.g, bordercol.b, 0))
 	end
 	draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Spectators X:") + 2, gInt("Adjustments", "Window Adjustments", "Spectators Y:"), radarW, radarH, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "Window Adjustments", "Window Opacity:")))
 	draw.SimpleText("Spectators", "MiscFont2", gInt("Adjustments", "Window Adjustments", "Spectators X:") + 102, gInt("Adjustments", "Window Adjustments", "Spectators Y:") + 11, color3, 1, 1)
@@ -2824,9 +2826,9 @@ local function Radar()
 	local col = Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Adjustments", "Others", "T Opacity:"))
 	local everything = ents.GetAll()
 	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Borders" then
-		draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Radar X:") - 0.25, gInt("Adjustments", "Window Adjustments", "Radar Y:") - 1.75, radarW + 4, radarH + 4, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:")))
+		draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Radar X:"), gInt("Adjustments", "Window Adjustments", "Radar Y:") - 1.75, radarW + 4, radarH + 4, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:")))
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
-		draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Radar X:") - 0.25, gInt("Adjustments", "Window Adjustments", "Radar Y:") - 1.75, radarW + 4, radarH + 4, Color(bordercol.r, bordercol.g, bordercol.b, 0))
+		draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Radar X:"), gInt("Adjustments", "Window Adjustments", "Radar Y:") - 1.75, radarW + 4, radarH + 4, Color(bordercol.r, bordercol.g, bordercol.b, 0))
 	end
 	draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Radar X:") + 2, gInt("Adjustments", "Window Adjustments", "Radar Y:"), radarW, radarH, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "Window Adjustments", "Window Opacity:")))
 	draw.SimpleText("Radar", "MiscFont2", gInt("Adjustments", "Window Adjustments", "Radar X:") + 102, gInt("Adjustments", "Window Adjustments", "Radar Y:") + 11, col, 1, 1)
@@ -3084,8 +3086,8 @@ hook.Add("RenderScene", "RenderScene", function(origin, angle, fov)
 	render.RenderView(view)
 	render.CopyTexture(nil, fake)
 	cam.Start2D()
-    hook.Run("HUDPaint2")
-    cam.End2D()
+		hook.Run("MiscPaint")
+	cam.End2D()
 	render.SetRenderTarget(fake)
 	return true
 end)
@@ -6258,7 +6260,7 @@ hook.Add("player_disconnect", "player_disconnect", function(v, data)
 	end
 end)
 
-hook.Add("HUDPaint2", "HUDPaint2", function()
+hook.Add("MiscPaint", "MiscPaint", function()
 	if gInt("Adjustments", "Others", "BG Darkness:") > 0 and menuopen then
 		surface.SetDrawColor(0, 0, 0, gInt("Adjustments", "Others", "BG Darkness:") * 10)
 		surface.DrawRect(0, 0, ScrW(), ScrH())
