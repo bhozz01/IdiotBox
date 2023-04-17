@@ -125,483 +125,483 @@ idiot.contributors["STEAM_0:1:101813068"] = {} -- sdunken (first user)
 --NOTE-- I want to mention that these are not the only people that helped me with the development of IdiotBox, but they are the ones who helped me the most and that is why they are credited here.
 
 local options = {
-		["Main Menu"] = {
-				{
-					{"General Utilities", 16, 20, 232, 144, 218}, 
-					{"Optimize Game", "Checkbox", false, 78}, 
-					{"Spectator Mode", "Checkbox", false, 78}, 
-					{"Anti-AFK", "Checkbox", false, 78}, 
-					{"Anti-Ads", "Checkbox", false, 78}, 
-					{"Anti-Blind", "Checkbox", false, 78}, 
-                }, 
-				{
-					{"Trouble in Terrorist Town Utilities", 16, 177, 232, 222, 218}, 
-					{"Traitor Finder", "Checkbox", false, 78}, 
-					{"Ignore Detectives as Innocent", "Checkbox", false, 78}, 
-					{"Ignore Fellow Traitors", "Checkbox", false, 78}, 
-					{"Hide Round Report", "Checkbox", false, 78}, 
-					{"Panel Remover", "Checkbox", false, 78}, 
-					{"Prop Kill", "Checkbox", false, 78}, 
-					{"Prop Kill Key:", "Toggle", 0, 92, 0}, 
-				}, 
-				{
-					{"DarkRP Utilities", 16, 412, 232, 148, 218}, 
-					{"Suicide Near Arrest Batons", "Checkbox", false, 78}, 
-					{"Transparent Props", "Checkbox", false, 78}, 
-					{"Transparency:", "Slider", 175, 255, 92}, 
-					{""}, 
-					{"Money Value", "Checkbox", false, 78}, 
-				}, 
-				{
-					{"Murder Utilities", 16, 573, 232, 145, 218}, 
-					{"Murderer Finder", "Checkbox", false, 78}, 
-					{"Hide End Round Board", "Checkbox", false, 78}, 
-					{"Hide Footprints", "Checkbox", false, 78}, 
-					{"No Black Screens", "Checkbox", false, 78}, 
-					{"Bystander Name", "Checkbox", false, 78}, 
-				}, 
-				{
-          			{"Menus", 261, 20, 232, 175, 218}, 
-					{"Entity Finder Menu", "Button", "", 92}, 
-					{"Plugin Loader Menu", "Button", "", 92}, 
-					{"Menu Style:", "Selection", "Borders", {"Borders", "Borderless"}, 92}, 
-					{""}, 
-					{"Options Style:", "Selection", "Borderless", {"Borders", "Borderless"}, 92}, 
-					{""}, 
-          		}, 
-				{
-          			{"Configurations", 261, 208, 232, 175, 218}, 
-					{"Automatically Save", "Checkbox", false, 78}, 
-					{"Save Configuration", "Button", "", 92}, 
-					{"Load Configuration", "Button", "", 92}, 
-					{"Delete Configuration", "Button", "", 92}, 
-					{"Configuration:", "Selection", "Legit Config", {"Legit Config", "Rage Config", "HvH Config", "Misc Config #1", "Misc Config #2", "Misc Config #3", "Misc Config #4", "Misc Config #5", "Misc Config #6", "Misc Config #7"}, 92}, 
-					{""}, 
-          		}, 
-				{
-          			{"Others", 261, 396, 232, 130, 218}, 
-					{"Apply custom name", "Checkbox", false, 78}, 
-					{"Feature Tooltips", "Checkbox", true, 78}, -- Enabled by default
-					{"Print Changelog", "Button", "", 92}, 
-					{"Unload Cheat", "Button", "", 92}, 
-          		}, 
-				{
-					{"Priority List", 506, 20, 232, 205, 218}, 
-					{"Enabled", "Checkbox", true, 78}, -- Enabled by default
-					{"List Position X:", "Slider", 1356, 2000, 92}, 
-					{""}, 
-					{"List Position Y:", "Slider", 134, 2000, 92}, 
-					{""}, 
-					{"List Spacing:", "Slider", 0, 10, 92}, 
-					{""}, 
-                }, 
-				{
-					{"Panic Mode", 506, 239, 232, 100, 218}, 
-					{"Enabled", "Checkbox", false, 78}, 
-					{"Mode:", "Selection", "Disable All", {"Disable Aimbot", "Disable Anti-Aim", "Disable All"}, 92}, 
-					{""}, 
-                }, 
-        }, 
-        ["Aim Assist"] = {
-				{
-					{"Aimbot", 16, 20, 232, 345, 218}, 
-					{"Enabled", "Checkbox", false, 78}, 
-					{"Toggle Key:", "Toggle", 0, 92, 0}, 
-					{""}, 
-					{"Aim FoV Value:", "Slider", 0, 180, 92}, 
-					{""}, 
-					{"Aim Smoothness:", "Slider", 0, 50, 92}, 
-					{""}, 
-					{"Silent Aim", "Checkbox", false, 78}, 
-					{"Auto Fire", "Checkbox", false, 78}, 
-					{"Auto Zoom", "Checkbox", false, 78}, 
-					{"Auto Stop", "Checkbox", false, 78}, 
-					{"Auto Crouch", "Checkbox", false, 78}, 
-					{"Target Lock", "Checkbox", false, 78}, 
-                }, 
-				{
-					{"Triggerbot", 16, 378, 232, 200, 218}, 
-					{"Enabled", "Checkbox", false, 78}, 
-					{"Toggle Key:", "Toggle", 0, 92, 0}, 
-					{""}, 
-					{"Smooth Aim", "Checkbox", false, 78}, 
-					{"Auto Zoom", "Checkbox", false, 78}, 
-					{"Auto Stop", "Checkbox", false, 78}, 
-					{"Auto Crouch", "Checkbox", false, 78}, 
-                }, 
-				{
-					{"Aim Priorities", 261, 20, 232, 708, 218}, 
-					{"Priority Targets Only", "Checkbox", false, 78}, 
-					{"Disable in Noclip", "Checkbox", false, 78}, 
-					{"Hitbox:", "Selection", "Head", {"Head", "Body"}, 92}, 
-					{""}, 
-					{"Aim Priority:", "Selection", "Crosshair", {"Crosshair", "Distance", "Health", "Random"}, 92}, 
-					{""}, 
-					{"Target Players", "Checkbox", true, 78}, -- Enabled by default
-					{"Target Bots", "Checkbox", true, 78}, -- Enabled by default
-					{"Target NPCs", "Checkbox", true, 78}, -- Enabled by default
-					{"Target Team", "Checkbox", true, 78}, -- Enabled by default
-					{"Target Enemies", "Checkbox", true, 78}, -- Enabled by default
-					{"Target Steam Friends", "Checkbox", false, 78}, 
-					{"Target Admins", "Checkbox", false, 78}, 
-					{"Target Spectators", "Checkbox", false, 78}, 
-					{"Target Frozen Players", "Checkbox", false, 78}, 
-					{"Target Noclipping Players", "Checkbox", false, 78}, 
-					{"Target Driving Players", "Checkbox", false, 78}, 
-					{"Target Transparent Players", "Checkbox", false, 78}, 
-					{"Target Overhealed Players", "Checkbox", false, 78}, 
-					{"Max Player Health:", "Slider", 500, 5000, 92}, 
-					{""}, 
-					{"Distance Limit", "Checkbox", false, 78}, 
-					{"Distance:", "Slider", 1500, 5000, 92}, 
-					{""}, 
-					{"Velocity Limit", "Checkbox", false, 78}, 
-					{"Velocity:", "Slider", 1000, 5000, 92}, 
-					{""}, 
-                }, 
-				{
-					{"Miscellaneous", 506, 20, 232, 375, 218}, 
-					{"Remove Weapon Recoil", "Checkbox", false, 78}, 
-					{"Remove Bullet Spread", "Checkbox", false, 78}, 
-					{"Projectile Prediction", "Checkbox", false, 78}, 
-					{"Auto Reload", "Checkbox", false, 78}, 
-					{"Rapid Fire:", "Selection", "Off", {"Off", "Primary Fire", "Alt Fire"}, 92}, 
-					{""}, 
-					{"Line-of-Sight Check:", "Selection", "Default", {"Off", "Default", "Auto Wallbang"}, 92}, -- Enabled by default
-					{""}, 
-					{"Manipulate Interpolation", "Checkbox", false, 78}, 
-					{"Manipulate Bullet Time", "Checkbox", false, 78}, 
-					{"Bullet Fire Delay:", "Slider", 0, 100, 92}, 
-					{""}, 
-					{"Show FoV Circle", "Checkbox", false, 78}, 
-					{"Snap Lines", "Checkbox", false, 78}, 
-                }, 
-        }, 
-		["Hack vs. Hack"] = {
-				{
-					{"Anti-Aim", 16, 20, 232, 605, 218}, 
-					{"Enabled", "Checkbox", false, 78}, 
-					{"Disable in Noclip", "Checkbox", true, 78}, -- Enabled by default
-					{"Disable in 'Use' Toggle", "Checkbox", true, 78}, -- Enabled by default
-					{"Detect Walls", "Checkbox", false, 78}, 
-					{"Lock View", "Checkbox", false, 78}, 
-					{"Mode:", "Selection", "Default", {"Default", "Static", "Distance Adapt", "Crosshair Adapt"}, 92}, 
-					{""}, 
-					{"Pitch:", "Selection", "Off", {"Off", "Down", "Up", "Center", "Fake-Down", "Fake-Up", "Jitter", "Semi-Jitter Down", "Semi-Jitter Up", "Emotion", "Spinbot"}, 92}, 
-					{""}, 
-					{"Yaw:", "Selection", "Off", {"Off", "Forwards", "Backwards", "Sideways", "Fake-Forwards", "Fake-Backwards", "Fake-Sideways", "Jitter", "Backwards Jitter", "Sideways Jitter", "Semi-Jitter", "Back Semi-Jitter", "Side Semi-Jitter", "Side Switch", "Emotion", "Spinbot"}, 92}, 
-					{""}, 
-					{"Anti-Aim Direction:", "Selection", "Left", {"Left", "Right", "Manual Switch"}, 92}, 
-					{""}, 
-					{"Switch Key:", "Toggle", 0, 92, 0}, 
-					{""}, 
-					{"Spinbot Pitch Speed:", "Slider", 30, 180, 92}, 
-					{""}, 
-					{"Spinbot Yaw Speed:", "Slider", 30, 180, 92}, 
-					{""}, 
-					{"Emotion Pitch Speed:", "Slider", 18, 100, 92}, 
-					{""}, 
-					{"Emotion Yaw Speed:", "Slider", 18, 100, 92}, 
-					{""}, 
-                }, 
-				{
-					{"Resolver", 261, 20, 232, 200, 218}, 
-					{"Enabled", "Checkbox", false, 78}, 
-					{"Priority Targets Only", "Checkbox", false, 78}, 
-					{"Pitch:", "Selection", "Off", {"Off", "Down", "Up", "Center", "Invert", "Random", "Auto"}, 92}, 
-					{""}, 
-					{"Yaw:", "Selection", "Off", {"Off", "Left", "Right", "Invert", "Random", "Auto"}, 92}, 
-					{""}, 
-					{"Emote Resolver", "Checkbox", false, 78}, 
-                }, 
-				{
-					{"Fake Lag", 506, 20, 232, 180, 218}, 
-					{"Enabled", "Checkbox", false, 78}, 
-					{"Disable on Attack", "Checkbox", false, 78}, 
-					{"Lag Choke:", "Slider", 14, 14, 92}, 
-					{""}, 
-					{"Lag Send:", "Slider", 0, 14, 92}, 
-					{""}, 
-                }, 
+	["Main Menu"] = {
+		{
+			{"General Utilities", 16, 20, 232, 144, 218}, 
+			{"Optimize Game", "Checkbox", false, 78}, 
+			{"Spectator Mode", "Checkbox", false, 78}, 
+			{"Anti-AFK", "Checkbox", false, 78}, 
+			{"Anti-Ads", "Checkbox", false, 78}, 
+			{"Anti-Blind", "Checkbox", false, 78}, 
 		}, 
-        ["Visuals"] = {
-                {
-					{"Wallhack", 16, 20, 232, 700, 218}, 
-					{"Enabled", "Checkbox", false, 78}, 
-					{"Style:", "Selection", "Optimized", {"Classic", "Optimized"}, 92}, 
-					{""}, 
-					{"Visibility:", "Selection", "Global", {"Global", "Clientside"}, 92}, 
-					{""}, 
-					{"Box:", "Selection", "Off", {"Off", "2D Box", "3D Box", "Edged Box"}, 92}, 
-					{""}, 
-					{"Chams:", "Selection", "Off", {"Off", "Normal", "Flat", "Wireframe", "Playermodel"}, 92}, 
-					{""}, 
-					{"Skeleton", "Checkbox", false, 78}, 
-					{"Glow", "Checkbox", false, 78}, 
-					{"Hitbox", "Checkbox", false, 78}, 
-					{"Vision Line", "Checkbox", false, 78}, 
-					{"Position Lines:", "Selection", "Off", {"Off", "Top", "Center", "Bottom"}, 92}, 
-					{""}, 
-					{"Name", "Checkbox", false, 78}, 
-					{"Health Bar", "Checkbox", false, 78}, 
-					{"Health Value", "Checkbox", false, 78}, 
-					{"Armor Bar", "Checkbox", false, 78}, 
-					{"Armor Value", "Checkbox", false, 78}, 
-					{"Weapon", "Checkbox", false, 78}, 
-					{"Rank", "Checkbox", false, 78}, 
-					{"Distance", "Checkbox", false, 78}, 
-					{"Velocity", "Checkbox", false, 78}, 
-					{"Conditions", "Checkbox", false, 78}, 
-					{"Steam ID", "Checkbox", false, 78}, 
-					{"Ping", "Checkbox", false, 78}, 
-                }, 
-				{
-                	{"Point of View", 261, 20, 232, 725, 218}, 
-					{"Custom FoV", "Checkbox", false, 78}, 
-					{"FoV Value:", "Slider", 110, 360, 92}, 
-					{""}, 
-					{"Thirdperson", "Checkbox", false, 78}, 
-					{"Thirdperson Key:", "Toggle", 0, 92, 0}, 
-					{""}, 
-					{"Thirdperson Range:", "Slider", 15, 100, 92}, 
-					{""}, 
-					{"Thirdperson FoV Value:", "Slider", 110, 360, 92}, 
-					{""}, 
-					{"Viewmodel Chams:", "Selection", "Off", {"Off", "Normal", "Flat", "Wireframe"}, 92}, 
-					{""}, 
-					{"Rainbow Mode", "Checkbox", false, 78}, 
-					{"No Viewmodel", "Checkbox", false, 78}, 
-					{"No Hands", "Checkbox", false, 78}, 
-					{"Custom Positions", "Checkbox", false, 78}, 
-					{"Viewmodel X:", "Slider", 50, 100, 92}, 
-					{""}, 
-					{"Viewmodel Y:", "Slider", 30, 60, 92}, 
-					{""}, 
-					{"Viewmodel Z:", "Slider", 20, 40, 92}, 
-					{""}, 
-					{"Viewmodel Pitch:", "Slider", 90, 180, 92}, 
-					{""}, 
-					{"Viewmodel Yaw:", "Slider", 90, 180, 92}, 
-					{""}, 
-					{"Viewmodel Roll:", "Slider", 90, 180, 92}, 
-					{""}, 
-                }, 
-                {
-					{"Miscellaneous", 506, 20, 232, 700, 218}, 
-					{"Priority Targets Only", "Checkbox", false, 78}, 
-					{"Hide Ignored Targets", "Checkbox", false, 78}, 
-					{"Target Priority Colors", "Checkbox", true, 78}, -- Enabled by default
-					{"Show Enemies Only", "Checkbox", false, 78}, 
-					{"Show Spectators", "Checkbox", false, 78}, 
-					{"Team Colors", "Checkbox", true, 78}, -- Enabled by default
-					{"Adaptive Text Color", "Checkbox", true, 78}, -- Enabled by default
-					{"Show NPCs", "Checkbox", false, 78}, 
-					{"NPC Name", "Checkbox", false, 78}, 
-					{"NPC Box", "Checkbox", false, 78}, 
-					{"NPC Health", "Checkbox", false, 78}, 
-					{"NPC Chams:", "Selection", "Off", {"Off", "Normal", "Flat", "Wireframe", "Model"}, 92}, 
-					{""}, 
-					{"Show Entities", "Checkbox", false, 78}, 
-					{"Entity Name", "Checkbox", false, 78}, 
-					{"Entity Box", "Checkbox", false, 78}, 
-					{"Entity Chams:", "Selection", "Off", {"Off", "Normal", "Flat", "Wireframe", "Model"}, 92}, 
-					{""}, 
-					{"Hide HUD", "Checkbox", false, 78}, 
-					{"Witness Finder", "Checkbox", false, 78}, 
-					{"Dormant Check:", "Selection", "All", {"None", "Players", "Entities", "All"}, 92}, 
-					{""}, 
-					{"Crosshair:", "Selection", "Off", {"Off", "Box", "Dot", "Square", "Circle", "Cross", "Edged Cross", "Swastika", "GTA IV"}, 92}, 
-					{""}, 
-					{"Distance Limit", "Checkbox", false, 78}, 
-					{"Distance:", "Slider", 1500, 5000, 92}, 
-					{""}, 
-                }, 
-        }, 
-		["Miscellaneous"] = {
-				{
-					{"Miscellaneous", 16, 20, 232, 220, 218}, 
-					{"Flash Spam", "Checkbox", false, 78}, 
-					{"Use Spam", "Checkbox", false, 78}, 
-					{"Name Stealer:", "Selection", "Off", {"Off", "Normal", "Priority Targets", "DarkRP Name"}, 92}, 
-					{""}, 
-					{"Emotes:", "Selection", "Off", {"Off", "Dance", "Sexy", "Wave", "Robot", "Bow", "Cheer", "Laugh", "Zombie", "Agree", "Disagree", "Forward", "Back", "Salute", "Pose", "Halt", "Group", "Random"}, 92}, 
-					{""}, 
-					{"Murder Taunts:", "Selection", "Off", {"Off", "Funny", "Help", "Scream", "Morose", "Random"}, 92}, 
-					{""}, 
-                }, 
-				{
-					{"Textures", 16, 253, 232, 192, 218}, 
-					{"Transparent Walls", "Checkbox", false, 78}, 
-					{"Transparency:", "Slider", 82, 100, 92}, 
-					{""}, 
-					{"Remove Sky", "Checkbox", false, 78}, 
-					{"Remove 3D Skybox", "Checkbox", false, 78}, 
-					{"Bright Mode", "Checkbox", false, 78}, 
-					{"Dark Mode", "Checkbox", false, 78}, 
-                }, 
-				{
-					{"Panels", 16, 459, 232, 244, 218}, 
-					{"Spectators Window", "Checkbox", false, 78}, 
-					{"Radar Window", "Checkbox", false, 78}, 
-					{"Radar Distance:", "Slider", 50, 100, 92}, 
-					{""}, 
-					{"Custom Status", "Checkbox", false, 78}, 
-					{"Players List", "Checkbox", false, 78}, 
-					{"Show List Titles", "Checkbox", true, 78}, -- Enabled by default
-					{"Panels Style:", "Selection", "Borders", {"Borders", "Borderless"}, 92}, 
-					{""}, 
-                }, 
-				{
-					{"Movement", 261, 20, 232, 270, 218}, 
-					{"Bunny Hop", "Checkbox", false, 78}, 
-					{"Auto Strafe:", "Selection", "Off", {"Off", "Legit", "Rage", "Directional"}, 92}, -- Directional strafing is a 'work-in-progress' feature
-					{""}, 
-					{"Circle Strafe", "Checkbox", false, 78}, 
-					{"Circle Strafe Key:", "Toggle", 0, 92, 0}, 
-					{""}, 
-					{"Circle Strafe Speed:", "Slider", 2, 6, 92}, 
-					{""}, 
-					{"Air Crouch", "Checkbox", false, 78}, 
-					{"Fake Crouch", "Checkbox", false, 78}, 
-                }, 
-				{
-					{"Free Roaming", 261, 304, 232, 205, 218}, 
-					{"Enabled", "Checkbox", false, 78}, 
-					{"Toggle Key:", "Toggle", 0, 92, 0}, 
-					{""}, 
-					{"Speed:", "Slider", 30, 100, 92}, 
-					{""}, 
-					{"FoV Value:", "Slider", 110, 360, 92}, 
-					{""}, 
-                }, 
-				{
-                	{"Chat", 506, 20, 232, 220, 218}, 
-					{"Log Kills in Chat", "Checkbox", false, 78}, 
-					{"Priority Targets Only", "Checkbox", false, 78}, 
-					{"Chat Spam:", "Selection", "Off", {"Off", "Advertising 1", "Advertising 2", "Advertising 3", "Nazi 1", "Nazi 2", "Nazi 3", "Arabic Spam", "Hebrew Spam", "Offensive Spam", "Insult Spam", "Message Spam", "N-Word Spam", "N-WORD SPAM", "'H' Spam", "Clear Chat", "OOC Clear Chat"}, 92}, 
-					{""}, 
-					{"Kill Spam:", "Selection", "Off", {"Off", "Normal", "Insult", "Salty", "HvH", "IdiotBox HvH", "Votekick", "Voteban", "Killstreak", }, 92}, 
-					{""}, 
-					{"Reply Spam:", "Selection", "Off", {"Off", "shut up", "ok", "who", "nobody cares", "where", "stop spamming", "what", "yea", "lol", "english please", "lmao", "shit", "fuck", "Random", "Disconnect Spam", "Cheater Callout", "Copy Messages"}, 92}, 
-					{""}, 
-                }, 
-				{
-					{"Sounds", 506, 254, 232, 195, 218}, 
-					{"Hitsounds:", "Selection", "Off", {"Off", "Default", "Headshot 1", "Headshot 2", "Metal", "Blip", "Eggcrack", "Balloon Pop"}, 92}, 
-					{""}, 
-					{"Killsounds:", "Selection", "Off", {"Off", "Default", "Headshot 1", "Headshot 2", "Metal", "Blip", "Eggcrack", "Balloon Pop"}, 92}, 
-					{""}, 
-					{"Music Player:", "Selection", "Off", {"Off", "Rust", "Resonance", "Daisuke", "A Burning M...", "Libet's Delay", "Lullaby Of T...", "Erectin' a River", "Fleeting Love", "Malo Tebya", "Vermilion", "Gravity", "Remorse", "Hold", "Green Valleys", "FP3", "Random"}, 92}, 
-					{""}, 
-					{"Reset Sounds", "Checkbox", false, 78}, 
-                }, 
-        }, 
-		["Adjustments"] = {
-				{
-          			{"Main Text Color", 16, 20, 232, 105, 88}, 
-          			{"Red:", "SliderOld", 0, 255, 92}, 
-					{"Green:", "SliderOld", 205, 255, 92}, 
-					{"Blue:", "SliderOld", 255, 255, 92}, 
-          		}, 
-				{
-					{"Menu Text Color", 16, 138, 232, 105, 88}, 
-					{"Red:", "SliderOld", 255, 255, 92}, 
-					{"Green:", "SliderOld", 255, 255, 92}, 
-					{"Blue:", "SliderOld", 255, 255, 92}, 
-				}, 
-				{
-          			{"Background Menu Color", 16, 256, 232, 105, 88}, 
-          			{"Red:", "SliderOld", 30, 255, 92}, 
-					{"Green:", "SliderOld", 30, 255, 92}, 
-					{"Blue:", "SliderOld", 45, 255, 92}, 
-          		}, 
-				{
-					{"Border Color", 16, 374, 232, 105, 88}, 
-					{"Red:", "SliderOld", 0, 255, 92}, 
-					{"Green:", "SliderOld", 155, 255, 92}, 
-					{"Blue:", "SliderOld", 255, 255, 92}, 
-                }, 
-				{
-					{"Viewmodel Color", 16, 492, 232, 105, 88}, 
-					{"Red:", "SliderOld", 0, 255, 92}, 
-					{"Green:", "SliderOld", 235, 255, 92}, 
-					{"Blue:", "SliderOld", 255, 255, 92}, 
-                }, 
-				{
-					{"Crosshair Color", 16, 610, 232, 105, 88}, 
-					{"Red:", "SliderOld", 0, 255, 92}, 
-					{"Green:", "SliderOld", 235, 255, 92}, 
-					{"Blue:", "SliderOld", 255, 255, 92}, 
-                }, 
-				{
-					{"Team Visuals Color", 261, 20, 232, 105, 88}, 
-					{"Red:", "SliderOld", 255, 255, 92}, 
-					{"Green:", "SliderOld", 255, 255, 92}, 
-					{"Blue:", "SliderOld", 0, 255, 92}, 
-                }, 
-				{
-					{"Enemy Visuals Color", 261, 138, 232, 105, 88}, 
-					{"Red:", "SliderOld", 255, 255, 92}, 
-					{"Green:", "SliderOld", 125, 255, 92}, 
-					{"Blue:", "SliderOld", 255, 255, 92}, 
-                }, 
-				{
-					{"Priority Targets Color", 261, 256, 232, 105, 88}, 
-					{"Red:", "SliderOld", 255, 255, 92}, 
-					{"Green:", "SliderOld", 0, 255, 92}, 
-					{"Blue:", "SliderOld", 100, 255, 92}, 
-                }, 
-				{
-					{"Ignored Targets Color", 261, 374, 232, 105, 88}, 
-					{"Red:", "SliderOld", 175, 255, 92}, 
-					{"Green:", "SliderOld", 175, 255, 92}, 
-					{"Blue:", "SliderOld", 175, 255, 92}, 
-                }, 
-				{
-					{"Others", 261, 492, 232, 157, 88}, 
-					{"T Opacity:", "SliderOld", 255, 255, 92}, 
-					{"B Opacity:", "SliderOld", 255, 255, 92}, 
-					{"BG Opacity:", "SliderOld", 255, 255, 92}, 
-					{"BG Darkness:", "SliderOld", 22, 25, 92}, 
-					{"Roundness:", "SliderOld", 50, 67, 92}, 
-                }, 
-				{
-					{"Misc Visuals Color", 506, 20, 232, 105, 88}, 
-					{"Red:", "SliderOld", 0, 255, 92}, 
-					{"Green:", "SliderOld", 255, 255, 92}, 
-					{"Blue:", "SliderOld", 255, 255, 92}, 
-                }, 
-				{
-					{"Team Chams Color", 506, 138, 232, 105, 88}, 
-					{"Red:", "SliderOld", 255, 255, 92}, 
-					{"Green:", "SliderOld", 215, 255, 92}, 
-					{"Blue:", "SliderOld", 0, 255, 92}, 
-                }, 
-				{
-					{"Enemy Chams Color", 506, 256, 232, 105, 88}, 
-					{"Red:", "SliderOld", 255, 255, 92}, 
-					{"Green:", "SliderOld", 70, 255, 92}, 
-					{"Blue:", "SliderOld", 255, 255, 92}, 
-                }, 
-				{
-					{"Window Adjustments", 506, 374, 232, 180, 88}, 
-					{"Spectators X:", "SliderOld", 12, 2000, 92}, 
-					{"Spectators Y:", "SliderOld", 12, 2000, 92}, 
-					{"Radar X:", "SliderOld", 225, 2000, 92}, 
-					{"Radar Y:", "SliderOld", 12, 2000, 92}, 
-					{"Window Opacity:", "SliderOld", 255, 255, 92}, 
-					{"Roundness:", "SliderOld", 16, 42, 92}, 
-                }, 
-				{
-					{"List Adjustments", 506, 568, 232, 180, 88}, 
-					{"Custom Status X:", "SliderOld", 17, 2000, 92}, 
-					{"Custom Status Y:", "SliderOld", 250, 2000, 92}, 
-					{"Players List X:", "SliderOld", 17, 2000, 92}, 
-					{"Players List Y:", "SliderOld", 430, 2000, 92}, 
-					{"List Opacity:", "SliderOld", 255, 255, 92}, 
-					{"Roundness:", "SliderOld", 8, 10, 92}, 
-                }, 
-        }, 
+		{
+			{"Trouble in Terrorist Town Utilities", 16, 177, 232, 222, 218}, 
+			{"Traitor Finder", "Checkbox", false, 78}, 
+			{"Ignore Detectives as Innocent", "Checkbox", false, 78}, 
+			{"Ignore Fellow Traitors", "Checkbox", false, 78}, 
+			{"Hide Round Report", "Checkbox", false, 78}, 
+			{"Panel Remover", "Checkbox", false, 78}, 
+			{"Prop Kill", "Checkbox", false, 78}, 
+			{"Prop Kill Key:", "Toggle", 0, 92, 0}, 
+		}, 
+		{
+			{"DarkRP Utilities", 16, 412, 232, 148, 218}, 
+			{"Suicide Near Arrest Batons", "Checkbox", false, 78}, 
+			{"Transparent Props", "Checkbox", false, 78}, 
+			{"Transparency:", "Slider", 175, 255, 92}, 
+			{""}, 
+			{"Money Value", "Checkbox", false, 78}, 
+		}, 
+		{
+			{"Murder Utilities", 16, 573, 232, 145, 218}, 
+			{"Murderer Finder", "Checkbox", false, 78}, 
+			{"Hide End Round Board", "Checkbox", false, 78}, 
+			{"Hide Footprints", "Checkbox", false, 78}, 
+			{"No Black Screens", "Checkbox", false, 78}, 
+			{"Bystander Name", "Checkbox", false, 78}, 
+		}, 
+		{
+			{"Menus", 261, 20, 232, 175, 218}, 
+			{"Entity Finder Menu", "Button", "", 92}, 
+			{"Plugin Loader Menu", "Button", "", 92}, 
+			{"Menu Style:", "Selection", "Borders", {"Borders", "Borderless"}, 92}, 
+			{""}, 
+			{"Options Style:", "Selection", "Borderless", {"Borders", "Borderless"}, 92}, 
+			{""}, 
+		}, 
+		{
+			{"Configurations", 261, 208, 232, 175, 218}, 
+			{"Automatically Save", "Checkbox", false, 78}, 
+			{"Save Configuration", "Button", "", 92}, 
+			{"Load Configuration", "Button", "", 92}, 
+			{"Delete Configuration", "Button", "", 92}, 
+			{"Configuration:", "Selection", "Legit Config", {"Legit Config", "Rage Config", "HvH Config", "Misc Config #1", "Misc Config #2", "Misc Config #3", "Misc Config #4", "Misc Config #5", "Misc Config #6", "Misc Config #7"}, 92}, 
+			{""}, 
+		}, 
+		{
+          	{"Others", 261, 396, 232, 130, 218}, 
+			{"Apply custom name", "Checkbox", false, 78}, 
+			{"Feature Tooltips", "Checkbox", true, 78}, -- Enabled by default
+			{"Print Changelog", "Button", "", 92}, 
+			{"Unload Cheat", "Button", "", 92}, 
+		}, 
+		{
+			{"Priority List", 506, 20, 232, 205, 218}, 
+			{"Enabled", "Checkbox", true, 78}, -- Enabled by default
+			{"List Position X:", "Slider", 1356, 2000, 92}, 
+			{""}, 
+			{"List Position Y:", "Slider", 134, 2000, 92}, 
+			{""}, 
+			{"List Spacing:", "Slider", 0, 10, 92}, 
+			{""}, 
+		}, 
+		{
+			{"Panic Mode", 506, 239, 232, 100, 218}, 
+			{"Enabled", "Checkbox", false, 78}, 
+			{"Mode:", "Selection", "Disable All", {"Disable Aimbot", "Disable Anti-Aim", "Disable All"}, 92}, 
+			{""}, 
+		}, 
+	}, 
+	["Aim Assist"] = {
+		{
+			{"Aimbot", 16, 20, 232, 345, 218}, 
+			{"Enabled", "Checkbox", false, 78}, 
+			{"Toggle Key:", "Toggle", 0, 92, 0}, 
+			{""}, 
+			{"Aim FoV Value:", "Slider", 0, 180, 92}, 
+			{""}, 
+			{"Aim Smoothness:", "Slider", 0, 50, 92}, 
+			{""}, 
+			{"Silent Aim", "Checkbox", false, 78}, 
+			{"Auto Fire", "Checkbox", false, 78}, 
+			{"Auto Zoom", "Checkbox", false, 78}, 
+			{"Auto Stop", "Checkbox", false, 78}, 
+			{"Auto Crouch", "Checkbox", false, 78}, 
+			{"Target Lock", "Checkbox", false, 78}, 
+		}, 
+		{
+			{"Triggerbot", 16, 378, 232, 200, 218}, 
+			{"Enabled", "Checkbox", false, 78}, 
+			{"Toggle Key:", "Toggle", 0, 92, 0}, 
+			{""}, 
+			{"Smooth Aim", "Checkbox", false, 78}, 
+			{"Auto Zoom", "Checkbox", false, 78}, 
+			{"Auto Stop", "Checkbox", false, 78}, 
+			{"Auto Crouch", "Checkbox", false, 78}, 
+		}, 
+		{
+			{"Aim Priorities", 261, 20, 232, 708, 218}, 
+			{"Priority Targets Only", "Checkbox", false, 78}, 
+			{"Disable in Noclip", "Checkbox", false, 78}, 
+			{"Hitbox:", "Selection", "Head", {"Head", "Body"}, 92}, 
+			{""}, 
+			{"Aim Priority:", "Selection", "Crosshair", {"Crosshair", "Distance", "Health", "Random"}, 92}, 
+			{""}, 
+			{"Target Players", "Checkbox", true, 78}, -- Enabled by default
+			{"Target Bots", "Checkbox", true, 78}, -- Enabled by default
+			{"Target NPCs", "Checkbox", true, 78}, -- Enabled by default
+			{"Target Team", "Checkbox", true, 78}, -- Enabled by default
+			{"Target Enemies", "Checkbox", true, 78}, -- Enabled by default
+			{"Target Steam Friends", "Checkbox", false, 78}, 
+			{"Target Admins", "Checkbox", false, 78}, 
+			{"Target Spectators", "Checkbox", false, 78}, 
+			{"Target Frozen Players", "Checkbox", false, 78}, 
+			{"Target Noclipping Players", "Checkbox", false, 78}, 
+			{"Target Driving Players", "Checkbox", false, 78}, 
+			{"Target Transparent Players", "Checkbox", false, 78}, 
+			{"Target Overhealed Players", "Checkbox", false, 78}, 
+			{"Max Player Health:", "Slider", 500, 5000, 92}, 
+			{""}, 
+			{"Distance Limit", "Checkbox", false, 78}, 
+			{"Distance:", "Slider", 1500, 5000, 92}, 
+			{""}, 
+			{"Velocity Limit", "Checkbox", false, 78}, 
+			{"Velocity:", "Slider", 1000, 5000, 92}, 
+			{""}, 
+		}, 
+		{
+			{"Miscellaneous", 506, 20, 232, 375, 218}, 
+			{"Remove Weapon Recoil", "Checkbox", false, 78}, 
+			{"Remove Bullet Spread", "Checkbox", false, 78}, 
+			{"Projectile Prediction", "Checkbox", false, 78}, 
+			{"Auto Reload", "Checkbox", false, 78}, 
+			{"Rapid Fire:", "Selection", "Off", {"Off", "Primary Fire", "Alt Fire"}, 92}, 
+			{""}, 
+			{"Line-of-Sight Check:", "Selection", "Default", {"Off", "Default", "Auto Wallbang"}, 92}, -- Enabled by default
+			{""}, 
+			{"Manipulate Interpolation", "Checkbox", false, 78}, 
+			{"Manipulate Bullet Time", "Checkbox", false, 78}, 
+			{"Bullet Fire Delay:", "Slider", 0, 100, 92}, 
+			{""}, 
+			{"Show FoV Circle", "Checkbox", false, 78}, 
+			{"Snap Lines", "Checkbox", false, 78}, 
+		}, 
+	}, 
+	["Hack vs. Hack"] = {
+		{
+			{"Anti-Aim", 16, 20, 232, 605, 218}, 
+			{"Enabled", "Checkbox", false, 78}, 
+			{"Disable in Noclip", "Checkbox", true, 78}, -- Enabled by default
+			{"Disable in 'Use' Toggle", "Checkbox", true, 78}, -- Enabled by default
+			{"Detect Walls", "Checkbox", false, 78}, 
+			{"Lock View", "Checkbox", false, 78}, 
+			{"Mode:", "Selection", "Default", {"Default", "Static", "Distance Adapt", "Crosshair Adapt"}, 92}, 
+			{""}, 
+			{"Pitch:", "Selection", "Off", {"Off", "Down", "Up", "Center", "Fake-Down", "Fake-Up", "Jitter", "Semi-Jitter Down", "Semi-Jitter Up", "Emotion", "Spinbot"}, 92}, 
+			{""}, 
+			{"Yaw:", "Selection", "Off", {"Off", "Forwards", "Backwards", "Sideways", "Fake-Forwards", "Fake-Backwards", "Fake-Sideways", "Jitter", "Backwards Jitter", "Sideways Jitter", "Semi-Jitter", "Back Semi-Jitter", "Side Semi-Jitter", "Side Switch", "Emotion", "Spinbot"}, 92}, 
+			{""}, 
+			{"Anti-Aim Direction:", "Selection", "Left", {"Left", "Right", "Manual Switch"}, 92}, 
+			{""}, 
+			{"Switch Key:", "Toggle", 0, 92, 0}, 
+			{""}, 
+			{"Spinbot Pitch Speed:", "Slider", 30, 180, 92}, 
+			{""}, 
+			{"Spinbot Yaw Speed:", "Slider", 30, 180, 92}, 
+			{""}, 
+			{"Emotion Pitch Speed:", "Slider", 18, 100, 92}, 
+			{""}, 
+			{"Emotion Yaw Speed:", "Slider", 18, 100, 92}, 
+			{""}, 
+		}, 
+		{
+			{"Resolver", 261, 20, 232, 200, 218}, 
+			{"Enabled", "Checkbox", false, 78}, 
+			{"Priority Targets Only", "Checkbox", false, 78}, 
+			{"Pitch:", "Selection", "Off", {"Off", "Down", "Up", "Center", "Invert", "Random", "Auto"}, 92}, 
+			{""}, 
+			{"Yaw:", "Selection", "Off", {"Off", "Left", "Right", "Invert", "Random", "Auto"}, 92}, 
+			{""}, 
+			{"Emote Resolver", "Checkbox", false, 78}, 
+		}, 
+		{
+			{"Fake Lag", 506, 20, 232, 180, 218}, 
+			{"Enabled", "Checkbox", false, 78}, 
+			{"Disable on Attack", "Checkbox", false, 78}, 
+			{"Lag Choke:", "Slider", 14, 14, 92}, 
+			{""}, 
+			{"Lag Send:", "Slider", 0, 14, 92}, 
+			{""}, 
+		}, 
+	}, 
+	["Visuals"] = {
+		{
+			{"Wallhack", 16, 20, 232, 700, 218}, 
+			{"Enabled", "Checkbox", false, 78}, 
+			{"Style:", "Selection", "Optimized", {"Classic", "Optimized"}, 92}, 
+			{""}, 
+			{"Visibility:", "Selection", "Global", {"Global", "Clientside"}, 92}, 
+			{""}, 
+			{"Box:", "Selection", "Off", {"Off", "2D Box", "3D Box", "Edged Box"}, 92}, 
+			{""}, 
+			{"Chams:", "Selection", "Off", {"Off", "Normal", "Flat", "Wireframe", "Playermodel"}, 92}, 
+			{""}, 
+			{"Skeleton", "Checkbox", false, 78}, 
+			{"Glow", "Checkbox", false, 78}, 
+			{"Hitbox", "Checkbox", false, 78}, 
+			{"Vision Line", "Checkbox", false, 78}, 
+			{"Position Lines:", "Selection", "Off", {"Off", "Top", "Center", "Bottom"}, 92}, 
+			{""}, 
+			{"Name", "Checkbox", false, 78}, 
+			{"Health Bar", "Checkbox", false, 78}, 
+			{"Health Value", "Checkbox", false, 78}, 
+			{"Armor Bar", "Checkbox", false, 78}, 
+			{"Armor Value", "Checkbox", false, 78}, 
+			{"Weapon", "Checkbox", false, 78}, 
+			{"Rank", "Checkbox", false, 78}, 
+			{"Distance", "Checkbox", false, 78}, 
+			{"Velocity", "Checkbox", false, 78}, 
+			{"Conditions", "Checkbox", false, 78}, 
+			{"Steam ID", "Checkbox", false, 78}, 
+			{"Ping", "Checkbox", false, 78}, 
+		}, 
+		{
+			{"Point of View", 261, 20, 232, 725, 218}, 
+			{"Custom FoV", "Checkbox", false, 78}, 
+			{"FoV Value:", "Slider", 110, 360, 92}, 
+			{""}, 
+			{"Thirdperson", "Checkbox", false, 78}, 
+			{"Thirdperson Key:", "Toggle", 0, 92, 0}, 
+			{""}, 
+			{"Thirdperson Range:", "Slider", 15, 100, 92}, 
+			{""}, 
+			{"Thirdperson FoV Value:", "Slider", 110, 360, 92}, 
+			{""}, 
+			{"Viewmodel Chams:", "Selection", "Off", {"Off", "Normal", "Flat", "Wireframe"}, 92}, 
+			{""}, 
+			{"Rainbow Mode", "Checkbox", false, 78}, 
+			{"No Viewmodel", "Checkbox", false, 78}, 
+			{"No Hands", "Checkbox", false, 78}, 
+			{"Custom Positions", "Checkbox", false, 78}, 
+			{"Viewmodel X:", "Slider", 50, 100, 92}, 
+			{""}, 
+			{"Viewmodel Y:", "Slider", 30, 60, 92}, 
+			{""}, 
+			{"Viewmodel Z:", "Slider", 20, 40, 92}, 
+			{""}, 
+			{"Viewmodel Pitch:", "Slider", 90, 180, 92}, 
+			{""}, 
+			{"Viewmodel Yaw:", "Slider", 90, 180, 92}, 
+			{""}, 
+			{"Viewmodel Roll:", "Slider", 90, 180, 92}, 
+			{""}, 
+		}, 
+		{
+			{"Miscellaneous", 506, 20, 232, 700, 218}, 
+			{"Priority Targets Only", "Checkbox", false, 78}, 
+			{"Hide Ignored Targets", "Checkbox", false, 78}, 
+			{"Target Priority Colors", "Checkbox", true, 78}, -- Enabled by default
+			{"Show Enemies Only", "Checkbox", false, 78}, 
+			{"Show Spectators", "Checkbox", false, 78}, 
+			{"Team Colors", "Checkbox", true, 78}, -- Enabled by default
+			{"Adaptive Text Color", "Checkbox", true, 78}, -- Enabled by default
+			{"Show NPCs", "Checkbox", false, 78}, 
+			{"NPC Name", "Checkbox", false, 78}, 
+			{"NPC Box", "Checkbox", false, 78}, 
+			{"NPC Health", "Checkbox", false, 78}, 
+			{"NPC Chams:", "Selection", "Off", {"Off", "Normal", "Flat", "Wireframe", "Model"}, 92}, 
+			{""}, 
+			{"Show Entities", "Checkbox", false, 78}, 
+			{"Entity Name", "Checkbox", false, 78}, 
+			{"Entity Box", "Checkbox", false, 78}, 
+			{"Entity Chams:", "Selection", "Off", {"Off", "Normal", "Flat", "Wireframe", "Model"}, 92}, 
+			{""}, 
+			{"Hide HUD", "Checkbox", false, 78}, 
+			{"Witness Finder", "Checkbox", false, 78}, 
+			{"Dormant Check:", "Selection", "All", {"None", "Players", "Entities", "All"}, 92}, 
+			{""}, 
+			{"Crosshair:", "Selection", "Off", {"Off", "Box", "Dot", "Square", "Circle", "Cross", "Edged Cross", "Swastika", "GTA IV"}, 92}, 
+			{""}, 
+			{"Distance Limit", "Checkbox", false, 78}, 
+			{"Distance:", "Slider", 1500, 5000, 92}, 
+			{""}, 
+		}, 
+	}, 
+	["Miscellaneous"] = {
+		{
+			{"Miscellaneous", 16, 20, 232, 220, 218}, 
+			{"Flash Spam", "Checkbox", false, 78}, 
+			{"Use Spam", "Checkbox", false, 78}, 
+			{"Name Stealer:", "Selection", "Off", {"Off", "Normal", "Priority Targets", "DarkRP Name"}, 92}, 
+			{""}, 
+			{"Emotes:", "Selection", "Off", {"Off", "Dance", "Sexy", "Wave", "Robot", "Bow", "Cheer", "Laugh", "Zombie", "Agree", "Disagree", "Forward", "Back", "Salute", "Pose", "Halt", "Group", "Random"}, 92}, 
+			{""}, 
+			{"Murder Taunts:", "Selection", "Off", {"Off", "Funny", "Help", "Scream", "Morose", "Random"}, 92}, 
+			{""}, 
+		}, 
+		{
+			{"Textures", 16, 253, 232, 192, 218}, 
+			{"Transparent Walls", "Checkbox", false, 78}, 
+			{"Transparency:", "Slider", 82, 100, 92}, 
+			{""}, 
+			{"Remove Sky", "Checkbox", false, 78}, 
+			{"Remove 3D Skybox", "Checkbox", false, 78}, 
+			{"Bright Mode", "Checkbox", false, 78}, 
+			{"Dark Mode", "Checkbox", false, 78}, 
+		}, 
+		{
+			{"Panels", 16, 459, 232, 244, 218}, 
+			{"Spectators Window", "Checkbox", false, 78}, 
+			{"Radar Window", "Checkbox", false, 78}, 
+			{"Radar Distance:", "Slider", 50, 100, 92}, 
+			{""}, 
+			{"Custom Status", "Checkbox", false, 78}, 
+			{"Players List", "Checkbox", false, 78}, 
+			{"Show List Titles", "Checkbox", true, 78}, -- Enabled by default
+			{"Panels Style:", "Selection", "Borders", {"Borders", "Borderless"}, 92}, 
+			{""}, 
+		}, 
+		{
+			{"Movement", 261, 20, 232, 270, 218}, 
+			{"Bunny Hop", "Checkbox", false, 78}, 
+			{"Auto Strafe:", "Selection", "Off", {"Off", "Legit", "Rage", "Directional"}, 92}, -- Directional strafing is a 'work-in-progress' feature
+			{""}, 
+			{"Circle Strafe", "Checkbox", false, 78}, 
+			{"Circle Strafe Key:", "Toggle", 0, 92, 0}, 
+			{""}, 
+			{"Circle Strafe Speed:", "Slider", 2, 6, 92}, 
+			{""}, 
+			{"Air Crouch", "Checkbox", false, 78}, 
+			{"Fake Crouch", "Checkbox", false, 78}, 
+		}, 
+		{
+			{"Free Roaming", 261, 304, 232, 205, 218}, 
+			{"Enabled", "Checkbox", false, 78}, 
+			{"Toggle Key:", "Toggle", 0, 92, 0}, 
+			{""}, 
+			{"Speed:", "Slider", 30, 100, 92}, 
+			{""}, 
+			{"FoV Value:", "Slider", 110, 360, 92}, 
+			{""}, 
+		}, 
+		{
+			{"Chat", 506, 20, 232, 220, 218}, 
+			{"Log Kills in Chat", "Checkbox", false, 78}, 
+			{"Priority Targets Only", "Checkbox", false, 78}, 
+			{"Chat Spam:", "Selection", "Off", {"Off", "Advertising 1", "Advertising 2", "Advertising 3", "Nazi 1", "Nazi 2", "Nazi 3", "Arabic Spam", "Hebrew Spam", "Offensive Spam", "Insult Spam", "Message Spam", "N-Word Spam", "N-WORD SPAM", "'H' Spam", "Clear Chat", "OOC Clear Chat"}, 92}, 
+			{""}, 
+			{"Kill Spam:", "Selection", "Off", {"Off", "Normal", "Insult", "Salty", "HvH", "IdiotBox HvH", "Votekick", "Voteban", "Killstreak", }, 92}, 
+			{""}, 
+			{"Reply Spam:", "Selection", "Off", {"Off", "shut up", "ok", "who", "nobody cares", "where", "stop spamming", "what", "yea", "lol", "english please", "lmao", "shit", "fuck", "Random", "Disconnect Spam", "Cheater Callout", "Copy Messages"}, 92}, 
+			{""}, 
+		}, 
+		{
+			{"Sounds", 506, 254, 232, 195, 218}, 
+			{"Hitsounds:", "Selection", "Off", {"Off", "Default", "Headshot 1", "Headshot 2", "Metal", "Blip", "Eggcrack", "Balloon Pop"}, 92}, 
+			{""}, 
+			{"Killsounds:", "Selection", "Off", {"Off", "Default", "Headshot 1", "Headshot 2", "Metal", "Blip", "Eggcrack", "Balloon Pop"}, 92}, 
+			{""}, 
+			{"Music Player:", "Selection", "Off", {"Off", "Rust", "Resonance", "Daisuke", "A Burning M...", "Libet's Delay", "Lullaby Of T...", "Erectin' a River", "Fleeting Love", "Malo Tebya", "Vermilion", "Gravity", "Remorse", "Hold", "Green Valleys", "FP3", "Random"}, 92}, 
+			{""}, 
+			{"Reset Sounds", "Checkbox", false, 78}, 
+		}, 
+	}, 
+	["Adjustments"] = {
+		{
+			{"Main Text Color", 16, 20, 232, 105, 88}, 
+			{"Red:", "SliderOld", 0, 255, 92}, 
+			{"Green:", "SliderOld", 205, 255, 92}, 
+			{"Blue:", "SliderOld", 255, 255, 92}, 
+		}, 
+		{
+			{"Menu Text Color", 16, 138, 232, 105, 88}, 
+			{"Red:", "SliderOld", 255, 255, 92}, 
+			{"Green:", "SliderOld", 255, 255, 92}, 
+			{"Blue:", "SliderOld", 255, 255, 92}, 
+		}, 
+		{
+			{"Background Menu Color", 16, 256, 232, 105, 88}, 
+			{"Red:", "SliderOld", 30, 255, 92}, 
+			{"Green:", "SliderOld", 30, 255, 92}, 
+			{"Blue:", "SliderOld", 45, 255, 92}, 
+		}, 
+		{
+			{"Border Color", 16, 374, 232, 105, 88}, 
+			{"Red:", "SliderOld", 0, 255, 92}, 
+			{"Green:", "SliderOld", 155, 255, 92}, 
+			{"Blue:", "SliderOld", 255, 255, 92}, 
+		}, 
+		{
+			{"Viewmodel Color", 16, 492, 232, 105, 88}, 
+			{"Red:", "SliderOld", 0, 255, 92}, 
+			{"Green:", "SliderOld", 235, 255, 92}, 
+			{"Blue:", "SliderOld", 255, 255, 92}, 
+		}, 
+		{
+			{"Crosshair Color", 16, 610, 232, 105, 88}, 
+			{"Red:", "SliderOld", 0, 255, 92}, 
+			{"Green:", "SliderOld", 235, 255, 92}, 
+			{"Blue:", "SliderOld", 255, 255, 92}, 
+		}, 
+		{
+			{"Team Visuals Color", 261, 20, 232, 105, 88}, 
+			{"Red:", "SliderOld", 255, 255, 92}, 
+			{"Green:", "SliderOld", 255, 255, 92}, 
+			{"Blue:", "SliderOld", 0, 255, 92}, 
+		}, 
+		{
+			{"Enemy Visuals Color", 261, 138, 232, 105, 88}, 
+			{"Red:", "SliderOld", 255, 255, 92}, 
+			{"Green:", "SliderOld", 125, 255, 92}, 
+			{"Blue:", "SliderOld", 255, 255, 92}, 
+		}, 
+		{
+			{"Priority Targets Color", 261, 256, 232, 105, 88}, 
+			{"Red:", "SliderOld", 255, 255, 92}, 
+			{"Green:", "SliderOld", 0, 255, 92}, 
+			{"Blue:", "SliderOld", 100, 255, 92}, 
+		}, 
+		{
+			{"Ignored Targets Color", 261, 374, 232, 105, 88}, 
+			{"Red:", "SliderOld", 175, 255, 92}, 
+			{"Green:", "SliderOld", 175, 255, 92}, 
+			{"Blue:", "SliderOld", 175, 255, 92}, 
+		}, 
+		{
+			{"Others", 261, 492, 232, 157, 88}, 
+			{"T Opacity:", "SliderOld", 255, 255, 92}, 
+			{"B Opacity:", "SliderOld", 255, 255, 92}, 
+			{"BG Opacity:", "SliderOld", 255, 255, 92}, 
+			{"BG Darkness:", "SliderOld", 22, 25, 92}, 
+			{"Roundness:", "SliderOld", 50, 67, 92}, 
+		}, 
+		{
+			{"Misc Visuals Color", 506, 20, 232, 105, 88}, 
+			{"Red:", "SliderOld", 0, 255, 92}, 
+			{"Green:", "SliderOld", 255, 255, 92}, 
+			{"Blue:", "SliderOld", 255, 255, 92}, 
+		}, 
+		{
+			{"Team Chams Color", 506, 138, 232, 105, 88}, 
+			{"Red:", "SliderOld", 255, 255, 92}, 
+			{"Green:", "SliderOld", 215, 255, 92}, 
+			{"Blue:", "SliderOld", 0, 255, 92}, 
+		}, 
+		{
+			{"Enemy Chams Color", 506, 256, 232, 105, 88}, 
+			{"Red:", "SliderOld", 255, 255, 92}, 
+			{"Green:", "SliderOld", 70, 255, 92}, 
+			{"Blue:", "SliderOld", 255, 255, 92}, 
+		}, 
+		{
+			{"Window Adjustments", 506, 374, 232, 180, 88}, 
+			{"Spectators X:", "SliderOld", 12, 2000, 92}, 
+			{"Spectators Y:", "SliderOld", 12, 2000, 92}, 
+			{"Radar X:", "SliderOld", 225, 2000, 92}, 
+			{"Radar Y:", "SliderOld", 12, 2000, 92}, 
+			{"Window Opacity:", "SliderOld", 255, 255, 92}, 
+			{"Roundness:", "SliderOld", 16, 42, 92}, 
+		}, 
+		{
+			{"List Adjustments", 506, 568, 232, 180, 88}, 
+			{"Custom Status X:", "SliderOld", 17, 2000, 92}, 
+			{"Custom Status Y:", "SliderOld", 250, 2000, 92}, 
+			{"Players List X:", "SliderOld", 17, 2000, 92}, 
+			{"Players List Y:", "SliderOld", 430, 2000, 92}, 
+			{"List Opacity:", "SliderOld", 255, 255, 92}, 
+			{"Roundness:", "SliderOld", 8, 10, 92}, 
+		}, 
+	}, 
 }
 
 local order = {
@@ -1669,7 +1669,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("===========================================================\n\n")
 	print("IdiotBox v6.9.b7 bugfixes (in no particular order)")
 	print("")
-	print("PLEASE NOTE: This changelog includes bugfixes from previous updates as well.")
+	print("Please note: This changelog includes bugfixes from previous updates as well.")
 	print("\n")
 	print("- The 'readme.txt' file is finally up-to-date and only contains the important information;")
 	print("- Aim Smoothness will automatically disable itself if Silent aim is turned on;")
@@ -1734,7 +1734,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("\n")
 	print("IdiotBox v6.9.b7 new features (in no particular order)")
 	print("")
-	print("PLEASE NOTE: This changelog includes feature changes from previous updates as well.")
+	print("Please note: This changelog includes feature changes from previous updates as well.")
 	print("\n")
 	print("- Added 'Projectile Prediction' and 'Line-of-Sight Check' to Aimbot;")
 	print("- Added 'Emote Resolver' to Resolver;")
@@ -1780,7 +1780,6 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Removed 'Screengrab Notifications' from Miscellaneous;")
 	print("- Removed 'Mirror' from Point of View;")
 	print("- Removed useless information from Anti-Aim and Miscellaneous;")
-	print("- Removed old and irrelevant changes from this changelog, ironically enough;")
 	print("- Changed the Armor Bar and Armor Value colors from bright green to bright blue.")
 	print("- Changed the default colors, menu size and others;")
 	print("- Changed the entity finder menu;")
@@ -4046,6 +4045,14 @@ local function AutoReload(cmd)
 	end
 end
 
+local function OnScreen(v)
+	if math.abs(v:LocalToWorld(v:OBBCenter()):ToScreen().x) < ScrW() * 5 and math.abs(v:LocalToWorld(v:OBBCenter()):ToScreen().y) < ScrH() * 5 then
+		return true
+	else
+		return false
+	end
+end
+
 local function Visuals(v)
 	local colOne = (idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) && Color(0, 0, 0) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v)
 	local colTwo = (idiot.contributors[v:SteamID()] || idiot.creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || Color(0, 0, 0)
@@ -4064,6 +4071,25 @@ local function Visuals(v)
 	local misccol = Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
 	if (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then
 		return false
+	end
+	if (gBool("Visuals", "Wallhack", "Vision Line")) then
+		local b1, b2 = v:EyePos(), v:GetEyeTrace().HitPos
+		cam.Start3D()
+			render.DrawLine(b1, b2, colFour)
+			render.DrawWireframeSphere(b2, 2, 10, 10, colFour, b2)
+		cam.End3D()	
+	end
+	if not OnScreen(v) then return false end -- I just thought it would make more sense for the function above to work, even if the player is off the screen
+	if gOption("Visuals", "Wallhack", "Position Lines:") ~= "Off" then
+		local pos = v:LocalToWorld(v:OBBCenter()):ToScreen()
+			surface.SetDrawColor(colThree)
+		if gBool("Visuals", "Wallhack", "Position Lines:") == "Bottom" then
+			surface.DrawLine(ScrW() / 2, ScrH(), pos.x, pos.y)
+		elseif gBool("Visuals", "Wallhack", "Position Lines:") == "Top" then
+			surface.DrawLine(ScrW() / 2, 0, pos.x, pos.y)
+		else
+			surface.DrawLine(ScrW() / 2, ScrH() / 2, pos.x, pos.y)
+		end
 	end
 	if gOption("Visuals", "Wallhack", "Style:") == "Optimized" then
 	local x1, y1, x2, y2 = ScrW() * 2, ScrH() * 2, - ScrW(), - ScrH()
@@ -4789,13 +4815,6 @@ local function Visuals(v)
 		local wep = v:GetActiveWeapon()
 		halo.Add({v, wep}, colFour, .55, .55, 5, true, true)
 	end
-	global.cam.Start3D()
-		if (gBool("Visuals", "Wallhack", "Vision Line")) then
-			local b1, b2 = v:EyePos(), v:GetEyeTrace().HitPos
-			global.render.DrawLine(b1, b2, colFour)
-			global.render.DrawWireframeSphere(b2, 2, 10, 10, colFour, b2)
-		end
-	global.cam.End3D()
 	if (gBool("Visuals", "Wallhack", "Hitbox")) then
 		for k, v in next, player.GetAll() do
 		if (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) then continue end
@@ -4833,25 +4852,6 @@ local function Visuals(v)
 		end
 			end
 		end
-	end
-	if gOption("Visuals", "Wallhack", "Position Lines:") ~= "Off" then
-		local pos = v:LocalToWorld(v:OBBCenter()):ToScreen()
-			surface.SetDrawColor(colThree)
-		if gBool("Visuals", "Wallhack", "Position Lines:") == "Bottom" then
-			surface.DrawLine(ScrW() / 2, ScrH(), pos.x, pos.y)
-		elseif gBool("Visuals", "Wallhack", "Position Lines:") == "Top" then
-			surface.DrawLine(ScrW() / 2, 0, pos.x, pos.y)
-		else
-			surface.DrawLine(ScrW() / 2, ScrH() / 2, pos.x, pos.y)
-		end
-	end
-end
-
-local function OnScreen(v)
-	if math.abs(v:LocalToWorld(v:OBBCenter()):ToScreen().x) < ScrW() * 5 and math.abs(v:LocalToWorld(v:OBBCenter()):ToScreen().y) < ScrH() * 5 then
-		return true
-	else
-		return false
 	end
 end
 
@@ -4933,7 +4933,7 @@ end
 hook.Add("DrawOverlay", "DrawOverlay", function()
 	if gBool("Visuals", "Wallhack", "Enabled") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) && !menuopen then
 		for k, v in next, player.GetAll() do
-		if ((!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or not em.IsValid(v) or em.Health(v) < 0.1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not OnScreen(v) or not WallhackFilter(v) or not EnemyWallhackFilter(v) then continue end
+		if ((!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or not em.IsValid(v) or em.Health(v) < 0.1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not WallhackFilter(v) or not EnemyWallhackFilter(v) then continue end
 			Visuals(v)
 		end
 	end
