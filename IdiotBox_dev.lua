@@ -4899,8 +4899,9 @@ end)
 local function ShowNPCs()
 	for k, v in pairs(ents.FindByClass("npc_*")) do
 	if (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or not OnScreen(v) or not WallhackFilter(v) then continue end
-	local colOne = Color(0, 255, 0)
+	local colOne = (Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b))
 	local colTwo = Color((100 - em.Health(v)) * 2.55, em.Health(v) * 2.55, 0, 255)
+	local colThree = (Color(0, 0, 0))
 	local pos = em.GetPos(v)
 	local min, max = em.GetCollisionBounds(v)
 	local pos2 = pos + Vector(0, 0, max.z)
@@ -4911,20 +4912,18 @@ local function ShowNPCs()
 	local w = h / 1.7
 	local hp = em.Health(v) * h / 100
 	local health = em.Health(v)
-	local colOne = (Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b))
 	if health < 0 then
 	health = 0
 	end
-	local colThree = (Color(0, 0, 0))
 	if v:Health() > 0 then
-	if gBool("Visuals", "Miscellaneous", "NPC Box") then
+	if gOption("Visuals", "Miscellaneous", "Box:") == "2D Box" then
 		surface.SetDrawColor(colOne)
 		surface.DrawOutlinedRect(pos.x - w / 2, pos.y - h, w, h)
 		surface.SetDrawColor(colThree)
 		surface.DrawOutlinedRect(pos.x - w / 2 - 1, pos.y - h - 1, w + 2, h + 2)
 		surface.DrawOutlinedRect(pos.x - w / 2 + 1, pos.y - h + 1, w - 2, h - 2)
 	end
-	if gBool("Visuals", "Miscellaneous", "NPC Name") then
+	if gBool("Visuals", "Wallhack", "Name") then
 		draw.SimpleText(v:GetClass(), "VisualsFont", pos.x, pos.y - h - 2 - 7, Color(255, 255, 255), 1, 1)
 		surface.SetDrawColor(Color(0, 0, 0))
 	end
@@ -4939,9 +4938,43 @@ local function ShowNPCs()
 			surface.DrawLine(ScrW() / 2, ScrH() / 2, pos.x, pos.y)
 		end
 	end
-	local colOne = Color((100 - em.Health(v)) * 2.55, em.Health(v) * 2.55, 0)
-	if gBool("Visuals", "Miscellaneous", "NPC Health") then
-		draw.SimpleText("Health: "..health, "VisualsFont", pos.x, pos.y - 2, colOne, 1, 0)
+	if (gBool("Visuals", "Wallhack", "Skeleton")) then
+		local pos = em.GetPos(v)
+		for i = 0, em.GetBoneCount(v) do
+		local parent = em.GetBoneParent(v, i)
+		local bonepos = em.GetBonePosition(v, i)
+		local parentpos = em.GetBonePosition(v, parent)
+		if (!parent) or (bonepos == pos) or (!bonepos || !parentpos) then continue end
+		local screen1, screen2 = vm.ToScreen(bonepos), vm.ToScreen(parentpos)
+		surface.SetDrawColor(colOne)
+		surface.DrawLine(screen1.x, screen1.y, screen2.x, screen2.y)
+		end
+	end
+	if (gBool("Visuals", "Wallhack", "Glow")) then
+		halo.Add({v}, colOne, .55, .55, 5, true, true)
+	end
+	if (gBool("Visuals", "Wallhack", "Hitbox")) then
+		if v:IsValid() and v:Health() > 0 then
+			for i = 0, v:GetHitBoxGroupCount() - 1 do
+			for _i = 0, v:GetHitBoxCount(i) - 1 do
+			local bone = v:GetHitBoxBone(_i, i)
+			if not (bone) then continue end			
+			local min, max = v:GetHitBoxBounds(_i, i)			
+			if (v:GetBonePosition(bone)) then
+			local pos, ang = v:GetBonePosition(bone)
+				cam.Start3D()
+					render.DrawWireframeBox(pos, ang, min, max, colOne)
+				cam.End3D()
+			end
+		end
+			end
+		end
+	end
+	local colFour = Color((100 - em.Health(v)) * 2.55, em.Health(v) * 2.55, 0)
+	if gBool("Visuals", "Wallhack", "Health Value") then
+		draw.SimpleText("Health: "..health, "VisualsFont", pos.x, pos.y - 2, colFour, 1, 0)
+	end
+	if gBool("Visuals", "Wallhack", "Health Bar") then
 		if (hp > h) then hp = h end
 			local diff = h - hp
 				surface.SetDrawColor(0, 0, 0, 255)
