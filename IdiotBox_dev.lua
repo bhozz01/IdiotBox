@@ -107,9 +107,11 @@ idiot.contributors = idiot.contributors or {}
 idiot.creator["STEAM_0:0:63644275"] = {} -- me
 idiot.creator["STEAM_0:0:162667998"] = {} -- my alt
 idiot.contributors["STEAM_0:0:196578290"] = {} -- pinged (code dev, likely the most important one, helped me out with optimization and many others)
-idiot.contributors["STEAM_0:1:126050820"] = {} -- papertek (dev & discord manager)
+idiot.contributors["STEAM_0:0:158432486"] = {} -- ciggarette man (code dev, also helped out with optimization and shit)
+idiot.contributors["STEAM_0:1:126050820"] = {} -- papertek (dev & ex-discord manager)
 idiot.contributors["STEAM_0:1:193781969"] = {} -- paradox (code dev)
 idiot.contributors["STEAM_0:0:109145007"] = {} -- scottpott (code dev)
+idiot.contributors["STEAM_0:1:69272242"] = {} -- leemee (code dev)
 idiot.contributors["STEAM_0:0:205376238"] = {} -- vectivus (code dev)
 idiot.contributors["STEAM_0:1:188710062"] = {} -- uucka (code tester)
 idiot.contributors["STEAM_0:1:191270548"] = {} -- cal1nxd (code tester)
@@ -387,7 +389,7 @@ local options = {
 			{""}, 
 		}, 
 		{
-			{"Miscellaneous", 506, 20, 232, 700, 218}, 
+			{"Miscellaneous", 506, 20, 232, 630, 218}, 
 			{"Priority Targets Only", "Checkbox", false, 78}, 
 			{"Hide Ignored Targets", "Checkbox", false, 78}, 
 			{"Target Priority Colors", "Checkbox", true, 78}, -- Enabled by default
@@ -398,19 +400,16 @@ local options = {
 			{"Show NPCs", "Checkbox", false, 78}, 
 			{"NPC Name", "Checkbox", false, 78}, 
 			{"NPC Box", "Checkbox", false, 78}, 
-			{"NPC Health", "Checkbox", false, 78}, 
+			{"NPC Glow", "Checkbox", false, 78}, 
 			{"NPC Chams:", "Selection", "Off", {"Off", "Normal", "Flat", "Wireframe", "Model"}, 92}, 
 			{""}, 
 			{"Show Entities", "Checkbox", false, 78}, 
 			{"Entity Name", "Checkbox", false, 78}, 
 			{"Entity Box", "Checkbox", false, 78}, 
+			{"Entity Glow", "Checkbox", false, 78}, 
 			{"Entity Chams:", "Selection", "Off", {"Off", "Normal", "Flat", "Wireframe", "Model"}, 92}, 
 			{""}, 
-			{"Hide HUD", "Checkbox", false, 78}, 
-			{"Witness Finder", "Checkbox", false, 78}, 
 			{"Dormant Check:", "Selection", "All", {"None", "Players", "Entities", "All"}, 92}, 
-			{""}, 
-			{"Crosshair:", "Selection", "Off", {"Off", "Box", "Dot", "Square", "Circle", "Cross", "Edged Cross", "Swastika", "GTA IV"}, 92}, 
 			{""}, 
 			{"Distance Limit", "Checkbox", false, 78}, 
 			{"Distance:", "Slider", 1500, 5000, 92}, 
@@ -445,7 +444,7 @@ local options = {
 			{"Radar Window", "Checkbox", false, 78}, 
 			{"Radar Distance:", "Slider", 50, 100, 92}, 
 			{""}, 
-			{"Custom Status", "Checkbox", false, 78}, 
+			{"Debug Info", "Checkbox", false, 78}, 
 			{"Players List", "Checkbox", false, 78}, 
 			{"Show List Titles", "Checkbox", true, 78}, -- Enabled by default
 			{"Panels Style:", "Selection", "Borders", {"Borders", "Borderless"}, 92}, 
@@ -472,6 +471,13 @@ local options = {
 			{"Speed:", "Slider", 30, 100, 92}, 
 			{""}, 
 			{"FoV Value:", "Slider", 110, 360, 92}, 
+			{""}, 
+		}, 
+		{
+			{"GUI Settings", 261, 523, 232, 120, 218}, 
+			{"Hide HUD", "Checkbox", false, 78}, 
+			{"Witness Finder", "Checkbox", false, 78}, 
+			{"Crosshair:", "Selection", "Off", {"Off", "Box", "Dot", "Square", "Circle", "Cross", "Edged Cross", "Swastika", "GTA IV"}, 92}, 
 			{""}, 
 		}, 
 		{
@@ -594,8 +600,8 @@ local options = {
 		}, 
 		{
 			{"List Adjustments", 506, 568, 232, 180, 88}, 
-			{"Custom Status X:", "SliderOld", 17, 2000, 92}, 
-			{"Custom Status Y:", "SliderOld", 250, 2000, 92}, 
+			{"Debug Info X:", "SliderOld", 17, 2000, 92}, 
+			{"Debug Info Y:", "SliderOld", 250, 2000, 92}, 
 			{"Players List X:", "SliderOld", 17, 2000, 92}, 
 			{"Players List Y:", "SliderOld", 430, 2000, 92}, 
 			{"List Opacity:", "SliderOld", 255, 255, 92}, 
@@ -1271,26 +1277,28 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			info = "Draws a spectator box, where you will be alerted if anyone is currently spectating you."
 		elseif feat == "Radar Window" then
 			info = "Draws a Radar Window."
-		elseif feat == "Custom Status" then
+		elseif feat == "Debug Info" then
 			info = "Draws your ping, framerate, current date and time etc."
 		elseif feat == "Players List" then
 			info = "Draws a list of the players present on a server, along with their ranks."
 		elseif feat == "Show List Titles" then
-			info = "Shows the titles for both Custom Status and Players List."
+			info = "Shows the titles for both Debug Info and Players List."
 		elseif feat == "Show NPCs" then
 			info = "Shows NPCs on Visuals. This feature uses the classic Wallhack style by default."
 		elseif feat == "NPC Name" then
 			info = "Draws the NPC's name."
 		elseif feat == "NPC Box" then
 			info = "Draws a 2D box around the NPC."
-		elseif feat == "NPC Health" then
-			info = "Draws a health bar to the left side of the NPC alongside their health value."
+		elseif feat == "NPC Glow" then
+			info = "Draws a glowing outline of the NPC."
 		elseif feat == "Show Entities" then
 			info = "Draws the selected entities from the Entity Finder Menu. This feature uses the classic Wallhack style by default."
 		elseif feat == "Entity Name" then
 			info = "Draws the names of the selected entities from the Entity Finder Menu."
 		elseif feat == "Entity Box" then
 			info = "Draws a 3D box around the selected entities from the Entity Finder Menu."
+		elseif feat == "Entity Glow" then
+			info = "Draws a glowing outline of the selected entities from the Entity Finder Menu."
 		elseif feat == "Hide HUD" then
 			info = "Hides the original HUD, for example: health value, ammo value, crosshair etc."
 		elseif feat == "Witness Finder" then
@@ -1676,7 +1684,6 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Merged Ragebot and Legitbot into a single function;")
 	print("- Cheat menu/ game menus will no longer be covered by Visuals/ windows/ lists and others;")
 	print("- Show Entities and Show NPCs can only be used if Visuals is turned on;")
-	print("- Added missing space between the Custom Status rank and username;")
 	print("- Fixed dimensions of the Armor Bar not matching the dimensions of the Health Bar;")
 	print("- Fixed Bunny Hop breaking the movement when in water;")
 	print("- Fixed Entities not using the correct Visuals color;")
@@ -1767,7 +1774,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Reworked 'Wallhack' from scratch;")
 	print("- Reworked 'Auto Wallbang' from Aimbot;")
 	print("- Reworked 'Resolver' from Hack vs. Hack;")
-	print("- Reworked 'Radar', 'Spectators', 'Custom Status' and 'Players List' from Panels;")
+	print("- Reworked 'Radar', 'Spectators', 'Debug Info' and 'Players List' from Panels;")
 	print("- Reworked 'Free Roaming' from Miscellaneous;")
 	print("- Reworked 'Traitor Finder' and 'Murderer Finder' from Main Menu;")
 	print("- Reworked 'Show NPCs' and 'Show Entities' from Visuals;")
@@ -2683,12 +2690,12 @@ end
 local function StausTitle()
 	if !gBool("Miscellaneous", "Panels", "Show List Titles") then return end
 	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Borders" then
-		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Custom Status X:") - 1, gInt("Adjustments", "List Adjustments", "Custom Status Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:")))
+		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Debug Info X:") - 1, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:")))
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
-		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Custom Status X:") - 1, gInt("Adjustments", "List Adjustments", "Custom Status Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, 0))
+		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Debug Info X:") - 1, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, 0))
 	end
-	draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Custom Status X:") + 1, gInt("Adjustments", "List Adjustments", "Custom Status Y:") - 23, 88, 20, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "List Adjustments", "List Opacity:")))
-	draw.DrawText("Status", "MiscFont2", gInt("Adjustments", "List Adjustments", "Custom Status X:") + 45, gInt("Adjustments", "List Adjustments", "Custom Status Y:") - 22, Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_CENTER)
+	draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Debug Info X:") + 1, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 23, 88, 20, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "List Adjustments", "List Opacity:")))
+	draw.DrawText("Debug", "MiscFont2", gInt("Adjustments", "List Adjustments", "Debug Info X:") + 45, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 22, Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_CENTER)
 end
 
 local function Status()
@@ -2701,7 +2708,7 @@ local function Status()
 	end
 	surface.SetFont("MiscFont")
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Custom Status X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Custom Status Y:"))
+	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
 	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Health: "..hp)
 	if (em.IsValid(wep)) then
@@ -2711,52 +2718,52 @@ local function Status()
 	end
 	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Custom Status X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Custom Status Y:"))
+	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
 	surface.DrawText("Ammo: "..daclip.."/"..me:GetAmmoCount(wep:GetPrimaryAmmoType()))
 	else
 	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Custom Status X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Custom Status Y:"))
+	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
 	surface.DrawText("Ammo: ".."0".."/".."0")
 	end
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Custom Status X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Custom Status Y:"))
+	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
 	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Velocity: "..math.Round(velocity))
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Custom Status X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Custom Status Y:"))
+	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
 	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Server: "..GetHostName())
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Custom Status X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Custom Status Y:"))
+	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
 	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Gamemode: "..engine.ActiveGamemode())
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Custom Status X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Custom Status Y:"))
+	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
 	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Map: "..game.GetMap())
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Custom Status X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Custom Status Y:"))
+	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
 	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Looking at: "..EntityName())
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Custom Status X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Custom Status Y:"))
+	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
 	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Entities: "..math.Round(ents.GetCount()))
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Custom Status X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Custom Status Y:"))
+	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
 	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Frames: "..math.Round(1 / FrameTime()))
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Custom Status X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Custom Status Y:"))
+	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
 	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Ping: "..me:Ping())
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Custom Status X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Custom Status Y:"))
+	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
 	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Date: "..os.date("%d %b %Y"))
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Custom Status X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Custom Status Y:"))
+	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
 	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
 	surface.DrawText("Time: "..os.date("%H:%M:%S"))
 end
@@ -2988,14 +2995,14 @@ end
 
 local function Crosshair()
 	if menuopen or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
-	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Box") then
+	if (gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "Box") then
 	local x1, y1 = ScrW() * 0.5, ScrH() * 0.5
 		surface.SetDrawColor(0, 0, 0, gInt("Adjustments", "Others", "T Opacity:"))
 		surface.DrawOutlinedRect(x1 - 3, y1 - 2, 6, 6)
 		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:"))
 		surface.DrawRect(x1 - 2, y1 - 1, 4, 4)
 	end
-	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Dot") then -- Cancer, I know, but I want to avoid using surface.DrawPoly as much as possible
+	if (gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "Dot") then -- Cancer, I know, but I want to avoid using surface.DrawPoly as much as possible
 		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
 		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
 		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.6, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
@@ -3017,20 +3024,20 @@ local function Crosshair()
 		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.6, Color(0, 0, 0, gInt("Adjustments", "Others", "T Opacity:")))
 		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.8, Color(0, 0, 0, gInt("Adjustments", "Others", "T Opacity:")))
 	end
-	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Square") then
+	if (gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "Square") then
 	local x1, y1 = ScrW() * 0.5, ScrH() * 0.5
 		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:"))
 		surface.DrawOutlinedRect(x1 - 3, y1 - 2, 6, 6)
 	end
-	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Circle") then
+	if (gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "Circle") then
 		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
 	end
-	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Cross") then
+	if (gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "Cross") then
 		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:"))
 		surface.DrawLine(ScrW() / 2 - 11, ScrH() / 2, ScrW() / 2 + 11, ScrH() / 2)
 		surface.DrawLine(ScrW() / 2 - 0, ScrH() / 2 - 11, ScrW() / 2 - 0, ScrH() / 2 + 11)
 	end
-	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Edged Cross") then
+	if (gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "Edged Cross") then
 		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:"))
 		surface.DrawLine(ScrW() / 2 - 14.5, ScrH() / 2, ScrW() / 2 + 14.5, ScrH() / 2)
 		surface.DrawLine(ScrW() / 2 - 0, ScrH() / 2 - 14.5, ScrW() / 2 - 0, ScrH() / 2 + 14.5)
@@ -3038,7 +3045,7 @@ local function Crosshair()
 		surface.DrawLine(ScrW() / 2 - 9, ScrH() / 2, ScrW() / 2 + 9, ScrH() / 2)
 		surface.DrawLine(ScrW() / 2 - 0, ScrH() / 2 - 9, ScrW() / 2 - 0, ScrH() / 2 + 9)
 	end
-	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "Swastika") then
+	if (gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "Swastika") then
 		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:"))
 		surface.DrawLine(ScrW() / 2, ScrH() / 2, ScrW() / 2 + 20, ScrH() / 2)
 		surface.DrawLine(ScrW() / 2 + 20, ScrH() / 2, ScrW() / 2 + 20, ScrH() / 2 + 20)
@@ -3049,7 +3056,7 @@ local function Crosshair()
 		surface.DrawLine(ScrW() / 2, ScrH() / 2, ScrW() / 2, ScrH() / 2 + 20)
 		surface.DrawLine(ScrW() / 2, ScrH() / 2 + 20, ScrW() / 2 - 20, ScrH() / 2 + 20)
 	end
-	if (gOption("Visuals", "Miscellaneous", "Crosshair:") == "GTA IV") then
+	if (gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "GTA IV") then
 		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 11, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
 		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
 	end
@@ -3109,10 +3116,10 @@ hook.Add("PreDrawEffects", "PreDrawEffects", function()
 end)
 
 hook.Add("HUDShouldDraw", "HUDShouldDraw", function(name)
-	if gBool("Visuals", "Miscellaneous", "Hide HUD") and hide[name] then
+	if gBool("Miscellaneous", "GUI Settings", "Hide HUD") and hide[name] then
 		return false
 	end
-	if gOption("Visuals", "Miscellaneous", "Crosshair:") ~= "Off" and crosshairhide[name] then
+	if gOption("Miscellaneous", "GUI Settings", "Crosshair:") ~= "Off" and crosshairhide[name] then
 		return false
 	end
 end)
@@ -4166,12 +4173,12 @@ local function Visuals(v)
 		local friendstatus = pm.GetFriendStatus(v)
 		if idiot.creator[v:SteamID()] then
 			textpos = textpos + 1
-			draw.SimpleText("IdiotBox Creator", "VisualsFont", x2 + 9, y1 + textpos, devcol, 0, 1)
+			draw.SimpleText("IdiotBox Creator", "MiscFont", x2 + 9, y1 + textpos, devcol, 0, 1)
 			textpos = textpos + 9
 		end
 		if idiot.contributors[v:SteamID()] then
 			textpos = textpos + 1
-			draw.SimpleText("IdiotBox Contributor", "VisualsFont", x2 + 9, y1 + textpos, devcol, 0, 1)
+			draw.SimpleText("IdiotBox Contributor", "MiscFont", x2 + 9, y1 + textpos, devcol, 0, 1)
 			textpos = textpos + 9
 		end
 		if (gBool("Main Menu", "Murder Utilities", "Bystander Name") && engine.ActiveGamemode() == "murder") then
@@ -4180,7 +4187,7 @@ local function Visuals(v)
 			textpos = textpos + 9
 		else
 			textpos = textpos + 1
-			draw.SimpleText("Name: "..pm.Name(v), "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
+			draw.SimpleText(pm.Name(v), "MiscFont", x2 + 9, y1 + textpos, textcol, 0, 1)
 			textpos = textpos + 9
 		end
 		if (friendstatus == "friend") and not gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
@@ -4351,12 +4358,12 @@ local function Visuals(v)
 		local friendstatus = pm.GetFriendStatus(v)
 		if idiot.creator[v:SteamID()] then
 			textpos = textpos + 1
-			draw.SimpleText("IdiotBox Creator", "VisualsFont", x2 + 3, y1 + textpos, devcol, 0, 1)
+			draw.SimpleText("IdiotBox Creator", "MiscFont", x2 + 3, y1 + textpos, devcol, 0, 1)
 			textpos = textpos + 9
 		end
 		if idiot.contributors[v:SteamID()] then
 			textpos = textpos + 1
-			draw.SimpleText("IdiotBox Contributor", "VisualsFont", x2 + 3, y1 + textpos, devcol, 0, 1)
+			draw.SimpleText("IdiotBox Contributor", "MiscFont", x2 + 3, y1 + textpos, devcol, 0, 1)
 			textpos = textpos + 9
 		end
 		if (gBool("Main Menu", "Murder Utilities", "Bystander Name") && engine.ActiveGamemode() == "murder") then
@@ -4365,7 +4372,7 @@ local function Visuals(v)
 			textpos = textpos + 9
 		else
 			textpos = textpos + 1
-			draw.SimpleText("Name: "..pm.Name(v), "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
+			draw.SimpleText(pm.Name(v), "MiscFont", x2 + 3, y1 + textpos, textcol, 0, 1)
 			textpos = textpos + 9
 		end
 		if (friendstatus == "friend") and not gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
@@ -4626,7 +4633,7 @@ local function Visuals(v)
 		if (gBool("Main Menu", "Murder Utilities", "Bystander Name") && engine.ActiveGamemode() == "murder") then
 			draw.SimpleText(v:GetNWString("bystanderName"), "VisualsFont", pos.x, pos.y - h - 1 - (friendstatus == "friend" && 12 || 12), textcol, 1, 1)
 		else
-			draw.SimpleText(pm.Name(v), "VisualsFont", pos.x, pos.y - h - 1 - (friendstatus == "friend" && 12 || 12), textcol, 1, 1)
+			draw.SimpleText(pm.Name(v), "MiscFont", pos.x, pos.y - h - 1 - (friendstatus == "friend" && 12 || 12), textcol, 1, 1)
 		end
 		local friendstatus = pm.GetFriendStatus(v)
 		if (friendstatus == "friend") then
@@ -4899,15 +4906,17 @@ end)
 local function ShowNPCs()
 	for k, v in pairs(ents.FindByClass("npc_*")) do
 	if (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or not OnScreen(v) or not WallhackFilter(v) then continue end
-	local colOne = (Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b))
+	local colOne = Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b)
 	local colTwo = Color((100 - em.Health(v)) * 2.55, em.Health(v) * 2.55, 0, 255)
-	local colThree = (Color(0, 0, 0))
-	local pos = em.GetPos(v)
+	local colThree = Color(0, 0, 0)
+	local colFour = Color(255, 255, 255)
+	local colFive = Color((100 - em.Health(v)) * 2.55, em.Health(v) * 2.55, 0)
 	local min, max = em.GetCollisionBounds(v)
+	local pos = em.GetPos(v)
 	local pos2 = pos + Vector(0, 0, max.z)
 	local pos = vm.ToScreen(pos)
 	local pos2 = vm.ToScreen(pos2)
-	local hh = 0
+	local textpos = 0
 	local h = pos.y - pos2.y
 	local w = h / 1.7
 	local hp = em.Health(v) * h / 100
@@ -4915,16 +4924,16 @@ local function ShowNPCs()
 	if health < 0 then
 	health = 0
 	end
-	if v:Health() > 0 then
-	if gOption("Visuals", "Miscellaneous", "Box:") == "2D Box" then
+	if v:IsValid() and v:Health() > 0 then
+	if gBool("Visuals", "Miscellaneous", "NPC Box") then
 		surface.SetDrawColor(colOne)
 		surface.DrawOutlinedRect(pos.x - w / 2, pos.y - h, w, h)
 		surface.SetDrawColor(colThree)
 		surface.DrawOutlinedRect(pos.x - w / 2 - 1, pos.y - h - 1, w + 2, h + 2)
 		surface.DrawOutlinedRect(pos.x - w / 2 + 1, pos.y - h + 1, w - 2, h - 2)
 	end
-	if gBool("Visuals", "Wallhack", "Name") then
-		draw.SimpleText(v:GetClass(), "VisualsFont", pos.x, pos.y - h - 2 - 7, Color(255, 255, 255), 1, 1)
+	if gBool("Visuals", "Miscellaneous", "NPC Name") then
+		draw.SimpleText(v:GetClass(), "MiscFont", pos.x, pos.y - h - 2 - 7, Color(255, 255, 255), 1, 1)
 		surface.SetDrawColor(Color(0, 0, 0))
 	end
 	if gOption("Visuals", "Wallhack", "Position Lines:") ~= "Off" then
@@ -4950,11 +4959,10 @@ local function ShowNPCs()
 		surface.DrawLine(screen1.x, screen1.y, screen2.x, screen2.y)
 		end
 	end
-	if (gBool("Visuals", "Wallhack", "Glow")) then
+	if (gBool("Visuals", "Miscellaneous", "NPC Glow")) then
 		halo.Add({v}, colOne, .55, .55, 5, true, true)
 	end
 	if (gBool("Visuals", "Wallhack", "Hitbox")) then
-		if v:IsValid() and v:Health() > 0 then
 			for i = 0, v:GetHitBoxGroupCount() - 1 do
 			for _i = 0, v:GetHitBoxCount(i) - 1 do
 			local bone = v:GetHitBoxBone(_i, i)
@@ -4965,14 +4973,24 @@ local function ShowNPCs()
 				cam.Start3D()
 					render.DrawWireframeBox(pos, ang, min, max, colOne)
 				cam.End3D()
-			end
-		end
+				end
 			end
 		end
 	end
-	local colFour = Color((100 - em.Health(v)) * 2.55, em.Health(v) * 2.55, 0)
 	if gBool("Visuals", "Wallhack", "Health Value") then
-		draw.SimpleText("Health: "..health, "VisualsFont", pos.x, pos.y - 2, colFour, 1, 0)
+		textpos = textpos + 1
+		draw.SimpleText("Health: "..health, "VisualsFont", pos.x, pos.y + textpos, colFive, 1, 0)
+		textpos = textpos + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Distance")) then
+		textpos = textpos + 1
+		draw.SimpleText("Distance: "..math.Round(v:GetPos():Distance(me:GetPos()) / 40), "VisualsFont", pos.x, pos.y + textpos, colFour, 1, 0)
+		textpos = textpos + 9
+	end
+	if (gBool("Visuals", "Wallhack", "Velocity")) then
+		textpos = textpos + 1
+		draw.SimpleText("Velocity: "..math.Round(v:GetVelocity():Length()), "VisualsFont", pos.x, pos.y + textpos, colFour, 1, 0)
+		textpos = textpos + 9
 	end
 	if gBool("Visuals", "Wallhack", "Health Bar") then
 		if (hp > h) then hp = h end
@@ -5030,8 +5048,24 @@ hook.Add("DrawOverlay", "DrawOverlay", function()
 				local pos2 = vm.ToScreen(pos2)
 				local min, max = v:WorldSpaceAABB()
 				local origin = v:GetPos()
+				local textpos = 0
 				if gBool("Visuals", "Miscellaneous", "Entity Name") then
-					draw.SimpleText(v:GetClass(), "MiscFont", pos.x, pos.y, Color(255, 255, 255), 1)
+					textpos = textpos + 1
+					draw.SimpleText(v:GetClass(), "MiscFont", pos.x, pos.y + textpos, Color(255, 255, 255), 1)
+					textpos = textpos + 9
+				end
+				if (gBool("Visuals", "Wallhack", "Distance")) then
+					textpos = textpos + 1
+					draw.SimpleText("Distance: "..math.Round(v:GetPos():Distance(me:GetPos()) / 40), "VisualsFont", pos.x, pos.y + textpos, textcol, 1, 0)
+					textpos = textpos + 9
+				end
+				if (gBool("Visuals", "Wallhack", "Velocity")) then
+					textpos = textpos + 1
+					draw.SimpleText("Velocity: "..math.Round(v:GetVelocity():Length()), "VisualsFont", pos.x, pos.y + textpos, textcol, 1, 0)
+					textpos = textpos + 9
+				end
+				if (gBool("Visuals", "Miscellaneous", "Entity Glow")) then
+					halo.Add({v}, Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b), .55, .55, 5, true, true)
 				end
 				if gBool("Visuals", "Miscellaneous", "Entity Box") then
 					cam.Start3D()
@@ -5051,7 +5085,7 @@ hook.Add("DrawOverlay", "DrawOverlay", function()
 	if gBool("Miscellaneous", "Panels", "Radar Window") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
 		Radar()
 	end
-	if gBool("Miscellaneous", "Panels", "Custom Status") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
+	if gBool("Miscellaneous", "Panels", "Debug Info") && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
 		StausTitle()
 		Status()
 	end
@@ -5059,7 +5093,7 @@ hook.Add("DrawOverlay", "DrawOverlay", function()
 		PlayersTitle()
 		Players()
 	end
-	if gOption("Visuals", "Miscellaneous", "Crosshair:") ~= "Off" && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
+	if gOption("Miscellaneous", "GUI Settings", "Crosshair:") ~= "Off" && !gui.IsGameUIVisible() && !gui.IsConsoleVisible() && !(IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then
 		Crosshair()
 	end
 	if gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or me:IsTyping() or menuopen or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not me:Alive() or me:Health() < 1 or (gBool("Aim Assist", "Triggerbot", "Enabled") and not gBool("Aim Assist", "Aimbot", "Enabled")) then return end
@@ -6326,7 +6360,7 @@ hook.Add("MiscPaint", "MiscPaint", function()
 	local offset = Vector(0, 0, 32)
 	local trace = {}
 	local witnesscolor = Color(0, 0, 0)
-	if (gBool("Visuals", "Miscellaneous", "Witness Finder")) then
+	if (gBool("Miscellaneous", "GUI Settings", "Witness Finder")) then
 		local time = os.time() - 1
 		local witnesses = 0
 		local beingwitnessed = true
