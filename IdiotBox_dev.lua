@@ -474,7 +474,8 @@ local options = {
 			{""}, 
 		}, 
 		{
-			{"GUI Settings", 261, 523, 232, 120, 218}, 
+			{"GUI Settings", 261, 523, 232, 145, 218}, 
+			{"Advanced Network Graph", "Checkbox", false, 78}, 
 			{"Hide HUD", "Checkbox", false, 78}, 
 			{"Witness Finder", "Checkbox", false, 78}, 
 			{"Crosshair:", "Selection", "Off", {"Off", "Box", "Dot", "Square", "Circle", "Cross", "Edged Cross", "Swastika", "GTA IV"}, 92}, 
@@ -1050,7 +1051,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: April 15th 2023")
+	surface.DrawText("Latest build: April 21st 2023")
 	surface.SetFont("MenuFont")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -1299,12 +1300,14 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			info = "Draws a 3D box around the selected entities from the Entity Finder Menu."
 		elseif feat == "Entity Glow" then
 			info = "Draws a glowing outline of the selected entities from the Entity Finder Menu."
+		elseif feat == "Advanced Network Graph" then
+			info = "Displays a very detailed network graph (net_graph 4)."
 		elseif feat == "Hide HUD" then
 			info = "Hides the original HUD, for example: health value, ammo value, crosshair etc."
 		elseif feat == "Witness Finder" then
 			info = "Shows how many people can currently see you."
 		elseif feat == "Show FoV Circle" then
-			info = "Draws an FoV circle for your Aimbot's FoV value."
+			info = "Draws a circle indicating your Aimbot's FoV value."
 		elseif feat == "Snap Lines" then
 			info = "Draws a line towards the player currently being targeted by your Aimbot."
 		elseif feat == "Flash Spam" then
@@ -1762,6 +1765,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Added 'Thirdperson Key', 'Custom Positions', 'Rainbow Mode' and 'Flat' & 'Wireframe' chams to Point of View;")
 	print("- Added 'Murder Taunts' to Miscellaneous;")
 	print("- Added 'Legit', 'Rage' and 'Directional' to Auto Strafe;")
+	print("- Added 'GUI Settings' to Miscellaneous;")
 	print("- Added customizable list adjustments to Priority List;")
 	print("- Added engine prediction module (big.dll);")
 	print("- Added custom key binds;")
@@ -3972,6 +3976,12 @@ hook.Add("Think", "Think", function()
         RunConsoleCommand("r_3dsky", "0")
     elseif (!gBool("Miscellaneous", "Textures", "Remove 3D Skybox") and skycvar:GetBool() == false) then
         RunConsoleCommand("r_3dsky", "1")
+    end
+	local netcvar = GetConVar("net_graph")
+	if (gBool("Miscellaneous", "GUI Settings", "Advanced Network Graph") and netcvar:GetBool() == false) then
+        RunConsoleCommand("net_graph", "4")
+    elseif (!gBool("Miscellaneous", "GUI Settings", "Advanced Network Graph") and netcvar:GetBool() == true) then
+        RunConsoleCommand("net_graph", "0")
     end
 end)
 
