@@ -85,8 +85,9 @@ concommand.Add("idiot_usespam", function()
 end)
 
 surface.CreateFont("VisualsFont", {font = "Tahoma", size = 12, antialias = false, outline = true})
-surface.CreateFont("MenuFont", {font = "Tahoma", size = 12, weight = 674, antialias = false, outline = true})
-surface.CreateFont("MenuFont2", {font = "Tahoma", size = 12, antialias = true, outline = true})
+surface.CreateFont("MenuFont", {font = "Tahoma", size = 12, antialias = true, outline = false})
+surface.CreateFont("MenuFont2", {font = "Tahoma", size = 12, weight = 674, antialias = false, outline = true})
+surface.CreateFont("MenuFont3", {font = "Tahoma", size = 12, antialias = true, outline = true})
 surface.CreateFont("MainFont", {font = "Tahoma", size = 16, weight = 1300, antialias = false, outline = false})
 surface.CreateFont("MainFont2", {font = "Tahoma", size = 11, weight = 640, antialias = false, outline = true})
 surface.CreateFont("MainFont3", {font = "Tahoma", size = 13, weight = 800, antialias = false, outline = true})
@@ -107,11 +108,11 @@ idiot.contributors = idiot.contributors or {}
 idiot.creator["STEAM_0:0:63644275"] = {} -- me
 idiot.creator["STEAM_0:0:162667998"] = {} -- my alt
 idiot.contributors["STEAM_0:0:196578290"] = {} -- pinged (code dev, likely the most important one, helped me out with optimization and many others)
-idiot.contributors["STEAM_0:0:158432486"] = {} -- ciggarette man (code dev, also helped out with optimization and shit)
 idiot.contributors["STEAM_0:1:126050820"] = {} -- papertek (dev & ex-discord manager)
+idiot.contributors["STEAM_0:0:453356413"] = {} -- lenn (garry's mod server manager)
+idiot.contributors["STEAM_0:1:69272242"] = {} -- leme (code dev)
 idiot.contributors["STEAM_0:1:193781969"] = {} -- paradox (code dev)
 idiot.contributors["STEAM_0:0:109145007"] = {} -- scottpott (code dev)
-idiot.contributors["STEAM_0:1:69272242"] = {} -- leemee (code dev)
 idiot.contributors["STEAM_0:0:205376238"] = {} -- vectivus (code dev)
 idiot.contributors["STEAM_0:1:188710062"] = {} -- uucka (code tester)
 idiot.contributors["STEAM_0:1:191270548"] = {} -- cal1nxd (code tester)
@@ -687,7 +688,7 @@ local function MsgG(time, text)
 		window.Paint = function(s, w, h)
 			surface.SetDrawColor(bgmenucol.r, bgmenucol.g, bgmenucol.b, 240)
 			surface.DrawRect(0, 0, w, h)
-			draw.DrawText(text, "MenuFont", w / 2, 6, Color(0, 255, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.DrawText(text, "MenuFont2", w / 2, 6, Color(0, 255, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 		timer.Simple(time, function()
 			if windowopen then
@@ -715,7 +716,7 @@ local function MsgY(time, text)
 		window.Paint = function(s, w, h)
 			surface.SetDrawColor(bgmenucol.r, bgmenucol.g, bgmenucol.b, 240)
 			surface.DrawRect(0, 0, w, h)
-			draw.DrawText(text, "MenuFont", w / 2, 6, Color(255, 255, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.DrawText(text, "MenuFont2", w / 2, 6, Color(255, 255, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 		timer.Simple(time, function()
 			if windowopen then
@@ -743,7 +744,7 @@ local function MsgR(time, text)
 		window.Paint = function(s, w, h)
 			surface.SetDrawColor(bgmenucol.r, bgmenucol.g, bgmenucol.b, 240)
 			surface.DrawRect(0, 0, w, h)
-			draw.DrawText(text, "MenuFont", w / 2, 6, Color(255, 0, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.DrawText(text, "MenuFont2", w / 2, 6, Color(255, 0, 0), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 		timer.Simple(time, function()
 			if windowopen then
@@ -1042,7 +1043,7 @@ for k, v in next, order do
 end
 
 local function DrawUpperText(w, h)
-	surface.SetFont("MenuFont")
+	surface.SetFont("MenuFont2")
 	local tw, th = surface.GetTextSize("")
 	surface.SetTextPos(37, 15 - th / 2)
 	surface.SetTextColor(HSVToColor(RealTime() * 45 % 360, 1, 1))
@@ -1052,7 +1053,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
 	surface.DrawText("Latest build: April 21st 2023")
-	surface.SetFont("MenuFont")
+	surface.SetFont("MenuFont2")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
 	surface.DrawRect(w - 0, 31, 0, h)
@@ -1381,7 +1382,7 @@ local function DrawSlider(self, w, h, var, maxy, posx, posy, dist)
 	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:"))
 	local tw, th = surface.GetTextSize(curnum)
 	surface.DrawOutlinedRect(posx - 195 + dist + 2 + ww, 81 + posy + maxy + 4, 4, 12)
-	surface.SetFont("MenuFont2")
+	surface.SetFont("MenuFont")
 	surface.SetTextPos(posx - 193 + dist + 2 + (size / 2) - tw / 2, 81 + posy + maxy + 16)
 	surface.DrawText(curnum)
 	local mx, my = self:GetPos()
@@ -1410,7 +1411,7 @@ function idiot.DrawOldSlider(self, w, h, var, maxy, posx, posy, dist) -- I fucki
 	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:"))
 	local tw, th = surface.GetTextSize(curnum)
 	surface.DrawOutlinedRect(3 + posx + 15 + 5 + dist + ww, 61 + posy + maxy + 4, 4, 12)
-	surface.SetFont("MenuFont2")
+	surface.SetFont("MenuFont")
 	surface.SetTextPos(5 + posx + 15 + 5 + dist + (size / 2) - tw / 2, 61 + posy + maxy + 16)
 	surface.DrawText(curnum)
 	local mx, my = self:GetPos()
@@ -1433,7 +1434,7 @@ local function DrawSelect(self, w, h, var, maxy, posx, posy, dist)
 	local mx, my = self:GetPos()
 	local bMouse = MouseInArea(mx + posx - 193 + dist + 2, my + 81 + posy + maxy, mx + posx - 193 + dist + 2 + size, my + 81 + posy + maxy + 14)
 	local check = dist..posy..posx..w..h..maxy
-	surface.SetFont("MenuFont2")
+	surface.SetFont("MenuFont")
 	surface.SetTextColor(menutextcol.r - 65, menutextcol.g - 65, menutextcol.b - 50, gInt("Adjustments", "Others", "T Opacity:"))
 	surface.SetDrawColor(bgmenucol.r + 75, bgmenucol.g + 75, bgmenucol.b + 75, 55)
 	surface.DrawRect(posx - 193 + dist + 2, 81 + posy + maxy + 2, size - 3, 14)
@@ -1515,7 +1516,7 @@ local function DrawSelect(self, w, h, var, maxy, posx, posy, dist)
 		drawlast = function()
 			local maxy2 = 14
 			for k, v in next, var[4] do
-				surface.SetFont("MenuFont2")
+				surface.SetFont("MenuFont3")
 				surface.SetTextColor(menutextcol.r - 65, menutextcol.g - 65, menutextcol.b - 50, gInt("Adjustments", "Others", "T Opacity:"))
 				surface.SetDrawColor(bgmenucol.r + 75, bgmenucol.g + 75, bgmenucol.b + 75, 222)
 				surface.DrawRect(posx - 191 + dist, 81 + posy + maxy + maxy2, size - 3, 14)
@@ -1556,7 +1557,7 @@ local function DrawToggle(self, w, h, var, maxy, posx, posy, dist)
 	local mx, my = self:GetPos()
 	local bMouse = MouseInArea(mx + posx - 193 + dist + 2, my + 81 + posy + maxy, mx + posx - 193 + dist + 2 + size, my + 81 + posy + maxy + 16)
 	local check = dist..posy..posx..w..h..maxy
-	surface.SetFont("MenuFont2")
+	surface.SetFont("MenuFont")
 	surface.SetTextColor(menutextcol.r - 65, menutextcol.g - 65, menutextcol.b - 50, gInt("Adjustments", "Others", "T Opacity:"))
 	surface.SetDrawColor(bgmenucol.r + 75, bgmenucol.g + 75, bgmenucol.b + 75, 55)
 	surface.DrawRect(posx - 193 + dist + 2, 81 + posy + maxy + 2, size - 3, 14)
@@ -1969,8 +1970,8 @@ local function EntityFinder()
 		end
 		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 2, 2, w - 4, h - 4, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "Others", "BG Opacity:")))
 		DrawUpperText(w, h)
-		draw.SimpleText("Search Entity:", "MenuFont", 17, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-		draw.SimpleText("Add Entity:", "MenuFont", 461, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		draw.SimpleText("Search Entity:", "MenuFont2", 17, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		draw.SimpleText("Add Entity:", "MenuFont2", 461, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 	end
 	finder.Think = function()
 		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or global.unloaded == true) then
@@ -2060,7 +2061,7 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 	local mx, my = self:GetPos()
 	local bMouse = MouseInArea(mx - 193 + posx + dist, my + 61 + posy + maxy, mx - 193 + posx + dist + size + 69, my + 61 + posy + maxy + 16)
 	local check = dist..posy..posx..w..h..maxy
-	surface.SetFont("MenuFont2")
+	surface.SetFont("MenuFont")
 	surface.SetTextColor(menutextcol.r - 65, menutextcol.g - 65, menutextcol.b - 50, gInt("Adjustments", "Others", "T Opacity:"))
 	if bMouse or notyetselected == check then
 		surface.SetDrawColor(bgmenucol.r + 75, bgmenucol.g + 75, bgmenucol.b + 75, 180)
@@ -2229,7 +2230,7 @@ local function DrawSubSub(self, w, h, k, var)
 	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:"))
 	local startpos = 61 + posy
 	surface.SetTextColor(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "T Opacity:"))
-	surface.SetFont("MenuFont")
+	surface.SetFont("MenuFont2")
 	local tw, th = surface.GetTextSize(opt)
 	surface.SetDrawColor(bgmenucol.r + 13, bgmenucol.g + 13, bgmenucol.b + 13, gInt("Adjustments", "Others", "BG Opacity:"));
 	surface.DrawRect(5 + posx, startpos, sizex, sizey);
@@ -2264,17 +2265,16 @@ local function DrawSubSub(self, w, h, k, var)
 	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 0)
 	local startpos = 61 + posy
 	surface.SetTextColor(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "T Opacity:"))
-	surface.SetFont("MenuFont")
+	surface.SetFont("MenuFont2")
 	local tw, th = surface.GetTextSize(opt)
 	surface.SetDrawColor(bgmenucol.r + 13, bgmenucol.g + 13, bgmenucol.b + 13, gInt("Adjustments", "Others", "BG Opacity:"));
 	surface.DrawRect(5 + posx, startpos, sizex, sizey);
-	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 0)
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:"))
 	surface.DrawLine(5 + posx, startpos, 5 + posx + 15, startpos)
+	surface.DrawLine(5 + posx, startpos + 1, 5 + posx + 15, startpos + 1)
 	surface.SetTextPos(5 + posx + 15 + 5, startpos - th / 2)
-	surface.DrawLine(5 + posx + 15 + 5 + tw + 5, startpos, 5 + posx + sizex, startpos)
-	surface.DrawLine(5 + posx, startpos, 5 + posx, startpos + sizey)
-	surface.DrawLine(5 + posx, startpos + sizey, 5 + posx + sizex, startpos + sizey)
-	surface.DrawLine(5 + posx + sizex, startpos, 5 + posx + sizex, startpos + sizey)
+	surface.DrawLine(5 + posx + 15 + 5 + tw + 5, startpos, 5 + posx - 1 + sizex, startpos)
+	surface.DrawLine(5 + posx + 15 + 5 + tw + 5, startpos + 1, 5 + posx - 1 + sizex, startpos + 1)
 	surface.DrawText(opt)
 	local maxy = 15
 	for k, v in next, var do
@@ -2349,7 +2349,7 @@ local function Menu()
 		end
 		mousedown = input.IsMouseDown(MOUSE_LEFT)
 		if gBool("Main Menu", "Others", "Feature Tooltips") and info ~= "" then
-			draw.SimpleText(info, "MenuFont", w / 2, h / 1.03, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText(info, "MenuFont2", w / 2, h / 1.03, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 	end
 	frame.Think = function()
