@@ -571,7 +571,7 @@ local options = {
 			{"B Opacity:", "SliderOld", 255, 255, 92}, 
 			{"BG Opacity:", "SliderOld", 255, 255, 92}, 
 			{"BG Darkness:", "SliderOld", 22, 25, 92}, 
-			{"Roundness:", "SliderOld", 50, 67, 92}, 
+			{"Roundness:", "SliderOld", 38, 67, 92}, 
 		}, 
 		{
 			{"Misc Visuals Color", 506, 20, 232, 105, 88}, 
@@ -1064,7 +1064,7 @@ local function MouseInArea(minx, miny, maxx, maxy)
 	return(mousex < maxx and mousex > minx and mousey < maxy and mousey > miny)
 end
 
-local function DrawOptions(self, w, h)
+local function DrawTabs(self, w, h)
 	local mx, my = self:GetPos()
 	local sizeper = (w - 10) / #order
 	local maxx = 0
@@ -1072,15 +1072,25 @@ local function DrawOptions(self, w, h)
 		local bMouse = MouseInArea(mx + 5 + maxx, my + 31, mx + 5 + maxx + sizeper, my + 31 + 30)
 		if (visible[v]) then
 			local curcol = Color(bordercol.r, bordercol.g, bordercol.b, 255)
+			local curcol2 = Color(bgmenucol.r + 13, bgmenucol.g + 13, bgmenucol.b + 13, 255)
 			for i = 0, 1 do
 				surface.SetDrawColor(curcol)
-				surface.DrawLine(5 + maxx, 60 + i, 5 + maxx + sizeper, 60 + i)
+				surface.DrawLine(5 + maxx, 62 + i, 5 + maxx + sizeper, 62 + i)
+			end
+			for i = 0, 30 do
+				surface.SetDrawColor(curcol2)
+				surface.DrawLine(5 + maxx, 31 + i, 5 + maxx + sizeper, 31 + i)
 			end
 		elseif (bMouse) then
 			local curcol = Color(bordercol.r, bordercol.g, bordercol.b, 100)
+			local curcol2 = Color(bgmenucol.r + 13, bgmenucol.g + 13, bgmenucol.b + 13, 100)
 			for i = 0, 1 do
 				surface.SetDrawColor(curcol)
-				surface.DrawLine(5 + maxx, 60 + i, 5 + maxx + sizeper, 60 + i)
+				surface.DrawLine(5 + maxx, 62 + i, 5 + maxx + sizeper, 62 + i)
+			end
+			for i = 0, 30 do
+				surface.SetDrawColor(curcol2)
+				surface.DrawLine(5 + maxx, 31 + i, 5 + maxx + sizeper, 31 + i)
 			end
 		end
 		if (bMouse and input.IsMouseDown(MOUSE_LEFT) and not mousedown and not visible[v]) then
@@ -1089,6 +1099,11 @@ local function DrawOptions(self, w, h)
 				visible[key] = false
 			end
 			visible[v] = not nb
+		end
+		local curcol2 = Color(bgmenucol.r + 13, bgmenucol.g + 13, bgmenucol.b + 13, 85)
+		for i = 0, 30 do
+			surface.SetDrawColor(curcol2)
+			surface.DrawLine(5 + maxx, 31 + i, 5 + maxx + sizeper, 31 + i)
 		end
 		surface.SetFont("MainFont3")
 		surface.SetTextColor(maintextcol.r, maintextcol.g, maintextcol.b, 255)
@@ -1423,7 +1438,7 @@ function idiot.DrawOldSlider(self, w, h, var, maxy, posx, posy, dist) -- I fucki
 	end
 end
 
-local function DrawSelect(self, w, h, var, maxy, posx, posy, dist)
+local function DrawDropdown(self, w, h, var, maxy, posx, posy, dist)
 	local size = var[5]
 	local curopt = var[3]
 	surface.SetFont("MenuFont")
@@ -2252,7 +2267,7 @@ local function DrawSubSub(self, w, h, k, var)
 			elseif (v[2] == "SliderOld") then
 				idiot.DrawOldSlider(self, w, h, v, maxy, posx, posy, dist)
 			elseif (v[2] == "Selection") then
-				DrawSelect(self, w, h, v, maxy, posx, posy, dist)
+				DrawDropdown(self, w, h, v, maxy, posx, posy, dist)
 			elseif(v[2] == "Toggle") then
 				DrawToggle(self, w, h, v, maxy, posx, posy, dist)
 			elseif v[2] == "Button" then
@@ -2286,7 +2301,7 @@ local function DrawSubSub(self, w, h, k, var)
 			elseif (v[2] == "SliderOld") then
 				idiot.DrawOldSlider(self, w, h, v, maxy, posx, posy, dist)
 			elseif (v[2] == "Selection") then
-				DrawSelect(self, w, h, v, maxy, posx, posy, dist)
+				DrawDropdown(self, w, h, v, maxy, posx, posy, dist)
 			elseif(v[2] == "Toggle") then
 				DrawToggle(self, w, h, v, maxy, posx, posy, dist)
 			elseif v[2] == "Button" then
@@ -2341,7 +2356,7 @@ local function Menu()
 		end
 		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 2, 2, w - 4, h - 4, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "Others", "BG Opacity:")))
 		DrawUpperText(w, h)
-		DrawOptions(self, w, h)
+		DrawTabs(self, w, h)
 		DrawSub(self, w, h)
 		if (drawlast) then
 			drawlast()
