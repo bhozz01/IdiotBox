@@ -763,28 +763,33 @@ do
 	if gui.IsGameUIVisible() then
 		gui.HideGameUI()
 	end
+	if BRANCH ~= "unknown" then
+		MsgR(4.3, "ERROR! Cannot load IdiotBox in this Garry's Mod branch.")
+		surface.PlaySound("buttons/lightswitch2.wav")
+		return
+	end
 	if (global.game.SinglePlayer()) then
-		MsgR(4.3, "Attention! Not going to load in Singleplayer Mode!") 
+		MsgR(4.3, "ERROR! Cannot load IdiotBox in Single Player.")
 		surface.PlaySound("buttons/lightswitch2.wav")
 		return
 	end
 	if not file.Exists("lua/bin/gmcl_bsendpacket_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_fhook_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_ChatClear_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_dickwrap_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_big_win32.dll", "MOD") then
-			MsgR(4.3, "Please download the modules before using IdiotBox.")
+			MsgR(4.3, "ERROR! Please install the modules before using IdiotBox.")
 			surface.PlaySound("buttons/lightswitch2.wav")
 			return
 		end
 	if ScrW() <= 769 or ScrH() <= 859 then
-		MsgR(4.3, "The cheat menu has a resolution of 769x859. Please use a resolution larger than that!")
+		MsgR(4.3, "ERROR! The IdiotBox menu resolution is 769x859. Please use a larger resolution.")
 		surface.PlaySound("buttons/lightswitch2.wav")
 		return
 	end
 	if (global.Loaded) then
-		MsgR(4.3, "Already initialized the cheat. Reloading it will cause major module bugs!")
+		MsgR(4.3, "ERROR! Already initialized IdiotBox. Reloading would cause major issues.")
 		surface.PlaySound("buttons/lightswitch2.wav")
 		return
 	end
 	if global.unloaded == true then
-		MsgR(4.3, "You unloaded the cheat. Reloading it will cause major module bugs!")
+		MsgR(4.3, "ERROR! You unloaded IdiotBox. Reloading would cause major issues.")
 		surface.PlaySound("buttons/lightswitch2.wav")
 		return
 	end
