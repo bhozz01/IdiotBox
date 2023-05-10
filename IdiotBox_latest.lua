@@ -4213,20 +4213,20 @@ local function Visuals(v)
 		end
 		if table.HasValue(ignorelist, v:UniqueID()) and not (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
 			textpos = textpos + 1
-			draw.SimpleText("*Ignored Target*", "VisualsFont", x2 + 9, y1 + textpos, ignoredcol, 0, 1)
+			draw.SimpleText("*ignored*", "VisualsFont", x2 + 9, y1 + textpos, ignoredcol, 0, 1)
 			textpos = textpos + 9
 		elseif table.HasValue(ignorelist, v:UniqueID()) and (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
 			textpos = textpos + 1
-			draw.SimpleText("*Ignored Target*", "VisualsFont", x2 + 9, y1 + textpos, devcol, 0, 1)
+			draw.SimpleText("*ignored*", "VisualsFont", x2 + 9, y1 + textpos, devcol, 0, 1)
 			textpos = textpos + 9
 		end
 		if table.HasValue(prioritylist, v:UniqueID()) and not (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
 			textpos = textpos + 1
-			draw.SimpleText("*Priority Target*", "VisualsFont", x2 + 9, y1 + textpos, prioritycol, 0, 1)
+			draw.SimpleText("*prioritized*", "VisualsFont", x2 + 9, y1 + textpos, prioritycol, 0, 1)
 			textpos = textpos + 9
 		elseif table.HasValue(prioritylist, v:UniqueID()) and (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
 			textpos = textpos + 1
-			draw.SimpleText("*Priority Target*", "VisualsFont", x2 + 9, y1 + textpos, devcol, 0, 1)
+			draw.SimpleText("*prioritized*", "VisualsFont", x2 + 9, y1 + textpos, devcol, 0, 1)
 			textpos = textpos + 9
 		end
 		if (friendstatus == "friend") and not gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
