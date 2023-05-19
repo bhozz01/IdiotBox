@@ -85,6 +85,7 @@ concommand.Add("idiot_usespam", function()
 end)
 
 surface.CreateFont("VisualsFont", {font = "Tahoma", size = 12, antialias = false, outline = true})
+surface.CreateFont("VisualsFont2", {font = "Tahoma", size = 11, antialias = false, outline = true})
 surface.CreateFont("MenuFont", {font = "Tahoma", size = 12, antialias = true, outline = false})
 surface.CreateFont("MenuFont2", {font = "Tahoma", size = 12, weight = 674, antialias = false, outline = true})
 surface.CreateFont("MenuFont3", {font = "Tahoma", size = 12, antialias = true, outline = true})
@@ -1712,14 +1713,12 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Fixed Bunny Hop breaking the movement when in water;")
 	print("- Fixed Entities not using the correct Visuals color;")
 	print("- Fixed entity list not showing props and being too cluttered;")
-	print("- Fixed Fake Lag Send not showing up;")
 	print("- Fixed visual bug, where weapons would display a weird name on Wallhack;")
 	print("- Fixed menu border bug, where if you clicked the border, the entire menu would turn blue;")
 	print("- Fixed alignment issues with the window borders;")
 	print("- Fixed Reply Spam and Copy Messages not ignoring friends;")
 	print("- Fixed being unable to fly WAC planes and rotate props or camera angles;")
 	print("- Fixed Kill Spam giving script errors when an NPC was killed;")
-	print("- Fixed Feature Tooltips not working with every feature;")
 	print("- Fixed Entity Loader Menu breaking the cheat menu after closing it;")
 	print("- Fixed 3D Box and Hitbox rendering issues;")
 	print("- Fixed colliding options in the drop-down selecion tabs;")
@@ -1735,17 +1734,11 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Fixed poorly placed checkboxes/ sliders/ selections;")
 	print("- Fixed Anti-Aim Resolver continuing to resolve angles when set to 'Off';")
 	print("- Fixed Thirdperson showing in spectator mode;")
-	print("- Fixed FoV Circle not showing upon enabling;")
 	print("- Fixed text coloring and positioning issues with the optimized Wallhack style;")
-	print("- Fixed skybox changing upon initializing the script;")
-	print("- Fixed Anti-Aim breaking the Radar view angles;")
 	print("- Fixed Circle Strafe spaghetti code not functioning the way it should;")
-	print("- Fixed Free Roaming not working with Anti-Aim;")
 	print("- Fixed Visuals causing severe lag;")
 	print("- Fixed Cheater Callout clearing chat when it should not;")
-	print("- Fixed Thirdperson, Custom FoV and Free Roaming functioning improperly when the user is dead;")
 	print("- Fixed Prop Kill giving script errors when toggled;")
-	print("- Fixed Anti-Aim Yaw Jitter, Semi-Jitter Down and Semi-Jitter Up breaking the Anti-Aim Pitch;")
 	print("- Fixed Triggerbot Smooth Aim slowing down your overall mouse speed;")
 	print("- Fixed certain outlines and fonts not having the proper dimensions;")
 	print("- Fixed a Projectile Prediction bug where dying would cause script errors;")
@@ -1756,13 +1749,9 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Reorganized certain out-of-place functions and menu options;")
 	print("- Reorganized the developer list;")
 	print("- Renamed certain misspelled or broken functions and menu options;")
-	print("- Renamed hooks for better anticheat protection;")
 	print("- Removed calls and variables that had no use;")
 	print("- Removed unusable DarkRP names from the Name Stealer;")
 	print("- Removed cloned hooks for better performance;")
-	print("- Removed old and unused Fake Lag functions;")
-	print("- Removed old and unused message pop-up function;")
-	print("- Removed old resolver module (aaa.dll).")
 	print("\n")
 	print("IdiotBox v6.9.b7 new features (in no particular order)")
 	print("")
@@ -4139,6 +4128,7 @@ local function Visuals(v)
 	end
 	local diff, diff2 = math.abs(x2 - x1), math.abs(y2 - y1)
 	local textpos = 5
+	local textpos2 = 5
 	if (gOption("Visuals", "Wallhack", "Box:") == "2D Box") then
 		surface.SetDrawColor(colOne)
 		surface.DrawOutlinedRect(x1, y1, diff, diff2)
@@ -4201,43 +4191,8 @@ local function Visuals(v)
 		surface.DrawRect(x1 + diff + 3, y2 - math.Clamp(diff2 / v:GetMaxArmor() * v:Armor(), 0, diff2), 3, math.Clamp(diff2 / v:GetMaxArmor() * v:Armor(), 0, diff2))
 	if (gBool("Visuals", "Wallhack", "Name")) then
 		local friendstatus = pm.GetFriendStatus(v)
-		if idiot.creator[v:SteamID()] then
-			textpos = textpos + 1
-			draw.SimpleText("*IdiotBox Creator*", "VisualsFont", x2 + 9, y1 + textpos, devcol, 0, 1)
-			textpos = textpos + 9
-		end
-		if idiot.contributors[v:SteamID()] then
-			textpos = textpos + 1
-			draw.SimpleText("*IdiotBox Contributor*", "VisualsFont", x2 + 9, y1 + textpos, devcol, 0, 1)
-			textpos = textpos + 9
-		end
-		if table.HasValue(ignorelist, v:UniqueID()) and not (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
-			textpos = textpos + 1
-			draw.SimpleText("*ignored*", "VisualsFont", x2 + 9, y1 + textpos, ignoredcol, 0, 1)
-			textpos = textpos + 9
-		elseif table.HasValue(ignorelist, v:UniqueID()) and (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
-			textpos = textpos + 1
-			draw.SimpleText("*ignored*", "VisualsFont", x2 + 9, y1 + textpos, devcol, 0, 1)
-			textpos = textpos + 9
-		end
-		if table.HasValue(prioritylist, v:UniqueID()) and not (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
-			textpos = textpos + 1
-			draw.SimpleText("*prioritized*", "VisualsFont", x2 + 9, y1 + textpos, prioritycol, 0, 1)
-			textpos = textpos + 9
-		elseif table.HasValue(prioritylist, v:UniqueID()) and (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
-			textpos = textpos + 1
-			draw.SimpleText("*prioritized*", "VisualsFont", x2 + 9, y1 + textpos, devcol, 0, 1)
-			textpos = textpos + 9
-		end
-		if (friendstatus == "friend") and not gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
-			textpos = textpos + 1
-			draw.SimpleText("*Steam Friend*", "VisualsFont", x2 + 9, y1 + textpos, friendcol, 0, 1)
-			textpos = textpos + 9
-		elseif (friendstatus == "friend") and gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
-			textpos = textpos + 1
-			draw.SimpleText("*Steam Friend*", "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
-			textpos = textpos + 9
-		end
+		local pos = em.GetPos(v)
+		local pos = vm.ToScreen(pos)
 		if (gBool("Main Menu", "Murder Utilities", "Bystander Name") && engine.ActiveGamemode() == "murder") then
 			textpos = textpos + 1
 			draw.SimpleText(v:GetNWString("bystanderName"), "MiscFont", x2 + 9, y1 + textpos, textcol, 0, 1)
@@ -4246,6 +4201,31 @@ local function Visuals(v)
 			textpos = textpos + 1
 			draw.SimpleText(pm.Name(v), "MiscFont", x2 + 9, y1 + textpos, textcol, 0, 1)
 			textpos = textpos + 9
+		end
+		if table.HasValue(ignorelist, v:UniqueID()) and not (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
+			textpos2 = textpos2 + 1
+			draw.SimpleText("*ignored*", "VisualsFont2", pos.x, y1 + textpos2 - 20, ignoredcol, 1, 0)
+			textpos2 = textpos2 - 12
+		end
+		if table.HasValue(prioritylist, v:UniqueID()) and not (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
+			textpos2 = textpos2 + 1
+			draw.SimpleText("*prioritized*", "VisualsFont2", pos.x, y1 + textpos2 - 20, prioritycol, 1, 0)
+			textpos2 = textpos2 - 12
+		end
+		if (friendstatus == "friend") and not gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
+			textpos2 = textpos2 + 1
+			draw.SimpleText("Steam Friend", "VisualsFont2", pos.x, y1 + textpos2 - 20, friendcol, 1, 0)
+			textpos2 = textpos2 - 12
+		end
+		if idiot.creator[v:SteamID()] then
+			textpos2 = textpos2 + 1
+			draw.SimpleText("IdiotBox Creator", "VisualsFont2", pos.x, y1 + textpos2 - 19, devcol, 1, 0)
+			textpos2 = textpos2 - 12
+		end
+		if idiot.contributors[v:SteamID()] then
+			textpos2 = textpos2 + 1
+			draw.SimpleText("IdiotBox Contributor", "VisualsFont2", pos.x, y1 + textpos2 - 19, devcol, 1, 0)
+			textpos2 = textpos2 - 12
 		end
 	end
 	if gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
@@ -4386,43 +4366,8 @@ local function Visuals(v)
 	elseif (!gBool("Visuals", "Wallhack", "Armor Bar")) then
 	if (gBool("Visuals", "Wallhack", "Name")) then
 		local friendstatus = pm.GetFriendStatus(v)
-		if idiot.creator[v:SteamID()] then
-			textpos = textpos + 1
-			draw.SimpleText("*IdiotBox Creator*", "VisualsFont", x2 + 3, y1 + textpos, devcol, 0, 1)
-			textpos = textpos + 9
-		end
-		if idiot.contributors[v:SteamID()] then
-			textpos = textpos + 1
-			draw.SimpleText("*IdiotBox Contributor*", "VisualsFont", x2 + 3, y1 + textpos, devcol, 0, 1)
-			textpos = textpos + 9
-		end
-		if table.HasValue(ignorelist, v:UniqueID()) and not (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
-			textpos = textpos + 1
-			draw.SimpleText("*ignored*", "VisualsFont", x2 + 3, y1 + textpos, ignoredcol, 0, 1)
-			textpos = textpos + 9
-		elseif table.HasValue(ignorelist, v:UniqueID()) and (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
-			textpos = textpos + 1
-			draw.SimpleText("*ignored*", "VisualsFont", x2 + 3, y1 + textpos, devcol, 0, 1)
-			textpos = textpos + 9
-		end
-		if table.HasValue(prioritylist, v:UniqueID()) and not (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
-			textpos = textpos + 1
-			draw.SimpleText("*prioritized*", "VisualsFont", x2 + 3, y1 + textpos, prioritycol, 0, 1)
-			textpos = textpos + 9
-		elseif table.HasValue(prioritylist, v:UniqueID()) and (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
-			textpos = textpos + 1
-			draw.SimpleText("*prioritized*", "VisualsFont", x2 + 3, y1 + textpos, devcol, 0, 1)
-			textpos = textpos + 9
-		end
-		if (friendstatus == "friend") and not gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
-			textpos = textpos + 1
-			draw.SimpleText("*Steam Friend*", "VisualsFont", x2 + 3, y1 + textpos, friendcol, 0, 1)
-			textpos = textpos + 9
-		elseif (friendstatus == "friend") and gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
-			textpos = textpos + 1
-			draw.SimpleText("*Steam Friend*", "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
-			textpos = textpos + 9
-		end
+		local pos = em.GetPos(v)
+		local pos = vm.ToScreen(pos)
 		if (gBool("Main Menu", "Murder Utilities", "Bystander Name") && engine.ActiveGamemode() == "murder") then
 			textpos = textpos + 1
 			draw.SimpleText(v:GetNWString("bystanderName"), "MiscFont", x2 + 3, y1 + textpos, textcol, 0, 1)
@@ -4431,6 +4376,31 @@ local function Visuals(v)
 			textpos = textpos + 1
 			draw.SimpleText(pm.Name(v), "MiscFont", x2 + 3, y1 + textpos, textcol, 0, 1)
 			textpos = textpos + 9
+		end
+		if table.HasValue(ignorelist, v:UniqueID()) and not (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
+			textpos2 = textpos2 + 1
+			draw.SimpleText("*ignored*", "VisualsFont2", pos.x, y1 + textpos2 - 20, ignoredcol, 1, 0)
+			textpos2 = textpos2 - 12
+		end
+		if table.HasValue(prioritylist, v:UniqueID()) and not (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
+			textpos2 = textpos2 + 1
+			draw.SimpleText("*prioritized*", "VisualsFont2", pos.x, y1 + textpos2 - 20, prioritycol, 1, 0)
+			textpos2 = textpos2 - 12
+		end
+		if (friendstatus == "friend") and not gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
+			textpos2 = textpos2 + 1
+			draw.SimpleText("Steam Friend", "VisualsFont2", pos.x, y1 + textpos2 - 20, friendcol, 1, 0)
+			textpos2 = textpos2 - 12
+		end
+		if idiot.creator[v:SteamID()] then
+			textpos2 = textpos2 + 1
+			draw.SimpleText("IdiotBox Creator", "VisualsFont2", pos.x, y1 + textpos2 - 19, devcol, 1, 0)
+			textpos2 = textpos2 - 12
+		end
+		if idiot.contributors[v:SteamID()] then
+			textpos2 = textpos2 + 1
+			draw.SimpleText("IdiotBox Contributor", "VisualsFont2", pos.x, y1 + textpos2 - 19, devcol, 1, 0)
+			textpos2 = textpos2 - 12
 		end
 	end
 	if gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
