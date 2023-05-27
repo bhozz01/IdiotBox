@@ -109,18 +109,15 @@ idiot.contributors = idiot.contributors or {}
 idiot.creator["STEAM_0:0:63644275"] = {} -- me
 idiot.creator["STEAM_0:0:162667998"] = {} -- my alt
 idiot.contributors["STEAM_0:0:196578290"] = {} -- pinged (code dev, likely the most important one, helped me out with optimization and many others)
-idiot.contributors["STEAM_0:1:126050820"] = {} -- papertek (dev & ex-discord manager)
+idiot.contributors["STEAM_0:1:126050820"] = {} -- papertek // johnrg (dev & ex-discord manager)
 idiot.contributors["STEAM_0:0:453356413"] = {} -- lenn (garry's mod server manager)
 idiot.contributors["STEAM_0:1:69272242"] = {} -- leme (code dev)
-idiot.contributors["STEAM_0:1:193781969"] = {} -- paradox (code dev)
-idiot.contributors["STEAM_0:0:109145007"] = {} -- scottpott (code dev)
+idiot.contributors["STEAM_0:1:193781969"] = {} -- outcome // paradox (code dev)
+idiot.contributors["STEAM_0:0:109145007"] = {} -- scottpott8 (code dev)
 idiot.contributors["STEAM_0:0:205376238"] = {} -- vectivus (code dev)
 idiot.contributors["STEAM_0:1:188710062"] = {} -- uucka (code tester)
 idiot.contributors["STEAM_0:1:191270548"] = {} -- cal1nxd (code tester)
-idiot.contributors["STEAM_0:1:404757"] = {} -- xvcaligo (code tester)
-idiot.contributors["STEAM_0:1:69536635"] = {} -- tryhard (code tester)
-idiot.contributors["STEAM_0:0:150101893"] = {} -- derpos (code tester)
-idiot.contributors["STEAM_0:1:75441355"] = {} -- zergo (code tester)
+idiot.contributors["STEAM_0:1:404757"] = {} -- xvcaligo // persix (code tester)
 idiot.contributors["STEAM_0:0:453611223"] = {} -- naxut (code tester & advertiser and really good friend)
 idiot.contributors["STEAM_0:1:59798110"] = {} -- mrsquid (old advertiser)
 idiot.contributors["STEAM_0:1:4375194"] = {} -- ohhstyle (old advertiser)
@@ -1705,20 +1702,14 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("Please note: This changelog includes bugfixes from previous updates as well.")
 	print("\n")
 	print("- The 'readme.txt' file is finally up-to-date and only contains the important information;")
-	print("- Aim Smoothness will automatically disable itself if Silent aim is turned on;")
 	print("- Merged Ragebot and Legitbot into a single function;")
-	print("- Cheat menu/ game menus will no longer be covered by Visuals/ windows/ lists and others;")
-	print("- Show Entities and Show NPCs can only be used if Visuals is turned on;")
-	print("- Fixed dimensions of the Armor Bar not matching the dimensions of the Health Bar;")
-	print("- Fixed Bunny Hop breaking the movement when in water;")
 	print("- Fixed Entities not using the correct Visuals color;")
 	print("- Fixed entity list not showing props and being too cluttered;")
 	print("- Fixed visual bug, where weapons would display a weird name on Wallhack;")
 	print("- Fixed menu border bug, where if you clicked the border, the entire menu would turn blue;")
 	print("- Fixed alignment issues with the window borders;")
-	print("- Fixed Reply Spam and Copy Messages not ignoring friends;")
 	print("- Fixed being unable to fly WAC planes and rotate props or camera angles;")
-	print("- Fixed Kill Spam giving script errors when an NPC was killed;")
+	print("- Fixed Kill Spam giving script errors when an NPC was killed;") -- Old, but gold
 	print("- Fixed Entity Loader Menu breaking the cheat menu after closing it;")
 	print("- Fixed 3D Box and Hitbox rendering issues;")
 	print("- Fixed colliding options in the drop-down selecion tabs;")
@@ -1727,7 +1718,6 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Fixed Hitbox spamming the console with error messages;")
 	print("- Fixed Snap Lines still showing when Aimbot is not enabled;")
 	print("- Fixed toggle keys activating when browsing game menus/ typing;")
-	print("- Fixed Bullet Fire Delay, Anti-Ads, Hide Round Report and Panel Remover not working correctly;")
 	print("- Fixed Aimbot and Triggerbot targeting spawning players;")
 	print("- Fixed misplaced tab selection lines;")
 	print("- Fixed Viewmodel Chams not always covering the viewmodel hands;")
@@ -1738,19 +1728,15 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Fixed Circle Strafe spaghetti code not functioning the way it should;")
 	print("- Fixed Visuals causing severe lag;")
 	print("- Fixed Cheater Callout clearing chat when it should not;")
-	print("- Fixed Prop Kill giving script errors when toggled;")
 	print("- Fixed Triggerbot Smooth Aim slowing down your overall mouse speed;")
 	print("- Fixed certain outlines and fonts not having the proper dimensions;")
 	print("- Fixed a Projectile Prediction bug where dying would cause script errors;")
 	print("- Fixed Manipulate Interpolation, Optimize Game and Dark Mode not resetting when disabled;")
 	print("- Fixed local variable limit and timer issues;")
 	print("- Reworked localizations and overall script for better performance;")
-	print("- Reworked visibility of IdiotBox developers on servers;")
 	print("- Reorganized certain out-of-place functions and menu options;")
-	print("- Reorganized the developer list;")
 	print("- Renamed certain misspelled or broken functions and menu options;")
 	print("- Removed calls and variables that had no use;")
-	print("- Removed unusable DarkRP names from the Name Stealer;")
 	print("- Removed cloned hooks for better performance;")
 	print("\n")
 	print("IdiotBox v6.9.b7 new features (in no particular order)")
@@ -1760,51 +1746,36 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Added 'Projectile Prediction' and 'Line-of-Sight Check' to Aimbot;")
 	print("- Added 'Emote Resolver' to Resolver;")
 	print("- Added 'Distance Limit', 'Velocity Limit' and NPC targeting to Aim Assist;")
-	print("- Added 'Priority List' and 'Use Spam' to Miscellaneous;")
-	print("- Added 'Cheater Callout', 'Copy Messages', 'Disconnect Spam', 'lol', 'english please', 'lmao', 'shit' and 'fuck' to Reply Spam;")
-	print("- Added 'Border Color', 'Misc Visuals Color' and 'Opacity' sliders to Adjustments;")
-	print("- Added 'Fake-Forwards/ Backwards/ Sideways', Yaw Spinbot, 'Static', 'Adapt' and 'Disable in Use Toggle' to Anti-Aim;")
-	print("- Added 'Players List', 'Show Entities', 'Conditions', 'Velocity', 'Dormant Check', 'Show Spectators', 'Hide Ignored Targets', 'Position Lines', 'Show NPCs', 'Entity' & 'NPC' Chams, 'Flat' & 'Wireframe' chams materials, clientside visibility and 'Target Priority Colors' & priority statuses to Visuals;")
+	print("- Added 'Default', 'Static', 'Distance Adapt' and 'Crosshair Adapt' to Anti-Aim;")
+	print("- Added 'Position Lines', 'Flat' & 'Wireframe' chams materials, clientside visibility, 'Adaptive Text Colors' and 'Target Priority Colors' & priority status to Visuals;")
 	print("- Added 'Remove 3D Skybox' to Textures;")
-	print("- Added 'Panic Mode', 'Entity Finder Menu', 'Plugin Loader Menu', 'Optimize Game', 'Feature Tooltips', 'Spectator Mode' and more gamemode specific features to Main Menu;")
+	print("- Added 'Feature Tooltips', 'Spectator Mode' and more gamemode specific features to Main Menu;")
 	print("- Added 'Target Spectators', 'Target Players', 'Target Frozen Players' and 'Target Enemies' to Aim Priorities;")
 	print("- Added 'Toggle Key' and 'Speed' to Free Roaming;")
 	print("- Added 'Circle Strafe Key' and 'Fake Crouch' to Movement;")
 	print("- Added 'Arabic Spam' and 'Hebrew Spam' to Chat Spam;") -- Old, but gold
-	print("- Added 'Priority Targets Only' to Priority List;")
 	print("- Added 'Thirdperson Key', 'Custom Positions', 'Rainbow Mode' and 'Flat' & 'Wireframe' chams to Point of View;")
-	print("- Added 'Murder Taunts' to Miscellaneous;")
 	print("- Added 'Legit', 'Rage' and 'Directional' to Auto Strafe;")
 	print("- Added 'GUI Settings' to Miscellaneous;")
 	print("- Added customizable list adjustments to Priority List;")
 	print("- Added engine prediction module (big.dll);")
-	print("- Added custom key binds;")
-	print("- Added bordered menu styles;")
-	print("- Added sliding menu;")
 	print("- Added more hitsounds, killsounds, more music and a custom music player to Sounds;")
 	print("- Added more customization options to Panels;")
-	print("- Added a custom configurations menu;")
 	print("- Reworked 'Bunny Hop' and 'Auto Strafe' from scratch;")
 	print("- Reworked 'Wallhack' from scratch;")
 	print("- Reworked 'Auto Wallbang' from Aimbot;")
-	print("- Reworked 'Resolver' from Hack vs. Hack;")
 	print("- Reworked 'Radar', 'Spectators', 'Debug Info' and 'Players List' from Panels;")
-	print("- Reworked 'Free Roaming' from Miscellaneous;")
 	print("- Reworked 'Traitor Finder' and 'Murderer Finder' from Main Menu;")
 	print("- Reworked 'Show NPCs' and 'Show Entities' from Visuals;")
-	print("- Reworked priorities from Aim Priorities;")
 	print("- Reworked anti-screengrabber from scratch;")
 	print("- Reworked the menu's design from scratch;")
 	print("- Reworked old 'file.Read' blocker from scratch;")
-	print("- Renamed 'Aim Assist', 'Hack vs. Hack' and 'Main Menu' tabs;")
 	print("- Removed 'Triggerbot' tab and merged it with the 'Aim Assist' tab;")
 	print("- Removed 'Shoutout' and 'Drop Money' from Chat Spam;")
 	print("- Removed 'Screengrab Notifications' from Miscellaneous;")
 	print("- Removed 'Mirror' from Point of View;")
-	print("- Removed useless information from Anti-Aim and Miscellaneous;")
 	print("- Changed the Armor Bar and Armor Value colors from bright green to bright blue.")
 	print("- Changed the default colors, menu size and others;")
-	print("- Changed the entity finder menu;")
 	print("\n\n===========================================================")
 	timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Printed changelog to console!") end)
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
@@ -4202,17 +4173,17 @@ local function Visuals(v)
 			draw.SimpleText(pm.Name(v), "MiscFont", x2 + 9, y1 + textpos, textcol, 0, 1)
 			textpos = textpos + 9
 		end
-		if table.HasValue(ignorelist, v:UniqueID()) and not (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
+		if table.HasValue(ignorelist, v:UniqueID()) then
 			textpos2 = textpos2 + 1
 			draw.SimpleText("*ignored*", "VisualsFont2", pos.x, y1 + textpos2 - 20, ignoredcol, 1, 0)
 			textpos2 = textpos2 - 12
 		end
-		if table.HasValue(prioritylist, v:UniqueID()) and not (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
+		if table.HasValue(prioritylist, v:UniqueID()) then
 			textpos2 = textpos2 + 1
 			draw.SimpleText("*prioritized*", "VisualsFont2", pos.x, y1 + textpos2 - 20, prioritycol, 1, 0)
 			textpos2 = textpos2 - 12
 		end
-		if (friendstatus == "friend") and not gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
+		if (friendstatus == "friend") then
 			textpos2 = textpos2 + 1
 			draw.SimpleText("Steam Friend", "VisualsFont2", pos.x, y1 + textpos2 - 20, friendcol, 1, 0)
 			textpos2 = textpos2 - 12
@@ -4377,17 +4348,17 @@ local function Visuals(v)
 			draw.SimpleText(pm.Name(v), "MiscFont", x2 + 3, y1 + textpos, textcol, 0, 1)
 			textpos = textpos + 9
 		end
-		if table.HasValue(ignorelist, v:UniqueID()) and not (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
+		if table.HasValue(ignorelist, v:UniqueID()) then
 			textpos2 = textpos2 + 1
 			draw.SimpleText("*ignored*", "VisualsFont2", pos.x, y1 + textpos2 - 20, ignoredcol, 1, 0)
 			textpos2 = textpos2 - 12
 		end
-		if table.HasValue(prioritylist, v:UniqueID()) and not (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
+		if table.HasValue(prioritylist, v:UniqueID()) then
 			textpos2 = textpos2 + 1
 			draw.SimpleText("*prioritized*", "VisualsFont2", pos.x, y1 + textpos2 - 20, prioritycol, 1, 0)
 			textpos2 = textpos2 - 12
 		end
-		if (friendstatus == "friend") and not gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
+		if (friendstatus == "friend") then
 			textpos2 = textpos2 + 1
 			draw.SimpleText("Steam Friend", "VisualsFont2", pos.x, y1 + textpos2 - 20, friendcol, 1, 0)
 			textpos2 = textpos2 - 12
@@ -4625,17 +4596,14 @@ local function Visuals(v)
 	end
 	if (gBool("Visuals", "Wallhack", "Name")) then
 		local friendstatus = pm.GetFriendStatus(v)
-		if (friendstatus == "friend") and not gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
+		if (friendstatus == "friend") then
 			draw.SimpleText("Steam Friend", "VisualsFont", pos.x, pos.y - h - 13 - 13, friendcol, 1, 1)
-		elseif (friendstatus == "friend") and gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
-			draw.SimpleText("Steam Friend", "VisualsFont", pos.x, pos.y - h - 13 - 13, textcol, 1, 1)
 		end
 		if (gBool("Main Menu", "Murder Utilities", "Bystander Name") && engine.ActiveGamemode() == "murder") then
-			draw.SimpleText(v:GetNWString("bystanderName"), "VisualsFont", pos.x, pos.y - h - 1 - (friendstatus == "friend" && 12 || 12), textcol, 1, 1)
+			draw.SimpleText(v:GetNWString("bystanderName"), "MiscFont", pos.x, pos.y - h - 1 - (friendstatus == "friend" && 12 || 12), textcol, 1, 1)
 		else
 			draw.SimpleText(pm.Name(v), "MiscFont", pos.x, pos.y - h - 1 - (friendstatus == "friend" && 12 || 12), textcol, 1, 1)
 		end
-		local friendstatus = pm.GetFriendStatus(v)
 		if (friendstatus == "friend") then
 			if idiot.creator[v:SteamID()] then
 				draw.SimpleText("IdiotBox Creator", "VisualsFont", pos.x, pos.y - h - 26 - 13, devcol, 1, 1)
@@ -4653,42 +4621,34 @@ local function Visuals(v)
 			end
 		end
 		if (friendstatus == "friend") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()]) then
-			if table.HasValue(ignorelist, v:UniqueID()) and not (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
+			if table.HasValue(ignorelist, v:UniqueID()) then
 				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 39 - 13, ignoredcol, 1, 1)
-			elseif table.HasValue(ignorelist, v:UniqueID()) and (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
-				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 39 - 13, devcol, 1, 1)
 			end
-			if table.HasValue(prioritylist, v:UniqueID()) and not (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
+			if table.HasValue(prioritylist, v:UniqueID()) then
 				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 39 - 13, prioritycol, 1, 1)
-			elseif table.HasValue(prioritylist, v:UniqueID()) and (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
-				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 39 - 13, devcol, 1, 1)
 			end
 		end
 		if (friendstatus == "friend") and not (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()]) then
-			if table.HasValue(ignorelist, v:UniqueID()) and not (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
+			if table.HasValue(ignorelist, v:UniqueID()) then
 				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, ignoredcol, 1, 1)
 			end
-			if table.HasValue(prioritylist, v:UniqueID()) and not (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
+			if table.HasValue(prioritylist, v:UniqueID()) then
 				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, prioritycol, 1, 1)
 			end
 		end
 		if (friendstatus ~= "friend") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()]) then
-			if table.HasValue(ignorelist, v:UniqueID()) and not (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
+			if table.HasValue(ignorelist, v:UniqueID()) then
 				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, ignoredcol, 1, 1)
-			elseif table.HasValue(ignorelist, v:UniqueID()) and (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
-				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, devcol, 1, 1)
 			end
-			if table.HasValue(prioritylist, v:UniqueID()) and not (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
+			if table.HasValue(prioritylist, v:UniqueID()) then
 				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, prioritycol, 1, 1)
-			elseif table.HasValue(prioritylist, v:UniqueID()) and (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
-				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 26 - 13, devcol, 1, 1)
 			end
 		end
 		if (friendstatus ~= "friend") and not (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()]) then
-			if table.HasValue(ignorelist, v:UniqueID()) and not (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
+			if table.HasValue(ignorelist, v:UniqueID()) then
 				draw.SimpleText("Ignored Target", "VisualsFont", pos.x, pos.y - h - 13 - 13, ignoredcol, 1, 1)
 			end
-			if table.HasValue(prioritylist, v:UniqueID()) and not (gBool("Visuals", "Miscellaneous", "Adaptive Text Color") and (idiot.creator[v:SteamID()] or idiot.contributors[v:SteamID()])) then
+			if table.HasValue(prioritylist, v:UniqueID()) then
 				draw.SimpleText("Priority Target", "VisualsFont", pos.x, pos.y - h - 13 - 13, prioritycol, 1, 1)
 			end
 		end
