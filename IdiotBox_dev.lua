@@ -180,9 +180,8 @@ local options = {
 			{""}, 
 		}, 
 		{
-          	{"Others", 261, 396, 232, 154, 218}, 
+          	{"Others", 261, 396, 232, 130, 218}, 
 			{"Feature Tooltips", "Checkbox", true, 78}, -- Enabled by default
-			{"Toggle Custom Name", "Checkbox", false, 78}, 
 			{"Apply Custom Name", "Button", false, 92}, 
 			{"Print Changelog", "Button", "", 92}, 
 			{"Unload Cheat", "Button", "", 92}, 
@@ -777,7 +776,7 @@ do
 		surface.PlaySound("buttons/lightswitch2.wav")
 		return
 	end
-	if not file.Exists("lua/bin/gmcl_bsendpacket_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_fhook_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_chatclear_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_dickwrap_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_big_win32.dll", "MOD") then
+	if not file.Exists("lua/bin/gmcl_bsendpacket_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_chatclear_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_dickwrap_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_big_win32.dll", "MOD") then
 			MsgR(4.3, "ERROR! Please install the modules before using IdiotBox.")
 			surface.PlaySound("buttons/lightswitch2.wav")
 			return
@@ -801,17 +800,12 @@ do
 end
 
 require("bsendpacket")
-require("fhook")
 require("chatclear")
 require("dickwrap")
 require("big")
 
 global.bSendPacket = true
 global.unloaded = false
-
-idiot.ChangeName = _fhook_changename
-idiot.Predict = dickwrap.Predict
-
 global.TickCount = 0
 
 if not file.IsDir(folder, "DATA") then
@@ -1179,8 +1173,6 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			info = "Saves your current configuration automatically."
 		elseif feat == "Feature Tooltips" then
 			info = "Detailed information about features will appear here, at the bottom of the menu."
-		elseif feat == "Toggle Custom Name" then
-			info = "CONSTANTLY changes your in-game name to a custom one. Use the 'idiot_changename' command, followed by your desired name."
 		elseif feat == "Silent Aim" then
 			info = "Makes the Aimbot invisible for you."
 		elseif feat == "Auto Fire" then
@@ -2068,7 +2060,7 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 		elseif feat == "Delete Configuration" then
 			info = "Deletes your desired configuration file."
 		elseif feat == "Apply Custom Name" then
-			info = "TEMPORARILY changes your in-game name to a custom one. Use the 'idiot_changename' command, followed by your desired name."
+			info = "Changes your in-game name to a custom one. Use the 'idiot_changename' command, followed by your desired name."
 		elseif feat == "Print Changelog" then
 			info = "Prints the IdiotBox changelog in the console."
 		elseif feat == "Unload Cheat" then
@@ -5382,7 +5374,7 @@ end
 local function PredictSpread(cmd, ang)
 	local w = pm.GetActiveWeapon(me)
 	if (not w or not em.IsValid(w) or not cones[em.GetClass(w)] or not gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread")) then return am.Forward(ang) end
-	return (idiot.Predict(cmd, am.Forward(ang), cones[em.GetClass(w)]))
+	return (dickwrap.Predict(cmd, am.Forward(ang), cones[em.GetClass(w)]))
 end
 
 local function AutoFire(cmd)
@@ -6292,20 +6284,12 @@ hook.Add("ShouldDrawLocalPlayer", "ShouldDrawLocalPlayer", function()
 end)
 
 hook.Add("CreateMove", "CreateMove", function(cmd)
-	if gBool("Main Menu", "Others", "Toggle Custom Name") then
-		idiot.ChangeName(GetConVarString("idiot_changename"))
-		if not Confirmed1 then
-			MsgG(3.2, "Successfully applied custom name.")
-			surface.PlaySound("buttons/lightswitch2.wav")
-		Confirmed1 = true
-		end
-	end
 	local randomname = {"Mike Hawk", "Moe Lester", "Mike Hunt", "Ben Dover", "Harold Kundt", "Peter Pain", "Dusan Mandic", "Harry Gooch", "Mike Oxlong", "Ivana Dooyu", "Slim Shader", "Dead Walker", "Mike Oxbig", "Mike Rotch", "Hugh Jass", "Robin Banks", "Mike Litt", "Harry Wang", "Harry Cox", "Moss Cular", "Amanda Reen", "Major Kumm", "Willie Wang", "Hugh Blackstuff", "Mike Rap", "Al Coholic", "Cole Kutz", "Mike Litoris", "Dixie Normous", "Dick Pound", "Mike Ock", "Sum Ting Wong", "Ho Lee Fuk", "Harry Azcrac", "Jay L. Bate", "Hugh G. Rection", "Long Wang", "Wayne King",}
 		if gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Normal" or gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Priority Targets" then
 		local randply = player.GetAll()[math.random(#player.GetAll())]
 		local friendstatus = pm.GetFriendStatus(randply)
 		if (!randply:IsValid() || randply == me || friendstatus == "friend" || (gBool("Main Menu", "Priority List", "Enabled") && table.HasValue(ignorelist, randply:UniqueID())) || (gBool("Main Menu", "Priority List", "Enabled") && gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Priority Targets" && !table.HasValue(prioritylist, randply:UniqueID()))) then return end
-			idiot.ChangeName(randply:Name().." ")
+			big.ChangeName(randply:Name().." ")
 		elseif gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "DarkRP Name" then
 			namechangeTime = namechangeTime + 1
 		if namechangeTime > 500 then
