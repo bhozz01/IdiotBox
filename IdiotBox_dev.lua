@@ -1707,7 +1707,7 @@ end
 
 function idiot.Changelog() -- Ran out of local variables, again
 	print("===========================================================\n\n")
-	print("IdiotBox v7.0.b1 bugfixes (in no particular order)")
+	print("IdiotBox v7.0.b1 code bugfixes (in no particular order)")
 	print("")
 	print("Please note: This changelog includes bugfixes from previous updates as well.")
 	print("\n")
@@ -1736,6 +1736,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Fixed Thirdperson showing in spectator mode;")
 	print("- Fixed text coloring and positioning issues with the optimized Wallhack style;")
 	print("- Fixed Circle Strafe spaghetti code not functioning the way it should;")
+	print("- Fixed Name Changer/ Stealer reverting to your Steam username as soon as a new player joined the server;")
 	print("- Fixed Visuals causing severe lag;")
 	print("- Fixed Cheater Callout clearing chat when it should not;")
 	print("- Fixed Triggerbot Smooth Aim slowing down your overall mouse speed;")
@@ -1748,8 +1749,9 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Renamed certain misspelled or broken functions and menu options;")
 	print("- Removed calls and variables that had no use;")
 	print("- Removed cloned hooks for better performance;")
+	print("WORK-IN-PROGRESS: clean up bad hooks for better performance;")
 	print("\n")
-	print("IdiotBox v7.0.b1 new features (in no particular order)")
+	print("IdiotBox v7.0.b1 feature changes (in no particular order)")
 	print("")
 	print("Please note: This changelog includes feature changes from previous updates as well.")
 	print("\n")
@@ -1762,7 +1764,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Added 'Feature Tooltips', 'Spectator Mode' and more gamemode specific features to Main Menu;")
 	print("- Added 'Target Spectators', 'Target Players', 'Target Frozen Players' and 'Target Enemies' to Aim Priorities;")
 	print("- Added 'Toggle Key' and 'Speed' to Free Roaming;")
-	print("- Added 'Circle Strafe Key' and 'Fake Crouch' to Movement;")
+	print("- Added 'Air Stuck', 'Circle Strafe Key' and 'Fake Crouch' to Movement;")
 	print("- Added 'Arabic Spam' and 'Hebrew Spam' to Chat Spam;") -- Old, but gold
 	print("- Added 'Thirdperson Key', 'Custom Positions', 'Rainbow Mode' and 'Flat' & 'Wireframe' chams to Point of View;")
 	print("- Added 'Legit', 'Rage' and 'Directional' to Auto Strafe;")
@@ -1777,15 +1779,19 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Reworked 'Radar', 'Spectators', 'Debug Info' and 'Players List' from Panels;")
 	print("- Reworked 'Traitor Finder' and 'Murderer Finder' from Main Menu;")
 	print("- Reworked 'Show NPCs' and 'Show Entities' from Visuals;")
+	print("- Reworked 'Emotes' from Miscellaneous, allowing you to move while acting;")
 	print("- Reworked anti-screengrabber from scratch;")
 	print("- Reworked the menu's design from scratch;")
 	print("- Reworked old 'file.Read' blocker from scratch;")
+	print("- Reworked nospread from scratch, in pure lua;")
 	print("- Removed 'Triggerbot' tab and merged it with the 'Aim Assist' tab;")
 	print("- Removed 'Shoutout' and 'Drop Money' from Chat Spam;")
 	print("- Removed 'Screengrab Notifications' from Miscellaneous;")
 	print("- Removed 'Mirror' from Point of View;")
+	print("- Removed 'dickwrap.dll' and 'fhook.dll' modules;")
 	print("- Changed the Armor Bar and Armor Value colors from bright green to bright blue.")
 	print("- Changed the default colors, menu size and others;")
+	print("WORK-IN-PROGRESS: rework 'Projectile Prediction' from scratch;")
 	print("\n\n===========================================================")
 	timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Printed changelog to console!") end)
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
@@ -2214,11 +2220,8 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Apply Custom Name" then
 			big.ChangeName(GetConVarString("idiot_changename"))
-			if not changed then
-				timer.Create("ChatPrint", 0.1, 1, function() MsgY(3.2, "Successfully applied custom username.") end)
-				timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
-			changed = true
-			end
+			timer.Create("ChatPrint", 0.1, 1, function() MsgY(3.2, "Successfully applied custom username.") end)
+			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		end
 	end
 end
