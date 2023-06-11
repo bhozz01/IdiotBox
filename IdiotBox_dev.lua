@@ -1062,7 +1062,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: d11/m06-pre03")
+	surface.DrawText("Latest build: d12/m06-pre04")
 	surface.SetFont("MenuFont2")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -1791,6 +1791,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Removed 'dickwrap.dll' and 'fhook.dll' modules;")
 	print("- Changed the Armor Bar and Armor Value colors from bright green to bright blue.")
 	print("- Changed the default colors, menu size and others;")
+	print("WORK-IN-PROGRESS: add 'Target Build Mode' and 'Disable in Build Mode';")
 	print("WORK-IN-PROGRESS: rework 'Projectile Prediction' from scratch;")
 	print("\n\n===========================================================")
 	timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Printed changelog to console!") end)
@@ -3854,30 +3855,7 @@ end
 hook.Add("Think", "Think", function()
 	TraitorDetector()
 	MurdererDetector()
-	TransparentWalls()
 	Think()
-	if gBool("Main Menu", "General Utilities", "Optimize Game") then
-		if not optimized then
-			me:ConCommand("r_cleardecals; M9KGasEffect 0")
-		optimized = true
-		end
-	else
-		if optimized then
-			me:ConCommand("M9KGasEffect 1")
-		optimized = false
-		end
-	end
-	if gBool("Aim Assist", "Miscellaneous", "Manipulate Interpolation") then
-		if not applied then
-			me:ConCommand("cl_interp 0; cl_interp_ratio 0; cl_updaterate 99999")
-		applied = true
-		end
-	else
-		if applied then
-			me:ConCommand("cl_interp 0; cl_interp_ratio 2; cl_updaterate 30")
-		applied = false
-		end
-	end
 	if engine.ActiveGamemode() == "terrortown" then
 		if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Hide Round Report") then
 			if not displayed then
@@ -6818,6 +6796,29 @@ hook.Add("ShouldDrawLocalPlayer", "ShouldDrawLocalPlayer", function()
 end)
 
 hook.Add("StartCommand", "StartCommand", function(randply, cmd)
+	TransparentWalls()
+	if gBool("Main Menu", "General Utilities", "Optimize Game") then
+		if not optimized then
+			me:ConCommand("r_cleardecals; M9KGasEffect 0")
+		optimized = true
+		end
+	else
+		if optimized then
+			me:ConCommand("M9KGasEffect 1")
+		optimized = false
+		end
+	end
+	if gBool("Aim Assist", "Miscellaneous", "Manipulate Interpolation") then
+		if not applied then
+			me:ConCommand("cl_interp 0; cl_interp_ratio 0; cl_updaterate 99999")
+		applied = true
+		end
+	else
+		if applied then
+			me:ConCommand("cl_interp 0; cl_interp_ratio 2; cl_updaterate 30")
+		applied = false
+		end
+	end
 	local randomname = {"Mike Hawk", "Moe Lester", "Mike Hunt", "Ben Dover", "Harold Kundt", "Peter Pain", "Dusan Mandic", "Harry Gooch", "Mike Oxlong", "Ivana Dooyu", "Slim Shader", "Dead Walker", "Mike Oxbig", "Mike Rotch", "Hugh Jass", "Robin Banks", "Mike Litt", "Harry Wang", "Harry Cox", "Moss Cular", "Amanda Reen", "Major Kumm", "Willie Wang", "Hugh Blackstuff", "Mike Rap", "Al Coholic", "Cole Kutz", "Mike Litoris", "Dixie Normous", "Dick Pound", "Mike Ock", "Sum Ting Wong", "Ho Lee Fuk", "Harry Azcrac", "Jay L. Bate", "Hugh G. Rection", "Long Wang", "Wayne King",}
 		if gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Normal" or gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Priority Targets" then
 		local randply = player.GetAll()[math.random(#player.GetAll())]
