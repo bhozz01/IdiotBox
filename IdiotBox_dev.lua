@@ -1062,7 +1062,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: d12/m06-pre04")
+	surface.DrawText("Latest build: d12/m06-pre05")
 	surface.SetFont("MenuFont2")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -1736,7 +1736,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Fixed Thirdperson showing in spectator mode;")
 	print("- Fixed text coloring and positioning issues with the optimized Wallhack style;")
 	print("- Fixed Circle Strafe spaghetti code not functioning the way it should;")
-	print("- Fixed Name Changer/ Stealer reverting to your Steam username as soon as a new player joined the server;")
+	print("- Fixed name changer/ stealer reverting to your Steam username as soon as a new player joined the server;")
 	print("- Fixed Visuals causing severe lag;")
 	print("- Fixed Cheater Callout clearing chat when it should not;")
 	print("- Fixed Triggerbot Smooth Aim slowing down your overall mouse speed;")
@@ -1783,7 +1783,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Reworked anti-screengrabber from scratch;")
 	print("- Reworked the menu's design from scratch;")
 	print("- Reworked old 'file.Read' blocker from scratch;")
-	print("- Reworked nospread from scratch, in pure lua;")
+	print("- Reworked spread prediction from scratch, in pure lua;")
 	print("- Removed 'Triggerbot' tab and merged it with the 'Aim Assist' tab;")
 	print("- Removed 'Shoutout' and 'Drop Money' from Chat Spam;")
 	print("- Removed 'Screengrab Notifications' from Miscellaneous;")
@@ -2540,15 +2540,13 @@ end
 local function RapidPrimaryFire(cmd)
 	if gOption("Aim Assist", "Miscellaneous", "Rapid Fire:") ~= "Off" and gOption("Aim Assist", "Miscellaneous", "Rapid Fire:") == "Primary Fire" then
 		if pm.KeyDown(me, IN_ATTACK) then
-			if (me:Alive() or em.Health(me) > 0) then
-				if not FixTools() then
-					if toggler == 0 then
-						cm.SetButtons(cmd, bit.bor(cm.GetButtons(cmd), IN_ATTACK))
-						toggler = 1
-					else
-						cm.SetButtons(cmd, bit.band(cm.GetButtons(cmd), bit.bnot(IN_ATTACK)))
-						toggler = 0
-					end
+			if (me:Alive() or em.Health(me) > 0) and not FixTools() then
+				if toggler == 0 then
+					cm.SetButtons(cmd, bit.bor(cm.GetButtons(cmd), IN_ATTACK))
+					toggler = 1
+				else
+					cm.SetButtons(cmd, bit.band(cm.GetButtons(cmd), bit.bnot(IN_ATTACK)))
+					toggler = 0
 				end
 			end
 		end
@@ -2558,15 +2556,13 @@ end
 local function RapidAltFire(cmd)
 	if gOption("Aim Assist", "Miscellaneous", "Rapid Fire:") ~= "Off" and gOption("Aim Assist", "Miscellaneous", "Rapid Fire:") == "Alt Fire" then
 		if pm.KeyDown(me, IN_ATTACK) then
-			if (me:Alive() or em.Health(me) > 0) then
-				if not FixTools() then
-					if toggler == 0 then
-						cm.SetButtons(cmd, bit.bor(cm.GetButtons(cmd), IN_ATTACK2))
-						toggler = 1
-					else
-						cm.SetButtons(cmd, bit.band(cm.GetButtons(cmd), bit.bnot(IN_ATTACK2)))
-						toggler = 0
-					end
+			if (me:Alive() or em.Health(me) > 0) and not FixTools() then
+				if toggler == 0 then
+					cm.SetButtons(cmd, bit.bor(cm.GetButtons(cmd), IN_ATTACK2))
+					toggler = 1
+				else
+					cm.SetButtons(cmd, bit.band(cm.GetButtons(cmd), bit.bnot(IN_ATTACK2)))
+					toggler = 0
 				end
 			end
 		end
@@ -2680,12 +2676,10 @@ function idiot.AngleOutOfRange(ang)
 end
 
 local function FixAngle(ang)
-	if not idiot.AngleOutOfRange(ang) then return end
-	if not FixTools() then
-		ang.pitch = math.Clamp(math.NormalizeAngle(ang.pitch), - 89, 89)
-		ang.yaw = math.NormalizeAngle(ang.yaw)
-		ang.roll = math.NormalizeAngle(ang.roll)
-	end
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or (not me:Alive() or me:Health() < 1) or not idiot.AngleOutOfRange(ang) or FixTools() then return end
+	ang.pitch = math.Clamp(math.NormalizeAngle(ang.pitch), - 89, 89)
+	ang.yaw = math.NormalizeAngle(ang.yaw)
+	ang.roll = math.NormalizeAngle(ang.roll)
 end
 
 local function DrawOutlinedText (title, font, x, y, color, OUTsize, OUTcolor)
@@ -5832,6 +5826,7 @@ function idiot.RemapClamped(val, A, B, C, D)
 end
 
 local function PredictSpread(cmd, ang) -- HUGE FUCKING THANKS TO S0LUM'S NCMD (and data for helping me figure shit out)
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
     local wep = me:GetActiveWeapon()
     local class = wep:GetClass()
     local cone = idiot.spread.Spread[class]
@@ -6669,18 +6664,15 @@ local function FakeAngles(cmd)
 	end
     fa = fa + Angle(cm.GetMouseY(cmd) * .023, cm.GetMouseX(cmd) * - .023, 0)
     FixAngle(fa)
-    if (cm.CommandNumber(cmd) == 0) then
-		if not FixTools() then
-			cm.SetViewAngles(cmd, GetAngle(fa))
-			return
-		end
+    if cm.CommandNumber(cmd) == 0 and not FixTools() then
+		cm.SetViewAngles(cmd, GetAngle(fa))
+		return
 	end
-	if (cm.KeyDown(cmd, 1)) then
-		if not FixTools() then
-			local ang = PredictSpread(cmd, fa)
-			FixAngle(ang)
-			cm.SetViewAngles(cmd, ang)
-		end
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
+	if cm.KeyDown(cmd, 1) and not FixTools() then
+		local ang = PredictSpread(cmd, fa)
+		FixAngle(ang)
+		cm.SetViewAngles(cmd, ang)
     end
 end
 
