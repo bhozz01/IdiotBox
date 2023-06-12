@@ -103,6 +103,7 @@ idiot.chamsmat4 = CreateMaterial("flatmat2", "UnLitGeneric", {["$ignorez"] = 0, 
 idiot.chamsmat5 = CreateMaterial("wiremat1", "UnLitGeneric", {["$ignorez"] = 1, ["$wireframe"] = 1, })
 idiot.chamsmat6 = CreateMaterial("wiremat2", "UnLitGeneric", {["$ignorez"] = 0, ["$wireframe"] = 1, })
 
+idiot.frpressed, idiot.frtoggle = false -- These localizations below are some extra localizations that didn't fit within the regular limit
 idiot.tcopy = table.Copy
 idiot.R_ = debug.getregistry()
 idiot.R = idiot.tcopy(idiot.R_)
@@ -1062,7 +1063,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: d12m06-pre05")
+	surface.DrawText("Latest build: d12m06-pre06")
 	surface.SetFont("MenuFont2")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -1749,7 +1750,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Renamed certain misspelled or broken functions and menu options;")
 	print("- Removed calls and variables that had no use;")
 	print("- Removed cloned hooks for better performance;")
-	print("WORK-IN-PROGRESS: clean up bad hooks for better performance;")
+	print("WORK-IN-PROGRESS: clean up bad hooks for better performance.")
 	print("\n")
 	print("IdiotBox v7.0.b1 feature changes (in no particular order)")
 	print("")
@@ -1780,19 +1781,21 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Reworked 'Traitor Finder' and 'Murderer Finder' from Main Menu;")
 	print("- Reworked 'Show NPCs' and 'Show Entities' from Visuals;")
 	print("- Reworked 'Emotes' from Miscellaneous, allowing you to move while acting;")
+	print("- Reworked 'Free Roaming' from Miscellaneous, so that you will no longer have to hold down the toggle key in order to roam;")
 	print("- Reworked anti-screengrabber from scratch;")
 	print("- Reworked the menu's design from scratch;")
 	print("- Reworked old 'file.Read' blocker from scratch;")
-	print("- Reworked spread prediction from scratch, in pure lua;")
+	print("- Reworked spread prediction from scratch;")
 	print("- Removed 'Triggerbot' tab and merged it with the 'Aim Assist' tab;")
 	print("- Removed 'Shoutout' and 'Drop Money' from Chat Spam;")
 	print("- Removed 'Screengrab Notifications' from Miscellaneous;")
 	print("- Removed 'Mirror' from Point of View;")
 	print("- Removed 'dickwrap.dll' and 'fhook.dll' modules;")
-	print("- Changed the Armor Bar and Armor Value colors from bright green to bright blue.")
+	print("- Changed the Armor Bar and Armor Value colors from bright green to bright blue;")
 	print("- Changed the default colors, menu size and others;")
 	print("WORK-IN-PROGRESS: add 'Target Build Mode' and 'Disable in Build Mode';")
 	print("WORK-IN-PROGRESS: rework 'Projectile Prediction' from scratch;")
+	print("WORK-IN-PROGRESS: rework recoil compensation from scratch.")
 	print("\n\n===========================================================")
 	timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Printed changelog to console!") end)
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
@@ -2519,6 +2522,22 @@ local function ThirdpersonCheck()
 			tppressed = false
 		end
 		if tptoggle then
+			return true
+		else
+			return false
+		end
+	end
+end
+
+function idiot.FreeRoamCheck()
+	if gBool("Miscellaneous", "Free Roaming", "Enabled") then
+		if gKey("Miscellaneous", "Free Roaming", "Toggle Key:") and not idiot.frpressed then
+			idiot.frpressed = true
+			idiot.frtoggle = not idiot.frtoggle
+		elseif not gKey("Miscellaneous", "Free Roaming", "Toggle Key:") and idiot.frpressed then
+			idiot.frpressed = false
+		end
+		if idiot.frtoggle then
 			return true
 		else
 			return false
@@ -6553,7 +6572,7 @@ local function AntiAim(cmd)
 	if (gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Anti-Aim")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me then return end
 	end
 	local wep = pm.GetActiveWeapon(me)
-	if ((gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP) || me:Team() == TEAM_SPECTATOR || triggering == true || (cm.CommandNumber(cmd) == 0 && !ThirdpersonCheck()) || cm.KeyDown(cmd, 1) || gBool("Visuals", "Point of View", "Custom FoV") && gBool("Miscellaneous", "Free Roaming", "Enabled") && gKey("Miscellaneous", "Free Roaming", "Toggle Key:") && !ThirdpersonCheck() || me:WaterLevel() > 1 || (input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable in 'Use' Toggle") && !(me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible())) || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aim Assist", "Aimbot", "Enabled") && (gInt("Aim Assist", "Aimbot", "Aim FoV Value:") > 0 || gInt("Aim Assist", "Aimbot", "Aim Smoothness:") > 0) || gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && engine.ActiveGamemode() == "terrortown" && wep:IsValid() && wep:GetClass() == "weapon_zm_carry") then return end
+	if ((gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP) || me:Team() == TEAM_SPECTATOR || triggering == true || (cm.CommandNumber(cmd) == 0 && !ThirdpersonCheck()) || cm.KeyDown(cmd, 1) || gBool("Visuals", "Point of View", "Custom FoV") && idiot.FreeRoamCheck() && !ThirdpersonCheck() || me:WaterLevel() > 1 || (input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable in 'Use' Toggle") && !(me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible())) || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aim Assist", "Aimbot", "Enabled") && (gInt("Aim Assist", "Aimbot", "Aim FoV Value:") > 0 || gInt("Aim Assist", "Aimbot", "Aim Smoothness:") > 0) || gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && engine.ActiveGamemode() == "terrortown" && wep:IsValid() && wep:GetClass() == "weapon_zm_carry") then return end
 	if gOption("Hack vs. Hack", "Anti-Aim", "Anti-Aim Direction:") == "Manual Switch" then
 	if gKey("Hack vs. Hack", "Anti-Aim", "Switch Key:") and not manualpressed then
 	manualpressed = true
@@ -6598,7 +6617,7 @@ end
 
 local function GetAngle(ang)
 	if not FixTools() then
-		if (not gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil")) then 
+		if not gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil") then 
 			return ang + pm.GetPunchAngle(me)
 		else
 			return ang
@@ -6698,8 +6717,14 @@ local function FakeCrouch(cmd)
 end
 
 hook.Add("CalcView", "CalcView", function(me, pos, ang, fov)
+	local recoil = {
+		angles = ang,
+		origin = pos,
+		fov = fov
+	}
+	local calcang = me:EyeAngles() * 1
 	local view = {}
-		if gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) and (me:Alive() or me:Health() > 0) then
+		if idiot.FreeRoamCheck() and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) and (me:Alive() or me:Health() > 0) then
 			local speed = gInt("Miscellaneous", "Free Roaming", "Speed:") / 5
 			local mouseang = Angle(roamy, roamx, 0)
 			if me:KeyDown(IN_SPEED) then
@@ -6728,22 +6753,34 @@ hook.Add("CalcView", "CalcView", function(me, pos, ang, fov)
 			view.fov = gInt("Miscellaneous", "Free Roaming", "FoV Value:")
 			view.drawviewer = true
 		end
-		if gBool("Visuals", "Point of View", "Custom FoV") and not ThirdpersonCheck() and not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:")) and (me:Alive() or me:Health() > 0) then
+		if gBool("Visuals", "Point of View", "Custom FoV") and not ThirdpersonCheck() and not idiot.FreeRoamCheck() and (me:Alive() or me:Health() > 0) then
 			view.origin = pos
 			view.angles = angles
 			view.fov = gInt("Visuals", "Point of View", "FoV Value:")
 		end
-		if gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil") and (me:Alive() or me:Health() > 0) and me:GetMoveType() ~= 10 and me:GetObserverTarget() == nil then
-			view.origin = me:EyePos()
-			view.angles = me:EyeAngles()
-		end
-		if ThirdpersonCheck() and not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:")) and (me:Alive() or me:Health() > 0) then
+		if (me:Alive() or me:Health() > 0) and not (me:GetMoveType() == 10 and not gBool("Main Menu", "General Utilities", "Spectator Mode")) and me:GetObserverTarget() == nil then
+			local wep = me:GetActiveWeapon()
+			if IsValid(wep) then
+				local wepcalcview = wep.CalcView
+					if wepcalcview then
+						local wepangle = angle_zero
+						recoil.origin, wepangle, recoil.fov = wepcalcview(wep, me, recoil.origin * 1, calcang * 1, recoil.fov)
+							if not gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil") then
+								recoil.angles = wepangle
+							end
+						end
+					end
+				if gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil") then
+					recoil.angles = calcang
+				end
+			end
+		if ThirdpersonCheck() and not idiot.FreeRoamCheck() and (me:Alive() or me:Health() > 0) then
 			view.angles = GetAngle(fa)
 			view.origin = ThirdpersonCheck() and pos + am.Forward(fa) * (gInt("Visuals", "Point of View", "Thirdperson Range:") * - 10)
 			view.fov = gInt("Visuals", "Point of View", "Thirdperson FoV Value:")
 			return view
 		end
-		if not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:")) and (me:Alive() or me:Health() > 0) then
+		if not idiot.FreeRoamCheck() and (me:Alive() or me:Health() > 0) then
 			view.angles = GetAngle(fa)
 			view.origin = pos
 		end
@@ -6751,7 +6788,7 @@ hook.Add("CalcView", "CalcView", function(me, pos, ang, fov)
 end)
 
 local function FreeRoam(cmd)
-	if (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:") and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) and (me:Alive() or me:Health() > 0)) then
+	if (idiot.FreeRoamCheck() and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) and (me:Alive() or me:Health() > 0)) then
 		if roamon == false then
 			roampos, roamang = me:EyePos(), cmd:GetViewAngles()
 			roamy, roamx = cmd:GetViewAngles().x, cmd:GetViewAngles().y
@@ -6784,7 +6821,7 @@ hook.Add("AdjustMouseSensitivity", "AdjustMouseSensitivity", function()
 end)
 
 hook.Add("ShouldDrawLocalPlayer", "ShouldDrawLocalPlayer", function()
-	if not (gBool("Miscellaneous", "Free Roaming", "Enabled") and gKey("Miscellaneous", "Free Roaming", "Toggle Key:")) then return ThirdpersonCheck() end
+	if not idiot.FreeRoamCheck() then return ThirdpersonCheck() end
 end)
 
 hook.Add("StartCommand", "StartCommand", function(randply, cmd)
