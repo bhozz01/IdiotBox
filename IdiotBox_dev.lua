@@ -6721,9 +6721,13 @@ local function FakeAngles(cmd)
 		cm.SetViewAngles(cmd, GetAngle(fa))
 		return
 	end
+end
+
+function idiot.LaserBullets(cmd)
 	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
 	if cm.KeyDown(cmd, 1) and not FixTools() then
-		local ang = PredictSpread(cmd, fa)
+		local ang = cm.GetViewAngles(cmd)
+		ang = PredictSpread(cmd, ang)
 		local wep = me:GetActiveWeapon()
 			if gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread") then PredictSpread(cmd, ang) end
 			if gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil") then ang:Sub(idiot.CalculateAntiRecoil(wep)) end
@@ -6938,11 +6942,12 @@ hook.Add("CreateMove", "CreateMove", function(cmd)
 	AirCrouch(cmd)
 	PropKill(cmd)
 	if cm.CommandNumber(cmd) == 0 then return end
+	idiot.AirStuck(cmd)
+	idiot.LaserBullets(cmd)
 	big.StartPrediction(cmd, cm.CommandNumber(cmd))
 	Aimbot(cmd)
 	Triggerbot(cmd)
 	big.FinishPrediction()
-	idiot.AirStuck(cmd)
 end)
 
 hook.Add("player_disconnect", "player_disconnect", function(v, data)
