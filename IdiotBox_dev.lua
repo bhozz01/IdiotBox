@@ -299,7 +299,7 @@ local options = {
 			{""}, 
 			{"Pitch:", "Selection", "Off", {"Off", "Down", "Up", "Center", "Fake-Down", "Fake-Up", "Jitter", "Semi-Jitter Down", "Semi-Jitter Up", "Emotion", "Spinbot"}, 92}, 
 			{""}, 
-			{"Yaw:", "Selection", "Off", {"Off", "Forwards", "Backwards", "Sideways", "Fake-Forwards", "Fake-Backwards", "Fake-Sideways", "Jitter", "Backwards Jitter", "Sideways Jitter", "Semi-Jitter", "Back Semi-Jitter", "Side Semi-Jitter", "Side Switch", "Emotion", "Spinbot"}, 92}, 
+			{"Yaw:", "Selection", "Off", {"Off", "Forwards", "Backwards", "Sideways", "Fake-Forwards", "Fake-Backwards", "Fake-Sideways", --[["Fake Angles",]] "Jitter", "Backwards Jitter", "Sideways Jitter", "Semi-Jitter", "Back Semi-Jitter", "Side Semi-Jitter", "Side Switch", "Emotion", "Spinbot"}, 92}, 
 			{""}, 
 			{"Anti-Aim Direction:", "Selection", "Left", {"Left", "Right", "Manual Switch"}, 92}, 
 			{""}, 
@@ -1707,12 +1707,12 @@ local function Unload()
 end
 
 function idiot.Changelog() -- Ran out of local variables, again
-	print("===========================================================\n\n")
-	print("IdiotBox v7.0.b1 code bugfixes (in no particular order)")
+	print("===============================================================================================\n\n")
+	print("IdiotBox v7.0.b1 CODE BUGFIXES (in no particular order)")
 	print("")
 	print("Please note: This changelog includes bugfixes from previous updates as well.")
 	print("\n")
-	print("- The 'readme.txt' file is finally up-to-date and only contains the important information;")
+	print("- The 'readme.txt' file is finally up-to-date and only contains important information;")
 	print("- Merged Ragebot and Legitbot into a single function;")
 	print("- Fixed Entities not using the correct Visuals color;")
 	print("- Fixed entity list not showing props and being too cluttered;")
@@ -1749,10 +1749,9 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Reorganized certain out-of-place functions and menu options;")
 	print("- Renamed certain misspelled or broken functions and menu options;")
 	print("- Removed calls and variables that had no use;")
-	print("- Removed cloned hooks for better performance;")
-	print("WORK-IN-PROGRESS: clean up bad hooks for better performance.")
+	print("- Removed cloned hooks for better performance.")
 	print("\n")
-	print("IdiotBox v7.0.b1 feature changes (in no particular order)")
+	print("IdiotBox v7.0.b1 FEATURE CHANGES (in no particular order)")
 	print("")
 	print("Please note: This changelog includes feature changes from previous updates as well.")
 	print("\n")
@@ -1760,7 +1759,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Added 'Emote Resolver' to Resolver;")
 	print("- Added 'Distance Limit', 'Velocity Limit' and NPC targeting to Aim Assist;")
 	print("- Added 'Default', 'Static', 'Distance Adapt' and 'Crosshair Adapt' to Anti-Aim;")
-	print("- Added 'Position Lines', 'Flat' & 'Wireframe' chams materials, clientside visibility, 'Adaptive Text Colors' and 'Target Priority Colors' & priority status to Visuals;")
+	print("- Added 'Position Lines', 'Flat' & 'Wireframe' chams materials, 'Adaptive Text Colors' and 'Target Priority Colors' to Visuals;")
 	print("- Added 'Remove 3D Skybox' to Textures;")
 	print("- Added 'Feature Tooltips', 'Spectator Mode' and more gamemode specific features to Main Menu;")
 	print("- Added 'Target Spectators', 'Target Players', 'Target Frozen Players' and 'Target Enemies' to Aim Priorities;")
@@ -1794,10 +1793,19 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Removed 'Mirror' from Point of View;")
 	print("- Removed 'dickwrap.dll' and 'fhook.dll' modules;")
 	print("- Changed the Armor Bar and Armor Value colors from bright green to bright blue;")
-	print("- Changed the default colors, menu size and others;")
-	print("WORK-IN-PROGRESS: add 'Target Build Mode' and 'Disable in Build Mode';")
-	print("WORK-IN-PROGRESS: rework 'Projectile Prediction' from scratch;")
-	print("\n\n===========================================================")
+	print("- Changed the default colors, menu size and others.")
+	print("\n")
+	print("IdiotBox TO-DO LIST (in no particular order)")
+	print("")
+	print("Please note: This list includes any potential future additions/ changes/ removals, and is subject to change.")
+	print("\n")
+	print("- WORK-IN-PROGRESS (ETA: v7.0.b1-pre08): add 'Target Build Mode' and 'Disable in Build Mode' to Aim Assist;")
+	print("- WORK-IN-PROGRESS (ETA: undetermined): add 'Backtracking' and 'Multi-Tap' to Aim Assist;")
+	print("- WORK-IN-PROGRESS (ETA: undetermined): add 'Fake Angles' to Anti-Aim;")
+	print("- WORK-IN-PROGRESS (ETA: undetermined): fix 'Directional Strafing' angle calculation errors;")
+	print("- WORK-IN-PROGRESS (ETA: undetermined): rework 'Projectile Prediction' from scratch;")
+	print("- WORK-IN-PROGRESS (ETA: undetermined): clean up bad hooks and functions for better performance.")
+	print("\n\n===============================================================================================")
 	timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Printed changelog to console!") end)
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 end
@@ -5957,7 +5965,7 @@ local function PredictPos(aimtarget)
 		return AimPos(aimtarget)
 	end
 end
---[[
+--[[ !!FUTURE UPDATE!!
 sv_gravity = GetConVar("sv_gravity")
 steptime = engine.TickInterval()
 
@@ -5996,7 +6004,7 @@ function idiot.ProjectilePrediction(ent, projorigin, v0) -- AGAIN, THANK YOU S0L
     if finalpos:IsZero() then return false end
     return finalpos
 end
-]]--
+!!FUTURE UPDATE!! ]]--
 function idiot.GetWeaponBase()
 	local wep = me:GetActiveWeapon()
     if not wep.Base then return "" end
@@ -6593,6 +6601,33 @@ local function Yaw()
 		else
 		oy = 270 + math.sin(CurTime() * 10) * 5
 	    end
+	--[[ !!FUTURE UPDATE!!
+	elseif (opt == "Fake Angles" && default) then
+		if bSendPacket then
+		oy = fa.y + 115
+		else
+		oy = fa.y - 115
+		end
+	elseif (opt == "Fake Angles" && distadapt) then
+		if bSendPacket then
+		oy = GetClosestDistance() + 115
+		else
+		oy = GetClosestDistance() - 115
+		end
+	elseif (opt == "Fake Angles" && crossadapt) then
+		if bSendPacket then
+		oy = GetClosestCrosshair() + 115
+		else
+		oy = GetClosestCrosshair() - 115
+		end
+	elseif (opt == "Fake Angles" && static) then
+		if bSendPacket then
+		oy = 115
+		else
+		oy = - 115
+		end
+	end
+	!!FUTURE UPDATE!! ]]--
 	end
 end
 
