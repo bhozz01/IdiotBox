@@ -1063,7 +1063,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: d12m06-pre06")
+	surface.DrawText("Latest build: d13m06-pre07")
 	surface.SetFont("MenuFont2")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -1771,6 +1771,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Added 'Legit', 'Rage' and 'Directional' to Auto Strafe;")
 	print("- Added 'GUI Settings' to Miscellaneous;")
 	print("- Added customizable list adjustments to Priority List;")
+	print("- Added spread prediction and recoil compensation to Triggerbot;")
 	print("- Added engine prediction module (big.dll);")
 	print("- Added more hitsounds, killsounds, more music and a custom music player to Sounds;")
 	print("- Added more customization options to Panels;")
@@ -1786,6 +1787,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Reworked the menu's design from scratch;")
 	print("- Reworked old 'file.Read' blocker from scratch;")
 	print("- Reworked spread prediction from scratch;")
+	print("- Reworked recoil compensation from scratch;")
 	print("- Removed 'Triggerbot' tab and merged it with the 'Aim Assist' tab;")
 	print("- Removed 'Shoutout' and 'Drop Money' from Chat Spam;")
 	print("- Removed 'Screengrab Notifications' from Miscellaneous;")
@@ -1795,7 +1797,6 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Changed the default colors, menu size and others;")
 	print("WORK-IN-PROGRESS: add 'Target Build Mode' and 'Disable in Build Mode';")
 	print("WORK-IN-PROGRESS: rework 'Projectile Prediction' from scratch;")
-	print("WORK-IN-PROGRESS: rework recoil compensation from scratch.")
 	print("\n\n===========================================================")
 	timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Printed changelog to console!") end)
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
@@ -5339,11 +5340,10 @@ local function GetTarget()
 		if (sticky && Valid(aimtarget)) then return end
 		dists = {}
 		local x, y = ScrW(), ScrH()
-		local AngA, AngB = 0
 		for k, v in next, ents.GetAll() do
 			if (!Valid(v)) then continue end
-			local EyePos = v:EyePos():ToScreen()
-			dists[#dists + 1] = {math.Dist(x / 2, y / 2, EyePos.x, EyePos.y), v}
+			local eyepos = v:EyePos():ToScreen()
+			dists[#dists + 1] = {math.Dist(x / 2, y / 2, eyepos.x, eyepos.y), v}
 		end
 		table.sort(dists, function(a, b)
 			return(a[1] < b[1])
@@ -5854,7 +5854,7 @@ local function PredictSpread(cmd, ang) -- HUGE FUCKING THANKS TO S0LUM'S NCMD (a
         local ramp = idiot.RemapClamped(wep:GetInternalVariable('m_flAccuracyPenalty'), 0, 1.5, 0, 1)
         cone = LerpVector(ramp, Vector(0.00873, 0.00873, 0.00873), Vector(0.05234, 0.05234, 0.05234))
     end
-    local seed = idiot.spread.md5.PseudoRandom(cmd:CommandNumber())
+    local seed = idiot.spread.md5.PseudoRandom(cm.CommandNumber(cmd))
     local x, y = idiot.spread.enginespread[seed][1], idiot.spread.enginespread[seed][2]
     local forward, right, up = ang:Forward(), ang:Right(), ang:Up()
     local retvec = forward + (x * cone[1] * right * - 1) + (y * cone[2] * up * - 1)
@@ -5997,6 +5997,38 @@ function idiot.ProjectilePrediction(ent, projorigin, v0) -- AGAIN, THANK YOU S0L
     return finalpos
 end
 ]]--
+function idiot.GetWeaponBase()
+	local wep = me:GetActiveWeapon()
+    if not wep.Base then return "" end
+    return string.Split(string.lower(wep.Base), "_")[1]
+end
+
+function idiot.CalculateAntiRecoil()
+	if not FixTools() then
+		local wep = me:GetActiveWeapon()
+		if not wep:IsValid() then return end
+		if wep:GetClass() == "weapon_pistol" then
+			return angle_zero
+		end
+		if wep:IsScripted() then
+			if idiot.GetWeaponBase(wep) ~= "cw" and idiot.GetWeaponBase(wep) ~= "fas2" then
+				return angle_zero
+			end
+		end
+		return me:GetViewPunchAngles()
+	end
+end
+
+local function GetAngle(ang)
+	if not FixTools() then
+		if not gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil") then 
+			return ang + pm.GetPunchAngle(me)
+		else
+			return ang
+		end
+	end
+end
+
 local function Aimbot(cmd)
 	if cm.CommandNumber(cmd) == 0 or not gBool("Aim Assist", "Aimbot", "Enabled") or not me:Alive() or me:Health() < 1 or not me:GetActiveWeapon():IsValid() or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) then return end
 	for k, v in pairs(player.GetAll()) do
@@ -6012,8 +6044,11 @@ local function Aimbot(cmd)
 	local adp = math.abs(math.NormalizeAngle(ang.p - fa.p))
 	local ang = SmoothAim(ang)
 	local fov = gInt("Aim Assist", "Aimbot", "Aim FoV Value:")
+	local wep = me:GetActiveWeapon()
 	if fov == 0 then
 		aa = true
+		if gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread") then PredictSpread(cmd, ang) end
+		if gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil") then ang:Sub(idiot.CalculateAntiRecoil(wep)) end
 		FixAngle(ang)
 		cmd:SetViewAngles(ang)
 		if (gBool("Aim Assist", "Aimbot", "Auto Fire")) then
@@ -6029,6 +6064,8 @@ local function Aimbot(cmd)
 		end
 	else
 	if not (ady > fov or adp > fov) then
+		if gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread") then PredictSpread(cmd, ang) end
+		if gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil") then ang:Sub(idiot.CalculateAntiRecoil(wep)) end
 		FixAngle(ang)
 		cmd:SetViewAngles(ang)
         if (gBool("Aim Assist", "Aimbot", "Auto Fire")) then
@@ -6122,6 +6159,14 @@ local function Triggerbot(cmd)
 	if (gBool("Aim Assist", "Triggerbot", "Auto Zoom")) then
 		cmd:SetButtons(cmd:GetButtons() + IN_ATTACK2)
 	end
+	if (cmd:GetButtons() and IN_ATTACK) and not FixTools() then
+		local ang = PredictSpread(cmd, ang)
+		local wep = me:GetActiveWeapon()
+			if gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread") then PredictSpread(cmd, ang) end
+			if gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil") then ang:Sub(idiot.CalculateAntiRecoil(wep)) end
+		FixAngle(ang)
+		cm.SetViewAngles(cmd, ang)
+    end
 	if not (v and global.IsValid(v) and v:Health() > 0 and not v:IsDormant() and me:GetObserverTarget() ~= v and AimAssistPriorities(v)) then return end
 	triggering = true
 	if WeaponCanFire() then
@@ -6158,11 +6203,10 @@ local function GetClosestCrosshair()
 	local dfov = {}
 	local crosshairclosest
 	local x, y = ScrW(), ScrH()
-	local AngA, AngB = 0
 	for k, v in next, ents.GetAll() do
 	if (!Valid(v)) then continue end
-	local EyePos = v:EyePos():ToScreen()
-	dfov[#dfov + 1] = {math.Dist(x / 2, y / 2, EyePos.x, EyePos.y), v}
+	local eyepos = v:EyePos():ToScreen()
+	dfov[#dfov + 1] = {math.Dist(x / 2, y / 2, eyepos.x, eyepos.y), v}
 	end
 	table.sort(dfov, function(a, b)
 	return(a[1] < b[1])
@@ -6615,16 +6659,6 @@ local function FakeLag(cmd, Choke, Send)
 	return true
 end
 
-local function GetAngle(ang)
-	if not FixTools() then
-		if not gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil") then 
-			return ang + pm.GetPunchAngle(me)
-		else
-			return ang
-		end
-	end
-end
-
 local function PropKill(cmd)
 	local wep = pm.GetActiveWeapon(me)
 	if !gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") or engine.ActiveGamemode() ~= "terrortown" or !wep:IsValid() or !wep:GetClass() == "weapon_zm_carry" or menuopen or me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
@@ -6690,6 +6724,9 @@ local function FakeAngles(cmd)
 	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
 	if cm.KeyDown(cmd, 1) and not FixTools() then
 		local ang = PredictSpread(cmd, fa)
+		local wep = me:GetActiveWeapon()
+			if gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread") then PredictSpread(cmd, ang) end
+			if gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil") then ang:Sub(idiot.CalculateAntiRecoil(wep)) end
 		FixAngle(ang)
 		cm.SetViewAngles(cmd, ang)
     end
@@ -6875,6 +6912,14 @@ hook.Add("StartCommand", "StartCommand", function(randply, cmd)
     end
 end)
 
+function idiot.AirStuck(cmd)
+	if gBool("Miscellaneous", "Movement", "Air Stuck") then
+		if gKey("Miscellaneous", "Movement", "Air Stuck Key:") then
+			big.SetOutSequenceNumber(big.GetOutSequenceNumber() + gInt("Miscellaneous", "Movement", "Air Stuck Value:"))
+		end
+	end
+end
+
 hook.Add("CreateMove", "CreateMove", function(cmd)
 	global.bSendPacket = true
 	FakeLag(cmd)
@@ -6897,11 +6942,7 @@ hook.Add("CreateMove", "CreateMove", function(cmd)
 	Aimbot(cmd)
 	Triggerbot(cmd)
 	big.FinishPrediction()
-	if gBool("Miscellaneous", "Movement", "Air Stuck") then
-		if gKey("Miscellaneous", "Movement", "Air Stuck Key:") then
-			big.SetOutSequenceNumber(big.GetOutSequenceNumber() + gInt("Miscellaneous", "Movement", "Air Stuck Value:"))
-		end
-	end
+	idiot.AirStuck(cmd)
 end)
 
 hook.Add("player_disconnect", "player_disconnect", function(v, data)
