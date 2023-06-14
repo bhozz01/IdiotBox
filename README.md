@@ -13,7 +13,7 @@
 
 There are a lot of methods out there for loading .lua scripts on servers that don't have 'sv_allowcslua' enabled. Some of these methods can change from time to time, as they get patched and replaced by others;
 
-My method of choice is using a loader named 'external.dll' (message me on Discord and I will send it to you). To use it, follow these steps:
+My method of choice is using a loader named 'external.dll' (message me on Discord at 'phizz0777' and I will send it to you). To use it, follow these steps:
 1. Create a folder in 'C:\Documents' named 'external' (other names won't work); 
 2. Drag 'IdiotBox_latest.lua' or any other .lua script of your choice in said folder;
 3. Open Garry's Mod in the default version of the game (make sure you are NOT in any beta branch, such as x86-64/ chromium/ dev/ prerelease), as the modules (located in the 'bin' folder) are ONLY COMPATIBLE with the DEFAULT VERSION of the game;
@@ -27,11 +27,11 @@ My method of choice is using a loader named 'external.dll' (message me on Discor
 
 ***If you are using a prorpietary .lua script loader, follow the tutorial that came with it. There is not much else I can help you with in this instance;
 
-***If you are having trouble with loading IdiotBox or other .lua scripts on public servers, add me on Discord (Phizz#1667) and I will assist you as best as I possibly can.
+***If you are having trouble with loading IdiotBox or other .lua scripts on public servers, message me on Discord (phizz0777) and I will assist you as best as I possibly can.
 
 -----REPORTING ISSUES:-----
 
-If you encounter any bugs, errors or glitches while using IdiotBox, contact me through Discord (Phizz#1667) and I will assist you as much as I possibly can;
+If you encounter any bugs, errors or glitches while using IdiotBox, contact me through Discord (phizz0777) and I will assist you as much as I possibly can;
 
 Alternatively, you can add me on Steam (https://steamcommunity.com/id/phizzofficial), however, my friends list is usually full and you might not be able to add me, but you can always leave a comment.
 
