@@ -1063,7 +1063,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: d13m06-pre07")
+	surface.DrawText("Latest build: d14m06-pre08")
 	surface.SetFont("MenuFont2")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -1744,6 +1744,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Fixed certain outlines and fonts not having the proper dimensions;")
 	print("- Fixed a Projectile Prediction bug where dying would cause script errors;")
 	print("- Fixed Manipulate Interpolation, Optimize Game and Dark Mode not resetting when disabled;")
+	print("- Fixed missing spread prediction and recoil compensation checks;")
 	print("- Fixed local variable limit and timer issues;")
 	print("- Reworked localizations and overall script for better performance;")
 	print("- Reorganized certain out-of-place functions and menu options;")
@@ -1799,7 +1800,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("")
 	print("Please note: This list includes any potential future additions/ changes/ removals, and is subject to change.")
 	print("\n")
-	print("- WORK-IN-PROGRESS (ETA: v7.0.b1-pre08): add 'Target Build Mode' and 'Disable in Build Mode' to Aim Assist;")
+	print("- WORK-IN-PROGRESS (ETA: v7.0.b1-pre09): add 'Target Build Mode' and 'Disable in Build Mode' to Aim Assist;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): add 'Backtracking' and 'Multi-Tap' to Aim Assist;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): add 'Fake Angles' to Anti-Aim;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): fix 'Directional Strafing' angle calculation errors;")
@@ -2700,10 +2701,12 @@ local function FixMovement(cmd)
 end
 
 function idiot.AngleOutOfRange(ang)
+	local ang = me:EyePos():Angle()
 	return ang.pitch > 89 or ang.pitch < -89 or ang.yaw > 180 or ang.yaw < -180 or ang.roll > 180 or ang.roll < -180
 end
 
 local function FixAngle(ang)
+	local ang = me:EyePos():Angle()
 	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or (not me:Alive() or me:Health() < 1) or not idiot.AngleOutOfRange(ang) or FixTools() then return end
 	ang.pitch = math.Clamp(math.NormalizeAngle(ang.pitch), - 89, 89)
 	ang.yaw = math.NormalizeAngle(ang.yaw)
@@ -5855,20 +5858,22 @@ end
 local function PredictSpread(cmd, ang) -- HUGE FUCKING THANKS TO S0LUM'S NCMD (and data for helping me figure shit out)
 	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
     local wep = me:GetActiveWeapon()
-    local class = wep:GetClass()
-    local cone = idiot.spread.Spread[class]
-    if not global.IsValid(wep) or not cone or not gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread") then return ang end
-	if class == 'weapon_pistol' then
-        local ramp = idiot.RemapClamped(wep:GetInternalVariable('m_flAccuracyPenalty'), 0, 1.5, 0, 1)
-        cone = LerpVector(ramp, Vector(0.00873, 0.00873, 0.00873), Vector(0.05234, 0.05234, 0.05234))
-    end
-    local seed = idiot.spread.md5.PseudoRandom(cm.CommandNumber(cmd))
-    local x, y = idiot.spread.enginespread[seed][1], idiot.spread.enginespread[seed][2]
-    local forward, right, up = ang:Forward(), ang:Right(), ang:Up()
-    local retvec = forward + (x * cone[1] * right * - 1) + (y * cone[2] * up * - 1)
-    local spreadangles =  retvec:Angle()
-	spreadangles:Normalize()
+	if gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread") and me:GetActiveWeapon():IsValid() and me:Alive() and me:Health() > 0 then
+		local class = wep:GetClass()
+		local cone = idiot.spread.Spread[class]
+		if not cone then return ang end
+		if class == 'weapon_pistol' then
+			local ramp = idiot.RemapClamped(wep:GetInternalVariable('m_flAccuracyPenalty'), 0, 1.5, 0, 1)
+			cone = LerpVector(ramp, Vector(0.00873, 0.00873, 0.00873), Vector(0.05234, 0.05234, 0.05234))
+		end
+		local seed = idiot.spread.md5.PseudoRandom(cm.CommandNumber(cmd))
+		local x, y = idiot.spread.enginespread[seed][1], idiot.spread.enginespread[seed][2]
+		local forward, right, up = ang:Forward(), ang:Right(), ang:Up()
+		local retvec = forward + (x * cone[1] * right * - 1) + (y * cone[2] * up * - 1)
+		local spreadangles =  retvec:Angle()
+		spreadangles:Normalize()
     return spreadangles
+	end
 end
 
 local function AutoFire(cmd)
@@ -6038,21 +6043,33 @@ local function GetAngle(ang)
 end
 
 local function Aimbot(cmd)
-	if cm.CommandNumber(cmd) == 0 or not gBool("Aim Assist", "Aimbot", "Enabled") or not me:Alive() or me:Health() < 1 or not me:GetActiveWeapon():IsValid() or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) then return end
+	if not gBool("Aim Assist", "Aimbot", "Enabled") or not me:Alive() or me:Health() < 1 or not me:GetActiveWeapon():IsValid() or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) then return end
 	for k, v in pairs(player.GetAll()) do
 	if ((gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me) || FixTools() then return end
 	end
 	GetTarget()
     aa = false
+	if gBool("Aim Assist", "Aimbot", "Enabled") && gBool("Aim Assist", "Aimbot", "Auto Stop") && aimtarget && gKey("Aim Assist", "Aimbot", "Toggle Key:") && WeaponCanFire() then
+		cmd:SetForwardMove(0)
+		cmd:SetSideMove(0)
+		cmd:SetUpMove(0)
+	end
+	if gBool("Aim Assist", "Aimbot", "Enabled") && gBool("Aim Assist", "Aimbot", "Auto Crouch") && aimtarget && gKey("Aim Assist", "Aimbot", "Toggle Key:") && WeaponCanFire() then
+		cmd:SetButtons(cmd:GetButtons() + IN_DUCK)
+	end
     if (aimtarget && aimtarget:IsValid() && gKey("Aim Assist", "Aimbot", "Toggle Key:") && WeaponCanFire()) then
 	local pos = PredictPos(aimtarget)
 	local ang = (pos - me:EyePos()):Angle()
-	ang = PredictSpread(cmd, ang)
+	if gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread") then
+		ang = PredictSpread(cmd, ang)
+	elseif not gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread") then
+		ang = (pos - me:EyePos()):Angle()
+	end
+	local wep = me:GetActiveWeapon()
 	local ady = math.abs(math.NormalizeAngle(ang.y - fa.y))
 	local adp = math.abs(math.NormalizeAngle(ang.p - fa.p))
 	local ang = SmoothAim(ang)
 	local fov = gInt("Aim Assist", "Aimbot", "Aim FoV Value:")
-	local wep = me:GetActiveWeapon()
 	if fov == 0 then
 		aa = true
 		if gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread") then PredictSpread(cmd, ang) end
@@ -6100,7 +6117,7 @@ local function TriggerFilter(hitbox)
 end
 
 local function Triggerbot(cmd)
-	if cm.CommandNumber(cmd) == 0 or not gBool("Aim Assist", "Triggerbot", "Enabled") or not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Triggerbot", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not gKey("Aim Assist", "Triggerbot", "Toggle Key:") or cmd:KeyDown(IN_ATTACK) or FixTools() then return end
+	if not gBool("Aim Assist", "Triggerbot", "Enabled") or not me:GetActiveWeapon():IsValid() or not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Triggerbot", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not gKey("Aim Assist", "Triggerbot", "Toggle Key:") or cmd:KeyDown(IN_ATTACK) or FixTools() then return end
 	local dist = gBool("Aim Assist", "Aim Priorities", "Distance:")
 	local vel = gBool("Aim Assist", "Aim Priorities", "Velocity:")
 	local maxhealth = gInt("Aim Assist", "Aim Priorities", "Max Player Health:") 
@@ -6164,22 +6181,34 @@ local function Triggerbot(cmd)
 			return false
 		end
 	end
+	if gBool("Aim Assist", "Triggerbot", "Enabled") && gBool("Aim Assist", "Triggerbot", "Auto Stop") && gKey("Aim Assist", "Triggerbot", "Toggle Key:") && triggering && WeaponCanFire() then
+		cmd:SetForwardMove(0)
+		cmd:SetSideMove(0)
+		cmd:SetUpMove(0)
+	end
+	if gBool("Aim Assist", "Triggerbot", "Enabled") && gBool("Aim Assist", "Triggerbot", "Auto Crouch") && gKey("Aim Assist", "Triggerbot", "Toggle Key:") && triggering && WeaponCanFire() then
+		cmd:SetButtons(cmd:GetButtons() + IN_DUCK)
+	end
 	if (gBool("Aim Assist", "Triggerbot", "Auto Zoom")) then
 		cmd:SetButtons(cmd:GetButtons() + IN_ATTACK2)
 	end
-	if (cmd:GetButtons() and IN_ATTACK) and not FixTools() then
-		local ang = PredictSpread(cmd, ang)
+	if triggering and (cmd:GetButtons() and IN_ATTACK) and not FixTools() then
+		local ang = cm.GetViewAngles(cmd)
+		if gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread") then
+			ang = PredictSpread(cmd, ang)
+		elseif not gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread") then
+			ang = cm.GetViewAngles(cmd)
+		end
 		local wep = me:GetActiveWeapon()
 			if gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread") then PredictSpread(cmd, ang) end
 			if gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil") then ang:Sub(idiot.CalculateAntiRecoil(wep)) end
 		FixAngle(ang)
 		cm.SetViewAngles(cmd, ang)
     end
-	if not (v and global.IsValid(v) and v:Health() > 0 and not v:IsDormant() and me:GetObserverTarget() ~= v and AimAssistPriorities(v)) then return end
-	triggering = true
 	if WeaponCanFire() then
 		cmd:SetButtons(cmd:GetButtons() + IN_ATTACK)
 	end
+	triggering = true
 	else
 	triggering = false
 	end
@@ -6651,7 +6680,7 @@ local function AntiAim(cmd)
 	if (gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Anti-Aim")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me then return end
 	end
 	local wep = pm.GetActiveWeapon(me)
-	if ((gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP) || me:Team() == TEAM_SPECTATOR || triggering == true || (cm.CommandNumber(cmd) == 0 && !ThirdpersonCheck()) || cm.KeyDown(cmd, 1) || gBool("Visuals", "Point of View", "Custom FoV") && idiot.FreeRoamCheck() && !ThirdpersonCheck() || me:WaterLevel() > 1 || (input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable in 'Use' Toggle") && !(me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible())) || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aim Assist", "Aimbot", "Enabled") && (gInt("Aim Assist", "Aimbot", "Aim FoV Value:") > 0 || gInt("Aim Assist", "Aimbot", "Aim Smoothness:") > 0) || gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && engine.ActiveGamemode() == "terrortown" && wep:IsValid() && wep:GetClass() == "weapon_zm_carry") then return end
+	if ((gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP) || me:Team() == TEAM_SPECTATOR || triggering || (cm.CommandNumber(cmd) == 0 && !ThirdpersonCheck()) || cm.KeyDown(cmd, 1) || gBool("Visuals", "Point of View", "Custom FoV") && idiot.FreeRoamCheck() && !ThirdpersonCheck() || me:WaterLevel() > 1 || (input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable in 'Use' Toggle") && !(me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible())) || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aim Assist", "Aimbot", "Enabled") && (gInt("Aim Assist", "Aimbot", "Aim FoV Value:") > 0 || gInt("Aim Assist", "Aimbot", "Aim Smoothness:") > 0) || gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && engine.ActiveGamemode() == "terrortown" && wep:IsValid() && wep:GetClass() == "weapon_zm_carry") then return end
 	if gOption("Hack vs. Hack", "Anti-Aim", "Anti-Aim Direction:") == "Manual Switch" then
 	if gKey("Hack vs. Hack", "Anti-Aim", "Switch Key:") and not manualpressed then
 	manualpressed = true
@@ -6730,22 +6759,6 @@ local function PropKill(cmd)
 	end
 end
 
-local function AutoStop(cmd)
-	if (gBool("Aim Assist", "Aimbot", "Enabled") && gBool("Aim Assist", "Aimbot", "Auto Stop") && aimtarget && gKey("Aim Assist", "Aimbot", "Toggle Key:") && WeaponCanFire() or gBool("Aim Assist", "Triggerbot", "Enabled") && gBool("Aim Assist", "Triggerbot", "Auto Stop") && gKey("Aim Assist", "Triggerbot", "Toggle Key:") && triggering && WeaponCanFire()) then
-		cmd:SetForwardMove(0)
-		cmd:SetSideMove(0)
-		cmd:SetUpMove(0)
-	return
-	end
-end
-
-local function AutoCrouch(cmd)	
-	if (gBool("Aim Assist", "Aimbot", "Enabled") && gBool("Aim Assist", "Aimbot", "Auto Crouch") && aimtarget && gKey("Aim Assist", "Aimbot", "Toggle Key:") && WeaponCanFire() or gBool("Aim Assist", "Triggerbot", "Enabled") && gBool("Aim Assist", "Triggerbot", "Auto Crouch") && gKey("Aim Assist", "Triggerbot", "Toggle Key:") && triggering && WeaponCanFire()) then
-		cmd:SetButtons(cmd:GetButtons() + IN_DUCK)
-	return
-	end
-end
-
 local function FakeAngles(cmd)
 	if (!fa) then 
 		fa = cm.GetViewAngles(cmd)
@@ -6762,12 +6775,18 @@ function idiot.LaserBullets(cmd)
 	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
 	if cm.KeyDown(cmd, 1) and not FixTools() then
 		local ang = cm.GetViewAngles(cmd)
-		ang = PredictSpread(cmd, ang)
+		if gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread") then
+			ang = PredictSpread(cmd, ang)
+		elseif not gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread") then
+			ang = cm.GetViewAngles(cmd)
+		end
 		local wep = me:GetActiveWeapon()
+		if me:GetActiveWeapon():IsValid() and me:Alive() and me:Health() > 0 then
 			if gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread") then PredictSpread(cmd, ang) end
 			if gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil") then ang:Sub(idiot.CalculateAntiRecoil(wep)) end
 		FixAngle(ang)
 		cm.SetViewAngles(cmd, ang)
+		end
     end
 end
 
@@ -6892,8 +6911,10 @@ local function FreeRoam(cmd)
 end
 
 hook.Add("AdjustMouseSensitivity", "AdjustMouseSensitivity", function()
-	if not gBool("Aim Assist", "Triggerbot", "Smooth Aim") or not gKey("Aim Assist", "Triggerbot", "Toggle Key:") or not triggering or FixTools() then return end
-	return .10
+	if me:GetActiveWeapon():IsValid() and me:Alive() and me:Health() > 0 then
+		if not gBool("Aim Assist", "Triggerbot", "Enabled") or not gBool("Aim Assist", "Triggerbot", "Smooth Aim") or not gKey("Aim Assist", "Triggerbot", "Toggle Key:") or not triggering or FixTools() then return end
+		return .10
+	end
 end)
 
 hook.Add("ShouldDrawLocalPlayer", "ShouldDrawLocalPlayer", function()
@@ -6971,8 +6992,6 @@ hook.Add("CreateMove", "CreateMove", function(cmd)
 	AntiAim(cmd)
 	RapidPrimaryFire(cmd)
 	RapidAltFire(cmd)
-	AutoStop(cmd)
-	AutoCrouch(cmd)
 	FakeCrouch(cmd)
 	AirCrouch(cmd)
 	PropKill(cmd)
