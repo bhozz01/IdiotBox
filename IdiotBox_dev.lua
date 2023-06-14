@@ -36,7 +36,7 @@ end)
 
 local global = (_G)
 local folder = "IdiotBox"
-local version = "7.0.b1"
+local version = "7.0.b1-pre08"
 
 local me = LocalPlayer()
 --[[ local wep = me:GetActiveWeapon() ]]-- Trying to localize this causes many issues for whatever reason, but I'll figure it out at one point
