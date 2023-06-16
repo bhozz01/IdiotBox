@@ -1063,7 +1063,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: d14m06-pre08")
+	surface.DrawText("Latest build: d16m06-pre08")
 	surface.SetFont("MenuFont2")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -2700,17 +2700,10 @@ local function FixMovement(cmd)
 	cmd:SetSideMove(math.sin(math.rad(yaw)) * vel)
 end
 
-function idiot.AngleOutOfRange(ang)
-	local ang = me:EyePos():Angle()
-	return ang.pitch > 89 or ang.pitch < -89 or ang.yaw > 180 or ang.yaw < -180 or ang.roll > 180 or ang.roll < -180
-end
-
 local function FixAngle(ang)
-	local ang = me:EyePos():Angle()
-	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or (not me:Alive() or me:Health() < 1) or not idiot.AngleOutOfRange(ang) or FixTools() then return end
-	ang.pitch = math.Clamp(math.NormalizeAngle(ang.pitch), - 89, 89)
-	ang.yaw = math.NormalizeAngle(ang.yaw)
-	ang.roll = math.NormalizeAngle(ang.roll)
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or (not me:Alive() or me:Health() < 1) or FixTools() then return end
+	ang.x = math.NormalizeAngle(ang.x)
+	ang.p = math.Clamp(ang.p, - 89, 89)
 end
 
 local function DrawOutlinedText (title, font, x, y, color, OUTsize, OUTcolor)
