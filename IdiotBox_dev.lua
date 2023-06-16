@@ -115,7 +115,7 @@ idiot.contributors = idiot.contributors or {}
 
 idiot.creator["STEAM_0:0:63644275"] = {} -- me
 idiot.creator["STEAM_0:0:162667998"] = {} -- my alt
-idiot.contributors["STEAM_0:0:196578290"] = {} -- pinged (code dev, likely the most important one, helped me out with optimization and many others)
+idiot.contributors["STEAM_0:0:196578290"] = {} -- pinged (code dev, helped me out with optimization and many others)
 idiot.contributors["STEAM_0:0:4727797"] = {} -- data (code dev, helped me figure out a ton of stuff, especially lua nospread)
 idiot.contributors["STEAM_0:0:74527587"] = {} -- s0lum (code dev indirectly, got many features from NCMD, including lua nospread)
 idiot.contributors["STEAM_0:0:453356413"] = {} -- lenn (garry's mod server manager)
