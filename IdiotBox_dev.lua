@@ -36,7 +36,7 @@ end)
 
 local global = (_G)
 local folder = "IdiotBox"
-local version = "7.0.b1-pre08"
+local version = "7.0.b1-pre09"
 
 local me = LocalPlayer()
 --[[ local wep = me:GetActiveWeapon() ]]-- Trying to localize this causes many issues for whatever reason, but I'll figure it out at one point
@@ -255,7 +255,7 @@ local options = {
 			{"Target Steam Friends", "Checkbox", false, 78}, 
 			{"Target Admins", "Checkbox", false, 78}, 
 			{"Target Spectators", "Checkbox", false, 78}, 
-			{"Target Frozen Players", "Checkbox", false, 78}, 
+			{"Target Immune Players", "Checkbox", false, 78}, 
 			{"Target Noclipping Players", "Checkbox", false, 78}, 
 			{"Target Driving Players", "Checkbox", false, 78}, 
 			{"Target Transparent Players", "Checkbox", false, 78}, 
@@ -1063,7 +1063,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: d14m06-pre08")
+	surface.DrawText("Latest build: d18m06-pre09")
 	surface.SetFont("MenuFont2")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -1215,8 +1215,8 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			info = "Makes the Aim Assist target server admins."
 		elseif feat == "Target Spectators" then
 			info = "Makes the Aim Assist target spectators."
-		elseif feat == "Target Frozen Players" then
-			info = "Makes the Aim Assist target frozen players."
+		elseif feat == "Target Immune Players" then
+			info = "Makes the Aim Assist target players immune to damage."
 		elseif feat == "Target Noclipping Players" then
 			info = "Makes the Aim Assist target noclipping players."
 		elseif feat == "Target Driving Players" then
@@ -1763,7 +1763,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Added 'Position Lines', 'Flat' & 'Wireframe' chams materials, 'Adaptive Text Colors' and 'Target Priority Colors' to Visuals;")
 	print("- Added 'Remove 3D Skybox' to Textures;")
 	print("- Added 'Feature Tooltips', 'Spectator Mode' and more gamemode specific features to Main Menu;")
-	print("- Added 'Target Spectators', 'Target Players', 'Target Frozen Players' and 'Target Enemies' to Aim Priorities;")
+	print("- Added 'Target Spectators', 'Target Players', 'Target Immune Players' and 'Target Enemies' to Aim Priorities;")
 	print("- Added 'Toggle Key' and 'Speed' to Free Roaming;")
 	print("- Added 'Air Stuck', 'Circle Strafe Key' and 'Fake Crouch' to Movement;")
 	print("- Added 'Arabic Spam' and 'Hebrew Spam' to Chat Spam;") -- Old, but gold
@@ -1800,7 +1800,6 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("")
 	print("Please note: This list includes any potential future additions/ changes/ removals, and is subject to change.")
 	print("\n")
-	print("- WORK-IN-PROGRESS (ETA: v7.0.b1-pre09): add 'Target Build Mode' and 'Disable in Build Mode' to Aim Assist;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): add 'Backtracking' and 'Multi-Tap' to Aim Assist;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): add 'Fake Angles' to Anti-Aim;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): fix 'Directional Strafing' angle calculation errors;")
@@ -5222,7 +5221,12 @@ local function Valid(v)
 	local dist = gBool("Aim Assist", "Aim Priorities", "Distance:")
 	local vel = gBool("Aim Assist", "Aim Priorities", "Velocity:")
     local wep = me:GetActiveWeapon()
-	local maxhealth = gInt("Aim Assist", "Aim Priorities", "Max Player Health:") 
+	local maxhealth = gInt("Aim Assist", "Aim Priorities", "Max Player Health:")
+	idiot.NetMessages = {
+        Buildmode = {"BuildMode", "buildmode", "_Kyle_Buildmode"},
+        God = {"has_god", "god_mode", "ugod"},
+        Protected = {"LibbyProtectedSpawn", "SH_SZ.Safe", "spawn_protect", "InSpawnZone"}
+    }
 	if (!v || !em.IsValid(v) || v == me || em.Health(v) < 1 || em.IsDormant(v) || !AimAssistPriorities(v) || (v == aimignore && gOption("Aim Assist", "Aim Priorities", "Aim Priority:") == "Random")) then return false end
 	if v:IsPlayer() then
 	if gBool("Aim Assist", "Aim Priorities", "Distance Limit") then
@@ -5258,9 +5262,6 @@ local function Valid(v)
 	if !gBool("Aim Assist", "Aim Priorities", "Target Noclipping Players") then
 		if em.GetMoveType(v) == MOVETYPE_NOCLIP then return false end
 	end
-	if !gBool("Aim Assist", "Aim Priorities", "Target Frozen Players") then
-		if pm.IsFrozen(v) then return false end
-	end
 	if !gBool("Aim Assist", "Aim Priorities", "Target Overhealed Players") then
 		if v:Health() > maxhealth then return false end
 	end
@@ -5276,6 +5277,31 @@ local function Valid(v)
 	if (gBool("Main Menu", "Priority List", "Enabled") and table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Aim Assist", "Aim Priorities", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then
 		return false
 	end
+	if !gBool("Aim Assist", "Aim Priorities", "Target Immune Players") then
+		if pm.IsFrozen(v) then return false end
+	end
+	if !gBool("Aim Assist", "Aim Priorities", "Target Immune Players") then
+        for i = 1, #idiot.NetMessages.Buildmode do
+            if tobool(v:GetNWBool(idiot.NetMessages.Buildmode[i])) then
+                return false
+            end
+        end
+    end
+    if !gBool("Aim Assist", "Aim Priorities", "Target Immune Players") then
+        for i = 1, #idiot.NetMessages.Protected do
+            if tobool(v:GetNWBool(idiot.NetMessages.Protected[i])) then
+                return false
+            end
+        end
+    end
+    if !gBool("Aim Assist", "Aim Priorities", "Target Immune Players") then
+        if v:HasGodMode() then return false end
+        for i = 1, #idiot.NetMessages.God do
+            if tobool(v:GetNWBool(idiot.NetMessages.God[i])) then
+                return false
+            end
+        end
+    end
 	if v:Team() == TEAM_CONNECTING then
 		return false
 	end
@@ -6117,6 +6143,11 @@ local function Triggerbot(cmd)
 	local trace = me:GetEyeTraceNoCursor()
 	local v = trace.Entity
 	local hitbox = trace.HitBox
+	idiot.NetMessages = {
+        Buildmode = {"BuildMode", "buildmode", "_Kyle_Buildmode"},
+        God = {"has_god", "god_mode", "ugod"},
+        Protected = {"LibbyProtectedSpawn", "SH_SZ.Safe", "spawn_protect", "InSpawnZone"}
+    }
 	if (v and global.IsValid(v) and v:Health() > 0 and not v:IsDormant() and me:GetObserverTarget() ~= v and AimAssistPriorities(v)) and TriggerFilter(hitbox) then
 	if v:IsPlayer() then
 		if gBool("Aim Assist", "Aim Priorities", "Distance Limit") then
@@ -6143,9 +6174,6 @@ local function Triggerbot(cmd)
 		if !gBool("Aim Assist", "Aim Priorities", "Target Admins") then
 			if pm.IsAdmin(v) then return false end
 		end
-		if !gBool("Aim Assist", "Aim Priorities", "Target Frozen Players") then
-			if pm.IsFrozen(v) then return false end
-		end
 		if !gBool("Aim Assist", "Aim Priorities", "Target Driving Players") then
 			if pm.InVehicle(v) then return false end
 		end
@@ -6169,6 +6197,31 @@ local function Triggerbot(cmd)
 		end
 		if (gBool("Main Menu", "Priority List", "Enabled") and table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Aim Assist", "Aim Priorities", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID())) then
 			return false
+		end
+		if !gBool("Aim Assist", "Aim Priorities", "Target Immune Players") then
+			if pm.IsFrozen(v) then return false end
+		end
+		if !gBool("Aim Assist", "Aim Priorities", "Target Immune Players") then
+			for i = 1, #idiot.NetMessages.Buildmode do
+				if tobool(v:GetNWBool(idiot.NetMessages.Buildmode[i])) then
+					return false
+				end
+			end
+		end
+		if !gBool("Aim Assist", "Aim Priorities", "Target Immune Players") then
+			for i = 1, #idiot.NetMessages.Protected do
+				if tobool(v:GetNWBool(idiot.NetMessages.Protected[i])) then
+					return false
+				end
+			end
+		end
+		if !gBool("Aim Assist", "Aim Priorities", "Target Immune Players") then
+			if v:HasGodMode() then return false end
+			for i = 1, #idiot.NetMessages.God do
+				if tobool(v:GetNWBool(idiot.NetMessages.God[i])) then
+					return false
+				end
+			end
 		end
 		if v:Team() == TEAM_CONNECTING then
 			return false
