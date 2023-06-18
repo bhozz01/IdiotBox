@@ -6701,7 +6701,6 @@ local function Yaw()
 		else
 		oy = - 115
 		end
-	end
 	!!FUTURE UPDATE!! ]]--
 	end
 end
