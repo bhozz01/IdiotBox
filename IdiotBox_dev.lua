@@ -108,7 +108,6 @@ idiot.tcopy = table.Copy
 idiot.R_ = debug.getregistry()
 idiot.R = idiot.tcopy(idiot.R_)
 idiot.spread = {}
-idiot.tresult = {}
 
 idiot.creator = idiot.creator or {}
 idiot.contributors = idiot.contributors or {}
@@ -5992,6 +5991,8 @@ end
 --[[ !!FUTURE UPDATE!!
 sv_gravity = GetConVar("sv_gravity")
 steptime = engine.TickInterval()
+
+idiot.tresult = {}
 
 function idiot.ProjectilePrediction(ent, projorigin, v0) -- AGAIN, THANK YOU S0LUM GOD DAMN
     local finalpos = Vector(0, 0, 0)
