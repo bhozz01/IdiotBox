@@ -96,6 +96,8 @@ surface.CreateFont("MiscFont", {font = "Tahoma", size = 12, weight = 900, antial
 surface.CreateFont("MiscFont2", {font = "Tahoma", size = 12, weight = 900, antialias = false, outline = false})
 surface.CreateFont("MiscFont3", {font = "Tahoma", size = 13, weight = 674, antialias = false, outline = true})
 
+-- The following localizations are ones that didn't fit within the regular limit
+
 idiot.chamsmat1 = CreateMaterial("normalmat1", "VertexLitGeneric", {["$ignorez"] = 1, ["$basetexture"] = "models/debug/debugwhite", })
 idiot.chamsmat2 = CreateMaterial("normalmat2", "VertexLitGeneric", {["$ignorez"] = 0, ["$basetexture"] = "models/debug/debugwhite", })
 idiot.chamsmat3 = CreateMaterial("flatmat1", "UnLitGeneric", {["$ignorez"] = 1, ["$basetexture"] = "models/debug/debugwhite", })
@@ -103,7 +105,13 @@ idiot.chamsmat4 = CreateMaterial("flatmat2", "UnLitGeneric", {["$ignorez"] = 0, 
 idiot.chamsmat5 = CreateMaterial("wiremat1", "UnLitGeneric", {["$ignorez"] = 1, ["$wireframe"] = 1, })
 idiot.chamsmat6 = CreateMaterial("wiremat2", "UnLitGeneric", {["$ignorez"] = 0, ["$wireframe"] = 1, })
 
-idiot.frpressed, idiot.frtoggle = false -- These localizations below are some extra localizations that didn't fit within the regular limit
+idiot.m9kPenetration = {["SniperPenetratedRound"] = 20, ["pistol"] = 9, ["357"] = 12, ["smg1"] = 14, ["ar2"] = 16, ["buckshot"] = 5, ["slam"] = 5, ["AirboatGun"] = 17, }
+idiot.m9kMaxRicochet = {["SniperPenetratedRound"] = 10, ["pistol"] = 2, ["357"] = 5, ["smg1"] = 4, ["ar2"] = 5, ["buckshot"] = 0, ["slam"] = 0, ["AirboatGun"] = 9, }
+idiot.m9kCanRicochet = {["SniperPenetratedRound"] = true, ["pistol"] = true, ["buckshot"] = true, ["slam"] = true}
+idiot.m9kPenMaterial = {[MAT_GLASS] = true, [MAT_PLASTIC] = true, [MAT_WOOD] = true, [MAT_FLESH] = true, [MAT_ALIENFLESH] = true}
+
+idiot.NetMessages = {Buildmode = {"BuildMode", "buildmode", "_Kyle_Buildmode"}, God = {"HasGodMode", "has_god", "god_mode", "ugod"}, Protected = {"LibbyProtectedSpawn", "SH_SZ.Safe", "spawn_protect", "InSpawnZone"}}
+idiot.frpressed, idiot.frtoggle = false
 idiot.tcopy = table.Copy
 idiot.R_ = debug.getregistry()
 idiot.R = idiot.tcopy(idiot.R_)
@@ -278,7 +286,7 @@ local options = {
 			{""}, 
 			{"Line-of-Sight Check:", "Selection", "Default", {"Off", "Default", "Auto Wallbang"}, 92}, -- Enabled by default
 			{""}, 
-			{"Manipulate Interpolation", "Checkbox", false, 78}, 
+			{"Disable Interpolation", "Checkbox", false, 78}, 
 			{"Manipulate Bullet Time", "Checkbox", false, 78}, 
 			{"Bullet Fire Delay:", "Slider", 0, 100, 92}, 
 			{""}, 
@@ -1062,7 +1070,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: d18m06-pre09")
+	surface.DrawText("Latest build: d24m06-pre09")
 	surface.SetFont("MenuFont2")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -1236,7 +1244,7 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			info = "Aimbot calculates your and your target's speed and compensates for non-hitscan weapons."
 		elseif feat == "Auto Reload" then
 			info = "Automatically reloads your weapon after firing it."
-		elseif feat == "Manipulate Interpolation" then
+		elseif feat == "Disable Interpolation" then
 			info = "Lag exploit, could be used to your advantage. Do not use if unfamiliar."
 		elseif feat == "Manipulate Bullet Time" then
 			info = "Creates a tiny delay between each gunshot for better efficiency."
@@ -1742,7 +1750,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Fixed Triggerbot Smooth Aim slowing down your overall mouse speed;")
 	print("- Fixed certain outlines and fonts not having the proper dimensions;")
 	print("- Fixed a Projectile Prediction bug where dying would cause script errors;")
-	print("- Fixed Manipulate Interpolation, Optimize Game and Dark Mode not resetting when disabled;")
+	print("- Fixed Disable Interpolation, Optimize Game and Dark Mode not resetting when disabled;")
 	print("- Fixed missing spread prediction and recoil compensation checks;")
 	print("- Fixed local variable limit and timer issues;")
 	print("- Reworked localizations and overall script for better performance;")
@@ -1802,6 +1810,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- WORK-IN-PROGRESS (ETA: undetermined): add 'Backtracking' and 'Multi-Tap' to Aim Assist;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): add 'Fake Angles' to Anti-Aim;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): fix 'Directional Strafing' angle calculation errors;")
+	print("- WORK-IN-PROGRESS (ETA: undetermined): rework 'Auto Wallbang' from scratch;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): rework 'Projectile Prediction' from scratch;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): clean up bad hooks and functions for better performance.")
 	print("\n\n===============================================================================================")
@@ -5203,7 +5212,81 @@ hook.Add("entity_killed", "entity_killed", function(data)
 		LogKills(data)
 	end
 end)
-
+--[[ !!FUTURE UPDATE!!
+function idiot.M9KAutowall()
+	if !idiot.activeWeapon.Penetration then
+		return false
+	end
+	local function BulletPenetrate( tr, bounceNum, damage )
+		if damage < 1 then
+			return false
+		end
+		local maxPenetration = 14
+		local maxRicochet = 0
+		local isRicochet = false
+            if idiot.m9kPenetration[ idiot.activeWeapon.Primary.Ammo ] then
+                maxPenetration = idiot.m9kPenetration[ idiot.activeWeapon.Primary.Ammo ]
+            end
+            if idiot.m9kMaxRicochet[ idiot.activeWeapon.Primary.Ammo ] then
+                maxRicochet = idiot.m9kMaxRicochet[ idiot.activeWeapon.Primary.Ammo ]
+            end
+            if idiot.m9kCanRicochet[ idiot.activeWeapon.Primary.Ammo ] then
+                isRicochet = idiot.m9kMaxRicochet[ idiot.activeWeapon.Primary.Ammo ]
+            end
+			if tr.MatType == MAT_METAL and isRicochet and idiot.activeWeapon.Primary.Ammo != "SniperPenetratedRound" then
+				return false
+			end
+			if bounceNum > maxRicochet then
+				return false
+			end
+			local penetrationDir = tr.Normal * maxPenetration
+			if idiot.m9kPenMaterial[ tr.MatType ] then
+				penetrationDir = tr.Normal * ( maxPenetration * 2 ) 
+			end
+			if tr.Fraction <= 0 then
+				return false
+			end
+			idiot.traceStruct.endpos    = tr.HitPos
+			idiot.traceStruct.start     = tr.HitPos + penetrationDir
+			idiot.traceStruct.mask      = MASK_SHOT
+			idiot.traceStruct.filter    = me
+			local trace = TraceLine( idiot.traceStruct )
+			if trace.StartSolid or trace.Fraction >= 1 then
+				return false
+			end
+			idiot.traceStruct.endpos = trace.HitPos + tr.Normal * 32768
+			idiot.traceStruct.start  = trace.HitPos
+			idiot.traceStruct.mask   = MASK_SHOT
+			idiot.traceStruct.filter = me
+			local penTrace = TraceLine( idiot.traceStruct )
+            if idiot.cfg.vars["Ignores-Head unhitable"] then
+                return penTrace.Entity == plyTarget and penTrace.HitGroup == 1
+            else
+                return penTrace.Entity == plyTarget
+            end
+			local damageMulti = 0.5
+			if idiot.activeWeapon.Primary.Ammo == "SniperPenetratedRound" then
+				damageMulti = 1
+			elseif tr.MatType == MAT_CONCRETE or tr.MatType == MAT_METAL then
+				damageMulti = 0.3
+			elseif tr.MatType == MAT_WOOD or tr.MatType == MAT_PLASTIC or tr.MatType == MAT_GLASS then
+				damageMulti = 0.8
+			elseif tr.MatType == MAT_FLESH or tr.MatType == MAT_ALIENFLESH then
+				damageMulti = 0.9
+			end	
+			if penTrace.MatType == MAT_GLASS then
+				bounceNum = bounceNum - 1
+			end
+			return BulletPenetrate( penTrace, bounceNum + 1, damage * damageMulti )
+		end
+        idiot.traceStruct.start = eyePos
+        idiot.traceStruct.endpos = eyePos + dir * 32768
+        idiot.traceStruct.filter = me
+        idiot.traceStruct.mask = MASK_SHOT
+	local trace = TraceLine( idiot.traceStruct )
+	return BulletPenetrate( trace, 0, idiot.activeWeapon.Primary.Damage )
+end
+!!FUTURE UPDATE!! ]]--
 local function AimAssistPriorities(v)
 	if gBool("Aim Assist", "Aim Priorities", "Target Players") and not gBool("Aim Assist", "Aim Priorities", "Target NPCs") then
 		return v:IsPlayer()
@@ -5221,11 +5304,6 @@ local function Valid(v)
 	local vel = gBool("Aim Assist", "Aim Priorities", "Velocity:")
     local wep = me:GetActiveWeapon()
 	local maxhealth = gInt("Aim Assist", "Aim Priorities", "Max Player Health:")
-	idiot.NetMessages = {
-        Buildmode = {"BuildMode", "buildmode", "_Kyle_Buildmode"},
-        God = {"has_god", "god_mode", "ugod"},
-        Protected = {"LibbyProtectedSpawn", "SH_SZ.Safe", "spawn_protect", "InSpawnZone"}
-    }
 	if (!v || !em.IsValid(v) || v == me || em.Health(v) < 1 || em.IsDormant(v) || !AimAssistPriorities(v) || (v == aimignore && gOption("Aim Assist", "Aim Priorities", "Aim Priority:") == "Random")) then return false end
 	if v:IsPlayer() then
 	if gBool("Aim Assist", "Aim Priorities", "Distance Limit") then
@@ -5294,7 +5372,6 @@ local function Valid(v)
         end
     end
     if !gBool("Aim Assist", "Aim Priorities", "Target Immune Players") then
-        if v:HasGodMode() then return false end
         for i = 1, #idiot.NetMessages.God do
             if tobool(v:GetNWBool(idiot.NetMessages.God[i])) then
                 return false
@@ -6144,11 +6221,6 @@ local function Triggerbot(cmd)
 	local trace = me:GetEyeTraceNoCursor()
 	local v = trace.Entity
 	local hitbox = trace.HitBox
-	idiot.NetMessages = {
-        Buildmode = {"BuildMode", "buildmode", "_Kyle_Buildmode"},
-        God = {"has_god", "god_mode", "ugod"},
-        Protected = {"LibbyProtectedSpawn", "SH_SZ.Safe", "spawn_protect", "InSpawnZone"}
-    }
 	if (v and global.IsValid(v) and v:Health() > 0 and not v:IsDormant() and me:GetObserverTarget() ~= v and AimAssistPriorities(v)) and TriggerFilter(hitbox) then
 	if v:IsPlayer() then
 		if gBool("Aim Assist", "Aim Priorities", "Distance Limit") then
@@ -6217,7 +6289,6 @@ local function Triggerbot(cmd)
 			end
 		end
 		if !gBool("Aim Assist", "Aim Priorities", "Target Immune Players") then
-			if v:HasGodMode() then return false end
 			for i = 1, #idiot.NetMessages.God do
 				if tobool(v:GetNWBool(idiot.NetMessages.God[i])) then
 					return false
@@ -6980,7 +7051,7 @@ hook.Add("StartCommand", "StartCommand", function(randply, cmd)
 		optimized = false
 		end
 	end
-	if gBool("Aim Assist", "Miscellaneous", "Manipulate Interpolation") then
+	if gBool("Aim Assist", "Miscellaneous", "Disable Interpolation") then
 		if not applied then
 			me:ConCommand("cl_interp 0; cl_interp_ratio 0; cl_updaterate 99999")
 		applied = true
