@@ -36,7 +36,7 @@ end)
 
 local global = (_G)
 local folder = "IdiotBox"
-local version = "7.0.b1-pre09"
+local version = "7.0.b1-pre10"
 
 local me = LocalPlayer()
 --[[ local wep = me:GetActiveWeapon() ]]-- Trying to localize this causes many issues for whatever reason, but I'll figure it out at one point
@@ -1070,7 +1070,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: d24m06-pre09")
+	surface.DrawText("Latest build: d24m06-pre10")
 	surface.SetFont("MenuFont2")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -1744,6 +1744,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Fixed Thirdperson showing in spectator mode;")
 	print("- Fixed text coloring and positioning issues with the optimized Wallhack style;")
 	print("- Fixed Circle Strafe spaghetti code not functioning the way it should;")
+	print("- Fixed Priority List staying on-screen after closing the menu;")
 	print("- Fixed name changer/ stealer reverting to your Steam username as soon as a new player joined the server;")
 	print("- Fixed Visuals causing severe lag;")
 	print("- Fixed Cheater Callout clearing chat when it should not;")
@@ -1809,9 +1810,9 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("\n")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): add 'Backtracking' and 'Multi-Tap' to Aim Assist;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): add 'Fake Angles' to Anti-Aim;")
-	print("- WORK-IN-PROGRESS (ETA: undetermined): fix 'Directional Strafing' angle calculation errors;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): rework 'Auto Wallbang' from scratch;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): rework 'Projectile Prediction' from scratch;")
+	print("- WORK-IN-PROGRESS (ETA: undetermined): fix 'Directional Strafing' angle calculation errors;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): clean up bad hooks and functions for better performance.")
 	print("\n\n===============================================================================================")
 	timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Printed changelog to console!") end)
@@ -5063,7 +5064,7 @@ hook.Add("DrawOverlay", "DrawOverlay", function()
 			end
 		end
 	end
-	if gBool("Main Menu", "Priority List", "Enabled") and menuopen and ScrW() >= 1600 or ScrH() >= 1400 then
+	if gBool("Main Menu", "Priority List", "Enabled") and menuopen then
 		PlayerList()
 	end
 	if v == me and not em.IsValid(v) then return end
