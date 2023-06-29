@@ -5373,6 +5373,7 @@ local function Valid(v)
         end
     end
     if !gBool("Aim Assist", "Aim Priorities", "Target Immune Players") then
+		if v:HasGodMode() then return false end
         for i = 1, #idiot.NetMessages.God do
             if tobool(v:GetNWBool(idiot.NetMessages.God[i])) then
                 return false
@@ -6290,6 +6291,7 @@ local function Triggerbot(cmd)
 			end
 		end
 		if !gBool("Aim Assist", "Aim Priorities", "Target Immune Players") then
+			if v:HasGodMode() then return false end
 			for i = 1, #idiot.NetMessages.God do
 				if tobool(v:GetNWBool(idiot.NetMessages.God[i])) then
 					return false
