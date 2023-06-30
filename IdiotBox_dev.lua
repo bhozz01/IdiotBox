@@ -36,7 +36,7 @@ end)
 
 local global = (_G)
 local folder = "IdiotBox"
-local version = "7.0.b1-pre10"
+local version = "7.0.b1-pre11"
 
 local me = LocalPlayer()
 --[[ local wep = me:GetActiveWeapon() ]]-- Trying to localize this causes many issues for whatever reason, but I'll figure it out at one point
@@ -1070,7 +1070,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: d24m06-pre10")
+	surface.DrawText("Latest build: d01m07-pre11")
 	surface.SetFont("MenuFont2")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -1809,10 +1809,11 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("Please note: This list includes any potential future additions/ changes/ removals, and is subject to change.")
 	print("\n")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): add 'Backtracking' and 'Multi-Tap' to Aim Assist;")
-	print("- WORK-IN-PROGRESS (ETA: undetermined): add 'Fake Angles' to Anti-Aim;")
+	print("- WORK-IN-PROGRESS (ETA: undetermined): add 'Fake Lag' & 'Fake Angles' chams to Visuals;")
+	print("- WORK-IN-PROGRESS (ETA: undetermined): add true fake angles to Anti-Aim;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): rework 'Auto Wallbang' from scratch;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): rework 'Projectile Prediction' from scratch;")
-	print("- WORK-IN-PROGRESS (ETA: undetermined): fix 'Directional Strafing' angle calculation errors;")
+	print("- WORK-IN-PROGRESS (ETA: undetermined): fix directional strafing angle calculation errors;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): clean up bad hooks and functions for better performance.")
 	print("\n\n===============================================================================================")
 	timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Printed changelog to console!") end)
@@ -5218,21 +5219,21 @@ function idiot.M9KAutowall()
 	if !idiot.activeWeapon.Penetration then
 		return false
 	end
-	local function BulletPenetrate( tr, bounceNum, damage )
+	local function BulletPenetrate(tr, bounceNum, damage)
 		if damage < 1 then
 			return false
 		end
 		local maxPenetration = 14
 		local maxRicochet = 0
 		local isRicochet = false
-            if idiot.m9kPenetration[ idiot.activeWeapon.Primary.Ammo ] then
-                maxPenetration = idiot.m9kPenetration[ idiot.activeWeapon.Primary.Ammo ]
+            if idiot.m9kPenetration[idiot.activeWeapon.Primary.Ammo] then
+                maxPenetration = idiot.m9kPenetration[idiot.activeWeapon.Primary.Ammo]
             end
-            if idiot.m9kMaxRicochet[ idiot.activeWeapon.Primary.Ammo ] then
-                maxRicochet = idiot.m9kMaxRicochet[ idiot.activeWeapon.Primary.Ammo ]
+            if idiot.m9kMaxRicochet[idiot.activeWeapon.Primary.Ammo] then
+                maxRicochet = idiot.m9kMaxRicochet[idiot.activeWeapon.Primary.Ammo]
             end
-            if idiot.m9kCanRicochet[ idiot.activeWeapon.Primary.Ammo ] then
-                isRicochet = idiot.m9kMaxRicochet[ idiot.activeWeapon.Primary.Ammo ]
+            if idiot.m9kCanRicochet[idiot.activeWeapon.Primary.Ammo] then
+                isRicochet = idiot.m9kMaxRicochet[idiot.activeWeapon.Primary.Ammo]
             end
 			if tr.MatType == MAT_METAL and isRicochet and idiot.activeWeapon.Primary.Ammo != "SniperPenetratedRound" then
 				return false
@@ -5241,25 +5242,25 @@ function idiot.M9KAutowall()
 				return false
 			end
 			local penetrationDir = tr.Normal * maxPenetration
-			if idiot.m9kPenMaterial[ tr.MatType ] then
-				penetrationDir = tr.Normal * ( maxPenetration * 2 ) 
+			if idiot.m9kPenMaterial[tr.MatType] then
+				penetrationDir = tr.Normal * (maxPenetration * 2) 
 			end
 			if tr.Fraction <= 0 then
 				return false
 			end
-			idiot.traceStruct.endpos    = tr.HitPos
-			idiot.traceStruct.start     = tr.HitPos + penetrationDir
-			idiot.traceStruct.mask      = MASK_SHOT
-			idiot.traceStruct.filter    = me
-			local trace = TraceLine( idiot.traceStruct )
+			idiot.traceStruct.endpos = tr.HitPos
+			idiot.traceStruct.start = tr.HitPos + penetrationDir
+			idiot.traceStruct.mask = MASK_SHOT
+			idiot.traceStruct.filter = me
+			local trace = TraceLine(idiot.traceStruct)
 			if trace.StartSolid or trace.Fraction >= 1 then
 				return false
 			end
 			idiot.traceStruct.endpos = trace.HitPos + tr.Normal * 32768
-			idiot.traceStruct.start  = trace.HitPos
-			idiot.traceStruct.mask   = MASK_SHOT
+			idiot.traceStruct.start = trace.HitPos
+			idiot.traceStruct.mask = MASK_SHOT
 			idiot.traceStruct.filter = me
-			local penTrace = TraceLine( idiot.traceStruct )
+			local penTrace = TraceLine(idiot.traceStruct)
             if idiot.cfg.vars["Ignores-Head unhitable"] then
                 return penTrace.Entity == plyTarget and penTrace.HitGroup == 1
             else
@@ -5278,14 +5279,14 @@ function idiot.M9KAutowall()
 			if penTrace.MatType == MAT_GLASS then
 				bounceNum = bounceNum - 1
 			end
-			return BulletPenetrate( penTrace, bounceNum + 1, damage * damageMulti )
+			return BulletPenetrate(penTrace, bounceNum + 1, damage * damageMulti)
 		end
         idiot.traceStruct.start = eyePos
         idiot.traceStruct.endpos = eyePos + dir * 32768
         idiot.traceStruct.filter = me
         idiot.traceStruct.mask = MASK_SHOT
-	local trace = TraceLine( idiot.traceStruct )
-	return BulletPenetrate( trace, 0, idiot.activeWeapon.Primary.Damage )
+	local trace = TraceLine(idiot.traceStruct)
+	return BulletPenetrate(trace, 0, idiot.activeWeapon.Primary.Damage)
 end
 !!FUTURE UPDATE!! ]]--
 local function AimAssistPriorities(v)
