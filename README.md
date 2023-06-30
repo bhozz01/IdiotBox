@@ -1,8 +1,8 @@
 -----INSTALLING AND INITIALIZING:-----
 
-1. Drag 'IdiotBox_latest.lua' and the 'bin' folder located in the .zip file into the following directory: Program Files (x86) > Steam > steamapps > common > GarrysMod > garrysmod > lua;
+1. Drag 'IdiotBox_latest.lua' and the 'bin' folder located in the Zip file into the following directory: Program Files (x86) > Steam > steamapps > common > GarrysMod > garrysmod > lua;
 2. Open Garry's Mod in the default version of the game (make sure you are NOT in any beta branch, such as x86-64/ chromium/ dev/ prerelease), as the modules (located in the 'bin' folder) are ONLY COMPATIBLE with the DEFAULT VERSION of the game;
-3. Join a multiplayer game/ public server that allows players to load .lua scripts (the server must have 'sv_allowcslua' set to 1);
+3. Join a multiplayer game/ public server that allows players to load Lua scripts (the server must have 'sv_allowcslua' set to 1);
 4. Open the console and type the following command: 'lua_openscript_cl IdiotBox_latest.lua' (or whatever your script's name is);
 5. Run the command;
 6. Enjoy!
@@ -11,11 +11,11 @@
 
 -----HOW TO INITIALIZE IDIOTBOX ON PUBLIC SERVERS:-----
 
-There are a lot of methods out there for loading .lua scripts on servers that don't have 'sv_allowcslua' enabled. Some of these methods can change from time to time, as they get patched and replaced by others;
+There are a lot of methods out there for loading Lua scripts on servers that don't have 'sv_allowcslua' enabled. Some of these methods can change from time to time, as they get patched and replaced by others;
 
 My method of choice is using a loader named 'external.dll' (message me on Discord at 'phizz0777' and I will send it to you). To use it, follow these steps:
 1. Create a folder in 'C:\Documents' named 'external' (other names won't work); 
-2. Drag 'IdiotBox_latest.lua' or any other .lua script of your choice in said folder;
+2. Drag 'IdiotBox_latest.lua' or any other Lua script of your choice in said folder;
 3. Open Garry's Mod in the default version of the game (make sure you are NOT in any beta branch, such as x86-64/ chromium/ dev/ prerelease), as the modules (located in the 'bin' folder) are ONLY COMPATIBLE with the DEFAULT VERSION of the game;
 4. Inject 'external.dll' into Garry's Mod (with an injector of your choice);
 5. Join a multiplayer game/ public server;
@@ -23,11 +23,11 @@ My method of choice is using a loader named 'external.dll' (message me on Discor
 7. Run the command;
 8. Enjoy!
 
-***If you are using a gLua loader, you will have to copy the script itself (which you can do by opening the .lua file with any text editor), paste it into the loader's console and execute it from there;
+***If you are using a gLua loader, you will have to copy the script itself (which you can do by opening the Lua file with any text editor), paste it into the loader's console and execute it from there;
 
-***If you are using a prorpietary .lua script loader, follow the tutorial that came with it. There is not much else I can help you with in this instance;
+***If you are using a prorpietary Lua script loader, follow the tutorial that came with it. There is not much else I can help you with in this instance;
 
-***If you are having trouble with loading IdiotBox or other .lua scripts on public servers, message me on Discord (phizz0777) and I will assist you as best as I possibly can.
+***If you are having trouble with loading IdiotBox or other Lua scripts on public servers, message me on Discord (phizz0777) and I will assist you as best as I possibly can.
 
 -----REPORTING ISSUES:-----
 
