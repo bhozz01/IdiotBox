@@ -36,7 +36,7 @@ end)
 
 local global = (_G)
 local folder = "IdiotBox"
-local version = "7.0.b1-pre11"
+local version = "7.0.b1-pre12"
 
 local me = LocalPlayer()
 --[[ local wep = me:GetActiveWeapon() ]]-- Trying to localize this causes many issues for whatever reason, but I'll figure it out at one point
@@ -104,11 +104,6 @@ idiot.chamsmat3 = CreateMaterial("flatmat1", "UnLitGeneric", {["$ignorez"] = 1, 
 idiot.chamsmat4 = CreateMaterial("flatmat2", "UnLitGeneric", {["$ignorez"] = 0, ["$basetexture"] = "models/debug/debugwhite", })
 idiot.chamsmat5 = CreateMaterial("wiremat1", "UnLitGeneric", {["$ignorez"] = 1, ["$wireframe"] = 1, })
 idiot.chamsmat6 = CreateMaterial("wiremat2", "UnLitGeneric", {["$ignorez"] = 0, ["$wireframe"] = 1, })
-
-idiot.m9kPenetration = {["SniperPenetratedRound"] = 20, ["pistol"] = 9, ["357"] = 12, ["smg1"] = 14, ["ar2"] = 16, ["buckshot"] = 5, ["slam"] = 5, ["AirboatGun"] = 17, }
-idiot.m9kMaxRicochet = {["SniperPenetratedRound"] = 10, ["pistol"] = 2, ["357"] = 5, ["smg1"] = 4, ["ar2"] = 5, ["buckshot"] = 0, ["slam"] = 0, ["AirboatGun"] = 9, }
-idiot.m9kCanRicochet = {["SniperPenetratedRound"] = true, ["pistol"] = true, ["buckshot"] = true, ["slam"] = true}
-idiot.m9kPenMaterial = {[MAT_GLASS] = true, [MAT_PLASTIC] = true, [MAT_WOOD] = true, [MAT_FLESH] = true, [MAT_ALIENFLESH] = true}
 
 idiot.NetMessages = {Buildmode = {"BuildMode", "buildmode", "_Kyle_Buildmode"}, God = {"HasGodMode", "has_god", "god_mode", "ugod"}, Protected = {"LibbyProtectedSpawn", "SH_SZ.Safe", "spawn_protect", "InSpawnZone"}}
 idiot.frpressed, idiot.frtoggle = false
@@ -1070,7 +1065,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: d01m07-pre11")
+	surface.DrawText("Latest build: d19m07-pre12")
 	surface.SetFont("MenuFont2")
 	surface.DrawRect(0, 31, 0, h - 31)
 	surface.DrawRect(0, h - 0, w, h)
@@ -1662,6 +1657,7 @@ local function Unload()
 	hook.Remove("PostDrawViewModel", "PostDrawViewModel")
 	hook.Remove("PreDrawEffects", "PreDrawEffects")
 	hook.Remove("HUDShouldDraw", "HUDShouldDraw")
+	hook.Remove("Tick", "Tick")
 	hook.Remove("Think", "Think")
 	hook.Remove("CalcViewModelView", "CalcViewModelView")
 	hook.Remove("PreDrawSkyBox", "PreDrawSkyBox")
@@ -1814,6 +1810,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- WORK-IN-PROGRESS (ETA: undetermined): rework 'Auto Wallbang' from scratch;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): rework 'Projectile Prediction' from scratch;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): fix directional strafing angle calculation errors;")
+	print("- WORK-IN-PROGRESS (ETA: undetermined): optimize UI design for more user-friendliness;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): clean up bad hooks and functions for better performance.")
 	print("\n\n===============================================================================================")
 	timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Printed changelog to console!") end)
@@ -3809,18 +3806,6 @@ local src = string.lower(debug.getinfo(2).short_src)
 end
 
 local function Think()
-	if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menuopen and not menukeydown) then
-		menuopen = true
-		menukeydown = true
-		Menu()
-	elseif (not (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menuopen) then
-		menukeydown = false
-	end
-	if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and menukeydown and menuopen) then
-		menukeydown2 = true
-	else
-		menukeydown2 = false
-	end
 	if gOption("Miscellaneous", "Chat", "Chat Spam:") ~= "Off" then
 		ChatSpam()
 	end
@@ -3878,6 +3863,21 @@ local function CheckChild(pan)
 		end
 	end
 end
+
+hook.Add("Tick", "Tick", function()
+	if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menuopen and not menukeydown) then
+		menuopen = true
+		menukeydown = true
+		Menu()
+	elseif (not (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menuopen) then
+		menukeydown = false
+	end
+	if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and menukeydown and menuopen) then
+		menukeydown2 = true
+	else
+		menukeydown2 = false
+	end
+end)
 
 hook.Add("Think", "Think", function()
 	TraitorDetector()
@@ -5214,81 +5214,7 @@ hook.Add("entity_killed", "entity_killed", function(data)
 		LogKills(data)
 	end
 end)
---[[ !!FUTURE UPDATE!!
-function idiot.M9KAutowall()
-	if !idiot.activeWeapon.Penetration then
-		return false
-	end
-	local function BulletPenetrate(tr, bounceNum, damage)
-		if damage < 1 then
-			return false
-		end
-		local maxPenetration = 14
-		local maxRicochet = 0
-		local isRicochet = false
-            if idiot.m9kPenetration[idiot.activeWeapon.Primary.Ammo] then
-                maxPenetration = idiot.m9kPenetration[idiot.activeWeapon.Primary.Ammo]
-            end
-            if idiot.m9kMaxRicochet[idiot.activeWeapon.Primary.Ammo] then
-                maxRicochet = idiot.m9kMaxRicochet[idiot.activeWeapon.Primary.Ammo]
-            end
-            if idiot.m9kCanRicochet[idiot.activeWeapon.Primary.Ammo] then
-                isRicochet = idiot.m9kMaxRicochet[idiot.activeWeapon.Primary.Ammo]
-            end
-			if tr.MatType == MAT_METAL and isRicochet and idiot.activeWeapon.Primary.Ammo != "SniperPenetratedRound" then
-				return false
-			end
-			if bounceNum > maxRicochet then
-				return false
-			end
-			local penetrationDir = tr.Normal * maxPenetration
-			if idiot.m9kPenMaterial[tr.MatType] then
-				penetrationDir = tr.Normal * (maxPenetration * 2) 
-			end
-			if tr.Fraction <= 0 then
-				return false
-			end
-			idiot.traceStruct.endpos = tr.HitPos
-			idiot.traceStruct.start = tr.HitPos + penetrationDir
-			idiot.traceStruct.mask = MASK_SHOT
-			idiot.traceStruct.filter = me
-			local trace = TraceLine(idiot.traceStruct)
-			if trace.StartSolid or trace.Fraction >= 1 then
-				return false
-			end
-			idiot.traceStruct.endpos = trace.HitPos + tr.Normal * 32768
-			idiot.traceStruct.start = trace.HitPos
-			idiot.traceStruct.mask = MASK_SHOT
-			idiot.traceStruct.filter = me
-			local penTrace = TraceLine(idiot.traceStruct)
-            if idiot.cfg.vars["Ignores-Head unhitable"] then
-                return penTrace.Entity == plyTarget and penTrace.HitGroup == 1
-            else
-                return penTrace.Entity == plyTarget
-            end
-			local damageMulti = 0.5
-			if idiot.activeWeapon.Primary.Ammo == "SniperPenetratedRound" then
-				damageMulti = 1
-			elseif tr.MatType == MAT_CONCRETE or tr.MatType == MAT_METAL then
-				damageMulti = 0.3
-			elseif tr.MatType == MAT_WOOD or tr.MatType == MAT_PLASTIC or tr.MatType == MAT_GLASS then
-				damageMulti = 0.8
-			elseif tr.MatType == MAT_FLESH or tr.MatType == MAT_ALIENFLESH then
-				damageMulti = 0.9
-			end	
-			if penTrace.MatType == MAT_GLASS then
-				bounceNum = bounceNum - 1
-			end
-			return BulletPenetrate(penTrace, bounceNum + 1, damage * damageMulti)
-		end
-        idiot.traceStruct.start = eyePos
-        idiot.traceStruct.endpos = eyePos + dir * 32768
-        idiot.traceStruct.filter = me
-        idiot.traceStruct.mask = MASK_SHOT
-	local trace = TraceLine(idiot.traceStruct)
-	return BulletPenetrate(trace, 0, idiot.activeWeapon.Primary.Damage)
-end
-!!FUTURE UPDATE!! ]]--
+
 local function AimAssistPriorities(v)
 	if gBool("Aim Assist", "Aim Priorities", "Target Players") and not gBool("Aim Assist", "Aim Priorities", "Target NPCs") then
 		return v:IsPlayer()
