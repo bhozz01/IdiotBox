@@ -91,10 +91,10 @@ idiot.chamsmat6 = CreateMaterial("wiremat2", "UnLitGeneric", {["$ignorez"] = 0, 
 
 idiot.NetMessages = {Buildmode = {"BuildMode", "buildmode", "_Kyle_Buildmode"}, God = {"HasGodMode", "has_god", "god_mode", "ugod"}, Protected = {"LibbyProtectedSpawn", "SH_SZ.Safe", "spawn_protect", "InSpawnZone"}}
 idiot.frpressed, idiot.frtoggle = false
-idiot.tcopy = table.Copy
-idiot.R_ = debug.getregistry()
-idiot.R = idiot.tcopy(idiot.R_)
 idiot.spread = {}
+
+idiot.R_ = debug.getregistry()
+idiot.R = table.Copy(idiot.R_)
 
 idiot.creator = idiot.creator or {}
 idiot.contributors = idiot.contributors or {}
