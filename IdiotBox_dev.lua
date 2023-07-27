@@ -32,7 +32,7 @@ local idiot, drawnents, prioritylist, ignorelist, visible, dists, cones, traitor
 local toggler, playerkills, namechangeTime, circlestrafeval, timeHoldingSpaceOnGround, servertime, faketick, propval, propdelay, crouched = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 local menutextcol, bgmenucol, bordercol, teamvisualscol, enemyvisualscol, prioritytargetscol, ignoredtargetscol, miscvisualscol, teamchamscol, enemychamscol, crosshaircol, viewmodelcol = Color(255, 255, 255), Color(30, 30, 45), Color(0, 155, 255), Color(255, 255, 255), Color(255, 255, 255), Color(255, 0, 100), Color(175, 175, 175), Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 235, 255), Color(0, 235, 255)
 
-local radarX, radarY, radarW, radarH = 50, ScrH() / 3, 200, 200
+local windowX, windowY, windowW, windowH = 50, ScrH() / 3, 200, 200
 local roampos, roamang, roamon, roamx, roamy, roamduck, roamjump = me:EyePos(), me:GetAngles(), false, 0, 0, false, false
 
 local clForwardSpeedCvar = GetConVar("cl_forwardspeed")
@@ -164,7 +164,7 @@ local options = {
 			{"Menus", 261, 20, 232, 225, 218}, 
 			{"Entity Finder Menu", "Button", "", 92}, 
 			{"Plugin Loader Menu", "Button", "", 92}, 
-			{"Toolbar Style:", "Selection", "BG Color", {"BG Color", "Border Color"}, 92}, 
+			{"Toolbar Style:", "Selection", "BG Color", {"Border Color", "BG Color"}, 92}, 
 			{""}, 
 			{"Menu Style:", "Selection", "Borderless", {"Bordered", "Borderless"}, 92}, 
 			{""}, 
@@ -439,15 +439,17 @@ local options = {
 			{"Dark Mode", "Checkbox", false, 78}, 
 		}, 
 		{
-			{"Panels", 16, 459, 232, 244, 218}, 
-			{"Spectators Window", "Checkbox", false, 78}, 
-			{"Radar Window", "Checkbox", false, 78}, 
+			{"Panels", 16, 459, 232, 294, 218}, 
+			{"Spectators Window", "Checkbox", true, 78},  -- Enabled by default
+			{"Radar Window", "Checkbox", true, 78},  -- Enabled by default
 			{"Radar Distance:", "Slider", 50, 100, 156}, 
 			{""}, 
-			{"Debug Info", "Checkbox", false, 78}, 
-			{"Players List", "Checkbox", false, 78}, 
+			{"Debug Info", "Checkbox", true, 78},  -- Enabled by default
+			{"Players List", "Checkbox", true, 78},  -- Enabled by default
 			{"Show List Titles", "Checkbox", true, 78}, -- Enabled by default
-			{"Panels Style:", "Selection", "Bordered", {"Bordered", "Borderless"}, 92}, 
+			{"Panels Style:", "Selection", "Borderless", {"Bordered", "Borderless"}, 92}, 
+			{""}, 
+			{"Radar Lines Style:", "Selection", "Border Color", {"Border Color", "BG Color"}, 92}, 
 			{""}, 
 		}, 
 		{
@@ -597,10 +599,10 @@ local options = {
 		}, 
 		{
 			{"List Adjustments", 506, 518, 232, 130, 88}, 
-			{"Debug Info X:", "SliderOld", 12, 2000, 92}, 
-			{"Debug Info Y:", "SliderOld", 250, 2000, 92}, 
-			{"Players List X:", "SliderOld", 12, 2000, 92}, 
-			{"Players List Y:", "SliderOld", 430, 2000, 92}, 
+			{"Debug Info X:", "SliderOld", 225, 2000, 92}, 
+			{"Debug Info Y:", "SliderOld", 35, 2000, 92}, 
+			{"Players List X:", "SliderOld", 1770, 2000, 92}, 
+			{"Players List Y:", "SliderOld", 245, 2000, 92}, 
 		}, 
 	}, 
 }
@@ -1037,6 +1039,10 @@ local function DrawUpperText(w, h)
 	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetFont("MainFont2")
 	surface.DrawText("Latest build: d27m07-pre13")
+	surface.SetFont("MenuFont2")
+	surface.DrawRect(0, 31, 0, h - 31)
+	surface.DrawRect(0, h - 0, w, h)
+	surface.DrawRect(w - 0, 31, 0, h)
 end
 
 local function MouseInArea(minx, miny, maxx, maxy)
@@ -1467,6 +1473,8 @@ local function DrawDropdown(self, w, h, var, maxy, posx, posy, dist)
 			info = "Choose between having a plain or a bordered options list."
 		elseif feat == "Panels Style:" then
 			info = "Choose between having plain or bordered panel frames."
+		elseif feat == "Radar Lines Style:" then
+			info = "Choose between having plain or colored radar lines."
 		elseif feat == "Configuration:" then
 			info = "Choose your desired configuration file, located in the game's data folder."
 		elseif feat == "Mode:" then
@@ -2732,11 +2740,21 @@ end
 local function StausTitle()
 	if !gBool("Miscellaneous", "Panels", "Show List Titles") then return end
 	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Bordered" then
-		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Debug Info X:"), gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 24, 90, 22, Color(bordercol.r, bordercol.g, bordercol.b, 255))
+		surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 255)
+		surface.DrawRect(gInt("Adjustments", "List Adjustments", "Debug Info X:"), gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 24, 90, 22)
+		for i = 0, 1 do
+			surface.DrawLine(gInt("Adjustments", "List Adjustments", "Debug Info X:"), gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 87 + 62 + i, gInt("Adjustments", "List Adjustments", "Debug Info X:") + 89, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 87 + 62 + i)
+		end
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
-		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Debug Info X:"), gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 24, 90, 22, Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255))
+		surface.SetDrawColor(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255)
+		surface.DrawRect(gInt("Adjustments", "List Adjustments", "Debug Info X:"), gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 24, 90, 22)
+		for i = 0, 1 do
+			surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 255)
+			surface.DrawLine(gInt("Adjustments", "List Adjustments", "Debug Info X:"), gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 87 + 62 + i, gInt("Adjustments", "List Adjustments", "Debug Info X:") + 89, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 87 + 62 + i)
+		end
 	end
-	draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Debug Info X:") + 1, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 23, 88, 20, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
+	surface.SetDrawColor(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255)
+	surface.DrawRect(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 1, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 23, 88, 20)
 	draw.DrawText("Debug", "MiscFont2", gInt("Adjustments", "List Adjustments", "Debug Info X:") + 45, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 22, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_CENTER)
 end
 
@@ -2824,7 +2842,6 @@ local function GetColor(v)
 end
 
 local function Spectator()
-	local radarX, radarY, radarW, radarH = 50, ScrH() / 3, 200, 200
 	local color1 = Color(0, 0, 0, gInt("Adjustments", "Others", "Text Opacity:"))
 	local color2 = Color(255, 0, 0, gInt("Adjustments", "Others", "Text Opacity:"))
 	local color3 = Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
@@ -2833,12 +2850,20 @@ local function Spectator()
 	specscount = 0
 	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Bordered" then
 		surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 255)
-		surface.DrawRect(gInt("Adjustments", "Window Adjustments", "Spectators X:") + 1, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 0.75, radarW + 2, radarH + 2)
+		surface.DrawRect(gInt("Adjustments", "Window Adjustments", "Spectators X:") + 1, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 0.75, windowW + 2, windowH + 2)
+		for i = 0, 1 do
+			surface.DrawLine(gInt("Adjustments", "Window Adjustments", "Spectators X:") + 1, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 64 + 62 + i, gInt("Adjustments", "Window Adjustments", "Spectators X:") + 202, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 64 + 62 + i)
+		end
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
 		surface.SetDrawColor(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255)
-		surface.DrawRect(gInt("Adjustments", "Window Adjustments", "Spectators X:") + 1, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 0.75, radarW + 2, radarH + 2)
+		surface.DrawRect(gInt("Adjustments", "Window Adjustments", "Spectators X:") + 1, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 0.75, windowW + 2, windowH + 2)
+		for i = 0, 1 do
+			surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 255)
+			surface.DrawLine(gInt("Adjustments", "Window Adjustments", "Spectators X:") + 1, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 64 + 62 + i, gInt("Adjustments", "Window Adjustments", "Spectators X:") + 202, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 64 + 62 + i)
+		end
 	end
-	draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Spectators X:") + 2, gInt("Adjustments", "Window Adjustments", "Spectators Y:"), radarW, radarH, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
+	surface.SetDrawColor(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255)
+	surface.DrawRect(gInt("Adjustments", "Window Adjustments", "Spectators X:") + 2, gInt("Adjustments", "Window Adjustments", "Spectators Y:"), windowW, windowH)
 	draw.SimpleText("Spectators", "MiscFont2", gInt("Adjustments", "Window Adjustments", "Spectators X:") + 102, gInt("Adjustments", "Window Adjustments", "Spectators Y:") + 11, color3, 1, 1)
 	for k, v in pairs(player.GetAll()) do
 		if (IsValid(v:GetObserverTarget())) and v:GetObserverTarget() == me then
@@ -2877,16 +2902,16 @@ local function Radar()
 	local col = Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	local everything = ents.GetAll()
 	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Bordered" then
-		draw.RoundedBox(360, gInt("Adjustments", "Window Adjustments", "Radar X:") + 1, gInt("Adjustments", "Window Adjustments", "Radar Y:") - 0.75, radarW + 2, radarH + 2, Color(bordercol.r, bordercol.g, bordercol.b, 255))
+		draw.RoundedBox(360, gInt("Adjustments", "Window Adjustments", "Radar X:") + 1, gInt("Adjustments", "Window Adjustments", "Radar Y:") - 0.75, windowW + 2, windowH + 2, Color(bordercol.r, bordercol.g, bordercol.b, 255))
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
-		draw.RoundedBox(360, gInt("Adjustments", "Window Adjustments", "Radar X:") + 1, gInt("Adjustments", "Window Adjustments", "Radar Y:") - 0.75, radarW + 2, radarH + 2, Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255))
+		draw.RoundedBox(360, gInt("Adjustments", "Window Adjustments", "Radar X:") + 1, gInt("Adjustments", "Window Adjustments", "Radar Y:") - 0.75, windowW + 2, windowH + 2, Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255))
 	end
-	draw.RoundedBox(360, gInt("Adjustments", "Window Adjustments", "Radar X:") + 2, gInt("Adjustments", "Window Adjustments", "Radar Y:"), radarW, radarH, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
+	draw.RoundedBox(360, gInt("Adjustments", "Window Adjustments", "Radar X:") + 2, gInt("Adjustments", "Window Adjustments", "Radar Y:"), windowW, windowH, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
 	draw.SimpleText("Radar", "MiscFont2", gInt("Adjustments", "Window Adjustments", "Radar X:") + 102, gInt("Adjustments", "Window Adjustments", "Radar Y:") + 11, col, 1, 1)
 	draw.NoTexture()
-	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Bordered" then
+	if gOption("Miscellaneous", "Panels", "Radar Lines Style:") == "Border Color" then
 		surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 255 - 75)
-	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
+	elseif gOption("Miscellaneous", "Panels", "Radar Lines Style:") == "BG Color" then
 		surface.SetDrawColor(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255)
 	end
 	surface.DrawLine(gInt("Adjustments", "Window Adjustments", "Radar X:") + 209 * 0.5, gInt("Adjustments", "Window Adjustments", "Radar Y:") + 24, gInt("Adjustments", "Window Adjustments", "Radar X:") + 209 * 0.5, gInt("Adjustments", "Window Adjustments", "Radar Y:") + 190)
@@ -2899,16 +2924,16 @@ local function Radar()
 			surface.SetDrawColor(color)
 			local myPos = me:GetPos()
 			local theirPos = v:GetPos()
-			local theirX = (radarX + (radarW / 2)) + ((theirPos.x - myPos.x) / gInt("Miscellaneous", "Panels", "Radar Distance:"))
-			local theirY = (radarY + (radarH / 2)) + ((myPos.y - theirPos.y) / gInt("Miscellaneous", "Panels", "Radar Distance:"))
+			local theirX = (windowX + (windowW / 2)) + ((theirPos.x - myPos.x) / gInt("Miscellaneous", "Panels", "Radar Distance:"))
+			local theirY = (windowY + (windowH / 2)) + ((myPos.y - theirPos.y) / gInt("Miscellaneous", "Panels", "Radar Distance:"))
 			local myRotation = math.rad(fa.y - 90)
-			theirX = theirX - (radarX + (radarW / 2))
-			theirY = theirY - (radarY + (radarH / 2))
+			theirX = theirX - (windowX + (windowW / 2))
+			theirY = theirY - (windowY + (windowH / 2))
 			local newX = theirX * math.cos(myRotation) - theirY * math.sin(myRotation)
 			local newY = theirX * math.sin(myRotation) + theirY * math.cos(myRotation)
-			newX = newX + (gInt("Adjustments", "Window Adjustments", "Radar X:") + 2 + (radarW / 2))
-			newY = newY + (gInt("Adjustments", "Window Adjustments", "Radar Y:") + 2 + (radarH / 2))
-			if newX < (gInt("Adjustments", "Window Adjustments", "Radar X:") + 2 + radarW) and newX > gInt("Adjustments", "Window Adjustments", "Radar X:") + 2 and newY < (gInt("Adjustments", "Window Adjustments", "Radar Y:") + radarH) and newY > gInt("Adjustments", "Window Adjustments", "Radar Y:") then
+			newX = newX + (gInt("Adjustments", "Window Adjustments", "Radar X:") + 2 + (windowW / 2))
+			newY = newY + (gInt("Adjustments", "Window Adjustments", "Radar Y:") + 2 + (windowH / 2))
+			if newX < (gInt("Adjustments", "Window Adjustments", "Radar X:") + 2 + windowW) and newX > gInt("Adjustments", "Window Adjustments", "Radar X:") + 2 and newY < (gInt("Adjustments", "Window Adjustments", "Radar Y:") + windowH) and newY > gInt("Adjustments", "Window Adjustments", "Radar Y:") then
 				Arrow(newX + 4, newY, v:EyeAngles().y - fa.y)
 			end
 		end
@@ -2919,12 +2944,22 @@ end
 local function PlayersTitle()
 	if !gBool("Miscellaneous", "Panels", "Show List Titles") then return end
 	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Bordered" then
-		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Players List X:"), gInt("Adjustments", "List Adjustments", "Players List Y:") - 24, 90, 22, Color(bordercol.r, bordercol.g, bordercol.b, 255))
+		surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 255)
+		surface.DrawRect(gInt("Adjustments", "List Adjustments", "Players List X:"), gInt("Adjustments", "List Adjustments", "Players List Y:") - 24, 90, 22)
+		for i = 0, 1 do
+			surface.DrawLine(gInt("Adjustments", "List Adjustments", "Players List X:"), gInt("Adjustments", "List Adjustments", "Players List Y:") - 87 + 62 + i, gInt("Adjustments", "List Adjustments", "Players List X:") + 89, gInt("Adjustments", "List Adjustments", "Players List Y:") - 87 + 62 + i)
+		end
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
-		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Players List X:"), gInt("Adjustments", "List Adjustments", "Players List Y:") - 24, 90, 22, Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255))
+		surface.SetDrawColor(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255)
+		surface.DrawRect(gInt("Adjustments", "List Adjustments", "Players List X:"), gInt("Adjustments", "List Adjustments", "Players List Y:") - 24, 90, 22)
+		for i = 0, 1 do
+			surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 255)
+			surface.DrawLine(gInt("Adjustments", "List Adjustments", "Players List X:"), gInt("Adjustments", "List Adjustments", "Players List Y:") - 87 + 62 + i, gInt("Adjustments", "List Adjustments", "Players List X:") + 89, gInt("Adjustments", "List Adjustments", "Players List Y:") - 87 + 62 + i)
+		end
 	end
-	draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Players List X:") + 1, gInt("Adjustments", "List Adjustments", "Players List Y:") - 23, 88, 20, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
-	draw.DrawText("Players", "MiscFont2", gInt("Adjustments", "List Adjustments", "Players List X:") + 47, gInt("Adjustments", "List Adjustments", "Players List Y:") - 22, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_CENTER)
+	surface.SetDrawColor(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255)
+	surface.DrawRect(gInt("Adjustments", "List Adjustments", "Players List X:") + 1, gInt("Adjustments", "List Adjustments", "Players List Y:") - 23, 88, 20)
+	draw.DrawText("Players", "MiscFont2", gInt("Adjustments", "List Adjustments", "Players List X:") + 45, gInt("Adjustments", "List Adjustments", "Players List Y:") - 22, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_CENTER)
 end
 
 local function Players()
@@ -2985,6 +3020,11 @@ local function PlayerList()
 	local offset = 14 + gInt("Main Menu", "Priority List", "List Spacing:")
 	local curcol2 = Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 175)
 	local curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 175)
+	local curcol4 = Color(bordercol.r, bordercol.g, bordercol.b, 255)
+	for i = 0, 1 do
+		surface.SetDrawColor(curcol4)
+		surface.DrawLine(pos_x - 1, pos_y - 64 + 62 + i, pos_x + 348, pos_y - 64 + 62 + i)
+	end
 	if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
 		surface.SetDrawColor(curcol2)
 		surface.DrawRect(pos_x, pos_y, 350, 15)
@@ -3823,7 +3863,7 @@ local src = string.lower(debug.getinfo(2).short_src)
 	end
 end
 
-local function Think()
+local function Tick()
 	if gOption("Miscellaneous", "Chat", "Chat Spam:") ~= "Off" then
 		ChatSpam()
 	end
@@ -3883,6 +3923,7 @@ local function CheckChild(pan)
 end
 
 hook.Add("Tick", "Tick", function()
+	Tick()
 	if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menuopen and not menukeydown) then
 		menuopen = true
 		menukeydown = true
@@ -3895,12 +3936,6 @@ hook.Add("Tick", "Tick", function()
 	else
 		menukeydown2 = false
 	end
-end)
-
-hook.Add("Think", "Think", function()
-	TraitorDetector()
-	MurdererDetector()
-	Think()
 	if engine.ActiveGamemode() == "terrortown" then
 		if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Hide Round Report") then
 			if not displayed then
@@ -3911,28 +3946,6 @@ hook.Add("Think", "Think", function()
 		if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Panel Remover") then
 			local pan = vgui.GetHoveredPanel()
 			CheckChild(pan)
-		end
-		if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Traitor Finder") then
-			if GetRoundState() == ROUND_ACTIVE then
-				for k, v in next, ents.GetAll() do
-					if not v:IsWeapon() or not v:IsValid() then continue end
-					if (v:GetOwner():IsPlayer() and v:GetOwner():IsDetective()) or v:GetOwner() == me then continue end
-					if not me:IsTraitor() and v:GetOwner():IsPlayer() and table.HasValue(v.CanBuy, 1) and not table.HasValue(tweps, v:GetClass()) and not table.HasValue(traitors, v:GetOwner():UniqueID()) then
-						table.insert(traitors, v:GetOwner():UniqueID())
-						table.insert(tweps, v:GetClass())
-							chat.AddText(Color(255, 255, 255), "\n[TRAITOR FINDER LOGS]")
-							chat.AddText(Color(255, 255, 255), "Detected traitor: ", Color(255, 0, 0), v:GetOwner():Nick())
-							chat.AddText(Color(255, 255, 255), "Item purchased: ", Color(255, 0, 0), v:GetPrintName().."\n")
-							surface.PlaySound("buttons/lightswitch2.wav")
-					elseif gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Traitor Finder") and me:IsTraitor() and v:GetOwner():IsPlayer() and v:GetOwner():IsTraitor() then
-						table.insert(traitors, v:GetOwner():UniqueID())
-						table.insert(tweps, v:GetClass())
-					end
-				end
-			elseif GetRoundState() == ROUND_POST and #traitors > 0 then
-				table.Empty(traitors)
-				table.Empty(tweps)
-			end
 		end
 	elseif engine.ActiveGamemode() == "murder" then
 		if gBool("Main Menu", "Murder Utilities", "Hide End Round Board") then
@@ -3958,13 +3971,13 @@ hook.Add("Think", "Think", function()
 		local tauntspam = {"funny", "help", "scream", "morose",}
 			if gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Funny" then
 				RunConsoleCommand("mu_taunt", "funny")
-			elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Funny" == "Help" then
+			elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Help" then
 				RunConsoleCommand("mu_taunt", "help")
-			elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Funny" == "Scream" then
+			elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Scream" then
 				RunConsoleCommand("mu_taunt", "scream")
-			elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Funny" == "Morose" then
+			elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Morose" then
 				RunConsoleCommand("mu_taunt", "morose")
-			elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Funny" == "Random" then
+			elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Random" then
 				RunConsoleCommand("mu_taunt", tauntspam[math.random(#tauntspam)])
 			end
 		end
@@ -4008,6 +4021,35 @@ hook.Add("Think", "Think", function()
 			MsgG(4.3, "Successfully blocked an advertisement!")
 			surface.PlaySound("buttons/lightswitch2.wav")
 			return true
+			end
+		end
+	end
+end)
+
+hook.Add("Think", "Think", function()
+	TraitorDetector()
+	MurdererDetector()
+	if engine.ActiveGamemode() == "terrortown" then
+		if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Traitor Finder") then
+			if GetRoundState() == ROUND_ACTIVE then
+				for k, v in next, ents.GetAll() do
+					if not v:IsWeapon() or not v:IsValid() then continue end
+					if (v:GetOwner():IsPlayer() and v:GetOwner():IsDetective()) or v:GetOwner() == me then continue end
+					if not me:IsTraitor() and v:GetOwner():IsPlayer() and table.HasValue(v.CanBuy, 1) and not table.HasValue(tweps, v:GetClass()) and not table.HasValue(traitors, v:GetOwner():UniqueID()) then
+						table.insert(traitors, v:GetOwner():UniqueID())
+						table.insert(tweps, v:GetClass())
+							chat.AddText(Color(255, 255, 255), "\n[TRAITOR FINDER LOGS]")
+							chat.AddText(Color(255, 255, 255), "Detected traitor: ", Color(255, 0, 0), v:GetOwner():Nick())
+							chat.AddText(Color(255, 255, 255), "Item purchased: ", Color(255, 0, 0), v:GetPrintName().."\n")
+							surface.PlaySound("buttons/lightswitch2.wav")
+					elseif gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Traitor Finder") and me:IsTraitor() and v:GetOwner():IsPlayer() and v:GetOwner():IsTraitor() then
+						table.insert(traitors, v:GetOwner():UniqueID())
+						table.insert(tweps, v:GetClass())
+					end
+				end
+			elseif GetRoundState() == ROUND_POST and #traitors > 0 then
+				table.Empty(traitors)
+				table.Empty(tweps)
 			end
 		end
 	end
