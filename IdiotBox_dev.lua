@@ -510,37 +510,31 @@ local options = {
 	}, 
 	["Adjustments"] = {
 		{
-			{"Main Text Color", 16, 20, 232, 105, 88}, 
-			{"Red:", "SliderOld", 0, 255, 92}, 
-			{"Green:", "SliderOld", 205, 255, 92}, 
-			{"Blue:", "SliderOld", 255, 255, 92}, 
-		}, 
-		{
-			{"Menu Text Color", 16, 138, 232, 105, 88}, 
+			{"Menu Text Color", 16, 20, 232, 105, 88}, 
 			{"Red:", "SliderOld", 255, 255, 92}, 
 			{"Green:", "SliderOld", 255, 255, 92}, 
 			{"Blue:", "SliderOld", 255, 255, 92}, 
 		}, 
 		{
-			{"Background Menu Color", 16, 256, 232, 105, 88}, 
+			{"Background Menu Color", 16, 138, 232, 105, 88}, 
 			{"Red:", "SliderOld", 30, 255, 92}, 
 			{"Green:", "SliderOld", 30, 255, 92}, 
-			{"Blue:", "SliderOld", 45, 255, 92}, 
+			{"Blue:", "SliderOld", 37, 255, 92}, 
 		}, 
 		{
-			{"Border Color", 16, 374, 232, 105, 88}, 
+			{"Border Color", 16, 256, 232, 105, 88}, 
 			{"Red:", "SliderOld", 0, 255, 92}, 
 			{"Green:", "SliderOld", 155, 255, 92}, 
 			{"Blue:", "SliderOld", 255, 255, 92}, 
 		}, 
 		{
-			{"Viewmodel Color", 16, 492, 232, 105, 88}, 
+			{"Viewmodel Color", 16, 374, 232, 105, 88}, 
 			{"Red:", "SliderOld", 0, 255, 92}, 
 			{"Green:", "SliderOld", 235, 255, 92}, 
 			{"Blue:", "SliderOld", 255, 255, 92}, 
 		}, 
 		{
-			{"Crosshair Color", 16, 610, 232, 130, 88}, 
+			{"Crosshair Color", 16, 492, 232, 130, 88}, 
 			{"Red:", "SliderOld", 0, 255, 92}, 
 			{"Green:", "SliderOld", 235, 255, 92}, 
 			{"Blue:", "SliderOld", 255, 255, 92}, 
@@ -595,20 +589,18 @@ local options = {
 			{"Blue:", "SliderOld", 255, 255, 92}, 
 		}, 
 		{
-			{"Window Adjustments", 506, 374, 232, 155, 88}, 
+			{"Window Adjustments", 506, 374, 232, 130, 88}, 
 			{"Spectators X:", "SliderOld", 12, 2000, 92}, 
 			{"Spectators Y:", "SliderOld", 12, 2000, 92}, 
-			{"Radar X:", "SliderOld", 225, 2000, 92}, 
+			{"Radar X:", "SliderOld", 1710, 2000, 92}, 
 			{"Radar Y:", "SliderOld", 12, 2000, 92}, 
-			{"Roundness:", "SliderOld", 16, 42, 92}, 
 		}, 
 		{
-			{"List Adjustments", 506, 543, 232, 155, 88}, 
+			{"List Adjustments", 506, 518, 232, 130, 88}, 
 			{"Debug Info X:", "SliderOld", 17, 2000, 92}, 
 			{"Debug Info Y:", "SliderOld", 250, 2000, 92}, 
 			{"Players List X:", "SliderOld", 17, 2000, 92}, 
 			{"Players List Y:", "SliderOld", 430, 2000, 92}, 
-			{"Roundness:", "SliderOld", 8, 10, 92}, 
 		}, 
 	}, 
 }
@@ -2741,12 +2733,12 @@ end
 local function StausTitle()
 	if !gBool("Miscellaneous", "Panels", "Show List Titles") then return end
 	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Bordered" then
-		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Debug Info X:") - 1, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, 255))
+		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Debug Info X:"), gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 24, 90, 22, Color(bordercol.r, bordercol.g, bordercol.b, 255))
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
-		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Debug Info X:") - 1, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, 0))
+		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Debug Info X:"), gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 24, 90, 22, Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255))
 	end
 	draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Debug Info X:") + 1, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 23, 88, 20, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
-	draw.DrawText("Debug", "MiscFont2", gInt("Adjustments", "List Adjustments", "Debug Info X:") + 45, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 22, Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_CENTER)
+	draw.DrawText("Debug", "MiscFont2", gInt("Adjustments", "List Adjustments", "Debug Info X:") + 45, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 22, Color(255, 255, 255, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_CENTER)
 end
 
 local function Status()
@@ -2834,16 +2826,18 @@ end
 
 local function Spectator()
 	local radarX, radarY, radarW, radarH = 50, ScrH() / 3, 200, 200
-	local color1 = (Color(0, 0, 0, gInt("Adjustments", "Others", "Text Opacity:")))
-	local color2 = (Color(255, 0, 0, gInt("Adjustments", "Others", "Text Opacity:")))
-	local color3 = (Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Adjustments", "Others", "Text Opacity:")))
-	local color4 = (Color(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:")))
+	local color1 = Color(0, 0, 0, gInt("Adjustments", "Others", "Text Opacity:"))
+	local color2 = Color(255, 0, 0, gInt("Adjustments", "Others", "Text Opacity:"))
+	local color3 = Color(255, 255, 255, gInt("Adjustments", "Others", "Text Opacity:"))
+	local color4 = Color(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	local hudspecslength = 150
 	specscount = 0
 	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Bordered" then
-		draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Spectators X:"), gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 1.75, radarW + 4, radarH + 4, Color(bordercol.r, bordercol.g, bordercol.b, 255))
+		surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 255)
+		surface.DrawRect(gInt("Adjustments", "Window Adjustments", "Spectators X:") + 1, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 0.75, radarW + 2, radarH + 2)
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
-		draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Spectators X:"), gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 1.75, radarW + 4, radarH + 4, Color(bordercol.r, bordercol.g, bordercol.b, 0))
+		surface.SetDrawColor(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255)
+		surface.DrawRect(gInt("Adjustments", "Window Adjustments", "Spectators X:") + 1, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 0.75, radarW + 2, radarH + 2)
 	end
 	draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Spectators X:") + 2, gInt("Adjustments", "Window Adjustments", "Spectators Y:"), radarW, radarH, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
 	draw.SimpleText("Spectators", "MiscFont2", gInt("Adjustments", "Window Adjustments", "Spectators X:") + 102, gInt("Adjustments", "Window Adjustments", "Spectators Y:") + 11, color3, 1, 1)
@@ -2881,17 +2875,21 @@ local function Arrow(x, y, myRotation)
 end
 
 local function Radar()
-	local col = Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
+	local col = Color(255, 255, 255, gInt("Adjustments", "Others", "Text Opacity:"))
 	local everything = ents.GetAll()
 	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Bordered" then
-		draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Radar X:"), gInt("Adjustments", "Window Adjustments", "Radar Y:") - 1.75, radarW + 4, radarH + 4, Color(bordercol.r, bordercol.g, bordercol.b, 255))
+		draw.RoundedBox(360, gInt("Adjustments", "Window Adjustments", "Radar X:") + 1, gInt("Adjustments", "Window Adjustments", "Radar Y:") - 0.75, radarW + 2, radarH + 2, Color(bordercol.r, bordercol.g, bordercol.b, 255))
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
-		draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Radar X:"), gInt("Adjustments", "Window Adjustments", "Radar Y:") - 1.75, radarW + 4, radarH + 4, Color(bordercol.r, bordercol.g, bordercol.b, 0))
+		draw.RoundedBox(360, gInt("Adjustments", "Window Adjustments", "Radar X:") + 1, gInt("Adjustments", "Window Adjustments", "Radar Y:") - 0.75, radarW + 2, radarH + 2, Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255))
 	end
-	draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Radar X:") + 2, gInt("Adjustments", "Window Adjustments", "Radar Y:"), radarW, radarH, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
+	draw.RoundedBox(360, gInt("Adjustments", "Window Adjustments", "Radar X:") + 2, gInt("Adjustments", "Window Adjustments", "Radar Y:"), radarW, radarH, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
 	draw.SimpleText("Radar", "MiscFont2", gInt("Adjustments", "Window Adjustments", "Radar X:") + 102, gInt("Adjustments", "Window Adjustments", "Radar Y:") + 11, col, 1, 1)
 	draw.NoTexture()
-	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 255 - 75)
+	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Bordered" then
+		surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 255 - 75)
+	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
+		surface.SetDrawColor(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255)
+	end
 	surface.DrawLine(gInt("Adjustments", "Window Adjustments", "Radar X:") + 209 * 0.5, gInt("Adjustments", "Window Adjustments", "Radar Y:") + 24, gInt("Adjustments", "Window Adjustments", "Radar X:") + 209 * 0.5, gInt("Adjustments", "Window Adjustments", "Radar Y:") + 190)
 	surface.DrawLine(gInt("Adjustments", "Window Adjustments", "Radar X:") + 12, gInt("Adjustments", "Window Adjustments", "Radar Y:") + 209 * 0.5, gInt("Adjustments", "Window Adjustments", "Radar X:") + 191, gInt("Adjustments", "Window Adjustments", "Radar Y:") + 209 * 0.5)
 	surface.SetDrawColor(team.GetColor(me:Team()))
@@ -2922,12 +2920,12 @@ end
 local function PlayersTitle()
 	if !gBool("Miscellaneous", "Panels", "Show List Titles") then return end
 	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Bordered" then
-		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Players List X:") - 1, gInt("Adjustments", "List Adjustments", "Players List Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, 255))
+		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Players List X:"), gInt("Adjustments", "List Adjustments", "Players List Y:") - 24, 90, 22, Color(bordercol.r, bordercol.g, bordercol.b, 255))
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
-		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Players List X:") - 1, gInt("Adjustments", "List Adjustments", "Players List Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, 0))
+		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Players List X:"), gInt("Adjustments", "List Adjustments", "Players List Y:") - 24, 90, 22, Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255))
 	end
 	draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Players List X:") + 1, gInt("Adjustments", "List Adjustments", "Players List Y:") - 23, 88, 20, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
-	draw.DrawText("Players", "MiscFont2", gInt("Adjustments", "List Adjustments", "Players List X:") + 47, gInt("Adjustments", "List Adjustments", "Players List Y:") - 22, Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_CENTER)
+	draw.DrawText("Players", "MiscFont2", gInt("Adjustments", "List Adjustments", "Players List X:") + 47, gInt("Adjustments", "List Adjustments", "Players List Y:") - 22, Color(255, 255, 255, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_CENTER)
 end
 
 local function Players()
@@ -7301,7 +7299,6 @@ Outcome (paradox)
 Mr. Squid
 OhhStyle
 SDunken
-Crave4
 
 ]]--
 
