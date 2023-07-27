@@ -597,9 +597,9 @@ local options = {
 		}, 
 		{
 			{"List Adjustments", 506, 518, 232, 130, 88}, 
-			{"Debug Info X:", "SliderOld", 17, 2000, 92}, 
+			{"Debug Info X:", "SliderOld", 12, 2000, 92}, 
 			{"Debug Info Y:", "SliderOld", 250, 2000, 92}, 
-			{"Players List X:", "SliderOld", 17, 2000, 92}, 
+			{"Players List X:", "SliderOld", 12, 2000, 92}, 
 			{"Players List Y:", "SliderOld", 430, 2000, 92}, 
 		}, 
 	}, 
