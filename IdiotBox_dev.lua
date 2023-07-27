@@ -2769,62 +2769,50 @@ local function Status()
 	surface.SetFont("MiscFont")
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
+	surface.SetTextColor(bordercol.r, bordercol.g - 24, bordercol.b - 130, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Health: "..hp)
 	if (em.IsValid(wep)) then
 	local daclip = wep:Clip1()
 	if daclip < 0 then
 	daclip = 0
 	end
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
 	surface.DrawText("Ammo: "..daclip.."/"..me:GetAmmoCount(wep:GetPrimaryAmmoType()))
 	else
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
 	surface.DrawText("Ammo: ".."0".."/".."0")
 	end
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Velocity: "..math.Round(velocity))
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Server: "..GetHostName())
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Gamemode: "..engine.ActiveGamemode())
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Map: "..game.GetMap())
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Looking at: "..EntityName())
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Entities: "..math.Round(ents.GetCount()))
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Frames: "..math.Round(1 / FrameTime()))
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Ping: "..me:Ping())
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Date: "..os.date("%d %b %Y"))
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Time: "..os.date("%H:%M:%S"))
 end
 
@@ -2967,11 +2955,11 @@ local function Players()
 	surface.SetFont("MiscFont")
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Players List X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Players List Y:"))
-	surface.SetTextColor(0, 131, 175, gInt("Adjustments", "Others", "Text Opacity:"))
+	surface.SetTextColor(bordercol.r, bordercol.g - 24, bordercol.b - 80, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Players: "..player.GetCount().."/"..game.MaxPlayers())
 	local NWString = em.GetNWString(v)
 	for k, v in next, player.GetAll() do
-		surface.SetTextColor(0, 131, 175, gInt("Adjustments", "Others", "Text Opacity:"))
+		surface.SetTextColor(bordercol.r, bordercol.g - 24, bordercol.b - 80, gInt("Adjustments", "Others", "Text Opacity:"))
 		hh = hh + 12
 		surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Players List X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Players List Y:"))
 		surface.DrawText(""..em.GetNWString(v, "usergroup").."")
