@@ -2,41 +2,25 @@
  //--------By Phizz--------//
 //------------------------//
 
+--[[
 
+||-------------NOTES-------------||
 
---NOTE-- I do not take credit for all of the features in this cheat. Some codes have been taken from other scripts. In fact, most of this thing is pasted. The contributors are listed in the 'readme.txt' file;
+I do not take credit for all of the features in this cheat. The contributors are listed at the bottom of this script;
+This script is nowhere near perfect - there's a lot of room for improvement. It started off as a very broken, random paste that I made for fun, then it somehow turned into one of the most popular cheats in Garry's Mod;
+We try to make IdiotBox a better cheat with each update that gets released, and so far, it seems to go pretty well - but we're nowhere near the end.
 
---NOTE-- You can report any bugs or post any suggestions in our Discord server (link is on the website - if the server gets disabled, DM me at https://steamcommunity.com/id/phizzofficial/ or visit the website, we always refresh invite links) or through our website, at https://phizzofficial.wixsite.com/idiotbox4gmod/;
+||------CONTACT INFORMATION------||
 
---NOTE-- This script is nowhere near perfect - there's a lot of room for improvement. It started off as a very broken, random paste that I made for fun, then it somehow turned into one of the most popular cheats in Garry's Mod. We try to make IdiotBox a better cheat with each update that gets released, and so far, it seems to go pretty well - but we're nowhere near the end.
+Discord server: https://discord.com/invite/2h4un8G;
+Steam group: https://steamcommunity.com/groups/ib4g;
+Creator (Phizz): https://steamcommunity.com/id/phizzofficial/, or 'phizz0777' on Discord.
 
-
-
-local detours = {}
-
-local protectedfiles = {
-	"IdiotBox_latest.lua", 
-	"IdiotBox_backup.lua", 
-	"IdiotBox_dev.lua", 
-}
-
-local function DetourFunction(originalFunction, newFunction)
-    detours[newFunction] = originalFunction
-    return newFunction
-end
- 
-file.Read = DetourFunction(file.Read, function(fileName, path)
-	for k, v in next, protectedfiles do
-		if string.find("IdiotBox", v) then
-			return "3D_TrollFace_Troll_Model_200"
-		end
-	end 
-    return detours[file.Read](fileName, path)
-end)
+]]--
 
 local global = (_G)
 local folder = "IdiotBox"
-local version = "7.0.b1-pre12"
+local version = "7.0.b1-pre13"
 
 local me = LocalPlayer()
 --[[ local wep = me:GetActiveWeapon() ]]-- Trying to localize this causes many issues for whatever reason, but I'll figure it out at one point
@@ -89,7 +73,7 @@ surface.CreateFont("VisualsFont2", {font = "Tahoma", size = 11, antialias = fals
 surface.CreateFont("MenuFont", {font = "Tahoma", size = 12, antialias = true, outline = false})
 surface.CreateFont("MenuFont2", {font = "Tahoma", size = 12, weight = 674, antialias = false, outline = true})
 surface.CreateFont("MenuFont3", {font = "Tahoma", size = 12, antialias = true, outline = true})
-surface.CreateFont("MainFont", {font = "Tahoma", size = 16, weight = 1300, antialias = false, outline = false})
+surface.CreateFont("MainFont", {font = "Tahoma", size = 16, weight = 1300, antialias = false, outline = true})
 surface.CreateFont("MainFont2", {font = "Tahoma", size = 11, weight = 640, antialias = false, outline = true})
 surface.CreateFont("MainFont3", {font = "Tahoma", size = 13, weight = 800, antialias = false, outline = true})
 surface.CreateFont("MiscFont", {font = "Tahoma", size = 12, weight = 900, antialias = false, outline = true})
@@ -136,6 +120,10 @@ idiot.contributors["STEAM_0:1:101813068"] = {} -- sdunken (first user)
 
 --NOTE-- I want to mention that these are not the only people that helped me with the development of IdiotBox, but they are the ones who helped me the most and that is why they are credited here.
 
+local function UIScale(i)
+    return math.max(i * (ScrH() / 1440), 1)
+end
+
 local options = {
 	["Main Menu"] = {
 		{
@@ -160,7 +148,7 @@ local options = {
 			{"DarkRP Utilities", 16, 412, 232, 148, 218}, 
 			{"Suicide Near Arrest Batons", "Checkbox", false, 78}, 
 			{"Transparent Props", "Checkbox", false, 78}, 
-			{"Transparency:", "Slider", 175, 255, 92}, 
+			{"Transparency:", "Slider", 175, 255, 156}, 
 			{""}, 
 			{"Money Value", "Checkbox", false, 78}, 
 		}, 
@@ -173,16 +161,18 @@ local options = {
 			{"Bystander Name", "Checkbox", false, 78}, 
 		}, 
 		{
-			{"Menus", 261, 20, 232, 175, 218}, 
+			{"Menus", 261, 20, 232, 225, 218}, 
 			{"Entity Finder Menu", "Button", "", 92}, 
 			{"Plugin Loader Menu", "Button", "", 92}, 
-			{"Menu Style:", "Selection", "Borders", {"Borders", "Borderless"}, 92}, 
+			{"Toolbar Style:", "Selection", "BG Color", {"BG Color", "Border Color"}, 92}, 
 			{""}, 
-			{"Options Style:", "Selection", "Borderless", {"Borders", "Borderless"}, 92}, 
+			{"Menu Style:", "Selection", "Borderless", {"Bordered", "Borderless"}, 92}, 
+			{""}, 
+			{"Options Style:", "Selection", "Borderless", {"Bordered", "Borderless"}, 92}, 
 			{""}, 
 		}, 
 		{
-			{"Configurations", 261, 208, 232, 175, 218}, 
+			{"Configurations", 261, 258, 232, 175, 218}, 
 			{"Automatically Save", "Checkbox", false, 78}, 
 			{"Save Configuration", "Button", "", 92}, 
 			{"Load Configuration", "Button", "", 92}, 
@@ -191,7 +181,7 @@ local options = {
 			{""}, 
 		}, 
 		{
-          	{"Others", 261, 396, 232, 130, 218}, 
+          	{"Others", 261, 446, 232, 130, 218}, 
 			{"Feature Tooltips", "Checkbox", true, 78}, -- Enabled by default
 			{"Apply Custom Name", "Button", false, 92}, 
 			{"Print Changelog", "Button", "", 92}, 
@@ -200,11 +190,11 @@ local options = {
 		{
 			{"Priority List", 506, 20, 232, 205, 218}, 
 			{"Enabled", "Checkbox", true, 78}, -- Enabled by default
-			{"List Position X:", "Slider", 1356, 2000, 92}, 
+			{"List Position X:", "Slider", 1356, 2000, 156}, 
 			{""}, 
-			{"List Position Y:", "Slider", 134, 2000, 92}, 
+			{"List Position Y:", "Slider", 112, 2000, 156}, 
 			{""}, 
-			{"List Spacing:", "Slider", 0, 10, 92}, 
+			{"List Spacing:", "Slider", 0, 10, 156}, 
 			{""}, 
 		}, 
 		{
@@ -220,9 +210,9 @@ local options = {
 			{"Enabled", "Checkbox", false, 78}, 
 			{"Toggle Key:", "Toggle", 0, 92, 0}, 
 			{""}, 
-			{"Aim FoV Value:", "Slider", 0, 180, 92}, 
+			{"Aim FoV Value:", "Slider", 0, 180, 156}, 
 			{""}, 
-			{"Aim Smoothness:", "Slider", 0, 50, 92}, 
+			{"Aim Smoothness:", "Slider", 0, 50, 156}, 
 			{""}, 
 			{"Silent Aim", "Checkbox", false, 78}, 
 			{"Auto Fire", "Checkbox", false, 78}, 
@@ -262,13 +252,13 @@ local options = {
 			{"Target Driving Players", "Checkbox", false, 78}, 
 			{"Target Transparent Players", "Checkbox", false, 78}, 
 			{"Target Overhealed Players", "Checkbox", false, 78}, 
-			{"Max Player Health:", "Slider", 500, 5000, 92}, 
+			{"Max Player Health:", "Slider", 500, 5000, 156}, 
 			{""}, 
 			{"Distance Limit", "Checkbox", false, 78}, 
-			{"Distance:", "Slider", 1500, 5000, 92}, 
+			{"Distance:", "Slider", 1500, 5000, 156}, 
 			{""}, 
 			{"Velocity Limit", "Checkbox", false, 78}, 
-			{"Velocity:", "Slider", 1000, 5000, 92}, 
+			{"Velocity:", "Slider", 1000, 5000, 156}, 
 			{""}, 
 		}, 
 		{
@@ -283,7 +273,7 @@ local options = {
 			{""}, 
 			{"Disable Interpolation", "Checkbox", false, 78}, 
 			{"Manipulate Bullet Time", "Checkbox", false, 78}, 
-			{"Bullet Fire Delay:", "Slider", 0, 100, 92}, 
+			{"Bullet Fire Delay:", "Slider", 0, 100, 156}, 
 			{""}, 
 			{"Show FoV Circle", "Checkbox", false, 78}, 
 			{"Snap Lines", "Checkbox", false, 78}, 
@@ -307,13 +297,13 @@ local options = {
 			{""}, 
 			{"Switch Key:", "Toggle", 0, 92, 0}, 
 			{""}, 
-			{"Spinbot Pitch Speed:", "Slider", 30, 180, 92}, 
+			{"Spinbot Pitch Speed:", "Slider", 30, 180, 156}, 
 			{""}, 
-			{"Spinbot Yaw Speed:", "Slider", 30, 180, 92}, 
+			{"Spinbot Yaw Speed:", "Slider", 30, 180, 156}, 
 			{""}, 
-			{"Emotion Pitch Speed:", "Slider", 18, 100, 92}, 
+			{"Emotion Pitch Speed:", "Slider", 18, 100, 156}, 
 			{""}, 
-			{"Emotion Yaw Speed:", "Slider", 18, 100, 92}, 
+			{"Emotion Yaw Speed:", "Slider", 18, 100, 156}, 
 			{""}, 
 		}, 
 		{
@@ -330,9 +320,9 @@ local options = {
 			{"Fake Lag", 506, 20, 232, 180, 218}, 
 			{"Enabled", "Checkbox", false, 78}, 
 			{"Disable on Attack", "Checkbox", false, 78}, 
-			{"Lag Choke:", "Slider", 14, 14, 92}, 
+			{"Lag Choke:", "Slider", 14, 14, 156}, 
 			{""}, 
-			{"Lag Send:", "Slider", 0, 14, 92}, 
+			{"Lag Send:", "Slider", 0, 14, 156}, 
 			{""}, 
 		}, 
 	}, 
@@ -370,14 +360,14 @@ local options = {
 		{
 			{"Point of View", 261, 20, 232, 725, 218}, 
 			{"Custom FoV", "Checkbox", false, 78}, 
-			{"FoV Value:", "Slider", 110, 360, 92}, 
+			{"FoV Value:", "Slider", 110, 360, 156}, 
 			{""}, 
 			{"Thirdperson", "Checkbox", false, 78}, 
 			{"Thirdperson Key:", "Toggle", 0, 92, 0}, 
 			{""}, 
-			{"Thirdperson Range:", "Slider", 15, 100, 92}, 
+			{"Thirdperson Range:", "Slider", 15, 100, 156}, 
 			{""}, 
-			{"Thirdperson FoV Value:", "Slider", 110, 360, 92}, 
+			{"Thirdperson FoV Value:", "Slider", 110, 360, 156}, 
 			{""}, 
 			{"Viewmodel Chams:", "Selection", "Off", {"Off", "Normal", "Flat", "Wireframe"}, 92}, 
 			{""}, 
@@ -385,17 +375,17 @@ local options = {
 			{"No Viewmodel", "Checkbox", false, 78}, 
 			{"No Hands", "Checkbox", false, 78}, 
 			{"Custom Positions", "Checkbox", false, 78}, 
-			{"Viewmodel X:", "Slider", 50, 100, 92}, 
+			{"Viewmodel X:", "Slider", 50, 100, 156}, 
 			{""}, 
-			{"Viewmodel Y:", "Slider", 30, 60, 92}, 
+			{"Viewmodel Y:", "Slider", 30, 60, 156}, 
 			{""}, 
-			{"Viewmodel Z:", "Slider", 20, 40, 92}, 
+			{"Viewmodel Z:", "Slider", 20, 40, 156}, 
 			{""}, 
-			{"Viewmodel Pitch:", "Slider", 90, 180, 92}, 
+			{"Viewmodel Pitch:", "Slider", 90, 180, 156}, 
 			{""}, 
-			{"Viewmodel Yaw:", "Slider", 90, 180, 92}, 
+			{"Viewmodel Yaw:", "Slider", 90, 180, 156}, 
 			{""}, 
-			{"Viewmodel Roll:", "Slider", 90, 180, 92}, 
+			{"Viewmodel Roll:", "Slider", 90, 180, 156}, 
 			{""}, 
 		}, 
 		{
@@ -422,7 +412,7 @@ local options = {
 			{"Dormant Check:", "Selection", "All", {"None", "Players", "Entities", "All"}, 92}, 
 			{""}, 
 			{"Distance Limit", "Checkbox", false, 78}, 
-			{"Distance:", "Slider", 1500, 5000, 92}, 
+			{"Distance:", "Slider", 1500, 5000, 156}, 
 			{""}, 
 		}, 
 	}, 
@@ -441,7 +431,7 @@ local options = {
 		{
 			{"Textures", 16, 253, 232, 192, 218}, 
 			{"Transparent Walls", "Checkbox", false, 78}, 
-			{"Transparency:", "Slider", 82, 100, 92}, 
+			{"Transparency:", "Slider", 82, 100, 156}, 
 			{""}, 
 			{"Remove Sky", "Checkbox", false, 78}, 
 			{"Remove 3D Skybox", "Checkbox", false, 78}, 
@@ -452,12 +442,12 @@ local options = {
 			{"Panels", 16, 459, 232, 244, 218}, 
 			{"Spectators Window", "Checkbox", false, 78}, 
 			{"Radar Window", "Checkbox", false, 78}, 
-			{"Radar Distance:", "Slider", 50, 100, 92}, 
+			{"Radar Distance:", "Slider", 50, 100, 156}, 
 			{""}, 
 			{"Debug Info", "Checkbox", false, 78}, 
 			{"Players List", "Checkbox", false, 78}, 
 			{"Show List Titles", "Checkbox", true, 78}, -- Enabled by default
-			{"Panels Style:", "Selection", "Borders", {"Borders", "Borderless"}, 92}, 
+			{"Panels Style:", "Selection", "Bordered", {"Bordered", "Borderless"}, 92}, 
 			{""}, 
 		}, 
 		{
@@ -468,14 +458,14 @@ local options = {
 			{"Circle Strafe", "Checkbox", false, 78}, 
 			{"Circle Strafe Key:", "Toggle", 0, 92, 0}, 
 			{""}, 
-			{"Circle Strafe Speed:", "Slider", 2, 6, 92}, 
+			{"Circle Strafe Speed:", "Slider", 2, 6, 156}, 
 			{""}, 
 			{"Air Crouch", "Checkbox", false, 78}, 
 			{"Fake Crouch", "Checkbox", false, 78}, 
 			{"Air Stuck", "Checkbox", false, 78}, 
 			{"Air Stuck Key:", "Toggle", 0, 92, 0}, 
 			{""}, 
-			{"Air Stuck Value:", "Slider", 100, 500, 92}, 
+			{"Air Stuck Value:", "Slider", 100, 500, 156}, 
 			{""}, 
 		}, 
 		{
@@ -483,9 +473,9 @@ local options = {
 			{"Enabled", "Checkbox", false, 78}, 
 			{"Toggle Key:", "Toggle", 0, 92, 0}, 
 			{""}, 
-			{"Speed:", "Slider", 30, 100, 92}, 
+			{"Speed:", "Slider", 30, 100, 156}, 
 			{""}, 
-			{"FoV Value:", "Slider", 110, 360, 92}, 
+			{"FoV Value:", "Slider", 110, 360, 156}, 
 			{""}, 
 		}, 
 		{
@@ -550,10 +540,11 @@ local options = {
 			{"Blue:", "SliderOld", 255, 255, 92}, 
 		}, 
 		{
-			{"Crosshair Color", 16, 610, 232, 105, 88}, 
+			{"Crosshair Color", 16, 610, 232, 130, 88}, 
 			{"Red:", "SliderOld", 0, 255, 92}, 
 			{"Green:", "SliderOld", 235, 255, 92}, 
 			{"Blue:", "SliderOld", 255, 255, 92}, 
+			{"Opacity:", "SliderOld", 255, 255, 92}, 
 		}, 
 		{
 			{"Team Visuals Color", 261, 20, 232, 105, 88}, 
@@ -580,12 +571,10 @@ local options = {
 			{"Blue:", "SliderOld", 175, 255, 92}, 
 		}, 
 		{
-			{"Others", 261, 492, 232, 157, 88}, 
-			{"T Opacity:", "SliderOld", 255, 255, 92}, 
-			{"B Opacity:", "SliderOld", 255, 255, 92}, 
-			{"BG Opacity:", "SliderOld", 255, 255, 92}, 
+			{"Others", 261, 492, 232, 105, 88}, 
+			{"Text Opacity:", "SliderOld", 255, 255, 92}, 
 			{"BG Darkness:", "SliderOld", 22, 25, 92}, 
-			{"Roundness:", "SliderOld", 38, 67, 92}, 
+			{"Roundness:", "SliderOld", 0, 30, 92}, 
 		}, 
 		{
 			{"Misc Visuals Color", 506, 20, 232, 105, 88}, 
@@ -606,21 +595,19 @@ local options = {
 			{"Blue:", "SliderOld", 255, 255, 92}, 
 		}, 
 		{
-			{"Window Adjustments", 506, 374, 232, 180, 88}, 
+			{"Window Adjustments", 506, 374, 232, 155, 88}, 
 			{"Spectators X:", "SliderOld", 12, 2000, 92}, 
 			{"Spectators Y:", "SliderOld", 12, 2000, 92}, 
 			{"Radar X:", "SliderOld", 225, 2000, 92}, 
 			{"Radar Y:", "SliderOld", 12, 2000, 92}, 
-			{"Window Opacity:", "SliderOld", 255, 255, 92}, 
 			{"Roundness:", "SliderOld", 16, 42, 92}, 
 		}, 
 		{
-			{"List Adjustments", 506, 568, 232, 180, 88}, 
+			{"List Adjustments", 506, 543, 232, 155, 88}, 
 			{"Debug Info X:", "SliderOld", 17, 2000, 92}, 
 			{"Debug Info Y:", "SliderOld", 250, 2000, 92}, 
 			{"Players List X:", "SliderOld", 17, 2000, 92}, 
 			{"Players List Y:", "SliderOld", 430, 2000, 92}, 
-			{"List Opacity:", "SliderOld", 255, 255, 92}, 
 			{"Roundness:", "SliderOld", 8, 10, 92}, 
 		}, 
 	}, 
@@ -782,28 +769,8 @@ do
 		surface.PlaySound("buttons/lightswitch2.wav")
 		return
 	end
-	if (global.game.SinglePlayer()) then
-		MsgR(4.3, "ERROR! Cannot load IdiotBox in Single Player.")
-		surface.PlaySound("buttons/lightswitch2.wav")
-		return
-	end
 	if not file.Exists("lua/bin/gmcl_bsendpacket_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_chatclear_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_big_win32.dll", "MOD") then
-			MsgR(4.3, "ERROR! Please install the modules before using IdiotBox.")
-			surface.PlaySound("buttons/lightswitch2.wav")
-			return
-		end
-	if ScrW() <= 769 or ScrH() <= 859 then
-		MsgR(4.3, "ERROR! The IdiotBox menu resolution is 769x859. Please use a larger resolution.")
-		surface.PlaySound("buttons/lightswitch2.wav")
-		return
-	end
-	if (global.Loaded) then
-		MsgR(4.3, "ERROR! Already initialized IdiotBox. Reloading would cause major issues.")
-		surface.PlaySound("buttons/lightswitch2.wav")
-		return
-	end
-	if global.unloaded == true then
-		MsgR(4.3, "ERROR! You unloaded IdiotBox. Reloading would cause major issues.")
+		MsgR(4.3, "ERROR! Please install the modules before initializing IdiotBox.")
 		surface.PlaySound("buttons/lightswitch2.wav")
 		return
 	end
@@ -1056,20 +1023,28 @@ for k, v in next, order do
 end
 
 local function DrawUpperText(w, h)
-	surface.SetFont("MenuFont2")
+	local curcol2 = Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 175)
+	local curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 175)
+	if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
+		for i = 0, 28 do
+			surface.SetDrawColor(curcol2)
+			surface.DrawLine(1.75, i + 2, w - 2.75, i + 2)
+		end
+	elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
+		for i = 0, 28 do
+			surface.SetDrawColor(curcol3)
+			surface.DrawLine(1.75, i + 2, w - 2.75, i + 2)
+		end
+	end
 	local tw, th = surface.GetTextSize("")
-	surface.SetTextPos(37, 15 - th / 2)
-	surface.SetTextColor(HSVToColor(RealTime() * 45 % 360, 1, 1))
+	surface.SetTextPos(37, 13 - th / 2)
+	surface.SetTextColor(255, 255, 255, 255)
 	surface.SetFont("MainFont")
 	surface.DrawText("IdiotBox v7.0.b1")
-	surface.SetTextPos(147, 18 - th / 2)
-	surface.SetTextColor(maintextcol.r, maintextcol.g - 50, maintextcol.b - 25, 175)
+	surface.SetTextPos(147, 16 - th / 2)
+	surface.SetTextColor(255, 255, 255, 255)
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: d19m07-pre12")
-	surface.SetFont("MenuFont2")
-	surface.DrawRect(0, 31, 0, h - 31)
-	surface.DrawRect(0, h - 0, w, h)
-	surface.DrawRect(w - 0, 31, 0, h)
+	surface.DrawText("Latest build: d27m07-pre13")
 end
 
 local function MouseInArea(minx, miny, maxx, maxy)
@@ -1085,25 +1060,41 @@ local function DrawTabs(self, w, h)
 		local bMouse = MouseInArea(mx + 5 + maxx, my + 31, mx + 5 + maxx + sizeper, my + 31 + 30)
 		if (visible[v]) then
 			local curcol = Color(bordercol.r, bordercol.g, bordercol.b, 255)
-			local curcol2 = Color(bgmenucol.r + 13, bgmenucol.g + 13, bgmenucol.b + 13, 255)
+			local curcol2 = Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 145)
+			local curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 145)
 			for i = 0, 1 do
 				surface.SetDrawColor(curcol)
-				surface.DrawLine(5 + maxx, 62 + i, 5 + maxx + sizeper, 62 + i)
+				surface.DrawLine(4.25 + maxx, 62 + i, 4.25 + maxx + sizeper, 62 + i)
 			end
-			for i = 0, 30 do
-				surface.SetDrawColor(curcol2)
-				surface.DrawLine(5 + maxx, 31 + i, 5 + maxx + sizeper, 31 + i)
+			if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
+				for i = 0, 30 do
+					surface.SetDrawColor(curcol2)
+					surface.DrawLine(4.25 + maxx, 31 + i, 4.25 + maxx + sizeper, 31 + i)
+				end
+			elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
+				for i = 0, 30 do
+					surface.SetDrawColor(curcol3)
+					surface.DrawLine(4.25 + maxx, 31 + i, 4.25 + maxx + sizeper, 31 + i)
+				end
 			end
 		elseif (bMouse) then
-			local curcol = Color(bordercol.r, bordercol.g, bordercol.b, 100)
-			local curcol2 = Color(bgmenucol.r + 13, bgmenucol.g + 13, bgmenucol.b + 13, 100)
+			local curcol = Color(bordercol.r, bordercol.g, bordercol.b, 185)
+			local curcol2 = Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 65)
+			local curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 65)
 			for i = 0, 1 do
 				surface.SetDrawColor(curcol)
-				surface.DrawLine(5 + maxx, 62 + i, 5 + maxx + sizeper, 62 + i)
+				surface.DrawLine(4.25 + maxx, 62 + i, 4.25 + maxx + sizeper, 62 + i)
 			end
-			for i = 0, 30 do
-				surface.SetDrawColor(curcol2)
-				surface.DrawLine(5 + maxx, 31 + i, 5 + maxx + sizeper, 31 + i)
+			if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
+				for i = 0, 30 do
+					surface.SetDrawColor(curcol2)
+					surface.DrawLine(4.25 + maxx, 31 + i, 4.25 + maxx + sizeper, 31 + i)
+				end
+			elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
+				for i = 0, 30 do
+					surface.SetDrawColor(curcol3)
+					surface.DrawLine(4.25 + maxx, 31 + i, 4.25 + maxx + sizeper, 31 + i)
+				end
 			end
 		end
 		if (bMouse and input.IsMouseDown(MOUSE_LEFT) and not mousedown and not visible[v]) then
@@ -1113,13 +1104,21 @@ local function DrawTabs(self, w, h)
 			end
 			visible[v] = not nb
 		end
-		local curcol2 = Color(bgmenucol.r + 13, bgmenucol.g + 13, bgmenucol.b + 13, 85)
-		for i = 0, 30 do
-			surface.SetDrawColor(curcol2)
-			surface.DrawLine(5 + maxx, 31 + i, 5 + maxx + sizeper, 31 + i)
+		local curcol2 = Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 70)
+		local curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 70)
+		if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
+			for i = 0, 30 do
+				surface.SetDrawColor(curcol2)
+				surface.DrawLine(4.25 + maxx, 31 + i, 4.25 + maxx + sizeper, 31 + i)
+			end
+		elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
+			for i = 0, 30 do
+				surface.SetDrawColor(curcol3)
+				surface.DrawLine(4.25 + maxx, 31 + i, 4.25 + maxx + sizeper, 31 + i)
+			end
 		end
 		surface.SetFont("MainFont3")
-		surface.SetTextColor(maintextcol.r, maintextcol.g, maintextcol.b, 255)
+		surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, 255)
 		local tw, th = surface.GetTextSize(v)
 		surface.SetTextPos(5 + maxx + sizeper / 2 - tw / 2, 31 + 15 - th / 2)
 		surface.DrawText(v)
@@ -1130,14 +1129,14 @@ end
 local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 	local size = var[4]
 	surface.SetFont("MenuFont")
-	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetTextPos(25 + posx + 15 + 5, 61 + posy + maxy)
 	local tw, th = surface.GetTextSize(var[1])
 	surface.SetDrawColor(bgmenucol.r + 175, bgmenucol.g + 175, bgmenucol.b + 175, 55)
 	local mx, my = self:GetPos()
 	local bMouse = MouseInArea(mx - 193 + posx + dist, my + 61 + posy + maxy, mx - 193 + posx + dist + size - 65, my + 61 + posy + maxy + 16)
 	if bMouse then
-		surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:") - 155)
+		surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:") - 155)
 		surface.SetDrawColor(bgmenucol.r + 175, bgmenucol.g + 175, bgmenucol.b + 175, 180)
 		if not input.IsMouseDown(MOUSE_LEFT) then
 			surface.DrawRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, 9, 9)
@@ -1398,16 +1397,15 @@ local function DrawSlider(self, w, h, var, maxy, posx, posy, dist)
 	local max = var[4]
 	local size = var[5]
 	surface.SetFont("MenuFont")
-	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetTextPos(posx - 193 + dist + 2, 61 + posy + maxy)
 	surface.DrawText(var[1])
 	local tw, th = surface.GetTextSize(var[1])
-	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "T Opacity:"))
-	surface.DrawRect(posx - 193 + dist + 2, 81 + posy + maxy + 9, size, 2)
+	surface.SetDrawColor(bgmenucol.r + 175, bgmenucol.g + 175, bgmenucol.b + 175, 55)
+	surface.DrawRect(posx - 193 + dist + 2, 80 + posy + maxy + 9, size, 4)
 	local ww = math.ceil(curnum * size / max)
-	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetDrawColor(bgmenucol.r + 175, bgmenucol.g + 175, bgmenucol.b + 175, 180)
 	surface.DrawRect(posx - 195 + dist + 2 + ww, 81 + posy + maxy + 9 - 5, 4, 12)
-	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:"))
 	local tw, th = surface.GetTextSize(curnum)
 	surface.DrawOutlinedRect(posx - 195 + dist + 2 + ww, 81 + posy + maxy + 4, 4, 12)
 	surface.SetFont("MenuFont")
@@ -1427,16 +1425,15 @@ function idiot.DrawOldSlider(self, w, h, var, maxy, posx, posy, dist) -- I fucki
 	local max = var[4]
 	local size = var[5]
 	surface.SetFont("MenuFont")
-	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetTextPos(5 + posx + 15 + 5, 61 + posy + maxy)
 	surface.DrawText(var[1])
 	local tw, th = surface.GetTextSize(var[1])
-	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "T Opacity:"))
-	surface.DrawRect(5 + posx + 15 + 5 + dist, 61 + posy + maxy + 9, size, 2)
+	surface.SetDrawColor(bgmenucol.r + 175, bgmenucol.g + 175, bgmenucol.b + 175, 55)
+	surface.DrawRect(5 + posx + 15 + 5 + dist, 60 + posy + maxy + 9, size, 4)
 	local ww = math.ceil(curnum * size / max)
-	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetDrawColor(bgmenucol.r + 175, bgmenucol.g + 175, bgmenucol.b + 175, 180)
 	surface.DrawRect(3 + posx + 15 + 5 + dist + ww, 61 + posy + maxy + 9 - 5, 4, 12)
-	surface.SetDrawColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:"))
 	local tw, th = surface.GetTextSize(curnum)
 	surface.DrawOutlinedRect(3 + posx + 15 + 5 + dist + ww, 61 + posy + maxy + 4, 4, 12)
 	surface.SetFont("MenuFont")
@@ -1455,7 +1452,7 @@ local function DrawDropdown(self, w, h, var, maxy, posx, posy, dist)
 	local size = var[5]
 	local curopt = var[3]
 	surface.SetFont("MenuFont")
-	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetTextPos(posx - 193 + dist + 2, 61 + posy + maxy)
 	local tw, th = surface.GetTextSize(var[1])
 	surface.DrawText(var[1])
@@ -1463,14 +1460,16 @@ local function DrawDropdown(self, w, h, var, maxy, posx, posy, dist)
 	local bMouse = MouseInArea(mx + posx - 193 + dist + 2, my + 81 + posy + maxy, mx + posx - 193 + dist + 2 + size, my + 81 + posy + maxy + 14)
 	local check = dist..posy..posx..w..h..maxy
 	surface.SetFont("MenuFont")
-	surface.SetTextColor(menutextcol.r - 65, menutextcol.g - 65, menutextcol.b - 50, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(menutextcol.r - 65, menutextcol.g - 65, menutextcol.b - 50, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetDrawColor(bgmenucol.r + 75, bgmenucol.g + 75, bgmenucol.b + 75, 55)
 	surface.DrawRect(posx - 193 + dist + 2, 81 + posy + maxy + 2, size - 3, 14)
 	if (bMouse || notyetselected == check) then
 		surface.SetDrawColor(bgmenucol.r + 75, bgmenucol.g + 75, bgmenucol.b + 75, 180)
 		surface.DrawRect(posx - 193 + dist + 2, 81 + posy + maxy + 2, size - 3, 14)
 		local feat = var[1]
-		if feat == "Menu Style:" then
+		if feat == "Toolbar Style:" then
+			info = "Choose between having a plain or a colored menu toolbar."
+		elseif feat == "Menu Style:" then
 			info = "Choose between having a plain or a bordered menu frame."
 		elseif feat == "Options Style:" then
 			info = "Choose between having a plain or a bordered options list."
@@ -1545,7 +1544,7 @@ local function DrawDropdown(self, w, h, var, maxy, posx, posy, dist)
 			local maxy2 = 14
 			for k, v in next, var[4] do
 				surface.SetFont("MenuFont3")
-				surface.SetTextColor(menutextcol.r - 65, menutextcol.g - 65, menutextcol.b - 50, gInt("Adjustments", "Others", "T Opacity:"))
+				surface.SetTextColor(menutextcol.r - 65, menutextcol.g - 65, menutextcol.b - 50, gInt("Adjustments", "Others", "Text Opacity:"))
 				surface.SetDrawColor(bgmenucol.r + 75, bgmenucol.g + 75, bgmenucol.b + 75, 222)
 				surface.DrawRect(posx - 191 + dist, 81 + posy + maxy + maxy2, size - 3, 14)
 				local bMouse2 = MouseInArea(mx + posx - 193 + dist + 2, my + 81 + posy + maxy + maxy2, mx + posx - 193 + dist + 2 + size, my + 81 + posy + maxy + 14 + maxy2)
@@ -1578,7 +1577,7 @@ local function DrawToggle(self, w, h, var, maxy, posx, posy, dist)
 	local text = var[1]
 	local size = var[4]
 	surface.SetFont("MenuFont")
-	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetTextPos(posx - 193 + dist + 2, 61 + posy + maxy)
 	local tw, th = surface.GetTextSize(text)
 	surface.DrawText(var[1])
@@ -1586,7 +1585,7 @@ local function DrawToggle(self, w, h, var, maxy, posx, posy, dist)
 	local bMouse = MouseInArea(mx + posx - 193 + dist + 2, my + 81 + posy + maxy, mx + posx - 193 + dist + 2 + size, my + 81 + posy + maxy + 16)
 	local check = dist..posy..posx..w..h..maxy
 	surface.SetFont("MenuFont")
-	surface.SetTextColor(menutextcol.r - 65, menutextcol.g - 65, menutextcol.b - 50, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(menutextcol.r - 65, menutextcol.g - 65, menutextcol.b - 50, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetDrawColor(bgmenucol.r + 75, bgmenucol.g + 75, bgmenucol.b + 75, 55)
 	surface.DrawRect(posx - 193 + dist + 2, 81 + posy + maxy + 2, size - 3, 14)
 	if bMouse or notyetselected == check then
@@ -1705,7 +1704,7 @@ local function Unload()
 	me:ConCommand("M9KGasEffect 1 cl_interp 0 cl_interp_ratio 2 cl_updaterate 30")
 	global.bSendPacket = true
 	global.Loaded = false
-	timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Successfully unloaded the cheat.") end)
+	timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Successfully unloaded IdiotBox!") end)
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 end
 
@@ -1749,10 +1748,12 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- Fixed a Projectile Prediction bug where dying would cause script errors;")
 	print("- Fixed Disable Interpolation, Optimize Game and Dark Mode not resetting when disabled;")
 	print("- Fixed missing spread prediction and recoil compensation checks;")
+	print("- Fixed module issues upon reloading the script/ loading it in Single Player mode;")
 	print("- Fixed local variable limit and timer issues;")
 	print("- Reworked localizations and overall script for better performance;")
 	print("- Reorganized certain out-of-place functions and menu options;")
 	print("- Renamed certain misspelled or broken functions and menu options;")
+	print("- Removed broken/ useless file.Read detour;")
 	print("- Removed calls and variables that had no use;")
 	print("- Removed cloned hooks for better performance.")
 	print("\n")
@@ -1813,7 +1814,7 @@ function idiot.Changelog() -- Ran out of local variables, again
 	print("- WORK-IN-PROGRESS (ETA: undetermined): optimize UI design for more user-friendliness;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): clean up bad hooks and functions for better performance.")
 	print("\n\n===============================================================================================")
-	timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Printed changelog to console!") end)
+	timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Successfully printed changelog to console!") end)
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 end
 
@@ -1828,7 +1829,7 @@ end
 local function EntityFinder()
 	local added = {}
 	local finder = vgui.Create("DFrame")
-	finder:SetSize(769, 859)
+	finder:SetSize(UIScale(1022), UIScale(1150))
 	finder:Center()
 	finder:SetTitle("")
 	finder:MakePopup()
@@ -1975,19 +1976,21 @@ local function EntityFinder()
 		drawlist:AddLine(v)
 	end
 	entlist.Paint = function(self, w, h)
-		draw.RoundedBox(15, 0, 0, w, h, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:")))
+		draw.RoundedBox(15, 0, 0, w, h, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:")))
 	end
 	drawlist.Paint = function(self, w, h)
-		draw.RoundedBox(15, 0, 0, w, h, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:")))
+		draw.RoundedBox(15, 0, 0, w, h, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:")))
 	end
 	finder.Paint = function(self, w, h)
-		if gOption("Main Menu", "Menus", "Menu Style:") == "Borders" then -- Thank you for fixing my mess, Pinged
-            draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 0, 0, w, h, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:")))
+		if gOption("Main Menu", "Menus", "Menu Style:") == "Bordered" then -- Thank you for fixing my mess, Pinged
+			draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 1, 1, w - 2, h - 2, Color(bordercol.r, bordercol.g, bordercol.b, 255))
+		elseif gOption("Main Menu", "Menus", "Menu Style:") == "Borderless" then
+			draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 1, 1, w - 2, h - 2, Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255))
 		end
-		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 2, 2, w - 4, h - 4, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "Others", "BG Opacity:")))
+		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 2, 2, w - 4, h - 4, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
 		DrawUpperText(w, h)
-		draw.SimpleText("Search Entity:", "MenuFont2", 17, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-		draw.SimpleText("Add Entity:", "MenuFont2", 461, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		draw.SimpleText("Search Entity:", "MenuFont2", 17, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		draw.SimpleText("Add Entity:", "MenuFont2", 461, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 	end
 	finder.Think = function()
 		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or global.unloaded == true) then
@@ -2006,7 +2009,7 @@ end
 
 local function PluginLoader()
 	local plugin = vgui.Create("DFrame")
-	plugin:SetSize(769, 859)
+	plugin:SetSize(UIScale(1022), UIScale(1150))
 	plugin:Center()
 	plugin:SetTitle("")
 	plugin:MakePopup()
@@ -2024,7 +2027,7 @@ local function PluginLoader()
 		chat.PlaySound()
 		if pluginlist:GetSelectedLine() ~= nil then
 			surface.PlaySound("buttons/button14.wav")
-			MsgY(3, "Loaded "..pluginlist:GetLine(pluginlist:GetSelectedLine()):GetValue(1).." successfully.")
+			MsgG(3, "Successfully initialized "..pluginlist:GetLine(pluginlist:GetSelectedLine()):GetValue(1).."!")
 			local d = vgui.Create('DHTML')
 			d:SetAllowLua(true)
 			return d:ConsoleMessage([[RUNLUA: ]]..file.Read("lua/"..pluginlist:GetLine(pluginlist:GetSelectedLine()):GetValue(1), "GAME"))
@@ -2045,13 +2048,15 @@ local function PluginLoader()
 			pluginlist:AddLine(v)
 		end
 	pluginlist.Paint = function(self, w, h)
-		draw.RoundedBox(15, 0, 0, w, h, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:")))
+		draw.RoundedBox(15, 0, 0, w, h, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:")))
 	end
 	plugin.Paint = function(self, w, h)
-		if gOption("Main Menu", "Menus", "Menu Style:") == "Borders" then -- Thank you for fixing my mess, Pinged
-            draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 0, 0, w, h, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:")))
+		if gOption("Main Menu", "Menus", "Menu Style:") == "Bordered" then -- Thank you for fixing my mess, Pinged
+			draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 1, 1, w - 2, h - 2, Color(bordercol.r, bordercol.g, bordercol.b, 255))
+		elseif gOption("Main Menu", "Menus", "Menu Style:") == "Borderless" then
+			draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 1, 1, w - 2, h - 2, Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255))
 		end
-		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 2, 2, w - 4, h - 4, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "Others", "BG Opacity:")))
+		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 2, 2, w - 4, h - 4, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
 		DrawUpperText(w, h)
 	end
 	plugin.Think = function()
@@ -2071,14 +2076,14 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 	local text = var[1]
 	local size = var[4]
 	surface.SetFont("MenuFont")
-	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetDrawColor(bgmenucol.r + 75, bgmenucol.g + 75, bgmenucol.b + 75, 55)
 	surface.DrawRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, size + 66, 14)
 	local mx, my = self:GetPos()
 	local bMouse = MouseInArea(mx - 193 + posx + dist, my + 61 + posy + maxy, mx - 193 + posx + dist + size + 69, my + 61 + posy + maxy + 16)
 	local check = dist..posy..posx..w..h..maxy
 	surface.SetFont("MenuFont")
-	surface.SetTextColor(menutextcol.r - 65, menutextcol.g - 65, menutextcol.b - 50, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(menutextcol.r - 65, menutextcol.g - 65, menutextcol.b - 50, gInt("Adjustments", "Others", "Text Opacity:"))
 	if bMouse or notyetselected == check then
 		surface.SetDrawColor(bgmenucol.r + 75, bgmenucol.g + 75, bgmenucol.b + 75, 180)
 		surface.DrawRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, size + 66, 14)
@@ -2132,7 +2137,7 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #7" then
 				idiot.SaveConfig10()
 			end
-			timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Configuration Saved!") end)
+			timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Configuration saved!") end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Load Configuration" then
 			if gOption("Main Menu", "Configurations", "Configuration:") == "Legit Config" then
@@ -2156,7 +2161,7 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #7" then
 				idiot.LoadConfig10()
 			end
-			timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Configuration Loaded!") end)
+			timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Configuration loaded!") end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Delete Configuration" then
 			if gOption("Main Menu", "Configurations", "Configuration:") == "Legit Config" then
@@ -2180,7 +2185,7 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #7" then
 				file.Delete(folder.."/config10.txt")
 			end
-			timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Configuration Deleted!") end)
+			timer.Create("ChatPrint", 0.1, 1, function() MsgR(2.5, "Configuration deleted!") end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Plugin Loader Menu" then
 			self:Remove()
@@ -2208,7 +2213,7 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 				end
 			end
 			PluginLoader()
-			timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Plugin Menu Loaded!") end)
+			timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Successfully loaded Plugin Menu!") end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Entity Finder Menu" then
 				self:Remove()
@@ -2236,30 +2241,33 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 					end
 				end
 			EntityFinder()
-			timer.Create("ChatPrint", 0.1, 1, function() MsgY(2.5, "Entities Menu Loaded!") end)
+			timer.Create("ChatPrint", 0.1, 1, function() MsgG(2.5, "Successfully loaded Entities Menu!") end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Apply Custom Name" then
 			big.ChangeName(GetConVarString("idiot_changename"))
-			timer.Create("ChatPrint", 0.1, 1, function() MsgY(3.2, "Successfully applied custom username.") end)
+			timer.Create("ChatPrint", 0.1, 1, function() MsgG(3.2, "Successfully applied custom username!") end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		end
 	end
 end
 
 local function DrawSubSub(self, w, h, k, var)
-	if gOption("Main Menu", "Menus", "Options Style:") == "Borders" then
+	if gOption("Main Menu", "Menus", "Options Style:") == "Bordered" then
 	local opt, posx, posy, sizex, sizey, dist = var[1][1], var[1][2], var[1][3], var[1][4], var[1][5], var[1][6]
-	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:"))
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 255)
 	local startpos = 61 + posy
-	surface.SetTextColor(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetFont("MenuFont2")
 	local tw, th = surface.GetTextSize(opt)
-	surface.SetDrawColor(bgmenucol.r + 13, bgmenucol.g + 13, bgmenucol.b + 13, gInt("Adjustments", "Others", "BG Opacity:"));
+	surface.SetDrawColor(bgmenucol.r + 13, bgmenucol.g + 13, bgmenucol.b + 13, 255)
 	surface.DrawRect(5 + posx, startpos, sizex, sizey);
-	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:"))
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 255)
 	surface.DrawLine(5 + posx, startpos, 5 + posx + 15, startpos)
+	surface.DrawLine(5 + posx, startpos + 1, 5 + posx + 15, startpos + 1)
 	surface.SetTextPos(5 + posx + 15 + 5, startpos - th / 2)
 	surface.DrawLine(5 + posx + 15 + 5 + tw + 5, startpos, 5 + posx + sizex, startpos)
+	surface.DrawLine(5 + posx + 15 + 5 + tw + 5, startpos + 1, 5 + posx + sizex, startpos + 1)
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 255)
 	surface.DrawLine(5 + posx, startpos, 5 + posx, startpos + sizey)
 	surface.DrawLine(5 + posx, startpos + sizey, 5 + posx + sizex, startpos + sizey)
 	surface.DrawLine(5 + posx + sizex, startpos, 5 + posx + sizex, startpos + sizey)
@@ -2286,17 +2294,21 @@ local function DrawSubSub(self, w, h, k, var)
 	local opt, posx, posy, sizex, sizey, dist = var[1][1], var[1][2], var[1][3], var[1][4], var[1][5], var[1][6]
 	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 0)
 	local startpos = 61 + posy
-	surface.SetTextColor(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetFont("MenuFont2")
 	local tw, th = surface.GetTextSize(opt)
-	surface.SetDrawColor(bgmenucol.r + 13, bgmenucol.g + 13, bgmenucol.b + 13, gInt("Adjustments", "Others", "BG Opacity:"));
+	surface.SetDrawColor(bgmenucol.r + 13, bgmenucol.g + 13, bgmenucol.b + 13, 255)
 	surface.DrawRect(5 + posx, startpos, sizex, sizey);
-	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:"))
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 255)
 	surface.DrawLine(5 + posx, startpos, 5 + posx + 15, startpos)
 	surface.DrawLine(5 + posx, startpos + 1, 5 + posx + 15, startpos + 1)
 	surface.SetTextPos(5 + posx + 15 + 5, startpos - th / 2)
-	surface.DrawLine(5 + posx + 15 + 5 + tw + 5, startpos, 5 + posx - 1 + sizex, startpos)
-	surface.DrawLine(5 + posx + 15 + 5 + tw + 5, startpos + 1, 5 + posx - 1 + sizex, startpos + 1)
+	surface.DrawLine(5 + posx + 15 + 5 + tw + 5, startpos, 5 + posx + sizex, startpos)
+	surface.DrawLine(5 + posx + 15 + 5 + tw + 5, startpos + 1, 5 + posx + sizex, startpos + 1)
+	surface.SetDrawColor(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255)
+	surface.DrawLine(5 + posx, startpos, 5 + posx, startpos + sizey)
+	surface.DrawLine(5 + posx, startpos + sizey, 5 + posx + sizex, startpos + sizey)
+	surface.DrawLine(5 + posx + sizex, startpos, 5 + posx + sizex, startpos + sizey)
 	surface.DrawText(opt)
 	local maxy = 15
 	for k, v in next, var do
@@ -2347,7 +2359,7 @@ end
 local function Menu()
 	local menusongs = {"https://dl.dropbox.com/s/0m22ytfia8qoy4m/Daisuke%20-%20El%20Huervo.mp3?dl=1", "https://dl.dropbox.com/s/0fdgaj0ry8uummf/Rust_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/vsz77wdjqy1xf83/HOME%20-%20Resonance.mp3?dl=1", "https://dl.dropbox.com/s/ovh8xt0nn6wjgjj/The%20Caretaker%20-%20It%27s%20just%20a%20burning%20memory%20%282016%29.mp3?dl=1", "https://dl.dropbox.com/s/8bg55iwowf2jtv8/cuckoid%20-%20ponyinajar.mp3?dl=1", "https://dl.dropbox.com/s/0uly6phlgpoj4ss/1932_George_Olsen_-_Lullaby_Of_The_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/qfl7mu39us5hzn4/Erectin_a_River_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/stkat6jlp4jhpxo/Monrroe_-_Fleeting_Love_%28getmp3.pro%29.mp3?dl=1","https://dl.dropbox.com/s/vhd3il20d8ephb4/DJ_Spizdil_-_malo_tebyaHardstyle_m_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/2vf1lx9cnd5g9pq/Maduk_-_Vermilion_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/wcoo6cov1iatcao/Metrik_-_Gravity_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/8a91zs6woqz9bb4/Scattle_Remorse_REUPLOAD_CHECK_DE_%28getmp3.pro%29.mp3?dl=1","https://dl.dropbox.com/s/bqt4dcjoziezdjk/The_Caretaker_-_Libets_Delay_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/12ztoyw2rc2q0z0/HOME_-_Hold_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/xlk7wuel56bwrr3/T_Sugah_-_Green_Valleys_LAOS_%28getmp3.pro%29.mp3?dl=1",}
 	local frame = vgui.Create("DFrame")
-	frame:SetSize(769, 859)
+	frame:SetSize(UIScale(1022), UIScale(1150))
 	frame:Center()
 	frame:SlideDown(0.5)
 	frame:SetTitle("")
@@ -2358,10 +2370,12 @@ local function Menu()
 			candoslider = false
 		end
 		info = ""
-		if gOption("Main Menu", "Menus", "Menu Style:") == "Borders" then -- Thank you for fixing my mess, Pinged
-            draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 0, 0, w, h, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:")))
+		if gOption("Main Menu", "Menus", "Menu Style:") == "Bordered" then -- Thank you for fixing my mess, Pinged
+			draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 1, 1, w - 2, h - 2, Color(bordercol.r, bordercol.g, bordercol.b, 255))
+		elseif gOption("Main Menu", "Menus", "Menu Style:") == "Borderless" then
+			draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 1, 1, w - 2, h - 2, Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255))
 		end
-		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 2, 2, w - 4, h - 4, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "Others", "BG Opacity:")))
+		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 2, 2, w - 4, h - 4, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
 		DrawUpperText(w, h)
 		DrawTabs(self, w, h)
 		DrawSub(self, w, h)
@@ -2371,7 +2385,7 @@ local function Menu()
 		end
 		mousedown = input.IsMouseDown(MOUSE_LEFT)
 		if gBool("Main Menu", "Others", "Feature Tooltips") and info ~= "" then
-			draw.SimpleText(info, "MenuFont2", w / 2, h / 1.03, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText(info, "MenuFont2", w / 2, h / 1.03, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 	end
 	frame.Think = function()
@@ -2726,13 +2740,13 @@ end
 
 local function StausTitle()
 	if !gBool("Miscellaneous", "Panels", "Show List Titles") then return end
-	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Borders" then
-		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Debug Info X:") - 1, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:")))
+	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Bordered" then
+		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Debug Info X:") - 1, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, 255))
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
 		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Debug Info X:") - 1, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, 0))
 	end
-	draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Debug Info X:") + 1, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 23, 88, 20, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "List Adjustments", "List Opacity:")))
-	draw.DrawText("Debug", "MiscFont2", gInt("Adjustments", "List Adjustments", "Debug Info X:") + 45, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 22, Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_CENTER)
+	draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Debug Info X:") + 1, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 23, 88, 20, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
+	draw.DrawText("Debug", "MiscFont2", gInt("Adjustments", "List Adjustments", "Debug Info X:") + 45, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 22, Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_CENTER)
 end
 
 local function Status()
@@ -2746,62 +2760,62 @@ local function Status()
 	surface.SetFont("MiscFont")
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Health: "..hp)
 	if (em.IsValid(wep)) then
 	local daclip = wep:Clip1()
 	if daclip < 0 then
 	daclip = 0
 	end
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
 	surface.DrawText("Ammo: "..daclip.."/"..me:GetAmmoCount(wep:GetPrimaryAmmoType()))
 	else
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
 	surface.DrawText("Ammo: ".."0".."/".."0")
 	end
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Velocity: "..math.Round(velocity))
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Server: "..GetHostName())
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Gamemode: "..engine.ActiveGamemode())
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Map: "..game.GetMap())
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Looking at: "..EntityName())
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Entities: "..math.Round(ents.GetCount()))
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Frames: "..math.Round(1 / FrameTime()))
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Ping: "..me:Ping())
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Date: "..os.date("%d %b %Y"))
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Time: "..os.date("%H:%M:%S"))
 end
 
@@ -2820,18 +2834,18 @@ end
 
 local function Spectator()
 	local radarX, radarY, radarW, radarH = 50, ScrH() / 3, 200, 200
-	local color1 = (Color(0, 0, 0, gInt("Adjustments", "Others", "T Opacity:")))
-	local color2 = (Color(255, 0, 0, gInt("Adjustments", "Others", "T Opacity:")))
-	local color3 = (Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Adjustments", "Others", "T Opacity:")))
-	local color4 = (Color(0, 131, 125, gInt("Adjustments", "Others", "T Opacity:")))
+	local color1 = (Color(0, 0, 0, gInt("Adjustments", "Others", "Text Opacity:")))
+	local color2 = (Color(255, 0, 0, gInt("Adjustments", "Others", "Text Opacity:")))
+	local color3 = (Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Adjustments", "Others", "Text Opacity:")))
+	local color4 = (Color(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:")))
 	local hudspecslength = 150
 	specscount = 0
-	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Borders" then
-		draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Spectators X:"), gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 1.75, radarW + 4, radarH + 4, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:")))
+	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Bordered" then
+		draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Spectators X:"), gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 1.75, radarW + 4, radarH + 4, Color(bordercol.r, bordercol.g, bordercol.b, 255))
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
 		draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Spectators X:"), gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 1.75, radarW + 4, radarH + 4, Color(bordercol.r, bordercol.g, bordercol.b, 0))
 	end
-	draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Spectators X:") + 2, gInt("Adjustments", "Window Adjustments", "Spectators Y:"), radarW, radarH, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "Window Adjustments", "Window Opacity:")))
+	draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Spectators X:") + 2, gInt("Adjustments", "Window Adjustments", "Spectators Y:"), radarW, radarH, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
 	draw.SimpleText("Spectators", "MiscFont2", gInt("Adjustments", "Window Adjustments", "Spectators X:") + 102, gInt("Adjustments", "Window Adjustments", "Spectators Y:") + 11, color3, 1, 1)
 	for k, v in pairs(player.GetAll()) do
 		if (IsValid(v:GetObserverTarget())) and v:GetObserverTarget() == me then
@@ -2867,17 +2881,17 @@ local function Arrow(x, y, myRotation)
 end
 
 local function Radar()
-	local col = Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Adjustments", "Others", "T Opacity:"))
+	local col = Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	local everything = ents.GetAll()
-	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Borders" then
-		draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Radar X:"), gInt("Adjustments", "Window Adjustments", "Radar Y:") - 1.75, radarW + 4, radarH + 4, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:")))
+	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Bordered" then
+		draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Radar X:"), gInt("Adjustments", "Window Adjustments", "Radar Y:") - 1.75, radarW + 4, radarH + 4, Color(bordercol.r, bordercol.g, bordercol.b, 255))
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
 		draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Radar X:"), gInt("Adjustments", "Window Adjustments", "Radar Y:") - 1.75, radarW + 4, radarH + 4, Color(bordercol.r, bordercol.g, bordercol.b, 0))
 	end
-	draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Radar X:") + 2, gInt("Adjustments", "Window Adjustments", "Radar Y:"), radarW, radarH, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "Window Adjustments", "Window Opacity:")))
+	draw.RoundedBox(gInt("Adjustments", "Window Adjustments", "Roundness:"), gInt("Adjustments", "Window Adjustments", "Radar X:") + 2, gInt("Adjustments", "Window Adjustments", "Radar Y:"), radarW, radarH, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
 	draw.SimpleText("Radar", "MiscFont2", gInt("Adjustments", "Window Adjustments", "Radar X:") + 102, gInt("Adjustments", "Window Adjustments", "Radar Y:") + 11, col, 1, 1)
 	draw.NoTexture()
-	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:") - 75)
+	surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 255 - 75)
 	surface.DrawLine(gInt("Adjustments", "Window Adjustments", "Radar X:") + 209 * 0.5, gInt("Adjustments", "Window Adjustments", "Radar Y:") + 24, gInt("Adjustments", "Window Adjustments", "Radar X:") + 209 * 0.5, gInt("Adjustments", "Window Adjustments", "Radar Y:") + 190)
 	surface.DrawLine(gInt("Adjustments", "Window Adjustments", "Radar X:") + 12, gInt("Adjustments", "Window Adjustments", "Radar Y:") + 209 * 0.5, gInt("Adjustments", "Window Adjustments", "Radar X:") + 191, gInt("Adjustments", "Window Adjustments", "Radar Y:") + 209 * 0.5)
 	surface.SetDrawColor(team.GetColor(me:Team()))
@@ -2907,13 +2921,13 @@ end
 
 local function PlayersTitle()
 	if !gBool("Miscellaneous", "Panels", "Show List Titles") then return end
-	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Borders" then
-		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Players List X:") - 1, gInt("Adjustments", "List Adjustments", "Players List Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, gInt("Adjustments", "Others", "B Opacity:")))
+	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Bordered" then
+		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Players List X:") - 1, gInt("Adjustments", "List Adjustments", "Players List Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, 255))
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
 		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Players List X:") - 1, gInt("Adjustments", "List Adjustments", "Players List Y:") - 25, 92, 24, Color(bordercol.r, bordercol.g, bordercol.b, 0))
 	end
-	draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Players List X:") + 1, gInt("Adjustments", "List Adjustments", "Players List Y:") - 23, 88, 20, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, gInt("Adjustments", "List Adjustments", "List Opacity:")))
-	draw.DrawText("Players", "MiscFont2", gInt("Adjustments", "List Adjustments", "Players List X:") + 47, gInt("Adjustments", "List Adjustments", "Players List Y:") - 22, Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Adjustments", "Others", "T Opacity:")), TEXT_ALIGN_CENTER)
+	draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Players List X:") + 1, gInt("Adjustments", "List Adjustments", "Players List Y:") - 23, 88, 20, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
+	draw.DrawText("Players", "MiscFont2", gInt("Adjustments", "List Adjustments", "Players List X:") + 47, gInt("Adjustments", "List Adjustments", "Players List Y:") - 22, Color(maintextcol.r, maintextcol.g, maintextcol.b, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_CENTER)
 end
 
 local function Players()
@@ -2921,15 +2935,15 @@ local function Players()
 	surface.SetFont("MiscFont")
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Players List X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Players List Y:"))
-	surface.SetTextColor(0, 131, 175, gInt("Adjustments", "Others", "T Opacity:"))
+	surface.SetTextColor(0, 131, 175, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Players: "..player.GetCount().."/"..game.MaxPlayers())
 	local NWString = em.GetNWString(v)
 	for k, v in next, player.GetAll() do
-		surface.SetTextColor(0, 131, 175, gInt("Adjustments", "Others", "T Opacity:"))
+		surface.SetTextColor(0, 131, 175, gInt("Adjustments", "Others", "Text Opacity:"))
 		hh = hh + 12
 		surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Players List X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Players List Y:"))
 		surface.DrawText(""..em.GetNWString(v, "usergroup").."")
-		surface.SetTextColor(255, 255, 255, gInt("Adjustments", "Others", "T Opacity:"))
+		surface.SetTextColor(255, 255, 255, gInt("Adjustments", "Others", "Text Opacity:"))
 		surface.DrawText(" "..v:GetName())
 	end
 end
@@ -2972,8 +2986,15 @@ local function PlayerList()
 	local pos_x, pos_y = gInt("Main Menu", "Priority List", "List Position X:") - 0.25, gInt("Main Menu", "Priority List", "List Position Y:") - 1.75
 	local number = 1
 	local offset = 14 + gInt("Main Menu", "Priority List", "List Spacing:")
-	surface.SetDrawColor(maintextcol.r, maintextcol.g, maintextcol.b, 100)
-	surface.DrawRect(pos_x, pos_y, 350, 15)
+	local curcol2 = Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 175)
+	local curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 175)
+	if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
+		surface.SetDrawColor(curcol2)
+		surface.DrawRect(pos_x, pos_y, 350, 15)
+	elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
+		surface.SetDrawColor(curcol3)
+		surface.DrawRect(pos_x, pos_y, 350, 15)
+	end
 	surface.SetDrawColor(0, 0, 0)
 	surface.DrawOutlinedRect(pos_x, pos_y, 350, 15)
 	surface.DrawOutlinedRect(pos_x, pos_y, 30, 15)
@@ -3034,48 +3055,48 @@ local function Crosshair()
 	if menuopen or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
 	if (gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "Box") then
 	local x1, y1 = ScrW() * 0.5, ScrH() * 0.5
-		surface.SetDrawColor(0, 0, 0, gInt("Adjustments", "Others", "T Opacity:"))
+		surface.SetDrawColor(0, 0, 0, gInt("Adjustments", "Crosshair Color", "Opacity:"))
 		surface.DrawOutlinedRect(x1 - 3, y1 - 2, 6, 6)
-		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:"))
+		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 		surface.DrawRect(x1 - 2, y1 - 1, 4, 4)
 	end
 	if (gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "Dot") then -- Cancer, I know, but I want to avoid using surface.DrawPoly as much as possible
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.6, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.8, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.6, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.8, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.6, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.8, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 3, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4, Color(0, 0, 0, gInt("Adjustments", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.2, Color(0, 0, 0, gInt("Adjustments", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.4, Color(0, 0, 0, gInt("Adjustments", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.6, Color(0, 0, 0, gInt("Adjustments", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.8, Color(0, 0, 0, gInt("Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.6, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.8, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.6, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.8, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.6, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.8, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 3, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4, Color(0, 0, 0, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.2, Color(0, 0, 0, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.4, Color(0, 0, 0, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.6, Color(0, 0, 0, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.8, Color(0, 0, 0, gInt("Adjustments", "Crosshair Color", "Opacity:")))
 	end
 	if (gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "Square") then
 	local x1, y1 = ScrW() * 0.5, ScrH() * 0.5
-		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:"))
+		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:"))
 		surface.DrawOutlinedRect(x1 - 3, y1 - 2, 6, 6)
 	end
 	if (gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "Circle") then
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
 	end
 	if (gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "Cross") then
-		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:"))
+		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:"))
 		surface.DrawLine(ScrW() / 2 - 11, ScrH() / 2, ScrW() / 2 + 11, ScrH() / 2)
 		surface.DrawLine(ScrW() / 2 - 0, ScrH() / 2 - 11, ScrW() / 2 - 0, ScrH() / 2 + 11)
 	end
 	if (gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "Edged Cross") then
-		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:"))
+		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:"))
 		surface.DrawLine(ScrW() / 2 - 14.5, ScrH() / 2, ScrW() / 2 + 14.5, ScrH() / 2)
 		surface.DrawLine(ScrW() / 2 - 0, ScrH() / 2 - 14.5, ScrW() / 2 - 0, ScrH() / 2 + 14.5)
 		surface.SetDrawColor(255, 255, 255)
@@ -3083,7 +3104,7 @@ local function Crosshair()
 		surface.DrawLine(ScrW() / 2 - 0, ScrH() / 2 - 9, ScrW() / 2 - 0, ScrH() / 2 + 9)
 	end
 	if (gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "Swastika") then
-		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:"))
+		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:"))
 		surface.DrawLine(ScrW() / 2, ScrH() / 2, ScrW() / 2 + 20, ScrH() / 2)
 		surface.DrawLine(ScrW() / 2 + 20, ScrH() / 2, ScrW() / 2 + 20, ScrH() / 2 + 20)
 		surface.DrawLine(ScrW() / 2, ScrH() / 2, ScrW() / 2 - 20, ScrH() / 2)
@@ -3094,8 +3115,8 @@ local function Crosshair()
 		surface.DrawLine(ScrW() / 2, ScrH() / 2 + 20, ScrW() / 2 - 20, ScrH() / 2 + 20)
 	end
 	if (gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "GTA IV") then
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 11, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 11, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
 	end
 end
 
@@ -3838,7 +3859,7 @@ local function CheckChild(pan)
 		removewindow = true
 		if input.IsKeyDown(17) then
 			if pan.GetTitle then
-				MsgR(4.3, "IdiotBox successfully removed \""..pan:GetTitle().."\".")
+				MsgG(4.3, "Successfully removed \""..pan:GetTitle().."\"!")
 				surface.PlaySound("buttons/lightswitch2.wav")
 			end
 			pan:Remove()
@@ -3847,7 +3868,7 @@ local function CheckChild(pan)
 		for k, v in pairs(pan:GetChildren()) do
 			if input.IsKeyDown(17) then
 				if v.GetTitle then
-					MsgR(4.3, "IdiotBox successfully removed \""..v:GetTitle().."\".")
+					MsgG(4.3, "Successfully removed \""..v:GetTitle().."\"!")
 					surface.PlaySound("buttons/lightswitch2.wav")
 				end
 				v:Remove()
@@ -3979,7 +4000,7 @@ hook.Add("Think", "Think", function()
 		end
 	if (gBool("Main Menu", "General Utilities", "Anti-Blind")) then
 		if (HookExist("HUDPaint", "ulx_blind")) then
-			MsgR(4.3, "IdiotBox successfully blocked a blinding attempt.")
+			MsgG(4.3, "Successfully blocked a blinding attempt!")
 			surface.PlaySound("buttons/lightswitch2.wav")
 			hook.Remove("HUDPaint", "ulx_blind")
         end
@@ -3987,7 +4008,7 @@ hook.Add("Think", "Think", function()
 	if MOTDgd or MOTDGD then
 		function MOTDgd.GetIfSkip()
 		if (gBool("Main Menu", "General Utilities", "Anti-Ads")) then
-			MsgR(4.3, "IdiotBox successfully blocked an advertisement.")
+			MsgG(4.3, "Successfully blocked an advertisement!")
 			surface.PlaySound("buttons/lightswitch2.wav")
 			return true
 			end
@@ -5092,13 +5113,13 @@ hook.Add("DrawOverlay", "DrawOverlay", function()
 	end
 	if (aimtarget and em.IsValid(aimtarget) and not FixTools() and gBool("Aim Assist", "Miscellaneous", "Snap Lines") and (gBool("Aim Assist", "Aimbot", "Enabled"))) then
 		if me:Alive() or em.Health(me) > 0 then
-			local col = Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:"))
+			local col = Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:"))
 			local pos = vm.ToScreen(em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)))
 			surface.SetDrawColor(col)
 			surface.DrawLine(ScrW() / 2, ScrH() / 2, pos.x, pos.y)
 			surface.SetDrawColor(0, 0, 0)
 			surface.DrawOutlinedRect(pos.x - 2, pos.y - 2, 5, 5)
-			surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:"))
+			surface.SetDrawColor(col)
 			surface.DrawRect(pos.x - 1, pos.y - 1, 3, 3)
 		end
 	end
@@ -7110,7 +7131,7 @@ hook.Add("MiscPaint", "MiscPaint", function()
 		if propval >= 180 then
 			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(255, 0, 0))
 		else
-			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:")))
+			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
 		end
 	end
 	if menuopen or me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not me:Alive() or me:Health() < 1 then return end
@@ -7118,7 +7139,7 @@ hook.Add("MiscPaint", "MiscPaint", function()
 		local center = Vector(ScrW() / 2, ScrH() / 2, 0)
 		local scale = Vector(((gInt("Aim Assist", "Aimbot", "Aim FoV Value:")) * 8.5), ((gInt("Aim Assist", "Aimbot", "Aim FoV Value:")) * 8.5), 0)
 		local segmentdist = 360 / (2 * math.pi * math.max(scale.x, scale.y) / 2)
-			surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "T Opacity:"))	
+			surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:"))	
 		for a = 0, 360 - segmentdist, segmentdist do
 			surface.DrawLine(center.x + math.cos(math.rad(a)) * scale.x, center.y - math.sin(math.rad(a)) * scale.y, center.x + math.cos(math.rad(a + segmentdist)) * scale.x, center.y - math.sin(math.rad(a + segmentdist)) * scale.y)
 		end
@@ -7207,7 +7228,23 @@ hook.Add("OnPlayerChat", "OnPlayerChat", function(chatPlayer, text, teamChat)
 end)
 
 timer.Simple(0.1, function()
-	chat.AddText(Color(0, 255, 0), "Successfully loaded IdiotBox!")
+	if global.game.SinglePlayer() then
+		chat.AddText(Color(255, 255, 0), "Attention! You may encounter issues when using IdiotBox in Singleplayer mode.")
+		chat.AddText(Color(255, 255, 0), "We recommend initializing in a Multiplayer local game/ public server.")
+		surface.PlaySound("buttons/lightswitch2.wav")
+	end
+end)
+
+timer.Simple(0.2, function()
+	if ScrW() ~= 1920 or ScrH() ~= 1080 then
+		chat.AddText(Color(255, 255, 0), "Attention! We are working on adaptive menu scaling. You may encounter visual bugs when toggling the IdiotBox menu.")
+		chat.AddText(Color(255, 255, 0), "We recommend setting your game resolution to 1920x1080 for the best user experience.")
+		surface.PlaySound("buttons/lightswitch2.wav")
+	end
+end)
+
+timer.Simple(0.1, function()
+	chat.AddText(Color(0, 255, 0), "Successfully initialized IdiotBox!")
 	surface.PlaySound("buttons/bell1.wav")
 end)
 
@@ -7228,7 +7265,7 @@ MsgG(5.3, "Welcome, "..me:Nick()..". Press 'Insert', 'F11' or 'Home' to toggle."
 surface.PlaySound("buttons/lightswitch2.wav")
 
 if ac != true then 
-	timer.Create("ChatPrint", 5.7, 1, function() MsgG(5.3, "No anti-cheats have been detected.") end)
+	timer.Create("ChatPrint", 5.7, 1, function() MsgG(5.3, "No anti-cheats have been detected!") end)
 	timer.Create("PlaySound", 5.7, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 end
 
@@ -7239,15 +7276,34 @@ if (global.QAC or global.qac or global.CAC or global.cac or global.SAC or global
 	return
 end
 
+--[[
 
+||-------------NOTES-------------||
 
---NOTE-- This is the end of the very messy script that is IdiotBox;
+Big thanks to everyone who still supports me to this day. Without you, this wouldn't be a thing;
+All of my credits go out to you and the ones who helped me with the development of IdiotBox. <3
 
---NOTE-- Thank you to everyone who still supports me to this day. Without you, this cheat wouldn't be a thing;
+||------------CREDITS------------||
 
---NOTE-- All of my credits go out to you and the ones who helped me with the development of this cheat. <3
+Pinged
+data
+s0lum
+lenn
+leme
+scottpott8
+Vectivus
+uÚcka
+cal1nxd
+XVcaligo (PerSix)
+naxut
+papertek (JohnRG)
+Outcome (paradox)
+Mr. Squid
+OhhStyle
+SDunken
+Crave4
 
-
+]]--
 
   //-----Script Ends Here----//
  //-------------------------//
