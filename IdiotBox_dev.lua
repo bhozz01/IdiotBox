@@ -1030,11 +1030,11 @@ local function DrawUpperText(w, h)
 	end
 	local tw, th = surface.GetTextSize("")
 	surface.SetTextPos(37, 13 - th / 2)
-	surface.SetTextColor(255, 255, 255, 255)
+	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetFont("MainFont")
 	surface.DrawText("IdiotBox v7.0.b1")
 	surface.SetTextPos(147, 16 - th / 2)
-	surface.SetTextColor(255, 255, 255, 255)
+	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetFont("MainFont2")
 	surface.DrawText("Latest build: d27m07-pre13")
 end
@@ -2737,7 +2737,7 @@ local function StausTitle()
 		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Debug Info X:"), gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 24, 90, 22, Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255))
 	end
 	draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Debug Info X:") + 1, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 23, 88, 20, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
-	draw.DrawText("Debug", "MiscFont2", gInt("Adjustments", "List Adjustments", "Debug Info X:") + 45, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 22, Color(255, 255, 255, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_CENTER)
+	draw.DrawText("Debug", "MiscFont2", gInt("Adjustments", "List Adjustments", "Debug Info X:") + 45, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 22, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_CENTER)
 end
 
 local function Status()
@@ -2827,7 +2827,7 @@ local function Spectator()
 	local radarX, radarY, radarW, radarH = 50, ScrH() / 3, 200, 200
 	local color1 = Color(0, 0, 0, gInt("Adjustments", "Others", "Text Opacity:"))
 	local color2 = Color(255, 0, 0, gInt("Adjustments", "Others", "Text Opacity:"))
-	local color3 = Color(255, 255, 255, gInt("Adjustments", "Others", "Text Opacity:"))
+	local color3 = Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	local color4 = Color(0, 131, 125, gInt("Adjustments", "Others", "Text Opacity:"))
 	local hudspecslength = 150
 	specscount = 0
@@ -2874,7 +2874,7 @@ local function Arrow(x, y, myRotation)
 end
 
 local function Radar()
-	local col = Color(255, 255, 255, gInt("Adjustments", "Others", "Text Opacity:"))
+	local col = Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	local everything = ents.GetAll()
 	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Bordered" then
 		draw.RoundedBox(360, gInt("Adjustments", "Window Adjustments", "Radar X:") + 1, gInt("Adjustments", "Window Adjustments", "Radar Y:") - 0.75, radarW + 2, radarH + 2, Color(bordercol.r, bordercol.g, bordercol.b, 255))
@@ -2924,7 +2924,7 @@ local function PlayersTitle()
 		draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Players List X:"), gInt("Adjustments", "List Adjustments", "Players List Y:") - 24, 90, 22, Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255))
 	end
 	draw.RoundedBox(gInt("Adjustments", "List Adjustments", "Roundness:"), gInt("Adjustments", "List Adjustments", "Players List X:") + 1, gInt("Adjustments", "List Adjustments", "Players List Y:") - 23, 88, 20, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
-	draw.DrawText("Players", "MiscFont2", gInt("Adjustments", "List Adjustments", "Players List X:") + 47, gInt("Adjustments", "List Adjustments", "Players List Y:") - 22, Color(255, 255, 255, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_CENTER)
+	draw.DrawText("Players", "MiscFont2", gInt("Adjustments", "List Adjustments", "Players List X:") + 47, gInt("Adjustments", "List Adjustments", "Players List Y:") - 22, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_CENTER)
 end
 
 local function Players()
@@ -2940,7 +2940,7 @@ local function Players()
 		hh = hh + 12
 		surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Players List X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Players List Y:"))
 		surface.DrawText(""..em.GetNWString(v, "usergroup").."")
-		surface.SetTextColor(255, 255, 255, gInt("Adjustments", "Others", "Text Opacity:"))
+		surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 		surface.DrawText(" "..v:GetName())
 	end
 end
@@ -2996,9 +2996,9 @@ local function PlayerList()
 	surface.DrawOutlinedRect(pos_x, pos_y, 350, 15)
 	surface.DrawOutlinedRect(pos_x, pos_y, 30, 15)
 	surface.DrawOutlinedRect(pos_x + 29, pos_y, 180, 15)
-	draw.SimpleText("#", "MiscFont", pos_x + 5, pos_y, Color(255, 255, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-	draw.SimpleText("Username", "MiscFont", pos_x + 35, pos_y, Color(255, 255, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-	draw.SimpleText("Priority", "MiscFont", pos_x + 214, pos_y, Color(255, 255, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+	draw.SimpleText("#", "MiscFont", pos_x + 5, pos_y, Color(menutextcol.r, menutextcol.g, menutextcol.b), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+	draw.SimpleText("Username", "MiscFont", pos_x + 35, pos_y, Color(menutextcol.r, menutextcol.g, menutextcol.b), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+	draw.SimpleText("Priority", "MiscFont", pos_x + 214, pos_y, Color(menutextcol.r, menutextcol.g, menutextcol.b), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
 	for k, v in next, player.GetAll() do
 		if v == me or not v:IsValid() then continue end
 		if MouseInArea(pos_x, pos_y + offset, pos_x + 350, pos_y + offset + 14) then
@@ -3040,9 +3040,9 @@ local function PlayerList()
 		surface.DrawOutlinedRect(pos_x, pos_y + offset, 350, 15)
 		surface.DrawOutlinedRect(pos_x, pos_y + offset, 30, 15)
 		surface.DrawOutlinedRect(pos_x + 29, pos_y + offset, 180, 15)
-		draw.SimpleText(number, "MiscFont", pos_x + 5, pos_y + offset, Color(255, 255, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-		draw.SimpleText(v:Nick(), "MiscFont", pos_x + 35, pos_y + offset, Color(255, 255, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-		draw.SimpleText(Priority(v), "MiscFont", pos_x + 214, pos_y + offset, Color(255, 255, 255), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+		draw.SimpleText(number, "MiscFont", pos_x + 5, pos_y + offset, Color(menutextcol.r, menutextcol.g, menutextcol.b), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+		draw.SimpleText(v:Nick(), "MiscFont", pos_x + 35, pos_y + offset, Color(menutextcol.r, menutextcol.g, menutextcol.b), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
+		draw.SimpleText(Priority(v), "MiscFont", pos_x + 214, pos_y + offset, Color(menutextcol.r, menutextcol.g, menutextcol.b), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
 		offset = offset + 14 + gInt("Main Menu", "Priority List", "List Spacing:")
 		number = number + 1
 	end
@@ -7118,7 +7118,7 @@ hook.Add("MiscPaint", "MiscPaint", function()
 			else
 				witnesscolor = Color(255, 0, 0)
 			end
-    	draw.SimpleText(witnesses.." Player(s) can see you.", "MiscFont3", (ScrW() / 2) - 65, 42, Color(menutextcolor.r, menutextcolor.g, menutextcolor.b), 4, 1, 1, Color(0, 0, 0))
+    	draw.SimpleText(witnesses.." Player(s) can see you.", "MiscFont3", (ScrW() / 2) - 65, 42, Color(menutextcol.r, menutextcol.g, menutextcol.b), 4, 1, 1, Color(0, 0, 0))
     	surface.SetDrawColor(witnesscolor)
     	surface.DrawRect((ScrW() / 2) - 73, 55, 152, 5)
     end
