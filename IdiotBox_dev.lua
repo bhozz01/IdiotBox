@@ -30,7 +30,7 @@ local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen
 local idiot, drawnents, prioritylist, ignorelist, visible, dists, cones, traitors, tweps = {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
 
 local toggler, playerkills, namechangeTime, circlestrafeval, timeHoldingSpaceOnGround, servertime, faketick, propval, propdelay, crouched = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-local maintextcol, menutextcol, bgmenucol, bordercol, teamvisualscol, enemyvisualscol, prioritytargetscol, ignoredtargetscol, miscvisualscol, teamchamscol, enemychamscol, crosshaircol, viewmodelcol = Color(0, 205, 255), Color(255, 255, 255), Color(30, 30, 45), Color(0, 155, 255), Color(255, 255, 255), Color(255, 255, 255), Color(255, 0, 100), Color(175, 175, 175), Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 235, 255), Color(0, 235, 255)
+local menutextcol, bgmenucol, bordercol, teamvisualscol, enemyvisualscol, prioritytargetscol, ignoredtargetscol, miscvisualscol, teamchamscol, enemychamscol, crosshaircol, viewmodelcol = Color(255, 255, 255), Color(30, 30, 45), Color(0, 155, 255), Color(255, 255, 255), Color(255, 255, 255), Color(255, 0, 100), Color(175, 175, 175), Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 235, 255), Color(0, 235, 255)
 
 local radarX, radarY, radarW, radarH = 50, ScrH() / 3, 200, 200
 local roampos, roamang, roamon, roamx, roamy, roamduck, roamjump = me:EyePos(), me:GetAngles(), false, 0, 0, false, false
@@ -2333,7 +2333,6 @@ local function DrawSub(self, w, h)
 end
 
 local function CacheColors()
-	maintextcol = Color(gInt("Adjustments", "Main Text Color", "Red:"), gInt("Adjustments", "Main Text Color", "Green:"), gInt("Adjustments", "Main Text Color", "Blue:"))
 	menutextcol = Color(gInt("Adjustments", "Menu Text Color", "Red:"), gInt("Adjustments", "Menu Text Color", "Green:"), gInt("Adjustments", "Menu Text Color", "Blue:"))
 	bgmenucol = Color(gInt("Adjustments", "Background Menu Color", "Red:"), gInt("Adjustments", "Background Menu Color", "Green:"), gInt("Adjustments", "Background Menu Color", "Blue:"))
 	bordercol = Color(gInt("Adjustments", "Border Color", "Red:"), gInt("Adjustments", "Border Color", "Green:"), gInt("Adjustments", "Border Color", "Blue:"))
@@ -7119,7 +7118,7 @@ hook.Add("MiscPaint", "MiscPaint", function()
 			else
 				witnesscolor = Color(255, 0, 0)
 			end
-    	draw.SimpleText(witnesses.." Player(s) can see you.", "MiscFont3", (ScrW() / 2) - 65, 42, Color(maintextcol.r, maintextcol.g, maintextcol.b), 4, 1, 1, Color(0, 0, 0))
+    	draw.SimpleText(witnesses.." Player(s) can see you.", "MiscFont3", (ScrW() / 2) - 65, 42, Color(menutextcolor.r, menutextcolor.g, menutextcolor.b), 4, 1, 1, Color(0, 0, 0))
     	surface.SetDrawColor(witnesscolor)
     	surface.DrawRect((ScrW() / 2) - 73, 55, 152, 5)
     end
@@ -7299,6 +7298,7 @@ Outcome (paradox)
 Mr. Squid
 OhhStyle
 SDunken
+Crave4
 
 ]]--
 
