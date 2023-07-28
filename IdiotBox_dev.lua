@@ -5,13 +5,11 @@
 --[[
 
 ||-------------NOTES-------------||
-
 I do not take credit for all of the features in this cheat. The contributors are listed at the bottom of this script;
 This script is nowhere near perfect - there's a lot of room for improvement. It started off as a very broken, random paste that I made for fun, then it somehow turned into one of the most popular cheats in Garry's Mod;
 We try to make IdiotBox a better cheat with each update that gets released, and so far, it seems to go pretty well - but we're nowhere near the end.
 
 ||------CONTACT INFORMATION------||
-
 Discord server: https://discord.com/invite/2h4un8G;
 Steam group: https://steamcommunity.com/groups/ib4g;
 Creator (Phizz): https://steamcommunity.com/id/phizzofficial/, or 'phizz0777' on Discord.
@@ -20,7 +18,7 @@ Creator (Phizz): https://steamcommunity.com/id/phizzofficial/, or 'phizz0777' on
 
 local global = (_G)
 local folder = "IdiotBox"
-local version = "7.0.b1-pre13"
+local version = "7.0.b1-pre14"
 
 local me = LocalPlayer()
 --[[ local wep = me:GetActiveWeapon() ]]-- Trying to localize this causes many issues for whatever reason, but I'll figure it out at one point
@@ -592,17 +590,17 @@ local options = {
 		}, 
 		{
 			{"Window Adjustments", 506, 374, 232, 130, 88}, 
-			{"Spectators X:", "SliderOld", 12, 2000, 92}, 
-			{"Spectators Y:", "SliderOld", 12, 2000, 92}, 
-			{"Radar X:", "SliderOld", 1710, 2000, 92}, 
-			{"Radar Y:", "SliderOld", 12, 2000, 92}, 
+			{"Spectators X:", "SliderOld", 7, 1920, 92}, 
+			{"Spectators Y:", "SliderOld", 25, 1080, 92}, 
+			{"Radar X:", "SliderOld", 1710, 1920, 92}, 
+			{"Radar Y:", "SliderOld", 25, 1080, 92}, 
 		}, 
 		{
 			{"List Adjustments", 506, 518, 232, 130, 88}, 
-			{"Debug Info X:", "SliderOld", 225, 2000, 92}, 
-			{"Debug Info Y:", "SliderOld", 35, 2000, 92}, 
-			{"Players List X:", "SliderOld", 1770, 2000, 92}, 
-			{"Players List Y:", "SliderOld", 245, 2000, 92}, 
+			{"Debug Info X:", "SliderOld", 7, 1920, 92}, 
+			{"Debug Info Y:", "SliderOld", 265, 1080, 92}, 
+			{"Players List X:", "SliderOld", 7, 1920, 92}, 
+			{"Players List Y:", "SliderOld", 444, 1080, 92}, 
 		}, 
 	}, 
 }
@@ -1030,6 +1028,7 @@ local function DrawUpperText(w, h)
 			surface.DrawLine(1.75, i + 2, w - 2.75, i + 2)
 		end
 	end
+	surface.SetFont("MenuFont2")
 	local tw, th = surface.GetTextSize("")
 	surface.SetTextPos(37, 13 - th / 2)
 	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
@@ -1038,11 +1037,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(147, 16 - th / 2)
 	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: d27m07-pre13")
-	surface.SetFont("MenuFont2")
-	surface.DrawRect(0, 31, 0, h - 31)
-	surface.DrawRect(0, h - 0, w, h)
-	surface.DrawRect(w - 0, 31, 0, h)
+	surface.DrawText("Latest build: d28m07-pre14")
 end
 
 local function MouseInArea(minx, miny, maxx, maxy)
@@ -7306,12 +7301,10 @@ end
 --[[
 
 ||-------------NOTES-------------||
-
 Big thanks to everyone who still supports me to this day. Without you, this wouldn't be a thing;
 All of my credits go out to you and the ones who helped me with the development of IdiotBox. <3
 
 ||------------CREDITS------------||
-
 Pinged
 data
 s0lum
@@ -7328,7 +7321,6 @@ Outcome (paradox)
 Mr. Squid
 OhhStyle
 SDunken
-Crave4
 
 ]]--
 
