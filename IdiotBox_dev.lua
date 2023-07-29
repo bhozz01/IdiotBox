@@ -58,8 +58,6 @@ local am = FindMetaTable("Angle")
 local vm = FindMetaTable("Vector")
 local im = FindMetaTable("IMaterial")
 
-local anticheatNames = {"QAC", "qac", "CAC", "cac", "SAC", "sac", "DAC", "dac", "ZAC", "zac", "TAC", "tac", "LSAC", "lsac", "simplicity", "Simplicity", "ZARP", "Zarp", "zarp", "swiftAC", "swiftac", "SwiftAC", "Swiftac", "SMAC", "smac", "MAC", "mac", "GAC", "gac", "GS", "gs", "GTS", "gts", "AE", "ae", "CardinalLib", "cardinallib", "cardinalLib", "Cardinallib"}
-
 gameevent.Listen("entity_killed")
 gameevent.Listen("player_disconnect")
 gameevent.Listen("player_hurt")
@@ -90,6 +88,14 @@ ib.chamsmat3 = CreateMaterial("flatmat1", "UnLitGeneric", {["$ignorez"] = 1, ["$
 ib.chamsmat4 = CreateMaterial("flatmat2", "UnLitGeneric", {["$ignorez"] = 0, ["$basetexture"] = "models/debug/debugwhite", })
 ib.chamsmat5 = CreateMaterial("wiremat1", "UnLitGeneric", {["$ignorez"] = 1, ["$wireframe"] = 1, })
 ib.chamsmat6 = CreateMaterial("wiremat2", "UnLitGeneric", {["$ignorez"] = 0, ["$wireframe"] = 1, })
+
+ib.anticheatNames = {"QAC", "qac", "CAC", "cac", "SAC", "sac", "DAC", "dac", "ZAC", "zac", "TAC", "tac", "LSAC", "lsac", "simplicity", "Simplicity", "ZARP", "Zarp", "zarp", "swiftAC", "swiftac", "SwiftAC", "Swiftac", "SMAC", "smac", "MAC", "mac", "GAC", "gac", "GS", "gs", "GTS", "gts", "AE", "ae", "CardinalLib", "cardinallib", "cardinalLib", "Cardinallib"}
+ib.configFiles = {"config1.txt", "config2.txt", "config3.txt", "config4.txt", "config5.txt", "config6.txt", "config7.txt", "config8.txt", "config9.txt", "config10.txt"}
+ib.configOptions = {"Legit Config", "Rage Config", "HvH Config", "Misc Config #1", "Misc Config #2", "Misc Config #3", "Misc Config #4", "Misc Config #5", "Misc Config #6", "Misc Config #7"}
+
+ib.headshot1 = {"playerfx/headshot1.wav", "playerfx/headshot2.wav",}
+ib.headshot2 = {"player/headshot1.wav", "player/headshot2.wav", "player/headshot3.wav",}
+ib.metal = {"phx/hmetal1.wav", "phx/hmetal2.wav", "phx/hmetal3.wav",}
 
 ib.NetMessages = {Buildmode = {"BuildMode", "buildmode", "_Kyle_Buildmode"}, God = {"HasGodMode", "has_god", "god_mode", "ugod"}, Protected = {"LibbyProtectedSpawn", "SH_SZ.Safe", "spawn_protect", "InSpawnZone"}}
 ib.frpressed, ib.frtoggle = false
@@ -618,58 +624,46 @@ local order = {
 	"Adjustments", 
 }
 
+local function GetOptionValue(men, sub, lookup)
+    if not options[men] then
+        return nil
+    end
+    for _, aaa in pairs(options[men]) do
+        if aaa[1][1] == sub then
+            for _, val in pairs(aaa) do
+                if val[1] == lookup then
+                    return val[3]
+                end
+            end
+        end
+    end
+    return nil
+end
+
 local function gBool(men, sub, lookup)
-	if not options[men] then return end
-	for aa, aaa in next, options[men] do
-		for key, val in next, aaa do
-			if (aaa[1][1] ~= sub) then continue end
-			if (val[1] == lookup) then
-				return val[3]
-			end
-		end
-	end
+    local value = GetOptionValue(men, sub, lookup)
+    return value and value == true
 end
 
 local function gOption(men, sub, lookup)
-	if not options[men] then return "" end
-	for aa, aaa in next, options[men] do
-		for key, val in next, aaa do
-			if (aaa[1][1] ~= sub) then continue end
-			if (val[1] == lookup) then
-				return val[3]
-			end
-		end
-	end
-	return ""
+    local value = GetOptionValue(men, sub, lookup)
+    return value or ""
 end
 
 local function gInt(men, sub, lookup)
-	if not options[men] then return 0 end
-	for aa, aaa in next, options[men] do
-		for key, val in next, aaa do
-			if (aaa[1][1] ~= sub) then continue end
-			if (val[1] == lookup) then
-				return val[3]
-			end
-		end
-	end
-	return 0
+    local value = GetOptionValue(men, sub, lookup)
+    return value or 0
 end
 
 local function gKey(men, sub, lookup)
-    if not options[men] or me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) then return end
-    for aa, aaa in next, options[men] do
-        for key, val in next, aaa do
-            if(aaa[1][1] ~= sub) then continue end
-             if(val[1] == lookup) then
-				if input.IsKeyDown(val[3]) || input.IsMouseDown(val[3]) || val[3] == 0 then
-					return true
-				else
-					return false
-				end
-			end
-		end
-	end
+    if not options[men] or me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) and g_SpawnMenu:IsVisible()) then
+        return false
+    end
+    local value = GetOptionValue(men, sub, lookup)
+    if value then
+        return input.IsKeyDown(value) or input.IsMouseDown(value) or value == 0
+    end
+    return false
 end
 
 local function Popup(time, text, color)
@@ -748,44 +742,9 @@ else
 	file.Write(folder.."/ignored.txt", "[]")
 end
 
-function ib.SaveConfig1()
-	file.Write(folder.."/config1.txt", util.TableToJSON(options))
-end
-
-function ib.SaveConfig2()
-	file.Write(folder.."/config2.txt", util.TableToJSON(options))
-end
-
-function ib.SaveConfig3()
-	file.Write(folder.."/config3.txt", util.TableToJSON(options))
-end
-
-function ib.SaveConfig4()
-	file.Write(folder.."/config4.txt", util.TableToJSON(options))
-end
-
-function ib.SaveConfig5()
-	file.Write(folder.."/config5.txt", util.TableToJSON(options))
-end
-
-function ib.SaveConfig6()
-	file.Write(folder.."/config6.txt", util.TableToJSON(options))
-end
-
-function ib.SaveConfig7()
-	file.Write(folder.."/config7.txt", util.TableToJSON(options))
-end
-
-function ib.SaveConfig8()
-	file.Write(folder.."/config8.txt", util.TableToJSON(options))
-end
-
-function ib.SaveConfig9()
-	file.Write(folder.."/config9.txt", util.TableToJSON(options))
-end
-
-function ib.SaveConfig10()
-	file.Write(folder.."/config10.txt", util.TableToJSON(options))
+function ib.SaveConfig(index)
+    if index < 1 or index > #ib.configFiles then return end
+    file.Write(folder.."/"..ib.configFiles[index], util.TableToJSON(options))
 end
 
 function ib.UpdateVar(men, sub, lookup, new)
@@ -799,164 +758,24 @@ function ib.UpdateVar(men, sub, lookup, new)
 	end
 end
 
-function ib.LoadConfig1()
-	if file.Exists(folder.."/config1.txt", "DATA") then
-	local tab = util.JSONToTable(file.Read(folder.."/config1.txt", "DATA"))
-	local cursub
-		for k, v in next, tab do
-			if (not options[k]) then continue end
-			for men, subtab in next, v do
-				for key, val in next, subtab do
-					if (key == 1) then cursub = val[1] continue end
-					ib.UpdateVar(k, cursub, val[1], val[3])
-				end
-			end
-		end
-	end
-end
-
-function ib.LoadConfig2()
-	if file.Exists(folder.."/config2.txt", "DATA") then
-	local tab = util.JSONToTable(file.Read(folder.."/config2.txt", "DATA"))
-	local cursub
-		for k, v in next, tab do
-			if (not options[k]) then continue end
-			for men, subtab in next, v do
-				for key, val in next, subtab do
-					if (key == 1) then cursub = val[1] continue end
-					ib.UpdateVar(k, cursub, val[1], val[3])
-				end
-			end
-		end
-	end
-end
-
-function ib.LoadConfig3()
-	if file.Exists(folder.."/config3.txt", "DATA") then
-	local tab = util.JSONToTable(file.Read(folder.."/config3.txt", "DATA"))
-	local cursub
-		for k, v in next, tab do
-			if (not options[k]) then continue end
-			for men, subtab in next, v do
-				for key, val in next, subtab do
-					if (key == 1) then cursub = val[1] continue end
-					ib.UpdateVar(k, cursub, val[1], val[3])
-				end
-			end
-		end
-	end
-end
-
-function ib.LoadConfig4()
-	if file.Exists(folder.."/config4.txt", "DATA") then
-	local tab = util.JSONToTable(file.Read(folder.."/config4.txt", "DATA"))
-	local cursub
-		for k, v in next, tab do
-			if (not options[k]) then continue end
-			for men, subtab in next, v do
-				for key, val in next, subtab do
-					if (key == 1) then cursub = val[1] continue end
-					ib.UpdateVar(k, cursub, val[1], val[3])
-				end
-			end
-		end
-	end
-end
-
-function ib.LoadConfig5()
-	if file.Exists(folder.."/config5.txt", "DATA") then
-	local tab = util.JSONToTable(file.Read(folder.."/config5.txt", "DATA"))
-	local cursub
-		for k, v in next, tab do
-			if (not options[k]) then continue end
-			for men, subtab in next, v do
-				for key, val in next, subtab do
-					if (key == 1) then cursub = val[1] continue end
-					ib.UpdateVar(k, cursub, val[1], val[3])
-				end
-			end
-		end
-	end
-end
-
-function ib.LoadConfig6()
-	if file.Exists(folder.."/config6.txt", "DATA") then
-	local tab = util.JSONToTable(file.Read(folder.."/config6.txt", "DATA"))
-	local cursub
-		for k, v in next, tab do
-			if (not options[k]) then continue end
-			for men, subtab in next, v do
-				for key, val in next, subtab do
-					if (key == 1) then cursub = val[1] continue end
-					ib.UpdateVar(k, cursub, val[1], val[3])
-				end
-			end
-		end
-	end
-end
-
-function ib.LoadConfig7()
-	if file.Exists(folder.."/config7.txt", "DATA") then
-	local tab = util.JSONToTable(file.Read(folder.."/config7.txt", "DATA"))
-	local cursub
-		for k, v in next, tab do
-			if (not options[k]) then continue end
-			for men, subtab in next, v do
-				for key, val in next, subtab do
-					if (key == 1) then cursub = val[1] continue end
-					ib.UpdateVar(k, cursub, val[1], val[3])
-				end
-			end
-		end
-	end
-end
-
-function ib.LoadConfig8()
-	if file.Exists(folder.."/config8.txt", "DATA") then
-	local tab = util.JSONToTable(file.Read(folder.."/config8.txt", "DATA"))
-	local cursub
-		for k, v in next, tab do
-			if (not options[k]) then continue end
-			for men, subtab in next, v do
-				for key, val in next, subtab do
-					if (key == 1) then cursub = val[1] continue end
-					ib.UpdateVar(k, cursub, val[1], val[3])
-				end
-			end
-		end
-	end
-end
-
-function ib.LoadConfig9()
-	if file.Exists(folder.."/config9.txt", "DATA") then
-	local tab = util.JSONToTable(file.Read(folder.."/config9.txt", "DATA"))
-	local cursub
-		for k, v in next, tab do
-			if (not options[k]) then continue end
-			for men, subtab in next, v do
-				for key, val in next, subtab do
-					if (key == 1) then cursub = val[1] continue end
-					ib.UpdateVar(k, cursub, val[1], val[3])
-				end
-			end
-		end
-	end
-end
-
-function ib.LoadConfig10()
-	if file.Exists(folder.."/config10.txt", "DATA") then
-	local tab = util.JSONToTable(file.Read(folder.."/config10.txt", "DATA"))
-	local cursub
-		for k, v in next, tab do
-			if (not options[k]) then continue end
-			for men, subtab in next, v do
-				for key, val in next, subtab do
-					if (key == 1) then cursub = val[1] continue end
-					ib.UpdateVar(k, cursub, val[1], val[3])
-				end
-			end
-		end
-	end
+function ib.LoadConfig(index)
+    if index < 1 or index > #ib.configFiles then return end
+    if file.Exists(folder.."/"..ib.configFiles[index], "DATA") then
+        local tab = util.JSONToTable(file.Read(folder.."/"..ib.configFiles[index], "DATA"))
+        local cursub
+        for k, v in next, tab do
+            if not options[k] then continue end
+            for men, subtab in next, v do
+                for key, val in next, subtab do
+                    if key == 1 then
+                        cursub = val[1]
+                        continue
+                    end
+                    ib.UpdateVar(k, cursub, val[1], val[3])
+                end
+            end
+        end
+    end
 end
 
 for k, v in next, order do
@@ -1595,55 +1414,25 @@ end
 local function Unload()
 	RunConsoleCommand("stopsound")
 	global.unloaded = true
-	hook.Remove("RenderScene", "RenderScene")
-	hook.Remove("ShutDown", "ShutDown")
-	hook.Remove("PostDrawViewModel", "PostDrawViewModel")
-	hook.Remove("PreDrawEffects", "PreDrawEffects")
-	hook.Remove("HUDShouldDraw", "HUDShouldDraw")
-	hook.Remove("Tick", "Tick")
-	hook.Remove("Think", "Think")
-	hook.Remove("CalcViewModelView", "CalcViewModelView")
-	hook.Remove("PreDrawSkyBox", "PreDrawSkyBox")
-	hook.Remove("PreDrawViewModel", "PreDrawViewModel")
-	hook.Remove("PreDrawPlayerHands", "PreDrawPlayerHands")
-	hook.Remove("RenderScreenspaceEffects", "RenderScreenspaceEffects")
-	hook.Remove("player_hurt", "player_hurt")
-	hook.Remove("entity_killed", "entity_killed")
-	hook.Remove("Move", "Move")
-	hook.Remove("CalcView", "CalcView")
-	hook.Remove("AdjustMouseSensitivity", "AdjustMouseSensitivity")
-	hook.Remove("ShouldDrawLocalPlayer", "ShouldDrawLocalPlayer")
-	hook.Remove("StartCommand", "StartCommand")
-	hook.Remove("CreateMove", "CreateMove")
-	hook.Remove("player_disconnect", "player_disconnect")
-	hook.Remove("MiscPaint", "MiscPaint")
-	hook.Remove("PreDrawOpaqueRenderables", "PreDrawOpaqueRenderables")
-	hook.Remove("OnPlayerChat", "OnPlayerChat")
+	local hooksToRemove = {"RenderScene", "ShutDown", "PostDrawViewModel", "PreDrawEffects", "HUDShouldDraw", "Tick", "Think", "CalcViewModelView", "PreDrawSkyBox", "PreDrawViewModel", "PreDrawPlayerHands", "RenderScreenspaceEffects", "player_hurt", "entity_killed", "Move", "CalcView", "AdjustMouseSensitivity", "ShouldDrawLocalPlayer", "StartCommand", "CreateMove", "player_disconnect", "MiscPaint", "PreDrawOpaqueRenderables", "OnPlayerChat",}
+	for _, hookName in ipairs(hooksToRemove) do
+		hook.Remove(hookName, hookName)
+	end
 	concommand.Remove("ib_changename")
 	concommand.Remove("ib_usespam")
-		if gBool("Main Menu", "Configurations", "Automatically Save") then
-			if gOption("Main Menu", "Configurations", "Configuration:") == "Legit Config" then
-				ib.SaveConfig1()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Rage Config" then
-				ib.SaveConfig2()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "HvH Config" then
-				ib.SaveConfig3()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #1" then
-				ib.SaveConfig4()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #2" then
-				ib.SaveConfig5()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #3" then
-				ib.SaveConfig6()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #4" then
-				ib.SaveConfig7()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #5" then
-				ib.SaveConfig8()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #6" then
-				ib.SaveConfig9()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #7" then
-				ib.SaveConfig10()
-			end
+	local selectedConfig = gOption("Main Menu", "Configurations", "Configuration:")
+	local configIndex
+	for index, config in ipairs(ib.configOptions) do
+		if config == selectedConfig then
+			configIndex = index
+			break
 		end
+	end
+	if gBool("Main Menu", "Configurations", "Automatically Save") then
+		if configIndex then
+			ib.SaveConfig(configIndex)
+		end
+	end
 	me:ConCommand("M9KGasEffect 1 cl_interp 0 cl_interp_ratio 2 cl_updaterate 30")
 	global.bSendPacket = true
 	global.Loaded = false
@@ -1658,6 +1447,8 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("Please note: This changelog includes bugfixes from previous updates as well.")
 	print("\n")
 	print("- The 'readme.txt' file is finally up-to-date and only contains important information;")
+	print("- Optimized UI design for more user-friendliness;")
+	print("- Cleaned up bad hooks and functions for better performance;")
 	print("- Merged Ragebot and Legitbot into a single function;")
 	print("- Fixed Entities not using the correct Visuals color;")
 	print("- Fixed entity list not showing props and being too cluttered;")
@@ -1692,6 +1483,7 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Fixed Disable Interpolation, Optimize Game and Dark Mode not resetting when disabled;")
 	print("- Fixed missing spread prediction and recoil compensation checks;")
 	print("- Fixed improper rendering of the visuals;")
+	print("- Fixed anti-screengrabber security issues;")
 	print("- Fixed module issues upon reloading the script/ loading it in Single Player mode;")
 	print("- Fixed local variable limit and timer issues;")
 	print("- Reworked localizations and overall script for better performance;")
@@ -1755,9 +1547,7 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- WORK-IN-PROGRESS (ETA: undetermined): rework 'Auto Wallbang' from scratch;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): rework 'Projectile Prediction' from scratch;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): rework 'Radar' from scratch;")
-	print("- WORK-IN-PROGRESS (ETA: undetermined): fix directional strafing angle calculation errors;")
-	print("- WORK-IN-PROGRESS (ETA: undetermined): optimize UI design for more user-friendliness;")
-	print("- WORK-IN-PROGRESS (ETA: undetermined): clean up bad hooks and functions for better performance.")
+	print("- WORK-IN-PROGRESS (ETA: undetermined): fix directional strafing angle calculation errors.")
 	print("\n\n===============================================================================================")
 	timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Successfully printed changelog to console!", Color(0, 255, 0)) end)
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
@@ -2048,143 +1838,59 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 		elseif feat == "Print Changelog" then
 			info = "Prints the IdiotBox changelog in the console."
 		elseif feat == "Unload Cheat" then
-			info = "Unloads IdiotBox. If you desire to reload it, you will have to rejoin the server you're currently on."
+			info = "Unloads IdiotBox."
 		end
 	end
 	local tw, th = surface.GetTextSize(text)
 	surface.SetTextPos(posx - 173 + dist + 5, 61 + posy + maxy + 6 - th / 2 + 2)
 	surface.DrawText(text)
 	if bMouse and input.IsMouseDown(MOUSE_LEFT) and not drawlast and not mousedown or notyetselected == check then
+		local selectedConfig = gOption("Main Menu", "Configurations", "Configuration:")
+		local configIndex
+		for index, config in ipairs(ib.configOptions) do
+			if config == selectedConfig then
+				configIndex = index
+				break
+			end
+		end
 		if text == "Unload Cheat" then
 			self:Remove()
 			Unload()
 		elseif text == "Print Changelog" then
 			ib.Changelog()
-		elseif text == "Save Configuration" then
-			if gOption("Main Menu", "Configurations", "Configuration:") == "Legit Config" then
-				ib.SaveConfig1()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Rage Config" then
-				ib.SaveConfig2()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "HvH Config" then
-				ib.SaveConfig3()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #1" then
-				ib.SaveConfig4()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #2" then
-				ib.SaveConfig5()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #3" then
-				ib.SaveConfig6()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #4" then
-				ib.SaveConfig7()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #5" then
-				ib.SaveConfig8()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #6" then
-				ib.SaveConfig9()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #7" then
-				ib.SaveConfig10()
+		elseif text == "Save Configuration" or text == "Load Configuration" or text == "Delete Configuration" then
+			if configIndex then
+				if text == "Save Configuration" then
+					ib.SaveConfig(configIndex)
+					timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Configuration saved!", Color(0, 255, 0)) end)
+					timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
+				elseif text == "Load Configuration" then
+					ib.LoadConfig(configIndex)
+					timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Configuration loaded!", Color(255, 255, 0)) end)
+					timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
+				elseif text == "Delete Configuration" then
+					file.Delete(folder.."/config"..configIndex..".txt")
+					timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Configuration deleted!", Color(255, 0, 0)) end)
+					timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
+				end
 			end
-			timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Configuration saved!", Color(0, 255, 0)) end)
-			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
-		elseif text == "Load Configuration" then
-			if gOption("Main Menu", "Configurations", "Configuration:") == "Legit Config" then
-				ib.LoadConfig1()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Rage Config" then
-				ib.LoadConfig2()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "HvH Config" then
-				ib.LoadConfig3()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #1" then
-				ib.LoadConfig4()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #2" then
-				ib.LoadConfig5()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #3" then
-				ib.LoadConfig6()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #4" then
-				ib.LoadConfig7()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #5" then
-				ib.LoadConfig8()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #6" then
-				ib.LoadConfig9()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #7" then
-				ib.LoadConfig10()
-			end
-			timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Configuration loaded!", Color(255, 255, 0)) end)
-			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
-		elseif text == "Delete Configuration" then
-			if gOption("Main Menu", "Configurations", "Configuration:") == "Legit Config" then
-				file.Delete(folder.."/config1.txt")
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Rage Config" then
-				file.Delete(folder.."/config2.txt")
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "HvH Config" then
-				file.Delete(folder.."/config3.txt")
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #1" then
-				file.Delete(folder.."/config4.txt")
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #2" then
-				file.Delete(folder.."/config5.txt")
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #3" then
-				file.Delete(folder.."/config6.txt")
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #4" then
-				file.Delete(folder.."/config7.txt")
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #5" then
-				file.Delete(folder.."/config8.txt")
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #6" then
-				file.Delete(folder.."/config9.txt")
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #7" then
-				file.Delete(folder.."/config10.txt")
-			end
-			timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Configuration deleted!", Color(255, 0, 0)) end)
-			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Plugin Loader Menu" then
 			self:Remove()
 			if gBool("Main Menu", "Configurations", "Automatically Save") then
-				if gOption("Main Menu", "Configurations", "Configuration:") == "Legit Config" then
-					ib.SaveConfig1()
-				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Rage Config" then
-					ib.SaveConfig2()
-				elseif gOption("Main Menu", "Configurations", "Configuration:") == "HvH Config" then
-					ib.SaveConfig3()
-				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #1" then
-					ib.SaveConfig4()
-				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #2" then
-					ib.SaveConfig5()
-				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #3" then
-					ib.SaveConfig6()
-				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #4" then
-					ib.SaveConfig7()
-				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #5" then
-					ib.SaveConfig8()
-				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #6" then
-					ib.SaveConfig9()
-				elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #7" then
-					ib.SaveConfig10()
+				if configIndex then
+					ib.SaveConfig(configIndex)
 				end
 			end
 			PluginLoader()
 			timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Successfully loaded Plugin Menu!", Color(0, 255, 0)) end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Entity Finder Menu" then
-				self:Remove()
-				if gBool("Main Menu", "Configurations", "Automatically Save") then
-					if gOption("Main Menu", "Configurations", "Configuration:") == "Legit Config" then
-						ib.SaveConfig1()
-					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Rage Config" then
-						ib.SaveConfig2()
-					elseif gOption("Main Menu", "Configurations", "Configuration:") == "HvH Config" then
-						ib.SaveConfig3()
-					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #1" then
-						ib.SaveConfig4()
-					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #2" then
-						ib.SaveConfig5()
-					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #3" then
-						ib.SaveConfig6()
-					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #4" then
-						ib.SaveConfig7()
-					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #5" then
-						ib.SaveConfig8()
-					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #6" then
-						ib.SaveConfig9()
-					elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #7" then
-						ib.SaveConfig10()
-					end
+			self:Remove()
+			if gBool("Main Menu", "Configurations", "Automatically Save") then
+				if configIndex then
+					ib.SaveConfig(configIndex)
 				end
+			end
 			EntityFinder()
 			timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Successfully loaded Entities Menu!", Color(0, 255, 0)) end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
@@ -2374,32 +2080,22 @@ local function Menu()
 			candoslider = false
 			drawlast = nil
 		end)
-		if gBool("Main Menu", "Configurations", "Automatically Save") then
-			if gOption("Main Menu", "Configurations", "Configuration:") == "Legit Config" then
-				ib.SaveConfig1()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Rage Config" then
-				ib.SaveConfig2()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "HvH Config" then
-				ib.SaveConfig3()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #1" then
-				ib.SaveConfig4()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #2" then
-				ib.SaveConfig5()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #3" then
-				ib.SaveConfig6()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #4" then
-				ib.SaveConfig7()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #5" then
-				ib.SaveConfig8()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #6" then
-				ib.SaveConfig9()
-			elseif gOption("Main Menu", "Configurations", "Configuration:") == "Misc Config #7" then
-				ib.SaveConfig10()
-				end
+		local selectedConfig = gOption("Main Menu", "Configurations", "Configuration:")
+		local configIndex
+		for index, config in ipairs(ib.configOptions) do
+			if config == selectedConfig then
+				configIndex = index
+				break
 			end
 		end
-		CacheColors()
-		frame:othink()
+		if gBool("Main Menu", "Configurations", "Automatically Save") then
+			if configIndex then
+				ib.SaveConfig(configIndex)
+			end
+		end
+	end
+	CacheColors()
+	frame:othink()
 	end
 end
 
@@ -2946,27 +2642,20 @@ local function Crosshair()
 		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 		surface.DrawRect(x1 - 2, y1 - 1, 4, 4)
 	end
-	if (gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "Dot") then -- Cancer, I know, but I want to avoid using surface.DrawPoly as much as possible
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.6, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 0.8, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.6, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 1.8, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.2, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.6, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 2.8, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 3, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4, Color(0, 0, 0, gInt("Adjustments", "Crosshair Color", "Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.2, Color(0, 0, 0, gInt("Adjustments", "Crosshair Color", "Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.4, Color(0, 0, 0, gInt("Adjustments", "Crosshair Color", "Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.6, Color(0, 0, 0, gInt("Adjustments", "Crosshair Color", "Opacity:")))
-		surface.DrawCircle(ScrW() / 2, ScrH() / 2, 4.8, Color(0, 0, 0, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+	if gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "Dot" then
+		local crosshairSize = 0.16
+		local numCircles = 20
+		local opacity = gInt("Adjustments", "Crosshair Color", "Opacity:")
+		for i = 1, numCircles do
+			local size = crosshairSize + i * 0.16
+			local color = Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, opacity)
+			local outlineColor = Color(0, 0, 0, opacity)
+			if i > 18 then
+				surface.DrawCircle(ScrW() / 2, ScrH() / 2, size, outlineColor)
+			else
+				surface.DrawCircle(ScrW() / 2, ScrH() / 2, size, color)
+			end
+		end
 	end
 	if (gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "Square") then
 	local x1, y1 = ScrW() * 0.5, ScrH() * 0.5
@@ -3156,170 +2845,170 @@ local function PlayerChams(v)
 		return false
 	end
 	if gOption("Visuals", "Wallhack", "Chams:") == "Playermodel" then
-	if wep:IsValid() then
-	cam.Start3D()
-		cam.IgnoreZ(true)
-	em.DrawModel(wep)
-		cam.IgnoreZ(false)
-	cam.End3D()
-	end
-	cam.Start3D()
-		cam.IgnoreZ(true)
-	em.DrawModel(v)
-		cam.IgnoreZ(false)
-	cam.End3D()
+		if wep:IsValid() then
+			cam.Start3D()
+				cam.IgnoreZ(true)
+			em.DrawModel(wep)
+				cam.IgnoreZ(false)
+			cam.End3D()
+		end
+		cam.Start3D()
+			cam.IgnoreZ(true)
+		em.DrawModel(v)
+			cam.IgnoreZ(false)
+		cam.End3D()
 	end
 	if gOption("Visuals", "Wallhack", "Chams:") == "Normal" then
-	if wep:IsValid() then
-	cam.Start3D()
-		render.MaterialOverride(ib.chamsmat1)
-		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
-	em.DrawModel(wep)
-		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
-		render.MaterialOverride(ib.chamsmat2)
-	em.DrawModel(wep)
-		render.SetColorModulation(1, 1, 1)
-	cam.End3D()
-	end
-	cam.Start3D()
-		render.MaterialOverride(ib.chamsmat1)
-		render.SetColorModulation(col.b / 255, col.r / 255, col.g / 255)
-	em.DrawModel(v)
-		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
-		render.MaterialOverride(ib.chamsmat2)
-	em.DrawModel(v)
-		render.SetColorModulation(1, 1, 1)
-	cam.End3D()
+		if wep:IsValid() then
+			cam.Start3D()
+				render.MaterialOverride(ib.chamsmat1)
+				render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
+			em.DrawModel(wep)
+				render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
+				render.MaterialOverride(ib.chamsmat2)
+			em.DrawModel(wep)
+				render.SetColorModulation(1, 1, 1)
+			cam.End3D()
+		end
+		cam.Start3D()
+			render.MaterialOverride(ib.chamsmat1)
+			render.SetColorModulation(col.b / 255, col.r / 255, col.g / 255)
+		em.DrawModel(v)
+			render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
+			render.MaterialOverride(ib.chamsmat2)
+		em.DrawModel(v)
+			render.SetColorModulation(1, 1, 1)
+		cam.End3D()
 	end
 	if gOption("Visuals", "Wallhack", "Chams:") == "Flat" then
-	if wep:IsValid() then
-	cam.Start3D()
-		render.MaterialOverride(ib.chamsmat3)
-		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
-	em.DrawModel(wep)
-		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
-		render.MaterialOverride(ib.chamsmat4)
-	em.DrawModel(wep)
-		render.SetColorModulation(1, 1, 1)
-	cam.End3D()
-	end
-	cam.Start3D()
-		render.MaterialOverride(ib.chamsmat3)
-		render.SetColorModulation(col.b / 255, col.r / 255, col.g / 255)
-	em.DrawModel(v)
-		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
-		render.MaterialOverride(ib.chamsmat4)
-	em.DrawModel(v)
-		render.SetColorModulation(1, 1, 1)
-	cam.End3D()
+		if wep:IsValid() then
+			cam.Start3D()
+				render.MaterialOverride(ib.chamsmat3)
+				render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
+			em.DrawModel(wep)
+				render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
+				render.MaterialOverride(ib.chamsmat4)
+			em.DrawModel(wep)
+				render.SetColorModulation(1, 1, 1)
+			cam.End3D()
+		end
+		cam.Start3D()
+			render.MaterialOverride(ib.chamsmat3)
+			render.SetColorModulation(col.b / 255, col.r / 255, col.g / 255)
+		em.DrawModel(v)
+			render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
+			render.MaterialOverride(ib.chamsmat4)
+		em.DrawModel(v)
+			render.SetColorModulation(1, 1, 1)
+		cam.End3D()
 	end
 	if gOption("Visuals", "Wallhack", "Chams:") == "Wireframe" then
-	if wep:IsValid() then
-	cam.Start3D()
-		render.MaterialOverride(ib.chamsmat5)
-		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
-	em.DrawModel(wep)
-		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
-		render.MaterialOverride(ib.chamsmat6)
-	em.DrawModel(wep)
-		render.SetColorModulation(1, 1, 1)
-	cam.End3D()
-	end
-	cam.Start3D()
-		render.MaterialOverride(ib.chamsmat5)
-		render.SetColorModulation(col.b / 255, col.r / 255, col.g / 255)
-	em.DrawModel(v)
-		render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
-		render.MaterialOverride(ib.chamsmat6)
-	em.DrawModel(v)
-		render.SetColorModulation(1, 1, 1)
-	cam.End3D()
+		if wep:IsValid() then
+			cam.Start3D()
+				render.MaterialOverride(ib.chamsmat5)
+				render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
+			em.DrawModel(wep)
+				render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
+				render.MaterialOverride(ib.chamsmat6)
+			em.DrawModel(wep)
+				render.SetColorModulation(1, 1, 1)
+			cam.End3D()
+		end
+		cam.Start3D()
+			render.MaterialOverride(ib.chamsmat5)
+			render.SetColorModulation(col.b / 255, col.r / 255, col.g / 255)
+		em.DrawModel(v)
+			render.SetColorModulation(col.r / 255, col.g / 255, col.b / 255)
+			render.MaterialOverride(ib.chamsmat6)
+		em.DrawModel(v)
+			render.SetColorModulation(1, 1, 1)
+		cam.End3D()
 	end
 end
 
 local function EntityChams(v)
 	if gOption("Visuals", "Miscellaneous", "Entity Chams:") == "Model" then
-	cam.Start3D()
-		cam.IgnoreZ(true)
-	em.DrawModel(v)
-		cam.IgnoreZ(false)
-	cam.End3D()
+		cam.Start3D()
+			cam.IgnoreZ(true)
+		em.DrawModel(v)
+			cam.IgnoreZ(false)
+		cam.End3D()
 	end
 	if gOption("Visuals", "Miscellaneous", "Entity Chams:") == "Normal" then
-	cam.Start3D()
-		render.MaterialOverride(ib.chamsmat1)
-		render.SetColorModulation(miscvisualscol.b / 255, miscvisualscol.r / 255, miscvisualscol.g / 255)
-	em.DrawModel(v)
-		render.SetColorModulation(miscvisualscol.r / 255, miscvisualscol.g / 255, miscvisualscol.b / 255)
-		render.MaterialOverride(ib.chamsmat2)
-	em.DrawModel(v)
-		render.SetColorModulation(1, 1, 1)
-	cam.End3D()
+		cam.Start3D()
+			render.MaterialOverride(ib.chamsmat1)
+			render.SetColorModulation(miscvisualscol.b / 255, miscvisualscol.r / 255, miscvisualscol.g / 255)
+		em.DrawModel(v)
+			render.SetColorModulation(miscvisualscol.r / 255, miscvisualscol.g / 255, miscvisualscol.b / 255)
+			render.MaterialOverride(ib.chamsmat2)
+		em.DrawModel(v)
+			render.SetColorModulation(1, 1, 1)
+		cam.End3D()
 	end
 	if gOption("Visuals", "Miscellaneous", "Entity Chams:") == "Flat" then
-	cam.Start3D()
-		render.MaterialOverride(ib.chamsmat3)
-		render.SetColorModulation(miscvisualscol.b / 255, miscvisualscol.r / 255, miscvisualscol.g / 255)
-	em.DrawModel(v)
-		render.SetColorModulation(miscvisualscol.r / 255, miscvisualscol.g / 255, miscvisualscol.b / 255)
-		render.MaterialOverride(ib.chamsmat4)
-	em.DrawModel(v)
-		render.SetColorModulation(1, 1, 1)
-	cam.End3D()
+		cam.Start3D()
+			render.MaterialOverride(ib.chamsmat3)
+			render.SetColorModulation(miscvisualscol.b / 255, miscvisualscol.r / 255, miscvisualscol.g / 255)
+		em.DrawModel(v)
+			render.SetColorModulation(miscvisualscol.r / 255, miscvisualscol.g / 255, miscvisualscol.b / 255)
+			render.MaterialOverride(ib.chamsmat4)
+		em.DrawModel(v)
+			render.SetColorModulation(1, 1, 1)
+		cam.End3D()
 	end
 	if gOption("Visuals", "Miscellaneous", "Entity Chams:") == "Wireframe" then
-	cam.Start3D()
-		render.MaterialOverride(ib.chamsmat5)
-		render.SetColorModulation(miscvisualscol.b / 255, miscvisualscol.r / 255, miscvisualscol.g / 255)
-	em.DrawModel(v)
-		render.SetColorModulation(miscvisualscol.r / 255, miscvisualscol.g / 255, miscvisualscol.b / 255)
-		render.MaterialOverride(ib.chamsmat6)
-	em.DrawModel(v)
-		render.SetColorModulation(1, 1, 1)
-	cam.End3D()
+		cam.Start3D()
+			render.MaterialOverride(ib.chamsmat5)
+			render.SetColorModulation(miscvisualscol.b / 255, miscvisualscol.r / 255, miscvisualscol.g / 255)
+		em.DrawModel(v)
+			render.SetColorModulation(miscvisualscol.r / 255, miscvisualscol.g / 255, miscvisualscol.b / 255)
+			render.MaterialOverride(ib.chamsmat6)
+		em.DrawModel(v)
+			render.SetColorModulation(1, 1, 1)
+		cam.End3D()
 	end
 end
 
 local function NPCChams(v)
 	if gOption("Visuals", "Miscellaneous", "NPC Chams:") == "Model" then
-	cam.Start3D()
-		cam.IgnoreZ(true)
-	em.DrawModel(v)
-		cam.IgnoreZ(false)
-	cam.End3D()
+		cam.Start3D()
+			cam.IgnoreZ(true)
+		em.DrawModel(v)
+			cam.IgnoreZ(false)
+		cam.End3D()
 	end
 	if gOption("Visuals", "Miscellaneous", "NPC Chams:") == "Normal" then
-	cam.Start3D()
-		render.MaterialOverride(ib.chamsmat1)
-		render.SetColorModulation(miscvisualscol.b / 255, miscvisualscol.r / 255, miscvisualscol.g / 255)
-	em.DrawModel(v)
-		render.SetColorModulation(miscvisualscol.r / 255, miscvisualscol.g / 255, miscvisualscol.b / 255)
-		render.MaterialOverride(ib.chamsmat2)
-	em.DrawModel(v)
-		render.SetColorModulation(1, 1, 1)
-	cam.End3D()
+		cam.Start3D()
+			render.MaterialOverride(ib.chamsmat1)
+			render.SetColorModulation(miscvisualscol.b / 255, miscvisualscol.r / 255, miscvisualscol.g / 255)
+		em.DrawModel(v)
+			render.SetColorModulation(miscvisualscol.r / 255, miscvisualscol.g / 255, miscvisualscol.b / 255)
+			render.MaterialOverride(ib.chamsmat2)
+		em.DrawModel(v)
+			render.SetColorModulation(1, 1, 1)
+		cam.End3D()
 	end
 	if gOption("Visuals", "Miscellaneous", "NPC Chams:") == "Flat" then
-	cam.Start3D()
-		render.MaterialOverride(ib.chamsmat3)
-		render.SetColorModulation(miscvisualscol.b / 255, miscvisualscol.r / 255, miscvisualscol.g / 255)
-	em.DrawModel(v)
-		render.SetColorModulation(miscvisualscol.r / 255, miscvisualscol.g / 255, miscvisualscol.b / 255)
-		render.MaterialOverride(ib.chamsmat4)
-	em.DrawModel(v)
-		render.SetColorModulation(1, 1, 1)
-	cam.End3D()
+		cam.Start3D()
+			render.MaterialOverride(ib.chamsmat3)
+			render.SetColorModulation(miscvisualscol.b / 255, miscvisualscol.r / 255, miscvisualscol.g / 255)
+		em.DrawModel(v)
+			render.SetColorModulation(miscvisualscol.r / 255, miscvisualscol.g / 255, miscvisualscol.b / 255)
+			render.MaterialOverride(ib.chamsmat4)
+		em.DrawModel(v)
+			render.SetColorModulation(1, 1, 1)
+		cam.End3D()
 	end
 	if gOption("Visuals", "Miscellaneous", "NPC Chams:") == "Wireframe" then
-	cam.Start3D()
-		render.MaterialOverride(ib.chamsmat5)
-		render.SetColorModulation(miscvisualscol.b / 255, miscvisualscol.r / 255, miscvisualscol.g / 255)
-	em.DrawModel(v)
-		render.SetColorModulation(miscvisualscol.r / 255, miscvisualscol.g / 255, miscvisualscol.b / 255)
-		render.MaterialOverride(ib.chamsmat6)
-	em.DrawModel(v)
-		render.SetColorModulation(1, 1, 1)
-	cam.End3D()
+		cam.Start3D()
+			render.MaterialOverride(ib.chamsmat5)
+			render.SetColorModulation(miscvisualscol.b / 255, miscvisualscol.r / 255, miscvisualscol.g / 255)
+		em.DrawModel(v)
+			render.SetColorModulation(miscvisualscol.r / 255, miscvisualscol.g / 255, miscvisualscol.b / 255)
+			render.MaterialOverride(ib.chamsmat6)
+		em.DrawModel(v)
+			render.SetColorModulation(1, 1, 1)
+		cam.End3D()
 	end
 end
 
@@ -3978,9 +3667,9 @@ local function Visuals(v)
 		if gOption("Visuals", "Wallhack", "Position Lines:") ~= "Off" then
 			local pos = v:LocalToWorld(v:OBBCenter()):ToScreen()
 				surface.SetDrawColor(colThree)
-				if gBool("Visuals", "Wallhack", "Position Lines:") == "Bottom" then
+				if gOption("Visuals", "Wallhack", "Position Lines:") == "Bottom" then
 					surface.DrawLine(ScrW() / 2, ScrH(), pos.x, pos.y)
-				elseif gBool("Visuals", "Wallhack", "Position Lines:") == "Top" then
+				elseif gOption("Visuals", "Wallhack", "Position Lines:") == "Top" then
 					surface.DrawLine(ScrW() / 2, 0, pos.x, pos.y)
 				else
 					surface.DrawLine(ScrW() / 2, ScrH() / 2, pos.x, pos.y)
@@ -4796,15 +4485,15 @@ local function ShowNPCs()
 	if gOption("Visuals", "Wallhack", "Position Lines:") ~= "Off" then
 		local pos = v:LocalToWorld(v:OBBCenter()):ToScreen()
 			surface.SetDrawColor(colOne)
-		if gBool("Visuals", "Wallhack", "Position Lines:") == "Bottom" then
+		if gOption("Visuals", "Wallhack", "Position Lines:") == "Bottom" then
 			surface.DrawLine(ScrW() / 2, ScrH(), pos.x, pos.y)
-		elseif gBool("Visuals", "Wallhack", "Position Lines:") == "Top" then
+		elseif gOption("Visuals", "Wallhack", "Position Lines:") == "Top" then
 			surface.DrawLine(ScrW() / 2, 0, pos.x, pos.y)
 		else
 			surface.DrawLine(ScrW() / 2, ScrH() / 2, pos.x, pos.y)
 		end
 	end
-	if (gBool("Visuals", "Wallhack", "Skeleton")) then
+	if gBool("Visuals", "Wallhack", "Skeleton") then
 		local pos = em.GetPos(v)
 		for i = 0, em.GetBoneCount(v) do
 		local parent = em.GetBoneParent(v, i)
@@ -4816,10 +4505,10 @@ local function ShowNPCs()
 		surface.DrawLine(screen1.x, screen1.y, screen2.x, screen2.y)
 		end
 	end
-	if (gBool("Visuals", "Miscellaneous", "NPC Glow")) then
+	if gBool("Visuals", "Miscellaneous", "NPC Glow") then
 		halo.Add({v}, colOne, .55, .55, 5, true, true)
 	end
-	if (gBool("Visuals", "Wallhack", "Hitbox")) then
+	if gBool("Visuals", "Wallhack", "Hitbox") then
 			for i = 0, v:GetHitBoxGroupCount() - 1 do
 			for _i = 0, v:GetHitBoxCount(i) - 1 do
 			local bone = v:GetHitBoxBone(_i, i)
@@ -4839,12 +4528,12 @@ local function ShowNPCs()
 		draw.SimpleText("Health: "..health, "VisualsFont", pos.x, pos.y + textpos, colFive, 1, 0)
 		textpos = textpos + 9
 	end
-	if (gBool("Visuals", "Wallhack", "Distance")) then
+	if gBool("Visuals", "Wallhack", "Distance") then
 		textpos = textpos + 1
 		draw.SimpleText("Distance: "..math.Round(v:GetPos():Distance(me:GetPos()) / 40), "VisualsFont", pos.x, pos.y + textpos, colFour, 1, 0)
 		textpos = textpos + 9
 	end
-	if (gBool("Visuals", "Wallhack", "Velocity")) then
+	if gBool("Visuals", "Wallhack", "Velocity") then
 		textpos = textpos + 1
 		draw.SimpleText("Velocity: "..math.Round(v:GetVelocity():Length()), "VisualsFont", pos.x, pos.y + textpos, colFour, 1, 0)
 		textpos = textpos + 9
@@ -4896,11 +4585,11 @@ hook.Add("player_hurt", "player_hurt", function(data)
 			if gOption("Miscellaneous", "Sounds", "Hitsounds:") == "Default" then
 				surface.PlaySound("buttons/bell1.wav")
             elseif gOption("Miscellaneous", "Sounds", "Hitsounds:") == "Headshot 1" then
-                surface.PlaySound(headshot1[math.random(#headshot1)])
+                surface.PlaySound(ib.headshot1[math.random(#ib.headshot1)])
 			elseif gOption("Miscellaneous", "Sounds", "Hitsounds:") == "Headshot 2" then
-                surface.PlaySound(headshot2[math.random(#headshot2)])
+                surface.PlaySound(ib.headshot2[math.random(#ib.headshot2)])
 			elseif gOption("Miscellaneous", "Sounds", "Hitsounds:") == "Metal" then
-                surface.PlaySound(metal[math.random(#metal)])
+                surface.PlaySound(ib.metal[math.random(#ib.metal)])
             elseif gOption("Miscellaneous", "Sounds", "Hitsounds:") == "Blip" then
                 surface.PlaySound("buttons/blip2.wav")
 			elseif gOption("Miscellaneous", "Sounds", "Hitsounds:") == "Eggcrack" then
@@ -4913,9 +4602,6 @@ hook.Add("player_hurt", "player_hurt", function(data)
 end)
 
 local function Killsounds(data)
-	local headshot1 = {"playerfx/headshot1.wav", "playerfx/headshot2.wav",}
-	local headshot2 = {"player/headshot1.wav", "player/headshot2.wav", "player/headshot3.wav",}
-	local metal = {"phx/hmetal1.wav", "phx/hmetal2.wav", "phx/hmetal3.wav",}
 	local killer = global.Entity(data.entindex_attacker)
 	local victim = global.Entity(data.entindex_killed)
 	if (global.IsValid(killer) and global.IsValid(victim) and killer:IsPlayer() and victim:IsPlayer()) then
@@ -4924,11 +4610,11 @@ local function Killsounds(data)
 				if gOption("Miscellaneous", "Sounds", "Killsounds:") == "Default" then
 					surface.PlaySound("buttons/bell1.wav")
 				elseif gOption("Miscellaneous", "Sounds", "Killsounds:") == "Headshot 1" then
-					surface.PlaySound(headshot1[math.random(#headshot1)])
+					surface.PlaySound(ib.headshot1[math.random(#ib.headshot1)])
 				elseif gOption("Miscellaneous", "Sounds", "Killsounds:") == "Headshot 2" then
-					surface.PlaySound(headshot2[math.random(#headshot2)])
+					surface.PlaySound(ib.headshot2[math.random(#ib.headshot2)])
 				elseif gOption("Miscellaneous", "Sounds", "Killsounds:") == "Metal" then
-					surface.PlaySound(metal[math.random(#metal)])
+					surface.PlaySound(ib.metal[math.random(#ib.metal)])
 				elseif gOption("Miscellaneous", "Sounds", "Killsounds:") == "Blip" then
 					surface.PlaySound("buttons/blip2.wav")
 				elseif gOption("Miscellaneous", "Sounds", "Killsounds:") == "Eggcrack" then
@@ -7112,7 +6798,7 @@ if ac != true then
 	timer.Create("PlaySound", 5.7, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 end
 
-for _, anticheatName in ipairs(anticheatNames) do
+for _, anticheatName in ipairs(ib.anticheatNames) do
 	if global[anticheatName] then
 		timer.Create("ChatPrint", 5.7, 1, function() Popup(5.3, "An anti-cheat has been detected. Use with caution to avoid getting banned!", Color(255, 0, 0)) end)
 		timer.Create("PlaySound", 5.7, 1, function() surface.PlaySound("npc/scanner/combat_scan1.wav") end)
