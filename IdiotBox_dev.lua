@@ -200,7 +200,7 @@ local options = {
 			{"Enabled", "Checkbox", true, 78}, -- Enabled by default
 			{"List Position X:", "Slider", 1356, 2000, 156}, 
 			{""}, 
-			{"List Position Y:", "Slider", 112, 2000, 156}, 
+			{"List Position Y:", "Slider", 116, 2000, 156}, 
 			{""}, 
 			{"List Spacing:", "Slider", 0, 10, 156}, 
 			{""}, 
@@ -783,26 +783,31 @@ for k, v in next, order do
 end
 
 local function DrawUpperText(w, h)
-	local curcol2 = Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 175)
-	local curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 175)
+	local curcol = Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 175)
+	local curcol2 = Color(bordercol.r, bordercol.g, bordercol.b, 175)
+	local curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 255)
 	if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
 		for i = 0, 28 do
-			surface.SetDrawColor(curcol2)
+			surface.SetDrawColor(curcol)
+			surface.DrawLine(1.75, i + 2, w - 2.75, i + 2)
+		end
+		for i = 0, 1 do
+			surface.SetDrawColor(curcol3)
 			surface.DrawLine(1.75, i + 2, w - 2.75, i + 2)
 		end
 	elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
 		for i = 0, 28 do
-			surface.SetDrawColor(curcol3)
+			surface.SetDrawColor(curcol2)
 			surface.DrawLine(1.75, i + 2, w - 2.75, i + 2)
 		end
 	end
 	surface.SetFont("MenuFont2")
 	local tw, th = surface.GetTextSize("")
-	surface.SetTextPos(37, 13 - th / 2)
+	surface.SetTextPos(37, 15 - th / 2)
 	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetFont("MainFont")
 	surface.DrawText("IdiotBox v7.0.b1")
-	surface.SetTextPos(147, 16 - th / 2)
+	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetFont("MainFont2")
 	surface.DrawText("Latest build: d30m07-pre16")
