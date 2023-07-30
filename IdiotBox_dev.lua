@@ -20,7 +20,7 @@ Creator (Phizz): https://steamcommunity.com/id/phizzofficial/, or 'phizz0777' on
 
 local global = (_G)
 local folder = "IdiotBox"
-local version = "7.0.b1-pre15"
+local version = "7.0.b1-pre16"
 
 local me = LocalPlayer()
 --[[ local wep = me:GetActiveWeapon() ]]-- Trying to localize this causes many issues for whatever reason, but I'll figure it out at one point
@@ -805,7 +805,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(147, 16 - th / 2)
 	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: d29m07-pre15")
+	surface.DrawText("Latest build: d30m07-pre16")
 end
 
 local function MouseInArea(minx, miny, maxx, maxy)
@@ -6506,66 +6506,6 @@ hook.Add("player_disconnect", "player_disconnect", function(v, data)
 end)
 
 hook.Add("MiscPaint", "MiscPaint", function()
-	if gInt("Adjustments", "Others", "BG Darkness:") > 0 and menuopen then
-		surface.SetDrawColor(0, 0, 0, gInt("Adjustments", "Others", "BG Darkness:") * 10)
-		surface.DrawRect(0, 0, ScrW(), ScrH())
-	end
-	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or (v == me and not em.IsValid(v)) then return end
-	local cap = math.cos(math.rad(45))
-	local offset = Vector(0, 0, 32)
-	local trace = {}
-	local witnesscolor = Color(0, 0, 0)
-	if (gBool("Miscellaneous", "GUI Settings", "Witness Finder")) then
-		local time = os.time() - 1
-		local witnesses = 0
-		local beingwitnessed = true
-		if time < os.time() then
-			time = os.time() + .5
-			witnesses = 0
-			beingwitnessed = false
-				for k, pla in pairs(player.GetAll()) do
-					if pla:IsValid() and pla != me then
-						trace.start = me:EyePos() + offset
-						trace.endpos = pla:EyePos() + offset
-						trace.filter = {pla, me}
-						traceRes = util.TraceLine(trace)
-						if !traceRes.Hit then
-							if (pla:EyeAngles():Forward():Dot((me:EyePos() - pla:EyePos())) > cap) then
-								witnesses = witnesses + 1
-								beingwitnessed = true
-							end
-						end
-					end
-				end
-			end
-			if beingwitnessed == false then
-				witnesscolor = Color(0, 255, 0)
-			else
-				witnesscolor = Color(255, 0, 0)
-			end
-    	draw.SimpleText(witnesses.." Player(s) can see you.", "MiscFont3", (ScrW() / 2) - 65, 42, Color(menutextcol.r, menutextcol.g, menutextcol.b), 4, 1, 1, Color(0, 0, 0))
-    	surface.SetDrawColor(witnesscolor)
-    	surface.DrawRect((ScrW() / 2) - 73, 55, 152, 5)
-    end
-	local wep = pm.GetActiveWeapon(me)
-	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
-	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:") && engine.ActiveGamemode() == "terrortown" && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" then
-		if propval >= 180 then
-			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(255, 0, 0))
-		else
-			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
-		end
-	end
-	if (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not me:Alive() or me:Health() < 1 then return end
-	if gBool("Aim Assist", "Aimbot", "Enabled") and gBool("Aim Assist", "Miscellaneous", "Show FoV Circle") then
-		local center = Vector(ScrW() / 2, ScrH() / 2, 0)
-		local scale = Vector(((gInt("Aim Assist", "Aimbot", "Aim FoV Value:")) * 8.5), ((gInt("Aim Assist", "Aimbot", "Aim FoV Value:")) * 8.5), 0)
-		local segmentdist = 360 / (2 * math.pi * math.max(scale.x, scale.y) / 2)
-			surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:"))	
-		for a = 0, 360 - segmentdist, segmentdist do
-			surface.DrawLine(center.x + math.cos(math.rad(a)) * scale.x, center.y - math.sin(math.rad(a)) * scale.y, center.x + math.cos(math.rad(a + segmentdist)) * scale.x, center.y - math.sin(math.rad(a + segmentdist)) * scale.y)
-		end
-	end
 	if gBool("Visuals", "Wallhack", "Enabled") then
 		for k, v in next, player.GetAll() do
 		if ((!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or not em.IsValid(v) or em.Health(v) < 0.1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not WallhackFilter(v) or not EnemyWallhackFilter(v) then continue end
@@ -6636,6 +6576,10 @@ hook.Add("MiscPaint", "MiscPaint", function()
 			end
 		end
 	end
+	if gInt("Adjustments", "Others", "BG Darkness:") > 0 and menuopen then
+		surface.SetDrawColor(0, 0, 0, gInt("Adjustments", "Others", "BG Darkness:") * 10)
+		surface.DrawRect(0, 0, ScrW(), ScrH())
+	end
 	if gBool("Main Menu", "Priority List", "Enabled") and menuopen then
 		PlayerList()
 	end
@@ -6671,6 +6615,62 @@ hook.Add("MiscPaint", "MiscPaint", function()
 			surface.DrawOutlinedRect(pos.x - 2, pos.y - 2, 5, 5)
 			surface.SetDrawColor(col)
 			surface.DrawRect(pos.x - 1, pos.y - 1, 3, 3)
+		end
+	end
+	local cap = math.cos(math.rad(45))
+	local offset = Vector(0, 0, 32)
+	local trace = {}
+	local witnesscolor = Color(0, 0, 0)
+	if (gBool("Miscellaneous", "GUI Settings", "Witness Finder")) then
+		if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or (v == me and not em.IsValid(v)) then return end
+		local time = os.time() - 1
+		local witnesses = 0
+		local beingwitnessed = true
+		if time < os.time() then
+			time = os.time() + .5
+			witnesses = 0
+			beingwitnessed = false
+				for k, pla in pairs(player.GetAll()) do
+					if pla:IsValid() and pla != me then
+						trace.start = me:EyePos() + offset
+						trace.endpos = pla:EyePos() + offset
+						trace.filter = {pla, me}
+						traceRes = util.TraceLine(trace)
+						if !traceRes.Hit then
+							if (pla:EyeAngles():Forward():Dot((me:EyePos() - pla:EyePos())) > cap) then
+								witnesses = witnesses + 1
+								beingwitnessed = true
+							end
+						end
+					end
+				end
+			end
+			if beingwitnessed == false then
+				witnesscolor = Color(0, 255, 0)
+			else
+				witnesscolor = Color(255, 0, 0)
+			end
+    	draw.SimpleText(witnesses.." Player(s) can see you.", "MiscFont3", (ScrW() / 2) - 65, 42, Color(menutextcol.r, menutextcol.g, menutextcol.b), 4, 1, 1, Color(0, 0, 0))
+    	surface.SetDrawColor(witnesscolor)
+    	surface.DrawRect((ScrW() / 2) - 73, 55, 152, 5)
+    end
+	local wep = pm.GetActiveWeapon(me)
+	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:") && engine.ActiveGamemode() == "terrortown" && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" then
+		if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
+		if propval >= 180 then
+			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(255, 0, 0))
+		else
+			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+		end
+	end
+	if gBool("Aim Assist", "Aimbot", "Enabled") and gBool("Aim Assist", "Miscellaneous", "Show FoV Circle") then
+		if (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not me:Alive() or me:Health() < 1 then return end
+		local center = Vector(ScrW() / 2, ScrH() / 2, 0)
+		local scale = Vector(((gInt("Aim Assist", "Aimbot", "Aim FoV Value:")) * 8.5), ((gInt("Aim Assist", "Aimbot", "Aim FoV Value:")) * 8.5), 0)
+		local segmentdist = 360 / (2 * math.pi * math.max(scale.x, scale.y) / 2)
+			surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:"))	
+		for a = 0, 360 - segmentdist, segmentdist do
+			surface.DrawLine(center.x + math.cos(math.rad(a)) * scale.x, center.y - math.sin(math.rad(a)) * scale.y, center.x + math.cos(math.rad(a + segmentdist)) * scale.x, center.y - math.sin(math.rad(a + segmentdist)) * scale.y)
 		end
 	end
 end)
