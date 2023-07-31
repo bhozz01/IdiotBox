@@ -20,7 +20,7 @@ Creator (Phizz): https://steamcommunity.com/id/phizzofficial/, or 'phizz0777' on
 
 local global = (_G)
 local folder = "IdiotBox"
-local version = "7.0.b1-pre16"
+local version = "7.0.b1-pre17"
 
 local me = LocalPlayer()
 --[[ local wep = me:GetActiveWeapon() ]]-- Trying to localize this causes many issues for whatever reason, but I'll figure it out at one point
@@ -810,7 +810,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: d30m07-pre16")
+	surface.DrawText("Latest build: d31m07-pre17")
 end
 
 local function MouseInArea(minx, miny, maxx, maxy)
@@ -1896,7 +1896,7 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 					ib.SaveConfig(configIndex)
 				end
 			end
-			EntityFinder()
+			EntityFinder(v)
 			timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Successfully loaded Entities Menu!", Color(0, 255, 0)) end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Apply Custom Name" then
@@ -2763,6 +2763,7 @@ hook.Add("HUDShouldDraw", "HUDShouldDraw", function(name)
 end)
 
 local function ChatSpam()
+	local v = player.GetAll()[math.random(#player.GetAll())]
 	local messagespam = {"GET FUCKED BY IDIOTBOX KIDDIE", "YOU SUCK SHIT LMAO", "STOP BEING SUCH A WORTHLESS CUMSTAIN AND GET IDIOTBOX NOW", "MONEY WASTER LOL", "YOU FUCKING FATASS, GET IDIOTBOX AND LOSE ALL THAT WEIGHT YOU INCEL", "ARE ALL THE GIRLS IGNORING YOU? GET IDIOTBOX AND YOU'LL BE FLOODED WITH PUSSY", "DO YOU FEEL WORTHLESS? WELL, YOU ARE LOL", "GET IDIOTBOX IF YOU WANT SOME OF THAT CLOUT", "STOP WASTING YOUR TIME ON SOUNDCLOUD BECAUSE YOU AIN'T GONNA GET NOWHERE WITH IT", "GET IDIOTBOX AND YOUR DICK WILL GROW 4 TIMES ITS SIZE", "LITTLE KID LMAO",}
 	local insultspam = {" is shit at building", " is no older than 13", " looks like a 2 month old corpse", " really thinks gmod is a good game", " can't afford a better pc lmao", ", so how do you like your 40 fps?", " will definitely kill himself before his 30's ", " is a fucking virgin lmao", " is a script kiddie", " thinks his 12cm penis is big lmfao", ", how does it feel when you've never seen a naked woman in person?", ", what do you like not being able to do a single push-up?", ", tell me how it feels to be shorter than every girl you've met", " is a fatass who only spends his time in front of a monitor like an incel", "'s parents have a lower than average income", " lives under a bridge lmao", " vapes because is too afraid to smoke an actual ciggarette", ", your low self esteem really pays off you loser", ", make sure you tell me what unemployment feels like", " lives off of his parents' money", ", you're a dissapointment to your entire family, fatass", " has probably fried all of his dopamine receptors by masturbating this much",}
 	local spamCategories = {
@@ -2781,13 +2782,11 @@ local function ChatSpam()
 		["Arabic Spam"] = {"يمارس الجنس مع السلطة العربية سنة عظيمة", "رائحة مثل البظر دون السن القانونية هنا اسمحوا لي أن اللعنة", "ازدهار مسحوق الطاقة العربية سنة جيدة", "نحن نكره اليهو", "يمارس الجنس مع الأطفال الماعز نعم الجنس", "الله أكبر نعم رجل تفجير طفل", "هذه لحظة بره لحظة ارهابية سنة", "في تلك اللحظة التي يبدأ فيها أخاك في المغازلة مع والدتك", "الحصول على صندوق احمق نعم العربية غش كازاخستان", "يمارس الجنس مع نيغا الكلبة دا قرن الطفل", "ترك العرب باكستاني لحظة برمة تجميع كرمة", "حرق اليهود ، يمارس الجنس مع المسيح ، قتل الأطفال ، أصبح الله"},
 		["Offensive Spam"] = {"fuck niggers like fr", "who else here hates black people lmao", "all niggers should be locked in cages and fed bananas", "black people are some sub-human slaves imo", "i've never met an intelligent black person", "why tf are all niggers so ugly lol", "all the black dudes i've seen look like monkeys", "ooga booga black rights", "my grandpa died in ww2, he was the best german pilot", "white people are genetically superior to every othe race", "all jews can do is hide the truth, steal money and start wars"},
 		["Insult Spam"] = {function()
-			local randply = player.GetAll()[math.random(#player.GetAll())]
-			local friendstatus = pm.GetFriendStatus(randply)
-			if (!randply:IsValid() or randply == me or (friendstatus == "friend") or (gBool("Main Menu", "Priority List", "Enabled") and table.HasValue(ignorelist, randply:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and not table.HasValue(prioritylist, randply:UniqueID()))) then return end
-			RunConsoleCommand("say", randply:Name()..insultspam[math.random(#insultspam)])
+			local friendstatus = pm.GetFriendStatus(v)
+			if (!v:IsValid() or v == me or (friendstatus == "friend") or (gBool("Main Menu", "Priority List", "Enabled") and table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and not table.HasValue(prioritylist, v:UniqueID()))) then return end
+			RunConsoleCommand("say", v:Name()..insultspam[math.random(#insultspam)])
 		end},
 		["Message Spam"] = {function()
-			local v = player.GetAll()[math.random(#player.GetAll())]
 			if (gBool("Main Menu", "Priority List", "Enabled") and table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and not table.HasValue(prioritylist, v:UniqueID())) then return end
 			if v ~= me and v:GetFriendStatus() ~= "friend" and not pm.IsAdmin(v) then
 				me:ConCommand("ulx psay \""..v:Nick().."\" "..messagespam[math.random(#messagespam)])
@@ -3698,33 +3697,31 @@ local function Visuals(v)
 					surface.DrawOutlinedRect(x1 - 1, y1 - 1, diff + 2, diff2 + 2)
 					surface.DrawOutlinedRect(x1 + 1, y1 + 1, diff - 2, diff2 - 2)
 				elseif gOption("Visuals", "Wallhack", "Box:") == "3D Box" then
-					for k, v in pairs(player.GetAll()) do
-						if (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) then continue end
-						if v:IsValid() and v:Alive() and v:Health() > 0 then
-							local eye = v:EyeAngles()
-							local origin = v:GetPos()
-							local min, max = v:WorldSpaceAABB()
-							if gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(ignorelist, v:UniqueID()) and !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
-								cam.Start3D()
-									render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, ignoredcol)
-								cam.End3D()
-							elseif gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(prioritylist, v:UniqueID()) and !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
-								cam.Start3D()
-									render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, prioritycol)
-								cam.End3D()
-							elseif gBool("Visuals", "Miscellaneous", "Team Colors") and !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
-								cam.Start3D()
-									render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, team.GetColor(pm.Team(v)))
-								cam.End3D()
-							elseif (ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
-								cam.Start3D()
-									render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, devcol)
-								cam.End3D()
-							elseif !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
-								cam.Start3D()
-									render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, GetColor(v))
-								cam.End3D()
-							end
+					if (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) then return end
+					if v:IsValid() and v:Alive() and v:Health() > 0 then
+						local eye = v:EyeAngles()
+						local origin = v:GetPos()
+						local min, max = v:WorldSpaceAABB()
+						if gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(ignorelist, v:UniqueID()) and !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
+							cam.Start3D()
+								render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, ignoredcol)
+							cam.End3D()
+						elseif gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(prioritylist, v:UniqueID()) and !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
+							cam.Start3D()
+								render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, prioritycol)
+							cam.End3D()
+						elseif gBool("Visuals", "Miscellaneous", "Team Colors") and !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
+							cam.Start3D()
+								render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, team.GetColor(pm.Team(v)))
+							cam.End3D()
+						elseif (ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
+							cam.Start3D()
+								render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, devcol)
+							cam.End3D()
+						elseif !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
+							cam.Start3D()
+								render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, GetColor(v))
+							cam.End3D()
 						end
 					end
 				elseif gOption("Visuals", "Wallhack", "Box:") == "Edged Box" then   
@@ -4118,33 +4115,31 @@ local function Visuals(v)
 					surface.DrawOutlinedRect(pos.x - w / 2 - 1, pos.y - h - 1, w + 2, h + 2)
 					surface.DrawOutlinedRect(pos.x - w / 2 + 1, pos.y - h + 1, w - 2, h - 2)
 				elseif gOption("Visuals", "Wallhack", "Box:") == "3D Box" then
-					for k, v in pairs(player.GetAll()) do
-						if (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) then continue end
-						if v:IsValid() and v:Alive() and v:Health() > 0 then
-							local eye = v:EyeAngles()
-							local origin = v:GetPos()
-							local min, max = v:WorldSpaceAABB()
-							if gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(ignorelist, v:UniqueID()) and !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
-								cam.Start3D()
-									render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, ignoredcol)
-								cam.End3D()
-							elseif gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(prioritylist, v:UniqueID()) and !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
-								cam.Start3D()
-									render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, prioritycol)
-								cam.End3D()
-							elseif gBool("Visuals", "Miscellaneous", "Team Colors") and !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
-								cam.Start3D()
-									render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, team.GetColor(pm.Team(v)))
-								cam.End3D()
-							elseif (ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
-								cam.Start3D()
-									render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, devcol)
-								cam.End3D()
-							elseif !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
-								cam.Start3D()
-									render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, GetColor(v))
-								cam.End3D()
-							end
+					if (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) then return end
+					if v:IsValid() and v:Alive() and v:Health() > 0 then
+						local eye = v:EyeAngles()
+						local origin = v:GetPos()
+						local min, max = v:WorldSpaceAABB()
+						if gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(ignorelist, v:UniqueID()) and !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
+							cam.Start3D()
+								render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, ignoredcol)
+							cam.End3D()
+						elseif gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(prioritylist, v:UniqueID()) and !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
+							cam.Start3D()
+								render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, prioritycol)
+							cam.End3D()
+						elseif gBool("Visuals", "Miscellaneous", "Team Colors") and !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
+							cam.Start3D()
+								render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, team.GetColor(pm.Team(v)))
+							cam.End3D()
+						elseif (ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
+							cam.Start3D()
+								render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, devcol)
+							cam.End3D()
+						elseif !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
+							cam.Start3D()
+								render.DrawWireframeBox(origin, Angle(0, eye.y, 0), min - origin, max - origin, GetColor(v))
+							cam.End3D()
 						end
 					end
 				elseif gOption("Visuals", "Wallhack", "Box:") == "Edged Box" then   
@@ -4397,37 +4392,35 @@ local function Visuals(v)
 		halo.Add({v, wep}, colFour, .55, .55, 5, true, true)
 	end
 	if gBool("Visuals", "Wallhack", "Hitbox") then
-		for k, v in next, player.GetAll() do
-			if (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) then continue end
-			if v:IsValid() and v:Alive() and v:Health() > 0 then
-				for i = 0, v:GetHitBoxGroupCount() - 1 do
-					for _i = 0, v:GetHitBoxCount(i) - 1 do
-						local bone = v:GetHitBoxBone(_i, i)
-						if not (bone) then continue end			
-						local min, max = v:GetHitBoxBounds(_i, i)			
-						if v:GetBonePosition(bone) then
-							local pos, ang = v:GetBonePosition(bone)
-							if gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(ignorelist, v:UniqueID()) and !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
-								cam.Start3D()
-									render.DrawWireframeBox(pos, ang, min, max, ignoredcol)
-								cam.End3D()
-							elseif gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(prioritylist, v:UniqueID()) and !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
-								cam.Start3D()
-									render.DrawWireframeBox(pos, ang, min, max, prioritycol)
-								cam.End3D()
-							elseif gBool("Visuals", "Miscellaneous", "Team Colors") and !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
-								cam.Start3D()
-									render.DrawWireframeBox(pos, ang, min, max, team.GetColor(pm.Team(v)))
-								cam.End3D()
-							elseif (ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
-								cam.Start3D()
-									render.DrawWireframeBox(pos, ang, min, max, devcol)
-								cam.End3D()
-							elseif !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
-								cam.Start3D()
-									render.DrawWireframeBox(pos, ang, min, max, misccol)
-								cam.End3D()
-							end
+		if (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) or ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) then return end
+		if v:IsValid() and v:Alive() and v:Health() > 0 then
+			for i = 0, v:GetHitBoxGroupCount() - 1 do
+				for _i = 0, v:GetHitBoxCount(i) - 1 do
+					local bone = v:GetHitBoxBone(_i, i)
+					if not (bone) then continue end			
+					local min, max = v:GetHitBoxBounds(_i, i)			
+					if v:GetBonePosition(bone) then
+						local pos, ang = v:GetBonePosition(bone)
+						if gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(ignorelist, v:UniqueID()) and !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
+							cam.Start3D()
+								render.DrawWireframeBox(pos, ang, min, max, ignoredcol)
+							cam.End3D()
+						elseif gBool("Visuals", "Miscellaneous", "Target Priority Colors") and table.HasValue(prioritylist, v:UniqueID()) and !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
+							cam.Start3D()
+								render.DrawWireframeBox(pos, ang, min, max, prioritycol)
+							cam.End3D()
+						elseif gBool("Visuals", "Miscellaneous", "Team Colors") and !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
+							cam.Start3D()
+								render.DrawWireframeBox(pos, ang, min, max, team.GetColor(pm.Team(v)))
+							cam.End3D()
+						elseif (ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
+							cam.Start3D()
+								render.DrawWireframeBox(pos, ang, min, max, devcol)
+							cam.End3D()
+						elseif !(ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) then
+							cam.Start3D()
+								render.DrawWireframeBox(pos, ang, min, max, misccol)
+							cam.End3D()
 						end
 					end
 				end
@@ -4784,7 +4777,7 @@ end
 
 local function GetTarget()
 	local opt = gOption("Aim Assist", "Aim Priorities", "Aim Priority:")
-	local sticky = gOption("Aim Assist", "Aimbot", "Target Lock")
+	local sticky = gBool("Aim Assist", "Aimbot", "Target Lock")
 	if (opt == "Distance") then
 		if (sticky && Valid(aimtarget)) then return end
 		dists = {}
@@ -5519,7 +5512,7 @@ end
 local function Aimbot(cmd)
 	if not gBool("Aim Assist", "Aimbot", "Enabled") or not me:Alive() or me:Health() < 1 or not me:GetActiveWeapon():IsValid() or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) then return end
 	for k, v in pairs(player.GetAll()) do
-	if ((gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me) || FixTools() then return end
+		if ((gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me) || FixTools() then return end
 	end
 	GetTarget()
     aa = false
@@ -6172,7 +6165,7 @@ end
 
 local function AntiAim(cmd)
 	for k, v in pairs(player.GetAll()) do
-	if (gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Anti-Aim")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me then return end
+		if (gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Anti-Aim")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me then return end
 	end
 	local wep = pm.GetActiveWeapon(me)
 	if ((gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP) || me:Team() == TEAM_SPECTATOR || triggering || (cm.CommandNumber(cmd) == 0 && !ThirdpersonCheck()) || cm.KeyDown(cmd, 1) || gBool("Visuals", "Point of View", "Custom FoV") && ib.FreeRoamCheck() && !ThirdpersonCheck() || me:WaterLevel() > 1 || (input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable in 'Use' Toggle") && !(me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible())) || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aim Assist", "Aimbot", "Enabled") && (gInt("Aim Assist", "Aimbot", "Aim FoV Value:") > 0 || gInt("Aim Assist", "Aimbot", "Aim Smoothness:") > 0) || gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && engine.ActiveGamemode() == "terrortown" && wep:IsValid() && wep:GetClass() == "weapon_zm_carry") then return end
@@ -6510,25 +6503,15 @@ hook.Add("player_disconnect", "player_disconnect", function(v, data)
 	end
 end)
 
-hook.Add("MiscPaint", "MiscPaint", function()
-	if gBool("Visuals", "Wallhack", "Enabled") then
-		for k, v in next, player.GetAll() do
-		if ((!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or not em.IsValid(v) or em.Health(v) < 0.1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not WallhackFilter(v) or not EnemyWallhackFilter(v) then continue end
-			Visuals(v)
-		end
-	end
-	if gBool("Visuals", "Wallhack", "Enabled") and gBool("Visuals", "Miscellaneous", "Show NPCs") then
-		ShowNPCs()
-	end
-	for k, v in next, ents.GetAll() do
-	if engine.ActiveGamemode() == "terrortown" && gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Traitor Finder") then
-	local titems = {"weapon_ttt_turtlenade", "weapon_ttt_death_station", "weapon_ttt_tripmine", "weapon_ttt_silencedsniper", "(Disguise)", "spiderman's_swep", "weapon_ttt_trait_defilibrator", "weapon_ttt_xbow", "weapon_ttt_dhook", "weapon_awp", "weapon_ttt_ak47", "weapon_jihadbomb", "weapon_ttt_knife", "weapon_ttt_c4", "weapon_ttt_decoy", "weapon_ttt_flaregun", "weapon_ttt_phammer", "weapon_ttt_push", "weapon_ttt_radio", "weapon_ttt_sipistol", "weapon_ttt_teleport", "weapon_ttt_awp", "weapon_mad_awp", "weapon_real_cs_g3sg1", "weapon_ttt_cvg_g3sg1", "weapon_ttt_healthstation5", "weapon_ttt_sentry", "weapon_ttt_poison_dart", "weapon_ttt_trait_defibrillator", "weapon_ttt_tmp_s"}
+function ib.DrawFinders(v)
+	if engine.ActiveGamemode() == "terrortown" then
+		local titems = {"weapon_ttt_turtlenade", "weapon_ttt_death_station", "weapon_ttt_tripmine", "weapon_ttt_silencedsniper", "(Disguise)", "spiderman's_swep", "weapon_ttt_trait_defilibrator", "weapon_ttt_xbow", "weapon_ttt_dhook", "weapon_awp", "weapon_ttt_ak47", "weapon_jihadbomb", "weapon_ttt_knife", "weapon_ttt_c4", "weapon_ttt_decoy", "weapon_ttt_flaregun", "weapon_ttt_phammer", "weapon_ttt_push", "weapon_ttt_radio", "weapon_ttt_sipistol", "weapon_ttt_teleport", "weapon_ttt_awp", "weapon_mad_awp", "weapon_real_cs_g3sg1", "weapon_ttt_cvg_g3sg1", "weapon_ttt_healthstation5", "weapon_ttt_sentry", "weapon_ttt_poison_dart", "weapon_ttt_trait_defibrillator", "weapon_ttt_tmp_s"}
 		if table.HasValue(titems, v:GetClass()) then
 			pos = v:GetPos()
 			pos = pos:ToScreen()
 			draw.DrawText(v:GetPrintName(), "MiscFont", pos.x, pos.y, Color(255,75,75), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
-	elseif engine.ActiveGamemode() == "murder" && gBool("Main Menu", "Murder Utilities", "Murderer Finder") then
+	elseif engine.ActiveGamemode() == "murder" then
 		if string.find(v:GetClass(), "weapon_mu_magnum") then
 			pos = v:GetPos()
 			pos = pos:ToScreen()
@@ -6545,40 +6528,132 @@ hook.Add("MiscPaint", "MiscPaint", function()
 			draw.DrawText("Loot", "MiscFont", pos.x, pos.y, Color(50,255,50), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
 		end
 	end
-	if (v:IsDormant() and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or not v:IsValid() or not OnScreen(v) or not WallhackFilter(v) or (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) then continue end
-	if gBool("Visuals", "Wallhack", "Enabled") and gBool("Visuals", "Miscellaneous", "Show Entities") then
+end
+
+function ib.ShowEntities(v)
 	if table.HasValue(drawnents, v:GetClass()) and v:IsValid() and v:GetPos():Distance(me:GetPos()) > 40 then
-				local pos = em.GetPos(v) + Vector(0, 0, 0)
-				local pos2 = pos + Vector(0, 0, 0)
-				local pos = vm.ToScreen(pos)
-				local pos2 = vm.ToScreen(pos2)
-				local min, max = v:WorldSpaceAABB()
-				local origin = v:GetPos()
-				local textpos = 0
-				if gBool("Visuals", "Miscellaneous", "Entity Name") then
-					textpos = textpos + 1
-					draw.SimpleText(v:GetClass(), "MiscFont", pos.x, pos.y + textpos, Color(255, 255, 255), 1)
-					textpos = textpos + 9
-				end
-				if (gBool("Visuals", "Wallhack", "Distance")) then
-					textpos = textpos + 1
-					draw.SimpleText("Distance: "..math.Round(v:GetPos():Distance(me:GetPos()) / 40), "VisualsFont", pos.x, pos.y + textpos, textcol, 1, 0)
-					textpos = textpos + 9
-				end
-				if (gBool("Visuals", "Wallhack", "Velocity")) then
-					textpos = textpos + 1
-					draw.SimpleText("Velocity: "..math.Round(v:GetVelocity():Length()), "VisualsFont", pos.x, pos.y + textpos, textcol, 1, 0)
-					textpos = textpos + 9
-				end
-				if (gBool("Visuals", "Miscellaneous", "Entity Glow")) then
-					halo.Add({v}, Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b), .55, .55, 5, true, true)
-				end
-				if gBool("Visuals", "Miscellaneous", "Entity Box") then
-					cam.Start3D()
-						render.DrawWireframeBox(origin, Angle(0, 0, 0), min - origin, max - origin, Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b), true) 
-					cam.End3D()
+		local pos = em.GetPos(v) + Vector(0, 0, 0)
+		local pos2 = pos + Vector(0, 0, 0)
+		local pos = vm.ToScreen(pos)
+		local pos2 = vm.ToScreen(pos2)
+		local min, max = v:WorldSpaceAABB()
+		local origin = v:GetPos()
+		local textpos = 0
+		if gBool("Visuals", "Miscellaneous", "Entity Name") then
+			textpos = textpos + 1
+			draw.SimpleText(v:GetClass(), "MiscFont", pos.x, pos.y + textpos, Color(255, 255, 255), 1)
+			textpos = textpos + 9
+		end
+		if (gBool("Visuals", "Wallhack", "Distance")) then
+			textpos = textpos + 1
+			draw.SimpleText("Distance: "..math.Round(v:GetPos():Distance(me:GetPos()) / 40), "VisualsFont", pos.x, pos.y + textpos, textcol, 1, 0)
+			textpos = textpos + 9
+		end
+		if (gBool("Visuals", "Wallhack", "Velocity")) then
+			textpos = textpos + 1
+			draw.SimpleText("Velocity: "..math.Round(v:GetVelocity():Length()), "VisualsFont", pos.x, pos.y + textpos, textcol, 1, 0)
+			textpos = textpos + 9
+		end
+		if (gBool("Visuals", "Miscellaneous", "Entity Glow")) then
+			halo.Add({v}, Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b), .55, .55, 5, true, true)
+		end
+		if gBool("Visuals", "Miscellaneous", "Entity Box") then
+			cam.Start3D()
+				render.DrawWireframeBox(origin, Angle(0, 0, 0), min - origin, max - origin, Color(miscvisualscol.r, miscvisualscol.g, miscvisualscol.b), true) 
+			cam.End3D()
+		end
+	end
+end
+
+function ib.WitnessFinder(v)
+	local cap = math.cos(math.rad(45))
+	local offset = Vector(0, 0, 32)
+	local trace = {}
+	local witnesscolor = Color(0, 0, 0)
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or (v == me and not em.IsValid(v)) then return end
+	local time = os.time() - 1
+	local witnesses = 0
+	local beingwitnessed = true
+	if time < os.time() then
+		time = os.time() + .5
+		witnesses = 0
+		beingwitnessed = false
+		if v:IsValid() and v != me then
+			trace.start = me:EyePos() + offset
+			trace.endpos = v:EyePos() + offset
+			trace.filter = {v, me}
+			traceRes = util.TraceLine(trace)
+			if !traceRes.Hit then
+				if (v:EyeAngles():Forward():Dot((me:EyePos() - v:EyePos())) > cap) then
+					witnesses = witnesses + 1
+					beingwitnessed = true
 				end
 			end
+		end
+	end
+	if beingwitnessed == false then
+		witnesscolor = Color(0, 255, 0)
+	else
+		witnesscolor = Color(255, 0, 0)
+	end
+	draw.SimpleText(witnesses.." Player(s) can see you.", "MiscFont3", (ScrW() / 2) - 65, 42, Color(menutextcol.r, menutextcol.g, menutextcol.b), 4, 1, 1, Color(0, 0, 0))
+	surface.SetDrawColor(witnesscolor)
+	surface.DrawRect((ScrW() / 2) - 73, 55, 152, 5)
+end
+
+function ib.SnapLines()
+	if me:Alive() or em.Health(me) > 0 then
+		local col = Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:"))
+		local pos = vm.ToScreen(em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)))
+		surface.SetDrawColor(col)
+		surface.DrawLine(ScrW() / 2, ScrH() / 2, pos.x, pos.y)
+		surface.SetDrawColor(0, 0, 0)
+		surface.DrawOutlinedRect(pos.x - 2, pos.y - 2, 5, 5)
+		surface.SetDrawColor(col)
+		surface.DrawRect(pos.x - 1, pos.y - 1, 3, 3)
+	end
+end
+
+function ib.PropKillCircle()
+	local wep = pm.GetActiveWeapon(me)
+	if engine.ActiveGamemode() == "terrortown" && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" then
+		if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
+		if propval >= 180 then
+			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(255, 0, 0))
+		else
+			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
+		end
+	end
+end
+
+function ib.FovCircle()
+	if (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not me:Alive() or me:Health() < 1 then return end
+	local center = Vector(ScrW() / 2, ScrH() / 2, 0)
+	local scale = Vector(((gInt("Aim Assist", "Aimbot", "Aim FoV Value:")) * 9.5), ((gInt("Aim Assist", "Aimbot", "Aim FoV Value:")) * 9.5), 0)
+	local segmentdist = 360 / (2 * math.pi * math.max(scale.x, scale.y) / 2)
+		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:"))	
+	for a = 0, 360 - segmentdist, segmentdist do
+		surface.DrawLine(center.x + math.cos(math.rad(a)) * scale.x, center.y - math.sin(math.rad(a)) * scale.y, center.x + math.cos(math.rad(a + segmentdist)) * scale.x, center.y - math.sin(math.rad(a + segmentdist)) * scale.y)
+	end
+end
+
+hook.Add("MiscPaint", "MiscPaint", function()
+	if gBool("Visuals", "Wallhack", "Enabled") then
+		for k, v in next, player.GetAll() do
+		if ((!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or not em.IsValid(v) or em.Health(v) < 0.1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not WallhackFilter(v) or not EnemyWallhackFilter(v) then continue end
+			Visuals(v)
+		end
+	end
+	if gBool("Visuals", "Wallhack", "Enabled") and gBool("Visuals", "Miscellaneous", "Show NPCs") then
+		ShowNPCs()
+	end
+	for k, v in next, ents.GetAll() do
+		if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Traitor Finder") or gBool("Main Menu", "Murder Utilities", "Murderer Finder") then
+			ib.DrawFinders(v)
+		end
+		if (v:IsDormant() and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or not v:IsValid() or not OnScreen(v) or not WallhackFilter(v) or (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) then continue end
+		if gBool("Visuals", "Wallhack", "Enabled") and gBool("Visuals", "Miscellaneous", "Show Entities") then
+			ib.ShowEntities(v)
 		end
 	end
 	if gInt("Adjustments", "Others", "BG Darkness:") > 0 and menuopen then
@@ -6609,74 +6684,18 @@ hook.Add("MiscPaint", "MiscPaint", function()
 	if (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not me:Alive() or me:Health() < 1 or (gBool("Aim Assist", "Triggerbot", "Enabled") and not gBool("Aim Assist", "Aimbot", "Enabled")) then return end
 	for k, v in pairs(player.GetAll()) do
 		if (gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me then return end
+		if gBool("Miscellaneous", "GUI Settings", "Witness Finder") then
+			ib.WitnessFinder(v)
+		end
 	end
 	if (aimtarget and em.IsValid(aimtarget) and not FixTools() and gBool("Aim Assist", "Miscellaneous", "Snap Lines") and (gBool("Aim Assist", "Aimbot", "Enabled"))) then
-		if me:Alive() or em.Health(me) > 0 then
-			local col = Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:"))
-			local pos = vm.ToScreen(em.LocalToWorld(aimtarget, em.OBBCenter(aimtarget)))
-			surface.SetDrawColor(col)
-			surface.DrawLine(ScrW() / 2, ScrH() / 2, pos.x, pos.y)
-			surface.SetDrawColor(0, 0, 0)
-			surface.DrawOutlinedRect(pos.x - 2, pos.y - 2, 5, 5)
-			surface.SetDrawColor(col)
-			surface.DrawRect(pos.x - 1, pos.y - 1, 3, 3)
-		end
+		ib.SnapLines()
 	end
-	local cap = math.cos(math.rad(45))
-	local offset = Vector(0, 0, 32)
-	local trace = {}
-	local witnesscolor = Color(0, 0, 0)
-	if (gBool("Miscellaneous", "GUI Settings", "Witness Finder")) then
-		if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or (v == me and not em.IsValid(v)) then return end
-		local time = os.time() - 1
-		local witnesses = 0
-		local beingwitnessed = true
-		if time < os.time() then
-			time = os.time() + .5
-			witnesses = 0
-			beingwitnessed = false
-				for k, pla in pairs(player.GetAll()) do
-					if pla:IsValid() and pla != me then
-						trace.start = me:EyePos() + offset
-						trace.endpos = pla:EyePos() + offset
-						trace.filter = {pla, me}
-						traceRes = util.TraceLine(trace)
-						if !traceRes.Hit then
-							if (pla:EyeAngles():Forward():Dot((me:EyePos() - pla:EyePos())) > cap) then
-								witnesses = witnesses + 1
-								beingwitnessed = true
-							end
-						end
-					end
-				end
-			end
-			if beingwitnessed == false then
-				witnesscolor = Color(0, 255, 0)
-			else
-				witnesscolor = Color(255, 0, 0)
-			end
-    	draw.SimpleText(witnesses.." Player(s) can see you.", "MiscFont3", (ScrW() / 2) - 65, 42, Color(menutextcol.r, menutextcol.g, menutextcol.b), 4, 1, 1, Color(0, 0, 0))
-    	surface.SetDrawColor(witnesscolor)
-    	surface.DrawRect((ScrW() / 2) - 73, 55, 152, 5)
-    end
-	local wep = pm.GetActiveWeapon(me)
-	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:") && engine.ActiveGamemode() == "terrortown" && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" then
-		if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
-		if propval >= 180 then
-			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(255, 0, 0))
-		else
-			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
-		end
+	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:") then
+		ib.PropKillCircle()
 	end
 	if gBool("Aim Assist", "Aimbot", "Enabled") and gBool("Aim Assist", "Miscellaneous", "Show FoV Circle") then
-		if (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not me:Alive() or me:Health() < 1 then return end
-		local center = Vector(ScrW() / 2, ScrH() / 2, 0)
-		local scale = Vector(((gInt("Aim Assist", "Aimbot", "Aim FoV Value:")) * 8.5), ((gInt("Aim Assist", "Aimbot", "Aim FoV Value:")) * 8.5), 0)
-		local segmentdist = 360 / (2 * math.pi * math.max(scale.x, scale.y) / 2)
-			surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:"))	
-		for a = 0, 360 - segmentdist, segmentdist do
-			surface.DrawLine(center.x + math.cos(math.rad(a)) * scale.x, center.y - math.sin(math.rad(a)) * scale.y, center.x + math.cos(math.rad(a + segmentdist)) * scale.x, center.y - math.sin(math.rad(a + segmentdist)) * scale.y)
-		end
+		ib.FovCircle()
 	end
 end)
 
