@@ -45,7 +45,7 @@ local ox, oy = - 181, 0
 local fixmovement = fixmovement or nil
 local nullvec = Vector() * - 1
 
-local fake = GetRenderTarget("fake"..os.time(), ScrW(), ScrH())
+local mat = GetRenderTarget("mat"..os.time(), ScrW(), ScrH())
 
 local hide = {CHudHealth = true, CHudAmmo = true, CHudBattery = true, CHudSecondaryAmmo = true, CHudDamageIndicator = true, CHudCrosshair = true, }
 local crosshairhide = {CHudCrosshair = true, }
@@ -2716,24 +2716,17 @@ hook.Add("RenderScene", "RenderScene", function(origin, angle, fov)
 	end
 	render.SetLightingMode(gBool("Miscellaneous", "Textures", "Bright Mode") and 1 or 0)
 	local view = {
-		x = 0,
-		y = 0,
-		w = ScrW(),
-		h = ScrH(),
 		dopostprocess = true,
-		origin = origin,
-		angles = angle,
-		fov = fov,
 		drawhud = true,
 		drawmonitors = true,
 		drawviewmodel = true
 	}
 	render.RenderView(view)
-	render.CopyTexture(nil, fake)
+	render.CopyTexture(nil, mat)
 	cam.Start2D()
 		hook.Run("MiscPaint")
 	cam.End2D()
-	render.SetRenderTarget(fake)
+	render.SetRenderTarget(mat)
 	return true
 end)
 
