@@ -201,7 +201,7 @@ local options = {
 			{"Enabled", "Checkbox", true, 78}, -- Enabled by default
 			{"List Position X:", "Slider", 1356, 2000, 156}, 
 			{""}, 
-			{"List Position Y:", "Slider", 116, 2000, 156}, 
+			{"List Position Y:", "Slider", 115, 2000, 156}, 
 			{""}, 
 			{"List Spacing:", "Slider", 0, 10, 156}, 
 			{""}, 
@@ -790,17 +790,21 @@ local function DrawUpperText(w, h)
 	if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
 		for i = 0, 28 do
 			surface.SetDrawColor(curcol)
-			surface.DrawLine(1.75, i + 2, w - 2.75, i + 2)
+			surface.DrawLine(0.5, i + 1, w - 1.5, i + 1)
 		end
 		for i = 0, 1 do
 			surface.SetDrawColor(curcol3)
-			surface.DrawLine(1.75, i + 2, w - 2.75, i + 2)
+			surface.DrawLine(0.5, i + 1, w - 1.5, i + 1)
 		end
+		surface.SetDrawColor(0, 0, 0, 255)
+		surface.DrawLine(0.5, 3, w - 1.5, 3)
 	elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
 		for i = 0, 28 do
 			surface.SetDrawColor(curcol2)
-			surface.DrawLine(1.75, i + 2, w - 2.75, i + 2)
+			surface.DrawLine(0.5, i + 1, w - 1.5, i + 1)
 		end
+		surface.SetDrawColor(0, 0, 0, 255)
+		surface.DrawLine(0.5, 3, w - 1.5, 3)
 	end
 	surface.SetFont("MenuFont2")
 	local tw, th = surface.GetTextSize("")
@@ -824,24 +828,24 @@ local function DrawTabs(self, w, h)
 	local sizeper = (w - 10) / #order
 	local maxx = 0
 	for k, v in next, order do
-		local bMouse = MouseInArea(mx + 5 + maxx, my + 31, mx + 5 + maxx + sizeper, my + 31 + 30)
+		local bMouse = MouseInArea(mx + 5 + maxx, my + 30, mx + 5 + maxx + sizeper, my + 30 + 30)
 		if (visible[v]) then
 			local curcol = Color(bordercol.r, bordercol.g, bordercol.b, 255)
 			local curcol2 = Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 145)
 			local curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 145)
 			for i = 0, 1 do
 				surface.SetDrawColor(curcol)
-				surface.DrawLine(4.25 + maxx, 62 + i, 4.25 + maxx + sizeper, 62 + i)
+				surface.DrawLine(4.25 + maxx, 61 + i, 4.25 + maxx + sizeper, 61 + i)
 			end
 			if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
 				for i = 0, 30 do
 					surface.SetDrawColor(curcol2)
-					surface.DrawLine(4.25 + maxx, 31 + i, 4.25 + maxx + sizeper, 31 + i)
+					surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
 				end
 			elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
 				for i = 0, 30 do
 					surface.SetDrawColor(curcol3)
-					surface.DrawLine(4.25 + maxx, 31 + i, 4.25 + maxx + sizeper, 31 + i)
+					surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
 				end
 			end
 		elseif (bMouse) then
@@ -850,17 +854,17 @@ local function DrawTabs(self, w, h)
 			local curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 65)
 			for i = 0, 1 do
 				surface.SetDrawColor(curcol)
-				surface.DrawLine(4.25 + maxx, 62 + i, 4.25 + maxx + sizeper, 62 + i)
+				surface.DrawLine(4.25 + maxx, 61 + i, 4.25 + maxx + sizeper, 61 + i)
 			end
 			if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
 				for i = 0, 30 do
 					surface.SetDrawColor(curcol2)
-					surface.DrawLine(4.25 + maxx, 31 + i, 4.25 + maxx + sizeper, 31 + i)
+					surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
 				end
 			elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
 				for i = 0, 30 do
 					surface.SetDrawColor(curcol3)
-					surface.DrawLine(4.25 + maxx, 31 + i, 4.25 + maxx + sizeper, 31 + i)
+					surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
 				end
 			end
 		end
@@ -876,12 +880,12 @@ local function DrawTabs(self, w, h)
 		if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
 			for i = 0, 30 do
 				surface.SetDrawColor(curcol2)
-				surface.DrawLine(4.25 + maxx, 31 + i, 4.25 + maxx + sizeper, 31 + i)
+				surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
 			end
 		elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
 			for i = 0, 30 do
 				surface.SetDrawColor(curcol3)
-				surface.DrawLine(4.25 + maxx, 31 + i, 4.25 + maxx + sizeper, 31 + i)
+				surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
 			end
 		end
 		surface.SetFont("MainFont3")
