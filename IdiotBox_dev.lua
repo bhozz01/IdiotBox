@@ -19,11 +19,9 @@ Creator (Phizz): https://steamcommunity.com/id/phizzofficial/, or 'phizz0777' on
 ]]--
 
 local global = (_G)
-local folder = "IdiotBox"
-local version = "7.0.b1-pre17"
-
 local me = LocalPlayer()
---[[ local wep = me:GetActiveWeapon() ]]-- Trying to localize this causes many issues for whatever reason, but I'll figure it out at one point
+local folder = "IdiotBox"
+local version = "7.0.b1-pre18"
 
 local menukeydown, menukeydown2, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -100,6 +98,9 @@ ib.metal = {"phx/hmetal1.wav", "phx/hmetal2.wav", "phx/hmetal3.wav",}
 ib.NetMessages = {Buildmode = {"BuildMode", "buildmode", "_Kyle_Buildmode"}, God = {"HasGodMode", "has_god", "god_mode", "ugod"}, Protected = {"LibbyProtectedSpawn", "SH_SZ.Safe", "spawn_protect", "InSpawnZone"}}
 ib.frpressed, ib.frtoggle = false
 ib.spread = {}
+
+ib.allplayers = player.GetAll()
+ib.allentities = ents.GetAll()
 
 ib.R_ = debug.getregistry()
 ib.R = table.Copy(ib.R_)
@@ -810,7 +811,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: d31m07-pre17")
+	surface.DrawText("Latest build: d01m08-pre18")
 end
 
 local function MouseInArea(minx, miny, maxx, maxy)
@@ -1587,7 +1588,7 @@ local function EntityFinder()
 	function ib.RefreshEntities()
 		entlist:Clear()
 		drawlist:Clear()
-			for k, v in next, ents.GetAll() do
+			for k, v in next, ib.allentities do
 			local name = v:GetClass()
 			local copy = false
 			if not table.HasValue(added, v:GetClass()) and not table.HasValue(drawnents, v:GetClass()) and BadEntities(v) and v:GetClass() ~= "player" then
@@ -1674,7 +1675,7 @@ local function EntityFinder()
 	find.OnChange = function()
 		if find:GetValue() ~= "" then
 			entlist:Clear()
-			for k, v in next, ents.GetAll() do
+			for k, v in next, ib.allentities do
 			local name = v:GetClass()
 			local copy = false
 			if string.find(v:GetClass(), find:GetValue()) and not table.HasValue(added, v:GetClass()) and not table.HasValue(drawnents, v:GetClass()) and BadEntities(v) and v:GetClass() ~= "player" then
@@ -1686,7 +1687,7 @@ local function EntityFinder()
 			end
 		else
 			entlist:Clear()
-			for k, v in next, ents.GetAll() do
+			for k, v in next, ib.allentities do
 			local name = v:GetClass()
 			local copy = false
 			if not table.HasValue(added, v:GetClass()) and not table.HasValue(drawnents, v:GetClass()) and BadEntities(v) and v:GetClass() ~= "player" then
@@ -1702,7 +1703,7 @@ local function EntityFinder()
 			end
 		end
 	end
-	for k, v in next, ents.GetAll() do
+	for k, v in next, ib.allentities do
 		if not table.HasValue(added, v:GetClass()) and not table.HasValue(drawnents, v:GetClass()) and BadEntities(v) and v:GetClass() ~= "player" then
 			entlist:AddLine(v:GetClass())
 		end
@@ -2274,7 +2275,7 @@ local function FixMovement(cmd)
 	local mang = vm.Angle(vec)
 	local yaw = cm.GetViewAngles(cmd).y - fa.y + mang.y
 	if (((cm.GetViewAngles(cmd).p + 90) % 360) > 180) then
-	yaw = 180 - yaw
+		yaw = 180 - yaw
 	end
 	yaw = ((yaw + 180) % 360) - 180
 	cmd:SetForwardMove(math.cos(math.rad(yaw)) * vel)
@@ -2326,53 +2327,53 @@ local function Status()
 	local hp = em.Health(me)
 	local velocity = me:GetVelocity():Length()
 	if hp < 0 then
-	hp = 0
+		hp = 0
 	end
 	surface.SetFont("MiscFont")
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.SetTextColor(bordercol.r, bordercol.g - 24, bordercol.b - 130, gInt("Adjustments", "Others", "Text Opacity:"))
-	surface.DrawText("Health: "..hp)
+		surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
+		surface.SetTextColor(bordercol.r, bordercol.g - 24, bordercol.b - 130, gInt("Adjustments", "Others", "Text Opacity:"))
+		surface.DrawText("Health: "..hp)
 	if (em.IsValid(wep)) then
-	local daclip = wep:Clip1()
-	if daclip < 0 then
-	daclip = 0
-	end
-	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.DrawText("Ammo: "..daclip.."/"..me:GetAmmoCount(wep:GetPrimaryAmmoType()))
+		local daclip = wep:Clip1()
+		if daclip < 0 then
+			daclip = 0
+		end
+		hh = hh + 12
+		surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
+		surface.DrawText("Ammo: "..daclip.."/"..me:GetAmmoCount(wep:GetPrimaryAmmoType()))
 	else
-	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.DrawText("Ammo: ".."0".."/".."0")
+		hh = hh + 12
+		surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
+		surface.DrawText("Ammo: ".."0".."/".."0")
 	end
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.DrawText("Velocity: "..math.Round(velocity))
+		surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
+		surface.DrawText("Velocity: "..math.Round(velocity))
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.DrawText("Server: "..GetHostName())
+		surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
+		surface.DrawText("Server: "..GetHostName())
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.DrawText("Gamemode: "..engine.ActiveGamemode())
+		surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
+		surface.DrawText("Gamemode: "..engine.ActiveGamemode())
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.DrawText("Map: "..game.GetMap())
+		surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
+		surface.DrawText("Map: "..game.GetMap())
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.DrawText("Looking at: "..EntityName())
+		surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
+		surface.DrawText("Looking at: "..EntityName())
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.DrawText("Entities: "..math.Round(ents.GetCount()))
+		surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
+		surface.DrawText("Entities: "..math.Round(ents.GetCount()))
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.DrawText("Frames: "..math.Round(1 / FrameTime()))
+		surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
+		surface.DrawText("Frames: "..math.Round(1 / FrameTime()))
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.DrawText("Ping: "..me:Ping())
+		surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
+		surface.DrawText("Ping: "..me:Ping())
 	hh = hh + 12
-	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
-	surface.DrawText("Date: "..os.date("%d %b %Y"))
+		surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
+		surface.DrawText("Date: "..os.date("%d %b %Y"))
 	hh = hh + 12
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Debug Info X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Debug Info Y:"))
 	surface.DrawText("Time: "..os.date("%H:%M:%S"))
@@ -2415,7 +2416,7 @@ local function Spectator()
 	surface.SetDrawColor(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255)
 	surface.DrawRect(gInt("Adjustments", "Window Adjustments", "Spectators X:") + 2, gInt("Adjustments", "Window Adjustments", "Spectators Y:"), windowW, windowH)
 	draw.SimpleText("Spectators", "MiscFont2", gInt("Adjustments", "Window Adjustments", "Spectators X:") + 102, gInt("Adjustments", "Window Adjustments", "Spectators Y:") + 11, color3, 1, 1)
-	for k, v in pairs(player.GetAll()) do
+	for k, v in pairs(ib.allplayers) do
 		if (IsValid(v:GetObserverTarget())) and v:GetObserverTarget() == me then
 			DrawOutlinedText(v:GetName(), "MiscFont2", gInt("Adjustments", "Window Adjustments", "Spectators X:") + 102, gInt("Adjustments", "Window Adjustments", "Spectators Y:") + 32 + specscount, color2, 0.1, color1)
 			specscount = specscount + 12
@@ -2450,7 +2451,7 @@ end
 
 local function Radar()
 	local col = Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
-	local everything = ents.GetAll()
+	local everything = ib.allentities
 	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Bordered" then
 		draw.RoundedBox(360, gInt("Adjustments", "Window Adjustments", "Radar X:") + 1, gInt("Adjustments", "Window Adjustments", "Radar Y:") - 0.75, windowW + 2, windowH + 2, Color(bordercol.r, bordercol.g, bordercol.b, 255))
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
@@ -2520,7 +2521,7 @@ local function Players()
 	surface.SetTextColor(bordercol.r, bordercol.g - 24, bordercol.b - 80, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Players: "..player.GetCount().."/"..game.MaxPlayers())
 	local NWString = em.GetNWString(v)
-	for k, v in next, player.GetAll() do
+	for k, v in next, ib.allplayers do
 		surface.SetTextColor(bordercol.r, bordercol.g - 24, bordercol.b - 80, gInt("Adjustments", "Others", "Text Opacity:"))
 		hh = hh + 12
 		surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Players List X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Players List Y:"))
@@ -2589,7 +2590,7 @@ local function PlayerList()
 	draw.SimpleText("#", "MiscFont", pos_x + 5, pos_y, Color(menutextcol.r, menutextcol.g, menutextcol.b), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
 	draw.SimpleText("Username", "MiscFont", pos_x + 35, pos_y, Color(menutextcol.r, menutextcol.g, menutextcol.b), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
 	draw.SimpleText("Priority", "MiscFont", pos_x + 214, pos_y, Color(menutextcol.r, menutextcol.g, menutextcol.b), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
-	for k, v in next, player.GetAll() do
+	for k, v in next, ib.allplayers do
 		if v == me or not v:IsValid() then continue end
 		if MouseInArea(pos_x, pos_y + offset, pos_x + 350, pos_y + offset + 14) then
 			if input.IsMouseDown(107) then
@@ -2756,7 +2757,7 @@ hook.Add("HUDShouldDraw", "HUDShouldDraw", function(name)
 end)
 
 local function ChatSpam()
-	local v = player.GetAll()[math.random(#player.GetAll())]
+	local v = ib.allplayers[math.random(#ib.allplayers)]
 	local messagespam = {"GET FUCKED BY IDIOTBOX KIDDIE", "YOU SUCK SHIT LMAO", "STOP BEING SUCH A WORTHLESS CUMSTAIN AND GET IDIOTBOX NOW", "MONEY WASTER LOL", "YOU FUCKING FATASS, GET IDIOTBOX AND LOSE ALL THAT WEIGHT YOU INCEL", "ARE ALL THE GIRLS IGNORING YOU? GET IDIOTBOX AND YOU'LL BE FLOODED WITH PUSSY", "DO YOU FEEL WORTHLESS? WELL, YOU ARE LOL", "GET IDIOTBOX IF YOU WANT SOME OF THAT CLOUT", "STOP WASTING YOUR TIME ON SOUNDCLOUD BECAUSE YOU AIN'T GONNA GET NOWHERE WITH IT", "GET IDIOTBOX AND YOUR DICK WILL GROW 4 TIMES ITS SIZE", "LITTLE KID LMAO",}
 	local insultspam = {" is shit at building", " is no older than 13", " looks like a 2 month old corpse", " really thinks gmod is a good game", " can't afford a better pc lmao", ", so how do you like your 40 fps?", " will definitely kill himself before his 30's ", " is a fucking virgin lmao", " is a script kiddie", " thinks his 12cm penis is big lmfao", ", how does it feel when you've never seen a naked woman in person?", ", what do you like not being able to do a single push-up?", ", tell me how it feels to be shorter than every girl you've met", " is a fatass who only spends his time in front of a monitor like an incel", "'s parents have a lower than average income", " lives under a bridge lmao", " vapes because is too afraid to smoke an actual ciggarette", ", your low self esteem really pays off you loser", ", make sure you tell me what unemployment feels like", " lives off of his parents' money", ", you're a dissapointment to your entire family, fatass", " has probably fried all of his dopamine receptors by masturbating this much",}
 	local spamCategories = {
@@ -3280,7 +3281,7 @@ end
 local function TraitorDetector()
 	if engine.ActiveGamemode() ~= "terrortown" then return end
 	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Traitor Finder") then
-	for k, v in global.ipairs(global.ents.GetAll()) do
+	for k, v in global.ipairs(global.ib.allentities) do
 		local _v = v:GetOwner()
 		if (_v == me) then continue end
 		if (global.GetRoundState() == 3 and v:IsWeapon() and _v:IsPlayer() and not _v.Detected and global.table.HasValue(v.CanBuy, 1)) then
@@ -3298,7 +3299,7 @@ end
 
 local function MurdererDetector()
 	if not gBool("Main Menu", "Murder Utilities", "Murderer Finder") or engine.ActiveGamemode() ~= "murder" then return end
-	for k, v in global.ipairs(global.player.GetAll()) do
+	for k, v in global.ipairs(global.ib.allplayers) do
 		if (v == me) then continue end
 		if (GAMEMODE.RoundStage == 1 and not v.Detected and not v.Magnum) then
 			if (v:HasWeapon("weapon_mu_knife")) then
@@ -3478,7 +3479,7 @@ hook.Add("Tick", "Tick", function()
 		end
 	elseif engine.ActiveGamemode() == "darkrp" then
 		if gBool("Main Menu", "DarkRP Utilities", "Suicide Near Arrest Batons") and (me:Alive() or me:Health() > 0) then
-			for k, v in next, player.GetAll() do
+			for k, v in next, ib.allplayers do
 				if not v:IsValid() or v:Health() < 1 or v:IsDormant() or v == me or (gBool("Aim Assist", "Aim Priorities", "Ignore Friends") and v:GetFriendStatus() == "friend") then continue end
 				if v:GetPos():Distance(me:GetPos()) < 95 and v:GetActiveWeapon():GetClass() == "arrest_stick" and me:GetPos():Distance(v:GetEyeTrace().HitPos) < 105 then
 					me:ConCommand("kill")
@@ -3527,7 +3528,7 @@ hook.Add("Think", "Think", function()
 	if engine.ActiveGamemode() == "terrortown" then
 		if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Traitor Finder") then
 			if GetRoundState() == ROUND_ACTIVE then
-				for k, v in next, ents.GetAll() do
+				for k, v in next, ib.allentities do
 					if not v:IsWeapon() or not v:IsValid() then continue end
 					if (v:GetOwner():IsPlayer() and v:GetOwner():IsDetective()) or v:GetOwner() == me then continue end
 					if not me:IsTraitor() and v:GetOwner():IsPlayer() and table.HasValue(v.CanBuy, 1) and not table.HasValue(tweps, v:GetClass()) and not table.HasValue(traitors, v:GetOwner():UniqueID()) then
@@ -4424,11 +4425,11 @@ end
 
 hook.Add("RenderScreenspaceEffects", "RenderScreenspaceEffects", function()
 	if not gBool("Visuals", "Wallhack", "Enabled") then return end
-	for k, v in next, player.GetAll() do
+	for k, v in next, ib.allplayers do
 		if (not em.IsValid(v) or em.Health(v) < 1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not OnScreen(v) or not WallhackFilter(v) or not EnemyWallhackFilter(v) then continue end
 		PlayerChams(v)
 	end
-	for k, v in next, ents.GetAll() do
+	for k, v in next, ib.allentities do
 		if (not gBool("Visuals", "Miscellaneous", "Show Entities") or not em.IsValid(v) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All"))) or not OnScreen(v) or not WallhackFilter(v) then continue end
 		if table.HasValue(drawnents, v:GetClass()) and v:IsValid() and v:GetPos():Distance(me:GetPos()) > 40 then
 			EntityChams(v)
@@ -4774,7 +4775,7 @@ local function GetTarget()
 	if (opt == "Distance") then
 		if (sticky && Valid(aimtarget)) then return end
 		dists = {}
-		for k, v in next, ents.GetAll() do
+		for k, v in next, ib.allentities do
 			if (!Valid(v)) then continue end
 			dists[#dists + 1] = {vm.Distance(em.GetPos(v), em.GetPos(me)), v}
 		end
@@ -4785,7 +4786,7 @@ local function GetTarget()
 	elseif (opt == "Health") then
 		if (sticky && Valid(aimtarget)) then return end
 		dists = {}
-		for k, v in next, ents.GetAll() do
+		for k, v in next, ib.allentities do
 			if (!Valid(v)) then continue end
 			dists[#dists + 1] = {em.Health(v), v}
 		end
@@ -4797,7 +4798,7 @@ local function GetTarget()
 		if (!sticky && Valid(aimtarget)) then return end
 		aimtarget = nil
 		local avaib = {}
-		for k, v in next, ents.GetAll() do
+		for k, v in next, ib.allentities do
 			avaib[math.random(100)] = v
 		end
 		for k, v in next, avaib do
@@ -4809,7 +4810,7 @@ local function GetTarget()
 		if (sticky && Valid(aimtarget)) then return end
 		dists = {}
 		local x, y = ScrW(), ScrH()
-		for k, v in next, ents.GetAll() do
+		for k, v in next, ib.allentities do
 			if (!Valid(v)) then continue end
 			local eyepos = v:EyePos():ToScreen()
 			dists[#dists + 1] = {math.Dist(x / 2, y / 2, eyepos.x, eyepos.y), v}
@@ -5504,7 +5505,7 @@ end
 
 local function Aimbot(cmd)
 	if not gBool("Aim Assist", "Aimbot", "Enabled") or not me:Alive() or me:Health() < 1 or not me:GetActiveWeapon():IsValid() or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) then return end
-	for k, v in pairs(player.GetAll()) do
+	for k, v in pairs(ib.allplayers) do
 		if ((gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me) || FixTools() then return end
 	end
 	GetTarget()
@@ -5704,7 +5705,7 @@ end
 local function GetClosestDistance()
 	local ddists = {}
 	local closest
-	for k, v in next, player.GetAll() do
+	for k, v in next, ib.allplayers do
 	if (!Valid(v)) then continue end
 	ddists[#ddists + 1] = {vm.Distance(em.GetPos(v), em.GetPos(me)), v}
 	end
@@ -5722,10 +5723,10 @@ local function GetClosestCrosshair()
 	local dfov = {}
 	local crosshairclosest
 	local x, y = ScrW(), ScrH()
-	for k, v in next, ents.GetAll() do
-	if (!Valid(v)) then continue end
-	local eyepos = v:EyePos():ToScreen()
-	dfov[#dfov + 1] = {math.Dist(x / 2, y / 2, eyepos.x, eyepos.y), v}
+	for k, v in next, ib.allentities do
+		if (!Valid(v)) then continue end
+		local eyepos = v:EyePos():ToScreen()
+		dfov[#dfov + 1] = {math.Dist(x / 2, y / 2, eyepos.x, eyepos.y), v}
 	end
 	table.sort(dfov, function(a, b)
 	return(a[1] < b[1])
@@ -6157,7 +6158,7 @@ local function DetectWalls()
 end
 
 local function AntiAim(cmd)
-	for k, v in pairs(player.GetAll()) do
+	for k, v in pairs(ib.allplayers) do
 		if (gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Anti-Aim")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me then return end
 	end
 	local wep = pm.GetActiveWeapon(me)
@@ -6428,7 +6429,7 @@ hook.Add("StartCommand", "StartCommand", function(randply, cmd)
 	end
 	local randomname = {"Mike Hawk", "Moe Lester", "Mike Hunt", "Ben Dover", "Harold Kundt", "Peter Pain", "Dusan Mandic", "Harry Gooch", "Mike Oxlong", "Ivana Dooyu", "Slim Shader", "Dead Walker", "Mike Oxbig", "Mike Rotch", "Hugh Jass", "Robin Banks", "Mike Litt", "Harry Wang", "Harry Cox", "Moss Cular", "Amanda Reen", "Major Kumm", "Willie Wang", "Hugh Blackstuff", "Mike Rap", "Al Coholic", "Cole Kutz", "Mike Litoris", "Dixie Normous", "Dick Pound", "Mike Ock", "Sum Ting Wong", "Ho Lee Fuk", "Harry Azcrac", "Jay L. Bate", "Hugh G. Rection", "Long Wang", "Wayne King",}
 		if gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Normal" or gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Priority Targets" then
-		local randply = player.GetAll()[math.random(#player.GetAll())]
+		local randply = ib.allplayers[math.random(#ib.allplayers)]
 		local friendstatus = pm.GetFriendStatus(randply)
 		if (!randply:IsValid() || randply == me || friendstatus == "friend" || (gBool("Main Menu", "Priority List", "Enabled") && table.HasValue(ignorelist, randply:UniqueID())) || (gBool("Main Menu", "Priority List", "Enabled") && gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Priority Targets" && !table.HasValue(prioritylist, randply:UniqueID()))) then return end
 			big.ChangeName(randply:Name().." ")
@@ -6632,7 +6633,7 @@ end
 
 hook.Add("MiscPaint", "MiscPaint", function()
 	if gBool("Visuals", "Wallhack", "Enabled") then
-		for k, v in next, player.GetAll() do
+		for k, v in next, ib.allplayers do
 		if ((!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or not em.IsValid(v) or em.Health(v) < 0.1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not WallhackFilter(v) or not EnemyWallhackFilter(v) then continue end
 			Visuals(v)
 		end
@@ -6640,11 +6641,11 @@ hook.Add("MiscPaint", "MiscPaint", function()
 	if gBool("Visuals", "Wallhack", "Enabled") and gBool("Visuals", "Miscellaneous", "Show NPCs") then
 		ShowNPCs()
 	end
-	for k, v in next, ents.GetAll() do
+	for k, v in next, ib.allentities do
 		if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Traitor Finder") or gBool("Main Menu", "Murder Utilities", "Murderer Finder") then
 			ib.DrawFinders(v)
 		end
-		if (v:IsDormant() and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or not v:IsValid() or not OnScreen(v) or not WallhackFilter(v) or (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) then continue end
+		if not v:IsValid() or (v:IsDormant() and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or not OnScreen(v) or not WallhackFilter(v) or (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) then continue end
 		if gBool("Visuals", "Wallhack", "Enabled") and gBool("Visuals", "Miscellaneous", "Show Entities") then
 			ib.ShowEntities(v)
 		end
@@ -6675,7 +6676,7 @@ hook.Add("MiscPaint", "MiscPaint", function()
 		Crosshair()
 	end
 	if (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not me:Alive() or me:Health() < 1 or (gBool("Aim Assist", "Triggerbot", "Enabled") and not gBool("Aim Assist", "Aimbot", "Enabled")) then return end
-	for k, v in pairs(player.GetAll()) do
+	for k, v in pairs(ib.allplayers) do
 		if (gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me then return end
 		if gBool("Miscellaneous", "GUI Settings", "Witness Finder") then
 			ib.WitnessFinder(v)
@@ -6694,7 +6695,7 @@ end)
 
 hook.Add("PreDrawOpaqueRenderables", "PreDrawOpaqueRenderables", function()
 	if gBool("Hack vs. Hack", "Resolver", "Enabled") then
-		for k, v in next, player.GetAll() do
+		for k, v in next, ib.allplayers do
 			if v == me or not v:IsValid() or (gBool("Main Menu", "Priority List", "Enabled") and table.HasValue(ignorelist, v:UniqueID())) then continue end
 			if gBool("Main Menu", "Priority List", "Enabled") and gBool("Hack vs. Hack", "Resolver", "Priority Targets Only") then
 				if not table.HasValue(prioritylist, v:UniqueID()) then continue end
