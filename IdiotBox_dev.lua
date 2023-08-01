@@ -57,6 +57,7 @@ local vm = FindMetaTable("Vector")
 local im = FindMetaTable("IMaterial")
 
 gameevent.Listen("entity_killed")
+gameevent.Listen("player_spawn")
 gameevent.Listen("player_disconnect")
 gameevent.Listen("player_hurt")
 
@@ -128,6 +129,28 @@ ib.contributors["STEAM_0:1:4375194"] = {} -- ohhstyle (old advertiser)
 ib.contributors["STEAM_0:1:101813068"] = {} -- sdunken (first user)
 
 --NOTE-- I want to mention that these are not the only people that helped me with the development of IdiotBox, but they are the ones who helped me the most and that is why they are credited here.
+
+hook.Add("player_spawn", "player_spawn", function(v)
+    local pp = player.GetByID(v.userid)
+    if !IsValid(pp) then return end
+    if ib.allplayers[pp] then return end
+    table.insert(ib.allplayers, pp)
+end)
+
+hook.Add("player_disconnect", "player_disconnect", function(v, data)
+    local pp = player.GetByID(v.userid)
+    if !IsValid(pp) then return end
+    if !ib.allplayers[pp] then return end
+    table.remove(ib.allplayers, pp)
+	local quit = {"rage quit", "rage quit lol", "he raged", "he raged lmao", "he left", "he left lmfao"}
+	if gOption("Miscellaneous", "Chat", "Reply Spam:") == "Disconnect Spam" then
+		if (engine.ActiveGamemode() == "darkrp") then
+			me:ConCommand("say /ooc "..quit[math.random(#quit)])
+		else
+			me:ConCommand("say "..quit[math.random(#quit)])
+		end
+	end
+end)
 
 local function UIScale(i)
     return math.max(i * (ScrH() / 1440), 1)
@@ -201,7 +224,7 @@ local options = {
 			{"Enabled", "Checkbox", true, 78}, -- Enabled by default
 			{"List Position X:", "Slider", 1356, 2000, 156}, 
 			{""}, 
-			{"List Position Y:", "Slider", 116, 2000, 156}, 
+			{"List Position Y:", "Slider", 115, 2000, 156}, 
 			{""}, 
 			{"List Spacing:", "Slider", 0, 10, 156}, 
 			{""}, 
@@ -790,17 +813,25 @@ local function DrawUpperText(w, h)
 	if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
 		for i = 0, 28 do
 			surface.SetDrawColor(curcol)
-			surface.DrawLine(1.75, i + 2, w - 2.75, i + 2)
+			surface.DrawLine(0.5, i + 1, w - 1.5, i + 1)
 		end
 		for i = 0, 1 do
 			surface.SetDrawColor(curcol3)
-			surface.DrawLine(1.75, i + 2, w - 2.75, i + 2)
+			surface.DrawLine(0.5, i + 1, w - 1.5, i + 1)
 		end
+		surface.SetDrawColor(0, 0, 0, 255)
+		surface.DrawLine(0.5, 3, w - 1.5, 3)
 	elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
 		for i = 0, 28 do
 			surface.SetDrawColor(curcol2)
-			surface.DrawLine(1.75, i + 2, w - 2.75, i + 2)
+			surface.DrawLine(0.5, i + 1, w - 1.5, i + 1)
 		end
+		for i = 0, 1 do
+			surface.SetDrawColor(curcol3)
+			surface.DrawLine(0.5, i + 1, w - 1.5, i + 1)
+		end
+		surface.SetDrawColor(0, 0, 0, 255)
+		surface.DrawLine(0.5, 3, w - 1.5, 3)
 	end
 	surface.SetFont("MenuFont2")
 	local tw, th = surface.GetTextSize("")
@@ -824,24 +855,24 @@ local function DrawTabs(self, w, h)
 	local sizeper = (w - 10) / #order
 	local maxx = 0
 	for k, v in next, order do
-		local bMouse = MouseInArea(mx + 5 + maxx, my + 31, mx + 5 + maxx + sizeper, my + 31 + 30)
+		local bMouse = MouseInArea(mx + 5 + maxx, my + 30, mx + 5 + maxx + sizeper, my + 30 + 30)
 		if (visible[v]) then
 			local curcol = Color(bordercol.r, bordercol.g, bordercol.b, 255)
 			local curcol2 = Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 145)
 			local curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 145)
 			for i = 0, 1 do
 				surface.SetDrawColor(curcol)
-				surface.DrawLine(4.25 + maxx, 62 + i, 4.25 + maxx + sizeper, 62 + i)
+				surface.DrawLine(4.25 + maxx, 61 + i, 4.25 + maxx + sizeper, 61 + i)
 			end
 			if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
 				for i = 0, 30 do
 					surface.SetDrawColor(curcol2)
-					surface.DrawLine(4.25 + maxx, 31 + i, 4.25 + maxx + sizeper, 31 + i)
+					surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
 				end
 			elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
 				for i = 0, 30 do
 					surface.SetDrawColor(curcol3)
-					surface.DrawLine(4.25 + maxx, 31 + i, 4.25 + maxx + sizeper, 31 + i)
+					surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
 				end
 			end
 		elseif (bMouse) then
@@ -850,17 +881,17 @@ local function DrawTabs(self, w, h)
 			local curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 65)
 			for i = 0, 1 do
 				surface.SetDrawColor(curcol)
-				surface.DrawLine(4.25 + maxx, 62 + i, 4.25 + maxx + sizeper, 62 + i)
+				surface.DrawLine(4.25 + maxx, 61 + i, 4.25 + maxx + sizeper, 61 + i)
 			end
 			if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
 				for i = 0, 30 do
 					surface.SetDrawColor(curcol2)
-					surface.DrawLine(4.25 + maxx, 31 + i, 4.25 + maxx + sizeper, 31 + i)
+					surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
 				end
 			elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
 				for i = 0, 30 do
 					surface.SetDrawColor(curcol3)
-					surface.DrawLine(4.25 + maxx, 31 + i, 4.25 + maxx + sizeper, 31 + i)
+					surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
 				end
 			end
 		end
@@ -876,12 +907,12 @@ local function DrawTabs(self, w, h)
 		if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
 			for i = 0, 30 do
 				surface.SetDrawColor(curcol2)
-				surface.DrawLine(4.25 + maxx, 31 + i, 4.25 + maxx + sizeper, 31 + i)
+				surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
 			end
 		elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
 			for i = 0, 30 do
 				surface.SetDrawColor(curcol3)
-				surface.DrawLine(4.25 + maxx, 31 + i, 4.25 + maxx + sizeper, 31 + i)
+				surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
 			end
 		end
 		surface.SetFont("MainFont3")
@@ -1420,7 +1451,7 @@ end
 local function Unload()
 	RunConsoleCommand("stopsound")
 	global.unloaded = true
-	local hooksToRemove = {"RenderScene", "ShutDown", "PostDrawViewModel", "PreDrawEffects", "HUDShouldDraw", "Tick", "Think", "CalcViewModelView", "PreDrawSkyBox", "PreDrawViewModel", "PreDrawPlayerHands", "RenderScreenspaceEffects", "player_hurt", "entity_killed", "Move", "CalcView", "AdjustMouseSensitivity", "ShouldDrawLocalPlayer", "StartCommand", "CreateMove", "player_disconnect", "MiscPaint", "PreDrawOpaqueRenderables", "OnPlayerChat",}
+	local hooksToRemove = {"player_spawn", "player_disconnect", "RenderScene", "ShutDown", "PostDrawViewModel", "PreDrawEffects", "HUDShouldDraw", "Tick", "Think", "CalcViewModelView", "PreDrawSkyBox", "PreDrawViewModel", "PreDrawPlayerHands", "RenderScreenspaceEffects", "player_hurt", "entity_killed", "Move", "CalcView", "AdjustMouseSensitivity", "ShouldDrawLocalPlayer", "StartCommand", "CreateMove", "MiscPaint", "PreDrawOpaqueRenderables", "OnPlayerChat",}
 	for _, hookName in ipairs(hooksToRemove) do
 		hook.Remove(hookName, hookName)
 	end
@@ -6484,17 +6515,6 @@ hook.Add("CreateMove", "CreateMove", function(cmd)
 	Aimbot(cmd)
 	Triggerbot(cmd)
 	big.FinishPrediction()
-end)
-
-hook.Add("player_disconnect", "player_disconnect", function(v, data)
-	local quit = {"rage quit", "rage quit lol", "he raged", "he raged lmao", "he left", "he left lmfao"}
-	if gOption("Miscellaneous", "Chat", "Reply Spam:") == "Disconnect Spam" then
-		if (engine.ActiveGamemode() == "darkrp") then
-			me:ConCommand("say /ooc "..quit[math.random(#quit)])
-		else
-			me:ConCommand("say "..quit[math.random(#quit)])
-		end
-	end
 end)
 
 function ib.DrawFinders(v)
