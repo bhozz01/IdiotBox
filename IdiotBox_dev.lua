@@ -2459,7 +2459,7 @@ end
 
 local function Radar()
 	local col = Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
-	local everything = ib.allentities
+	local everything = ents.GetAll()
 	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Bordered" then
 		draw.RoundedBox(360, gInt("Adjustments", "Window Adjustments", "Radar X:") + 1, gInt("Adjustments", "Window Adjustments", "Radar Y:") - 0.75, windowW + 2, windowH + 2, Color(bordercol.r, bordercol.g, bordercol.b, 255))
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
@@ -2478,7 +2478,7 @@ local function Radar()
 	surface.SetDrawColor(team.GetColor(me:Team()))
 	for k = 1, #everything do
 		local v = everything[k]
-		if (v:IsValid() or v != me and v:IsPlayer() and v:Health() > 0 and not (em.IsDormant(v) and gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All") and not (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) and not ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) or (v:IsNPC() and v:Health() > 0)) then
+		if (v != me and v:IsPlayer() and v:Health() > 0 and not (em.IsDormant(v) and gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All") and not (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) and not ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) or (v:IsNPC() and v:Health() > 0)) then
 			color = (v:IsPlayer() and ((ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || pm.GetFriendStatus(v) == "friend" && Color(0, 155, 255) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v))) or Color(255, 255, 255)
 			surface.SetDrawColor(color)
 			local myPos = me:GetPos()
