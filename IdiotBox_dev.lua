@@ -21,7 +21,7 @@ Creator (Phizz): https://steamcommunity.com/id/phizzofficial/, or 'phizz0777' on
 local global = (_G)
 local me = LocalPlayer()
 local folder = "IdiotBox"
-local version = "7.0.b1-pre18"
+local version = "7.0.b1-pre19"
 
 local menukeydown, menukeydown2, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -815,7 +815,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: d01m08-pre18")
+	surface.DrawText("Latest build: d11m08-pre19")
 end
 
 local function MouseInArea(minx, miny, maxx, maxy)
@@ -1593,6 +1593,7 @@ local function EntityFinder()
 		entlist:Clear()
 		drawlist:Clear()
 			for k, v in next, ib.allentities do
+			if not v:IsValid() then return end
 			local name = v:GetClass()
 			local copy = false
 			if not table.HasValue(added, v:GetClass()) and not table.HasValue(drawnents, v:GetClass()) and BadEntities(v) and v:GetClass() ~= "player" then
@@ -1680,6 +1681,7 @@ local function EntityFinder()
 		if find:GetValue() ~= "" then
 			entlist:Clear()
 			for k, v in next, ib.allentities do
+			if not v:IsValid() then return end
 			local name = v:GetClass()
 			local copy = false
 			if string.find(v:GetClass(), find:GetValue()) and not table.HasValue(added, v:GetClass()) and not table.HasValue(drawnents, v:GetClass()) and BadEntities(v) and v:GetClass() ~= "player" then
@@ -1692,6 +1694,7 @@ local function EntityFinder()
 		else
 			entlist:Clear()
 			for k, v in next, ib.allentities do
+			if not v:IsValid() then return end
 			local name = v:GetClass()
 			local copy = false
 			if not table.HasValue(added, v:GetClass()) and not table.HasValue(drawnents, v:GetClass()) and BadEntities(v) and v:GetClass() ~= "player" then
@@ -1708,6 +1711,7 @@ local function EntityFinder()
 		end
 	end
 	for k, v in next, ib.allentities do
+		if not v:IsValid() then return end
 		if not table.HasValue(added, v:GetClass()) and not table.HasValue(drawnents, v:GetClass()) and BadEntities(v) and v:GetClass() ~= "player" then
 			entlist:AddLine(v:GetClass())
 		end
@@ -2421,7 +2425,7 @@ local function Spectator()
 	surface.DrawRect(gInt("Adjustments", "Window Adjustments", "Spectators X:") + 2, gInt("Adjustments", "Window Adjustments", "Spectators Y:"), windowW, windowH)
 	draw.SimpleText("Spectators", "MiscFont2", gInt("Adjustments", "Window Adjustments", "Spectators X:") + 102, gInt("Adjustments", "Window Adjustments", "Spectators Y:") + 11, color3, 1, 1)
 	for k, v in pairs(ib.allplayers) do
-		if (IsValid(v:GetObserverTarget())) and v:GetObserverTarget() == me then
+		if (v:IsValid() and IsValid(v:GetObserverTarget())) and v:GetObserverTarget() == me then
 			DrawOutlinedText(v:GetName(), "MiscFont2", gInt("Adjustments", "Window Adjustments", "Spectators X:") + 102, gInt("Adjustments", "Window Adjustments", "Spectators Y:") + 32 + specscount, color2, 0.1, color1)
 			specscount = specscount + 12
 		end
@@ -2474,7 +2478,7 @@ local function Radar()
 	surface.SetDrawColor(team.GetColor(me:Team()))
 	for k = 1, #everything do
 		local v = everything[k]
-		if (v != me and v:IsPlayer() and v:Health() > 0 and not (em.IsDormant(v) and gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All") and not (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) and not ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) or (v:IsNPC() and v:Health() > 0)) then
+		if (not v:IsValid() or v != me and v:IsPlayer() and v:Health() > 0 and not (em.IsDormant(v) and gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All") and not (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) and not ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) or (v:IsNPC() and v:Health() > 0)) then
 			color = (v:IsPlayer() and ((ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || pm.GetFriendStatus(v) == "friend" && Color(0, 155, 255) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v))) or Color(255, 255, 255)
 			surface.SetDrawColor(color)
 			local myPos = me:GetPos()
@@ -2526,6 +2530,7 @@ local function Players()
 	surface.DrawText("Players: "..player.GetCount().."/"..game.MaxPlayers())
 	local NWString = em.GetNWString(v)
 	for k, v in next, ib.allplayers do
+		if not v:IsValid() then continue end
 		surface.SetTextColor(bordercol.r, bordercol.g - 24, bordercol.b - 80, gInt("Adjustments", "Others", "Text Opacity:"))
 		hh = hh + 12
 		surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Players List X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Players List Y:"))
@@ -2595,7 +2600,7 @@ local function PlayerList()
 	draw.SimpleText("Username", "MiscFont", pos_x + 35, pos_y, Color(menutextcol.r, menutextcol.g, menutextcol.b), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
 	draw.SimpleText("Priority", "MiscFont", pos_x + 214, pos_y, Color(menutextcol.r, menutextcol.g, menutextcol.b), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
 	for k, v in next, ib.allplayers do
-		if v == me or not v:IsValid() then continue end
+		if not not v:IsValid() or v == me then continue end
 		if MouseInArea(pos_x, pos_y + offset, pos_x + 350, pos_y + offset + 14) then
 			if input.IsMouseDown(107) then
 				if MouseInArea(pos_x + 30, pos_y + offset, pos_x + 209, pos_y + offset + 14) and not v:IsBot() then
@@ -3287,7 +3292,7 @@ local function TraitorDetector()
 	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Traitor Finder") then
 	for k, v in global.ipairs(global.ib.allentities) do
 		local _v = v:GetOwner()
-		if (_v == me) then continue end
+		if not _v:IsValid() or _v == me then continue end
 		if (global.GetRoundState() == 3 and v:IsWeapon() and _v:IsPlayer() and not _v.Detected and global.table.HasValue(v.CanBuy, 1)) then
 			if (_v:GetRole() ~= 2) then
 				_v.Detected = true
@@ -3304,7 +3309,7 @@ end
 local function MurdererDetector()
 	if not gBool("Main Menu", "Murder Utilities", "Murderer Finder") or engine.ActiveGamemode() ~= "murder" then return end
 	for k, v in global.ipairs(global.ib.allplayers) do
-		if (v == me) then continue end
+		if not v:IsValid() or v == me then continue end
 		if (GAMEMODE.RoundStage == 1 and not v.Detected and not v.Magnum) then
 			if (v:HasWeapon("weapon_mu_knife")) then
 				v.Detected = true
@@ -3533,7 +3538,7 @@ hook.Add("Think", "Think", function()
 		if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Traitor Finder") then
 			if GetRoundState() == ROUND_ACTIVE then
 				for k, v in next, ib.allentities do
-					if not v:IsWeapon() or not v:IsValid() then continue end
+					if not v:IsValid() or v:IsWeapon() then continue end
 					if (v:GetOwner():IsPlayer() and v:GetOwner():IsDetective()) or v:GetOwner() == me then continue end
 					if not me:IsTraitor() and v:GetOwner():IsPlayer() and table.HasValue(v.CanBuy, 1) and not table.HasValue(tweps, v:GetClass()) and not table.HasValue(traitors, v:GetOwner():UniqueID()) then
 						table.insert(traitors, v:GetOwner():UniqueID())
@@ -4434,7 +4439,7 @@ hook.Add("RenderScreenspaceEffects", "RenderScreenspaceEffects", function()
 		PlayerChams(v)
 	end
 	for k, v in next, ib.allentities do
-		if (not gBool("Visuals", "Miscellaneous", "Show Entities") or not em.IsValid(v) or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All"))) or not OnScreen(v) or not WallhackFilter(v) then continue end
+		if not v:IsValid() or (not gBool("Visuals", "Miscellaneous", "Show Entities") or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All"))) or not OnScreen(v) or not WallhackFilter(v) then continue end
 		if table.HasValue(drawnents, v:GetClass()) and v:IsValid() and v:GetPos():Distance(me:GetPos()) > 40 then
 			EntityChams(v)
 		end
@@ -4803,6 +4808,7 @@ local function GetTarget()
 		aimtarget = nil
 		local avaib = {}
 		for k, v in next, ib.allentities do
+			if (!Valid(v)) then continue end
 			avaib[math.random(100)] = v
 		end
 		for k, v in next, avaib do
@@ -5510,7 +5516,7 @@ end
 local function Aimbot(cmd)
 	if not gBool("Aim Assist", "Aimbot", "Enabled") or not me:Alive() or me:Health() < 1 or not me:GetActiveWeapon():IsValid() or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) then return end
 	for k, v in pairs(ib.allplayers) do
-		if ((gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me) || FixTools() then return end
+		if !v:IsValid() || ((gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me) || FixTools() then return end
 	end
 	GetTarget()
     aa = false
@@ -5710,7 +5716,7 @@ local function GetClosestDistance()
 	local ddists = {}
 	local closest
 	for k, v in next, ib.allplayers do
-	if (!Valid(v)) then continue end
+	if !Valid(v) then continue end
 	ddists[#ddists + 1] = {vm.Distance(em.GetPos(v), em.GetPos(me)), v}
 	end
 	table.sort(ddists, function(a, b)
@@ -6163,6 +6169,7 @@ end
 
 local function AntiAim(cmd)
 	for k, v in pairs(ib.allplayers) do
+		if not v:IsValid() then continue end
 		if (gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Anti-Aim")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me then return end
 	end
 	local wep = pm.GetActiveWeapon(me)
@@ -6638,7 +6645,7 @@ end
 hook.Add("MiscPaint", "MiscPaint", function()
 	if gBool("Visuals", "Wallhack", "Enabled") then
 		for k, v in next, ib.allplayers do
-		if ((!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or not em.IsValid(v) or em.Health(v) < 0.1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not WallhackFilter(v) or not EnemyWallhackFilter(v) then continue end
+		if not em.IsValid(v) or ((!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) or em.Health(v) < 0.1 or (em.IsDormant(v) and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Players" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or (pm.Team(v) == TEAM_SPECTATOR and not gBool("Visuals", "Miscellaneous", "Show Spectators"))) or not WallhackFilter(v) or not EnemyWallhackFilter(v) then continue end
 			Visuals(v)
 		end
 	end
@@ -6646,10 +6653,11 @@ hook.Add("MiscPaint", "MiscPaint", function()
 		ShowNPCs()
 	end
 	for k, v in next, ib.allentities do
+		if not v:IsValid() then continue end
 		if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Traitor Finder") or gBool("Main Menu", "Murder Utilities", "Murderer Finder") then
 			ib.DrawFinders(v)
 		end
-		if not v:IsValid() or (v:IsDormant() and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or not OnScreen(v) or not WallhackFilter(v) or (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) then continue end
+		if (v:IsDormant() and (gOption("Visuals", "Miscellaneous", "Dormant Check:") == "Entities" or gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All")) or not OnScreen(v) or not WallhackFilter(v) or (!(ThirdpersonCheck() and gOption("Visuals", "Wallhack", "Visibility:") == "Clientside") and v == me) or (gOption("Visuals", "Wallhack", "Visibility:") == "Global" and v == me) then continue end
 		if gBool("Visuals", "Wallhack", "Enabled") and gBool("Visuals", "Miscellaneous", "Show Entities") then
 			ib.ShowEntities(v)
 		end
@@ -6681,7 +6689,7 @@ hook.Add("MiscPaint", "MiscPaint", function()
 	end
 	if (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not me:Alive() or me:Health() < 1 or (gBool("Aim Assist", "Triggerbot", "Enabled") and not gBool("Aim Assist", "Aimbot", "Enabled")) then return end
 	for k, v in pairs(ib.allplayers) do
-		if (gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me then return end
+		if not v:IsValid() or (gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me then return end
 		if gBool("Miscellaneous", "GUI Settings", "Witness Finder") then
 			ib.WitnessFinder(v)
 		end
@@ -6700,7 +6708,7 @@ end)
 hook.Add("PreDrawOpaqueRenderables", "PreDrawOpaqueRenderables", function()
 	if gBool("Hack vs. Hack", "Resolver", "Enabled") then
 		for k, v in next, ib.allplayers do
-			if v == me or not v:IsValid() or (gBool("Main Menu", "Priority List", "Enabled") and table.HasValue(ignorelist, v:UniqueID())) then continue end
+			if not v:IsValid() or v == me or (gBool("Main Menu", "Priority List", "Enabled") and table.HasValue(ignorelist, v:UniqueID())) then continue end
 			if gBool("Main Menu", "Priority List", "Enabled") and gBool("Hack vs. Hack", "Resolver", "Priority Targets Only") then
 				if not table.HasValue(prioritylist, v:UniqueID()) then continue end
 			end
