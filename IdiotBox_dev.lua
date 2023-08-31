@@ -36,7 +36,7 @@ local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen
 local ib, drawnents, prioritylist, ignorelist, visible, dists, cones, traitors, tweps = {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
 
 local toggler, playerkills, namechangeTime, circlestrafeval, timeHoldingSpaceOnGround, servertime, faketick, propval, propdelay, crouched = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-local menutextcol, bgmenucol, bordercol, teamvisualscol, enemyvisualscol, prioritytargetscol, ignoredtargetscol, miscvisualscol, teamchamscol, enemychamscol, crosshaircol, viewmodelcol = Color(255, 255, 255), Color(30, 30, 45), Color(0, 155, 255), Color(255, 255, 255), Color(255, 255, 255), Color(255, 0, 100), Color(175, 175, 175), Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 235, 255), Color(0, 235, 255)
+local menutextcol, bgmenucol, bordercol, teamvisualscol, enemyvisualscol, prioritytargetscol, ignoredtargetscol, miscvisualscol, teamchamscol, enemychamscol, crosshaircol, viewmodelcol = Color(255, 255, 255), Color(30, 30, 37), Color(0, 155, 255), Color(255, 255, 255), Color(255, 255, 255), Color(255, 0, 100), Color(175, 175, 175), Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 235, 255), Color(0, 235, 255)
 
 local windowX, windowY, windowW, windowH = 50, ScrH() / 3, 200, 200
 local roampos, roamang, roamon, roamx, roamy, roamduck, roamjump = me:EyePos(), me:GetAngles(), false, 0, 0, false, false
@@ -2282,6 +2282,34 @@ local function KillSpam(data)
 	end
 end
 
+local function GetAngle(ang)
+	if not FixTools() then
+		if not gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil") then 
+			return ang + pm.GetPunchAngle(me)
+		else
+			return ang
+		end
+	end
+end
+
+local function FixAngle(ang)
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or (not me:Alive() or me:Health() < 1) or FixTools() then return end
+	ang.p = math.Clamp(math.NormalizeAngle(ang.p), -89, 89)
+	ang.x = math.NormalizeAngle(ang.x)
+end
+
+local function FakeAngles(cmd)
+	if (!fa) then 
+		fa = cm.GetViewAngles(cmd)
+	end
+    fa = fa + Angle(cm.GetMouseY(cmd) * .023, cm.GetMouseX(cmd) * - .023, 0)
+    FixAngle(fa)
+    if cm.CommandNumber(cmd) == 0 and not FixTools() then
+		cm.SetViewAngles(cmd, GetAngle(fa))
+		return
+	end
+end
+
 local function FixMovement(cmd)
 	local vec = Vector(cm.GetForwardMove(cmd), cm.GetSideMove(cmd), 0)
 	local vel = math.sqrt(vec.x * vec.x + vec.y * vec.y)
@@ -2293,12 +2321,6 @@ local function FixMovement(cmd)
 	yaw = ((yaw + 180) % 360) - 180
 	cmd:SetForwardMove(math.cos(math.rad(yaw)) * vel)
 	cmd:SetSideMove(math.sin(math.rad(yaw)) * vel)
-end
-
-local function FixAngle(ang)
-	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or (not me:Alive() or me:Health() < 1) or FixTools() then return end
-	ang.p = math.Clamp(math.NormalizeAngle(ang.p), -89, 89)
-	ang.x = math.NormalizeAngle(ang.x)
 end
 
 local function DrawOutlinedText (title, font, x, y, color, OUTsize, OUTcolor)
@@ -5555,16 +5577,6 @@ function ib.CalculateAntiRecoil()
 	end
 end
 
-local function GetAngle(ang)
-	if not FixTools() then
-		if not gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil") then 
-			return ang + pm.GetPunchAngle(me)
-		else
-			return ang
-		end
-	end
-end
-
 local function Aimbot(cmd)
 	if not gBool("Aim Assist", "Aimbot", "Enabled") or not me:Alive() or me:Health() < 1 or not me:GetActiveWeapon():IsValid() or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) then return end
 	for k, v in pairs(player.GetAll()) do
@@ -6304,18 +6316,6 @@ local function PropKill(cmd)
 	end
 end
 
-local function FakeAngles(cmd)
-	if (!fa) then 
-		fa = cm.GetViewAngles(cmd)
-	end
-    fa = fa + Angle(cm.GetMouseY(cmd) * .023, cm.GetMouseX(cmd) * - .023, 0)
-    FixAngle(fa)
-    if cm.CommandNumber(cmd) == 0 and not FixTools() then
-		cm.SetViewAngles(cmd, GetAngle(fa))
-		return
-	end
-end
-
 function ib.LaserBullets(cmd)
 	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
 	if cm.KeyDown(cmd, 1) and not FixTools() then
@@ -6476,11 +6476,11 @@ end
 
 hook.Add("CreateMove", "CreateMove", function(cmd)
 	global.bSendPacket = true
+	FakeAngles(cmd)
 	FakeLag(cmd)
 	AntiAFK(cmd)
 	BunnyHop(cmd)
 	AutoStrafe(cmd)
-	FakeAngles(cmd)
 	FreeRoam(cmd)
 	AutoReload(cmd)
 	AntiAim(cmd)
