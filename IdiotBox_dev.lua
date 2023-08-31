@@ -29,7 +29,7 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "7.0.b1-pre19"
+local version = "7.0.b1-pre20"
 
 local menukeydown, menukeydown2, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -47,9 +47,6 @@ local forwardspeedval, sidespeedval = 10000, 10000
 
 local old_yaw = 0.0
 local ox, oy = - 181, 0
-
-local fixmovement = fixmovement or nil
-local nullvec = Vector() * - 1
 
 local mat = GetRenderTarget("mat"..os.time(), ScrW(), ScrH())
 
@@ -454,12 +451,12 @@ local options = {
 		}, 
 		{
 			{"Panels", 16, 459, 232, 294, 218}, 
-			{"Spectators Window", "Checkbox", true, 78},  -- Enabled by default
-			{"Radar Window", "Checkbox", true, 78},  -- Enabled by default
+			{"Spectators Window", "Checkbox", true, 78}, -- Enabled by default
+			{"Radar Window", "Checkbox", true, 78}, -- Enabled by default
 			{"Radar Distance:", "Slider", 50, 100, 156}, 
 			{""}, 
-			{"Debug Info", "Checkbox", true, 78},  -- Enabled by default
-			{"Players List", "Checkbox", true, 78},  -- Enabled by default
+			{"Debug Info", "Checkbox", true, 78}, -- Enabled by default
+			{"Players List", "Checkbox", true, 78}, -- Enabled by default
 			{"Show List Titles", "Checkbox", true, 78}, -- Enabled by default
 			{"Panels Style:", "Selection", "Borderless", {"Bordered", "Borderless"}, 92}, 
 			{""}, 
@@ -820,7 +817,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: d11m08-pre19")
+	surface.DrawText("Latest build: d31m08-pre20")
 end
 
 local function MouseInArea(minx, miny, maxx, maxy)
@@ -1429,7 +1426,7 @@ end
 local function Unload()
 	RunConsoleCommand("stopsound")
 	global.unloaded = true
-	local hooksToRemove = {"RenderScene", "ShutDown", "PostDrawViewModel", "PreDrawEffects", "HUDShouldDraw", "Tick", "Think", "CalcViewModelView", "PreDrawSkyBox", "PreDrawViewModel", "PreDrawPlayerHands", "RenderScreenspaceEffects", "player_hurt", "entity_killed", "Move", "CalcView", "AdjustMouseSensitivity", "ShouldDrawLocalPlayer", "StartCommand", "CreateMove", "player_disconnect", "MiscPaint", "PreDrawOpaqueRenderables", "OnPlayerChat",}
+	local hooksToRemove = {"RenderScene", "ShutDown", "PostDrawViewModel", "PreDrawEffects", "HUDShouldDraw", "Tick", "Think", "CalcViewModelView", "PreDrawSkyBox", "PreDrawViewModel", "PreDrawPlayerHands", "RenderScreenspaceEffects", "player_hurt", "entity_killed", "Move", "CalcView", "AdjustMouseSensitivity", "ShouldDrawLocalPlayer", "CreateMove", "player_disconnect", "MiscPaint", "PreDrawOpaqueRenderables", "OnPlayerChat",}
 	for _, hookName in ipairs(hooksToRemove) do
 		hook.Remove(hookName, hookName)
 	end
@@ -1487,6 +1484,7 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Fixed Anti-Aim Resolver continuing to resolve angles when set to 'Off';")
 	print("- Fixed Thirdperson showing in spectator mode;")
 	print("- Fixed text coloring and positioning issues with the optimized Wallhack style;")
+	print("- Fixed directional strafing angle calculation errors;")
 	print("- Fixed Circle Strafe spaghetti code not functioning the way it should;")
 	print("- Fixed Priority List staying on-screen after closing the menu;")
 	print("- Fixed name changer/ stealer reverting to your Steam username as soon as a new player joined the server;")
@@ -1558,11 +1556,13 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("\n")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): add 'Backtracking' and 'Multi-Tap' to Aim Assist;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): add 'Fake Lag' & 'Fake Angles' chams to Visuals;")
+	print("- WORK-IN-PROGRESS (ETA: undetermined): add color pickers instead of manual sliders;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): add true fake angles to Anti-Aim;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): rework 'Auto Wallbang' from scratch;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): rework 'Projectile Prediction' from scratch;")
 	print("- WORK-IN-PROGRESS (ETA: undetermined): rework 'Radar' from scratch;")
-	print("- WORK-IN-PROGRESS (ETA: undetermined): fix directional strafing angle calculation errors.")
+	print("- WORK-IN-PROGRESS (ETA: undetermined): fix 'Advanced Network Graph' issue;")
+	print("- WORK-IN-PROGRESS (ETA: undetermined): fix unoptimized calls and functions.")
 	print("\n\n===============================================================================================")
 	timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Successfully printed changelog to console!", Color(0, 255, 0)) end)
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
@@ -2297,8 +2297,8 @@ end
 
 local function FixAngle(ang)
 	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or (not me:Alive() or me:Health() < 1) or FixTools() then return end
+	ang.p = math.Clamp(math.NormalizeAngle(ang.p), -89, 89)
 	ang.x = math.NormalizeAngle(ang.x)
-	ang.p = math.Clamp(ang.p, - 89, 89)
 end
 
 local function DrawOutlinedText (title, font, x, y, color, OUTsize, OUTcolor)
@@ -2490,7 +2490,7 @@ local function Radar()
 			local theirPos = v:GetPos()
 			local theirX = (windowX + (windowW / 2)) + ((theirPos.x - myPos.x) / gInt("Miscellaneous", "Panels", "Radar Distance:"))
 			local theirY = (windowY + (windowH / 2)) + ((myPos.y - theirPos.y) / gInt("Miscellaneous", "Panels", "Radar Distance:"))
-			local myRotation = math.rad(fa.y - 90)
+			local myRotation = math.rad(fa.y - 90) -- Get shit on, funny little bug
 			theirX = theirX - (windowX + (windowW / 2))
 			theirY = theirY - (windowY + (windowH / 2))
 			local newX = theirX * math.cos(myRotation) - theirY * math.sin(myRotation)
@@ -3024,18 +3024,6 @@ local function NPCChams(v)
 	end
 end
 
-local function TransparentWalls()
-    local mats = em.GetMaterials(game.GetWorld())
-        for k, v in next, mats do
-            local material = Material(v)
-            if (!gBool("Miscellaneous", "Textures", "Transparent Walls")) then
-                im.SetFloat(material, "$alpha", 1)
-			continue
-        end
-        im.SetFloat(material, "$alpha", gInt("Miscellaneous", "Textures", "Transparency:") / 100 + 0.01)
-    end
-end
-
 if (clForwardSpeedCvar) then
 	forwardspeedval = clForwardSpeedCvar:GetFloat()
 end
@@ -3129,11 +3117,6 @@ local function RageStrafe(cmd)
 end
 
 local function DirectionalStrafe(cmd)
-	if !fixmovement then fixmovement = cm.GetViewAngles(cmd) end
-	fixmovement = fixmovement + Angle(cm.GetMouseY(cmd) * GetConVarNumber("m_pitch"), cm.GetMouseX(cmd) * - GetConVarNumber("m_yaw"))
-	fixmovement.x = math.Clamp(fixmovement.x, - 89, 89)
-    fixmovement.y = math.NormalizeAngle(fixmovement.y)
-    fixmovement.z = 0
 	if !me:IsOnGround() && cmd:KeyDown(IN_JUMP) then
 		cmd:RemoveKey(IN_JUMP)
 			local get_velocity_degree = function(velocity)
@@ -3157,7 +3140,7 @@ local function DirectionalStrafe(cmd)
         end
         local flip = cmd:TickCount() % 2 == 0
         local turn_direction_modifier = flip && 1.0 || - 1.0
-        local viewangles = Angle(fixmovement.x, fixmovement.y, fixmovement.z)
+        local viewangles = Angle(fa.x, fa.y, fa.z)
         if (forwardmove || sidemove) then
             cmd:SetForwardMove(0)
             cmd:SetSideMove(0)
@@ -3203,10 +3186,10 @@ local function DirectionalStrafe(cmd)
         local move = Vector(cmd:GetForwardMove(), cmd:GetSideMove(), 0)
         local speed = move:Length()
         local angles_move = move:Angle()
-		local normalized_x = math.modf(fixmovement.x + 180, 360) - 180
-        local normalized_y = math.modf(fixmovement.y + 180, 360) - 180
+		local normalized_x = math.modf(fa.x + 180, 360) - 180
+        local normalized_y = math.modf(fa.y + 180, 360) - 180
         local yaw = math.rad(normalized_y - viewangles.y + angles_move.y)
-        if (normalized_x >= 90 || normalized_x <= - 90 || fixmovement.x >= 90 && fixmovement.x <= 200 || fixmovement.x <= - 90 && fixmovement.x <= 200) then
+        if (normalized_x >= 90 || normalized_x <= - 90 || fa.x >= 90 && fa.x <= 200 || fa.x <= - 90 && fa.x <= 200) then
             cmd:SetForwardMove( - math.cos(yaw) * speed)
         else
             cmd:SetForwardMove(math.cos(yaw) * speed)
@@ -3373,7 +3356,37 @@ local src = string.lower(debug.getinfo(2).short_src)
 	end
 end
 
+local function TransparentWalls()
+    local mats = em.GetMaterials(game.GetWorld())
+        for k, v in next, mats do
+            local material = Material(v)
+            if (!gBool("Miscellaneous", "Textures", "Transparent Walls")) then
+                im.SetFloat(material, "$alpha", 1)
+			continue
+        end
+        im.SetFloat(material, "$alpha", gInt("Miscellaneous", "Textures", "Transparency:") / 100 + 0.01)
+    end
+end
+
+function ib.NameStealer()
+	local randomname = {"Mike Hawk", "Moe Lester", "Mike Hunt", "Ben Dover", "Harold Kundt", "Peter Pain", "Dusan Mandic", "Harry Gooch", "Mike Oxlong", "Ivana Dooyu", "Slim Shader", "Dead Walker", "Mike Oxbig", "Mike Rotch", "Hugh Jass", "Robin Banks", "Mike Litt", "Harry Wang", "Harry Cox", "Moss Cular", "Amanda Reen", "Major Kumm", "Willie Wang", "Hugh Blackstuff", "Mike Rap", "Al Coholic", "Cole Kutz", "Mike Litoris", "Dixie Normous", "Dick Pound", "Mike Ock", "Sum Ting Wong", "Ho Lee Fuk", "Harry Azcrac", "Jay L. Bate", "Hugh G. Rection", "Long Wang", "Wayne King",}
+		if gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Normal" or gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Priority Targets" then
+		local randply = player.GetAll()[math.random(#player.GetAll())]
+		local friendstatus = pm.GetFriendStatus(randply)
+		if (!randply:IsValid() || randply == me || friendstatus == "friend" || (gBool("Main Menu", "Priority List", "Enabled") && table.HasValue(ignorelist, randply:UniqueID())) || (gBool("Main Menu", "Priority List", "Enabled") && gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Priority Targets" && !table.HasValue(prioritylist, randply:UniqueID()))) then return end
+			big.ChangeName(randply:Name().." ")
+		elseif gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "DarkRP Name" then
+			namechangetime = namechangetime + 1
+		if namechangetime > 500 then
+			RunConsoleCommand("say", "/name "..randomname[math.random(#randomname)])
+			namechangetime = 0
+		end
+	end
+end
+
 local function Tick()
+	TransparentWalls()
+	ib.NameStealer()
 	if gOption("Miscellaneous", "Chat", "Chat Spam:") ~= "Off" then
 		ChatSpam()
 	end
@@ -3386,6 +3399,40 @@ local function Tick()
 	if gBool("Miscellaneous", "Miscellaneous", "Use Spam") and input.IsKeyDown(KEY_E) and not (me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or menuopen) then
 		RunConsoleCommand("ib_usespam")
 	end
+	if gBool("Main Menu", "General Utilities", "Optimize Game") then
+		if not optimized then
+			me:ConCommand("r_cleardecals; M9KGasEffect 0")
+		optimized = true
+		end
+	else
+		if optimized then
+			me:ConCommand("M9KGasEffect 1")
+		optimized = false
+		end
+	end
+	if gBool("Aim Assist", "Miscellaneous", "Disable Interpolation") then
+		if not applied then
+			me:ConCommand("cl_interp 0; cl_interp_ratio 0; cl_updaterate 99999")
+		applied = true
+		end
+	else
+		if applied then
+			me:ConCommand("cl_interp 0; cl_interp_ratio 2; cl_updaterate 30")
+		applied = false
+		end
+	end
+	local skycvar = GetConVar("r_3dsky")
+	if (gBool("Miscellaneous", "Textures", "Remove 3D Skybox") and skycvar:GetBool() == true) then
+        RunConsoleCommand("r_3dsky", "0")
+    elseif (!gBool("Miscellaneous", "Textures", "Remove 3D Skybox") and skycvar:GetBool() == false) then
+        RunConsoleCommand("r_3dsky", "1")
+    end
+	local netcvar = GetConVar("net_graph") -- Will fix, I promise
+	if (gBool("Miscellaneous", "GUI Settings", "Advanced Network Graph") and netcvar:GetBool() == false) then
+        RunConsoleCommand("net_graph", "4")
+    elseif (!gBool("Miscellaneous", "GUI Settings", "Advanced Network Graph") and netcvar:GetBool() == true) then
+        RunConsoleCommand("net_graph", "0")
+    end
 end
 
 local function HookExist(name, identifier)
@@ -6417,57 +6464,6 @@ end)
 
 hook.Add("ShouldDrawLocalPlayer", "ShouldDrawLocalPlayer", function()
 	if not ib.FreeRoamCheck() then return ThirdpersonCheck() end
-end)
-
-hook.Add("StartCommand", "StartCommand", function(randply, cmd)
-	TransparentWalls()
-	if gBool("Main Menu", "General Utilities", "Optimize Game") then
-		if not optimized then
-			me:ConCommand("r_cleardecals; M9KGasEffect 0")
-		optimized = true
-		end
-	else
-		if optimized then
-			me:ConCommand("M9KGasEffect 1")
-		optimized = false
-		end
-	end
-	if gBool("Aim Assist", "Miscellaneous", "Disable Interpolation") then
-		if not applied then
-			me:ConCommand("cl_interp 0; cl_interp_ratio 0; cl_updaterate 99999")
-		applied = true
-		end
-	else
-		if applied then
-			me:ConCommand("cl_interp 0; cl_interp_ratio 2; cl_updaterate 30")
-		applied = false
-		end
-	end
-	local randomname = {"Mike Hawk", "Moe Lester", "Mike Hunt", "Ben Dover", "Harold Kundt", "Peter Pain", "Dusan Mandic", "Harry Gooch", "Mike Oxlong", "Ivana Dooyu", "Slim Shader", "Dead Walker", "Mike Oxbig", "Mike Rotch", "Hugh Jass", "Robin Banks", "Mike Litt", "Harry Wang", "Harry Cox", "Moss Cular", "Amanda Reen", "Major Kumm", "Willie Wang", "Hugh Blackstuff", "Mike Rap", "Al Coholic", "Cole Kutz", "Mike Litoris", "Dixie Normous", "Dick Pound", "Mike Ock", "Sum Ting Wong", "Ho Lee Fuk", "Harry Azcrac", "Jay L. Bate", "Hugh G. Rection", "Long Wang", "Wayne King",}
-		if gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Normal" or gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Priority Targets" then
-		local randply = player.GetAll()[math.random(#player.GetAll())]
-		local friendstatus = pm.GetFriendStatus(randply)
-		if (!randply:IsValid() || randply == me || friendstatus == "friend" || (gBool("Main Menu", "Priority List", "Enabled") && table.HasValue(ignorelist, randply:UniqueID())) || (gBool("Main Menu", "Priority List", "Enabled") && gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "Priority Targets" && !table.HasValue(prioritylist, randply:UniqueID()))) then return end
-			big.ChangeName(randply:Name().." ")
-		elseif gOption("Miscellaneous", "Miscellaneous", "Name Stealer:") == "DarkRP Name" then
-			namechangetime = namechangetime + 1
-		if namechangetime > 500 then
-			RunConsoleCommand("say", "/name "..randomname[math.random(#randomname)])
-			namechangetime = 0
-		end
-	end
-	local skycvar = GetConVar("r_3dsky")
-	if (gBool("Miscellaneous", "Textures", "Remove 3D Skybox") and skycvar:GetBool() == true) then
-        RunConsoleCommand("r_3dsky", "0")
-    elseif (!gBool("Miscellaneous", "Textures", "Remove 3D Skybox") and skycvar:GetBool() == false) then
-        RunConsoleCommand("r_3dsky", "1")
-    end
-	local netcvar = GetConVar("net_graph")
-	if (gBool("Miscellaneous", "GUI Settings", "Advanced Network Graph") and netcvar:GetBool() == false) then
-        RunConsoleCommand("net_graph", "4")
-    elseif (!gBool("Miscellaneous", "GUI Settings", "Advanced Network Graph") and netcvar:GetBool() == true) then
-        RunConsoleCommand("net_graph", "0")
-    end
 end)
 
 function ib.AirStuck(cmd)
