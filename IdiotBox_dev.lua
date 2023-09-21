@@ -119,6 +119,7 @@ ib.contributors["STEAM_0:0:453356413"] = {} -- lenn (garry's mod server manager)
 ib.contributors["STEAM_0:1:69272242"] = {} -- leme (code dev)
 ib.contributors["STEAM_0:0:109145007"] = {} -- scottpott8 (code dev)
 ib.contributors["STEAM_0:0:205376238"] = {} -- vectivus (code dev)
+ib.contributors["STEAM_1:0:200336136"] = {} -- asteya (code dev)
 ib.contributors["STEAM_0:1:188710062"] = {} -- uucka (code tester)
 ib.contributors["STEAM_0:1:191270548"] = {} -- cal1nxd (code tester)
 ib.contributors["STEAM_0:1:404757"] = {} -- xvcaligo // persix (code tester)
@@ -2487,6 +2488,7 @@ end
 local function Radar()
 	local col = Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	local everything = ents.GetAll()
+	local fa = me:EyeAngles()
 	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Bordered" then
 		draw.RoundedBox(360, gInt("Adjustments", "Window Adjustments", "Radar X:") + 1, gInt("Adjustments", "Window Adjustments", "Radar Y:") - 0.75, windowW + 2, windowH + 2, Color(bordercol.r, bordercol.g, bordercol.b, 255))
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
@@ -6854,6 +6856,7 @@ lenn
 leme
 scottpott8
 Vectivus
+ASTEYA
 uÚcka
 cal1nxd
 XVcaligo (PerSix)
