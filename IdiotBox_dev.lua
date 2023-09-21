@@ -29,7 +29,7 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "7.0.b1-pre21"
+local version = "7.0.b1"
 
 local menukeydown, menukeydown2, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -132,10 +132,11 @@ ib.contributors["STEAM_0:1:101813068"] = {} -- sdunken (first user)
 
 --NOTE-- I want to mention that these are not the only people that helped me with the development of IdiotBox, but they are the ones who helped me the most and that is why they are credited here.
 
+--[[ !!FUTURE UPDATE!!
 local function UIScale(i)
     return math.max(i * (ScrH() / 1440), 1)
 end
-
+!!FUTURE UPDATE!! ]]--
 local options = {
 	["Main Menu"] = {
 		{
@@ -793,7 +794,7 @@ local function DrawUpperText(w, h)
 	if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
 		for i = 0, 28 do
 			surface.SetDrawColor(curcol)
-			surface.DrawLine(0.5, i + 1, w - 1.5, i + 1)
+			surface.DrawLine(1.5, i + 1, w - 2, i + 1)
 		end
 		for i = 0, 1 do
 			surface.SetDrawColor(curcol3)
@@ -804,7 +805,7 @@ local function DrawUpperText(w, h)
 	elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
 		for i = 0, 28 do
 			surface.SetDrawColor(curcol2)
-			surface.DrawLine(0.5, i + 1, w - 1.5, i + 1)
+			surface.DrawLine(1.5, i + 1, w - 2, i + 1)
 		end
 		surface.SetDrawColor(0, 0, 0, 255)
 		surface.DrawLine(0.5, 3, w - 1.5, 3)
@@ -818,7 +819,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: d21m09-pre21")
+	surface.DrawText("Latest build: September 21st 2023")
 end
 
 local function MouseInArea(minx, miny, maxx, maxy)
@@ -828,7 +829,7 @@ end
 
 local function DrawTabs(self, w, h)
 	local mx, my = self:GetPos()
-	local sizeper = (w - 10) / #order
+	local sizeper = (w - 8) / #order
 	local maxx = 0
 	for k, v in next, order do
 		local bMouse = MouseInArea(mx + 5 + maxx, my + 30, mx + 5 + maxx + sizeper, my + 30 + 30)
@@ -1488,6 +1489,7 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Fixed directional strafing angle calculation errors;")
 	print("- Fixed Circle Strafe spaghetti code not functioning the way it should;")
 	print("- Fixed Priority List staying on-screen after closing the menu;")
+	print("- Fixed Advanced Network Graph breaking the net_graph command;")
 	print("- Fixed name changer/ stealer reverting to your Steam username as soon as a new player joined the server;")
 	print("- Fixed Visuals causing severe lag;")
 	print("- Fixed Cheater Callout clearing chat when it should not;")
@@ -1533,7 +1535,6 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Added more customization options to Panels;")
 	print("- Reworked 'Bunny Hop' and 'Auto Strafe' from scratch;")
 	print("- Reworked 'Wallhack' from scratch;")
-	print("- Reworked 'Auto Wallbang' from Aimbot;")
 	print("- Reworked 'Radar', 'Spectators', 'Debug Info' and 'Players List' from Panels;")
 	print("- Reworked 'Traitor Finder' and 'Murderer Finder' from Main Menu;")
 	print("- Reworked 'Show NPCs' and 'Show Entities' from Visuals;")
@@ -1556,15 +1557,14 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("")
 	print("Please note: This list includes any potential future additions/ changes/ removals, and is subject to change.")
 	print("\n")
-	print("- WORK-IN-PROGRESS (ETA: undetermined): add 'Backtracking' and 'Multi-Tap' to Aim Assist;")
-	print("- WORK-IN-PROGRESS (ETA: undetermined): add 'Fake Lag' & 'Fake Angles' chams to Visuals;")
-	print("- WORK-IN-PROGRESS (ETA: undetermined): add color pickers instead of manual sliders;")
-	print("- WORK-IN-PROGRESS (ETA: undetermined): add true fake angles to Anti-Aim;")
-	print("- WORK-IN-PROGRESS (ETA: undetermined): rework 'Auto Wallbang' from scratch;")
-	print("- WORK-IN-PROGRESS (ETA: undetermined): rework 'Projectile Prediction' from scratch;")
-	print("- WORK-IN-PROGRESS (ETA: undetermined): rework 'Radar' from scratch;")
-	print("- WORK-IN-PROGRESS (ETA: undetermined): fix 'Advanced Network Graph' issue;")
-	print("- WORK-IN-PROGRESS (ETA: undetermined): fix unoptimized calls and functions.")
+	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): add 'Backtracking' and 'Multi-Tap' to Aim Assist;")
+	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): add 'Fake Lag' & 'Fake Angles' chams to Visuals;")
+	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): add true fake angles to Anti-Aim;")
+	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): add color pickers instead of manual sliders;")
+	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): rework 'Auto Wallbang' from scratch;")
+	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): rework 'Projectile Prediction' from scratch;")
+	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): rework menu base from scratch;")
+	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): fix all unoptimized calls and functions.")
 	print("\n\n===============================================================================================")
 	timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Successfully printed changelog to console!", Color(0, 255, 0)) end)
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
@@ -1581,11 +1581,12 @@ end
 local function EntityFinder()
 	local added = {}
 	local finder = vgui.Create("DFrame")
-	finder:SetSize(UIScale(1022), UIScale(1150))
+	finder:SetSize(764, 859)
 	finder:Center()
 	finder:SetTitle("")
 	finder:MakePopup()
 	finder:ShowCloseButton(false)
+	finder:SetDraggable(true)
 	local entlist = vgui.Create("DListView", finder)
 	entlist:SetPos(17, 75)
 	entlist:SetSize(300, 500)
@@ -1600,7 +1601,6 @@ local function EntityFinder()
 		entlist:Clear()
 		drawlist:Clear()
 			for k, v in next, ents.GetAll() do
-			if not v:IsValid() then return end
 			local name = v:GetClass()
 			local copy = false
 			if not table.HasValue(added, v:GetClass()) and not table.HasValue(drawnents, v:GetClass()) and BadEntities(v) and v:GetClass() ~= "player" then
@@ -1688,7 +1688,6 @@ local function EntityFinder()
 		if find:GetValue() ~= "" then
 			entlist:Clear()
 			for k, v in next, ents.GetAll() do
-			if not v:IsValid() then return end
 			local name = v:GetClass()
 			local copy = false
 			if string.find(v:GetClass(), find:GetValue()) and not table.HasValue(added, v:GetClass()) and not table.HasValue(drawnents, v:GetClass()) and BadEntities(v) and v:GetClass() ~= "player" then
@@ -1701,7 +1700,6 @@ local function EntityFinder()
 		else
 			entlist:Clear()
 			for k, v in next, ents.GetAll() do
-			if not v:IsValid() then return end
 			local name = v:GetClass()
 			local copy = false
 			if not table.HasValue(added, v:GetClass()) and not table.HasValue(drawnents, v:GetClass()) and BadEntities(v) and v:GetClass() ~= "player" then
@@ -1718,7 +1716,6 @@ local function EntityFinder()
 		end
 	end
 	for k, v in next, ents.GetAll() do
-		if not v:IsValid() then return end
 		if not table.HasValue(added, v:GetClass()) and not table.HasValue(drawnents, v:GetClass()) and BadEntities(v) and v:GetClass() ~= "player" then
 			entlist:AddLine(v:GetClass())
 		end
@@ -1748,8 +1745,9 @@ local function EntityFinder()
 		draw.SimpleText("Search Entity:", "MenuFont2", 17, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 		draw.SimpleText("Add Entity:", "MenuFont2", 461, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 	end
+	finder.othink = finder.Think
 	finder.Think = function()
-		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or global.unloaded == true) then
+		if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and (not menukeydown2 or global.unloaded == true) then
 			finder:SlideUp(0.5)
 			timer.Simple(0.5, function()
 			finder:Remove()
@@ -1759,17 +1757,19 @@ local function EntityFinder()
 			file.Write(folder.."/entities.txt", util.TableToJSON(drawnents))
 			end)
 		end
+	finder:othink()
 	end
 	ib.RefreshEntities()
 end
 
 local function PluginLoader()
 	local plugin = vgui.Create("DFrame")
-	plugin:SetSize(UIScale(1022), UIScale(1150))
+	plugin:SetSize(764, 859)
 	plugin:Center()
 	plugin:SetTitle("")
 	plugin:MakePopup()
 	plugin:ShowCloseButton(false)
+	plugin:SetDraggable(true)
 	local pluginlist = vgui.Create("DListView", plugin)
 	pluginlist:SetPos(150, 75)
 	pluginlist:SetSize(320, 500)
@@ -1794,15 +1794,15 @@ local function PluginLoader()
 	pluginrefresh:SetPos(500, 115)
 	pluginrefresh:SetSize(100, 30)
 	pluginrefresh.DoClick = function()
-	chat.PlaySound()
-	pluginlist:Clear()
+		chat.PlaySound()
+		pluginlist:Clear()
 		for k, v in pairs(file.Find("lua/*.lua", "GAME", "nameasc")) do 
 			pluginlist:AddLine(v)
 		end
 	end
-		for k, v in pairs(file.Find("lua/*.lua", "GAME", "nameasc")) do
-			pluginlist:AddLine(v)
-		end
+	for k, v in pairs(file.Find("lua/*.lua", "GAME", "nameasc")) do
+		pluginlist:AddLine(v)
+	end
 	pluginlist.Paint = function(self, w, h)
 		draw.RoundedBox(15, 0, 0, w, h, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:")))
 	end
@@ -1815,8 +1815,9 @@ local function PluginLoader()
 		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 2, 2, w - 4, h - 4, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
 		DrawUpperText(w, h)
 	end
+	plugin.othink = plugin.Think
 	plugin.Think = function()
-		if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown2 or global.unloaded == true) then
+		if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and (not menukeydown2 or global.unloaded == true) then
 			plugin:SlideUp(0.5)
 			timer.Simple(0.5, function()
 			plugin:Remove()
@@ -1825,6 +1826,7 @@ local function PluginLoader()
 			drawlast = nil
 			end)
 		end
+	plugin:othink()
 	end
 end
 
@@ -1895,6 +1897,16 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 					timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 				end
 			end
+		elseif text == "Entity Finder Menu" then
+			self:Remove()
+			if gBool("Main Menu", "Configurations", "Automatically Save") then
+				if configIndex then
+					ib.SaveConfig(configIndex)
+				end
+			end
+			EntityFinder()
+			timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Successfully loaded Entities Menu!", Color(0, 255, 0)) end)
+			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Plugin Loader Menu" then
 			self:Remove()
 			if gBool("Main Menu", "Configurations", "Automatically Save") then
@@ -1904,16 +1916,6 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 			end
 			PluginLoader()
 			timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Successfully loaded Plugin Menu!", Color(0, 255, 0)) end)
-			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
-		elseif text == "Entity Finder Menu" then
-			self:Remove()
-			if gBool("Main Menu", "Configurations", "Automatically Save") then
-				if configIndex then
-					ib.SaveConfig(configIndex)
-				end
-			end
-			EntityFinder(v)
-			timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Successfully loaded Entities Menu!", Color(0, 255, 0)) end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Apply Custom Name" then
 			big.ChangeName(GetConVarString("ib_changename"))
@@ -2340,20 +2342,20 @@ local function EntityName()
 	end
 end
 
-local function StausTitle()
+local function StatusTitle()
 	if !gBool("Miscellaneous", "Panels", "Show List Titles") then return end
 	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Bordered" then
 		surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 255)
 		surface.DrawRect(gInt("Adjustments", "List Adjustments", "Debug Info X:"), gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 24, 90, 22)
 		for i = 0, 1 do
-			surface.DrawLine(gInt("Adjustments", "List Adjustments", "Debug Info X:"), gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 87 + 62 + i, gInt("Adjustments", "List Adjustments", "Debug Info X:") + 89, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 87 + 62 + i)
+			surface.DrawLine(gInt("Adjustments", "List Adjustments", "Debug Info X:"), gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 87 + 62 + i, gInt("Adjustments", "List Adjustments", "Debug Info X:") + 90, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 87 + 62 + i)
 		end
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
 		surface.SetDrawColor(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255)
 		surface.DrawRect(gInt("Adjustments", "List Adjustments", "Debug Info X:"), gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 24, 90, 22)
 		for i = 0, 1 do
 			surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 255)
-			surface.DrawLine(gInt("Adjustments", "List Adjustments", "Debug Info X:"), gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 87 + 62 + i, gInt("Adjustments", "List Adjustments", "Debug Info X:") + 89, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 87 + 62 + i)
+			surface.DrawLine(gInt("Adjustments", "List Adjustments", "Debug Info X:"), gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 87 + 62 + i, gInt("Adjustments", "List Adjustments", "Debug Info X:") + 90, gInt("Adjustments", "List Adjustments", "Debug Info Y:") - 87 + 62 + i)
 		end
 	end
 	surface.SetDrawColor(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255)
@@ -2443,14 +2445,14 @@ local function Spectator()
 		surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 255)
 		surface.DrawRect(gInt("Adjustments", "Window Adjustments", "Spectators X:") + 1, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 0.75, windowW + 2, windowH + 2)
 		for i = 0, 1 do
-			surface.DrawLine(gInt("Adjustments", "Window Adjustments", "Spectators X:") + 1, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 64 + 62 + i, gInt("Adjustments", "Window Adjustments", "Spectators X:") + 202, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 64 + 62 + i)
+			surface.DrawLine(gInt("Adjustments", "Window Adjustments", "Spectators X:") + 1, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 64 + 62 + i, gInt("Adjustments", "Window Adjustments", "Spectators X:") + 203, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 64 + 62 + i)
 		end
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
 		surface.SetDrawColor(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255)
 		surface.DrawRect(gInt("Adjustments", "Window Adjustments", "Spectators X:") + 1, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 0.75, windowW + 2, windowH + 2)
 		for i = 0, 1 do
 			surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 255)
-			surface.DrawLine(gInt("Adjustments", "Window Adjustments", "Spectators X:") + 1, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 64 + 62 + i, gInt("Adjustments", "Window Adjustments", "Spectators X:") + 202, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 64 + 62 + i)
+			surface.DrawLine(gInt("Adjustments", "Window Adjustments", "Spectators X:") + 1, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 64 + 62 + i, gInt("Adjustments", "Window Adjustments", "Spectators X:") + 203, gInt("Adjustments", "Window Adjustments", "Spectators Y:") - 64 + 62 + i)
 		end
 	end
 	surface.SetDrawColor(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255)
@@ -2539,14 +2541,14 @@ local function PlayersTitle()
 		surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 255)
 		surface.DrawRect(gInt("Adjustments", "List Adjustments", "Players List X:"), gInt("Adjustments", "List Adjustments", "Players List Y:") - 24, 90, 22)
 		for i = 0, 1 do
-			surface.DrawLine(gInt("Adjustments", "List Adjustments", "Players List X:"), gInt("Adjustments", "List Adjustments", "Players List Y:") - 87 + 62 + i, gInt("Adjustments", "List Adjustments", "Players List X:") + 89, gInt("Adjustments", "List Adjustments", "Players List Y:") - 87 + 62 + i)
+			surface.DrawLine(gInt("Adjustments", "List Adjustments", "Players List X:"), gInt("Adjustments", "List Adjustments", "Players List Y:") - 87 + 62 + i, gInt("Adjustments", "List Adjustments", "Players List X:") + 90, gInt("Adjustments", "List Adjustments", "Players List Y:") - 87 + 62 + i)
 		end
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
 		surface.SetDrawColor(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255)
 		surface.DrawRect(gInt("Adjustments", "List Adjustments", "Players List X:"), gInt("Adjustments", "List Adjustments", "Players List Y:") - 24, 90, 22)
 		for i = 0, 1 do
 			surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 255)
-			surface.DrawLine(gInt("Adjustments", "List Adjustments", "Players List X:"), gInt("Adjustments", "List Adjustments", "Players List Y:") - 87 + 62 + i, gInt("Adjustments", "List Adjustments", "Players List X:") + 89, gInt("Adjustments", "List Adjustments", "Players List Y:") - 87 + 62 + i)
+			surface.DrawLine(gInt("Adjustments", "List Adjustments", "Players List X:"), gInt("Adjustments", "List Adjustments", "Players List Y:") - 87 + 62 + i, gInt("Adjustments", "List Adjustments", "Players List X:") + 90, gInt("Adjustments", "List Adjustments", "Players List Y:") - 87 + 62 + i)
 		end
 	end
 	surface.SetDrawColor(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255)
@@ -3455,10 +3457,9 @@ local function Tick()
     elseif (!gBool("Miscellaneous", "Textures", "Remove 3D Skybox") and skycvar:GetBool() == false) then
         RunConsoleCommand("r_3dsky", "1")
     end
-	local netcvar = GetConVar("net_graph") -- Will fix, I promise
-	if (gBool("Miscellaneous", "GUI Settings", "Advanced Network Graph") and netcvar:GetBool() == false) then
+	if (gBool("Miscellaneous", "GUI Settings", "Advanced Network Graph") and GetConVar("net_graph"):GetString() ~= "4") then
         RunConsoleCommand("net_graph", "4")
-    elseif (!gBool("Miscellaneous", "GUI Settings", "Advanced Network Graph") and netcvar:GetBool() == true) then
+    elseif (!gBool("Miscellaneous", "GUI Settings", "Advanced Network Graph") and GetConVar("net_graph"):GetString() == "4") then
         RunConsoleCommand("net_graph", "0")
     end
 end
@@ -6684,7 +6685,7 @@ hook.Add("MiscPaint", "MiscPaint", function()
 		Radar()
 	end
 	if gBool("Miscellaneous", "Panels", "Debug Info") then
-		StausTitle()
+		StatusTitle()
 		Status()
 	end
 	if gBool("Miscellaneous", "Panels", "Players List") then
