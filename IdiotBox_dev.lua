@@ -29,7 +29,7 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "7.0.b1-pre20"
+local version = "7.0.b1-pre21"
 
 local menukeydown, menukeydown2, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -817,7 +817,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: d31m08-pre20")
+	surface.DrawText("Latest build: d21m09-pre21")
 end
 
 local function MouseInArea(minx, miny, maxx, maxy)
@@ -2283,6 +2283,7 @@ local function KillSpam(data)
 end
 
 local function GetAngle(ang)
+	local ang = cm.GetViewAngles(cmd)
 	if not FixTools() then
 		if not gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil") then 
 			return ang + pm.GetPunchAngle(me)
@@ -2487,6 +2488,9 @@ end
 local function Radar()
 	local col = Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	local everything = ents.GetAll()
+	if (!fa) then 
+		fa = cm.GetViewAngles(cmd)
+	end
 	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Bordered" then
 		draw.RoundedBox(360, gInt("Adjustments", "Window Adjustments", "Radar X:") + 1, gInt("Adjustments", "Window Adjustments", "Radar Y:") - 0.75, windowW + 2, windowH + 2, Color(bordercol.r, bordercol.g, bordercol.b, 255))
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
