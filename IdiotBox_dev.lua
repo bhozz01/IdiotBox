@@ -1497,6 +1497,7 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Fixed Disable Interpolation, Optimize Game and Dark Mode not resetting when disabled;")
 	print("- Fixed missing spread prediction and recoil compensation checks;")
 	print("- Fixed improper rendering of the visuals;")
+	print("- Fixed script errors appearing upon loading IdiotBox through the webloader;")
 	print("- Fixed anti-screengrabber security issues;")
 	print("- Fixed module issues upon reloading the script/ loading it in Single Player mode;")
 	print("- Fixed local variable limit and timer issues;")
