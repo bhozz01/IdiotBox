@@ -2285,6 +2285,9 @@ end
 
 local function GetAngle(ang)
 	if not FixTools() then
+		if not isangle(ang) then 
+			return ang 
+		end
 		if not gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil") then 
 			return ang + pm.GetPunchAngle(me)
 		else
