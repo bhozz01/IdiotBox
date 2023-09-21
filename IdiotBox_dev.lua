@@ -2283,7 +2283,6 @@ local function KillSpam(data)
 end
 
 local function GetAngle(ang)
-	local ang = cm.GetViewAngles(cmd)
 	if not FixTools() then
 		if not gBool("Aim Assist", "Miscellaneous", "Remove Weapon Recoil") then 
 			return ang + pm.GetPunchAngle(me)
@@ -2488,9 +2487,6 @@ end
 local function Radar()
 	local col = Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	local everything = ents.GetAll()
-	if (!fa) then 
-		fa = cm.GetViewAngles(cmd)
-	end
 	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Bordered" then
 		draw.RoundedBox(360, gInt("Adjustments", "Window Adjustments", "Radar X:") + 1, gInt("Adjustments", "Window Adjustments", "Radar Y:") - 0.75, windowW + 2, windowH + 2, Color(bordercol.r, bordercol.g, bordercol.b, 255))
 	elseif gOption("Miscellaneous", "Panels", "Panels Style:") == "Borderless" then
@@ -2516,7 +2512,7 @@ local function Radar()
 			local theirPos = v:GetPos()
 			local theirX = (windowX + (windowW / 2)) + ((theirPos.x - myPos.x) / gInt("Miscellaneous", "Panels", "Radar Distance:"))
 			local theirY = (windowY + (windowH / 2)) + ((myPos.y - theirPos.y) / gInt("Miscellaneous", "Panels", "Radar Distance:"))
-			local myRotation = math.rad(fa.y - 90) -- Get shit on, funny little bug
+			local myRotation = math.rad(fa.y - 90)
 			theirX = theirX - (windowX + (windowW / 2))
 			theirY = theirY - (windowY + (windowH / 2))
 			local newX = theirX * math.cos(myRotation) - theirY * math.sin(myRotation)
