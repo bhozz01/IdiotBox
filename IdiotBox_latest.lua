@@ -466,7 +466,7 @@ local options = {
 			{""}, 
 		}, 
 		{
-			{"Movement", 261, 20, 232, 400, 218}, 
+			{"Movement", 261, 20, 232, 425, 218}, 
 			{"Bunny Hop", "Checkbox", false, 78}, 
 			{"Auto Strafe:", "Selection", "Off", {"Off", "Legit", "Rage", "Directional"}, 92}, -- Directional strafing is a 'work-in-progress' feature
 			{""}, 
@@ -475,6 +475,7 @@ local options = {
 			{""}, 
 			{"Circle Strafe Speed:", "Slider", 2, 6, 156}, 
 			{""}, 
+			{"Rage Mode", "Checkbox", false, 78}, 
 			{"Air Crouch", "Checkbox", false, 78}, 
 			{"Fake Crouch", "Checkbox", false, 78}, 
 			{"Air Stuck", "Checkbox", false, 78}, 
@@ -484,7 +485,7 @@ local options = {
 			{""}, 
 		}, 
 		{
-			{"Free Roaming", 261, 434, 232, 205, 218}, 
+			{"Free Roaming", 261, 459, 232, 205, 218}, 
 			{"Enabled", "Checkbox", false, 78}, 
 			{"Toggle Key:", "Toggle", 0, 92, 0}, 
 			{""}, 
@@ -505,7 +506,7 @@ local options = {
 			{""}, 
 		}, 
 		{
-			{"Sounds", 506, 254, 232, 195, 218}, 
+			{"Sounds", 506, 254, 232, 191, 218}, 
 			{"Hitsounds:", "Selection", "Off", {"Off", "Default", "Headshot 1", "Headshot 2", "Metal", "Blip", "Eggcrack", "Balloon Pop"}, 92}, 
 			{""}, 
 			{"Killsounds:", "Selection", "Off", {"Off", "Default", "Headshot 1", "Headshot 2", "Metal", "Blip", "Eggcrack", "Balloon Pop"}, 92}, 
@@ -515,7 +516,7 @@ local options = {
 			{"Reset Sounds", "Checkbox", false, 78}, 
 		}, 
 		{
-			{"GUI Settings", 506, 463, 232, 145, 218}, 
+			{"GUI Settings", 506, 459, 232, 145, 218}, 
 			{"Advanced Network Graph", "Checkbox", false, 78}, 
 			{"Hide HUD", "Checkbox", false, 78}, 
 			{"Witness Finder", "Checkbox", false, 78}, 
@@ -1143,6 +1144,8 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			info = "Jump continuously when holding your jump key."
 		elseif feat == "Circle Strafe" then
 			info = "Strafe in circles to gain maximum velocity. Must be paired with Auto Strafe in order for it to work."
+		elseif feat == "Rage Mode" then
+			info = "Forces the Legit and Directional auto strafers to move forwards. NOT the same as the Rage auto strafer."
 		elseif feat == "Air Crouch" then
 			info = "Spam-crouches you when jumping."
 		elseif feat == "Fake Crouch" then
@@ -3127,7 +3130,7 @@ local function LegitStrafe(cmd)
 		else
 			cmd:SetSideMove(0)
 		end
-	elseif cmd:KeyDown(IN_JUMP) then
+	elseif cmd:KeyDown(IN_JUMP) and gBool("Miscellaneous", "Movement", "Rage Mode") then
 		cmd:SetForwardMove(10000)
 	end
 end
@@ -3225,7 +3228,7 @@ local function DirectionalStrafe(cmd)
             cmd:SetForwardMove(math.cos(yaw) * speed)
         end
 		cmd:SetSideMove(math.sin(yaw) * speed)
-	elseif cmd:KeyDown(IN_JUMP) then
+	elseif cmd:KeyDown(IN_JUMP) and gBool("Miscellaneous", "Movement", "Rage Mode") then
 		cmd:SetForwardMove(10000)
 	end
 end
