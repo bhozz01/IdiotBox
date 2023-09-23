@@ -27,13 +27,13 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "7.1.b1-pre01"
+local version = "7.1.b1-pre02"
 
-local menukeydown, menukeydown2, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
+local menukeydown, frame, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
 local ib, drawnents, prioritylist, ignorelist, visible, dists, cones, traitors, tweps = {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
 
-local toggler, playerkills, namechangeTime, circlestrafeval, timeHoldingSpaceOnGround, servertime, faketick, propval, propdelay, crouched = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+local toggler, playerkills, namechangeTime, circlestrafeval, timeHoldingSpaceOnGround, servertime, faketick = 0, 0, 0, 0, 0, 0, 0
 local menutextcol, bgmenucol, bordercol, teamvisualscol, enemyvisualscol, prioritytargetscol, ignoredtargetscol, miscvisualscol, teamchamscol, enemychamscol, crosshaircol, viewmodelcol = Color(255, 255, 255), Color(30, 30, 37), Color(0, 155, 255), Color(255, 255, 255), Color(255, 255, 255), Color(255, 0, 100), Color(175, 175, 175), Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 235, 255), Color(0, 235, 255)
 
 local windowX, windowY, windowW, windowH = 50, ScrH() / 3, 200, 200
@@ -101,6 +101,10 @@ ib.metal = {"phx/hmetal1.wav", "phx/hmetal2.wav", "phx/hmetal3.wav",}
 ib.NetMessages = {Buildmode = {"BuildMode", "buildmode", "_Kyle_Buildmode"}, God = {"HasGodMode", "has_god", "god_mode", "ugod"}, Protected = {"LibbyProtectedSpawn", "SH_SZ.Safe", "spawn_protect", "InSpawnZone"}}
 ib.frpressed, ib.frtoggle = false
 ib.spread = {}
+
+ib.propval = 0
+ib.propdelay = 0
+ib.crouched = 0
 
 ib.R_ = debug.getregistry()
 ib.R = table.Copy(ib.R_)
@@ -786,44 +790,44 @@ for k, v in next, order do
 	visible[v] = false
 end
 
-local function DrawUpperText(w, h)
-	local curcol = Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 175)
-	local curcol2 = Color(bordercol.r, bordercol.g, bordercol.b, 175)
-	local curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 255)
-	if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
-		for i = 0, 28 do
-			surface.SetDrawColor(curcol)
-			surface.DrawLine(1.5, i + 1, w - 2, i + 1)
-		end
-		for i = 0, 1 do
-			surface.SetDrawColor(curcol3)
-			surface.DrawLine(0.5, i + 1, w - 1.5, i + 1)
-		end
-		surface.SetDrawColor(0, 0, 0, 255)
-		surface.DrawLine(0.5, 3, w - 1.5, 3)
-	elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
-		for i = 0, 28 do
-			surface.SetDrawColor(curcol2)
-			surface.DrawLine(1.5, i + 1, w - 2, i + 1)
-		end
-		surface.SetDrawColor(0, 0, 0, 255)
-		surface.DrawLine(0.5, 3, w - 1.5, 3)
-	end
-	surface.SetFont("MenuFont2")
-	local tw, th = surface.GetTextSize("")
-	surface.SetTextPos(37, 15 - th / 2)
-	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
-	surface.SetFont("MainFont")
-	surface.DrawText("IdiotBox v7.1.b1")
-	surface.SetTextPos(147, 18 - th / 2)
-	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
-	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: d22m09-pre01")
+local function DrawText(w, h, title)
+    local curcol, curcol2, curcol3
+    if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
+        curcol = Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 175)
+        curcol2 = Color(bordercol.r, bordercol.g, bordercol.b, 175)
+        curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 255)
+    elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
+        curcol = Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 175)
+        curcol2 = Color(bordercol.r, bordercol.g, bordercol.b, 175)
+        curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 255)
+    end
+    for i = 0, 28 do
+        surface.SetDrawColor(curcol)
+        surface.DrawLine(1.5, i + 1, w - 2, i + 1)
+    end
+    for i = 0, 1 do
+        surface.SetDrawColor(curcol3)
+        surface.DrawLine(0.5, i + 1, w - 1.5, i + 1)
+    end
+    surface.SetDrawColor(0, 0, 0, 255)
+    surface.DrawLine(0.5, 3, w - 1.5, 3)
+    surface.SetFont("MenuFont2")
+    local tw, th = surface.GetTextSize("")
+    surface.SetTextPos(37, 15 - th / 2)
+    surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
+    surface.SetFont("MainFont")
+    surface.DrawText(title)
+    if title == "IdiotBox v7.1.b1" then
+        surface.SetTextPos(147, 18 - th / 2)
+        surface.SetFont("MainFont2")
+        surface.DrawText("Latest build: d23m09-pre02")
+    end
 end
 
 local function MouseInArea(minx, miny, maxx, maxy)
-	local mousex, mousey = gui.MousePos()
-	return(mousex < maxx and mousex > minx and mousey < maxy and mousey > miny)
+    if vgui.GetHoveredPanel() ~= frame then return false end
+    local mousex, mousey = gui.MousePos()
+    return(mousex < maxx and mousex > minx and mousey < maxy and mousey > miny)
 end
 
 local function DrawTabs(self, w, h)
@@ -1572,68 +1576,6 @@ function ib.Changelog() -- Ran out of local variables, again
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 end
 
-local function DrawEntityFinderText(w, h)
-	local curcol = Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 175)
-	local curcol2 = Color(bordercol.r, bordercol.g, bordercol.b, 175)
-	local curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 255)
-	if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
-		for i = 0, 28 do
-			surface.SetDrawColor(curcol)
-			surface.DrawLine(1.5, i + 1, w - 2, i + 1)
-		end
-		for i = 0, 1 do
-			surface.SetDrawColor(curcol3)
-			surface.DrawLine(0.5, i + 1, w - 1.5, i + 1)
-		end
-		surface.SetDrawColor(0, 0, 0, 255)
-		surface.DrawLine(0.5, 3, w - 1.5, 3)
-	elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
-		for i = 0, 28 do
-			surface.SetDrawColor(curcol2)
-			surface.DrawLine(1.5, i + 1, w - 2, i + 1)
-		end
-		surface.SetDrawColor(0, 0, 0, 255)
-		surface.DrawLine(0.5, 3, w - 1.5, 3)
-	end
-	surface.SetFont("MenuFont2")
-	local tw, th = surface.GetTextSize("")
-	surface.SetTextPos(37, 15 - th / 2)
-	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
-	surface.SetFont("MainFont")
-	surface.DrawText("Entity Finder Menu")
-end
-
-local function DrawPluginLoaderText(w, h)
-	local curcol = Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 175)
-	local curcol2 = Color(bordercol.r, bordercol.g, bordercol.b, 175)
-	local curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 255)
-	if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
-		for i = 0, 28 do
-			surface.SetDrawColor(curcol)
-			surface.DrawLine(1.5, i + 1, w - 2, i + 1)
-		end
-		for i = 0, 1 do
-			surface.SetDrawColor(curcol3)
-			surface.DrawLine(0.5, i + 1, w - 1.5, i + 1)
-		end
-		surface.SetDrawColor(0, 0, 0, 255)
-		surface.DrawLine(0.5, 3, w - 1.5, 3)
-	elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
-		for i = 0, 28 do
-			surface.SetDrawColor(curcol2)
-			surface.DrawLine(1.5, i + 1, w - 2, i + 1)
-		end
-		surface.SetDrawColor(0, 0, 0, 255)
-		surface.DrawLine(0.5, 3, w - 1.5, 3)
-	end
-	surface.SetFont("MenuFont2")
-	local tw, th = surface.GetTextSize("")
-	surface.SetTextPos(37, 15 - th / 2)
-	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
-	surface.SetFont("MainFont")
-	surface.DrawText("Plugin Loader Menu")
-end
-
 local function BadEntities(v)
 	if string.find(v:GetClass(), "class") or string.find(v:GetClass(), "viewmodel") or string.find(v:GetClass(), "worldspawn") or string.find(v:GetClass(), "beam") or string.find(v:GetClass(), "env_") or string.find(v:GetClass(), "func_") or string.find(v:GetClass(), "manipulate_") then
 		return false
@@ -1644,7 +1586,7 @@ end
 
 local function EntityFinder()
 	local added = {}
-	local finder = vgui.Create("DFrame")
+	finder = vgui.Create("DFrame")
 	finder:SetSize(661, 359)
 	finder:SetTitle("")
 	finder:MakePopup()
@@ -1804,21 +1746,31 @@ local function EntityFinder()
 			draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 1, 1, w - 2, h - 2, Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255))
 		end
 		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 2, 2, w - 4, h - 4, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
-		DrawEntityFinderText(w, h)
+		DrawText(w, h, "Entity Finder Menu")
 		draw.SimpleText("Search:", "MenuFont2", 17, 299, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 		draw.SimpleText("Add:", "MenuFont2", 411, 299, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 	end
 	finder.othink = finder.Think
 	finder.Think = function()
-		if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and (not menukeydown2 or global.unloaded == true) then
-			finder:SlideUp(0.5)
-			timer.Simple(0.5, function()
+		if finder:IsVisible() and global.unloaded == true then
 			finder:Remove()
 			menuopen = false
 			candoslider = false
 			drawlast = nil
+		end
+		if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and (not menukeydown or global.unloaded == true) then
+			if finder then 
+				if finder:IsVisible() then
+					finder:SlideUp(0.5)
+					timer.Simple(0.5, function()
+						finder:Hide()
+						menuopen = false
+						candoslider = false
+						drawlast = nil
+					end)
+				end
+			return end
 			file.Write(folder.."/entities.txt", util.TableToJSON(drawnents))
-			end)
 		end
 	finder:othink()
 	end
@@ -1826,8 +1778,8 @@ local function EntityFinder()
 end
 
 local function PluginLoader()
-	local plugin = vgui.Create("DFrame")
-	plugin:SetSize(396, 359)
+	plugin = vgui.Create("DFrame")
+	plugin:SetSize(396, 332)
 	plugin:SetTitle("")
 	plugin:MakePopup()
 	plugin:ShowCloseButton(false)
@@ -1875,18 +1827,28 @@ local function PluginLoader()
 			draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 1, 1, w - 2, h - 2, Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255))
 		end
 		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 2, 2, w - 4, h - 4, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
-		DrawPluginLoaderText(w, h)
+		DrawText(w, h, "Plugin Loader Menu")
 	end
 	plugin.othink = plugin.Think
 	plugin.Think = function()
-		if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and (not menukeydown2 or global.unloaded == true) then
-			plugin:SlideUp(0.5)
-			timer.Simple(0.5, function()
+		if plugin:IsVisible() and global.unloaded == true then
 			plugin:Remove()
 			menuopen = false
 			candoslider = false
 			drawlast = nil
-			end)
+		end
+		if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and (not menukeydown or global.unloaded == true) then
+			if plugin then 
+				if plugin:IsVisible() then
+					plugin:SlideUp(0.5)
+					timer.Simple(0.5, function()
+						plugin:Hide()
+						menuopen = false
+						candoslider = false
+						drawlast = nil
+					end)
+				end
+			return end
 		end
 	plugin:othink()
 	end
@@ -2090,7 +2052,28 @@ local function CacheColors()
 end
 
 local function Menu()
-	local frame = vgui.Create("DFrame")
+	if frame then
+		if ib.menuopened then return end
+		ib.menuopened = true
+		frame:SetVisible(!frame:IsVisible())
+		menuopen = frame:IsVisible()
+		candoslider = false
+		drawlast = nil
+		ib.menuopened = nil
+		return
+	end
+	--[[if frame then 
+		if frame:IsVisible() then
+			frame:SlideUp(0.5)
+			timer.Simple(0.5, function()
+				frame:SetVisible(!frame:IsVisible())
+				menuopen = false
+				candoslider = false
+				drawlast = nil
+			end)
+		end
+	return end]]--
+	frame = vgui.Create("DFrame")
 	--[[ !!FUTURE UPDATE!!
 	frame:SetSize(UIScale(1022), UIScale(1150))
 	!!FUTURE UPDATE!! ]]--
@@ -2101,6 +2084,9 @@ local function Menu()
 	frame:MakePopup()
 	frame:ShowCloseButton(false)
 	frame:SetDraggable(true)
+	if !frame:IsVisible() then
+		frame:SetVisible(frame:IsVisible())
+	end
 	frame.Paint = function(self, w, h)
 		if (candoslider and not mousedown and not drawlast and not input.IsMouseDown(MOUSE_LEFT)) then
 			candoslider = false
@@ -2112,7 +2098,7 @@ local function Menu()
 			draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 1, 1, w - 2, h - 2, Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255))
 		end
 		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 2, 2, w - 4, h - 4, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
-		DrawUpperText(w, h)
+		DrawText(w, h, "IdiotBox v7.1.b1")
 		DrawTabs(self, w, h)
 		DrawSub(self, w, h)
 		if (drawlast) then
@@ -2156,13 +2142,6 @@ local function Menu()
 				end)
 			end
 		end
-		frame:SlideUp(0.5)
-		timer.Simple(0.5, function()
-			frame:Remove()
-			menuopen = false
-			candoslider = false
-			drawlast = nil
-		end)
 		local selectedConfig = gOption("Main Menu", "Configurations", "Configuration:")
 		local configIndex
 		for index, config in ipairs(ib.configOptions) do
@@ -3570,18 +3549,11 @@ end
 
 hook.Add("Tick", "Tick", function()
 	Tick()
-	if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menuopen and not menukeydown) then
-		menuopen = true
-		menukeydown = true
-		Menu()
-	elseif (not (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menuopen) then
-		menukeydown = false
-	end
-	if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and menukeydown and menuopen) then
-		menukeydown2 = true
-	else
-		menukeydown2 = false
-	end
+	if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown then
+        menuopen = true
+        Menu()
+    end
+    menukeydown = (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME))
 	if engine.ActiveGamemode() == "terrortown" then
 		if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Hide Round Report") then
 			if not displayed then
@@ -6357,9 +6329,9 @@ local function PropKill(cmd)
 	end
 	if gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:") then
 		ox = fa.x - 27
-		if propval < 180 then
-			oy = fa.y + propval
-			propval = propval + 3
+		if ib.propval < 180 then
+			oy = fa.y + ib.propval
+			ib.propval = ib.propval + 3
 		else
 			oy = fa.y + 180
 		end
@@ -6367,18 +6339,18 @@ local function PropKill(cmd)
 		cm.SetViewAngles(cmd, aaang)
 		FixMovement(cmd, true)
 	else
-		if propval > 0 then
-			propval = 0
-			propdelay = CurTime() + 0.5
+		if ib.propval > 0 then
+			ib.propval = 0
+			ib.propdelay = CurTime() + 0.5
 		end
-		if propdelay >= CurTime() then
+		if ib.propdelay >= CurTime() then
 			ox = - 17
 			oy = fa.y
 			local aaang = Angle(ox, oy, 0)
 			cm.SetViewAngles(cmd, aaang)
 			FixMovement(cmd, true)
 		else
-			propdelay = 0
+			ib.propdelay = 0
 		end
 	end
 end
@@ -6406,19 +6378,19 @@ local function FakeCrouch(cmd)
 	if em.GetMoveType(me) == MOVETYPE_NOCLIP or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or me:IsFlagSet(1024) then return end
 	if gBool("Miscellaneous", "Movement", "Fake Crouch") then
 		if me:KeyDown(IN_DUCK) then
-			if crouched <= 5 then
+			if ib.crouched <= 5 then
 				cmd:SetButtons(cmd:GetButtons() + IN_DUCK)
-			elseif crouched >= 25 then
-				crouched = 0
+			elseif ib.crouched >= 25 then
+				ib.crouched = 0
 			end
-			crouched = crouched + 1
+			ib.crouched = ib.crouched + 1
 		else
-			if crouched <= 5 then
+			if ib.crouched <= 5 then
 				cmd:SetButtons(cmd:GetButtons() + IN_DUCK)
-			elseif crouched >= 12.5 then
-				crouched = 0
+			elseif ib.crouched >= 12.5 then
+				ib.crouched = 0
 			end
-			crouched = crouched + 1
+			ib.crouched = ib.crouched + 1
 		end
 	end
 end
@@ -6691,7 +6663,7 @@ function ib.PropKillCircle()
 	local wep = pm.GetActiveWeapon(me)
 	if engine.ActiveGamemode() == "terrortown" && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" then
 		if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
-		if propval >= 180 then
+		if ib.propval >= 180 then
 			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(255, 0, 0))
 		else
 			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
