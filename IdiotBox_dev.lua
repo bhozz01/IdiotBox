@@ -27,7 +27,7 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "7.1.b1-pre02"
+local version = "7.1.b1-pre03"
 
 local menukeydown, frame, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -177,8 +177,8 @@ local options = {
 		}, 
 		{
 			{"Menus", 261, 20, 232, 225, 218}, 
-			{"Entity Finder Menu", "Button", "", 92}, 
-			{"Plugin Loader Menu", "Button", "", 92}, 
+			{"Entity Finder Menu", "Checkbox", false, 78}, 
+			{"Plugin Loader Menu", "Checkbox", false, 78}, 
 			{"Toolbar Style:", "Selection", "BG Color", {"Border Color", "BG Color"}, 92}, 
 			{""}, 
 			{"Menu Style:", "Selection", "Borderless", {"Bordered", "Borderless"}, 92}, 
@@ -820,7 +820,7 @@ local function DrawText(w, h, title)
     if title == "IdiotBox v7.1.b1" then
         surface.SetTextPos(147, 18 - th / 2)
         surface.SetFont("MainFont2")
-        surface.DrawText("Latest build: d23m09-pre02")
+        surface.DrawText("Latest build: d25m09-pre03")
     end
 end
 
@@ -1586,12 +1586,22 @@ end
 
 local function EntityFinder()
 	local added = {}
+	if IsValid(finder) then
+		finder:SetVisible(!finder:IsVisible())
+		ib.finderopen = finder:IsVisible()
+		candoslider = false
+		drawlast = nil
+		return
+	end
 	finder = vgui.Create("DFrame")
 	finder:SetSize(661, 359)
 	finder:SetTitle("")
 	finder:MakePopup()
 	finder:ShowCloseButton(false)
 	finder:SetDraggable(true)
+	if !finder:IsVisible() then
+		finder:SetVisible(finder:IsVisible())
+	end
 	local entlist = vgui.Create("DListView", finder)
 	entlist:SetPos(17, 75)
 	entlist:SetSize(250, 200)
@@ -1759,17 +1769,6 @@ local function EntityFinder()
 			drawlast = nil
 		end
 		if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and (not menukeydown or global.unloaded == true) then
-			if finder then 
-				if finder:IsVisible() then
-					finder:SlideUp(0.5)
-					timer.Simple(0.5, function()
-						finder:Hide()
-						menuopen = false
-						candoslider = false
-						drawlast = nil
-					end)
-				end
-			return end
 			file.Write(folder.."/entities.txt", util.TableToJSON(drawnents))
 		end
 	finder:othink()
@@ -1778,12 +1777,22 @@ local function EntityFinder()
 end
 
 local function PluginLoader()
+	if IsValid(plugin) then
+		plugin:SetVisible(!plugin:IsVisible())
+		ib.pluginopen = plugin:IsVisible()
+		candoslider = false
+		drawlast = nil
+		return
+	end
 	plugin = vgui.Create("DFrame")
 	plugin:SetSize(396, 332)
 	plugin:SetTitle("")
 	plugin:MakePopup()
 	plugin:ShowCloseButton(false)
 	plugin:SetDraggable(true)
+	if !plugin:IsVisible() then
+		plugin:SetVisible(plugin:IsVisible())
+	end
 	local pluginlist = vgui.Create("DListView", plugin)
 	pluginlist:SetPos(17, 75)
 	pluginlist:SetSize(250, 200)
@@ -1836,19 +1845,6 @@ local function PluginLoader()
 			menuopen = false
 			candoslider = false
 			drawlast = nil
-		end
-		if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and (not menukeydown or global.unloaded == true) then
-			if plugin then 
-				if plugin:IsVisible() then
-					plugin:SlideUp(0.5)
-					timer.Simple(0.5, function()
-						plugin:Hide()
-						menuopen = false
-						candoslider = false
-						drawlast = nil
-					end)
-				end
-			return end
 		end
 	plugin:othink()
 	end
@@ -1921,24 +1917,6 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 					timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 				end
 			end
-		elseif text == "Entity Finder Menu" then
-			if gBool("Main Menu", "Configurations", "Automatically Save") then
-				if configIndex then
-					ib.SaveConfig(configIndex)
-				end
-			end
-			EntityFinder()
-			timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Successfully loaded Entities Menu!", Color(0, 255, 0)) end)
-			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
-		elseif text == "Plugin Loader Menu" then
-			if gBool("Main Menu", "Configurations", "Automatically Save") then
-				if configIndex then
-					ib.SaveConfig(configIndex)
-				end
-			end
-			PluginLoader()
-			timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Successfully loaded Plugin Menu!", Color(0, 255, 0)) end)
-			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Apply Custom Name" then
 			big.ChangeName(GetConVarString("ib_changename"))
 			timer.Create("ChatPrint", 0.1, 1, function() Popup(3.2, "Successfully applied custom username!", Color(0, 255, 0)) end)
@@ -2062,24 +2040,12 @@ local function Menu()
 		ib.menuopened = nil
 		return
 	end
-	--[[if frame then 
-		if frame:IsVisible() then
-			frame:SlideUp(0.5)
-			timer.Simple(0.5, function()
-				frame:SetVisible(!frame:IsVisible())
-				menuopen = false
-				candoslider = false
-				drawlast = nil
-			end)
-		end
-	return end]]--
 	frame = vgui.Create("DFrame")
 	--[[ !!FUTURE UPDATE!!
 	frame:SetSize(UIScale(1022), UIScale(1150))
 	!!FUTURE UPDATE!! ]]--
 	frame:SetSize(764, 859)
 	frame:Center()
-	frame:SlideDown(0.5)
 	frame:SetTitle("")
 	frame:MakePopup()
 	frame:ShowCloseButton(false)
@@ -2126,7 +2092,7 @@ local function Menu()
 			end)
 		end
 	local musicPlayerOptions = {"Rust", "Resonance", "Daisuke", "A Burning M...", "Libet's Delay", "Lullaby Of T...", "Erectin' a River", "Fleeting Love", "Malo Tebya", "Vermilion", "Gravity", "Remorse", "Hold", "Green Valleys", "FP3"}
-	if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and (not menukeydown2 or global.unloaded == true) then
+	if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and (not menukeydown or global.unloaded == true) then
 	if gOption("Miscellaneous", "Sounds", "Music Player:") ~= "Off" then
 		local selectedOption = gOption("Miscellaneous", "Sounds", "Music Player:")
 			if selectedOption == "Random" then
@@ -3552,7 +3518,15 @@ hook.Add("Tick", "Tick", function()
 	if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown then
         menuopen = true
         Menu()
+		EntityFinder()
+		PluginLoader()
     end
+	--[[if gBool("Main Menu", "Menus", "Entity Finder Menu") and menuopen and not menukeydown then
+		EntityFinder()
+	end
+	if gBool("Main Menu", "Menus", "Plugin Loader Menu") and menuopen and not menukeydown then
+		PluginLoader()
+	end]]--
     menukeydown = (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME))
 	if engine.ActiveGamemode() == "terrortown" then
 		if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Hide Round Report") then
