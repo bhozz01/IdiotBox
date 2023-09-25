@@ -830,6 +830,11 @@ local function MouseInArea(minx, miny, maxx, maxy)
     return(mousex < maxx and mousex > minx and mousey < maxy and mousey > miny)
 end
 
+local function MouseInArea2(minx, miny, maxx, maxy) -- Probably very stupid but it'll work for now
+    local mousex, mousey = gui.MousePos()
+    return(mousex < maxx and mousex > minx and mousey < maxy and mousey > miny)
+end
+
 local function DrawTabs(self, w, h)
 	local mx, my = self:GetPos()
 	local sizeper = (w - 8) / #order
@@ -2641,18 +2646,18 @@ local function PlayerList()
 	draw.SimpleText("Priority", "MiscFont", pos_x + 214, pos_y, Color(menutextcol.r, menutextcol.g, menutextcol.b), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
 	for k, v in next, player.GetAll() do
 		if not v:IsValid() or v == me then continue end
-		if MouseInArea(pos_x, pos_y + offset, pos_x + 350, pos_y + offset + 14) then
+		if MouseInArea2(pos_x, pos_y + offset, pos_x + 350, pos_y + offset + 14) then
 			if input.IsMouseDown(107) then
-				if MouseInArea(pos_x + 30, pos_y + offset, pos_x + 209, pos_y + offset + 14) and not v:IsBot() then
+				if MouseInArea2(pos_x + 30, pos_y + offset, pos_x + 209, pos_y + offset + 14) and not v:IsBot() then
 					gui.OpenURL("http://steamcommunity.com/profiles/"..v:SteamID64().."/")
-				elseif MouseInArea(pos_x + 209, pos_y + offset, pos_x + 350, pos_y + offset + 14) and not pressed then
+				elseif MouseInArea2(pos_x + 209, pos_y + offset, pos_x + 350, pos_y + offset + 14) and not pressed then
 					Prioritize(v)
 					pressed = true
 				end
 			elseif input.IsMouseDown(108) then
-				if MouseInArea(pos_x + 30, pos_y + offset, pos_x + 209, pos_y + offset + 14) and not v:IsBot() then
+				if MouseInArea2(pos_x + 30, pos_y + offset, pos_x + 209, pos_y + offset + 14) and not v:IsBot() then
 					SetClipboardText("http://steamcommunity.com/profiles/"..v:SteamID64().."/")
-				elseif MouseInArea(pos_x + 209, pos_y + offset, pos_x + 350, pos_y + offset + 14) and not pressed then
+				elseif MouseInArea2(pos_x + 209, pos_y + offset, pos_x + 350, pos_y + offset + 14) and not pressed then
 					Ignore(v)
 					pressed = true
 				end
