@@ -27,7 +27,7 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "7.1.b1-pre03"
+local version = "7.1.b1-pre04"
 
 local menukeydown, frame, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -820,7 +820,7 @@ local function DrawText(w, h, title)
     if title == "IdiotBox v7.1.b1" then
         surface.SetTextPos(147, 18 - th / 2)
         surface.SetFont("MainFont2")
-        surface.DrawText("Latest build: d25m09-pre03")
+        surface.DrawText("Latest build: d26m09-pre04")
     end
 end
 
@@ -1575,6 +1575,7 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): rework 'Projectile Prediction' from scratch;")
 	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): rework 'Entity Finder' and 'Plugin Loader' menus;")
 	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): rework menu base from scratch;")
+	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): fix key binds getting stuck, seemingly at random times;")
 	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): fix all unoptimized calls and functions.")
 	print("\n\n===============================================================================================")
 	timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Successfully printed changelog to console!", Color(0, 255, 0)) end)
@@ -1592,10 +1593,13 @@ end
 local function EntityFinder()
 	local added = {}
 	if IsValid(finder) then
+		if ib.finderopened then return end
+		ib.finderopened = true
 		finder:SetVisible(!finder:IsVisible())
 		ib.finderopen = finder:IsVisible()
 		candoslider = false
 		drawlast = nil
+		ib.finderopened = nil
 		return
 	end
 	finder = vgui.Create("DFrame")
@@ -1783,10 +1787,13 @@ end
 
 local function PluginLoader()
 	if IsValid(plugin) then
+		if ib.pluginopened then return end
+		ib.pluginopened = true
 		plugin:SetVisible(!plugin:IsVisible())
 		ib.pluginopen = plugin:IsVisible()
 		candoslider = false
 		drawlast = nil
+		ib.pluginopened = nil
 		return
 	end
 	plugin = vgui.Create("DFrame")
