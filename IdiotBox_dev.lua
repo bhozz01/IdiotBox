@@ -27,7 +27,7 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "7.1.b1-pre04"
+local version = "7.1.b1-pre05"
 
 local menukeydown, frame, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -470,7 +470,7 @@ local options = {
 		{
 			{"Movement", 261, 20, 232, 425, 218}, 
 			{"Bunny Hop", "Checkbox", false, 78}, 
-			{"Auto Strafe:", "Selection", "Off", {"Off", "Legit", "Rage", "Directional"}, 92}, -- Directional strafing is a 'work-in-progress' feature
+			{"Auto Strafe:", "Selection", "Off", {"Off", "Legit", "Rage", "Directional"}, 92}, 
 			{""}, 
 			{"Circle Strafe", "Checkbox", false, 78}, 
 			{"Circle Strafe Key:", "Toggle", 0, 92, 0}, 
@@ -792,22 +792,23 @@ end
 
 local function DrawText(w, h, title)
     local curcol, curcol2, curcol3
+	curcol = Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 175)
+	curcol2 = Color(bordercol.r, bordercol.g, bordercol.b, 175)
+	curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 255)
     if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
-        curcol = Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 175)
-        curcol2 = Color(bordercol.r, bordercol.g, bordercol.b, 175)
-        curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 255)
+        for i = 0, 28 do
+			surface.SetDrawColor(curcol)
+			surface.DrawLine(1.5, i + 1, w - 2, i + 1)
+		end
+		for i = 0, 1 do
+			surface.SetDrawColor(curcol3)
+			surface.DrawLine(0.5, i + 1, w - 1.5, i + 1)
+		end
     elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
-        curcol = Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 175)
-        curcol2 = Color(bordercol.r, bordercol.g, bordercol.b, 175)
-        curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 255)
-    end
-    for i = 0, 28 do
-        surface.SetDrawColor(curcol)
-        surface.DrawLine(1.5, i + 1, w - 2, i + 1)
-    end
-    for i = 0, 1 do
-        surface.SetDrawColor(curcol3)
-        surface.DrawLine(0.5, i + 1, w - 1.5, i + 1)
+        for i = 0, 28 do
+			surface.SetDrawColor(curcol2)
+			surface.DrawLine(1.5, i + 1, w - 2, i + 1)
+		end
     end
     surface.SetDrawColor(0, 0, 0, 255)
     surface.DrawLine(0.5, 3, w - 1.5, 3)
@@ -820,7 +821,7 @@ local function DrawText(w, h, title)
     if title == "IdiotBox v7.1.b1" then
         surface.SetTextPos(147, 18 - th / 2)
         surface.SetFont("MainFont2")
-        surface.DrawText("Latest build: d26m09-pre04")
+        surface.DrawText("Latest build: d04m11-pre05")
     end
 end
 
@@ -847,17 +848,17 @@ local function DrawTabs(self, w, h)
 			local curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 145)
 			for i = 0, 1 do
 				surface.SetDrawColor(curcol)
-				surface.DrawLine(4.25 + maxx, 61 + i, 4.25 + maxx + sizeper, 61 + i)
+				surface.DrawLine(3.5 + maxx, 61 + i, 3.5 + maxx + sizeper, 61 + i)
 			end
 			if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
 				for i = 0, 30 do
 					surface.SetDrawColor(curcol2)
-					surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
+					surface.DrawLine(3.5 + maxx, 30 + i, 3.5 + maxx + sizeper, 30 + i)
 				end
 			elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
 				for i = 0, 30 do
 					surface.SetDrawColor(curcol3)
-					surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
+					surface.DrawLine(3.5 + maxx, 30 + i, 3.5 + maxx + sizeper, 30 + i)
 				end
 			end
 		elseif (bMouse) then
@@ -866,17 +867,17 @@ local function DrawTabs(self, w, h)
 			local curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 65)
 			for i = 0, 1 do
 				surface.SetDrawColor(curcol)
-				surface.DrawLine(4.25 + maxx, 61 + i, 4.25 + maxx + sizeper, 61 + i)
+				surface.DrawLine(3.5 + maxx, 61 + i, 3.5 + maxx + sizeper, 61 + i)
 			end
 			if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
 				for i = 0, 30 do
 					surface.SetDrawColor(curcol2)
-					surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
+					surface.DrawLine(3.5 + maxx, 30 + i, 3.5 + maxx + sizeper, 30 + i)
 				end
 			elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
 				for i = 0, 30 do
 					surface.SetDrawColor(curcol3)
-					surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
+					surface.DrawLine(3.5 + maxx, 30 + i, 3.5 + maxx + sizeper, 30 + i)
 				end
 			end
 		end
@@ -892,12 +893,12 @@ local function DrawTabs(self, w, h)
 		if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
 			for i = 0, 30 do
 				surface.SetDrawColor(curcol2)
-				surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
+				surface.DrawLine(3.5 + maxx, 30 + i, 3.5 + maxx + sizeper, 30 + i)
 			end
 		elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
 			for i = 0, 30 do
 				surface.SetDrawColor(curcol3)
-				surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
+				surface.DrawLine(3.5 + maxx, 30 + i, 3.5 + maxx + sizeper, 30 + i)
 			end
 		end
 		surface.SetFont("MainFont3")
@@ -1571,10 +1572,12 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): add 'Fake Lag' & 'Fake Angles' chams to Visuals;")
 	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): add true fake angles to Anti-Aim;")
 	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): add color pickers instead of manual sliders;")
+	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): add adaptive menu resolution scaling;")
 	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): rework 'Auto Wallbang' from scratch;")
 	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): rework 'Projectile Prediction' from scratch;")
 	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): rework 'Entity Finder' and 'Plugin Loader' menus;")
 	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): rework menu base from scratch;")
+	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): fix questionable UI choices;")
 	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): fix key binds getting stuck, seemingly at random times;")
 	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): fix all unoptimized calls and functions.")
 	print("\n\n===============================================================================================")
