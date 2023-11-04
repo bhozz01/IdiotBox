@@ -12,6 +12,7 @@
 There are a lot of methods out there for loading Lua scripts on servers that don't have 'sv_allowcslua' enabled. Some of these methods can change from time to time, as they get patched and replaced by others;
 
 My method of choice is using a loader named 'external.dll' (message me on Discord at 'phizz0777' and I will send it to you). To use it, follow these steps:
+
 1. Create a folder in 'C:\Documents' named 'external' (other names won't work); 
 2. Drag 'IdiotBox_latest.lua' or any other Lua script of your choice in said folder;
 3. Open Garry's Mod in the default version of the game (make sure you are NOT in any beta branch, such as x86-64/ chromium/ dev/ prerelease), as the modules (located in the 'bin' folder) are ONLY COMPATIBLE with the DEFAULT VERSION of the game;
