@@ -23,24 +23,15 @@ My method of choice is using a loader named 'external.dll' (message me on Discor
 7. Run the command;
 8. Enjoy!
 
-***If you are using a gLua loader, you will have to copy the script itself (which you can do by opening the Lua file with any text editor), paste it into the loader's console and execute it from there;
-***If you are using a prorpietary Lua script loader, follow the tutorial that came with it. There is not much else I can help you with in this instance;
-***If you are having trouble with loading IdiotBox or other Lua scripts on public servers, message me on Discord (phizz0777) and I will assist you as best as I possibly can.
+***If you are using a gLua loader, you will have to copy the script itself (which you can do by opening the Lua file with any text editor), paste it into the loader's console and execute it from there. If you are using a prorpietary Lua script loader, follow the tutorial that came with it. There is not much else I can help you with in this instance. If you are having trouble with loading IdiotBox or other Lua scripts on public servers, message me on Discord (phizz0777) and I will assist you as best as I possibly can.
 
 -----REPORTING ISSUES:-----
 
-If you encounter any bugs, errors or glitches while using IdiotBox, contact me through Discord (phizz0777) and I will assist you as much as I possibly can;
-Alternatively, you can add me on Steam (https://steamcommunity.com/id/phizzofficial), however, my friends list is usually full and you might not be able to add me, but you can always leave a comment.
+If you encounter any bugs, errors or glitches while using IdiotBox, contact me through Discord (phizz0777) and I will assist you as much as I possibly can. Alternatively, you can add me on Steam (https://steamcommunity.com/id/phizzofficial), however, my friends list is usually full and you might not be able to add me, but you can always leave a comment.
 
 -----NOTES:-----
 
-***To reiterate, DRAG BOTH 'IdiotBox_latest.lua' AND THE 'bin' FOLDER INTO THE AFOREMENTIONED DIRECTORY;
-***The 'IdiotBox_dev.lua' file lets you access the currently work-in-progress version of IdiotBox - but as a heads up - it can be very buggy and unstable.
+1. To reiterate, DRAG BOTH 'IdiotBox_latest.lua' AND THE 'bin' FOLDER INTO THE AFOREMENTIONED DIRECTORY;
+2. The 'IdiotBox_dev.lua' file lets you access the currently work-in-progress version of IdiotBox - but as a heads up - it can be very buggy and unstable.
 
------CREDITS:-----
-
-Pasteware - Many of the basic features;
-Others - Smaller features.
-
-Happy Cheating!
-   ~Phizz
+Happy Cheating! ~Phizz
