@@ -4774,8 +4774,8 @@ local function AimAssistPriorities(v)
 end
 
 local function Valid(v)
-	local dist = gBool("Aim Assist", "Aim Priorities", "Distance:")
-	local vel = gBool("Aim Assist", "Aim Priorities", "Velocity:")
+	local dist = gInt("Aim Assist", "Aim Priorities", "Distance:")
+	local vel = gInt("Aim Assist", "Aim Priorities", "Velocity:")
     local wep = me:GetActiveWeapon()
 	local maxhealth = gInt("Aim Assist", "Aim Priorities", "Max Player Health:")
 	if (!v || !em.IsValid(v) || v == me || em.Health(v) < 1 || em.IsDormant(v) || !AimAssistPriorities(v) || (v == aimignore && gOption("Aim Assist", "Aim Priorities", "Aim Priority:") == "Random")) then return false end
@@ -5681,8 +5681,8 @@ end
 
 local function Triggerbot(cmd)
 	if not gBool("Aim Assist", "Triggerbot", "Enabled") or not me:GetActiveWeapon():IsValid() or not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Triggerbot", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not gKey("Aim Assist", "Triggerbot", "Toggle Key:") or cmd:KeyDown(IN_ATTACK) or FixTools() then return end
-	local dist = gBool("Aim Assist", "Aim Priorities", "Distance:")
-	local vel = gBool("Aim Assist", "Aim Priorities", "Velocity:")
+	local dist = gInt("Aim Assist", "Aim Priorities", "Distance:")
+	local vel = gInt("Aim Assist", "Aim Priorities", "Velocity:")
 	local maxhealth = gInt("Aim Assist", "Aim Priorities", "Max Player Health:") 
 	local trace = me:GetEyeTraceNoCursor()
 	local v = trace.Entity
