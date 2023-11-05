@@ -27,7 +27,7 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "7.1.b1-pre05"
+local version = "7.1.b1-pre06"
 
 local menukeydown, frame, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -821,7 +821,7 @@ local function DrawText(w, h, title)
     if title == "IdiotBox v7.1.b1" then
         surface.SetTextPos(147, 18 - th / 2)
         surface.SetFont("MainFont2")
-        surface.DrawText("Latest build: d04m11-pre05")
+        surface.DrawText("Latest build: d05m11-pre06")
     end
 end
 
@@ -2874,7 +2874,7 @@ end
 
 local function WallhackFilter(v)
 	if (gBool("Visuals", "Miscellaneous", "Distance Limit")) then
-		local dist = gBool("Visuals", "Miscellaneous", "Distance:")
+		local dist = gInt("Visuals", "Miscellaneous", "Distance:")
 			if (vm.Distance(em.GetPos(v), em.GetPos(me)) > (dist * 5)) then return false end
 		end
 	return true
