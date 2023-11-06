@@ -27,7 +27,7 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "7.1.b1-pre06"
+local version = "7.1.b1-pre07"
 
 local menukeydown, frame, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -821,7 +821,7 @@ local function DrawText(w, h, title)
     if title == "IdiotBox v7.1.b1" then
         surface.SetTextPos(147, 18 - th / 2)
         surface.SetFont("MainFont2")
-        surface.DrawText("Latest build: d05m11-pre06")
+        surface.DrawText("Latest build: d06m11-pre07")
     end
 end
 
@@ -962,6 +962,10 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			info = "Makes the footprints invisible for you."
 		elseif feat == "No Black Screens" then
 			info = "Makes the screen not turn black at any given moment during a round."
+		elseif feat == "Entity Finder Menu" then
+			info = "Allows you to highlight any entitiy. Enable by toggling 'Show Entities' from Wallhack > Miscellaneous."
+		elseif feat == "Plugin Loader Menu" then
+			info = "Allows you to load any Lua script located in your Garry's Mod 'lua' folder."
 		elseif feat == "Automatically Save" then
 			info = "Saves your current configuration automatically."
 		elseif feat == "Feature Tooltips" then
@@ -1505,6 +1509,7 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Fixed Visuals causing severe lag;")
 	print("- Fixed Cheater Callout clearing chat when it should not;")
 	print("- Fixed Triggerbot Smooth Aim slowing down your overall mouse speed;")
+	print("- Fixed Witness Finder not working properly;")
 	print("- Fixed certain outlines and fonts not having the proper dimensions;")
 	print("- Fixed a Projectile Prediction bug where dying would cause script errors;")
 	print("- Fixed Disable Interpolation, Optimize Game and Dark Mode not resetting when disabled;")
@@ -5223,7 +5228,7 @@ ib.spread.Const = {
     0xa9e3e905, 0xfcefa3f8, 0x676f02d9, 0x8d2a4c8a,
     0xfffa3942, 0x8771f681, 0x6d9d6122, 0xfde5380c,
     0xa4beea44, 0x4bdecfa9, 0xf6bb4b60, 0xbebfbc70,
-    0x289b7ec6, 0xeaa127fa, 0xd4ef3085, 0x04881d05,
+    0x289b7ec6, 0xeaa127fa, 0xd4ef3085, 0x04881d06,
     0xd9d4d039, 0xe6db99e5, 0x1fa27cf8, 0xc4ac5665,
     0xf4292244, 0x432aff97, 0xab9423a7, 0xfc93a039,
     0x655b59c3, 0x8f0ccc92, 0xffeff47d, 0x85845dd1,
@@ -6599,7 +6604,7 @@ function ib.ShowEntities(v)
 	end
 end
 
-function ib.WitnessFinder(v)
+function ib.WitnessFinder()
 	local cap = math.cos(math.rad(45))
 	local offset = Vector(0, 0, 32)
 	local trace = {}
@@ -6612,15 +6617,17 @@ function ib.WitnessFinder(v)
 		time = os.time() + .5
 		witnesses = 0
 		beingwitnessed = false
-		if v:IsValid() and v != me then
-			trace.start = me:EyePos() + offset
-			trace.endpos = v:EyePos() + offset
-			trace.filter = {v, me}
-			traceRes = util.TraceLine(trace)
-			if !traceRes.Hit then
-				if (v:EyeAngles():Forward():Dot((me:EyePos() - v:EyePos())) > cap) then
-					witnesses = witnesses + 1
-					beingwitnessed = true
+		for k, v in pairs(player.GetAll()) do
+			if v:IsValid() and v != me then
+				trace.start = me:EyePos() + offset
+				trace.endpos = v:EyePos() + offset
+				trace.filter = {v, me}
+				traceRes = util.TraceLine(trace)
+				if !traceRes.Hit then
+					if (v:EyeAngles():Forward():Dot((me:EyePos() - v:EyePos())) > cap) then
+						witnesses = witnesses + 1
+						beingwitnessed = true
+					end
 				end
 			end
 		end
@@ -6717,20 +6724,20 @@ hook.Add("MiscPaint", "MiscPaint", function()
 		Crosshair()
 	end
 	if (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not me:Alive() or me:Health() < 1 or (gBool("Aim Assist", "Triggerbot", "Enabled") and not gBool("Aim Assist", "Aimbot", "Enabled")) then return end
-	for k, v in pairs(player.GetAll()) do
-		if not v:IsValid() or (gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me then return end
-		if gBool("Miscellaneous", "GUI Settings", "Witness Finder") then
-			ib.WitnessFinder(v)
-		end
-	end
-	if (aimtarget and em.IsValid(aimtarget) and not FixTools() and gBool("Aim Assist", "Miscellaneous", "Snap Lines") and (gBool("Aim Assist", "Aimbot", "Enabled"))) then
-		ib.SnapLines()
+	if gBool("Miscellaneous", "GUI Settings", "Witness Finder") then
+		ib.WitnessFinder()
 	end
 	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:") then
 		ib.PropKillCircle()
 	end
 	if gBool("Aim Assist", "Aimbot", "Enabled") and gBool("Aim Assist", "Miscellaneous", "Show FoV Circle") then
 		ib.FovCircle()
+	end
+	for k, v in pairs(player.GetAll()) do
+		if not v:IsValid() or (gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me then return end
+	end
+	if (aimtarget and em.IsValid(aimtarget) and not FixTools() and gBool("Aim Assist", "Miscellaneous", "Snap Lines") and (gBool("Aim Assist", "Aimbot", "Enabled"))) then
+		ib.SnapLines()
 	end
 end)
 
