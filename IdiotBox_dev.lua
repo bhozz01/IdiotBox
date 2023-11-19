@@ -27,7 +27,7 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "7.1.b1-pre08"
+local version = "7.1.b1-pre09"
 
 local menukeydown, frame, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -509,13 +509,13 @@ local options = {
 		}, 
 		{
 			{"Sounds", 506, 254, 232, 191, 218}, 
+			{"Reset All Game Sounds", "Button", "", 92}, 			
 			{"Hitsounds:", "Selection", "Off", {"Off", "Default", "Headshot 1", "Headshot 2", "Metal", "Blip", "Eggcrack", "Balloon Pop"}, 92}, 
 			{""}, 
 			{"Killsounds:", "Selection", "Off", {"Off", "Default", "Headshot 1", "Headshot 2", "Metal", "Blip", "Eggcrack", "Balloon Pop"}, 92}, 
 			{""}, 
 			{"Music Player:", "Selection", "Off", {"Off", "Rust", "Resonance", "Daisuke", "A Burning M...", "Libet's Delay", "Lullaby Of T...", "Erectin' a River", "Fleeting Love", "Malo Tebya", "Vermilion", "Gravity", "Remorse", "Hold", "Green Valleys", "FP3", "Random"}, 92}, 
 			{""}, 
-			{"Reset Sounds", "Checkbox", false, 78}, 
 		}, 
 		{
 			{"GUI Settings", 506, 459, 232, 145, 218}, 
@@ -821,7 +821,7 @@ local function DrawText(w, h, title)
     if title == "IdiotBox v7.1.b1" then
         surface.SetTextPos(147, 18 - th / 2)
         surface.SetFont("MainFont2")
-        surface.DrawText("Latest build: d18m11-pre08")
+        surface.DrawText("Latest build: d19m11-pre09")
     end
 end
 
@@ -1128,8 +1128,6 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			info = "Spams your flashlight, for fun."
 		elseif feat == "Use Spam" then
 			info = "Spams the 'use' command on interactive entities."
-		elseif feat == "Reset Sounds" then
-			info = "Clears all sounds that are currently playing on your server."
 		elseif feat == "Transparent Walls" then
 			info = "Makes the walls see-through."
 		elseif feat == "Remove Sky" then
@@ -1499,7 +1497,6 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Fixed Viewmodel Chams not always covering the viewmodel hands;")
 	print("- Fixed poorly placed checkboxes/ sliders/ selections;")
 	print("- Fixed Anti-Aim Resolver continuing to resolve angles when set to 'Off';")
-	print("- Fixed Thirdperson showing in spectator mode;")
 	print("- Fixed text coloring and positioning issues with the optimized Wallhack style;")
 	print("- Fixed directional strafing angle calculation errors;")
 	print("- Fixed Circle Strafe spaghetti code not functioning the way it should;")
@@ -1902,6 +1899,8 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 			info = "Prints the IdiotBox changelog in the console."
 		elseif feat == "Unload Cheat" then
 			info = "Unloads IdiotBox."
+		elseif feat == "Reset All Game Sounds" then
+			info = "Clears all sounds that are currently playing on your server."
 		end
 	end
 	local tw, th = surface.GetTextSize(text)
@@ -1941,6 +1940,8 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 			big.ChangeName(GetConVarString("ib_changename"))
 			timer.Create("ChatPrint", 0.1, 1, function() Popup(3.2, "Successfully applied custom username!", Color(0, 255, 0)) end)
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
+		elseif text == "Reset All Game Sounds" then
+			RunConsoleCommand("stopsound")
 		end
 	end
 end
@@ -2098,9 +2099,6 @@ local function Menu()
 	end
 	frame.othink = frame.Think
 	frame.Think = function()
-		if (gBool("Miscellaneous", "Sounds", "Reset Sounds")) then
-			RunConsoleCommand("stopsound")
-		end
 		local menusongs = {"https://dl.dropbox.com/s/0fdgaj0ry8uummf/Rust_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/vsz77wdjqy1xf83/HOME%20-%20Resonance.mp3?dl=1", "https://dl.dropbox.com/s/0m22ytfia8qoy4m/Daisuke%20-%20El%20Huervo.mp3?dl=1", "https://dl.dropbox.com/s/ovh8xt0nn6wjgjj/The%20Caretaker%20-%20It%27s%20just%20a%20burning%20memory%20%282016%29.mp3?dl=1", "https://dl.dropbox.com/s/bqt4dcjoziezdjk/The_Caretaker_-_Libets_Delay_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/0uly6phlgpoj4ss/1932_George_Olsen_-_Lullaby_Of_The_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/qfl7mu39us5hzn4/Erectin_a_River_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/stkat6jlp4jhpxo/Monrroe_-_Fleeting_Love_%28getmp3.pro%29.mp3?dl=1","https://dl.dropbox.com/s/vhd3il20d8ephb4/DJ_Spizdil_-_malo_tebyaHardstyle_m_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/2vf1lx9cnd5g9pq/Maduk_-_Vermilion_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/wcoo6cov1iatcao/Metrik_-_Gravity_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/8a91zs6woqz9bb4/Scattle_Remorse_REUPLOAD_CHECK_DE_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/12ztoyw2rc2q0z0/HOME_-_Hold_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/xlk7wuel56bwrr3/T_Sugah_-_Green_Valleys_LAOS_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/8bg55iwowf2jtv8/cuckoid%20-%20ponyinajar.mp3?dl=1",}
 		local function playRandomSong()
 			RunConsoleCommand("stopsound")
