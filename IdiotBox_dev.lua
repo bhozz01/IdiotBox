@@ -27,7 +27,7 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "7.1.b1-pre09"
+local version = "7.1.b1-pre10"
 
 local menukeydown, frame, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -121,7 +121,7 @@ ib.contributors["STEAM_0:0:453356413"] = {} -- lenn (garry's mod server manager)
 ib.contributors["STEAM_0:1:69272242"] = {} -- leme (code dev)
 ib.contributors["STEAM_0:0:109145007"] = {} -- scottpott8 (code dev)
 ib.contributors["STEAM_0:0:205376238"] = {} -- vectivus (code dev)
-ib.contributors["STEAM_1:0:200336136"] = {} -- asteya (code dev)
+ib.contributors["STEAM_0:0:200336136"] = {} -- asteya (code dev)
 ib.contributors["STEAM_0:1:188710062"] = {} -- uucka (code tester)
 ib.contributors["STEAM_0:1:191270548"] = {} -- cal1nxd (code tester)
 ib.contributors["STEAM_0:1:404757"] = {} -- xvcaligo // persix (code tester)
@@ -821,7 +821,7 @@ local function DrawText(w, h, title)
     if title == "IdiotBox v7.1.b1" then
         surface.SetTextPos(147, 18 - th / 2)
         surface.SetFont("MainFont2")
-        surface.DrawText("Latest build: d19m11-pre09")
+        surface.DrawText("Latest build: d22m11-pre10")
     end
 end
 
