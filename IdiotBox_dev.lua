@@ -27,7 +27,7 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "7.1.b1-pre10"
+local version = "7.1.b1-pre11"
 
 local menukeydown, frame, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -821,7 +821,7 @@ local function DrawText(w, h, title)
     if title == "IdiotBox v7.1.b1" then
         surface.SetTextPos(147, 18 - th / 2)
         surface.SetFont("MainFont2")
-        surface.DrawText("Latest build: d22m11-pre10")
+        surface.DrawText("Latest build: d02m12-pre11")
     end
 end
 
@@ -1507,6 +1507,7 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Fixed Cheater Callout clearing chat when it should not;")
 	print("- Fixed Triggerbot Smooth Aim slowing down your overall mouse speed;")
 	print("- Fixed Witness Finder not working properly;")
+	print("- Fixed Reset Sounds only working when the menu is toggled;")
 	print("- Fixed certain outlines and fonts not having the proper dimensions;")
 	print("- Fixed a Projectile Prediction bug where dying would cause script errors;")
 	print("- Fixed Disable Interpolation, Optimize Game and Dark Mode not resetting when disabled;")
