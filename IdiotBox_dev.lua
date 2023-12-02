@@ -90,7 +90,7 @@ ib.chamsmat4 = CreateMaterial("flatmat2", "UnLitGeneric", {["$ignorez"] = 0, ["$
 ib.chamsmat5 = CreateMaterial("wiremat1", "UnLitGeneric", {["$ignorez"] = 1, ["$wireframe"] = 1, })
 ib.chamsmat6 = CreateMaterial("wiremat2", "UnLitGeneric", {["$ignorez"] = 0, ["$wireframe"] = 1, })
 
-ib.anticheatNames = {"QAC", "qac", "CAC", "cac", "SAC", "sac", "DAC", "dac", "ZAC", "zac", "TAC", "tac", "LSAC", "lsac", "simplicity", "Simplicity", "ZARP", "Zarp", "zarp", "swiftAC", "swiftac", "SwiftAC", "Swiftac", "SMAC", "smac", "MAC", "mac", "GAC", "gac", "GS", "gs", "GTS", "gts", "AE", "ae", "CardinalLib", "cardinallib", "cardinalLib", "Cardinallib"}
+ib.anticheatNames = {"QAC", "qac", "CAC", "cac", "SAC", "sac", "DAC", "dac", "ZAC", "zac", "TAC", "tac", "LSAC", "lsac", "simplicity", "Simplicity", "ZARP", "Zarp", "zarp", "swiftAC", "swiftac", "SwiftAC", "Swiftac", "simplac", "simplAC", "SimplAC", "Simplac", "SMAC", "smac", "MAC", "mac", "GAC", "gac", "GS", "gs", "GTS", "gts", "AE", "ae", "CardinalLib", "cardinallib", "cardinalLib", "Cardinallib"}
 ib.configFiles = {"config1.txt", "config2.txt", "config3.txt", "config4.txt", "config5.txt", "config6.txt", "config7.txt", "config8.txt", "config9.txt", "config10.txt"}
 ib.configOptions = {"Legit Config", "Rage Config", "HvH Config", "Misc Config #1", "Misc Config #2", "Misc Config #3", "Misc Config #4", "Misc Config #5", "Misc Config #6", "Misc Config #7"}
 
