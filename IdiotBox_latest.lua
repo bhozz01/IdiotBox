@@ -818,7 +818,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: November 6th 2023")
+	surface.DrawText("Latest build: December 2nd 2023")
 end
 
 local function MouseInArea(minx, miny, maxx, maxy)
