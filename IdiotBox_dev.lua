@@ -29,7 +29,7 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "7.1.b1-pre11"
+local version = "7.1.b1-pre12"
 
 local menukeydown, frame, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -117,6 +117,7 @@ ib.contributors = ib.contributors or {}
 ib.creator["STEAM_0:0:63644275"] = {} -- me
 ib.creator["STEAM_0:0:162667998"] = {} -- my alt
 ib.contributors["STEAM_0:0:196578290"] = {} -- pinged (code dev, helped me out with optimization and many others)
+ib.contributors["STEAM_0:0:37523203"] = {} -- ljackson (code dev, helped me out with loads of optimization)
 ib.contributors["STEAM_0:0:4727797"] = {} -- data (code dev, helped me figure out a ton of stuff, especially lua nospread)
 ib.contributors["STEAM_0:0:74527587"] = {} -- s0lum (code dev indirectly, got many features from NCMD, including lua nospread)
 ib.contributors["STEAM_0:0:453356413"] = {} -- lenn (garry's mod server manager)
@@ -823,7 +824,7 @@ local function DrawText(w, h, title)
     if title == "IdiotBox v7.1.b1" then
         surface.SetTextPos(147, 18 - th / 2)
         surface.SetFont("MainFont2")
-        surface.DrawText("Latest build: d02m12-pre11")
+        surface.DrawText("Latest build: d03m12-pre12")
     end
 end
 
