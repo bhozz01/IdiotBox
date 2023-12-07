@@ -29,7 +29,7 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "7.1.b1-pre15"
+local version = "7.1.b1-pre16"
 
 local menukeydown, frame, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -363,10 +363,10 @@ local options = {
 			{"Position Lines:", "Selection", "Off", {"Off", "Top", "Center", "Bottom"}, 92}, 
 			{""}, 
 			{"Name", "Checkbox", false, 78}, 
-			{"Health Bar", "Checkbox", false, 78}, 
-			{"Health Value", "Checkbox", false, 78}, 
-			{"Armor Bar", "Checkbox", false, 78}, 
-			{"Armor Value", "Checkbox", false, 78}, 
+			{"Health Info:", "Selection", "Off", {"Off", "Health Bar", "Health Value", "All"}, 92}, 
+			{""}, 
+			{"Armor Info:", "Selection", "Off", {"Off", "Armor Bar", "Armor Value", "All"}, 92}, 
+			{""}, 
 			{"Weapon", "Checkbox", false, 78}, 
 			{"Rank", "Checkbox", false, 78}, 
 			{"Distance", "Checkbox", false, 78}, 
@@ -824,7 +824,7 @@ local function DrawText(w, h, title)
     if title == "IdiotBox v7.1.b1" then
         surface.SetTextPos(147, 18 - th / 2)
         surface.SetFont("MainFont2")
-        surface.DrawText("Latest build: d04m12-pre15")
+        surface.DrawText("Latest build: d07m12-pre16")
     end
 end
 
@@ -1055,14 +1055,6 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			info = "Draws the player's name, along with the priority status."
 		elseif feat == "Bystander Name" then
 			info = "Draws the player's bystander name in Murder. Enable Wallhack for this feature to work."
-		elseif feat == "Health Bar" then
-			info = "Draws a health bar to the left side of the player."
-		elseif feat == "Health Value" then
-			info = "Draws the player's health value in numbers."
-		elseif feat == "Armor Bar" then
-			info = "Draws an armor bar to the right side of the player."
-		elseif feat == "Armor Value" then
-			info = "Draws the player's armor value in numbers."
 		elseif feat == "Weapon" then
 			info = "Draws the weapon currently held by the player."
 		elseif feat == "Rank" then
@@ -1294,6 +1286,10 @@ local function DrawDropdown(self, w, h, var, maxy, posx, posy, dist)
 			info = "Draws different types of boxes around the player."
 		elseif feat == "Chams:" then
 			info = "Draws playermodels through walls, either as custom models or regular playermodels."
+		elseif feat == "Health Info:" then
+			info = "Draws the health value and/ or a health bar to the left side of the player."
+		elseif feat == "Armor Info:" then
+			info = "Draws the armor value and/ or an armor bar to the right side of the player."
 		elseif feat == "Position Lines:" then
 			info = "Draws lines that indicate player positions."
 		elseif feat == "NPC Chams:" then
@@ -1496,7 +1492,6 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Fixed Hitbox spamming the console with error messages;")
 	print("- Fixed Snap Lines still showing when Aimbot is not enabled;")
 	print("- Fixed Aimbot and Triggerbot targeting spawning players;")
-	print("- Fixed misplaced tab selection lines;")
 	print("- Fixed Viewmodel Chams not always covering the viewmodel hands;")
 	print("- Fixed poorly placed checkboxes/ sliders/ selections;")
 	print("- Fixed Anti-Aim Resolver continuing to resolve angles when set to 'Off';")
@@ -3848,14 +3843,14 @@ local function Visuals(v)
 					surface.DrawLine(x2, y2, x2 - (diff * 0.225), y2)
 					surface.DrawLine(x2, y2, x2, y2 - (diff2 * 0.225))
 				end
-				if gBool("Visuals", "Wallhack", "Health Bar") then
+				if gOption("Visuals", "Wallhack", "Health Info:") == "Health Bar" or gOption("Visuals", "Wallhack", "Health Info:") == "All" then
 					surface.SetDrawColor(0, 0, 0)
 					surface.DrawRect(x1 - 6, y1, 3, diff2)
 					surface.DrawRect(x1 - 7, y1 - 1, 5, diff2 + 2)
 					surface.SetDrawColor(Color(255 - 255 / v:GetMaxHealth() * v:Health(), 255 / v:GetMaxHealth() * v:Health(), 0))
 					surface.DrawRect(x1 - 6, y2 - math.Clamp(diff2 / v:GetMaxHealth() * v:Health(), 0, diff2), 3, math.Clamp(diff2 / v:GetMaxHealth() * v:Health(), 0, diff2))
 				end
-				if gBool("Visuals", "Wallhack", "Armor Bar") then
+				if gOption("Visuals", "Wallhack", "Armor Info:") == "Armor Bar" or gOption("Visuals", "Wallhack", "Armor Info:") == "All" then
 					surface.SetDrawColor(0, 0, 0)
 					surface.DrawRect(x1 + diff + 3, y1, 3, diff2)
 					surface.DrawRect(x1 + diff + 2, y1 - 1, 5, diff2 + 2)
@@ -3901,23 +3896,23 @@ local function Visuals(v)
 						end
 					end
 					if gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
-						if gBool("Visuals", "Wallhack", "Health Value") then
+						if gOption("Visuals", "Wallhack", "Health Info:") == "Health Value" or gOption("Visuals", "Wallhack", "Health Info:") == "All" then
 							textpos = textpos + 1
 							draw.SimpleText("Health: "..em.Health(v), "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
 							textpos = textpos + 9
 						end
-						if gBool("Visuals", "Wallhack", "Armor Value") then
+						if gOption("Visuals", "Wallhack", "Armor Info:") == "Armor Value" or gOption("Visuals", "Wallhack", "Armor Info:") == "All" then
 							textpos = textpos + 1
 							draw.SimpleText("Armor: "..v:Armor(), "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
 							textpos = textpos + 9
 						end
 					elseif !gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
-						if gBool("Visuals", "Wallhack", "Health Value") then
+						if gOption("Visuals", "Wallhack", "Health Info:") == "Health Value" or gOption("Visuals", "Wallhack", "Health Info:") == "All" then
 							textpos = textpos + 1
 							draw.SimpleText("Health: "..em.Health(v), "VisualsFont", x2 + 9, y1 + textpos, healthcol, 0, 1)
 							textpos = textpos + 9
 						end
-						if gBool("Visuals", "Wallhack", "Armor Value") then
+						if gOption("Visuals", "Wallhack", "Armor Info:") == "Armor Value" or gOption("Visuals", "Wallhack", "Armor Info:") == "All" then
 							textpos = textpos + 1
 							draw.SimpleText("Armor: "..v:Armor(), "VisualsFont", x2 + 9, y1 + textpos, armorcol, 0, 1)
 							textpos = textpos + 9
@@ -4035,7 +4030,7 @@ local function Visuals(v)
 							end
 						end
 					end
-				elseif !gBool("Visuals", "Wallhack", "Armor Bar") then
+				elseif !(gOption("Visuals", "Wallhack", "Armor Info:") == "Armor Bar" or gOption("Visuals", "Wallhack", "Armor Info:") == "All") then
 					if gBool("Visuals", "Wallhack", "Name") then
 						local friendstatus = pm.GetFriendStatus(v)
 						local pos = em.GetPos(v)
@@ -4076,23 +4071,23 @@ local function Visuals(v)
 						end
 					end
 					if gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
-						if gBool("Visuals", "Wallhack", "Health Value") then
+						if gOption("Visuals", "Wallhack", "Health Info:") == "Health Value" or gOption("Visuals", "Wallhack", "Health Info:") == "All" then
 							textpos = textpos + 1
 							draw.SimpleText("Health: "..em.Health(v), "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
 							textpos = textpos + 9
 						end
-						if gBool("Visuals", "Wallhack", "Armor Value") then
+						if gOption("Visuals", "Wallhack", "Armor Info:") == "Armor Value" or gOption("Visuals", "Wallhack", "Armor Info:") == "All" then
 							textpos = textpos + 1
 							draw.SimpleText("Armor: "..v:Armor(), "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
 							textpos = textpos + 9
 						end
 					elseif !gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
-						if gBool("Visuals", "Wallhack", "Health Value") then
+						if gOption("Visuals", "Wallhack", "Health Info:") == "Health Value" or gOption("Visuals", "Wallhack", "Health Info:") == "All" then
 							textpos = textpos + 1
 							draw.SimpleText("Health: "..em.Health(v), "VisualsFont", x2 + 3, y1 + textpos, healthcol, 0, 1)
 							textpos = textpos + 9
 						end
-						if gBool("Visuals", "Wallhack", "Armor Value") then
+						if gOption("Visuals", "Wallhack", "Armor Info:") == "Armor Value" or gOption("Visuals", "Wallhack", "Armor Info:") == "All" then
 							textpos = textpos + 1
 							draw.SimpleText("Armor: "..v:Armor(), "VisualsFont", x2 + 3, y1 + textpos, armorcol, 0, 1)
 							textpos = textpos + 9
@@ -4275,7 +4270,7 @@ local function Visuals(v)
 				end
 				surface.SetFont("VisualsFont")
 				surface.SetTextColor(255, 255, 255)
-				if gBool("Visuals", "Wallhack", "Health Bar") then
+				if gOption("Visuals", "Wallhack", "Health Info:") == "Health Bar" or gOption("Visuals", "Wallhack", "Health Info:") == "All" then
 					local hp = h * em.Health(v) / 100
 					if (hp > h) then hp = h end
 					local diff = h - hp
@@ -4284,7 +4279,7 @@ local function Visuals(v)
 					surface.SetDrawColor((100 - em.Health(v)) * 2.55, em.Health(v) * 2.55, 0, 255)
 					surface.DrawRect(pos.x - w / 2 - 7, pos.y - h + diff, 3, hp)
 				end
-				if gBool("Visuals", "Wallhack", "Armor Bar") then
+				if gOption("Visuals", "Wallhack", "Armor Info:") == "Armor Bar" or gOption("Visuals", "Wallhack", "Armor Info:") == "All" then
 					local armor = v:Armor() * h / 100
 					if (armor > h) then armor = h end
 					local diff = h - armor
@@ -4353,23 +4348,23 @@ local function Visuals(v)
 					end
 				end
 				if gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
-					if gBool("Visuals", "Wallhack", "Health Value") then
+					if gOption("Visuals", "Wallhack", "Health Info:") == "Health Value" or gOption("Visuals", "Wallhack", "Health Info:") == "All" then
 						textpos = textpos + 1
 						draw.SimpleText("Health: "..em.Health(v), "VisualsFont", pos.x, pos.y - 1 + textpos, textcol, 1, 0)
 						textpos = textpos + 9
 					end
-					if gBool("Visuals", "Wallhack", "Armor Value") then
+					if gOption("Visuals", "Wallhack", "Armor Info:") == "Armor Value" or gOption("Visuals", "Wallhack", "Armor Info:") == "All" then
 						textpos = textpos + 1
 						draw.SimpleText("Armor: "..v:Armor(), "VisualsFont", pos.x, pos.y - 1 + textpos, textcol, 1, 0)
 						textpos = textpos + 9
 					end
 				elseif !gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
-					if gBool("Visuals", "Wallhack", "Health Value") then
+					if gOption("Visuals", "Wallhack", "Health Info:") == "Health Value" or gOption("Visuals", "Wallhack", "Health Info:") == "All" then
 						textpos = textpos + 1
 						draw.SimpleText("Health: "..em.Health(v), "VisualsFont", pos.x, pos.y - 1 + textpos, healthcol, 1, 0)
 						textpos = textpos + 9
 					end
-					if gBool("Visuals", "Wallhack", "Armor Value") then
+					if gOption("Visuals", "Wallhack", "Armor Info:") == "Armor Value" or gOption("Visuals", "Wallhack", "Armor Info:") == "All" then
 						textpos = textpos + 1
 						draw.SimpleText("Armor: "..v:Armor(), "VisualsFont", pos.x, pos.y - 1 + textpos, armorcol, 1, 0)
 						textpos = textpos + 9
@@ -4634,7 +4629,7 @@ local function ShowNPCs()
 			end
 		end
 	end
-	if gBool("Visuals", "Wallhack", "Health Value") then
+	if gOption("Visuals", "Wallhack", "Health Info:") == "Health Value" or gOption("Visuals", "Wallhack", "Health Info:") == "All" then
 		textpos = textpos + 1
 		draw.SimpleText("Health: "..health, "VisualsFont", pos.x, pos.y + textpos, colFive, 1, 0)
 		textpos = textpos + 9
@@ -4649,7 +4644,7 @@ local function ShowNPCs()
 		draw.SimpleText("Velocity: "..math.Round(v:GetVelocity():Length()), "VisualsFont", pos.x, pos.y + textpos, colFour, 1, 0)
 		textpos = textpos + 9
 	end
-	if gBool("Visuals", "Wallhack", "Health Bar") then
+	if gOption("Visuals", "Wallhack", "Health Info:") == "Health Bar" or gOption("Visuals", "Wallhack", "Health Info:") == "All" then
 		if (hp > h) then hp = h end
 			local diff = h - hp
 				surface.SetDrawColor(0, 0, 0, 255)
