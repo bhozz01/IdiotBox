@@ -6876,6 +6876,7 @@ All of my credits go out to you and the ones who helped me with the development 
 ||------------CREDITS------------||
 
 Pinged
+L Jackson
 data
 s0lum
 lenn
