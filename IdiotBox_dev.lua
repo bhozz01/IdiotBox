@@ -29,7 +29,7 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "7.1.b1-pre16"
+local version = "7.1.b1-pre17"
 
 local menukeydown, frame, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -145,15 +145,7 @@ end
 local options = {
 	["Main Menu"] = {
 		{
-			{"General Utilities", 16, 20, 232, 144, 218}, 
-			{"Optimize Game", "Checkbox", false, 78}, 
-			{"Spectator Mode", "Checkbox", false, 78}, 
-			{"Anti-AFK", "Checkbox", false, 78}, 
-			{"Anti-Ads", "Checkbox", false, 78}, 
-			{"Anti-Blind", "Checkbox", false, 78}, 
-		}, 
-		{
-			{"Trouble in Terrorist Town Utilities", 16, 177, 232, 222, 218}, 
+			{"Trouble in Terrorist Town Utilities", 16, 20, 232, 222, 218}, 
 			{"Traitor Finder", "Checkbox", false, 78}, 
 			{"Ignore Detectives as Innocent", "Checkbox", false, 78}, 
 			{"Ignore Fellow Traitors", "Checkbox", false, 78}, 
@@ -163,23 +155,25 @@ local options = {
 			{"Prop Kill Key:", "Toggle", 0, 92, 0}, 
 		}, 
 		{
-			{"DarkRP Utilities", 16, 412, 232, 148, 218}, 
+			{"DarkRP Utilities", 16, 255, 232, 150, 218}, 
 			{"Suicide Near Arrest Batons", "Checkbox", false, 78}, 
+			{"Money Value", "Checkbox", false, 78}, 
 			{"Transparent Props", "Checkbox", false, 78}, 
 			{"Transparency:", "Slider", 175, 255, 156}, 
 			{""}, 
-			{"Money Value", "Checkbox", false, 78}, 
 		}, 
 		{
-			{"Murder Utilities", 16, 573, 232, 145, 218}, 
+			{"Murder Utilities", 16, 419, 232, 195, 218}, 
 			{"Murderer Finder", "Checkbox", false, 78}, 
+			{"Murder Taunts:", "Selection", "Off", {"Off", "Funny", "Help", "Scream", "Morose", "Random"}, 92}, 
+			{""}, 
 			{"Hide End Round Board", "Checkbox", false, 78}, 
 			{"Hide Footprints", "Checkbox", false, 78}, 
 			{"No Black Screens", "Checkbox", false, 78}, 
 			{"Bystander Name", "Checkbox", false, 78}, 
 		}, 
 		{
-			{"Menus", 261, 20, 232, 225, 218}, 
+			{"Menus", 261, 20, 232, 222, 218}, 
 			{"Entity Finder Menu", "Checkbox", false, 78}, 
 			{"Plugin Loader Menu", "Checkbox", false, 78}, 
 			{"Toolbar Style:", "Selection", "BG Color", {"Border Color", "BG Color"}, 92}, 
@@ -190,7 +184,7 @@ local options = {
 			{""}, 
 		}, 
 		{
-			{"Configurations", 261, 258, 232, 175, 218}, 
+			{"Configurations", 261, 255, 232, 175, 218}, 
 			{"Automatically Save", "Checkbox", false, 78}, 
 			{"Save Configuration", "Button", "", 92}, 
 			{"Load Configuration", "Button", "", 92}, 
@@ -199,7 +193,7 @@ local options = {
 			{""}, 
 		}, 
 		{
-          	{"Others", 261, 446, 232, 130, 218}, 
+          	{"Others", 261, 444, 232, 130, 218}, 
 			{"Feature Tooltips", "Checkbox", true, 78}, -- Enabled by default
 			{"Apply Custom Name", "Button", false, 92}, 
 			{"Print Changelog", "Button", "", 92}, 
@@ -220,6 +214,14 @@ local options = {
 			{"Enabled", "Checkbox", false, 78}, 
 			{"Mode:", "Selection", "Disable All", {"Disable Aimbot", "Disable Anti-Aim", "Disable All"}, 92}, 
 			{""}, 
+		}, 
+		{
+			{"General Utilities", 506, 354, 232, 144, 218}, 
+			{"Optimize Game", "Checkbox", false, 78}, 
+			{"Spectator Mode", "Checkbox", false, 78}, 
+			{"Anti-AFK", "Checkbox", false, 78}, 
+			{"Anti-Ads", "Checkbox", false, 78}, 
+			{"Anti-Blind", "Checkbox", false, 78}, 
 		}, 
 	}, 
 	["Aim Assist"] = {
@@ -436,18 +438,16 @@ local options = {
 	}, 
 	["Miscellaneous"] = {
 		{
-			{"Miscellaneous", 16, 20, 232, 220, 218}, 
+			{"Miscellaneous", 16, 20, 232, 170, 218}, 
 			{"Flash Spam", "Checkbox", false, 78}, 
 			{"Use Spam", "Checkbox", false, 78}, 
 			{"Name Stealer:", "Selection", "Off", {"Off", "Normal", "Priority Targets", "DarkRP Name"}, 92}, 
 			{""}, 
 			{"Emotes:", "Selection", "Off", {"Off", "dance", "muscle", "wave", "robot", "bow", "cheer", "laugh", "zombie", "agree", "disagree", "forward", "becon", "salute", "pers", "halt", "group", "Random"}, 92}, 
 			{""}, 
-			{"Murder Taunts:", "Selection", "Off", {"Off", "Funny", "Help", "Scream", "Morose", "Random"}, 92}, 
-			{""}, 
 		}, 
 		{
-			{"Textures", 16, 253, 232, 192, 218}, 
+			{"Textures", 16, 203, 232, 192, 218}, 
 			{"Transparent Walls", "Checkbox", false, 78}, 
 			{"Transparency:", "Slider", 82, 100, 156}, 
 			{""}, 
@@ -457,9 +457,10 @@ local options = {
 			{"Dark Mode", "Checkbox", false, 78}, 
 		}, 
 		{
-			{"Panels", 16, 459, 232, 294, 218}, 
+			{"Panels", 16, 409, 232, 320, 218}, 
 			{"Spectators Window", "Checkbox", true, 78}, -- Enabled by default
 			{"Radar Window", "Checkbox", true, 78}, -- Enabled by default
+			{"Radar Names", "Checkbox", true, 78}, -- Enabled by default
 			{"Radar Distance:", "Slider", 50, 100, 156}, 
 			{""}, 
 			{"Debug Info", "Checkbox", true, 78}, -- Enabled by default
@@ -824,7 +825,7 @@ local function DrawText(w, h, title)
     if title == "IdiotBox v7.1.b1" then
         surface.SetTextPos(147, 18 - th / 2)
         surface.SetFont("MainFont2")
-        surface.DrawText("Latest build: d07m12-pre16")
+        surface.DrawText("Latest build: d10m12-pre17")
     end
 end
 
@@ -972,7 +973,7 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 		elseif feat == "Automatically Save" then
 			info = "Saves your current configuration automatically."
 		elseif feat == "Feature Tooltips" then
-			info = "Detailed information about features will appear here, at the bottom of the menu."
+			info = "Detailed information about features will appear here, at the bottom right corner of the menu."
 		elseif feat == "Silent Aim" then
 			info = "Makes the Aimbot invisible for you."
 		elseif feat == "Auto Fire" then
@@ -1086,7 +1087,9 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 		elseif feat == "Spectators Window" then
 			info = "Draws a spectator box, where you will be alerted if anyone is currently spectating you."
 		elseif feat == "Radar Window" then
-			info = "Draws a Radar Window."
+			info = "Draws a radar window."
+		elseif feat == "Radar Names" then
+			info = "Draws player/ entity names on the radar window."
 		elseif feat == "Debug Info" then
 			info = "Draws your ping, framerate, current date and time etc."
 		elseif feat == "Players List" then
@@ -1493,7 +1496,6 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Fixed Snap Lines still showing when Aimbot is not enabled;")
 	print("- Fixed Aimbot and Triggerbot targeting spawning players;")
 	print("- Fixed Viewmodel Chams not always covering the viewmodel hands;")
-	print("- Fixed poorly placed checkboxes/ sliders/ selections;")
 	print("- Fixed Anti-Aim Resolver continuing to resolve angles when set to 'Off';")
 	print("- Fixed text coloring and positioning issues with the optimized Wallhack style;")
 	print("- Fixed directional strafing angle calculation errors;")
@@ -1502,11 +1504,11 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Fixed Advanced Network Graph breaking the net_graph command;")
 	print("- Fixed name changer/ stealer reverting to your Steam username as soon as a new player joined the server;")
 	print("- Fixed Visuals causing severe lag;")
+	print("- Fixed Radar no longer working and improved it;")
 	print("- Fixed Cheater Callout clearing chat when it should not;")
 	print("- Fixed Triggerbot Smooth Aim slowing down your overall mouse speed;")
 	print("- Fixed Witness Finder not working properly;")
 	print("- Fixed Reset Sounds only working when the menu is toggled;")
-	print("- Fixed certain outlines and fonts not having the proper dimensions;")
 	print("- Fixed a Projectile Prediction bug where dying would cause script errors;")
 	print("- Fixed Disable Interpolation, Optimize Game and Dark Mode not resetting when disabled;")
 	print("- Fixed missing spread prediction and recoil compensation checks;")
@@ -2094,7 +2096,7 @@ local function Menu()
 		end
 		mousedown = input.IsMouseDown(MOUSE_LEFT)
 		if gBool("Main Menu", "Others", "Feature Tooltips") and info ~= "" then
-			draw.SimpleText(info, "MenuFont2", w / 2, h / 1.03, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText(info, "MenuFont", w / 1.02, h / 1.01, Color(menutextcol.r, menutextcol.g, menutextcol.b, 100), TEXT_ALIGN_RIGHT, TEXT_ALIGN_BOTTOM)
 		end
 	end
 	frame.othink = frame.Think
@@ -2493,30 +2495,8 @@ local function Spectator()
 	hudspecslength = specscount + 19
 end
 
-local function Arrow(x, y, myRotation)
-	local arrow = {}
-	arrow[1] = {x = x, y = y}
-	arrow[2] = {x = x + 4, y = y + 7.5}
-	arrow[3] = {x = x, y = y + 5}
-	arrow[4] = {x = x - 4, y = y + 7.5}
-	myRotation = myRotation * - 1
-	myRotation = math.rad(myRotation)
-	for i = 1, 4 do
-		local theirX = arrow[i].x
-		local theirY = arrow[i].y
-		theirX = theirX - x
-		theirY = theirY - y
-		arrow[i].x = theirX * math.cos(myRotation) - theirY * math.sin(myRotation)
-		arrow[i].y = theirX * math.sin(myRotation) + theirY * math.cos(myRotation)
-		arrow[i].x = arrow[i].x + x
-		arrow[i].y = arrow[i].y + y
-	end
-	surface.DrawPoly(arrow)
-end
-
 local function Radar()
 	local col = Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
-	local everything = ents.GetAll()
 	local fa = me:EyeAngles()
 	if gOption("Miscellaneous", "Panels", "Panels Style:") == "Bordered" then
 		draw.RoundedBox(360, gInt("Adjustments", "Window Adjustments", "Radar X:") + 1, gInt("Adjustments", "Window Adjustments", "Radar Y:") - 0.75, windowW + 2, windowH + 2, Color(bordercol.r, bordercol.g, bordercol.b, 255))
@@ -2534,8 +2514,7 @@ local function Radar()
 	surface.DrawLine(gInt("Adjustments", "Window Adjustments", "Radar X:") + 209 * 0.5, gInt("Adjustments", "Window Adjustments", "Radar Y:") + 24, gInt("Adjustments", "Window Adjustments", "Radar X:") + 209 * 0.5, gInt("Adjustments", "Window Adjustments", "Radar Y:") + 190)
 	surface.DrawLine(gInt("Adjustments", "Window Adjustments", "Radar X:") + 12, gInt("Adjustments", "Window Adjustments", "Radar Y:") + 209 * 0.5, gInt("Adjustments", "Window Adjustments", "Radar X:") + 191, gInt("Adjustments", "Window Adjustments", "Radar Y:") + 209 * 0.5)
 	surface.SetDrawColor(team.GetColor(me:Team()))
-	for k = 1, #everything do
-		local v = everything[k]
+	for k, v in next, ents.GetAll() do
 		if (v != me and v:IsPlayer() and v:Health() > 0 and not (em.IsDormant(v) and gOption("Visuals", "Miscellaneous", "Dormant Check:") == "All") and not (v:Team() == TEAM_SPECTATOR and gBool("Visuals", "Miscellaneous", "Show Spectators")) and not ((gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Hide Ignored Targets") && table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Visuals", "Miscellaneous", "Priority Targets Only") && !table.HasValue(prioritylist, v:UniqueID()))) or (v:IsNPC() and v:Health() > 0)) then
 			color = (v:IsPlayer() and ((ib.contributors[v:SteamID()] || ib.creator[v:SteamID()]) && HSVToColor(RealTime() * 45 % 360, 1, 1) || (gBool("Visuals", "Miscellaneous", "Target Priority Colors") and ((table.HasValue(ignorelist, v:UniqueID()) && Color(ignoredtargetscol.r, ignoredtargetscol.g, ignoredtargetscol.b)) or (table.HasValue(prioritylist, v:UniqueID()) && Color(prioritytargetscol.r, prioritytargetscol.g, prioritytargetscol.b)))) || pm.GetFriendStatus(v) == "friend" && Color(0, 155, 255) || gBool("Visuals", "Miscellaneous", "Team Colors") && team.GetColor(pm.Team(v)) || GetColor(v))) or Color(255, 255, 255)
 			surface.SetDrawColor(color)
@@ -2550,8 +2529,24 @@ local function Radar()
 			local newY = theirX * math.sin(myRotation) + theirY * math.cos(myRotation)
 			newX = newX + (gInt("Adjustments", "Window Adjustments", "Radar X:") + 2 + (windowW / 2))
 			newY = newY + (gInt("Adjustments", "Window Adjustments", "Radar Y:") + 2 + (windowH / 2))
-			if newX < (gInt("Adjustments", "Window Adjustments", "Radar X:") + 2 + windowW) and newX > gInt("Adjustments", "Window Adjustments", "Radar X:") + 2 and newY < (gInt("Adjustments", "Window Adjustments", "Radar Y:") + windowH) and newY > gInt("Adjustments", "Window Adjustments", "Radar Y:") then
-				Arrow(newX + 4, newY, v:EyeAngles().y - fa.y)
+			if newX < ((gInt("Adjustments", "Window Adjustments", "Radar X:") + 30) + 2 + (windowW - 60)) and newX > (gInt("Adjustments", "Window Adjustments", "Radar X:") + 30) + 2 and newY < ((gInt("Adjustments", "Window Adjustments", "Radar Y:") + 30) + (windowH - 60)) and newY > (gInt("Adjustments", "Window Adjustments", "Radar Y:") + 30) then
+				surface.SetDrawColor(0, 0, 0)
+				surface.DrawRect(newX - 1.5, newY - 1.5, 8, 8)
+				surface.SetDrawColor(color)
+				surface.DrawRect(newX - 0.5, newY - 0.5, 6, 6)
+				if gBool("Miscellaneous", "Panels", "Radar Names") then
+					surface.SetFont("VisualsFont2")
+					surface.SetTextColor(color)
+					if v:IsPlayer() then
+						center1 = surface.GetTextSize(v:GetName())
+						surface.SetTextPos(newX + 4 - (center1 / 2), newY + 8)
+						surface.DrawText(v:GetName())
+					else
+						center2 = surface.GetTextSize(v:GetClass())
+						surface.SetTextPos(newX + 4 - (center2 / 2), newY + 8)
+						surface.DrawText(v:GetClass())
+					end
+				end
 			end
 		end
 	end
@@ -3579,15 +3574,15 @@ hook.Add("Tick", "Tick", function()
 		end
 		if me:Alive() or me:Health() > 0 then
 		local tauntspam = {"funny", "help", "scream", "morose",}
-			if gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Funny" then
+			if gOption("Main Menu", "Murder Utilities", "Murder Taunts:") == "Funny" then
 				RunConsoleCommand("mu_taunt", "funny")
-			elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Help" then
+			elseif gOption("Main Menu", "Murder Utilities", "Murder Taunts:") == "Help" then
 				RunConsoleCommand("mu_taunt", "help")
-			elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Scream" then
+			elseif gOption("Main Menu", "Murder Utilities", "Murder Taunts:") == "Scream" then
 				RunConsoleCommand("mu_taunt", "scream")
-			elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Morose" then
+			elseif gOption("Main Menu", "Murder Utilities", "Murder Taunts:") == "Morose" then
 				RunConsoleCommand("mu_taunt", "morose")
-			elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Random" then
+			elseif gOption("Main Menu", "Murder Utilities", "Murder Taunts:") == "Random" then
 				RunConsoleCommand("mu_taunt", tauntspam[math.random(#tauntspam)])
 			end
 		end
@@ -6703,7 +6698,6 @@ hook.Add("MiscPaint", "MiscPaint", function()
 	if gBool("Main Menu", "Priority List", "Enabled") and menuopen then
 		PlayerList()
 	end
-	if v == me and not em.IsValid(v) then return end
 	if gBool("Miscellaneous", "Panels", "Spectators Window") then
 		Spectator()
 	end
@@ -6721,18 +6715,19 @@ hook.Add("MiscPaint", "MiscPaint", function()
 	if gOption("Miscellaneous", "GUI Settings", "Crosshair:") ~= "Off" then
 		Crosshair()
 	end
-	if (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not me:Alive() or me:Health() < 1 or (gBool("Aim Assist", "Triggerbot", "Enabled") and not gBool("Aim Assist", "Aimbot", "Enabled")) then return end
+	if (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not me:Alive() or me:Health() < 1 then return end
 	if gBool("Miscellaneous", "GUI Settings", "Witness Finder") then
 		ib.WitnessFinder()
+	end
+	for k, v in pairs(player.GetAll()) do
+		if not v:IsValid() or (v == me and not em.IsValid(v)) or (gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me then return end
 	end
 	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:") then
 		ib.PropKillCircle()
 	end
+	if (gBool("Aim Assist", "Triggerbot", "Enabled") and not gBool("Aim Assist", "Aimbot", "Enabled")) then return end
 	if gBool("Aim Assist", "Aimbot", "Enabled") and gBool("Aim Assist", "Miscellaneous", "Show FoV Circle") then
 		ib.FovCircle()
-	end
-	for k, v in pairs(player.GetAll()) do
-		if not v:IsValid() or (gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me then return end
 	end
 	if (aimtarget and em.IsValid(aimtarget) and not FixTools() and gBool("Aim Assist", "Miscellaneous", "Snap Lines") and (gBool("Aim Assist", "Aimbot", "Enabled"))) then
 		ib.SnapLines()
