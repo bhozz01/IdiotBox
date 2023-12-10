@@ -22,8 +22,10 @@ local global = (_G)
 local me = LocalPlayer()
 
 --[[ !!FUTURE UPDATE!!
+
 local allplayers = player.GetAll()
 local allents = ents.GetAll()
+
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
@@ -6840,6 +6842,7 @@ All of my credits go out to you and the ones who helped me with the development 
 ||------------CREDITS------------||
 
 Pinged
+L Jackson
 data
 s0lum
 lenn
