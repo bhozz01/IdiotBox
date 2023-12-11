@@ -29,7 +29,7 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "7.1.b1-pre17"
+local version = "7.1.b1-pre18"
 
 local menukeydown, frame, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -216,7 +216,7 @@ local options = {
 			{""}, 
 		}, 
 		{
-			{"General Utilities", 506, 354, 232, 144, 218}, 
+			{"Miscellaneous", 506, 354, 232, 144, 218}, 
 			{"Optimize Game", "Checkbox", false, 78}, 
 			{"Spectator Mode", "Checkbox", false, 78}, 
 			{"Anti-AFK", "Checkbox", false, 78}, 
@@ -825,7 +825,7 @@ local function DrawText(w, h, title)
     if title == "IdiotBox v7.1.b1" then
         surface.SetTextPos(147, 18 - th / 2)
         surface.SetFont("MainFont2")
-        surface.DrawText("Latest build: d10m12-pre17")
+        surface.DrawText("Latest build: d11m12-pre18")
     end
 end
 
@@ -1555,9 +1555,9 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Reworked 'Show NPCs' and 'Show Entities' from Visuals;")
 	print("- Reworked 'Emotes' from Miscellaneous, allowing you to move while acting;")
 	print("- Reworked 'Free Roaming' from Miscellaneous, so that you will no longer have to hold down the toggle key in order to roam;")
+	print("- Reworked 'Feature Tooltips' from scratch;")
 	print("- Reworked anti-screengrabber from scratch;")
-	print("- Reworked the menu's design from scratch, again;")
-	print("- Reworked old 'file.Read' blocker from scratch;")
+	print("- Reworked the menu's design from scratch;")
 	print("- Reworked spread prediction from scratch;")
 	print("- Reworked recoil compensation from scratch;")
 	print("- Removed 'Triggerbot' tab and merged it with the 'Aim Assist' tab;")
@@ -1566,7 +1566,6 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Removed 'Mirror' from Point of View;")
 	print("- Removed 'dickwrap.dll' and 'fhook.dll' modules;")
 	print("- Changed the Armor Bar and Armor Value colors from bright green to bright blue;")
-	print("- Changed the default colors, menu size and others.")
 	print("\n")
 	print("IdiotBox TO-DO LIST (in no particular order)")
 	print("")
@@ -2325,7 +2324,7 @@ local function GetAngle(ang)
 end
 
 local function FixAngle(ang)
-	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or (not me:Alive() or me:Health() < 1) or FixTools() then return end
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or (not me:Alive() or me:Health() < 1) or FixTools() then return end
 	ang.p = math.Clamp(math.NormalizeAngle(ang.p), -89, 89)
 	ang.x = math.NormalizeAngle(ang.x)
 end
@@ -2702,7 +2701,7 @@ local function PlayerList()
 end
 
 local function Crosshair()
-	if menuopen or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
+	if menuopen or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
 	if (gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "Box") then
 	local x1, y1 = ScrW() * 0.5, ScrH() * 0.5
 		surface.SetDrawColor(0, 0, 0, gInt("Adjustments", "Crosshair Color", "Opacity:"))
@@ -3114,7 +3113,7 @@ local function Circle(cmd)
 end
 
 local function BunnyHop(cmd)
-	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
 	if gBool("Miscellaneous", "Movement", "Bunny Hop") and gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Off" then
     local badmovetypes = {
         [MOVETYPE_NOCLIP] = true,
@@ -3253,7 +3252,7 @@ local function CircleStrafe(cmd)
         [MOVETYPE_NOCLIP] = true,
         [MOVETYPE_LADDER] = true,
     }
-	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or badmovetypes[me:GetMoveType()] or me:IsFlagSet(1024) then return end
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or badmovetypes[me:GetMoveType()] or me:IsFlagSet(1024) then return end
 		if !gKey("Miscellaneous", "Movement", "Circle Strafe Key:") and gOption("Miscellaneous", "Movement", "Auto Strafe:") ~= "Off" then
 			if (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Legit") then
 				LegitStrafe(cmd)
@@ -3285,7 +3284,7 @@ local function CircleStrafe(cmd)
 end
 
 local function AutoStrafe(cmd)
-    if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
+    if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
 	if gBool("Miscellaneous", "Movement", "Bunny Hop") and gOption("Miscellaneous", "Movement", "Auto Strafe:") ~= "Off" then
     local badmovetypes = {
         [MOVETYPE_NOCLIP] = true,
@@ -3307,7 +3306,7 @@ local function AutoStrafe(cmd)
 end
 
 local function AirCrouch(cmd)
-	if em.GetMoveType(me) == MOVETYPE_NOCLIP or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or me:IsFlagSet(1024) then return end
+	if em.GetMoveType(me) == MOVETYPE_NOCLIP or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or me:IsFlagSet(1024) then return end
 	if gBool("Miscellaneous", "Movement", "Air Crouch") then
 	local pos = me:GetPos()
 	local trace = {
@@ -3447,7 +3446,7 @@ local function Tick()
 	if gBool("Miscellaneous", "Miscellaneous", "Use Spam") and input.IsKeyDown(KEY_E) and not (me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or menuopen) then
 		RunConsoleCommand("ib_usespam")
 	end
-	if gBool("Main Menu", "General Utilities", "Optimize Game") then
+	if gBool("Main Menu", "Miscellaneous", "Optimize Game") then
 		if not optimized then
 			me:ConCommand("r_cleardecals; M9KGasEffect 0")
 		optimized = true
@@ -3613,7 +3612,7 @@ hook.Add("Tick", "Tick", function()
 				end
 			end
 		end
-	if (gBool("Main Menu", "General Utilities", "Anti-Blind")) then
+	if (gBool("Main Menu", "Miscellaneous", "Anti-Blind")) then
 		if (HookExist("HUDPaint", "ulx_blind")) then
 			Popup(4.3, "Successfully blocked a blinding attempt!", Color(0, 255, 0))
 			surface.PlaySound("buttons/lightswitch2.wav")
@@ -3622,7 +3621,7 @@ hook.Add("Tick", "Tick", function()
     end
 	if MOTDgd or MOTDGD then
 		function MOTDgd.GetIfSkip()
-		if (gBool("Main Menu", "General Utilities", "Anti-Ads")) then
+		if (gBool("Main Menu", "Miscellaneous", "Anti-Ads")) then
 			Popup(4.3, "Successfully blocked an advertisement!", Color(0, 255, 0))
 			surface.PlaySound("buttons/lightswitch2.wav")
 			return true
@@ -4652,12 +4651,12 @@ local function ShowNPCs()
 end
 
 local function AntiAFK(cmd)
-	if (!gBool("Main Menu", "General Utilities", "Anti-AFK")) then
+	if (!gBool("Main Menu", "Miscellaneous", "Anti-AFK")) then
 		timer.Create("afk1", 6, 0, function()
 		local commands = {"moveleft", "moveright", "moveup", "movedown"}
 		local command1 = table.Random(commands)
 		local command2 = table.Random(commands)
-		if global.unloaded == true or !gBool("Main Menu", "General Utilities", "Anti-AFK") then return end
+		if global.unloaded == true or !gBool("Main Menu", "Miscellaneous", "Anti-AFK") then return end
 		timer.Create("afk2", 1, 1, function()
 		RunConsoleCommand("+"..command1)
 		RunConsoleCommand("+"..command2)
@@ -5425,7 +5424,7 @@ function ib.RemapClamped(val, A, B, C, D)
 end
 
 local function PredictSpread(cmd, ang) -- HUGE FUCKING THANKS TO S0LUM'S NCMD (and data for helping me figure shit out)
-	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
     local wep = me:GetActiveWeapon()
 	if gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread") and me:GetActiveWeapon():IsValid() and me:Alive() and me:Health() > 0 then
 		local class = wep:GetClass()
@@ -5604,7 +5603,7 @@ function ib.CalculateAntiRecoil()
 end
 
 local function Aimbot(cmd)
-	if not gBool("Aim Assist", "Aimbot", "Enabled") or not me:Alive() or me:Health() < 1 or not me:GetActiveWeapon():IsValid() or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) then return end
+	if not gBool("Aim Assist", "Aimbot", "Enabled") or not me:Alive() or me:Health() < 1 or not me:GetActiveWeapon():IsValid() or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "Miscellaneous", "Spectator Mode"))) then return end
 	for k, v in pairs(player.GetAll()) do
 		if !v:IsValid() || ((gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me) || FixTools() then return end
 	end
@@ -5678,7 +5677,7 @@ local function TriggerFilter(hitbox)
 end
 
 local function Triggerbot(cmd)
-	if not gBool("Aim Assist", "Triggerbot", "Enabled") or not me:GetActiveWeapon():IsValid() or not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Triggerbot", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not gKey("Aim Assist", "Triggerbot", "Toggle Key:") or cmd:KeyDown(IN_ATTACK) or FixTools() then return end
+	if not gBool("Aim Assist", "Triggerbot", "Enabled") or not me:GetActiveWeapon():IsValid() or not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Triggerbot", "Target Spectators") and gBool("Main Menu", "Miscellaneous", "Spectator Mode"))) or not gKey("Aim Assist", "Triggerbot", "Toggle Key:") or cmd:KeyDown(IN_ATTACK) or FixTools() then return end
 	local dist = gInt("Aim Assist", "Aim Priorities", "Distance:")
 	local vel = gInt("Aim Assist", "Aim Priorities", "Velocity:")
 	local maxhealth = gInt("Aim Assist", "Aim Priorities", "Max Player Health:") 
@@ -6308,7 +6307,7 @@ end
 
 local function PropKill(cmd)
 	local wep = pm.GetActiveWeapon(me)
-	if !gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") or engine.ActiveGamemode() ~= "terrortown" or !wep:IsValid() or !wep:GetClass() == "weapon_zm_carry" or menuopen or me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
+	if !gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") or engine.ActiveGamemode() ~= "terrortown" or !wep:IsValid() or !wep:GetClass() == "weapon_zm_carry" or menuopen or me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
 	if (cm.CommandNumber(cmd) == 0 && !ThirdpersonCheck()) then
 		return
 	elseif (cm.CommandNumber(cmd) == 0 && ThirdpersonCheck()) then
@@ -6343,7 +6342,7 @@ local function PropKill(cmd)
 end
 
 function ib.LaserBullets(cmd)
-	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
 	if cm.KeyDown(cmd, 1) and not FixTools() then
 		local ang = cm.GetViewAngles(cmd)
 		if gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread") then
@@ -6362,7 +6361,7 @@ function ib.LaserBullets(cmd)
 end
 
 local function FakeCrouch(cmd)
-	if em.GetMoveType(me) == MOVETYPE_NOCLIP or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or me:IsFlagSet(1024) then return end
+	if em.GetMoveType(me) == MOVETYPE_NOCLIP or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or me:IsFlagSet(1024) then return end
 	if gBool("Miscellaneous", "Movement", "Fake Crouch") then
 		if me:KeyDown(IN_DUCK) then
 			if ib.crouched <= 5 then
@@ -6390,7 +6389,7 @@ hook.Add("CalcView", "CalcView", function(me, pos, ang, fov)
 	}
 	local calcang = me:EyeAngles() * 1
 	local view = {}
-		if ib.FreeRoamCheck() and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) and (me:Alive() or me:Health() > 0) then
+		if ib.FreeRoamCheck() and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) and (me:Alive() or me:Health() > 0) then
 			local speed = gInt("Miscellaneous", "Free Roaming", "Speed:") / 5
 			local mouseang = Angle(roamy, roamx, 0)
 			if me:KeyDown(IN_SPEED) then
@@ -6424,7 +6423,7 @@ hook.Add("CalcView", "CalcView", function(me, pos, ang, fov)
 			view.angles = angles
 			view.fov = gInt("Visuals", "Point of View", "FoV Value:")
 		end
-		if (me:Alive() or me:Health() > 0) and not (me:GetMoveType() == 10 and not gBool("Main Menu", "General Utilities", "Spectator Mode")) and me:GetObserverTarget() == nil then
+		if (me:Alive() or me:Health() > 0) and not (me:GetMoveType() == 10 and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) and me:GetObserverTarget() == nil then
 			local wep = me:GetActiveWeapon()
 			if IsValid(wep) then
 				local wepcalcview = wep.CalcView
@@ -6454,7 +6453,7 @@ hook.Add("CalcView", "CalcView", function(me, pos, ang, fov)
 end)
 
 local function FreeRoam(cmd)
-	if (ib.FreeRoamCheck() and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) and (me:Alive() or me:Health() > 0)) then
+	if (ib.FreeRoamCheck() and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) and (me:Alive() or me:Health() > 0)) then
 		if roamon == false then
 			roampos, roamang = me:EyePos(), cmd:GetViewAngles()
 			roamy, roamx = cmd:GetViewAngles().x, cmd:GetViewAngles().y
@@ -6602,7 +6601,7 @@ function ib.WitnessFinder()
 	local offset = Vector(0, 0, 32)
 	local trace = {}
 	local witnesscolor = Color(0, 0, 0)
-	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or (v == me and not em.IsValid(v)) then return end
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or (v == me and not em.IsValid(v)) then return end
 	local time = os.time() - 1
 	local witnesses = 0
 	local beingwitnessed = true
@@ -6651,7 +6650,7 @@ end
 function ib.PropKillCircle()
 	local wep = pm.GetActiveWeapon(me)
 	if engine.ActiveGamemode() == "terrortown" && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" then
-		if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
+		if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
 		if ib.propval >= 180 then
 			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(255, 0, 0))
 		else
@@ -6661,7 +6660,7 @@ function ib.PropKillCircle()
 end
 
 function ib.FovCircle()
-	if (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not me:Alive() or me:Health() < 1 then return end
+	if (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "Miscellaneous", "Spectator Mode"))) or not me:Alive() or me:Health() < 1 then return end
 	local center = Vector(ScrW() / 2, ScrH() / 2, 0)
 	local scale = Vector(((gInt("Aim Assist", "Aimbot", "Aim FoV Value:")) * 9.5), ((gInt("Aim Assist", "Aimbot", "Aim FoV Value:")) * 9.5), 0)
 	local segmentdist = 360 / (2 * math.pi * math.max(scale.x, scale.y) / 2)
@@ -6715,7 +6714,7 @@ hook.Add("MiscPaint", "MiscPaint", function()
 	if gOption("Miscellaneous", "GUI Settings", "Crosshair:") ~= "Off" then
 		Crosshair()
 	end
-	if (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not me:Alive() or me:Health() < 1 then return end
+	if (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "Miscellaneous", "Spectator Mode"))) or not me:Alive() or me:Health() < 1 then return end
 	if gBool("Miscellaneous", "GUI Settings", "Witness Finder") then
 		ib.WitnessFinder()
 	end
