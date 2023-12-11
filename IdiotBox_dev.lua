@@ -2096,7 +2096,7 @@ local function Menu()
 		end
 		mousedown = input.IsMouseDown(MOUSE_LEFT)
 		if gBool("Main Menu", "Others", "Feature Tooltips") and info ~= "" then
-			draw.SimpleText(info, "MenuFont", w / 1.02, h / 1.01, Color(menutextcol.r, menutextcol.g, menutextcol.b, 100), TEXT_ALIGN_RIGHT, TEXT_ALIGN_BOTTOM)
+			draw.SimpleText(info, "MenuFont", w / 1.02, h / 1.015, Color(menutextcol.r, menutextcol.g, menutextcol.b, 100), TEXT_ALIGN_RIGHT, TEXT_ALIGN_BOTTOM)
 		end
 	end
 	frame.othink = frame.Think
