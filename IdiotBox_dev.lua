@@ -29,7 +29,7 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "7.1.b1-pre18"
+local version = "7.1.b1-pre19"
 
 local menukeydown, frame, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -447,17 +447,17 @@ local options = {
 			{""}, 
 		}, 
 		{
-			{"Textures", 16, 203, 232, 192, 218}, 
+			{"Textures", 16, 203, 232, 170, 218}, 
 			{"Transparent Walls", "Checkbox", false, 78}, 
 			{"Transparency:", "Slider", 82, 100, 156}, 
 			{""}, 
 			{"Remove Sky", "Checkbox", false, 78}, 
 			{"Remove 3D Skybox", "Checkbox", false, 78}, 
-			{"Bright Mode", "Checkbox", false, 78}, 
-			{"Dark Mode", "Checkbox", false, 78}, 
+			{"Remove Shadows", "Checkbox", false, 78}, 
+			--[[{"Dark Mode", "Checkbox", false, 78},]]
 		}, 
 		{
-			{"Panels", 16, 409, 232, 320, 218}, 
+			{"Panels", 16, 387, 232, 320, 218}, 
 			{"Spectators Window", "Checkbox", true, 78}, -- Enabled by default
 			{"Radar Window", "Checkbox", true, 78}, -- Enabled by default
 			{"Radar Names", "Checkbox", true, 78}, -- Enabled by default
@@ -825,7 +825,7 @@ local function DrawText(w, h, title)
     if title == "IdiotBox v7.1.b1" then
         surface.SetTextPos(147, 18 - th / 2)
         surface.SetFont("MainFont2")
-        surface.DrawText("Latest build: d11m12-pre18")
+        surface.DrawText("Latest build: d24m12-pre19")
     end
 end
 
@@ -1132,10 +1132,10 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			info = "Makes the sky completely black."
 		elseif feat == "Remove 3D Skybox" then
 			info = "Removes the 3D skybox. May improve framerate."
-		elseif feat == "Bright Mode" then
+		elseif feat == "Remove Shadows" then
 			info = "Creates uniform lighting throughout the whole map. Useful for dark maps."
-		elseif feat == "Dark Mode" then
-			info = "Gives the map a night-like aspect."
+		--[[elseif feat == "Dark Mode" then
+			info = "Gives the map a night-like aspect."]]--
 		elseif feat == "Custom FoV" then
 			info = "Allows you to set a custom FoV, outside of the default boundaries."
 		elseif feat == "Thirdperson" then
@@ -1510,7 +1510,7 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Fixed Witness Finder not working properly;")
 	print("- Fixed Reset Sounds only working when the menu is toggled;")
 	print("- Fixed a Projectile Prediction bug where dying would cause script errors;")
-	print("- Fixed Disable Interpolation, Optimize Game and Dark Mode not resetting when disabled;")
+	print("- Fixed Disable Interpolation and Optimize Game not resetting when disabled;")
 	print("- Fixed missing spread prediction and recoil compensation checks;")
 	print("- Fixed improper rendering of the visuals;")
 	print("- Fixed script errors appearing upon loading IdiotBox through the webloader;")
@@ -1562,6 +1562,7 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Reworked recoil compensation from scratch;")
 	print("- Removed 'Triggerbot' tab and merged it with the 'Aim Assist' tab;")
 	print("- Removed 'Shoutout' and 'Drop Money' from Chat Spam;")
+	print("- Removed 'Dark Mode' from Textures (temporarily);")
 	print("- Removed 'Screengrab Notifications' from Miscellaneous;")
 	print("- Removed 'Mirror' from Point of View;")
 	print("- Removed 'dickwrap.dll' and 'fhook.dll' modules;")
@@ -2763,7 +2764,7 @@ local function Crosshair()
 end
 
 hook.Add("RenderScene", "RenderScene", function(origin, angle, fov)
-	if gBool("Miscellaneous", "Textures", "Dark Mode") then
+	--[[if gBool("Miscellaneous", "Textures", "Dark Mode") then
 		for k, v in pairs(game.GetWorld():GetMaterials()) do
 		Material(v):SetVector("$color", Vector(0.05, 0.05, 0.05))
 		end
@@ -2775,8 +2776,8 @@ hook.Add("RenderScene", "RenderScene", function(origin, angle, fov)
 		end
 		render.SuppressEngineLighting(false)
 		render.ResetModelLighting(1, 1, 1)
-	end
-	render.SetLightingMode(gBool("Miscellaneous", "Textures", "Bright Mode") and 1 or 0)
+	end]]--
+	render.SetLightingMode(gBool("Miscellaneous", "Textures", "Remove Shadows") and 1 or 0)
 	local view = {
 		dopostprocess = true,
 		drawhud = true,
@@ -6389,7 +6390,7 @@ hook.Add("CalcView", "CalcView", function(me, pos, ang, fov)
 	}
 	local calcang = me:EyeAngles() * 1
 	local view = {}
-		if ib.FreeRoamCheck() and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) and (me:Alive() or me:Health() > 0) then
+		if ib.FreeRoamCheck() and not (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) and (me:Alive() or me:Health() > 0) then
 			local speed = gInt("Miscellaneous", "Free Roaming", "Speed:") / 5
 			local mouseang = Angle(roamy, roamx, 0)
 			if me:KeyDown(IN_SPEED) then
@@ -6453,7 +6454,7 @@ hook.Add("CalcView", "CalcView", function(me, pos, ang, fov)
 end)
 
 local function FreeRoam(cmd)
-	if (ib.FreeRoamCheck() and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) and (me:Alive() or me:Health() > 0)) then
+	if (ib.FreeRoamCheck() and not (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) and (me:Alive() or me:Health() > 0)) then
 		if roamon == false then
 			roampos, roamang = me:EyePos(), cmd:GetViewAngles()
 			roamy, roamx = cmd:GetViewAngles().x, cmd:GetViewAngles().y
