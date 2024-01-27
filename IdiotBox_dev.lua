@@ -713,7 +713,7 @@ do
 		surface.PlaySound("buttons/lightswitch2.wav")
 		return
 	end
-	if not file.Exists("lua/bin/gmcl_registry_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_big_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_bsendpacket_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_chatclear_win32.dll", "MOD") then
+	if not file.Exists("lua/bin/gmcl_big_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_bsendpacket_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_chatclear_win32.dll", "MOD") then
 		Popup(4.3, "ERROR! Please install the modules before initializing IdiotBox.", Color(255, 0, 0))
 		surface.PlaySound("buttons/lightswitch2.wav")
 		return
