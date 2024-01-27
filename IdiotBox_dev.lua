@@ -29,7 +29,7 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "7.1.b1-pre19"
+local version = "7.1.b1-pre20"
 
 local menukeydown, frame, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -107,9 +107,6 @@ ib.spread = {}
 ib.propval = 0
 ib.propdelay = 0
 ib.crouched = 0
-
-ib.R_ = debug.getregistry()
-ib.R = table.Copy(ib.R_)
 
 ib.creator = ib.creator or {}
 ib.contributors = ib.contributors or {}
@@ -716,7 +713,7 @@ do
 		surface.PlaySound("buttons/lightswitch2.wav")
 		return
 	end
-	if not file.Exists("lua/bin/gmcl_bsendpacket_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_chatclear_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_big_win32.dll", "MOD") then
+	if not file.Exists("lua/bin/gmcl_registry_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_big_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_bsendpacket_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_chatclear_win32.dll", "MOD") then
 		Popup(4.3, "ERROR! Please install the modules before initializing IdiotBox.", Color(255, 0, 0))
 		surface.PlaySound("buttons/lightswitch2.wav")
 		return
@@ -724,9 +721,9 @@ do
 	global.Loaded = true
 end
 
+require("big")
 require("bsendpacket")
 require("chatclear")
-require("big")
 
 global.bSendPacket = true
 global.unloaded = false
@@ -825,7 +822,7 @@ local function DrawText(w, h, title)
     if title == "IdiotBox v7.1.b1" then
         surface.SetTextPos(147, 18 - th / 2)
         surface.SetFont("MainFont2")
-        surface.DrawText("Latest build: d24m12-pre19")
+        surface.DrawText("Latest build: d27m01-pre20")
     end
 end
 
@@ -1443,7 +1440,7 @@ end
 local function Unload()
 	RunConsoleCommand("stopsound")
 	global.unloaded = true
-	local hooksToRemove = {"RenderScene", "ShutDown", "PostDrawViewModel", "PreDrawEffects", "HUDShouldDraw", "Tick", "Think", "CalcViewModelView", "PreDrawSkyBox", "PreDrawViewModel", "PreDrawPlayerHands", "RenderScreenspaceEffects", "player_hurt", "entity_killed", "Move", "CalcView", "AdjustMouseSensitivity", "ShouldDrawLocalPlayer", "CreateMove", "player_disconnect", "MiscPaint", "PreDrawOpaqueRenderables", "OnPlayerChat",}
+	local hooksToRemove = {"RenderScene", "ShutDown", "PostDrawViewModel", "PreDrawEffects", "HUDShouldDraw", "Tick", "Think", "CalcViewModelView", "PreDrawSkyBox", "PreDrawViewModel", "PreDrawPlayerHands", "RenderScreenspaceEffects", "player_hurt", "entity_killed", "Move", "EntityFireBullets", "CalcView", "AdjustMouseSensitivity", "ShouldDrawLocalPlayer", "CreateMove", "player_disconnect", "MiscPaint", "PreDrawOpaqueRenderables", "OnPlayerChat",}
 	for _, hookName in ipairs(hooksToRemove) do
 		hook.Remove(hookName, hookName)
 	end
@@ -1479,6 +1476,7 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Optimized UI design for more user-friendliness;")
 	print("- Cleaned up bad hooks and functions for better performance;")
 	print("- Merged Ragebot and Legitbot into a single function;")
+	print("- Fixed spread compensation patch crashing your game when shooting a non-HL2 weapon;")
 	print("- Fixed Entities not using the correct Visuals color;")
 	print("- Fixed entity list not showing props and being too cluttered;")
 	print("- Fixed visual bug, where weapons would display a weird name on Wallhack;")
@@ -1517,6 +1515,7 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Fixed anti-screengrabber security issues;")
 	print("- Fixed module issues upon reloading the script/ loading it in Single Player mode;")
 	print("- Fixed local variable limit and timer issues;")
+	print("- Fixed debug.getregistry() patch by adding the registry.dll module;")
 	print("- Reworked localizations and overall script for better performance;")
 	print("- Reorganized certain out-of-place functions and menu options;")
 	print("- Renamed certain misspelled or broken functions and menu options;")
@@ -3388,9 +3387,9 @@ local src = string.lower(debug.getinfo(2).short_src)
 	end
 end
 
-FindMetaTable('CUserCmd').ClearButtons = function( UserCmd )
+FindMetaTable('CUserCmd').ClearButtons = function(UserCmd)
 
-local src = string.lower( debug.getinfo(2).short_src )
+local src = string.lower(debug.getinfo(2).short_src)
 	if string.find(src, 'taunt_camera') then return
 		else return ib.ddance.clearbuttons(UserCmd)
 	end
@@ -5401,19 +5400,15 @@ function ib.spread.md5.PseudoRandom(number)
         a, b, c, d = ib.spread.md5.Transform(a, b, c, d, m)
     return bit.rshift(ib.spread.md5.Fix(b), 16) % 256
 end
- 
-ib.R_.Entity.FireBullets = function(pEnt, bul)
-    local wep = me:GetActiveWeapon() or nil
-    if not global.IsValid(wep) then return end
-    local class = wep:GetClass()
-    if not bul.Spread or not global.IsValid(wep) or not me:Alive() then
-        return ib.R.Entity.FireBullets(pEnt, bul)
-    end
-    if not ib.spread.Spread[class] or ib.spread.Spread[class] ~= bul.Spread then
-        ib.spread.Spread[class] = bul.Spread
-    end
-    return ib.R.Entity.FireBullets(pEnt, bul)
-end
+
+hook.Add("EntityFireBullets", "EntityFireBullets", function(pEnt, bul)
+	if not me:Alive() then return end
+	if pEnt ~= me then return end
+	local pWep = me:GetActiveWeapon()
+	if not IsValid(pWep) then return end
+	if not isvector(bul.Spread) then return end
+	ib.spread.Spread[pWep:GetClass()] = bul.Spread
+end)
 
 function ib.RemapClamped(val, A, B, C, D)
     if A == B then
