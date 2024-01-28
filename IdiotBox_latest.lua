@@ -705,20 +705,41 @@ do
 	end
 	if BRANCH ~= "unknown" then
 		Popup(4.3, "ERROR! Cannot load IdiotBox in this Garry's Mod branch.", Color(255, 0, 0))
+		chat.AddText(Color(255, 0, 0), "\n[ERROR LOGS]")
+		chat.AddText(Color(255, 255, 255), "- Incompatible game version (err:01)")
 		surface.PlaySound("buttons/lightswitch2.wav")
 		return
 	end
-	if not file.Exists("lua/bin/gmcl_bsendpacket_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_chatclear_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_big_win32.dll", "MOD") then
-		Popup(4.3, "ERROR! Please install the modules before initializing IdiotBox.", Color(255, 0, 0))
+	if global.game.SinglePlayer() then
+		Popup(4.3, "ERROR! Cannot load IdiotBox in Single Player mode.", Color(255, 0, 0))
+		chat.AddText(Color(255, 0, 0), "\n[ERROR LOGS]")
+		chat.AddText(Color(255, 255, 255), "- Missing multiplayer assets (err:02)")
+		surface.PlaySound("buttons/lightswitch2.wav")
+		return
+	end
+	if not file.Exists("lua/bin/gmcl_big_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_bsendpacket_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_chatclear_win32.dll", "MOD") then
+		Popup(4.3, "ERROR! Please install all of the modules before initializing IdiotBox.", Color(255, 0, 0))
+		chat.AddText(Color(255, 0, 0), "\n[ERROR LOGS]")
+		chat.AddText(Color(255, 255, 255), "- Missing/ invalid modules (err:03)\n")
+		chat.AddText(Color(255, 0, 0), "Required modules:")
+		if not file.Exists("lua/bin/gmcl_big_win32.dll", "MOD") then
+			chat.AddText(Color(255, 255, 255), "- gmcl_big_win32.dll")
+		end
+		if not file.Exists("lua/bin/gmcl_bsendpacket_win32.dll", "MOD") then
+			chat.AddText(Color(255, 255, 255), "- gmcl_bsendpacket_win32.dll")
+		end
+		if not file.Exists("lua/bin/gmcl_chatclear_win32.dll", "MOD") then
+			chat.AddText(Color(255, 255, 255), "- gmcl_chatclear_win32.dll")
+		end
 		surface.PlaySound("buttons/lightswitch2.wav")
 		return
 	end
 	global.Loaded = true
 end
 
+require("big")
 require("bsendpacket")
 require("chatclear")
-require("big")
 
 global.bSendPacket = true
 global.unloaded = false
@@ -818,7 +839,7 @@ local function DrawUpperText(w, h)
 	surface.SetTextPos(147, 18 - th / 2)
 	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: December 10th 2023")
+	surface.DrawText("Latest build: January 27th 2024")
 end
 
 local function MouseInArea(minx, miny, maxx, maxy)
@@ -1504,7 +1525,7 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Fixed improper rendering of the visuals;")
 	print("- Fixed script errors appearing upon loading IdiotBox through the webloader;")
 	print("- Fixed anti-screengrabber security issues;")
-	print("- Fixed module issues upon reloading the script/ loading it in Single Player mode;")
+	print("- Fixed module issues upon reloading the script;")
 	print("- Fixed local variable limit and timer issues;")
 	print("- Reworked localizations and overall script for better performance;")
 	print("- Reorganized certain out-of-place functions and menu options;")
@@ -1536,6 +1557,7 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Added engine prediction module (big.dll);")
 	print("- Added more hitsounds, killsounds, more music and a custom music player to Sounds;")
 	print("- Added more customization options to Panels;")
+	print("- Added error logs to help with confusion;")
 	print("- Reworked 'Bunny Hop' and 'Auto Strafe' from scratch;")
 	print("- Reworked 'Wallhack' from scratch;")
 	print("- Reworked 'Radar', 'Spectators', 'Debug Info' and 'Players List' from Panels;")
@@ -6773,14 +6795,6 @@ hook.Add("OnPlayerChat", "OnPlayerChat", function(chatPlayer, text, teamChat)
             end
         end
     end
-end)
-
-timer.Simple(0.1, function()
-	if global.game.SinglePlayer() then
-		chat.AddText(Color(255, 255, 0), "Attention! You may encounter issues when using IdiotBox in Singleplayer mode.")
-		chat.AddText(Color(255, 255, 0), "We recommend initializing in a Multiplayer local game/ public server.")
-		surface.PlaySound("buttons/lightswitch2.wav")
-	end
 end)
 
 timer.Simple(0.2, function()
