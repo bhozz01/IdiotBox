@@ -722,19 +722,16 @@ do
 		surface.PlaySound("buttons/lightswitch2.wav")
 		return
 	end
-	if not file.Exists("lua/bin/gmcl_big_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_bsendpacket_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_chatclear_win32.dll", "MOD") then
+	if not file.Exists("lua/bin/gmcl_big_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_chatclear_win32.dll", "MOD") then
 		Popup(4.3, "ERROR! Please install all of the modules before initializing IdiotBox.", Color(255, 0, 0))
 		chat.AddText(Color(255, 0, 0), "\n[ERROR LOGS]")
 		chat.AddText(Color(255, 255, 255), "- Missing/ invalid modules (err:03)\n")
 		chat.AddText(Color(255, 0, 0), "Required modules:")
 		if not file.Exists("lua/bin/gmcl_big_win32.dll", "MOD") then
-			chat.AddText(Color(255, 255, 255), "- gmcl_big_win32.dll")
-		end
-		if not file.Exists("lua/bin/gmcl_bsendpacket_win32.dll", "MOD") then
-			chat.AddText(Color(255, 255, 255), "- gmcl_bsendpacket_win32.dll")
+			chat.AddText(Color(255, 255, 255), "- gmcl_big_win32.dll (Main module)")
 		end
 		if not file.Exists("lua/bin/gmcl_chatclear_win32.dll", "MOD") then
-			chat.AddText(Color(255, 255, 255), "- gmcl_chatclear_win32.dll")
+			chat.AddText(Color(255, 255, 255), "- gmcl_chatclear_win32.dll (Chat removal module)")
 		end
 		surface.PlaySound("buttons/lightswitch2.wav")
 		return
@@ -743,7 +740,6 @@ do
 end
 
 require("big")
-require("bsendpacket")
 require("chatclear")
 
 global.bSendPacket = true
@@ -843,7 +839,7 @@ local function DrawText(w, h, title)
     if title == "IdiotBox v7.1.b1" then
         surface.SetTextPos(147, 18 - th / 2)
         surface.SetFont("MainFont2")
-        surface.DrawText("Latest build: d29m01-pre21")
+        surface.DrawText("Latest build: d01m02-pre22")
     end
 end
 
@@ -1586,7 +1582,7 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Removed 'Dark Mode' from Textures (temporarily);")
 	print("- Removed 'Screengrab Notifications' from Miscellaneous;")
 	print("- Removed 'Mirror' from Point of View;")
-	print("- Removed 'dickwrap.dll' and 'fhook.dll' modules;")
+	print("- Removed 'dickwrap.dll', 'bsendpacket.dll' and 'fhook.dll' modules;")
 	print("- Changed the Armor Bar and Armor Value colors from bright green to bright blue;")
 	print("\n")
 	print("IdiotBox TO-DO LIST (in no particular order)")
