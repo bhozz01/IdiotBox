@@ -29,7 +29,7 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "7.1.b1-pre22"
+local version = "7.1.b1-pre23"
 
 local menukeydown, frame, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -839,7 +839,7 @@ local function DrawText(w, h, title)
     if title == "IdiotBox v7.1.b1" then
         surface.SetTextPos(147, 18 - th / 2)
         surface.SetFont("MainFont2")
-        surface.DrawText("Latest build: d01m02-pre22")
+        surface.DrawText("Latest build: d16m03-pre23")
     end
 end
 
@@ -2598,7 +2598,6 @@ local function Players()
 	surface.SetTextPos(gInt("Adjustments", "List Adjustments", "Players List X:") + 3, hh + gInt("Adjustments", "List Adjustments", "Players List Y:"))
 	surface.SetTextColor(bordercol.r, bordercol.g - 24, bordercol.b - 80, gInt("Adjustments", "Others", "Text Opacity:"))
 	surface.DrawText("Players: "..player.GetCount().."/"..game.MaxPlayers())
-	local NWString = em.GetNWString(v)
 	for k, v in next, player.GetAll() do
 		if not v:IsValid() then continue end
 		surface.SetTextColor(bordercol.r, bordercol.g - 24, bordercol.b - 80, gInt("Adjustments", "Others", "Text Opacity:"))
