@@ -35,7 +35,7 @@ local menukeydown, menukeydown2, menuopen, mousedown, candoslider, drawlast, not
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
 local ib, drawnents, prioritylist, ignorelist, visible, dists, cones, traitors, tweps = {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
 
-local toggler, playerkills, namechangeTime, circlestrafeval, timeHoldingSpaceOnGround, servertime, faketick, propval, propdelay, crouched = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+local toggler, playerkills, namechangetime, circlestrafeval, timeHoldingSpaceOnGround, servertime, faketick, propval, propdelay, crouched = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 local menutextcol, bgmenucol, bordercol, teamvisualscol, enemyvisualscol, prioritytargetscol, ignoredtargetscol, miscvisualscol, teamchamscol, enemychamscol, crosshaircol, viewmodelcol = Color(255, 255, 255), Color(30, 30, 37), Color(0, 155, 255), Color(255, 255, 255), Color(255, 255, 255), Color(255, 0, 100), Color(175, 175, 175), Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 235, 255), Color(0, 235, 255)
 
 local windowX, windowY, windowW, windowH = 50, ScrH() / 3, 200, 200
