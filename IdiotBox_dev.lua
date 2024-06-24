@@ -29,7 +29,7 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "7.1.b1-pre23"
+local version = "7.1.b1-pre24"
 
 local menukeydown, frame, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -113,11 +113,10 @@ ib.contributors = ib.contributors or {}
 
 ib.creator["STEAM_0:0:63644275"] = {} -- me
 ib.creator["STEAM_0:0:162667998"] = {} -- my alt
-ib.contributors["STEAM_0:0:196578290"] = {} -- pinged (code dev, helped me out with optimization and many others)
-ib.contributors["STEAM_0:0:37523203"] = {} -- ljackson (code dev, helped me out with loads of optimization)
-ib.contributors["STEAM_0:0:4727797"] = {} -- data (code dev, helped me figure out a ton of stuff, especially lua nospread)
-ib.contributors["STEAM_0:0:74527587"] = {} -- s0lum (code dev indirectly, got many features from NCMD, including lua nospread)
-ib.contributors["STEAM_0:0:453356413"] = {} -- lenn (garry's mod server manager)
+ib.contributors["STEAM_0:0:196578290"] = {} -- pinged (code dev)
+ib.contributors["STEAM_0:0:37523203"] = {} -- ljackson (code dev)
+ib.contributors["STEAM_0:0:4727797"] = {} -- data (code dev)
+ib.contributors["STEAM_0:0:74527587"] = {} -- s0lum (code dev)
 ib.contributors["STEAM_0:1:69272242"] = {} -- leme (code dev)
 ib.contributors["STEAM_0:0:109145007"] = {} -- scottpott8 (code dev)
 ib.contributors["STEAM_0:0:205376238"] = {} -- vectivus (code dev)
@@ -125,7 +124,8 @@ ib.contributors["STEAM_0:0:200336136"] = {} -- asteya (code dev)
 ib.contributors["STEAM_0:1:188710062"] = {} -- uucka (code tester)
 ib.contributors["STEAM_0:1:191270548"] = {} -- cal1nxd (code tester)
 ib.contributors["STEAM_0:1:404757"] = {} -- xvcaligo // persix (code tester)
-ib.contributors["STEAM_0:0:453611223"] = {} -- naxut (code tester & advertiser and really good friend)
+ib.contributors["STEAM_0:0:453611223"] = {} -- naxut (code tester & advertiser)
+ib.contributors["STEAM_0:0:453356413"] = {} -- lenn (ex-garry's mod server manager)
 ib.contributors["STEAM_0:1:126050820"] = {} -- papertek // johnrg (ex-code dev & ex-discord manager)
 ib.contributors["STEAM_0:1:193781969"] = {} -- outcome // paradox (ex-code dev)
 ib.contributors["STEAM_0:1:59798110"] = {} -- mrsquid (old advertiser)
@@ -171,8 +171,8 @@ local options = {
 		}, 
 		{
 			{"Menus", 261, 20, 232, 222, 218}, 
-			{"Entity Finder Menu", "Checkbox", false, 78}, 
-			{"Plugin Loader Menu", "Checkbox", false, 78}, 
+			{"Entity Finder Menu", "Button", "", 92}, 
+			{"Plugin Loader Menu", "Button", "", 92}, 
 			{"Toolbar Style:", "Selection", "BG Color", {"Border Color", "BG Color"}, 92}, 
 			{""}, 
 			{"Menu Style:", "Selection", "Borderless", {"Bordered", "Borderless"}, 92}, 
@@ -839,7 +839,7 @@ local function DrawText(w, h, title)
     if title == "IdiotBox v7.1.b1" then
         surface.SetTextPos(147, 18 - th / 2)
         surface.SetFont("MainFont2")
-        surface.DrawText("Latest build: d16m03-pre23")
+        surface.DrawText("Latest build: d24m06-pre24")
     end
 end
 
@@ -1903,9 +1903,9 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 		surface.DrawRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, size + 66, 14)
 		local feat = var[1]
 		if feat == "Entity Finder Menu" then
-			info = "Opens the Entity Finder menu."
+			info = "Allows you to highlight any entitiy. Enable by toggling 'Show Entities' from Wallhack > Miscellaneous. (Menu panel is being reworked - may be buggy!)"
 		elseif feat == "Plugin Loader Menu" then
-			info = "Opens the Plugin Loader menu."
+			info = "Allows you to load any Lua script located in your Garry's Mod 'lua' folder. (Menu panel is being reworked - may be buggy!)"
 		elseif feat == "Save Configuration" then
 			info = "Saves your desired configuration file."
 		elseif feat == "Load Configuration" then
@@ -1934,7 +1934,12 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 				break
 			end
 		end
-		if text == "Unload Cheat" then
+		-- The functions for these two fuckers below are not called here, because of broken panels. You can find them in the 'Tick' hook, for now
+		if text == "Entity Finder Menu" then
+			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
+		elseif text == "Plugin Loader Menu" then
+			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
+		elseif text == "Unload Cheat" then
 			self:Remove()
 			Unload()
 		elseif text == "Print Changelog" then
@@ -3547,15 +3552,10 @@ hook.Add("Tick", "Tick", function()
 	if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown then
         menuopen = true
         Menu()
+		-- Make a bool for the two fuckers below, outside of the DrawButton context
 		EntityFinder()
 		PluginLoader()
     end
-	--[[if gBool("Main Menu", "Menus", "Entity Finder Menu") and menuopen and not menukeydown then
-		EntityFinder()
-	end
-	if gBool("Main Menu", "Menus", "Plugin Loader Menu") and menuopen and not menukeydown then
-		PluginLoader()
-	end]]--
     menukeydown = (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME))
 	if engine.ActiveGamemode() == "terrortown" then
 		if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Hide Round Report") then
