@@ -29,7 +29,7 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "7.1.b1-pre24"
+local version = "7.1.b1-pre25"
 
 local menukeydown, frame, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -839,7 +839,7 @@ local function DrawText(w, h, title)
     if title == "IdiotBox v7.1.b1" then
         surface.SetTextPos(147, 18 - th / 2)
         surface.SetFont("MainFont2")
-        surface.DrawText("Latest build: d24m06-pre24")
+        surface.DrawText("Latest build: d27m06-pre25")
     end
 end
 
@@ -1903,9 +1903,9 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 		surface.DrawRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, size + 66, 14)
 		local feat = var[1]
 		if feat == "Entity Finder Menu" then
-			info = "Allows you to highlight any entitiy. Enable by toggling 'Show Entities' from Wallhack > Miscellaneous. (Menu panel is being reworked - may be buggy!)"
+			info = "Allows you to highlight any entitiy. Enable by toggling 'Show Entities' from Wallhack > Miscellaneous. (MENU PANEL IS BEING REWORKED - MAY BE BUGGY!)"
 		elseif feat == "Plugin Loader Menu" then
-			info = "Allows you to load any Lua script located in your Garry's Mod 'lua' folder. (Menu panel is being reworked - may be buggy!)"
+			info = "Allows you to load any Lua script located in your Garry's Mod 'lua' folder. (MENU PANEL IS BEING REWORKED - MAY BE BUGGY!)"
 		elseif feat == "Save Configuration" then
 			info = "Saves your desired configuration file."
 		elseif feat == "Load Configuration" then
