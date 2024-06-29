@@ -1,4 +1,4 @@
-  //----IdiotBox v7.0.b8----//
+  //----IdiotBox v7.1.b1----//
  //--------By Phizz--------//
 //------------------------//
 
@@ -29,13 +29,13 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "7.0.b8"
+local version = "v7.1.b1"
 
-local menukeydown, menukeydown2, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
+local menukeydown, frame, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
 local ib, drawnents, prioritylist, ignorelist, visible, dists, cones, traitors, tweps = {}, {}, {}, {}, {}, {}, {}, {}, {}, {}
 
-local toggler, playerkills, namechangetime, circlestrafeval, timeHoldingSpaceOnGround, servertime, faketick, propval, propdelay, crouched = 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+local toggler, playerkills, namechangetime, circlestrafeval, timeHoldingSpaceOnGround, servertime, faketick = 0, 0, 0, 0, 0, 0, 0
 local menutextcol, bgmenucol, bordercol, teamvisualscol, enemyvisualscol, prioritytargetscol, ignoredtargetscol, miscvisualscol, teamchamscol, enemychamscol, crosshaircol, viewmodelcol = Color(255, 255, 255), Color(30, 30, 37), Color(0, 155, 255), Color(255, 255, 255), Color(255, 255, 255), Color(255, 0, 100), Color(175, 175, 175), Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255), Color(0, 235, 255), Color(0, 235, 255)
 
 local windowX, windowY, windowW, windowH = 50, ScrH() / 3, 200, 200
@@ -49,6 +49,7 @@ local old_yaw = 0.0
 local ox, oy = - 181, 0
 
 local mat = GetRenderTarget("mat"..os.time(), ScrW(), ScrH())
+local blur = Material("pp/blurscreen")
 
 local hide = {CHudHealth = true, CHudAmmo = true, CHudBattery = true, CHudSecondaryAmmo = true, CHudDamageIndicator = true, CHudCrosshair = true, }
 local crosshairhide = {CHudCrosshair = true, }
@@ -92,7 +93,7 @@ ib.chamsmat4 = CreateMaterial("flatmat2", "UnLitGeneric", {["$ignorez"] = 0, ["$
 ib.chamsmat5 = CreateMaterial("wiremat1", "UnLitGeneric", {["$ignorez"] = 1, ["$wireframe"] = 1, })
 ib.chamsmat6 = CreateMaterial("wiremat2", "UnLitGeneric", {["$ignorez"] = 0, ["$wireframe"] = 1, })
 
-ib.anticheatNames = {"QAC", "qac", "CAC", "cac", "SAC", "sac", "DAC", "dac", "ZAC", "zac", "TAC", "tac", "LSAC", "lsac", "simplicity", "Simplicity", "ZARP", "Zarp", "zarp", "swiftAC", "swiftac", "SwiftAC", "Swiftac", "SMAC", "smac", "MAC", "mac", "GAC", "gac", "GS", "gs", "GTS", "gts", "AE", "ae", "CardinalLib", "cardinallib", "cardinalLib", "Cardinallib"}
+ib.anticheatNames = {"QAC", "qac", "CAC", "cac", "SAC", "sac", "DAC", "dac", "ZAC", "zac", "TAC", "tac", "LSAC", "lsac", "simplicity", "Simplicity", "ZARP", "Zarp", "zarp", "swiftAC", "swiftac", "SwiftAC", "Swiftac", "simplac", "simplAC", "SimplAC", "Simplac", "memeac", "Memeac", "MemeAC", "memeAC", "SMAC", "smac", "MAC", "mac", "GAC", "gac", "GS", "gs", "GTS", "gts", "AE", "ae", "CardinalLib", "cardinallib", "cardinalLib", "Cardinallib"}
 ib.configFiles = {"config1.txt", "config2.txt", "config3.txt", "config4.txt", "config5.txt", "config6.txt", "config7.txt", "config8.txt", "config9.txt", "config10.txt"}
 ib.configOptions = {"Legit Config", "Rage Config", "HvH Config", "Misc Config #1", "Misc Config #2", "Misc Config #3", "Misc Config #4", "Misc Config #5", "Misc Config #6", "Misc Config #7"}
 
@@ -104,16 +105,19 @@ ib.NetMessages = {Buildmode = {"BuildMode", "buildmode", "_Kyle_Buildmode"}, God
 ib.frpressed, ib.frtoggle = false
 ib.spread = {}
 
+ib.propval = 0
+ib.propdelay = 0
+ib.crouched = 0
+
 ib.creator = ib.creator or {}
 ib.contributors = ib.contributors or {}
 
 ib.creator["STEAM_0:0:63644275"] = {} -- me
 ib.creator["STEAM_0:0:162667998"] = {} -- my alt
-ib.contributors["STEAM_0:0:196578290"] = {} -- pinged (code dev, helped me out with optimization and many others)
-ib.contributors["STEAM_0:0:37523203"] = {} -- ljackson (code dev, helped me out with loads of optimization)
-ib.contributors["STEAM_0:0:4727797"] = {} -- data (code dev, helped me figure out a ton of stuff, especially lua nospread)
-ib.contributors["STEAM_0:0:74527587"] = {} -- s0lum (code dev indirectly, got many features from NCMD, including lua nospread)
-ib.contributors["STEAM_0:0:453356413"] = {} -- lenn (garry's mod server manager)
+ib.contributors["STEAM_0:0:196578290"] = {} -- pinged (code dev)
+ib.contributors["STEAM_0:0:37523203"] = {} -- ljackson (code dev)
+ib.contributors["STEAM_0:0:4727797"] = {} -- data (code dev)
+ib.contributors["STEAM_0:0:74527587"] = {} -- s0lum (code dev)
 ib.contributors["STEAM_0:1:69272242"] = {} -- leme (code dev)
 ib.contributors["STEAM_0:0:109145007"] = {} -- scottpott8 (code dev)
 ib.contributors["STEAM_0:0:205376238"] = {} -- vectivus (code dev)
@@ -121,7 +125,8 @@ ib.contributors["STEAM_0:0:200336136"] = {} -- asteya (code dev)
 ib.contributors["STEAM_0:1:188710062"] = {} -- uucka (code tester)
 ib.contributors["STEAM_0:1:191270548"] = {} -- cal1nxd (code tester)
 ib.contributors["STEAM_0:1:404757"] = {} -- xvcaligo // persix (code tester)
-ib.contributors["STEAM_0:0:453611223"] = {} -- naxut (code tester & advertiser and really good friend)
+ib.contributors["STEAM_0:0:453611223"] = {} -- naxut (code tester & advertiser)
+ib.contributors["STEAM_0:0:453356413"] = {} -- lenn (ex-garry's mod server manager)
 ib.contributors["STEAM_0:1:126050820"] = {} -- papertek // johnrg (ex-code dev & ex-discord manager)
 ib.contributors["STEAM_0:1:193781969"] = {} -- outcome // paradox (ex-code dev)
 ib.contributors["STEAM_0:1:59798110"] = {} -- mrsquid (old advertiser)
@@ -138,15 +143,7 @@ end
 local options = {
 	["Main Menu"] = {
 		{
-			{"General Utilities", 16, 20, 232, 144, 218}, 
-			{"Optimize Game", "Checkbox", false, 78}, 
-			{"Spectator Mode", "Checkbox", false, 78}, 
-			{"Anti-AFK", "Checkbox", false, 78}, 
-			{"Anti-Ads", "Checkbox", false, 78}, 
-			{"Anti-Blind", "Checkbox", false, 78}, 
-		}, 
-		{
-			{"Trouble in Terrorist Town Utilities", 16, 177, 232, 222, 218}, 
+			{"Trouble in Terrorist Town Utilities", 16, 20, 232, 222, 218}, 
 			{"Traitor Finder", "Checkbox", false, 78}, 
 			{"Ignore Detectives as Innocent", "Checkbox", false, 78}, 
 			{"Ignore Fellow Traitors", "Checkbox", false, 78}, 
@@ -156,26 +153,28 @@ local options = {
 			{"Prop Kill Key:", "Toggle", 0, 92, 0}, 
 		}, 
 		{
-			{"DarkRP Utilities", 16, 412, 232, 148, 218}, 
+			{"DarkRP Utilities", 16, 255, 232, 150, 218}, 
 			{"Suicide Near Arrest Batons", "Checkbox", false, 78}, 
+			{"Money Value", "Checkbox", false, 78}, 
 			{"Transparent Props", "Checkbox", false, 78}, 
 			{"Transparency:", "Slider", 175, 255, 156}, 
 			{""}, 
-			{"Money Value", "Checkbox", false, 78}, 
 		}, 
 		{
-			{"Murder Utilities", 16, 573, 232, 145, 218}, 
+			{"Murder Utilities", 16, 419, 232, 195, 218}, 
 			{"Murderer Finder", "Checkbox", false, 78}, 
+			{"Murder Taunts:", "Selection", "Off", {"Off", "Funny", "Help", "Scream", "Morose", "Random"}, 92}, 
+			{""}, 
 			{"Hide End Round Board", "Checkbox", false, 78}, 
 			{"Hide Footprints", "Checkbox", false, 78}, 
 			{"No Black Screens", "Checkbox", false, 78}, 
 			{"Bystander Name", "Checkbox", false, 78}, 
 		}, 
 		{
-			{"Menus", 261, 20, 232, 225, 218}, 
+			{"Menus", 261, 20, 232, 222, 218}, 
 			{"Entity Finder Menu", "Button", "", 92}, 
 			{"Plugin Loader Menu", "Button", "", 92}, 
-			{"Toolbar Style:", "Selection", "BG Color", {"Border Color", "BG Color"}, 92}, 
+			{"Toolbar Style:", "Selection", "Background C...", {"Border Color", "Background C..."}, 92}, 
 			{""}, 
 			{"Menu Style:", "Selection", "Borderless", {"Bordered", "Borderless"}, 92}, 
 			{""}, 
@@ -183,7 +182,7 @@ local options = {
 			{""}, 
 		}, 
 		{
-			{"Configurations", 261, 258, 232, 175, 218}, 
+			{"Configurations", 261, 255, 232, 175, 218}, 
 			{"Automatically Save", "Checkbox", false, 78}, 
 			{"Save Configuration", "Button", "", 92}, 
 			{"Load Configuration", "Button", "", 92}, 
@@ -192,7 +191,7 @@ local options = {
 			{""}, 
 		}, 
 		{
-          	{"Others", 261, 446, 232, 130, 218}, 
+          	{"Others", 261, 444, 232, 130, 218}, 
 			{"Feature Tooltips", "Checkbox", true, 78}, -- Enabled by default
 			{"Apply Custom Name", "Button", false, 92}, 
 			{"Print Changelog", "Button", "", 92}, 
@@ -213,6 +212,14 @@ local options = {
 			{"Enabled", "Checkbox", false, 78}, 
 			{"Mode:", "Selection", "Disable All", {"Disable Aimbot", "Disable Anti-Aim", "Disable All"}, 92}, 
 			{""}, 
+		}, 
+		{
+			{"Miscellaneous", 506, 354, 232, 144, 218}, 
+			{"Optimize Game", "Checkbox", false, 78}, 
+			{"Spectator Mode", "Checkbox", false, 78}, 
+			{"Anti-AFK", "Checkbox", false, 78}, 
+			{"Anti-Ads", "Checkbox", false, 78}, 
+			{"Anti-Blind", "Checkbox", false, 78}, 
 		}, 
 	}, 
 	["Aim Assist"] = {
@@ -356,10 +363,10 @@ local options = {
 			{"Position Lines:", "Selection", "Off", {"Off", "Top", "Center", "Bottom"}, 92}, 
 			{""}, 
 			{"Name", "Checkbox", false, 78}, 
-			{"Health Bar", "Checkbox", false, 78}, 
-			{"Health Value", "Checkbox", false, 78}, 
-			{"Armor Bar", "Checkbox", false, 78}, 
-			{"Armor Value", "Checkbox", false, 78}, 
+			{"Health Info:", "Selection", "Off", {"Off", "Health Bar", "Health Value", "All"}, 92}, 
+			{""}, 
+			{"Armor Info:", "Selection", "Off", {"Off", "Armor Bar", "Armor Value", "All"}, 92}, 
+			{""}, 
 			{"Weapon", "Checkbox", false, 78}, 
 			{"Rank", "Checkbox", false, 78}, 
 			{"Distance", "Checkbox", false, 78}, 
@@ -429,30 +436,29 @@ local options = {
 	}, 
 	["Miscellaneous"] = {
 		{
-			{"Miscellaneous", 16, 20, 232, 220, 218}, 
+			{"Miscellaneous", 16, 20, 232, 170, 218}, 
 			{"Flash Spam", "Checkbox", false, 78}, 
 			{"Use Spam", "Checkbox", false, 78}, 
 			{"Name Stealer:", "Selection", "Off", {"Off", "Normal", "Priority Targets", "DarkRP Name"}, 92}, 
 			{""}, 
 			{"Emotes:", "Selection", "Off", {"Off", "dance", "muscle", "wave", "robot", "bow", "cheer", "laugh", "zombie", "agree", "disagree", "forward", "becon", "salute", "pers", "halt", "group", "Random"}, 92}, 
 			{""}, 
-			{"Murder Taunts:", "Selection", "Off", {"Off", "Funny", "Help", "Scream", "Morose", "Random"}, 92}, 
-			{""}, 
 		}, 
 		{
-			{"Textures", 16, 253, 232, 192, 218}, 
+			{"Textures", 16, 203, 232, 170, 218}, 
 			{"Transparent Walls", "Checkbox", false, 78}, 
 			{"Transparency:", "Slider", 82, 100, 156}, 
 			{""}, 
 			{"Remove Sky", "Checkbox", false, 78}, 
 			{"Remove 3D Skybox", "Checkbox", false, 78}, 
-			{"Bright Mode", "Checkbox", false, 78}, 
-			{"Dark Mode", "Checkbox", false, 78}, 
+			{"Remove Shadows", "Checkbox", false, 78}, 
+			--[[{"Dark Mode", "Checkbox", false, 78},]]
 		}, 
 		{
-			{"Panels", 16, 459, 232, 294, 218}, 
+			{"Panels", 16, 387, 232, 320, 218}, 
 			{"Spectators Window", "Checkbox", true, 78}, -- Enabled by default
 			{"Radar Window", "Checkbox", true, 78}, -- Enabled by default
+			{"Radar Names", "Checkbox", true, 78}, -- Enabled by default
 			{"Radar Distance:", "Slider", 50, 100, 156}, 
 			{""}, 
 			{"Debug Info", "Checkbox", true, 78}, -- Enabled by default
@@ -460,13 +466,13 @@ local options = {
 			{"Show List Titles", "Checkbox", true, 78}, -- Enabled by default
 			{"Panels Style:", "Selection", "Borderless", {"Bordered", "Borderless"}, 92}, 
 			{""}, 
-			{"Radar Lines Style:", "Selection", "Border Color", {"Border Color", "BG Color"}, 92}, 
+			{"Radar Lines Style:", "Selection", "Border Color", {"Border Color", "Background C..."}, 92}, 
 			{""}, 
 		}, 
 		{
 			{"Movement", 261, 20, 232, 425, 218}, 
 			{"Bunny Hop", "Checkbox", false, 78}, 
-			{"Auto Strafe:", "Selection", "Off", {"Off", "Legit", "Rage", "Directional"}, 92}, -- Directional strafing is a 'work-in-progress' feature
+			{"Auto Strafe:", "Selection", "Off", {"Off", "Legit", "Rage", "Directional"}, 92}, 
 			{""}, 
 			{"Circle Strafe", "Checkbox", false, 78}, 
 			{"Circle Strafe Key:", "Toggle", 0, 92, 0}, 
@@ -579,9 +585,10 @@ local options = {
 			{"Blue:", "SliderOld", 175, 255, 92}, 
 		}, 
 		{
-			{"Others", 261, 492, 232, 105, 88}, 
+			{"Others", 261, 492, 232, 130, 88}, 
 			{"Text Opacity:", "SliderOld", 255, 255, 92}, 
-			{"BG Darkness:", "SliderOld", 22, 25, 92}, 
+			{"Background Dark:", "SliderOld", 22, 25, 92}, 
+			{"Background Blur:", "SliderOld", 2, 6, 92}, 
 			{"Roundness:", "SliderOld", 0, 30, 92}, 
 		}, 
 		{
@@ -660,7 +667,7 @@ local function gInt(men, sub, lookup)
 end
 
 local function gKey(men, sub, lookup)
-    if not options[men] or me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) and g_SpawnMenu:IsVisible()) then
+    if not options[men] then
         return false
     end
     local value = GetOptionValue(men, sub, lookup)
@@ -803,12 +810,13 @@ for k, v in next, order do
 	visible[v] = false
 end
 
-local function DrawUpperText(w, h)
-	local curcol = Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 175)
-	local curcol2 = Color(bordercol.r, bordercol.g, bordercol.b, 175)
-	local curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 255)
-	if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
-		for i = 0, 28 do
+local function DrawText(w, h, title)
+    local curcol, curcol2, curcol3
+	curcol = Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 175)
+	curcol2 = Color(bordercol.r, bordercol.g, bordercol.b, 175)
+	curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 255)
+    if gOption("Main Menu", "Menus", "Toolbar Style:") == "Background C..." then
+        for i = 0, 28 do
 			surface.SetDrawColor(curcol)
 			surface.DrawLine(1.5, i + 1, w - 2, i + 1)
 		end
@@ -816,31 +824,36 @@ local function DrawUpperText(w, h)
 			surface.SetDrawColor(curcol3)
 			surface.DrawLine(0.5, i + 1, w - 1.5, i + 1)
 		end
-		surface.SetDrawColor(0, 0, 0, 255)
-		surface.DrawLine(0.5, 3, w - 1.5, 3)
-	elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
-		for i = 0, 28 do
+    elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
+        for i = 0, 28 do
 			surface.SetDrawColor(curcol2)
 			surface.DrawLine(1.5, i + 1, w - 2, i + 1)
 		end
-		surface.SetDrawColor(0, 0, 0, 255)
-		surface.DrawLine(0.5, 3, w - 1.5, 3)
-	end
-	surface.SetFont("MenuFont2")
-	local tw, th = surface.GetTextSize("")
-	surface.SetTextPos(37, 15 - th / 2)
-	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
-	surface.SetFont("MainFont")
-	surface.DrawText("IdiotBox v7.0.b8")
-	surface.SetTextPos(147, 18 - th / 2)
-	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
-	surface.SetFont("MainFont2")
-	surface.DrawText("Latest build: March 16th 2024")
+    end
+    surface.SetDrawColor(0, 0, 0, 255)
+    surface.DrawLine(0.5, 3, w - 1.5, 3)
+    surface.SetFont("MenuFont2")
+    local tw, th = surface.GetTextSize("")
+    surface.SetTextPos(37, 15 - th / 2)
+    surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
+    surface.SetFont("MainFont")
+    surface.DrawText(title)
+    if title == "IdiotBox v7.1.b1" then
+        surface.SetTextPos(147, 18 - th / 2)
+        surface.SetFont("MainFont2")
+        surface.DrawText("Latest build: June 30th 2024")
+    end
 end
 
 local function MouseInArea(minx, miny, maxx, maxy)
-	local mousex, mousey = gui.MousePos()
-	return(mousex < maxx and mousex > minx and mousey < maxy and mousey > miny)
+    if vgui.GetHoveredPanel() ~= frame then return false end
+    local mousex, mousey = gui.MousePos()
+    return(mousex < maxx and mousex > minx and mousey < maxy and mousey > miny)
+end
+
+local function MouseInArea2(minx, miny, maxx, maxy) -- Probably very stupid but it'll work for now
+    local mousex, mousey = gui.MousePos()
+    return(mousex < maxx and mousex > minx and mousey < maxy and mousey > miny)
 end
 
 local function DrawTabs(self, w, h)
@@ -855,17 +868,17 @@ local function DrawTabs(self, w, h)
 			local curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 145)
 			for i = 0, 1 do
 				surface.SetDrawColor(curcol)
-				surface.DrawLine(4.25 + maxx, 61 + i, 4.25 + maxx + sizeper, 61 + i)
+				surface.DrawLine(3.5 + maxx, 61 + i, 3.5 + maxx + sizeper, 61 + i)
 			end
-			if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
+			if gOption("Main Menu", "Menus", "Toolbar Style:") == "Background C..." then
 				for i = 0, 30 do
 					surface.SetDrawColor(curcol2)
-					surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
+					surface.DrawLine(3.5 + maxx, 30 + i, 3.5 + maxx + sizeper, 30 + i)
 				end
 			elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
 				for i = 0, 30 do
 					surface.SetDrawColor(curcol3)
-					surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
+					surface.DrawLine(3.5 + maxx, 30 + i, 3.5 + maxx + sizeper, 30 + i)
 				end
 			end
 		elseif (bMouse) then
@@ -874,17 +887,17 @@ local function DrawTabs(self, w, h)
 			local curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 65)
 			for i = 0, 1 do
 				surface.SetDrawColor(curcol)
-				surface.DrawLine(4.25 + maxx, 61 + i, 4.25 + maxx + sizeper, 61 + i)
+				surface.DrawLine(3.5 + maxx, 61 + i, 3.5 + maxx + sizeper, 61 + i)
 			end
-			if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
+			if gOption("Main Menu", "Menus", "Toolbar Style:") == "Background C..." then
 				for i = 0, 30 do
 					surface.SetDrawColor(curcol2)
-					surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
+					surface.DrawLine(3.5 + maxx, 30 + i, 3.5 + maxx + sizeper, 30 + i)
 				end
 			elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
 				for i = 0, 30 do
 					surface.SetDrawColor(curcol3)
-					surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
+					surface.DrawLine(3.5 + maxx, 30 + i, 3.5 + maxx + sizeper, 30 + i)
 				end
 			end
 		end
@@ -897,15 +910,15 @@ local function DrawTabs(self, w, h)
 		end
 		local curcol2 = Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 70)
 		local curcol3 = Color(bordercol.r, bordercol.g, bordercol.b, 70)
-		if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
+		if gOption("Main Menu", "Menus", "Toolbar Style:") == "Background C..." then
 			for i = 0, 30 do
 				surface.SetDrawColor(curcol2)
-				surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
+				surface.DrawLine(3.5 + maxx, 30 + i, 3.5 + maxx + sizeper, 30 + i)
 			end
 		elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
 			for i = 0, 30 do
 				surface.SetDrawColor(curcol3)
-				surface.DrawLine(4.25 + maxx, 30 + i, 4.25 + maxx + sizeper, 30 + i)
+				surface.DrawLine(3.5 + maxx, 30 + i, 3.5 + maxx + sizeper, 30 + i)
 			end
 		end
 		surface.SetFont("MainFont3")
@@ -972,7 +985,7 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 		elseif feat == "Automatically Save" then
 			info = "Saves your current configuration automatically."
 		elseif feat == "Feature Tooltips" then
-			info = "Detailed information about features will appear here, at the bottom of the menu."
+			info = "Detailed information about features will appear here, at the bottom right corner of the menu."
 		elseif feat == "Silent Aim" then
 			info = "Makes the Aimbot invisible for you."
 		elseif feat == "Auto Fire" then
@@ -1055,14 +1068,6 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			info = "Draws the player's name, along with the priority status."
 		elseif feat == "Bystander Name" then
 			info = "Draws the player's bystander name in Murder. Enable Wallhack for this feature to work."
-		elseif feat == "Health Bar" then
-			info = "Draws a health bar to the left side of the player."
-		elseif feat == "Health Value" then
-			info = "Draws the player's health value in numbers."
-		elseif feat == "Armor Bar" then
-			info = "Draws an armor bar to the right side of the player."
-		elseif feat == "Armor Value" then
-			info = "Draws the player's armor value in numbers."
 		elseif feat == "Weapon" then
 			info = "Draws the weapon currently held by the player."
 		elseif feat == "Rank" then
@@ -1094,7 +1099,9 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 		elseif feat == "Spectators Window" then
 			info = "Draws a spectator box, where you will be alerted if anyone is currently spectating you."
 		elseif feat == "Radar Window" then
-			info = "Draws a Radar Window."
+			info = "Draws a radar window."
+		elseif feat == "Radar Names" then
+			info = "Draws player/ entity names on the radar window."
 		elseif feat == "Debug Info" then
 			info = "Draws your ping, framerate, current date and time etc."
 		elseif feat == "Players List" then
@@ -1137,10 +1144,10 @@ local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
 			info = "Makes the sky completely black."
 		elseif feat == "Remove 3D Skybox" then
 			info = "Removes the 3D skybox. May improve framerate."
-		elseif feat == "Bright Mode" then
+		elseif feat == "Remove Shadows" then
 			info = "Creates uniform lighting throughout the whole map. Useful for dark maps."
-		elseif feat == "Dark Mode" then
-			info = "Gives the map a night-like aspect."
+		--[[elseif feat == "Dark Mode" then
+			info = "Gives the map a night-like aspect."]]--
 		elseif feat == "Custom FoV" then
 			info = "Allows you to set a custom FoV, outside of the default boundaries."
 		elseif feat == "Thirdperson" then
@@ -1294,6 +1301,10 @@ local function DrawDropdown(self, w, h, var, maxy, posx, posy, dist)
 			info = "Draws different types of boxes around the player."
 		elseif feat == "Chams:" then
 			info = "Draws playermodels through walls, either as custom models or regular playermodels."
+		elseif feat == "Health Info:" then
+			info = "Draws the health value and/ or a health bar to the left side of the player."
+		elseif feat == "Armor Info:" then
+			info = "Draws the armor value and/ or an armor bar to the right side of the player."
 		elseif feat == "Position Lines:" then
 			info = "Draws lines that indicate player positions."
 		elseif feat == "NPC Chams:" then
@@ -1472,7 +1483,7 @@ end
 
 function ib.Changelog() -- Ran out of local variables, again
 	print("===============================================================================================\n\n")
-	print("IdiotBox v7.0.b8 CODE BUGFIXES (in no particular order)")
+	print("IdiotBox v7.1.b1 GENERAL BUGFIXES")
 	print("")
 	print("Please note: This changelog includes bugfixes from previous updates as well.")
 	print("\n")
@@ -1484,24 +1495,21 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Fixed Entities not using the correct Visuals color;")
 	print("- Fixed entity list not showing props and being too cluttered;")
 	print("- Fixed visual bug, where weapons would display a weird name on Wallhack;")
-	print("- Fixed menu border bug, where if you clicked the border, the entire menu would turn blue;")
 	print("- Fixed alignment issues with the window borders;")
-	print("- Fixed being unable to fly WAC planes and rotate props or camera angles;")
+	print("- Fixed being unable to fly planes and rotate props or camera angles;")
 	print("- Fixed Kill Spam giving script errors when an NPC was killed;") -- Old, but gold
 	print("- Fixed Entity Loader Menu breaking the cheat menu after closing it;")
+	print("- Fixed Aim FoV automatically disabling Anti-Aim;")
+	print("- Fixed toggle keys glitching out and working improperly;")
 	print("- Fixed 3D Box and Hitbox rendering issues;")
 	print("- Fixed colliding options in the drop-down selecion tabs;")
 	print("- Fixed extreme bug where the anti-screengrabber would make you run out of VRAM and crash your system;")
 	print("- Fixed Bunny Hop and Auto Strafe breaking Free Roaming and breaking player movement when in water;")
 	print("- Fixed Hitbox spamming the console with error messages;")
 	print("- Fixed Snap Lines still showing when Aimbot is not enabled;")
-	print("- Fixed toggle keys activating when browsing game menus/ typing;")
 	print("- Fixed Aimbot and Triggerbot targeting spawning players;")
-	print("- Fixed misplaced tab selection lines;")
 	print("- Fixed Viewmodel Chams not always covering the viewmodel hands;")
-	print("- Fixed poorly placed checkboxes/ sliders/ selections;")
 	print("- Fixed Anti-Aim Resolver continuing to resolve angles when set to 'Off';")
-	print("- Fixed Thirdperson showing in spectator mode;")
 	print("- Fixed text coloring and positioning issues with the optimized Wallhack style;")
 	print("- Fixed directional strafing angle calculation errors;")
 	print("- Fixed Circle Strafe spaghetti code not functioning the way it should;")
@@ -1509,20 +1517,20 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Fixed Advanced Network Graph breaking the net_graph command;")
 	print("- Fixed name changer/ stealer reverting to your Steam username as soon as a new player joined the server;")
 	print("- Fixed Visuals causing severe lag;")
-	print("- Fixed Radar no longer working;")
+	print("- Fixed Radar no longer working and improved it;")
 	print("- Fixed Cheater Callout clearing chat when it should not;")
 	print("- Fixed Triggerbot Smooth Aim slowing down your overall mouse speed;")
 	print("- Fixed Witness Finder not working properly;")
 	print("- Fixed Reset Sounds only working when the menu is toggled;")
-	print("- Fixed certain outlines and fonts not having the proper dimensions;")
 	print("- Fixed a Projectile Prediction bug where dying would cause script errors;")
-	print("- Fixed Disable Interpolation, Optimize Game and Dark Mode not resetting when disabled;")
+	print("- Fixed Disable Interpolation and Optimize Game not resetting when disabled;")
 	print("- Fixed missing spread prediction and recoil compensation checks;")
 	print("- Fixed improper rendering of the visuals;")
 	print("- Fixed script errors appearing upon loading IdiotBox through the webloader;")
 	print("- Fixed anti-screengrabber security issues;")
 	print("- Fixed module issues upon reloading the script;")
 	print("- Fixed local variable limit and timer issues;")
+	print("- Fixed debug.getregistry() patch by adding the registry.dll module;")
 	print("- Reworked localizations and overall script for better performance;")
 	print("- Reorganized certain out-of-place functions and menu options;")
 	print("- Renamed certain misspelled or broken functions and menu options;")
@@ -1530,7 +1538,7 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Removed calls and variables that had no use;")
 	print("- Removed cloned hooks for better performance.")
 	print("\n")
-	print("IdiotBox v7.0.b8 FEATURE CHANGES (in no particular order)")
+	print("IdiotBox v7.1.b1 ADDITIONS & CHANGES")
 	print("")
 	print("Please note: This changelog includes feature changes from previous updates as well.")
 	print("\n")
@@ -1548,12 +1556,14 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Added 'Thirdperson Key', 'Custom Positions', 'Rainbow Mode' and 'Flat' & 'Wireframe' chams to Point of View;")
 	print("- Added 'Legit', 'Rage' and 'Directional' to Auto Strafe;")
 	print("- Added 'GUI Settings' to Miscellaneous;")
+	print("- Added better anti-cheat detection and protection;")
 	print("- Added customizable list adjustments to Priority List;")
 	print("- Added spread prediction and recoil compensation to Triggerbot;")
 	print("- Added engine prediction module (big.dll);")
 	print("- Added more hitsounds, killsounds, more music and a custom music player to Sounds;")
 	print("- Added more customization options to Panels;")
 	print("- Added error logs to help with confusion;")
+	print("- Added background blur;")
 	print("- Reworked 'Bunny Hop' and 'Auto Strafe' from scratch;")
 	print("- Reworked 'Wallhack' from scratch;")
 	print("- Reworked 'Radar', 'Spectators', 'Debug Info' and 'Players List' from Panels;")
@@ -1561,31 +1571,40 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Reworked 'Show NPCs' and 'Show Entities' from Visuals;")
 	print("- Reworked 'Emotes' from Miscellaneous, allowing you to move while acting;")
 	print("- Reworked 'Free Roaming' from Miscellaneous, so that you will no longer have to hold down the toggle key in order to roam;")
+	print("- Reworked 'Feature Tooltips' from scratch;")
 	print("- Reworked anti-screengrabber from scratch;")
-	print("- Reworked the menu's design from scratch, again;")
-	print("- Reworked old 'file.Read' blocker from scratch;")
+	print("- Reworked the menu's design from scratch;")
 	print("- Reworked spread prediction from scratch;")
 	print("- Reworked recoil compensation from scratch;")
 	print("- Removed 'Triggerbot' tab and merged it with the 'Aim Assist' tab;")
 	print("- Removed 'Shoutout' and 'Drop Money' from Chat Spam;")
+	print("- Removed 'Dark Mode' from Textures (temporarily);")
 	print("- Removed 'Screengrab Notifications' from Miscellaneous;")
 	print("- Removed 'Mirror' from Point of View;")
 	print("- Removed 'dickwrap.dll', 'bsendpacket.dll' and 'fhook.dll' modules;")
-	print("- Changed the Armor Bar and Armor Value colors from bright green to bright blue;")
-	print("- Changed the default colors, menu size and others.")
+	print("- Changed the Armor Bar and Armor Value colors from bright green to bright blue.")
 	print("\n")
-	print("IdiotBox TO-DO LIST (in no particular order)")
+	print("IdiotBox TO-DO LIST")
 	print("")
 	print("Please note: This list includes any potential future additions/ changes/ removals, and is subject to change.")
 	print("\n")
-	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): add 'Backtracking' and 'Multi-Tap' to Aim Assist;")
-	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): add 'Fake Lag' & 'Fake Angles' chams to Visuals;")
-	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): add true fake angles to Anti-Aim;")
-	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): add color pickers instead of manual sliders;")
-	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): rework 'Auto Wallbang' from scratch;")
-	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): rework 'Projectile Prediction' from scratch;")
-	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): rework menu base from scratch;")
-	print("- WORK-IN-PROGRESS (ETA: ~v7.1.b1): fix all unoptimized calls and functions.")
+	print("- Add 'Backtracking' and 'Multi-Tap' to Aim Assist;")
+	print("- Add 'Fake Lag' & 'Fake Angles' chams to Visuals;")
+	print("- Add true fake angles to Anti-Aim;")
+	print("- Add color pickers instead of manual sliders;")
+	print("- Rework 'Auto Wallbang' from scratch;")
+	print("- Rework 'Projectile Prediction' from scratch;")
+	print("- Fix all unoptimized calls and functions.")
+	print("\n")
+	print("IdiotBox WORK-IN-PROGRESS LIST")
+	print("")
+	print("Please note: This list includes any potential future additions/ changes/ removals, and is subject to change.")
+	print("\n")
+	print("- Add adaptive menu resolution scaling;")
+	print("- Rework menu base from scratch;")
+	print("- Rework 'Entity Finder' and 'Plugin Loader' menus;")
+	print("- Fix questionable UI choices;")
+	print("- Fix key binds getting stuck, seemingly at random times.")
 	print("\n\n===============================================================================================")
 	timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Successfully printed changelog to console!", Color(0, 255, 0)) end)
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
@@ -1601,23 +1620,36 @@ end
 
 local function EntityFinder()
 	local added = {}
-	local finder = vgui.Create("DFrame")
-	finder:SetSize(764, 859)
-	finder:Center()
+	if IsValid(finder) then
+		if ib.finderopened then return end
+		ib.finderopened = true
+		finder:SetVisible(!finder:IsVisible())
+		ib.finderopen = finder:IsVisible()
+		candoslider = false
+		drawlast = nil
+		ib.finderopened = nil
+		return
+	end
+	finder = vgui.Create("DFrame")
+	finder:SetPos(1240, 703)
+	finder:SetSize(661, 359)
 	finder:SetTitle("")
 	finder:MakePopup()
 	finder:ShowCloseButton(false)
 	finder:SetDraggable(true)
+	if !finder:IsVisible() then
+		finder:SetVisible(finder:IsVisible())
+	end
 	local entlist = vgui.Create("DListView", finder)
 	entlist:SetPos(17, 75)
-	entlist:SetSize(300, 500)
+	entlist:SetSize(250, 200)
 	entlist:SetMultiSelect(false)
-	entlist:AddColumn("Existing entities"):SetFixedWidth(300)
+	entlist:AddColumn("Existing entities"):SetFixedWidth(250)
 	local drawlist = vgui.Create("DListView", finder)
-	drawlist:SetPos(451, 75)
-	drawlist:SetSize(300, 500)
+	drawlist:SetPos(395, 75)
+	drawlist:SetSize(250, 200)
 	drawlist:SetMultiSelect(false)
-	drawlist:AddColumn("Drawn entities"):SetFixedWidth(300)
+	drawlist:AddColumn("Drawn entities"):SetFixedWidth(250)
 	function ib.RefreshEntities()
 		entlist:Clear()
 		drawlist:Clear()
@@ -1642,7 +1674,7 @@ local function EntityFinder()
 		end
 	local refresh = vgui.Create("DButton", finder)
 	refresh:SetText("Refresh")
-	refresh:SetPos(331, 350)
+	refresh:SetPos(281, 215)
 	refresh:SetSize(100, 30)
 	refresh.DoClick = function()
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
@@ -1650,7 +1682,7 @@ local function EntityFinder()
 	end
 	local add = vgui.Create("DButton", finder)
 	add:SetText(">>")
-	add:SetPos(331, 250)
+	add:SetPos(281, 115)
 	add:SetSize(100, 30)
 	add.DoClick = function()
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
@@ -1666,7 +1698,7 @@ local function EntityFinder()
 	end
 	local remove = vgui.Create("DButton", finder)
 	remove:SetText("<<")
-	remove:SetPos(331, 300)
+	remove:SetPos(281, 165)
 	remove:SetSize(100, 30)
 	remove.DoClick = function()
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
@@ -1685,12 +1717,12 @@ local function EntityFinder()
 		ib.RefreshEntities()
 	end
 	local addcustom = vgui.Create("DTextEntry", finder)
-	addcustom:SetPos(531, 600)
+	addcustom:SetPos(437, 290)
 	addcustom:SetSize(140, 20)
 	addcustom:SetText("")
 	local addcustombutton = vgui.Create("DButton", finder)
 	addcustombutton:SetText("Add")
-	addcustombutton:SetPos(676, 600)
+	addcustombutton:SetPos(581, 290)
 	addcustombutton:SetSize(60, 20)
 	addcustombutton.DoClick = function()
 	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
@@ -1702,7 +1734,7 @@ local function EntityFinder()
 		ib.RefreshEntities()
 	end
 	local find = vgui.Create("DTextEntry", finder)
-	find:SetPos(91, 600)
+	find:SetPos(57, 290)
 	find:SetSize(205, 20)
 	find:SetText("")
 	find.OnChange = function()
@@ -1762,21 +1794,20 @@ local function EntityFinder()
 			draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 1, 1, w - 2, h - 2, Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255))
 		end
 		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 2, 2, w - 4, h - 4, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
-		DrawUpperText(w, h)
-		draw.SimpleText("Search Entity:", "MenuFont2", 17, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
-		draw.SimpleText("Add Entity:", "MenuFont2", 461, 610, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		DrawText(w, h, "Entity Finder Menu")
+		draw.SimpleText("Search:", "MenuFont2", 17, 299, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		draw.SimpleText("Add:", "MenuFont2", 411, 299, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
 	end
 	finder.othink = finder.Think
 	finder.Think = function()
-		if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and (not menukeydown2 or global.unloaded == true) then
-			finder:SlideUp(0.5)
-			timer.Simple(0.5, function()
+		if finder:IsVisible() and global.unloaded == true then
 			finder:Remove()
 			menuopen = false
 			candoslider = false
 			drawlast = nil
+		end
+		if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and (not menukeydown or global.unloaded == true) then
 			file.Write(folder.."/entities.txt", util.TableToJSON(drawnents))
-			end)
 		end
 	finder:othink()
 	end
@@ -1784,21 +1815,34 @@ local function EntityFinder()
 end
 
 local function PluginLoader()
-	local plugin = vgui.Create("DFrame")
-	plugin:SetSize(764, 859)
-	plugin:Center()
+	if IsValid(plugin) then
+		if ib.pluginopened then return end
+		ib.pluginopened = true
+		plugin:SetVisible(!plugin:IsVisible())
+		ib.pluginopen = plugin:IsVisible()
+		candoslider = false
+		drawlast = nil
+		ib.pluginopened = nil
+		return
+	end
+	plugin = vgui.Create("DFrame")
+	plugin:SetPos(166, 400)
+	plugin:SetSize(396, 332)
 	plugin:SetTitle("")
 	plugin:MakePopup()
 	plugin:ShowCloseButton(false)
 	plugin:SetDraggable(true)
+	if !plugin:IsVisible() then
+		plugin:SetVisible(plugin:IsVisible())
+	end
 	local pluginlist = vgui.Create("DListView", plugin)
-	pluginlist:SetPos(150, 75)
-	pluginlist:SetSize(320, 500)
+	pluginlist:SetPos(17, 75)
+	pluginlist:SetSize(250, 200)
 	pluginlist:SetMultiSelect(false)
-	pluginlist:AddColumn("Available files ("..#file.Find("lua/*.lua","GAME", "nameasc")-1 ..")"):SetFixedWidth(320)
+	pluginlist:AddColumn("Available files ("..#file.Find("lua/*.lua","GAME", "nameasc")-1 ..")"):SetFixedWidth(250)
 	local pluginload = vgui.Create("DButton", plugin)
 	pluginload:SetText("Load")
-	pluginload:SetPos(500, 75)
+	pluginload:SetPos(281, 115)
 	pluginload:SetSize(100, 30)
 	pluginload.DoClick = function()
 		chat.PlaySound()
@@ -1812,7 +1856,7 @@ local function PluginLoader()
 	end
 	local pluginrefresh = vgui.Create("DButton", plugin )
 	pluginrefresh:SetText("Refresh")
-	pluginrefresh:SetPos(500, 115)
+	pluginrefresh:SetPos(281, 165)
 	pluginrefresh:SetSize(100, 30)
 	pluginrefresh.DoClick = function()
 		chat.PlaySound()
@@ -1834,18 +1878,15 @@ local function PluginLoader()
 			draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 1, 1, w - 2, h - 2, Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255))
 		end
 		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 2, 2, w - 4, h - 4, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
-		DrawUpperText(w, h)
+		DrawText(w, h, "Plugin Loader Menu")
 	end
 	plugin.othink = plugin.Think
 	plugin.Think = function()
-		if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and (not menukeydown2 or global.unloaded == true) then
-			plugin:SlideUp(0.5)
-			timer.Simple(0.5, function()
+		if plugin:IsVisible() and global.unloaded == true then
 			plugin:Remove()
 			menuopen = false
 			candoslider = false
 			drawlast = nil
-			end)
 		end
 	plugin:othink()
 	end
@@ -1868,9 +1909,9 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 		surface.DrawRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, size + 66, 14)
 		local feat = var[1]
 		if feat == "Entity Finder Menu" then
-			info = "Opens the Entity Finder menu."
+			info = "Allows you to highlight any entitiy. Enable by toggling 'Show Entities' from Visuals > Miscellaneous."
 		elseif feat == "Plugin Loader Menu" then
-			info = "Opens the Plugin Loader menu."
+			info = "Allows you to load any Lua script located in your Garry's Mod 'lua' folder."
 		elseif feat == "Save Configuration" then
 			info = "Saves your desired configuration file."
 		elseif feat == "Load Configuration" then
@@ -1899,7 +1940,12 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 				break
 			end
 		end
-		if text == "Unload Cheat" then
+		-- The functions for these two fuckers below are not called here, because of broken panels. You can find them in the 'Tick' hook, for now
+		if text == "Entity Finder Menu" then
+			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
+		elseif text == "Plugin Loader Menu" then
+			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
+		elseif text == "Unload Cheat" then
 			self:Remove()
 			Unload()
 		elseif text == "Print Changelog" then
@@ -1920,26 +1966,6 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 					timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 				end
 			end
-		elseif text == "Entity Finder Menu" then
-			self:Remove()
-			if gBool("Main Menu", "Configurations", "Automatically Save") then
-				if configIndex then
-					ib.SaveConfig(configIndex)
-				end
-			end
-			EntityFinder()
-			timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Successfully loaded Entities Menu!", Color(0, 255, 0)) end)
-			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
-		elseif text == "Plugin Loader Menu" then
-			self:Remove()
-			if gBool("Main Menu", "Configurations", "Automatically Save") then
-				if configIndex then
-					ib.SaveConfig(configIndex)
-				end
-			end
-			PluginLoader()
-			timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Successfully loaded Plugin Menu!", Color(0, 255, 0)) end)
-			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Apply Custom Name" then
 			big.ChangeName(GetConVarString("ib_changename"))
 			timer.Create("ChatPrint", 0.1, 1, function() Popup(3.2, "Successfully applied custom username!", Color(0, 255, 0)) end)
@@ -2055,17 +2081,29 @@ local function CacheColors()
 end
 
 local function Menu()
-	local frame = vgui.Create("DFrame")
+	if frame then
+		if ib.menuopened then return end
+		ib.menuopened = true
+		frame:SetVisible(!frame:IsVisible())
+		menuopen = frame:IsVisible()
+		candoslider = false
+		drawlast = nil
+		ib.menuopened = nil
+		return
+	end
+	frame = vgui.Create("DFrame")
 	--[[ !!FUTURE UPDATE!!
 	frame:SetSize(UIScale(1022), UIScale(1150))
 	!!FUTURE UPDATE!! ]]--
 	frame:SetSize(764, 859)
 	frame:Center()
-	frame:SlideDown(0.5)
 	frame:SetTitle("")
 	frame:MakePopup()
 	frame:ShowCloseButton(false)
 	frame:SetDraggable(true)
+	if !frame:IsVisible() then
+		frame:SetVisible(frame:IsVisible())
+	end
 	frame.Paint = function(self, w, h)
 		if (candoslider and not mousedown and not drawlast and not input.IsMouseDown(MOUSE_LEFT)) then
 			candoslider = false
@@ -2077,7 +2115,7 @@ local function Menu()
 			draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 1, 1, w - 2, h - 2, Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255))
 		end
 		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 2, 2, w - 4, h - 4, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
-		DrawUpperText(w, h)
+		DrawText(w, h, "IdiotBox v7.1.b1")
 		DrawTabs(self, w, h)
 		DrawSub(self, w, h)
 		if (drawlast) then
@@ -2086,7 +2124,7 @@ local function Menu()
 		end
 		mousedown = input.IsMouseDown(MOUSE_LEFT)
 		if gBool("Main Menu", "Others", "Feature Tooltips") and info ~= "" then
-			draw.SimpleText(info, "MenuFont2", w / 2, h / 1.03, Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:")), TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
+			draw.SimpleText(info, "MenuFont", w / 1.02, h / 1.015, Color(menutextcol.r, menutextcol.g, menutextcol.b, 100), TEXT_ALIGN_RIGHT, TEXT_ALIGN_BOTTOM)
 		end
 	end
 	frame.othink = frame.Think
@@ -2102,7 +2140,7 @@ local function Menu()
 			end)
 		end
 	local musicPlayerOptions = {"Rust", "Resonance", "Daisuke", "A Burning M...", "Libet's Delay", "Lullaby Of T...", "Erectin' a River", "Fleeting Love", "Malo Tebya", "Vermilion", "Gravity", "Remorse", "Hold", "Green Valleys", "FP3"}
-	if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and (not menukeydown2 or global.unloaded == true) then
+	if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and (not menukeydown or global.unloaded == true) then
 	if gOption("Miscellaneous", "Sounds", "Music Player:") ~= "Off" then
 		local selectedOption = gOption("Miscellaneous", "Sounds", "Music Player:")
 			if selectedOption == "Random" then
@@ -2118,13 +2156,6 @@ local function Menu()
 				end)
 			end
 		end
-		frame:SlideUp(0.5)
-		timer.Simple(0.5, function()
-			frame:Remove()
-			menuopen = false
-			candoslider = false
-			drawlast = nil
-		end)
 		local selectedConfig = gOption("Main Menu", "Configurations", "Configuration:")
 		local configIndex
 		for index, config in ipairs(ib.configOptions) do
@@ -2322,7 +2353,7 @@ local function GetAngle(ang)
 end
 
 local function FixAngle(ang)
-	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or (not me:Alive() or me:Health() < 1) or FixTools() then return end
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or (not me:Alive() or me:Health() < 1) or FixTools() then return end
 	ang.p = math.Clamp(math.NormalizeAngle(ang.p), -89, 89)
 	ang.x = math.NormalizeAngle(ang.x)
 end
@@ -2491,6 +2522,7 @@ local function Spectator()
 	end
 	hudspecslength = specscount + 19
 end
+
 local function Radar()
 	local col = Color(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
 	local fa = me:EyeAngles()
@@ -2504,7 +2536,7 @@ local function Radar()
 	draw.NoTexture()
 	if gOption("Miscellaneous", "Panels", "Radar Lines Style:") == "Border Color" then
 		surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 255 - 75)
-	elseif gOption("Miscellaneous", "Panels", "Radar Lines Style:") == "BG Color" then
+	elseif gOption("Miscellaneous", "Panels", "Radar Lines Style:") == "Background C..." then
 		surface.SetDrawColor(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255)
 	end
 	surface.DrawLine(gInt("Adjustments", "Window Adjustments", "Radar X:") + 209 * 0.5, gInt("Adjustments", "Window Adjustments", "Radar Y:") + 24, gInt("Adjustments", "Window Adjustments", "Radar X:") + 209 * 0.5, gInt("Adjustments", "Window Adjustments", "Radar Y:") + 190)
@@ -2530,6 +2562,19 @@ local function Radar()
 				surface.DrawRect(newX - 1.5, newY - 1.5, 8, 8)
 				surface.SetDrawColor(color)
 				surface.DrawRect(newX - 0.5, newY - 0.5, 6, 6)
+				if gBool("Miscellaneous", "Panels", "Radar Names") then
+					surface.SetFont("VisualsFont2")
+					surface.SetTextColor(color)
+					if v:IsPlayer() then
+						center1 = surface.GetTextSize(v:GetName())
+						surface.SetTextPos(newX + 4 - (center1 / 2), newY + 8)
+						surface.DrawText(v:GetName())
+					else
+						center2 = surface.GetTextSize(v:GetClass())
+						surface.SetTextPos(newX + 4 - (center2 / 2), newY + 8)
+						surface.DrawText(v:GetClass())
+					end
+				end
 			end
 		end
 	end
@@ -2620,7 +2665,7 @@ local function PlayerList()
 		surface.SetDrawColor(curcol4)
 		surface.DrawLine(pos_x - 1, pos_y - 64 + 62 + i, pos_x + 348, pos_y - 64 + 62 + i)
 	end
-	if gOption("Main Menu", "Menus", "Toolbar Style:") == "BG Color" then
+	if gOption("Main Menu", "Menus", "Toolbar Style:") == "Background C..." then
 		surface.SetDrawColor(curcol2)
 		surface.DrawRect(pos_x, pos_y, 350, 15)
 	elseif gOption("Main Menu", "Menus", "Toolbar Style:") == "Border Color" then
@@ -2636,18 +2681,18 @@ local function PlayerList()
 	draw.SimpleText("Priority", "MiscFont", pos_x + 214, pos_y, Color(menutextcol.r, menutextcol.g, menutextcol.b), TEXT_ALIGN_LEFT, TEXT_ALIGN_LEFT)
 	for k, v in next, player.GetAll() do
 		if not v:IsValid() or v == me then continue end
-		if MouseInArea(pos_x, pos_y + offset, pos_x + 350, pos_y + offset + 14) then
+		if MouseInArea2(pos_x, pos_y + offset, pos_x + 350, pos_y + offset + 14) then
 			if input.IsMouseDown(107) then
-				if MouseInArea(pos_x + 30, pos_y + offset, pos_x + 209, pos_y + offset + 14) and not v:IsBot() then
+				if MouseInArea2(pos_x + 30, pos_y + offset, pos_x + 209, pos_y + offset + 14) and not v:IsBot() then
 					gui.OpenURL("http://steamcommunity.com/profiles/"..v:SteamID64().."/")
-				elseif MouseInArea(pos_x + 209, pos_y + offset, pos_x + 350, pos_y + offset + 14) and not pressed then
+				elseif MouseInArea2(pos_x + 209, pos_y + offset, pos_x + 350, pos_y + offset + 14) and not pressed then
 					Prioritize(v)
 					pressed = true
 				end
 			elseif input.IsMouseDown(108) then
-				if MouseInArea(pos_x + 30, pos_y + offset, pos_x + 209, pos_y + offset + 14) and not v:IsBot() then
+				if MouseInArea2(pos_x + 30, pos_y + offset, pos_x + 209, pos_y + offset + 14) and not v:IsBot() then
 					SetClipboardText("http://steamcommunity.com/profiles/"..v:SteamID64().."/")
-				elseif MouseInArea(pos_x + 209, pos_y + offset, pos_x + 350, pos_y + offset + 14) and not pressed then
+				elseif MouseInArea2(pos_x + 209, pos_y + offset, pos_x + 350, pos_y + offset + 14) and not pressed then
 					Ignore(v)
 					pressed = true
 				end
@@ -2684,7 +2729,7 @@ local function PlayerList()
 end
 
 local function Crosshair()
-	if menuopen or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
+	if menuopen or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
 	if (gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "Box") then
 	local x1, y1 = ScrW() * 0.5, ScrH() * 0.5
 		surface.SetDrawColor(0, 0, 0, gInt("Adjustments", "Crosshair Color", "Opacity:"))
@@ -2746,7 +2791,7 @@ local function Crosshair()
 end
 
 hook.Add("RenderScene", "RenderScene", function(origin, angle, fov)
-	if gBool("Miscellaneous", "Textures", "Dark Mode") then
+	--[[if gBool("Miscellaneous", "Textures", "Dark Mode") then
 		for k, v in pairs(game.GetWorld():GetMaterials()) do
 		Material(v):SetVector("$color", Vector(0.05, 0.05, 0.05))
 		end
@@ -2758,8 +2803,8 @@ hook.Add("RenderScene", "RenderScene", function(origin, angle, fov)
 		end
 		render.SuppressEngineLighting(false)
 		render.ResetModelLighting(1, 1, 1)
-	end
-	render.SetLightingMode(gBool("Miscellaneous", "Textures", "Bright Mode") and 1 or 0)
+	end]]--
+	render.SetLightingMode(gBool("Miscellaneous", "Textures", "Remove Shadows") and 1 or 0)
 	local view = {
 		dopostprocess = true,
 		drawhud = true,
@@ -2813,9 +2858,9 @@ local function ChatSpam()
 		["Nazi 1"] = {"Die Fahne hoch! Die Reihen fest geschlossen", "SA marschiert mit ruhig festem Schritt", "Kam'raden, die Rotfront und Reaktion erschossen", "Marschier'n im Geist in unser'n Reihen mit", "Die Straße frei den braunen Bataillonen", "Die Straße frei dem Sturmabteilungsmann", "Es schau'n aufs Hakenkreuz voll Hoffnung schon Millionen", "Der Tag für Freiheit und für Brot bricht an", "Zum letzten Mal wird Sturmalarm geblasen", "Zum Kampfe steh'n wir alle schon bereit", "Schon flattern Hitlerfahnen über allen Straßen", "Die Knechtschaft dauert nur noch kurze Zeit", "Die Fahne hoch! Die Reihen fest geschlossen", "SA marschiert mit ruhig festem Schritt", "Kam'raden, die Rotfront und Reaktion erschossen", "Marschier'n im Geist in unser'n Reihen mit"},
 		["Nazi 2"] = {"SS marschiert in Feindesland", "Und singt ein Teufelslied", "Ein Schütze steht am Wolgastrand", "Und leise summt er mit", "Wir pfeifen auf Unten und Oben", "Und uns kann die ganze Welt", "Verfluchen oder auch loben", "Grad wie es jedem gefällt", "Wo wir sind da geht's immer vorwärts", "Und der Teufel, der lacht nur dazu", "Ha, ha, ha, ha, ha, ha", "Wir kämpfen für Deutschland", "Wir kämpfen für Hitler", "Der Rote kommt niemehr zur Ruh'", "Wir kämpften schon in mancher Schlacht", "In Nord, Süd, Ost und West", "Und stehen nun zum Kampf bereit", "Gegen die rote Pest", "SS wird nicht ruh'n, wir vernichten", "Bis niemand mehr stört Deutschlands Glück", "Und wenn sich die Reihen auch lichten", "Für uns gibt es nie ein Zurück", "Wo wir sind da geht's immer vorwärts", "Und der Teufel, der lacht nur dazu", "Ha, ha, ha, ha, ha, ha", "Wir kämpfen für Deutschland", "Wir kämpfen für Hitler", "Der Rote kommt niemehr zur Ruh'"},
 		["Nazi 3"] = {"Ade, mein liebes Schätzelein", "Ade, ade, ade", "Es muß, es muß geschieden sein", "Ade, ade, ade", "Es geht um Deutschlands Gloria", "Gloria, Gloria", "Sieg Heil! Sieg Heil Viktoria!", "Sieg Heil, Viktoria!", "Visier und Ziel sind eingestellt", "Ade, ade, ade", "Auf Stalin, Churchill, Roosevelt", "Ade, ade, ade", "Es geht um Deutschlands Gloria", "Gloria, Gloria", "Sieg Heil! Sieg Heil Viktoria!", "Sieg Heil, Viktoria!", "Wir ruhen und wir rasten nicht", "Ade, ade, ade", "Bis daß die Satansbrut zerbricht", "Ade, ade, ade", "Es geht um Deutschlands Gloria", "Gloria, Gloria", "Sieg Heil! Sieg Heil Viktoria!", "Sieg Heil, Viktoria!", "Reich mir die Hand zum Scheidegruß", "Ade, ade, ade", "Und deinen Mund zum Abschiedskuß", "Ade, ade, ade", "Es geht um Deutschlands Gloria", "Gloria, Gloria", "Sieg Heil! Sieg Heil Viktoria!", "Sieg Heil, Viktoria!"},
-		["Advertising 1"] = {"IdiotBox - https://phizzofficial.wixsite.com/idiotbox4gmod/", "IdiotBox - Destroying everyone since '16.", "IdiotBox - Easy to use, free Garry's Mod cheat.", "IdiotBox - Now you can forget that negative KD's can be possible.", "IdiotBox - Beats all of your other cheats.", "IdiotBox - IdiotBox came back, and it came back with a vengeance.", "IdiotBox - Join the Discord server if you have a high IQ.", "IdiotBox - The only high-quality free cheat, out for Garry's Mod.", "IdiotBox - Best cheat, created by Phizz & more.", "IdiotBox - Always updated, never dead.", "IdiotBox - A highly reliable and optimised cheating software.", "IdiotBox - Top class, free cheat for Garry's Mod.", "IdiotBox - Makes noobs cry waves of tears since forever!", "IdiotBox - Say goodbye to the respawn room!", "IdiotBox - Download the highest quality Garry's Mod cheat for free now!", "IdiotBox - A reliable way to go!", "IdiotBox - Make Garry's Mod great again!", "IdiotBox - Visit our website for fresh Discord invite links!", "IdiotBox - Monthly bugfixes & updates. It never gets outdated!", "IdiotBox - Download IdiotBox v7.0.b8 right now!", "IdiotBox - Bug-free and fully customizable!", "IdiotBox - Join our Steam group and Discord server to stay up-to-date!", "IdiotBox - Refund all your cheats, use this better and free alternative!", "IdiotBox - Now with more features than ever!", "IdiotBox - The best Garry's Mod cheat, with 24/7 support, for free!", "IdiotBox - Bypasses most anti-cheats and screengrabbers!"},
-		["Advertising 2"] = {"www.IB4G.net - https://phizzofficial.wixsite.com/idiotbox4gmod/", "www.IB4G.net - WORST FRAMERATE, BEST FEATURES!", "www.IB4G.net - WHAT ARE YOU WAITING FOR?", "www.IB4G.net - BEST GARRY'S MOD CHEAT OUT RIGHT NOW!", "www.IB4G.net - SAY GOODBYE TO THE RESPAWN ROOM!", "www.IB4G.net - NO SKILL REQUIRED!", "www.IB4G.net - NEVER DIE AGAIN WITH THIS!", "www.IB4G.net - ONLY HIGH IQ NIGGAS' USE IDIOTBOX!", "www.IB4G.net - THE GAME IS NOT ACTUALLY DYING, I JUST LIKE TO ANNOY KIDS LOL!", "www.IB4G.net - DOWNLOAD THE CHEAT FOR FREE!", "www.IB4G.net - NOW WITH AUTOMATIC UPDATES!", "www.IB4G.net - GUARANTEED SWAG AND RESPECT ON EVERY SERVER!", "www.IB4G.net - IDIOTBOX COMING SOON TO TETIRS!", "www.IB4G.net - VISIT OUR WEBSITE FOR A FRESH INVITE LINK TO OUR DISCORD!", "www.IB4G.net - PHIZZ IS A GOD FOR MAKING THIS!", "www.IB4G.net - BECOME THE SERVER MVP IN NO TIME!", "www.IB4G.net - 100% NO SKILL REQUIRED!", "www.IB4G.net - BEST CHEAT, MADE BY THE CHINESE COMMUNIST PARTY!", "www.IB4G.net - MAKE IDIOTBOX GREAT AGAIN!", "www.IB4G.net - WHY ARE YOU NOT CHEATING IN A DYING GAME?", "www.IB4G.net - RUINING EVERYONE'S FUN SINCE 2016!", "www.IB4G.net - IT'S PASTED, BUT IT'S THE BEST PASTE YOU WILL EVER USE!", "www.IB4G.net - A VERY CLEAN, HIGH-QUALITY AND BUG-FREE PASTE!", "www.IB4G.net - ALWAYS UPDATED! NEVER GETS OUTDATED!", "www.IB4G.net - WITH A FUCK TON OF NEW FEATURES!", "www.IB4G.net - ONCE YOU GO BLACK, YOU NEVER GO BACK. GET IDIOTBOX NOW!", "www.IB4G.net - SACRIFICE A FEW FRAMES FOR THE BEST EXPERIENCE OF YOUR LIFE!", "www.IB4G.net - STEAM GROUP WAS TAKEN DOWN, BUT IT'S BACK BABY!", "www.IB4G.net - BEST GARRY'S MOD CHEAT, NO CAP!", "www.IB4G.net - WITH IDIOTBOX, YOU'LL NEVER GET BANNED FOR CHEATING AGAIN!", "www.IB4G.net - DISCORD SERVER WAS TAKEN DOWN MANY TIMES, BUT WE ALWAYS COME BACK!"},
-		["Advertising 3"] = {"Get IdiotBox you fucking smelly niggers", "IdiotBox is the best fucking cheat and that is a fact", "All of you are fucking autistic for not having IdiotBox", "Why the fuck don't you get IdiotBox lol", "Stay being gay or get IdiotBox", "Your moms should know that you play grown-up games, join our Discord to prove you are not under-aged", "I have your IPs you dumb niggers, I will delete the IPs if you get IdiotBox", "You all fucking smell like shit for not using IdiotBox", "IdiotBox makes kiddos cry and piss their pants maybe and maybe shit and cum", "IdiotBox is the best free cheat in the history of the entire world so get it faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ or you're retarded", "Join our fucking Discord or else you are literally an unpriviledged niggers", "IdiotBox is a cheat for people with high IQ only, use IdiotBox to prove you're smart", "Don't wanna get fucking raped? Get IdiotBox and shit on them skids", "This is the best free paste around, no other paste is better than IdiotBox", "How the fuck are you not using IdiotBox in a shitty dying game lmfao", "IdiotBox is the best and most popular Garry's Mod cheat ever, why are you not using it lol", "May cause a bit of lag but it's worth it for the fuckton of features that it has", "You're all faggots if you don't cheat with IdiotBox", "You literally go to pride month parades if you don't use IdiotBox", "Idiotbox is the highest quality, most popular free cheat, just get it already", "Shit on all of the virgins that unironically play this game with this high-quality cheat", "Get good, get IdiotBox you fucking retards", "You're mad retarded if you are not using IdiotBox, no cap", "Own every single retard in HvH with this superior cheat now", "All of you are dumb niggers for not downloading IdiotBox and that is a fact", "You suck fat cocks in public bathrooms if you're not using IdiotBox", "Just get this god-like cheat already and rape all existing servers", "No you idiots, you can't get VAC banned for using lua scripts you absolute cretins", "IdiotBox bypasses even the most complex anti-cheats and screengrabbers, you're not getting banned anytime soon", "Just use IdiotBox to revert your sad lives and feel better about yourselves", "Phizz is a god because he made this god-like cheat called IdiotBox", "I am forced to put IdiotBox in almost every sentence and advertise in a toxic way because I'm a text in a lua script", "Why are you fucking gay? Get IdiotBox today", "The sentence above is a rhyme but the script says to put random sentences so I don't think you can see it, get IdiotBox btw", "Purchase IdiotBox now! Only for OH wait it's free", "It is highly recommended that you get IdiotBox in case of getting pwned", "You are swag and good looking, but only if you get IdiotBox", "Phizz spent so many fucking nights creating this masterpiece of a cheat so get it now or he will legit kill you", "Fuck you and get IdiotBox now lol", "IdiotBox is constantly getting updated with dope-ass features, it never gets outdated so just get it", "Have IdiotBox installed if you're mega straight and zero gay", "Whoever the fuck said lua cheats are bad deserves to die in a house fire", "You get IdiotBox, everyone else on the server gets pwned, ez as that", "Many cheats copied IdiotBox, but this is the original one, fucking copycats", "Join the fucking Discord, promise it won't hurt you faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ right this moment or I will hire a hitman to kill you", "Join the IdiotBox group at OH wait niggers got mad and mass-reported it, kys shitkids", "Nvm, Steam group is back lol get fucked you mad skid shitkids", "IdiotBox killed all of the paid cheats because it's too good", "Get IdiotBox, it's free and very good, you sacks of crying shit", "IdiotBox is the fucking G.O.A.T.", "What the fuck are you doing not using this god-like cheat lol", "This is an epic fucking cheat called IdiotBox that was created by Phizz and others, worship your new gods kiddos", "You were fed cock milk as a baby if you're not using IdiotBox and you can not prove me wrong", "IdiotBox has the dopest anti-aims and resolvers you'll ever use, you will be a HvH god", "Just please get IdiotBox already you retards, I am tired of typing these lines for fuck's sake", "Phizz will give everyone optimized IdiotBox soon so quit your shit", "IdiotBox needs no Steam group, we're too chad for one", "Our Discord was tapped at some point but IdiotBox is back and stronger than ever", "IdiotBox came back to kill silly niggers, and it came back with a vengeance", "Download Idiotbox v7.0.b8 now, you dont even know what you're missing you mongoloids", "Have I told you about IdiotBox, the best Garry's Mod cheat ever made??", "Holy shit, IdiotBox for Garry's Mod is the best cheat that I have ever used!!"},
+		["Advertising 1"] = {"[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - Destroying everyone since '16.", "[IdiotBox] - Easy to use, free Garry's Mod cheat.", "[IdiotBox] - Now you can forget that negative KD's can be possible.", "[IdiotBox] - Beats all of your other cheats.", "[IdiotBox] - IdiotBox came back, and it came back with a vengeance.", "[IdiotBox] - Join the Discord server if you have a high IQ.", "[IdiotBox] - The only high-quality free cheat, out for Garry's Mod.", "[IdiotBox] - Best cheat, created by Phizz & more.", "[IdiotBox] - Always updated, never dead.", "[IdiotBox] - A highly reliable and optimised cheating software.", "[IdiotBox] - Top class, free cheat for Garry's Mod.", "[IdiotBox] - Makes noobs cry waves of tears since forever!", "[IdiotBox] - Say goodbye to the respawn room!", "[IdiotBox] - Download the highest quality Garry's Mod cheat for free now!", "[IdiotBox] - A reliable way to go!", "[IdiotBox] - Make Garry's Mod great again!", "[IdiotBox] - Visit our website for fresh Discord invite links!", "[IdiotBox] - Monthly bugfixes & updates. It never gets outdated!", "[IdiotBox] - Download IdiotBox v7.1.b1 right now!", "[IdiotBox] - Bug-free and fully customizable!", "[IdiotBox] - Join our Steam group and Discord server to stay up-to-date!", "[IdiotBox] - Refund all your cheats, use this better and free alternative!", "[IdiotBox] - Now with more features than ever!", "[IdiotBox] - The best Garry's Mod cheat, with 24/7 support, for free!", "[IdiotBox] - Bypasses most anti-cheats and screengrabbers!"},
+		["Advertising 2"] = {"[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - WORST FRAMERATE, BEST FEATURES!", "[www.IB4G.net] - WHAT ARE YOU WAITING FOR?", "[www.IB4G.net] - BEST GARRY'S MOD CHEAT OUT RIGHT NOW!", "[www.IB4G.net] - SAY GOODBYE TO THE RESPAWN ROOM!", "[www.IB4G.net] - NO SKILL REQUIRED!", "[www.IB4G.net] - NEVER DIE AGAIN WITH THIS!", "[www.IB4G.net] - ONLY HIGH IQ NIGGAS' USE IDIOTBOX!", "[www.IB4G.net] - THE GAME IS NOT ACTUALLY DYING, I JUST LIKE TO ANNOY KIDS LOL!", "[www.IB4G.net] - DOWNLOAD THE CHEAT FOR FREE!", "[www.IB4G.net] - NOW WITH AUTOMATIC UPDATES!", "[www.IB4G.net] - GUARANTEED SWAG AND RESPECT ON EVERY SERVER!", "[www.IB4G.net] - IDIOTBOX COMING SOON TO TETIRS!", "[www.IB4G.net] - VISIT OUR WEBSITE FOR A FRESH INVITE LINK TO OUR DISCORD!", "[www.IB4G.net] - PHIZZ IS A GOD FOR MAKING THIS!", "[www.IB4G.net] - BECOME THE SERVER MVP IN NO TIME!", "[www.IB4G.net] - 100% NO SKILL REQUIRED!", "[www.IB4G.net] - BEST CHEAT, MADE BY THE CHINESE COMMUNIST PARTY!", "[www.IB4G.net] - MAKE IDIOTBOX GREAT AGAIN!", "[www.IB4G.net] - WHY ARE YOU NOT CHEATING IN A DYING GAME?", "[www.IB4G.net] - RUINING EVERYONE'S FUN SINCE 2016!", "[www.IB4G.net] - IT'S PASTED, BUT IT'S THE BEST PASTE YOU WILL EVER USE!", "[www.IB4G.net] - A VERY CLEAN, HIGH-QUALITY AND BUG-FREE PASTE!", "[www.IB4G.net] - ALWAYS UPDATED! NEVER GETS OUTDATED!", "[www.IB4G.net] - WITH A FUCK TON OF NEW FEATURES!", "[www.IB4G.net] - ONCE YOU GO BLACK, YOU NEVER GO BACK. GET IDIOTBOX NOW!", "[www.IB4G.net] - SACRIFICE A FEW FRAMES FOR THE BEST EXPERIENCE OF YOUR LIFE!", "[www.IB4G.net] - STEAM GROUP WAS TAKEN DOWN, BUT IT'S BACK BABY!", "[www.IB4G.net] - BEST GARRY'S MOD CHEAT, NO CAP!", "[www.IB4G.net] - WITH IDIOTBOX, YOU'LL NEVER GET BANNED FOR CHEATING AGAIN!", "[www.IB4G.net] - DISCORD SERVER WAS TAKEN DOWN MANY TIMES, BUT WE ALWAYS COME BACK!"},
+		["Advertising 3"] = {"Get IdiotBox you fucking smelly niggers", "IdiotBox is the best fucking cheat and that is a fact", "All of you are fucking autistic for not having IdiotBox", "Why the fuck don't you get IdiotBox lol", "Stay being gay or get IdiotBox", "Your moms should know that you play grown-up games, join our Discord to prove you are not under-aged", "I have your IPs you dumb niggers, I will delete the IPs if you get IdiotBox", "You all fucking smell like shit for not using IdiotBox", "IdiotBox makes kiddos cry and piss their pants maybe and maybe shit and cum", "IdiotBox is the best free cheat in the history of the entire world so get it faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ or you're retarded", "Join our fucking Discord or else you are literally an unpriviledged niggers", "IdiotBox is a cheat for people with high IQ only, use IdiotBox to prove you're smart", "Don't wanna get fucking raped? Get IdiotBox and shit on them skids", "This is the best free paste around, no other paste is better than IdiotBox", "How the fuck are you not using IdiotBox in a shitty dying game lmfao", "IdiotBox is the best and most popular Garry's Mod cheat ever, why are you not using it lol", "May cause a bit of lag but it's worth it for the fuckton of features that it has", "You're all faggots if you don't cheat with IdiotBox", "You literally go to pride month parades if you don't use IdiotBox", "Idiotbox is the highest quality, most popular free cheat, just get it already", "Shit on all of the virgins that unironically play this game with this high-quality cheat", "Get good, get IdiotBox you fucking retards", "You're mad retarded if you are not using IdiotBox, no cap", "Own every single retard in HvH with this superior cheat now", "All of you are dumb niggers for not downloading IdiotBox and that is a fact", "You suck fat cocks in public bathrooms if you're not using IdiotBox", "Just get this god-like cheat already and rape all existing servers", "No you idiots, you can't get VAC banned for using lua scripts you absolute cretins", "IdiotBox bypasses even the most complex anti-cheats and screengrabbers, you're not getting banned anytime soon", "Just use IdiotBox to revert your sad lives and feel better about yourselves", "Phizz is a god because he made this god-like cheat called IdiotBox", "I am forced to put IdiotBox in almost every sentence and advertise in a toxic way because I'm a text in a lua script", "Why are you fucking gay? Get IdiotBox today", "The sentence above is a rhyme but the script says to put random sentences so I don't think you can see it, get IdiotBox btw", "Purchase IdiotBox now! Only for OH wait it's free", "It is highly recommended that you get IdiotBox in case of getting pwned", "You are swag and good looking, but only if you get IdiotBox", "Phizz spent so many fucking nights creating this masterpiece of a cheat so get it now or he will legit kill you", "Fuck you and get IdiotBox now lol", "IdiotBox is constantly getting updated with dope-ass features, it never gets outdated so just get it", "Have IdiotBox installed if you're mega straight and zero gay", "Whoever the fuck said lua cheats are bad deserves to die in a house fire", "You get IdiotBox, everyone else on the server gets pwned, ez as that", "Many cheats copied IdiotBox, but this is the original one, fucking copycats", "Join the fucking Discord, promise it won't hurt you faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ right this moment or I will hire a hitman to kill you", "Join the IdiotBox group at OH wait niggers got mad and mass-reported it, kys shitkids", "Nvm, Steam group is back lol get fucked you mad skid shitkids", "IdiotBox killed all of the paid cheats because it's too good", "Get IdiotBox, it's free and very good, you sacks of crying shit", "IdiotBox is the fucking G.O.A.T.", "What the fuck are you doing not using this god-like cheat lol", "This is an epic fucking cheat called IdiotBox that was created by Phizz and others, worship your new gods kiddos", "You were fed cock milk as a baby if you're not using IdiotBox and you can not prove me wrong", "IdiotBox has the dopest anti-aims and resolvers you'll ever use, you will be a HvH god", "Just please get IdiotBox already you retards, I am tired of typing these lines for fuck's sake", "Phizz will give everyone optimized IdiotBox soon so quit your shit", "IdiotBox needs no Steam group, we're too chad for one", "Our Discord was tapped at some point but IdiotBox is back and stronger than ever", "IdiotBox came back to kill silly niggers, and it came back with a vengeance", "Download Idiotbox v7.1.b1 now, you dont even know what you're missing you mongoloids", "Have I told you about IdiotBox, the best Garry's Mod cheat ever made??", "Holy shit, IdiotBox for Garry's Mod is the best cheat that I have ever used!!"},
 		["Hebrew Spam"] = {"לזיין את הכלב שלך אמא לעזאזל חרא סקס בכוס", "לעזאזל כוס כלבה בזין אני אוהבת עורלה הדוקה חתכה לי שלום כומר", "זו לא בדיחה מזוינת אני רוצה לתלות את עצמי השנה", "תזדיין שאתה יהודי הוא הגדול ביותר שכולכם כושים", "אני אהיה בן שש בשנה מכושן", "יש למול את הפין", "ישראל היא פלסטין המזוין הגדול ביותר במדינה", "זקן ישבן גדול על סנטרי, זהב בביתי, פוליטיקה במכנסיים שלי", "מזדיין לצאת מכושים ישראלים", "כוס חתולה אני מזיין את הזין ואז אני מוצץ כן", "חרא של אלוהים זה חרא של רחוב כן", "אני הולך לזיין ילד בן שתים עשרה בתחת, כן חתוך עורלה לעזאזל חרא כלבה"},
 		["Arabic Spam"] = {"يمارس الجنس مع السلطة العربية سنة عظيمة", "رائحة مثل البظر دون السن القانونية هنا اسمحوا لي أن اللعنة", "ازدهار مسحوق الطاقة العربية سنة جيدة", "نحن نكره اليهو", "يمارس الجنس مع الأطفال الماعز نعم الجنس", "الله أكبر نعم رجل تفجير طفل", "هذه لحظة بره لحظة ارهابية سنة", "في تلك اللحظة التي يبدأ فيها أخاك في المغازلة مع والدتك", "الحصول على صندوق احمق نعم العربية غش كازاخستان", "يمارس الجنس مع نيغا الكلبة دا قرن الطفل", "ترك العرب باكستاني لحظة برمة تجميع كرمة", "حرق اليهود ، يمارس الجنس مع المسيح ، قتل الأطفال ، أصبح الله"},
 		["Offensive Spam"] = {"fuck niggers like fr", "who else here hates black people lmao", "all niggers should be locked in cages and fed bananas", "black people are some sub-human slaves imo", "i've never met an intelligent black person", "why tf are all niggers so ugly lol", "all the black dudes i've seen look like monkeys", "ooga booga black rights", "my grandpa died in ww2, he was the best german pilot", "white people are genetically superior to every othe race", "all jews can do is hide the truth, steal money and start wars"},
@@ -3096,7 +3141,7 @@ local function Circle(cmd)
 end
 
 local function BunnyHop(cmd)
-	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
 	if gBool("Miscellaneous", "Movement", "Bunny Hop") and gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Off" then
     local badmovetypes = {
         [MOVETYPE_NOCLIP] = true,
@@ -3235,7 +3280,7 @@ local function CircleStrafe(cmd)
         [MOVETYPE_NOCLIP] = true,
         [MOVETYPE_LADDER] = true,
     }
-	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or badmovetypes[me:GetMoveType()] or me:IsFlagSet(1024) then return end
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or badmovetypes[me:GetMoveType()] or me:IsFlagSet(1024) then return end
 		if !gKey("Miscellaneous", "Movement", "Circle Strafe Key:") and gOption("Miscellaneous", "Movement", "Auto Strafe:") ~= "Off" then
 			if (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Legit") then
 				LegitStrafe(cmd)
@@ -3267,7 +3312,7 @@ local function CircleStrafe(cmd)
 end
 
 local function AutoStrafe(cmd)
-    if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
+    if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
 	if gBool("Miscellaneous", "Movement", "Bunny Hop") and gOption("Miscellaneous", "Movement", "Auto Strafe:") ~= "Off" then
     local badmovetypes = {
         [MOVETYPE_NOCLIP] = true,
@@ -3289,7 +3334,7 @@ local function AutoStrafe(cmd)
 end
 
 local function AirCrouch(cmd)
-	if em.GetMoveType(me) == MOVETYPE_NOCLIP or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or me:IsFlagSet(1024) then return end
+	if em.GetMoveType(me) == MOVETYPE_NOCLIP or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or me:IsFlagSet(1024) then return end
 	if gBool("Miscellaneous", "Movement", "Air Crouch") then
 	local pos = me:GetPos()
 	local trace = {
@@ -3370,9 +3415,9 @@ local src = string.lower(debug.getinfo(2).short_src)
 	end
 end
 
-FindMetaTable('CUserCmd').ClearButtons = function( UserCmd )
+FindMetaTable('CUserCmd').ClearButtons = function(UserCmd)
 
-local src = string.lower( debug.getinfo(2).short_src )
+local src = string.lower(debug.getinfo(2).short_src)
 	if string.find(src, 'taunt_camera') then return
 		else return ib.ddance.clearbuttons(UserCmd)
 	end
@@ -3429,7 +3474,7 @@ local function Tick()
 	if gBool("Miscellaneous", "Miscellaneous", "Use Spam") and input.IsKeyDown(KEY_E) and not (me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or menuopen) then
 		RunConsoleCommand("ib_usespam")
 	end
-	if gBool("Main Menu", "General Utilities", "Optimize Game") then
+	if gBool("Main Menu", "Miscellaneous", "Optimize Game") then
 		if not optimized then
 			me:ConCommand("r_cleardecals; M9KGasEffect 0")
 		optimized = true
@@ -3510,18 +3555,14 @@ end
 
 hook.Add("Tick", "Tick", function()
 	Tick()
-	if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menuopen and not menukeydown) then
-		menuopen = true
-		menukeydown = true
-		Menu()
-	elseif (not (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menuopen) then
-		menukeydown = false
-	end
-	if ((input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and menukeydown and menuopen) then
-		menukeydown2 = true
-	else
-		menukeydown2 = false
-	end
+	if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown then
+        menuopen = true
+        Menu()
+		-- Make a bool for the two fuckers below, outside of the DrawButton context
+		EntityFinder()
+		PluginLoader()
+    end
+    menukeydown = (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME))
 	if engine.ActiveGamemode() == "terrortown" then
 		if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Hide Round Report") then
 			if not displayed then
@@ -3555,15 +3596,15 @@ hook.Add("Tick", "Tick", function()
 		end
 		if me:Alive() or me:Health() > 0 then
 		local tauntspam = {"funny", "help", "scream", "morose",}
-			if gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Funny" then
+			if gOption("Main Menu", "Murder Utilities", "Murder Taunts:") == "Funny" then
 				RunConsoleCommand("mu_taunt", "funny")
-			elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Help" then
+			elseif gOption("Main Menu", "Murder Utilities", "Murder Taunts:") == "Help" then
 				RunConsoleCommand("mu_taunt", "help")
-			elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Scream" then
+			elseif gOption("Main Menu", "Murder Utilities", "Murder Taunts:") == "Scream" then
 				RunConsoleCommand("mu_taunt", "scream")
-			elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Morose" then
+			elseif gOption("Main Menu", "Murder Utilities", "Murder Taunts:") == "Morose" then
 				RunConsoleCommand("mu_taunt", "morose")
-			elseif gOption("Miscellaneous", "Miscellaneous", "Murder Taunts:") == "Random" then
+			elseif gOption("Main Menu", "Murder Utilities", "Murder Taunts:") == "Random" then
 				RunConsoleCommand("mu_taunt", tauntspam[math.random(#tauntspam)])
 			end
 		end
@@ -3594,7 +3635,7 @@ hook.Add("Tick", "Tick", function()
 				end
 			end
 		end
-	if (gBool("Main Menu", "General Utilities", "Anti-Blind")) then
+	if (gBool("Main Menu", "Miscellaneous", "Anti-Blind")) then
 		if (HookExist("HUDPaint", "ulx_blind")) then
 			Popup(4.3, "Successfully blocked a blinding attempt!", Color(0, 255, 0))
 			surface.PlaySound("buttons/lightswitch2.wav")
@@ -3603,7 +3644,7 @@ hook.Add("Tick", "Tick", function()
     end
 	if MOTDgd or MOTDGD then
 		function MOTDgd.GetIfSkip()
-		if (gBool("Main Menu", "General Utilities", "Anti-Ads")) then
+		if (gBool("Main Menu", "Miscellaneous", "Anti-Ads")) then
 			Popup(4.3, "Successfully blocked an advertisement!", Color(0, 255, 0))
 			surface.PlaySound("buttons/lightswitch2.wav")
 			return true
@@ -3819,14 +3860,14 @@ local function Visuals(v)
 					surface.DrawLine(x2, y2, x2 - (diff * 0.225), y2)
 					surface.DrawLine(x2, y2, x2, y2 - (diff2 * 0.225))
 				end
-				if gBool("Visuals", "Wallhack", "Health Bar") then
+				if gOption("Visuals", "Wallhack", "Health Info:") == "Health Bar" or gOption("Visuals", "Wallhack", "Health Info:") == "All" then
 					surface.SetDrawColor(0, 0, 0)
 					surface.DrawRect(x1 - 6, y1, 3, diff2)
 					surface.DrawRect(x1 - 7, y1 - 1, 5, diff2 + 2)
 					surface.SetDrawColor(Color(255 - 255 / v:GetMaxHealth() * v:Health(), 255 / v:GetMaxHealth() * v:Health(), 0))
 					surface.DrawRect(x1 - 6, y2 - math.Clamp(diff2 / v:GetMaxHealth() * v:Health(), 0, diff2), 3, math.Clamp(diff2 / v:GetMaxHealth() * v:Health(), 0, diff2))
 				end
-				if gBool("Visuals", "Wallhack", "Armor Bar") then
+				if gOption("Visuals", "Wallhack", "Armor Info:") == "Armor Bar" or gOption("Visuals", "Wallhack", "Armor Info:") == "All" then
 					surface.SetDrawColor(0, 0, 0)
 					surface.DrawRect(x1 + diff + 3, y1, 3, diff2)
 					surface.DrawRect(x1 + diff + 2, y1 - 1, 5, diff2 + 2)
@@ -3872,23 +3913,23 @@ local function Visuals(v)
 						end
 					end
 					if gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
-						if gBool("Visuals", "Wallhack", "Health Value") then
+						if gOption("Visuals", "Wallhack", "Health Info:") == "Health Value" or gOption("Visuals", "Wallhack", "Health Info:") == "All" then
 							textpos = textpos + 1
 							draw.SimpleText("Health: "..em.Health(v), "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
 							textpos = textpos + 9
 						end
-						if gBool("Visuals", "Wallhack", "Armor Value") then
+						if gOption("Visuals", "Wallhack", "Armor Info:") == "Armor Value" or gOption("Visuals", "Wallhack", "Armor Info:") == "All" then
 							textpos = textpos + 1
 							draw.SimpleText("Armor: "..v:Armor(), "VisualsFont", x2 + 9, y1 + textpos, textcol, 0, 1)
 							textpos = textpos + 9
 						end
 					elseif !gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
-						if gBool("Visuals", "Wallhack", "Health Value") then
+						if gOption("Visuals", "Wallhack", "Health Info:") == "Health Value" or gOption("Visuals", "Wallhack", "Health Info:") == "All" then
 							textpos = textpos + 1
 							draw.SimpleText("Health: "..em.Health(v), "VisualsFont", x2 + 9, y1 + textpos, healthcol, 0, 1)
 							textpos = textpos + 9
 						end
-						if gBool("Visuals", "Wallhack", "Armor Value") then
+						if gOption("Visuals", "Wallhack", "Armor Info:") == "Armor Value" or gOption("Visuals", "Wallhack", "Armor Info:") == "All" then
 							textpos = textpos + 1
 							draw.SimpleText("Armor: "..v:Armor(), "VisualsFont", x2 + 9, y1 + textpos, armorcol, 0, 1)
 							textpos = textpos + 9
@@ -4006,7 +4047,7 @@ local function Visuals(v)
 							end
 						end
 					end
-				elseif !gBool("Visuals", "Wallhack", "Armor Bar") then
+				elseif !(gOption("Visuals", "Wallhack", "Armor Info:") == "Armor Bar" or gOption("Visuals", "Wallhack", "Armor Info:") == "All") then
 					if gBool("Visuals", "Wallhack", "Name") then
 						local friendstatus = pm.GetFriendStatus(v)
 						local pos = em.GetPos(v)
@@ -4047,23 +4088,23 @@ local function Visuals(v)
 						end
 					end
 					if gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
-						if gBool("Visuals", "Wallhack", "Health Value") then
+						if gOption("Visuals", "Wallhack", "Health Info:") == "Health Value" or gOption("Visuals", "Wallhack", "Health Info:") == "All" then
 							textpos = textpos + 1
 							draw.SimpleText("Health: "..em.Health(v), "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
 							textpos = textpos + 9
 						end
-						if gBool("Visuals", "Wallhack", "Armor Value") then
+						if gOption("Visuals", "Wallhack", "Armor Info:") == "Armor Value" or gOption("Visuals", "Wallhack", "Armor Info:") == "All" then
 							textpos = textpos + 1
 							draw.SimpleText("Armor: "..v:Armor(), "VisualsFont", x2 + 3, y1 + textpos, textcol, 0, 1)
 							textpos = textpos + 9
 						end
 					elseif !gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
-						if gBool("Visuals", "Wallhack", "Health Value") then
+						if gOption("Visuals", "Wallhack", "Health Info:") == "Health Value" or gOption("Visuals", "Wallhack", "Health Info:") == "All" then
 							textpos = textpos + 1
 							draw.SimpleText("Health: "..em.Health(v), "VisualsFont", x2 + 3, y1 + textpos, healthcol, 0, 1)
 							textpos = textpos + 9
 						end
-						if gBool("Visuals", "Wallhack", "Armor Value") then
+						if gOption("Visuals", "Wallhack", "Armor Info:") == "Armor Value" or gOption("Visuals", "Wallhack", "Armor Info:") == "All" then
 							textpos = textpos + 1
 							draw.SimpleText("Armor: "..v:Armor(), "VisualsFont", x2 + 3, y1 + textpos, armorcol, 0, 1)
 							textpos = textpos + 9
@@ -4246,7 +4287,7 @@ local function Visuals(v)
 				end
 				surface.SetFont("VisualsFont")
 				surface.SetTextColor(255, 255, 255)
-				if gBool("Visuals", "Wallhack", "Health Bar") then
+				if gOption("Visuals", "Wallhack", "Health Info:") == "Health Bar" or gOption("Visuals", "Wallhack", "Health Info:") == "All" then
 					local hp = h * em.Health(v) / 100
 					if (hp > h) then hp = h end
 					local diff = h - hp
@@ -4255,7 +4296,7 @@ local function Visuals(v)
 					surface.SetDrawColor((100 - em.Health(v)) * 2.55, em.Health(v) * 2.55, 0, 255)
 					surface.DrawRect(pos.x - w / 2 - 7, pos.y - h + diff, 3, hp)
 				end
-				if gBool("Visuals", "Wallhack", "Armor Bar") then
+				if gOption("Visuals", "Wallhack", "Armor Info:") == "Armor Bar" or gOption("Visuals", "Wallhack", "Armor Info:") == "All" then
 					local armor = v:Armor() * h / 100
 					if (armor > h) then armor = h end
 					local diff = h - armor
@@ -4324,23 +4365,23 @@ local function Visuals(v)
 					end
 				end
 				if gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
-					if gBool("Visuals", "Wallhack", "Health Value") then
+					if gOption("Visuals", "Wallhack", "Health Info:") == "Health Value" or gOption("Visuals", "Wallhack", "Health Info:") == "All" then
 						textpos = textpos + 1
 						draw.SimpleText("Health: "..em.Health(v), "VisualsFont", pos.x, pos.y - 1 + textpos, textcol, 1, 0)
 						textpos = textpos + 9
 					end
-					if gBool("Visuals", "Wallhack", "Armor Value") then
+					if gOption("Visuals", "Wallhack", "Armor Info:") == "Armor Value" or gOption("Visuals", "Wallhack", "Armor Info:") == "All" then
 						textpos = textpos + 1
 						draw.SimpleText("Armor: "..v:Armor(), "VisualsFont", pos.x, pos.y - 1 + textpos, textcol, 1, 0)
 						textpos = textpos + 9
 					end
 				elseif !gBool("Visuals", "Miscellaneous", "Adaptive Text Color") then
-					if gBool("Visuals", "Wallhack", "Health Value") then
+					if gOption("Visuals", "Wallhack", "Health Info:") == "Health Value" or gOption("Visuals", "Wallhack", "Health Info:") == "All" then
 						textpos = textpos + 1
 						draw.SimpleText("Health: "..em.Health(v), "VisualsFont", pos.x, pos.y - 1 + textpos, healthcol, 1, 0)
 						textpos = textpos + 9
 					end
-					if gBool("Visuals", "Wallhack", "Armor Value") then
+					if gOption("Visuals", "Wallhack", "Armor Info:") == "Armor Value" or gOption("Visuals", "Wallhack", "Armor Info:") == "All" then
 						textpos = textpos + 1
 						draw.SimpleText("Armor: "..v:Armor(), "VisualsFont", pos.x, pos.y - 1 + textpos, armorcol, 1, 0)
 						textpos = textpos + 9
@@ -4605,7 +4646,7 @@ local function ShowNPCs()
 			end
 		end
 	end
-	if gBool("Visuals", "Wallhack", "Health Value") then
+	if gOption("Visuals", "Wallhack", "Health Info:") == "Health Value" or gOption("Visuals", "Wallhack", "Health Info:") == "All" then
 		textpos = textpos + 1
 		draw.SimpleText("Health: "..health, "VisualsFont", pos.x, pos.y + textpos, colFive, 1, 0)
 		textpos = textpos + 9
@@ -4620,7 +4661,7 @@ local function ShowNPCs()
 		draw.SimpleText("Velocity: "..math.Round(v:GetVelocity():Length()), "VisualsFont", pos.x, pos.y + textpos, colFour, 1, 0)
 		textpos = textpos + 9
 	end
-	if gBool("Visuals", "Wallhack", "Health Bar") then
+	if gOption("Visuals", "Wallhack", "Health Info:") == "Health Bar" or gOption("Visuals", "Wallhack", "Health Info:") == "All" then
 		if (hp > h) then hp = h end
 			local diff = h - hp
 				surface.SetDrawColor(0, 0, 0, 255)
@@ -4633,12 +4674,12 @@ local function ShowNPCs()
 end
 
 local function AntiAFK(cmd)
-	if (!gBool("Main Menu", "General Utilities", "Anti-AFK")) then
+	if (!gBool("Main Menu", "Miscellaneous", "Anti-AFK")) then
 		timer.Create("afk1", 6, 0, function()
 		local commands = {"moveleft", "moveright", "moveup", "movedown"}
 		local command1 = table.Random(commands)
 		local command2 = table.Random(commands)
-		if global.unloaded == true or !gBool("Main Menu", "General Utilities", "Anti-AFK") then return end
+		if global.unloaded == true or !gBool("Main Menu", "Miscellaneous", "Anti-AFK") then return end
 		timer.Create("afk2", 1, 1, function()
 		RunConsoleCommand("+"..command1)
 		RunConsoleCommand("+"..command2)
@@ -5402,7 +5443,7 @@ function ib.RemapClamped(val, A, B, C, D)
 end
 
 local function PredictSpread(cmd, ang) -- HUGE FUCKING THANKS TO S0LUM'S NCMD (and data for helping me figure shit out)
-	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
     local wep = me:GetActiveWeapon()
 	if gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread") and me:GetActiveWeapon():IsValid() and me:Alive() and me:Health() > 0 then
 		local class = wep:GetClass()
@@ -5581,7 +5622,7 @@ function ib.CalculateAntiRecoil()
 end
 
 local function Aimbot(cmd)
-	if not gBool("Aim Assist", "Aimbot", "Enabled") or not me:Alive() or me:Health() < 1 or not me:GetActiveWeapon():IsValid() or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) then return end
+	if not gBool("Aim Assist", "Aimbot", "Enabled") or not me:Alive() or me:Health() < 1 or not me:GetActiveWeapon():IsValid() or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "Miscellaneous", "Spectator Mode"))) then return end
 	for k, v in pairs(player.GetAll()) do
 		if !v:IsValid() || ((gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me) || FixTools() then return end
 	end
@@ -5655,7 +5696,7 @@ local function TriggerFilter(hitbox)
 end
 
 local function Triggerbot(cmd)
-	if not gBool("Aim Assist", "Triggerbot", "Enabled") or not me:GetActiveWeapon():IsValid() or not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Triggerbot", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not gKey("Aim Assist", "Triggerbot", "Toggle Key:") or cmd:KeyDown(IN_ATTACK) or FixTools() then return end
+	if not gBool("Aim Assist", "Triggerbot", "Enabled") or not me:GetActiveWeapon():IsValid() or not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Triggerbot", "Target Spectators") and gBool("Main Menu", "Miscellaneous", "Spectator Mode"))) or not gKey("Aim Assist", "Triggerbot", "Toggle Key:") or cmd:KeyDown(IN_ATTACK) or FixTools() then return end
 	local dist = gInt("Aim Assist", "Aim Priorities", "Distance:")
 	local vel = gInt("Aim Assist", "Aim Priorities", "Velocity:")
 	local maxhealth = gInt("Aim Assist", "Aim Priorities", "Max Player Health:") 
@@ -6240,7 +6281,7 @@ local function AntiAim(cmd)
 		if (gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Anti-Aim")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me then return end
 	end
 	local wep = pm.GetActiveWeapon(me)
-	if ((gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP) || me:Team() == TEAM_SPECTATOR || triggering || (cm.CommandNumber(cmd) == 0 && !ThirdpersonCheck()) || cm.KeyDown(cmd, 1) || gBool("Visuals", "Point of View", "Custom FoV") && ib.FreeRoamCheck() && !ThirdpersonCheck() || me:WaterLevel() > 1 || (input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable in 'Use' Toggle") && !(me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible())) || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aim Assist", "Aimbot", "Enabled") && (gInt("Aim Assist", "Aimbot", "Aim FoV Value:") > 0 || gInt("Aim Assist", "Aimbot", "Aim Smoothness:") > 0) || gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && engine.ActiveGamemode() == "terrortown" && wep:IsValid() && wep:GetClass() == "weapon_zm_carry") then return end
+	if ((gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP) || me:Team() == TEAM_SPECTATOR || triggering || (cm.CommandNumber(cmd) == 0 && !ThirdpersonCheck()) || cm.KeyDown(cmd, 1) || gBool("Visuals", "Point of View", "Custom FoV") && ib.FreeRoamCheck() && !ThirdpersonCheck() || me:WaterLevel() > 1 || (input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable in 'Use' Toggle") && !(me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible())) || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aim Assist", "Aimbot", "Enabled") && gInt("Aim Assist", "Aimbot", "Aim Smoothness:") > 0 || gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && engine.ActiveGamemode() == "terrortown" && wep:IsValid() && wep:GetClass() == "weapon_zm_carry") then return end
 	if gOption("Hack vs. Hack", "Anti-Aim", "Anti-Aim Direction:") == "Manual Switch" then
 	if gKey("Hack vs. Hack", "Anti-Aim", "Switch Key:") and not manualpressed then
 	manualpressed = true
@@ -6285,7 +6326,7 @@ end
 
 local function PropKill(cmd)
 	local wep = pm.GetActiveWeapon(me)
-	if !gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") or engine.ActiveGamemode() ~= "terrortown" or !wep:IsValid() or !wep:GetClass() == "weapon_zm_carry" or menuopen or me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
+	if !gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") or engine.ActiveGamemode() ~= "terrortown" or !wep:IsValid() or !wep:GetClass() == "weapon_zm_carry" or menuopen or me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible() or (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
 	if (cm.CommandNumber(cmd) == 0 && !ThirdpersonCheck()) then
 		return
 	elseif (cm.CommandNumber(cmd) == 0 && ThirdpersonCheck()) then
@@ -6293,9 +6334,9 @@ local function PropKill(cmd)
 	end
 	if gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:") then
 		ox = fa.x - 27
-		if propval < 180 then
-			oy = fa.y + propval
-			propval = propval + 3
+		if ib.propval < 180 then
+			oy = fa.y + ib.propval
+			ib.propval = ib.propval + 3
 		else
 			oy = fa.y + 180
 		end
@@ -6303,24 +6344,24 @@ local function PropKill(cmd)
 		cm.SetViewAngles(cmd, aaang)
 		FixMovement(cmd, true)
 	else
-		if propval > 0 then
-			propval = 0
-			propdelay = CurTime() + 0.5
+		if ib.propval > 0 then
+			ib.propval = 0
+			ib.propdelay = CurTime() + 0.5
 		end
-		if propdelay >= CurTime() then
+		if ib.propdelay >= CurTime() then
 			ox = - 17
 			oy = fa.y
 			local aaang = Angle(ox, oy, 0)
 			cm.SetViewAngles(cmd, aaang)
 			FixMovement(cmd, true)
 		else
-			propdelay = 0
+			ib.propdelay = 0
 		end
 	end
 end
 
 function ib.LaserBullets(cmd)
-	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
 	if cm.KeyDown(cmd, 1) and not FixTools() then
 		local ang = cm.GetViewAngles(cmd)
 		if gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread") then
@@ -6339,22 +6380,22 @@ function ib.LaserBullets(cmd)
 end
 
 local function FakeCrouch(cmd)
-	if em.GetMoveType(me) == MOVETYPE_NOCLIP or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or me:IsFlagSet(1024) then return end
+	if em.GetMoveType(me) == MOVETYPE_NOCLIP or (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or me:IsFlagSet(1024) then return end
 	if gBool("Miscellaneous", "Movement", "Fake Crouch") then
 		if me:KeyDown(IN_DUCK) then
-			if crouched <= 5 then
+			if ib.crouched <= 5 then
 				cmd:SetButtons(cmd:GetButtons() + IN_DUCK)
-			elseif crouched >= 25 then
-				crouched = 0
+			elseif ib.crouched >= 25 then
+				ib.crouched = 0
 			end
-			crouched = crouched + 1
+			ib.crouched = ib.crouched + 1
 		else
-			if crouched <= 5 then
+			if ib.crouched <= 5 then
 				cmd:SetButtons(cmd:GetButtons() + IN_DUCK)
-			elseif crouched >= 12.5 then
-				crouched = 0
+			elseif ib.crouched >= 12.5 then
+				ib.crouched = 0
 			end
-			crouched = crouched + 1
+			ib.crouched = ib.crouched + 1
 		end
 	end
 end
@@ -6367,7 +6408,7 @@ hook.Add("CalcView", "CalcView", function(me, pos, ang, fov)
 	}
 	local calcang = me:EyeAngles() * 1
 	local view = {}
-		if ib.FreeRoamCheck() and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) and (me:Alive() or me:Health() > 0) then
+		if ib.FreeRoamCheck() and not (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) and (me:Alive() or me:Health() > 0) then
 			local speed = gInt("Miscellaneous", "Free Roaming", "Speed:") / 5
 			local mouseang = Angle(roamy, roamx, 0)
 			if me:KeyDown(IN_SPEED) then
@@ -6401,7 +6442,7 @@ hook.Add("CalcView", "CalcView", function(me, pos, ang, fov)
 			view.angles = angles
 			view.fov = gInt("Visuals", "Point of View", "FoV Value:")
 		end
-		if (me:Alive() or me:Health() > 0) and not (me:GetMoveType() == 10 and not gBool("Main Menu", "General Utilities", "Spectator Mode")) and me:GetObserverTarget() == nil then
+		if (me:Alive() or me:Health() > 0) and not (me:GetMoveType() == 10 and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) and me:GetObserverTarget() == nil then
 			local wep = me:GetActiveWeapon()
 			if IsValid(wep) then
 				local wepcalcview = wep.CalcView
@@ -6431,7 +6472,7 @@ hook.Add("CalcView", "CalcView", function(me, pos, ang, fov)
 end)
 
 local function FreeRoam(cmd)
-	if (ib.FreeRoamCheck() and not menuopen and not me:IsTyping() and not gui.IsGameUIVisible() and not gui.IsConsoleVisible() and not (IsValid(g_SpawnMenu) && g_SpawnMenu:IsVisible()) and not (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) and (me:Alive() or me:Health() > 0)) then
+	if (ib.FreeRoamCheck() and not (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) and (me:Alive() or me:Health() > 0)) then
 		if roamon == false then
 			roampos, roamang = me:EyePos(), cmd:GetViewAngles()
 			roamy, roamx = cmd:GetViewAngles().x, cmd:GetViewAngles().y
@@ -6579,7 +6620,7 @@ function ib.WitnessFinder()
 	local offset = Vector(0, 0, 32)
 	local trace = {}
 	local witnesscolor = Color(0, 0, 0)
-	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or (v == me and not em.IsValid(v)) then return end
+	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or (v == me and not em.IsValid(v)) then return end
 	local time = os.time() - 1
 	local witnesses = 0
 	local beingwitnessed = true
@@ -6628,8 +6669,8 @@ end
 function ib.PropKillCircle()
 	local wep = pm.GetActiveWeapon(me)
 	if engine.ActiveGamemode() == "terrortown" && wep:IsValid() && wep:GetClass() == "weapon_zm_carry" then
-		if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "General Utilities", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
-		if propval >= 180 then
+		if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 then return end
+		if ib.propval >= 180 then
 			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(255, 0, 0))
 		else
 			surface.DrawCircle(ScrW() / 2, ScrH() / 1.8, 80 + me:GetVelocity():Length() / 4, Color(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:")))
@@ -6638,7 +6679,7 @@ function ib.PropKillCircle()
 end
 
 function ib.FovCircle()
-	if (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not me:Alive() or me:Health() < 1 then return end
+	if (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "Miscellaneous", "Spectator Mode"))) or not me:Alive() or me:Health() < 1 then return end
 	local center = Vector(ScrW() / 2, ScrH() / 2, 0)
 	local scale = Vector(((gInt("Aim Assist", "Aimbot", "Aim FoV Value:")) * 9.5), ((gInt("Aim Assist", "Aimbot", "Aim FoV Value:")) * 9.5), 0)
 	local segmentdist = 360 / (2 * math.pi * math.max(scale.x, scale.y) / 2)
@@ -6668,14 +6709,25 @@ hook.Add("MiscPaint", "MiscPaint", function()
 			ib.ShowEntities(v)
 		end
 	end
-	if gInt("Adjustments", "Others", "BG Darkness:") > 0 and menuopen then
-		surface.SetDrawColor(0, 0, 0, gInt("Adjustments", "Others", "BG Darkness:") * 10)
-		surface.DrawRect(0, 0, ScrW(), ScrH())
+	if menuopen then
+		if gInt("Adjustments", "Others", "Background Blur:") > 0 then
+			surface.SetDrawColor(255, 255, 255)
+			surface.SetMaterial(blur)
+			for i = 1, 3 do
+				blur:SetFloat("$blur", (i / 1) * (gInt("Adjustments", "Others", "Background Blur:") or 6))
+				blur:Recompute()
+				render.UpdateScreenEffectTexture()
+				surface.DrawTexturedRect(0, 0, ScrW(), ScrH())
+			end
+		end
+		if gInt("Adjustments", "Others", "Background Dark:") > 0 then
+			surface.SetDrawColor(0, 0, 0, gInt("Adjustments", "Others", "Background Dark:") * 10)
+			surface.DrawRect(0, 0, ScrW(), ScrH())
+		end
 	end
 	if gBool("Main Menu", "Priority List", "Enabled") and menuopen then
 		PlayerList()
 	end
-	if v == me and not em.IsValid(v) then return end
 	if gBool("Miscellaneous", "Panels", "Spectators Window") then
 		Spectator()
 	end
@@ -6693,18 +6745,19 @@ hook.Add("MiscPaint", "MiscPaint", function()
 	if gOption("Miscellaneous", "GUI Settings", "Crosshair:") ~= "Off" then
 		Crosshair()
 	end
-	if (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "General Utilities", "Spectator Mode"))) or not me:Alive() or me:Health() < 1 or (gBool("Aim Assist", "Triggerbot", "Enabled") and not gBool("Aim Assist", "Aimbot", "Enabled")) then return end
+	if (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Aim Priorities", "Target Spectators") and gBool("Main Menu", "Miscellaneous", "Spectator Mode"))) or not me:Alive() or me:Health() < 1 then return end
 	if gBool("Miscellaneous", "GUI Settings", "Witness Finder") then
 		ib.WitnessFinder()
+	end
+	for k, v in pairs(player.GetAll()) do
+		if not v:IsValid() or (v == me and not em.IsValid(v)) or (gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me then return end
 	end
 	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:") then
 		ib.PropKillCircle()
 	end
+	if (gBool("Aim Assist", "Triggerbot", "Enabled") and not gBool("Aim Assist", "Aimbot", "Enabled")) then return end
 	if gBool("Aim Assist", "Aimbot", "Enabled") and gBool("Aim Assist", "Miscellaneous", "Show FoV Circle") then
 		ib.FovCircle()
-	end
-	for k, v in pairs(player.GetAll()) do
-		if not v:IsValid() or (gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me then return end
 	end
 	if (aimtarget and em.IsValid(aimtarget) and not FixTools() and gBool("Aim Assist", "Miscellaneous", "Snap Lines") and (gBool("Aim Assist", "Aimbot", "Enabled"))) then
 		ib.SnapLines()
@@ -6811,7 +6864,7 @@ timer.Simple(0.1, function()
 	else
 		if file.Read(folder.."/version.txt", "DATA") ~= version then
 			ib.Changelog()
-			chat.AddText(Color(0, 255, 0), "IdiotBox has been updated from v"..file.Read(folder.."/version.txt", "DATA").." to v"..version.."! Changelog is printed in the console.")
+			chat.AddText(Color(0, 255, 0), "IdiotBox has been updated from "..file.Read(folder.."/version.txt", "DATA").." to "..version.."! Changelog is printed in the console.")
 			surface.PlaySound("buttons/lightswitch2.wav")
 			file.Write(folder.."/version.txt", version)
 		end
