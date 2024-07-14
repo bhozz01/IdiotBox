@@ -1,9 +1,14 @@
 # IdiotBox cat edition
 
-> [!WARNING]
-> This version of IdiotBox uses the x86-64 branch and not the default branch!
+IB Cat Edition is a version of IdiotBox with default and x86-64 branch support. I'm planning on adding more features to this that are likely not going to be added into the original IdiotBox, however if Phizz feels like it he can take anything from here and put it into the official build.
 
-IB Cat Edition is a version of IdiotBox made for x86-64 versions of the game. I'm planning on adding more features to this that are likely not going to be added into the original IdiotBox, however if Phizz feels like it he can take anything from here and put it into the official build.
+Current features different from original IdiotBox:
+* Newline support in name changer (use `\n` in the convar and it will turn into a newline)
+* Custom disconnect messages (only in x86-64 because big module doesn't have the function)
+
+Known issues:
+* ChatClear only works in 32-bit. Since the module was released in 2016, the source code was never published and the creator was last online 2021, this will likely stay this way for a long time
+* Keybind buttons do not work
 
 # Installation
 
