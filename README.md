@@ -10,6 +10,11 @@ Known issues:
 * ChatClear only works in 32-bit. Since the module was released in 2016, the source code was never published and the creator was last online 2021, this will likely stay this way for a long time
 * Keybind buttons do not work
 
+Module credits:
+* [zxcmodule](https://github.com/tihomirocrew/zxcmodule) by D3D9C
+* [big](https://github.com/6b45/engineprediction) by razor
+* [ChatClear](https://www.mpgh.net/forum/showthread.php?t=1168652) by Herp
+
 # Installation
 
 1. Go to the [Releases](https://github.com/aaaasdfghjkllll/ibcatedition/releases) on GitHub and download the "ibcatedition.zip".
