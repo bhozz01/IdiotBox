@@ -31,4 +31,4 @@ If you are on a server that hasn't enabled `sv_allowcslua`, you can still load t
 
 # Reporting issues
 
-If you encounter any bugs, errors or glitches while using IB Cat Edition, create an issue on GitHub.
+If you encounter any bugs, errors or glitches while using IB Cat Edition, [create an issue on GitHub](https://github.com/aaaasdfghjkllll/ibcatedition/issues/new).
