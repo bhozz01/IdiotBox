@@ -114,28 +114,28 @@ ib.creator = ib.creator or {}
 ib.contributors = ib.contributors or {}
 ib.cateditioncreator = ib.cateditioncreator or {}
 
-ib.creator["STEAM_0:0:63644275"] = {} -- me
-ib.creator["STEAM_0:0:162667998"] = {} -- my alt
-ib.contributors["STEAM_0:0:196578290"] = {} -- pinged (code dev)
-ib.contributors["STEAM_0:0:37523203"] = {} -- ljackson (code dev)
-ib.contributors["STEAM_0:0:4727797"] = {} -- data (code dev)
-ib.contributors["STEAM_0:0:74527587"] = {} -- s0lum (code dev)
-ib.contributors["STEAM_0:1:69272242"] = {} -- leme (code dev)
-ib.contributors["STEAM_0:0:109145007"] = {} -- scottpott8 (code dev)
-ib.contributors["STEAM_0:0:205376238"] = {} -- vectivus (code dev)
-ib.contributors["STEAM_0:0:200336136"] = {} -- asteya (code dev)
-ib.contributors["STEAM_0:1:188710062"] = {} -- uucka (code tester)
-ib.contributors["STEAM_0:1:191270548"] = {} -- cal1nxd (code tester)
-ib.contributors["STEAM_0:1:404757"] = {} -- xvcaligo // persix (code tester)
-ib.contributors["STEAM_0:0:453611223"] = {} -- naxut (code tester & advertiser)
-ib.contributors["STEAM_0:0:453356413"] = {} -- lenn (ex-garry's mod server manager)
-ib.contributors["STEAM_0:1:126050820"] = {} -- papertek // johnrg (ex-code dev & ex-discord manager)
-ib.contributors["STEAM_0:1:193781969"] = {} -- outcome // paradox (ex-code dev)
-ib.contributors["STEAM_0:1:59798110"] = {} -- mrsquid (old advertiser)
-ib.contributors["STEAM_0:1:4375194"] = {} -- ohhstyle (old advertiser)
-ib.contributors["STEAM_0:1:101813068"] = {} -- sdunken (first user)
+ib.creator["STEAM_0:0:63644275"] = true -- me
+ib.creator["STEAM_0:0:162667998"] = true -- my alt
+ib.contributors["STEAM_0:0:196578290"] = true -- pinged (code dev)
+ib.contributors["STEAM_0:0:37523203"] = true -- ljackson (code dev)
+ib.contributors["STEAM_0:0:4727797"] = true -- data (code dev)
+ib.contributors["STEAM_0:0:74527587"] = true -- s0lum (code dev)
+ib.contributors["STEAM_0:1:69272242"] = true -- leme (code dev)
+ib.contributors["STEAM_0:0:109145007"] = true -- scottpott8 (code dev)
+ib.contributors["STEAM_0:0:205376238"] = true -- vectivus (code dev)
+ib.contributors["STEAM_0:0:200336136"] = true -- asteya (code dev)
+ib.contributors["STEAM_0:1:188710062"] = true -- uucka (code tester)
+ib.contributors["STEAM_0:1:191270548"] = true -- cal1nxd (code tester)
+ib.contributors["STEAM_0:1:404757"] = true -- xvcaligo // persix (code tester)
+ib.contributors["STEAM_0:0:453611223"] = true -- naxut (code tester & advertiser)
+ib.contributors["STEAM_0:0:453356413"] = true -- lenn (ex-garry's mod server manager)
+ib.contributors["STEAM_0:1:126050820"] = true -- papertek // johnrg (ex-code dev & ex-discord manager)
+ib.contributors["STEAM_0:1:193781969"] = true -- outcome // paradox (ex-code dev)
+ib.contributors["STEAM_0:1:59798110"] = true -- mrsquid (old advertiser)
+ib.contributors["STEAM_0:1:4375194"] = true -- ohhstyle (old advertiser)
+ib.contributors["STEAM_0:1:101813068"] = true -- sdunken (first user)
 
-ib.cateditioncreator["STEAM_0:0:743459526"] = {}
+ib.cateditioncreator["STEAM_0:0:743459526"] = true
 
 --NOTE-- I want to mention that these are not the only people that helped me with the development of IdiotBox, but they are the ones who helped me the most and that is why they are credited here.
 
@@ -186,8 +186,9 @@ local options = {
 		   {""}, 
 	   }, 
 	   {
-		   {"Configurations", 261, 255, 232, 175, 218}, 
+		   {"Configurations", 261, 255, 232, 187, 218}, 
 		   {"Automatically Save", "Checkbox", false, 78}, 
+		   {"Pretty-Print", "Checkbox", false, 78},
 		   {"Save Configuration", "Button", "", 92}, 
 		   {"Load Configuration", "Button", "", 92}, 
 		   {"Delete Configuration", "Button", "", 92}, 
@@ -195,7 +196,7 @@ local options = {
 		   {""}, 
 	   }, 
 	   {
-			 {"Others", 261, 444, 232, 145, 218}, --130
+			 {"Others", 261, 456, 232, 145, 218},
 		   {"Feature Tooltips", "Checkbox", true, 78}, -- Enabled by default
 		   {"Apply Custom Name", "Button", false, 92}, 
 		   {"Custom Disconnect", "Button", false, 92},
@@ -715,25 +716,22 @@ do
 	if gui.IsGameUIVisible() then
 		gui.HideGameUI()
 	end
-	if BRANCH ~= "x86-64" and BRANCH ~= "unknown" then
-		Popup(4.3, "ERROR! Cannot load IB Cat Edition in this Garry's Mod branch.", Color(255, 0, 0))
-		chat.AddText(Color(255, 0, 0), "\n[ERROR LOGS]")
-		chat.AddText(Color(255, 255, 255), "- Incompatible game version (err:01)")
-		surface.PlaySound("buttons/lightswitch2.wav")
-		return
-	end
 	if global.game.SinglePlayer() then
 		Popup(4.3, "ERROR! Cannot load IB Cat Edition in Single Player mode.", Color(255, 0, 0))
-		chat.AddText(Color(255, 0, 0), "\n[ERROR LOGS]")
-		chat.AddText(Color(255, 255, 255), "- Missing multiplayer assets (err:02)")
+		chat.AddText(Color(255, 0, 0), "Cannot load IB Cat Edition in Single Player!")
 		surface.PlaySound("buttons/lightswitch2.wav")
 		return
 	end
-	if (BRANCH == "x86-64" and not file.Exists("lua/bin/gmcl_zxcmodule_win64.dll", "MOD")) or (BRANCH == "unknown" and (not file.Exists("lua/bin/gmcl_big_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_chatclear_win32.dll", "MOD"))) then
-		Popup(4.3, "You have missing modules! Some features will not be available.", Color(255, 0, 0))
+	if BRANCH ~= "x86-64" and BRANCH ~= "unknown" then
+		Popup(4.3, "You are running branch " .. BRANCH .. ". IB Cat Edition is nut guaranteed to work!", Color(255, 255, 0))
+		chat.AddText(Color(255, 255, 0), BRANCH .. " is not guaranteed to work with IdiotBox! Ignoring binary modules.")
+		surface.PlaySound("buttons/lightswitch2.wav")
+	end
+	if system.IsWindows() and ((BRANCH == "x86-64" and not file.Exists("lua/bin/gmcl_zxcmodule_win64.dll", "MOD")) or (BRANCH == "unknown" and (not file.Exists("lua/bin/gmcl_big_win32.dll", "MOD") or not file.Exists("lua/bin/gmcl_chatclear_win32.dll", "MOD")))) then
+		Popup(4.3, "You have missing modules! Some features will not be available.", Color(255, 255, 0))
 		chat.AddText(Color(255, 0, 0), "Recommended modules:")
 		if BRANCH == "x86-64" then
-			chat.AddText(Color(255, 255, 255, "- gmcl_zxcmodule_win64.dll (Main module)"))
+			chat.AddText(Color(255, 255, 255), "- gmcl_zxcmodule_win64.dll (Main module)")
 		end
 		if BRANCH == "unknown" then
 			if not file.Exists("lua/bin/gmcl_big_win32.dll", "MOD") then
@@ -745,13 +743,18 @@ do
 		end
 		surface.PlaySound("buttons/lightswitch2.wav")
 	end
+	if not system.IsWindows() then
+		Popup(4.3, "You are not using Windows! Binary modules will not be available.", Color(255, 255, 0))
+		chat.AddText(Color(255, 255, 0), "You are not using Windows, ignoring binary modules.")
+		surface.PlaySound("buttons/lightswitch2.wav")
+	end
 	global.Loaded = true
 end
 
 local usedmodules = {}
 
-if BRANCH == "x86-64" and file.Exists("lua/bin/gmcl_zxcmodule_win64.dll", "MOD") then require("zxcmodule") usedmodules["zxcmodule"] = true end
-if BRANCH == "unknown" then
+if BRANCH == "x86-64" and system.IsWindows() and file.Exists("lua/bin/gmcl_zxcmodule_win64.dll", "MOD") then require("zxcmodule") usedmodules["zxcmodule"] = true end
+if BRANCH == "unknown" and system.IsWindows() then
 	if file.Exists("lua/bin/gmcl_big_win32.dll", "MOD") then require("big") usedmodules["big"] = true end
 	if file.Exists("lua/bin/gmcl_chatclear_win32.dll", "MOD") then require("chatclear") usedmodules["chatclear"] = true end
 end
@@ -784,7 +787,7 @@ end
 
 function ib.SaveConfig(index)
    if index < 1 or index > #ib.configFiles then return end
-   file.Write(folder.."/"..ib.configFiles[index], util.TableToJSON(options))
+   file.Write(folder.."/"..ib.configFiles[index], util.TableToJSON(options, gBool("Main Menu", "Configurations", "Pretty-Print")))
 end
 
 function ib.UpdateVar(men, sub, lookup, new)
@@ -943,263 +946,265 @@ local function DrawTabs(self, w, h)
 end
 
 local function DrawCheckbox(self, w, h, var, maxy, posx, posy, dist)
-   local size = var[4]
-   surface.SetFont("MenuFont")
-   surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
-   surface.SetTextPos(25 + posx + 15 + 5, 61 + posy + maxy)
-   local tw, th = surface.GetTextSize(var[1])
-   surface.SetDrawColor(bgmenucol.r + 175, bgmenucol.g + 175, bgmenucol.b + 175, 55)
-   local mx, my = self:GetPos()
-   local bMouse = MouseInArea(mx - 193 + posx + dist, my + 61 + posy + maxy, mx - 193 + posx + dist + size - 65, my + 61 + posy + maxy + 16)
-   if bMouse then
-	   surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:") - 155)
-	   surface.SetDrawColor(bgmenucol.r + 175, bgmenucol.g + 175, bgmenucol.b + 175, 180)
-	   if not input.IsMouseDown(MOUSE_LEFT) then
-		   surface.DrawRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, 9, 9)
-	   end
-	   local feat = var[1]
-	   if feat == "Enabled" then -- The tooltips listed below may not be correctly ordered because of feature placement changes I'm constantly making - basically fucking up your configs B))))
-		   info = "Toggles this feature."
-	   elseif feat == "Optimize Game" then
-		   info = "Clears decals and other effects to improve framerate."
-	   elseif feat == "Spectator Mode" then
-		   info = "Enables all IB Cat Edition features while in spectator mode too. Useful only for Spectator Deathmatch."
-	   elseif feat == "Anti-AFK" then
-		   info = "Makes you move from left to right in order to avoid getting kicked for being inactive on certain servers."
-	   elseif feat == "Anti-Ads" then
-		   info = "Blocks ads from showing up."
-	   elseif feat == "Anti-Blind" then
-		   info = "Blocks ULX blinding."
-	   elseif feat == "Hide Round Report" then
-		   info = "Hides the report at the end of a round."
-	   elseif feat == "Panel Remover" then
-		   info = "Removes panels, such as RDM reports, by pressing the 'G' key."
-	   elseif feat == "Traitor Finder" then
-		   info = "Draws TTT traitor-specific weapons, and sends alerts whenever a player buys one."
-	   elseif feat == "Ignore Detectives as Innocent" then
-		   info = "Ignores detectives if you're innocent."
-	   elseif feat == "Ignore Fellow Traitors" then
-		   info = "Ignores your traitor teammates if you're a traitor."
-	   elseif feat == "Prop Kill" then
-		   info = "Allows you to prop kill with the Magneto-stick upon toggling the prop kill key."
-	   elseif feat == "Suicide Near Arrest Batons" then
-		   info = "Automatically die when nearing an arrest baton to avoid being jailed."
-	   elseif feat == "Transparent Props" then
-		   info = "Changes prop opacity in DarkRP."
-	   elseif feat == "Murderer Finder" then
-		   info = "Draws Murder weapons, and sends alerts about who the murderer is."
-	   elseif feat == "Hide End Round Board" then
-		   info = "Hides the board at the end of a round."
-	   elseif feat == "Hide Footprints" then
-		   info = "Makes the footprints invisible for you."
-	   elseif feat == "No Black Screens" then
-		   info = "Makes the screen not turn black at any given moment during a round."
-	   elseif feat == "Automatically Save" then
-		   info = "Saves your current configuration automatically."
-	   elseif feat == "Feature Tooltips" then
-		   info = "Detailed information about features will appear here, at the bottom right corner of the menu."
-	   elseif feat == "Silent Aim" then
-		   info = "Makes the Aimbot invisible for you."
-	   elseif feat == "Auto Fire" then
-		   info = "Makes the Aimbot automatically shoot at your target for you."
-	   elseif feat == "Auto Zoom" then
-		   info = "Automatically scope/ zoom in with your weapon while targeting."
-	   elseif feat == "Auto Stop" then
-		   info = "Force-stops you from moving while targeting."
-	   elseif feat == "Auto Crouch" then
-		   info = "Force-crouches you while targeting."
-	   elseif feat == "Target Lock" then
-		   info = "Locks onto a specific target, until the target is no longer in your line of sight, or until it's eliminated."
-	   elseif feat == "Smooth Aim" then
-		   info = "Slows your mouse speed when triggering to improve accuracy."
-	   elseif feat == "Priority Targets Only" then
-		   info = "Players selected as priority targets will be the only ones targeted by this feature."
-	   elseif feat == "Disable in Noclip" then
-		   info = "Disables this feature when noclipping."
-	   elseif feat == "Target Players" then
-		   info = "Makes the Aim Assist target players."
-	   elseif feat == "Target Bots" then
-		   info = "Makes the Aim Assist target bots."
-	   elseif feat == "Target NPCs" then
-		   info = "Makes the Aim Assist target NPCs."
-	   elseif feat == "Target Team" then
-		   info = "Makes the Aim Assist target teammates."
-	   elseif feat == "Target Enemies" then
-		   info = "Makes the Aim Assist target enemies."
-	   elseif feat == "Target Steam Friends" then
-		   info = "Makes the Aim Assist target Steam friends."
-	   elseif feat == "Target Admins" then
-		   info = "Makes the Aim Assist target server admins."
-	   elseif feat == "Target Spectators" then
-		   info = "Makes the Aim Assist target spectators."
-	   elseif feat == "Target Immune Players" then
-		   info = "Makes the Aim Assist target players immune to damage."
-	   elseif feat == "Target Noclipping Players" then
-		   info = "Makes the Aim Assist target noclipping players."
-	   elseif feat == "Target Driving Players" then
-		   info = "Makes the Aim Assist target driving players."
-	   elseif feat == "Target Transparent Players" then
-		   info = "Makes the Aim Assist target transparent or invisible players."
-	   elseif feat == "Target Overhealed Players" then
-		   info = "Makes the Aim Assist target overhealed players."
-	   elseif feat == "Distance Limit" then
-		   info = "Sets a specific rendering limit for this feature."
-	   elseif feat == "Velocity Limit" then
-		   info = "Sets a specific velocity limit to avoid lightning-fast players from being targeted."
-	   elseif feat == "Remove Weapon Recoil" then
-		   info = "Removes weapon recoil."
-	   elseif feat == "Remove Bullet Spread" then
-		   info = "Creates a laser-accurate bullet spread. Not compatible with all weapon bases yet."
-	   elseif feat == "Projectile Prediction" then
-		   info = "Aimbot calculates your and your target's speed and compensates for non-hitscan weapons."
-	   elseif feat == "Auto Reload" then
-		   info = "Automatically reloads your weapon after firing it."
-	   elseif feat == "Disable Interpolation" then
-		   info = "Lag exploit, could be used to your advantage. Do not use if unfamiliar."
-	   elseif feat == "Manipulate Bullet Time" then
-		   info = "Creates a tiny delay between each gunshot for better efficiency."
-	   elseif feat == "Disable in 'Use' Toggle" then
-		   info = "Disables your Anti-Aim when pressing the 'E' key."
-	   elseif feat == "Detect Walls" then
-		   info = "Changes your angles based on your position relative to the world."
-	   elseif feat == "Lock View" then
-		   info = "Finds optimal angle to cover your head with a different part of the body."
-	   elseif feat == "Emote Resolver" then
-		   info = "Instead of resolving another player's angles, it will make the Aimbot automatically shoot emoters in their torso."
-	   elseif feat == "Disable on Attack" then
-		   info = "Disables fake lagging when shooting to improve accuracy when using this feature."
-	   elseif feat == "Skeleton" then
-		   info = "Draws the player's bones."
-	   elseif feat == "Glow" then
-		   info = "Draws a glowing outline of the player."
-	   elseif feat == "Hitbox" then
-		   info = "Draws the player's hitbox."
-	   elseif feat == "Vision Line" then
-		   info = "Draws a line, indicating where the player is looking."
-	   elseif feat == "Name" then
-		   info = "Draws the player's name, along with the priority status."
-	   elseif feat == "Bystander Name" then
-		   info = "Draws the player's bystander name in Murder. Enable Wallhack for this feature to work."
-	   elseif feat == "Weapon" then
-		   info = "Draws the weapon currently held by the player."
-	   elseif feat == "Rank" then
-		   info = "Draws the player's rank on the server."
-	   elseif feat == "Distance" then
-		   info = "Draws the player's distance value, relative to you."
-	   elseif feat == "Velocity" then
-		   info = "Draws the player's speed."
-	   elseif feat == "Conditions" then
-		   info = "Draws the player's current conditions, for example: sprinting, swimming, driving etc."
-	   elseif feat == "Steam ID" then
-		   info = "Draws the player's Steam ID. Bots will appear as 'BOT'."
-	   elseif feat == "Ping" then
-		   info = "Draws the player's ping."
-	   elseif feat == "Money Value" then
-		   info = "Draws the player's money value in DarkRP. Enable Wallhack for this feature to work."
-	   elseif feat == "Hide Ignored Targets" then
-		   info = "Makes ignored targets not show up on your Visuals."
-	   elseif feat == "Target Priority Colors" then
-		   info = "Changes the player's Wallhack color, based on their target priority."
-	   elseif feat == "Show Enemies Only" then
-		   info = "Only shows players that are not on your team."
-	   elseif feat == "Show Spectators" then
-		   info = "Shows players that are in spectator mode on your Visuals."
-	   elseif feat == "Team Colors" then
-		   info = "Visuals will draw with each player's assigned team color."
-	   elseif feat == "Adaptive Text Color" then
-		   info = "Changes the Wallhack text color to the current Wallhack color."
-	   elseif feat == "Spectators Window" then
-		   info = "Draws a spectator box, where you will be alerted if anyone is currently spectating you."
-	   elseif feat == "Radar Window" then
-		   info = "Draws a radar window."
-	   elseif feat == "Radar Names" then
-		   info = "Draws player/ entity names on the radar window."
-	   elseif feat == "Debug Info" then
-		   info = "Draws your ping, framerate, current date and time etc."
-	   elseif feat == "Players List" then
-		   info = "Draws a list of the players present on a server, along with their ranks."
-	   elseif feat == "Show List Titles" then
-		   info = "Shows the titles for both Debug Info and Players List."
-	   elseif feat == "Show NPCs" then
-		   info = "Shows NPCs on Visuals. This feature uses the classic Wallhack style by default."
-	   elseif feat == "NPC Name" then
-		   info = "Draws the NPC's name."
-	   elseif feat == "NPC Box" then
-		   info = "Draws a 2D box around the NPC."
-	   elseif feat == "NPC Glow" then
-		   info = "Draws a glowing outline of the NPC."
-	   elseif feat == "Show Entities" then
-		   info = "Draws the selected entities from the Entity Finder Menu. This feature uses the classic Wallhack style by default."
-	   elseif feat == "Entity Name" then
-		   info = "Draws the names of the selected entities from the Entity Finder Menu."
-	   elseif feat == "Entity Box" then
-		   info = "Draws a 3D box around the selected entities from the Entity Finder Menu."
-	   elseif feat == "Entity Glow" then
-		   info = "Draws a glowing outline of the selected entities from the Entity Finder Menu."
-	   elseif feat == "Advanced Network Graph" then
-		   info = "Displays a very detailed network graph (net_graph 4)."
-	   elseif feat == "Hide HUD" then
-		   info = "Hides the original HUD, for example: health value, ammo value, crosshair etc."
-	   elseif feat == "Witness Finder" then
-		   info = "Shows how many people can currently see you."
-	   elseif feat == "Show FoV Circle" then
-		   info = "Draws a circle indicating your Aimbot's FoV value."
-	   elseif feat == "Snap Lines" then
-		   info = "Draws a line towards the player currently being targeted by your Aimbot."
-	   elseif feat == "Flash Spam" then
-		   info = "Spams your flashlight, for fun."
-	   elseif feat == "Use Spam" then
-		   info = "Spams the 'use' command on interactive entities."
-	   elseif feat == "Transparent Walls" then
-		   info = "Makes the walls see-through."
-	   elseif feat == "Remove Sky" then
-		   info = "Makes the sky completely black."
-	   elseif feat == "Remove 3D Skybox" then
-		   info = "Removes the 3D skybox. May improve framerate."
-	   elseif feat == "Remove Shadows" then
-		   info = "Creates uniform lighting throughout the whole map. Useful for dark maps."
-	   --[[elseif feat == "Dark Mode" then
-		   info = "Gives the map a night-like aspect."]]--
-	   elseif feat == "Custom FoV" then
-		   info = "Allows you to set a custom FoV, outside of the default boundaries."
-	   elseif feat == "Thirdperson" then
-		   info = "Allows you to toggle thirdperson."
-	   elseif feat == "Rainbow Mode" then
-		   info = "Makes your viewmodel's texture RGB."
-	   elseif feat == "No Viewmodel" then
-		   info = "Removes your entire viewmodel."
-	   elseif feat == "No Hands" then
-		   info = "Removes your viewmodel hands."
-	   elseif feat == "Custom Positions" then
-		   info = "Allows you to completely customize your viewmodel positions and angles."
-	   elseif feat == "Bunny Hop" then
-		   info = "Jump continuously when holding your jump key."
-	   elseif feat == "Circle Strafe" then
-		   info = "Strafe in circles to gain maximum velocity. Must be paired with Auto Strafe in order for it to work."
-	   elseif feat == "Rage Mode" then
-		   info = "Forces the Legit and Directional auto strafers to move forwards. NOT the same as the Rage auto strafer."
-	   elseif feat == "Air Crouch" then
-		   info = "Spam-crouches you when jumping."
-	   elseif feat == "Fake Crouch" then
-		   info = "Combines walking and spam-crouching."
-	   elseif feat == "Air Stuck" then
-		   info = "Abuses sequencing in order to freeze you mid-air."
-	   elseif feat == "Log Kills in Chat" then
-		   info = "Logs every kill in chat."
-	   end
-   end
-   surface.DrawText(var[1])
-   surface.SetDrawColor(bgmenucol.r + 175, bgmenucol.g + 175, bgmenucol.b + 175, 55)
-   surface.DrawRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, 9, 9)
-   if var[3] then
-	   surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 180)
-	   surface.DrawRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, 9, 9)
-	   surface.SetDrawColor(bordercol.r + 20, bordercol.g + 20, bordercol.b + 20, 180)
-	   surface.DrawOutlinedRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, 9, 9)
-   end
-   if bMouse and input.IsMouseDown(MOUSE_LEFT) and not mousedown and not drawlast then
-	   var[3] = not var[3]
-   end
+	local size = var[4]
+	surface.SetFont("MenuFont")
+	surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
+	surface.SetTextPos(25 + posx + 15 + 5, 61 + posy + maxy)
+	local tw, th = surface.GetTextSize(var[1])
+	surface.SetDrawColor(bgmenucol.r + 175, bgmenucol.g + 175, bgmenucol.b + 175, 55)
+	local mx, my = self:GetPos()
+	local bMouse = MouseInArea(mx - 193 + posx + dist, my + 61 + posy + maxy, mx - 193 + posx + dist + size - 65, my + 61 + posy + maxy + 16)
+	if bMouse then
+		surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:") - 155)
+		surface.SetDrawColor(bgmenucol.r + 175, bgmenucol.g + 175, bgmenucol.b + 175, 180)
+		if not input.IsMouseDown(MOUSE_LEFT) then
+			surface.DrawRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, 9, 9)
+		end
+		local feat = var[1]
+		if feat == "Enabled" then -- The tooltips listed below may not be correctly ordered because of feature placement changes I'm constantly making - basically fucking up your configs B))))
+			info = "Toggles this feature."
+		elseif feat == "Optimize Game" then
+			info = "Clears decals and other effects to improve framerate."
+		elseif feat == "Spectator Mode" then
+			info = "Enables all IB Cat Edition features while in spectator mode too. Useful only for Spectator Deathmatch."
+		elseif feat == "Anti-AFK" then
+			info = "Makes you move from left to right in order to avoid getting kicked for being inactive on certain servers."
+		elseif feat == "Anti-Ads" then
+			info = "Blocks ads from showing up."
+		elseif feat == "Anti-Blind" then
+			info = "Blocks ULX blinding."
+		elseif feat == "Hide Round Report" then
+			info = "Hides the report at the end of a round."
+		elseif feat == "Panel Remover" then
+			info = "Removes panels, such as RDM reports, by pressing the 'G' key."
+		elseif feat == "Traitor Finder" then
+			info = "Draws TTT traitor-specific weapons, and sends alerts whenever a player buys one."
+		elseif feat == "Ignore Detectives as Innocent" then
+			info = "Ignores detectives if you're innocent."
+		elseif feat == "Ignore Fellow Traitors" then
+			info = "Ignores your traitor teammates if you're a traitor."
+		elseif feat == "Prop Kill" then
+			info = "Allows you to prop kill with the Magneto-stick upon toggling the prop kill key."
+		elseif feat == "Suicide Near Arrest Batons" then
+			info = "Automatically die when nearing an arrest baton to avoid being jailed."
+		elseif feat == "Transparent Props" then
+			info = "Changes prop opacity in DarkRP."
+		elseif feat == "Murderer Finder" then
+			info = "Draws Murder weapons, and sends alerts about who the murderer is."
+		elseif feat == "Hide End Round Board" then
+			info = "Hides the board at the end of a round."
+		elseif feat == "Hide Footprints" then
+			info = "Makes the footprints invisible for you."
+		elseif feat == "No Black Screens" then
+			info = "Makes the screen not turn black at any given moment during a round."
+		elseif feat == "Automatically Save" then
+			info = "Saves your current configuration automatically."
+		elseif feat == "Pretty-Print" then
+			info = "Make the config human readable when saving."
+		elseif feat == "Feature Tooltips" then
+			info = "Detailed information about features will appear here, at the bottom right corner of the menu."
+		elseif feat == "Silent Aim" then
+			info = "Makes the Aimbot invisible for you."
+		elseif feat == "Auto Fire" then
+			info = "Makes the Aimbot automatically shoot at your target for you."
+		elseif feat == "Auto Zoom" then
+			info = "Automatically scope/ zoom in with your weapon while targeting."
+		elseif feat == "Auto Stop" then
+			info = "Force-stops you from moving while targeting."
+		elseif feat == "Auto Crouch" then
+			info = "Force-crouches you while targeting."
+		elseif feat == "Target Lock" then
+			info = "Locks onto a specific target, until the target is no longer in your line of sight, or until it's eliminated."
+		elseif feat == "Smooth Aim" then
+			info = "Slows your mouse speed when triggering to improve accuracy."
+		elseif feat == "Priority Targets Only" then
+			info = "Players selected as priority targets will be the only ones targeted by this feature."
+		elseif feat == "Disable in Noclip" then
+			info = "Disables this feature when noclipping."
+		elseif feat == "Target Players" then
+			info = "Makes the Aim Assist target players."
+		elseif feat == "Target Bots" then
+			info = "Makes the Aim Assist target bots."
+		elseif feat == "Target NPCs" then
+			info = "Makes the Aim Assist target NPCs."
+		elseif feat == "Target Team" then
+			info = "Makes the Aim Assist target teammates."
+		elseif feat == "Target Enemies" then
+			info = "Makes the Aim Assist target enemies."
+		elseif feat == "Target Steam Friends" then
+			info = "Makes the Aim Assist target Steam friends."
+		elseif feat == "Target Admins" then
+			info = "Makes the Aim Assist target server admins."
+		elseif feat == "Target Spectators" then
+			info = "Makes the Aim Assist target spectators."
+		elseif feat == "Target Immune Players" then
+			info = "Makes the Aim Assist target players immune to damage."
+		elseif feat == "Target Noclipping Players" then
+			info = "Makes the Aim Assist target noclipping players."
+		elseif feat == "Target Driving Players" then
+			info = "Makes the Aim Assist target driving players."
+		elseif feat == "Target Transparent Players" then
+			info = "Makes the Aim Assist target transparent or invisible players."
+		elseif feat == "Target Overhealed Players" then
+			info = "Makes the Aim Assist target overhealed players."
+		elseif feat == "Distance Limit" then
+			info = "Sets a specific rendering limit for this feature."
+		elseif feat == "Velocity Limit" then
+			info = "Sets a specific velocity limit to avoid lightning-fast players from being targeted."
+		elseif feat == "Remove Weapon Recoil" then
+			info = "Removes weapon recoil."
+		elseif feat == "Remove Bullet Spread" then
+			info = "Creates a laser-accurate bullet spread. Not compatible with all weapon bases yet."
+		elseif feat == "Projectile Prediction" then
+			info = "Aimbot calculates your and your target's speed and compensates for non-hitscan weapons."
+		elseif feat == "Auto Reload" then
+			info = "Automatically reloads your weapon after firing it."
+		elseif feat == "Disable Interpolation" then
+			info = "Lag exploit, could be used to your advantage. Do not use if unfamiliar."
+		elseif feat == "Manipulate Bullet Time" then
+			info = "Creates a tiny delay between each gunshot for better efficiency."
+		elseif feat == "Disable in 'Use' Toggle" then
+			info = "Disables your Anti-Aim when pressing the 'E' key."
+		elseif feat == "Detect Walls" then
+			info = "Changes your angles based on your position relative to the world."
+		elseif feat == "Lock View" then
+			info = "Finds optimal angle to cover your head with a different part of the body."
+		elseif feat == "Emote Resolver" then
+			info = "Instead of resolving another player's angles, it will make the Aimbot automatically shoot emoters in their torso."
+		elseif feat == "Disable on Attack" then
+			info = "Disables fake lagging when shooting to improve accuracy when using this feature."
+		elseif feat == "Skeleton" then
+			info = "Draws the player's bones."
+		elseif feat == "Glow" then
+			info = "Draws a glowing outline of the player."
+		elseif feat == "Hitbox" then
+			info = "Draws the player's hitbox."
+		elseif feat == "Vision Line" then
+			info = "Draws a line, indicating where the player is looking."
+		elseif feat == "Name" then
+			info = "Draws the player's name, along with the priority status."
+		elseif feat == "Bystander Name" then
+			info = "Draws the player's bystander name in Murder. Enable Wallhack for this feature to work."
+		elseif feat == "Weapon" then
+			info = "Draws the weapon currently held by the player."
+		elseif feat == "Rank" then
+			info = "Draws the player's rank on the server."
+		elseif feat == "Distance" then
+			info = "Draws the player's distance value, relative to you."
+		elseif feat == "Velocity" then
+			info = "Draws the player's speed."
+		elseif feat == "Conditions" then
+			info = "Draws the player's current conditions, for example: sprinting, swimming, driving etc."
+		elseif feat == "Steam ID" then
+			info = "Draws the player's Steam ID. Bots will appear as 'BOT'."
+		elseif feat == "Ping" then
+			info = "Draws the player's ping."
+		elseif feat == "Money Value" then
+			info = "Draws the player's money value in DarkRP. Enable Wallhack for this feature to work."
+		elseif feat == "Hide Ignored Targets" then
+			info = "Makes ignored targets not show up on your Visuals."
+		elseif feat == "Target Priority Colors" then
+			info = "Changes the player's Wallhack color, based on their target priority."
+		elseif feat == "Show Enemies Only" then
+			info = "Only shows players that are not on your team."
+		elseif feat == "Show Spectators" then
+			info = "Shows players that are in spectator mode on your Visuals."
+		elseif feat == "Team Colors" then
+			info = "Visuals will draw with each player's assigned team color."
+		elseif feat == "Adaptive Text Color" then
+			info = "Changes the Wallhack text color to the current Wallhack color."
+		elseif feat == "Spectators Window" then
+			info = "Draws a spectator box, where you will be alerted if anyone is currently spectating you."
+		elseif feat == "Radar Window" then
+			info = "Draws a radar window."
+		elseif feat == "Radar Names" then
+			info = "Draws player/ entity names on the radar window."
+		elseif feat == "Debug Info" then
+			info = "Draws your ping, framerate, current date and time etc."
+		elseif feat == "Players List" then
+			info = "Draws a list of the players present on a server, along with their ranks."
+		elseif feat == "Show List Titles" then
+			info = "Shows the titles for both Debug Info and Players List."
+		elseif feat == "Show NPCs" then
+			info = "Shows NPCs on Visuals. This feature uses the classic Wallhack style by default."
+		elseif feat == "NPC Name" then
+			info = "Draws the NPC's name."
+		elseif feat == "NPC Box" then
+			info = "Draws a 2D box around the NPC."
+		elseif feat == "NPC Glow" then
+			info = "Draws a glowing outline of the NPC."
+		elseif feat == "Show Entities" then
+			info = "Draws the selected entities from the Entity Finder Menu. This feature uses the classic Wallhack style by default."
+		elseif feat == "Entity Name" then
+			info = "Draws the names of the selected entities from the Entity Finder Menu."
+		elseif feat == "Entity Box" then
+			info = "Draws a 3D box around the selected entities from the Entity Finder Menu."
+		elseif feat == "Entity Glow" then
+			info = "Draws a glowing outline of the selected entities from the Entity Finder Menu."
+		elseif feat == "Advanced Network Graph" then
+			info = "Displays a very detailed network graph (net_graph 4)."
+		elseif feat == "Hide HUD" then
+			info = "Hides the original HUD, for example: health value, ammo value, crosshair etc."
+		elseif feat == "Witness Finder" then
+			info = "Shows how many people can currently see you."
+		elseif feat == "Show FoV Circle" then
+			info = "Draws a circle indicating your Aimbot's FoV value."
+		elseif feat == "Snap Lines" then
+			info = "Draws a line towards the player currently being targeted by your Aimbot."
+		elseif feat == "Flash Spam" then
+			info = "Spams your flashlight, for fun."
+		elseif feat == "Use Spam" then
+			info = "Spams the 'use' command on interactive entities."
+		elseif feat == "Transparent Walls" then
+			info = "Makes the walls see-through."
+		elseif feat == "Remove Sky" then
+			info = "Makes the sky completely black."
+		elseif feat == "Remove 3D Skybox" then
+			info = "Removes the 3D skybox. May improve framerate."
+		elseif feat == "Remove Shadows" then
+			info = "Creates uniform lighting throughout the whole map. Useful for dark maps."
+		--[[elseif feat == "Dark Mode" then
+			info = "Gives the map a night-like aspect."]]--
+		elseif feat == "Custom FoV" then
+			info = "Allows you to set a custom FoV, outside of the default boundaries."
+		elseif feat == "Thirdperson" then
+			info = "Allows you to toggle thirdperson."
+		elseif feat == "Rainbow Mode" then
+			info = "Makes your viewmodel's texture RGB."
+		elseif feat == "No Viewmodel" then
+			info = "Removes your entire viewmodel."
+		elseif feat == "No Hands" then
+			info = "Removes your viewmodel hands."
+		elseif feat == "Custom Positions" then
+			info = "Allows you to completely customize your viewmodel positions and angles."
+		elseif feat == "Bunny Hop" then
+			info = "Jump continuously when holding your jump key."
+		elseif feat == "Circle Strafe" then
+			info = "Strafe in circles to gain maximum velocity. Must be paired with Auto Strafe in order for it to work."
+		elseif feat == "Rage Mode" then
+			info = "Forces the Legit and Directional auto strafers to move forwards. NOT the same as the Rage auto strafer."
+		elseif feat == "Air Crouch" then
+			info = "Spam-crouches you when jumping."
+		elseif feat == "Fake Crouch" then
+			info = "Combines walking and spam-crouching."
+		elseif feat == "Air Stuck" then
+			info = "Abuses sequencing in order to freeze you mid-air."
+		elseif feat == "Log Kills in Chat" then
+			info = "Logs every kill in chat."
+		end
+	end
+	surface.DrawText(var[1])
+	surface.SetDrawColor(bgmenucol.r + 175, bgmenucol.g + 175, bgmenucol.b + 175, 55)
+	surface.DrawRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, 9, 9)
+	if var[3] then
+		surface.SetDrawColor(bordercol.r, bordercol.g, bordercol.b, 180)
+		surface.DrawRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, 9, 9)
+		surface.SetDrawColor(bordercol.r + 20, bordercol.g + 20, bordercol.b + 20, 180)
+		surface.DrawOutlinedRect(posx - 193 + dist + 2, 61 + posy + maxy + 2, 9, 9)
+	end
+	if bMouse and input.IsMouseDown(MOUSE_LEFT) and not mousedown and not drawlast then
+		var[3] = not var[3]
+	end
 end
 
 local function DrawSlider(self, w, h, var, maxy, posx, posy, dist)
@@ -1495,135 +1500,6 @@ local function Unload()
    timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 end
 
-function ib.Changelog() -- Ran out of local variables, again
-   print("===============================================================================================\n\n")
-   print("IdiotBox v7.1.b1 GENERAL BUGFIXES")
-   print("")
-   print("Please note: This changelog includes bugfixes from previous updates as well.")
-   print("\n")
-   print("- The 'readme.txt' file is finally up-to-date and only contains important information;")
-   print("- Optimized UI design for more user-friendliness;")
-   print("- Cleaned up bad hooks and functions for better performance;")
-   print("- Merged Ragebot and Legitbot into a single function;")
-   print("- Fixed spread compensation patch crashing your game when shooting a non-HL2 weapon;")
-   print("- Fixed Entities not using the correct Visuals color;")
-   print("- Fixed entity list not showing props and being too cluttered;")
-   print("- Fixed visual bug, where weapons would display a weird name on Wallhack;")
-   print("- Fixed alignment issues with the window borders;")
-   print("- Fixed being unable to fly planes and rotate props or camera angles;")
-   print("- Fixed Kill Spam giving script errors when an NPC was killed;") -- Old, but gold
-   print("- Fixed Entity Loader Menu breaking the cheat menu after closing it;")
-   print("- Fixed Aim FoV automatically disabling Anti-Aim;")
-   print("- Fixed toggle keys glitching out and working improperly;")
-   print("- Fixed 3D Box and Hitbox rendering issues;")
-   print("- Fixed colliding options in the drop-down selecion tabs;")
-   print("- Fixed extreme bug where the anti-screengrabber would make you run out of VRAM and crash your system;")
-   print("- Fixed Bunny Hop and Auto Strafe breaking Free Roaming and breaking player movement when in water;")
-   print("- Fixed Hitbox spamming the console with error messages;")
-   print("- Fixed Snap Lines still showing when Aimbot is not enabled;")
-   print("- Fixed Aimbot and Triggerbot targeting spawning players;")
-   print("- Fixed Viewmodel Chams not always covering the viewmodel hands;")
-   print("- Fixed Anti-Aim Resolver continuing to resolve angles when set to 'Off';")
-   print("- Fixed text coloring and positioning issues with the optimized Wallhack style;")
-   print("- Fixed directional strafing angle calculation errors;")
-   print("- Fixed Circle Strafe spaghetti code not functioning the way it should;")
-   print("- Fixed Priority List staying on-screen after closing the menu;")
-   print("- Fixed Advanced Network Graph breaking the net_graph command;")
-   print("- Fixed name changer/ stealer reverting to your Steam username as soon as a new player joined the server;")
-   print("- Fixed Visuals causing severe lag;")
-   print("- Fixed Radar no longer working and improved it;")
-   print("- Fixed Cheater Callout clearing chat when it should not;")
-   print("- Fixed Triggerbot Smooth Aim slowing down your overall mouse speed;")
-   print("- Fixed Witness Finder not working properly;")
-   print("- Fixed Reset Sounds only working when the menu is toggled;")
-   print("- Fixed a Projectile Prediction bug where dying would cause script errors;")
-   print("- Fixed Disable Interpolation and Optimize Game not resetting when disabled;")
-   print("- Fixed missing spread prediction and recoil compensation checks;")
-   print("- Fixed improper rendering of the visuals;")
-   print("- Fixed script errors appearing upon loading IdiotBox through the webloader;")
-   print("- Fixed anti-screengrabber security issues;")
-   print("- Fixed module issues upon reloading the script;")
-   print("- Fixed local variable limit and timer issues;")
-   print("- Fixed debug.getregistry() patch by adding the registry.dll module;")
-   print("- Reworked localizations and overall script for better performance;")
-   print("- Reorganized certain out-of-place functions and menu options;")
-   print("- Renamed certain misspelled or broken functions and menu options;")
-   print("- Removed broken/ useless file.Read detour;")
-   print("- Removed calls and variables that had no use;")
-   print("- Removed cloned hooks for better performance.")
-   print("\n")
-   print("IdiotBox v7.1.b1 ADDITIONS & CHANGES")
-   print("")
-   print("Please note: This changelog includes feature changes from previous updates as well.")
-   print("\n")
-   print("- Added 'Projectile Prediction' and 'Line-of-Sight Check' to Aimbot;")
-   print("- Added 'Emote Resolver' to Resolver;")
-   print("- Added 'Distance Limit', 'Velocity Limit' and NPC targeting to Aim Assist;")
-   print("- Added 'Default', 'Static', 'Distance Adapt' and 'Crosshair Adapt' to Anti-Aim;")
-   print("- Added 'Position Lines', 'Flat' & 'Wireframe' chams materials, 'Adaptive Text Colors' and 'Target Priority Colors' to Visuals;")
-   print("- Added 'Remove 3D Skybox' to Textures;")
-   print("- Added 'Feature Tooltips', 'Spectator Mode' and more gamemode specific features to Main Menu;")
-   print("- Added 'Target Spectators', 'Target Players', 'Target Immune Players' and 'Target Enemies' to Aim Priorities;")
-   print("- Added 'Toggle Key' and 'Speed' to Free Roaming;")
-   print("- Added 'Air Stuck', 'Circle Strafe Key' and 'Fake Crouch' to Movement;")
-   print("- Added 'Arabic Spam' and 'Hebrew Spam' to Chat Spam;") -- Old, but gold
-   print("- Added 'Thirdperson Key', 'Custom Positions', 'Rainbow Mode' and 'Flat' & 'Wireframe' chams to Point of View;")
-   print("- Added 'Legit', 'Rage' and 'Directional' to Auto Strafe;")
-   print("- Added 'GUI Settings' to Miscellaneous;")
-   print("- Added better anti-cheat detection and protection;")
-   print("- Added customizable list adjustments to Priority List;")
-   print("- Added spread prediction and recoil compensation to Triggerbot;")
-   print("- Added engine prediction module (big.dll);")
-   print("- Added more hitsounds, killsounds, more music and a custom music player to Sounds;")
-   print("- Added more customization options to Panels;")
-   print("- Added error logs to help with confusion;")
-   print("- Added background blur;")
-   print("- Reworked 'Bunny Hop' and 'Auto Strafe' from scratch;")
-   print("- Reworked 'Wallhack' from scratch;")
-   print("- Reworked 'Radar', 'Spectators', 'Debug Info' and 'Players List' from Panels;")
-   print("- Reworked 'Traitor Finder' and 'Murderer Finder' from Main Menu;")
-   print("- Reworked 'Show NPCs' and 'Show Entities' from Visuals;")
-   print("- Reworked 'Emotes' from Miscellaneous, allowing you to move while acting;")
-   print("- Reworked 'Free Roaming' from Miscellaneous, so that you will no longer have to hold down the toggle key in order to roam;")
-   print("- Reworked 'Feature Tooltips' from scratch;")
-   print("- Reworked anti-screengrabber from scratch;")
-   print("- Reworked the menu's design from scratch;")
-   print("- Reworked spread prediction from scratch;")
-   print("- Reworked recoil compensation from scratch;")
-   print("- Removed 'Triggerbot' tab and merged it with the 'Aim Assist' tab;")
-   print("- Removed 'Shoutout' and 'Drop Money' from Chat Spam;")
-   print("- Removed 'Dark Mode' from Textures (temporarily);")
-   print("- Removed 'Screengrab Notifications' from Miscellaneous;")
-   print("- Removed 'Mirror' from Point of View;")
-   print("- Removed 'dickwrap.dll', 'bsendpacket.dll' and 'fhook.dll' modules;")
-   print("- Changed the Armor Bar and Armor Value colors from bright green to bright blue.")
-   print("\n")
-   print("IdiotBox TO-DO LIST")
-   print("")
-   print("Please note: This list includes any potential future additions/ changes/ removals, and is subject to change.")
-   print("\n")
-   print("- Add 'Backtracking' and 'Multi-Tap' to Aim Assist;")
-   print("- Add 'Fake Lag' & 'Fake Angles' chams to Visuals;")
-   print("- Add true fake angles to Anti-Aim;")
-   print("- Add color pickers instead of manual sliders;")
-   print("- Rework 'Auto Wallbang' from scratch;")
-   print("- Rework 'Projectile Prediction' from scratch;")
-   print("- Fix all unoptimized calls and functions.")
-   print("\n")
-   print("IdiotBox WORK-IN-PROGRESS LIST")
-   print("")
-   print("Please note: This list includes any potential future additions/ changes/ removals, and is subject to change.")
-   print("\n")
-   print("- Add adaptive menu resolution scaling;")
-   print("- Rework menu base from scratch;")
-   print("- Rework 'Entity Finder' and 'Plugin Loader' menus;")
-   print("- Fix questionable UI choices;")
-   print("- Fix key binds getting stuck, seemingly at random times.")
-   print("\n\n===============================================================================================")
-   timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Successfully printed changelog to console!", Color(0, 255, 0)) end)
-   timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
-end
-
 local function BadEntities(v)
    if string.find(v:GetClass(), "class") or string.find(v:GetClass(), "viewmodel") or string.find(v:GetClass(), "worldspawn") or string.find(v:GetClass(), "beam") or string.find(v:GetClass(), "env_") or string.find(v:GetClass(), "func_") or string.find(v:GetClass(), "manipulate_") then
 	   return false
@@ -1821,7 +1697,7 @@ local function EntityFinder()
 		   drawlast = nil
 	   end
 	   if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and (not menukeydown or global.unloaded == true) then
-		   file.Write(folder.."/entities.txt", util.TableToJSON(drawnents))
+		   file.Write(folder.."/entities.txt", util.TableToJSON(drawnents, gBool("Main Menu", "Configurations", "Pretty-Print")))
 	   end
    finder:othink()
    end
@@ -1937,7 +1813,7 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 		elseif feat == "Custom Disconnect" then
 			info = "Disconnects from the server with a custom message instead of the normal \"Disconnect by user.\". Use the \"ib_customdisconnect\" convar."
 		elseif feat == "Print Changelog" then
-			info = "Prints the IdiotBox changelog in the console."
+			info = "This does nothing. I'm too lazy to remove it."
 		elseif feat == "Unload Cheat" then
 			info = "Unloads IB Cat Edition."
 		elseif feat == "Reset All Game Sounds" then
@@ -1956,16 +1832,15 @@ local function DrawButton(self, w, h, var, maxy, posx, posy, dist)
 				break
 			end
 		end
-		-- The functions for these two fuckers below are not called here, because of broken panels. You can find them in the 'Tick' hook, for now
 		if text == "Entity Finder Menu" then
+			EntityFinder()
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Plugin Loader Menu" then
+			PluginLoader() -- was it really that hard Phizz?
 			timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 		elseif text == "Unload Cheat" then
 			self:Remove()
 			Unload()
-		elseif text == "Print Changelog" then
-			ib.Changelog()
 		elseif text == "Save Configuration" or text == "Load Configuration" or text == "Delete Configuration" then
 			if configIndex then
 				if text == "Save Configuration" then
@@ -2113,98 +1988,98 @@ local function CacheColors()
 end
 
 local function Menu()
-   if frame then
-	   if ib.menuopened then return end
-	   ib.menuopened = true
-	   frame:SetVisible(!frame:IsVisible())
-	   menuopen = frame:IsVisible()
-	   candoslider = false
-	   drawlast = nil
-	   ib.menuopened = nil
-	   return
-   end
-   frame = vgui.Create("DFrame")
-   --[[ !!FUTURE UPDATE!!
-   frame:SetSize(UIScale(1022), UIScale(1150))
-   !!FUTURE UPDATE!! ]]--
-   frame:SetSize(764, 859)
-   frame:Center()
-   frame:SetTitle("")
-   frame:MakePopup()
-   frame:ShowCloseButton(false)
-   frame:SetDraggable(true)
-   if !frame:IsVisible() then
-	   frame:SetVisible(frame:IsVisible())
-   end
-   frame.Paint = function(self, w, h)
-	   if (candoslider and not mousedown and not drawlast and not input.IsMouseDown(MOUSE_LEFT)) then
-		   candoslider = false
-	   end
-	   info = ""
-	   if gOption("Main Menu", "Menus", "Menu Style:") == "Bordered" then -- Thank you for fixing my mess, Pinged
-		   draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 1, 1, w - 2, h - 2, Color(bordercol.r, bordercol.g, bordercol.b, 255))
-	   elseif gOption("Main Menu", "Menus", "Menu Style:") == "Borderless" then
-		   draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 1, 1, w - 2, h - 2, Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255))
-	   end
-	   draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 2, 2, w - 4, h - 4, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
-	   DrawText(w, h, "IB Cat Edition v7.1.b1")
-	   DrawTabs(self, w, h)
-	   DrawSub(self, w, h)
-	   if (drawlast) then
-		   drawlast()
-		   candoslider = true
-	   end
-	   mousedown = input.IsMouseDown(MOUSE_LEFT)
-	   if gBool("Main Menu", "Others", "Feature Tooltips") and info ~= "" then
-		   draw.SimpleText(info, "MenuFont", w / 1.02, h / 1.015, Color(menutextcol.r, menutextcol.g, menutextcol.b, 100), TEXT_ALIGN_RIGHT, TEXT_ALIGN_BOTTOM)
-	   end
-   end
-   frame.othink = frame.Think
-   frame.Think = function()
-	   local menusongs = {"https://dl.dropbox.com/s/0fdgaj0ry8uummf/Rust_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/vsz77wdjqy1xf83/HOME%20-%20Resonance.mp3?dl=1", "https://dl.dropbox.com/s/0m22ytfia8qoy4m/Daisuke%20-%20El%20Huervo.mp3?dl=1", "https://dl.dropbox.com/s/ovh8xt0nn6wjgjj/The%20Caretaker%20-%20It%27s%20just%20a%20burning%20memory%20%282016%29.mp3?dl=1", "https://dl.dropbox.com/s/bqt4dcjoziezdjk/The_Caretaker_-_Libets_Delay_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/0uly6phlgpoj4ss/1932_George_Olsen_-_Lullaby_Of_The_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/qfl7mu39us5hzn4/Erectin_a_River_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/stkat6jlp4jhpxo/Monrroe_-_Fleeting_Love_%28getmp3.pro%29.mp3?dl=1","https://dl.dropbox.com/s/vhd3il20d8ephb4/DJ_Spizdil_-_malo_tebyaHardstyle_m_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/2vf1lx9cnd5g9pq/Maduk_-_Vermilion_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/wcoo6cov1iatcao/Metrik_-_Gravity_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/8a91zs6woqz9bb4/Scattle_Remorse_REUPLOAD_CHECK_DE_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/12ztoyw2rc2q0z0/HOME_-_Hold_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/xlk7wuel56bwrr3/T_Sugah_-_Green_Valleys_LAOS_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/8bg55iwowf2jtv8/cuckoid%20-%20ponyinajar.mp3?dl=1",}
-	   local function playRandomSong()
-		   RunConsoleCommand("stopsound")
-		   local randomSongURL = menusongs[math.random(#menusongs)]
-		   global.sound.PlayURL(randomSongURL, "mono", function(station)
-			   if global.IsValid(station) then
-				   station:Play()
-			   end
-		   end)
-	   end
-   local musicPlayerOptions = {"Rust", "Resonance", "Daisuke", "A Burning M...", "Libet's Delay", "Lullaby Of T...", "Erectin' a River", "Fleeting Love", "Malo Tebya", "Vermilion", "Gravity", "Remorse", "Hold", "Green Valleys", "FP3"}
-   if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and (not menukeydown or global.unloaded == true) then
-   if gOption("Miscellaneous", "Sounds", "Music Player:") ~= "Off" then
-	   local selectedOption = gOption("Miscellaneous", "Sounds", "Music Player:")
-		   if selectedOption == "Random" then
-			   playRandomSong()
-		   elseif table.HasValue(musicPlayerOptions, selectedOption) then
-			   RunConsoleCommand("stopsound")
-			   local selectedOptionIndex = table.KeyFromValue(musicPlayerOptions, selectedOption)
-			   local selectedSongURL = menusongs[selectedOptionIndex]
-			   global.sound.PlayURL(selectedSongURL, "mono", function(station)
-				   if global.IsValid(station) then
-					   station:Play()
-				   end
-			   end)
-		   end
-	   end
-	   local selectedConfig = gOption("Main Menu", "Configurations", "Configuration:")
-	   local configIndex
-	   for index, config in ipairs(ib.configOptions) do
-		   if config == selectedConfig then
-			   configIndex = index
-			   break
-		   end
-	   end
-	   if gBool("Main Menu", "Configurations", "Automatically Save") then
-		   if configIndex then
-			   ib.SaveConfig(configIndex)
-		   end
-	   end
-   end
-   CacheColors()
-   frame:othink()
-   end
+	if frame then
+		if ib.menuopened then return end
+		ib.menuopened = true
+		frame:SetVisible(!frame:IsVisible())
+		menuopen = frame:IsVisible()
+		candoslider = false
+		drawlast = nil
+		ib.menuopened = nil
+		return
+	end
+	frame = vgui.Create("DFrame")
+	--[[ !!FUTURE UPDATE!!
+	frame:SetSize(UIScale(1022), UIScale(1150))
+	!!FUTURE UPDATE!! ]]--
+	frame:SetSize(764, 859)
+	frame:Center()
+	frame:SetTitle("")
+	frame:MakePopup()
+	frame:ShowCloseButton(false)
+	frame:SetDraggable(true)
+	if !frame:IsVisible() then
+		frame:SetVisible(frame:IsVisible())
+	end
+	frame.Paint = function(self, w, h)
+		if (candoslider and not mousedown and not drawlast and not input.IsMouseDown(MOUSE_LEFT)) then
+			candoslider = false
+		end
+		info = ""
+		if gOption("Main Menu", "Menus", "Menu Style:") == "Bordered" then -- Thank you for fixing my mess, Pinged
+			draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 1, 1, w - 2, h - 2, Color(bordercol.r, bordercol.g, bordercol.b, 255))
+		elseif gOption("Main Menu", "Menus", "Menu Style:") == "Borderless" then
+			draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 1, 1, w - 2, h - 2, Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255))
+		end
+		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 2, 2, w - 4, h - 4, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
+		DrawText(w, h, "IB Cat Edition v7.1.b1")
+		DrawTabs(self, w, h)
+		DrawSub(self, w, h)
+		if (drawlast) then
+			drawlast()
+			candoslider = true
+		end
+		mousedown = input.IsMouseDown(MOUSE_LEFT)
+		if gBool("Main Menu", "Others", "Feature Tooltips") and info ~= "" then
+			draw.SimpleText(info, "MenuFont", w / 1.02, h / 1.015, Color(menutextcol.r, menutextcol.g, menutextcol.b, 100), TEXT_ALIGN_RIGHT, TEXT_ALIGN_BOTTOM)
+		end
+	end
+	frame.othink = frame.Think
+	frame.Think = function()
+		local menusongs = {"https://dl.dropbox.com/s/0fdgaj0ry8uummf/Rust_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/vsz77wdjqy1xf83/HOME%20-%20Resonance.mp3?dl=1", "https://dl.dropbox.com/s/0m22ytfia8qoy4m/Daisuke%20-%20El%20Huervo.mp3?dl=1", "https://dl.dropbox.com/s/ovh8xt0nn6wjgjj/The%20Caretaker%20-%20It%27s%20just%20a%20burning%20memory%20%282016%29.mp3?dl=1", "https://dl.dropbox.com/s/bqt4dcjoziezdjk/The_Caretaker_-_Libets_Delay_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/0uly6phlgpoj4ss/1932_George_Olsen_-_Lullaby_Of_The_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/qfl7mu39us5hzn4/Erectin_a_River_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/stkat6jlp4jhpxo/Monrroe_-_Fleeting_Love_%28getmp3.pro%29.mp3?dl=1","https://dl.dropbox.com/s/vhd3il20d8ephb4/DJ_Spizdil_-_malo_tebyaHardstyle_m_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/2vf1lx9cnd5g9pq/Maduk_-_Vermilion_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/wcoo6cov1iatcao/Metrik_-_Gravity_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/8a91zs6woqz9bb4/Scattle_Remorse_REUPLOAD_CHECK_DE_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/12ztoyw2rc2q0z0/HOME_-_Hold_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/xlk7wuel56bwrr3/T_Sugah_-_Green_Valleys_LAOS_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/8bg55iwowf2jtv8/cuckoid%20-%20ponyinajar.mp3?dl=1",}
+		local function playRandomSong()
+			RunConsoleCommand("stopsound")
+			local randomSongURL = menusongs[math.random(#menusongs)]
+			global.sound.PlayURL(randomSongURL, "mono", function(station)
+				if global.IsValid(station) then
+					station:Play()
+				end
+			end)
+		end
+		local musicPlayerOptions = {"Rust", "Resonance", "Daisuke", "A Burning M...", "Libet's Delay", "Lullaby Of T...", "Erectin' a River", "Fleeting Love", "Malo Tebya", "Vermilion", "Gravity", "Remorse", "Hold", "Green Valleys", "FP3"}
+		if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and (not menukeydown or global.unloaded == true) then
+		if gOption("Miscellaneous", "Sounds", "Music Player:") ~= "Off" then
+			local selectedOption = gOption("Miscellaneous", "Sounds", "Music Player:")
+				if selectedOption == "Random" then
+					playRandomSong()
+				elseif table.HasValue(musicPlayerOptions, selectedOption) then
+					RunConsoleCommand("stopsound")
+					local selectedOptionIndex = table.KeyFromValue(musicPlayerOptions, selectedOption)
+					local selectedSongURL = menusongs[selectedOptionIndex]
+					global.sound.PlayURL(selectedSongURL, "mono", function(station)
+						if global.IsValid(station) then
+							station:Play()
+						end
+					end)
+				end
+			end
+			local selectedConfig = gOption("Main Menu", "Configurations", "Configuration:")
+			local configIndex
+			for index, config in ipairs(ib.configOptions) do
+				if config == selectedConfig then
+					configIndex = index
+					break
+				end
+			end
+			if gBool("Main Menu", "Configurations", "Automatically Save") then
+				if configIndex then
+					ib.SaveConfig(configIndex)
+				end
+			end
+		end
+		CacheColors()
+		frame:othink()
+	end
 end
 
 local function ThirdpersonCheck()
@@ -2660,8 +2535,8 @@ local function Prioritize(v)
    else
 	   table.insert(prioritylist, v:UniqueID())
    end
-   file.Write(folder.."/priority.txt", util.TableToJSON(prioritylist))
-   file.Write(folder.."/ignored.txt", util.TableToJSON(ignorelist))
+   file.Write(folder.."/priority.txt", util.TableToJSON(prioritylist, gBool("Main Menu", "Configurations", "Pretty-Print")))
+   file.Write(folder.."/ignored.txt", util.TableToJSON(ignorelist, gBool("Main Menu", "Configurations", "Pretty-Print")))
 end
 
 local function Ignore(v)
@@ -2672,8 +2547,8 @@ local function Ignore(v)
    else
 	   table.insert(ignorelist, v:UniqueID())
    end
-   file.Write(folder.."/priority.txt", util.TableToJSON(prioritylist))
-   file.Write(folder.."/ignored.txt", util.TableToJSON(ignorelist))
+   file.Write(folder.."/priority.txt", util.TableToJSON(prioritylist, gBool("Main Menu", "Configurations", "Pretty-Print")))
+   file.Write(folder.."/ignored.txt", util.TableToJSON(ignorelist, gBool("Main Menu", "Configurations", "Pretty-Print")))
 end
 
 local function Priority(v)
@@ -3607,105 +3482,105 @@ local function CheckChild(pan)
 end
 
 hook.Add("Tick", "Tick", function()
-   Tick()
-   if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown then
-	   menuopen = true
-	   Menu()
-	   -- Make a bool for the two fuckers below, outside of the DrawButton context
-	   EntityFinder()
-	   PluginLoader()
-   end
-   menukeydown = (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME))
-   if engine.ActiveGamemode() == "terrortown" then
-	   if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Hide Round Report") then
-		   if not displayed then
-			   function CLSCORE:ShowPanel() return end
-		   displayed = true
-		   end
-	   end
-	   if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Panel Remover") then
-		   local pan = vgui.GetHoveredPanel()
-		   CheckChild(pan)
-	   end
-   elseif engine.ActiveGamemode() == "murder" then
-	   if gBool("Main Menu", "Murder Utilities", "Hide End Round Board") then
-		   if not displayed then
-			   function GAMEMODE:DisplayEndRoundBoard(data) return end
-			   displayed = true
-		   end
-	   end
-	   if gBool("Main Menu", "Murder Utilities", "Hide Footprints") then
-		   if not footprints then
-			   function GAMEMODE:DrawFootprints() return end
-			   footprints = true
-		   end
-	   end
-	   if gBool("Main Menu", "Murder Utilities", "No Black Screens") then
-		   if not blackscreen then
-			   function GAMEMODE:RenderScreenspaceEffects() return end
-			   function GAMEMODE:PostDrawHUD() return end
-			   blackscreen = true
-		   end
-	   end
-	   if me:Alive() or me:Health() > 0 then
-	   local tauntspam = {"funny", "help", "scream", "morose",}
-		   if gOption("Main Menu", "Murder Utilities", "Murder Taunts:") == "Funny" then
-			   RunConsoleCommand("mu_taunt", "funny")
-		   elseif gOption("Main Menu", "Murder Utilities", "Murder Taunts:") == "Help" then
-			   RunConsoleCommand("mu_taunt", "help")
-		   elseif gOption("Main Menu", "Murder Utilities", "Murder Taunts:") == "Scream" then
-			   RunConsoleCommand("mu_taunt", "scream")
-		   elseif gOption("Main Menu", "Murder Utilities", "Murder Taunts:") == "Morose" then
-			   RunConsoleCommand("mu_taunt", "morose")
-		   elseif gOption("Main Menu", "Murder Utilities", "Murder Taunts:") == "Random" then
-			   RunConsoleCommand("mu_taunt", tauntspam[math.random(#tauntspam)])
-		   end
-	   end
-   elseif engine.ActiveGamemode() == "darkrp" then
-	   if gBool("Main Menu", "DarkRP Utilities", "Suicide Near Arrest Batons") and (me:Alive() or me:Health() > 0) then
-		   for k, v in next, player.GetAll() do
-			   if not v:IsValid() or v:Health() < 1 or v:IsDormant() or v == me or (gBool("Aim Assist", "Aim Priorities", "Ignore Friends") and v:GetFriendStatus() == "friend") then continue end
-			   if v:GetPos():Distance(me:GetPos()) < 95 and v:GetActiveWeapon():GetClass() == "arrest_stick" and me:GetPos():Distance(v:GetEyeTrace().HitPos) < 105 then
-				   me:ConCommand("kill")
-			   end
-		   end
-	   end
-	   if gBool("Main Menu", "DarkRP Utilities", "Transparent Props") then
-		   for k, v in next, ents.FindByClass("prop_physics") do
-			   v:SetRenderMode(RENDERMODE_TRANSCOLOR)
-			   v:SetKeyValue("renderfx", 0)
-			   v:SetColor(Color(255, 255, 255, gInt("Main Menu", "DarkRP Utilities", "Transparency:")))
-		   end
-		   if loopedprops then
-			   loopedprops = false
-		   end
-	   else
-		   if not loopedprops then
-			   for k, v in next, ents.FindByClass("prop_physics") do
-				   v:SetColor(Color(255, 255, 255, 255))
-			   end
-				   loopedprops = true
-			   end
-		   end
-	   end
-   if (gBool("Main Menu", "Miscellaneous", "Anti-Blind")) then
-	   if (HookExist("HUDPaint", "ulx_blind")) then
-		   Popup(4.3, "Successfully blocked a blinding attempt!", Color(0, 255, 0))
-		   surface.PlaySound("buttons/lightswitch2.wav")
-		   hook.Remove("HUDPaint", "ulx_blind")
-	   end
-   end
-   if MOTDgd or MOTDGD then
-	   function MOTDgd.GetIfSkip()
-	   if (gBool("Main Menu", "Miscellaneous", "Anti-Ads")) then
-		   Popup(4.3, "Successfully blocked an advertisement!", Color(0, 255, 0))
-		   surface.PlaySound("buttons/lightswitch2.wav")
-		   return true
-		   end
-	   end
-   end
+	Tick()
+	if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and not menukeydown then
+		menuopen = true
+		Menu()
+		--EntityFinder()
+		--PluginLoader()
+	end
+	menukeydown = (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME))
+	if engine.ActiveGamemode() == "terrortown" then
+		if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Hide Round Report") then
+			if not displayed then
+				function CLSCORE:ShowPanel() return end
+			displayed = true
+			end
+		end
+		if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Panel Remover") then
+			local pan = vgui.GetHoveredPanel()
+			CheckChild(pan)
+		end
+	elseif engine.ActiveGamemode() == "murder" then
+		if gBool("Main Menu", "Murder Utilities", "Hide End Round Board") then
+			if not displayed then
+				function GAMEMODE:DisplayEndRoundBoard(data) return end
+				displayed = true
+			end
+		end
+		if gBool("Main Menu", "Murder Utilities", "Hide Footprints") then
+			if not footprints then
+				function GAMEMODE:DrawFootprints() return end
+				footprints = true
+			end
+		end
+		if gBool("Main Menu", "Murder Utilities", "No Black Screens") then
+			if not blackscreen then
+				function GAMEMODE:RenderScreenspaceEffects() return end
+				function GAMEMODE:PostDrawHUD() return end
+				blackscreen = true
+			end
+		end
+		if me:Alive() or me:Health() > 0 then
+		local tauntspam = {"funny", "help", "scream", "morose",}
+			if gOption("Main Menu", "Murder Utilities", "Murder Taunts:") == "Funny" then
+				RunConsoleCommand("mu_taunt", "funny")
+			elseif gOption("Main Menu", "Murder Utilities", "Murder Taunts:") == "Help" then
+				RunConsoleCommand("mu_taunt", "help")
+			elseif gOption("Main Menu", "Murder Utilities", "Murder Taunts:") == "Scream" then
+				RunConsoleCommand("mu_taunt", "scream")
+			elseif gOption("Main Menu", "Murder Utilities", "Murder Taunts:") == "Morose" then
+				RunConsoleCommand("mu_taunt", "morose")
+			elseif gOption("Main Menu", "Murder Utilities", "Murder Taunts:") == "Random" then
+				RunConsoleCommand("mu_taunt", tauntspam[math.random(#tauntspam)])
+			end
+		end
+	elseif engine.ActiveGamemode() == "darkrp" then
+		if gBool("Main Menu", "DarkRP Utilities", "Suicide Near Arrest Batons") and (me:Alive() or me:Health() > 0) then
+			for k, v in next, player.GetAll() do
+				if not v:IsValid() or v:Health() < 1 or v:IsDormant() or v == me or (gBool("Aim Assist", "Aim Priorities", "Ignore Friends") and v:GetFriendStatus() == "friend") then continue end
+				if v:GetPos():Distance(me:GetPos()) < 95 and v:GetActiveWeapon():GetClass() == "arrest_stick" and me:GetPos():Distance(v:GetEyeTrace().HitPos) < 105 then
+					me:ConCommand("kill")
+				end
+			end
+		end
+		if gBool("Main Menu", "DarkRP Utilities", "Transparent Props") then
+			for k, v in next, ents.FindByClass("prop_physics") do
+				v:SetRenderMode(RENDERMODE_TRANSCOLOR)
+				v:SetKeyValue("renderfx", 0)
+				v:SetColor(Color(255, 255, 255, gInt("Main Menu", "DarkRP Utilities", "Transparency:")))
+			end
+			if loopedprops then
+				loopedprops = false
+			end
+		else
+			if not loopedprops then
+				for k, v in next, ents.FindByClass("prop_physics") do
+					v:SetColor(Color(255, 255, 255, 255))
+				end
+					loopedprops = true
+				end
+			end
+		end
+	if (gBool("Main Menu", "Miscellaneous", "Anti-Blind")) then
+		if (HookExist("HUDPaint", "ulx_blind")) then
+			Popup(4.3, "Successfully blocked a blinding attempt!", Color(0, 255, 0))
+			surface.PlaySound("buttons/lightswitch2.wav")
+			hook.Remove("HUDPaint", "ulx_blind")
+		end
+	end
+	if MOTDgd or MOTDGD then
+		function MOTDgd.GetIfSkip()
+		if (gBool("Main Menu", "Miscellaneous", "Anti-Ads")) then
+			Popup(4.3, "Successfully blocked an advertisement!", Color(0, 255, 0))
+			surface.PlaySound("buttons/lightswitch2.wav")
+			return true
+			end
+		end
+	end
 end)
 
+-- hey phizz why do you begin with 3-char tabs?? i don't get it
 hook.Add("Think", "Think", function()
    TraitorDetector()
    MurdererDetector()
@@ -6951,8 +6826,7 @@ timer.Simple(0.1, function()
 	   file.Write(folder.."/version.txt", version)
    else
 	   if file.Read(folder.."/version.txt", "DATA") ~= version then
-		   ib.Changelog()
-		   chat.AddText(Color(0, 255, 0), "IB Cat Edition has been updated from "..file.Read(folder.."/version.txt", "DATA").." to "..version.."! Changelog is printed in the console.")
+		   chat.AddText(Color(0, 255, 0), "IB Cat Edition has been updated from "..file.Read(folder.."/version.txt", "DATA").." to "..version.."!")
 		   surface.PlaySound("buttons/lightswitch2.wav")
 		   file.Write(folder.."/version.txt", version)
 	   end
