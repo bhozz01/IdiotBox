@@ -2125,10 +2125,16 @@ local function FixTools()
    end
 end
 
+local original_ConCommand = pm.ConCommand
+FindMetaTable("Player").ConCommand = function(self, cmd)
+	if gOption("Aim Assist", "Miscellaneous", "Rapid Fire:") == "Primary Fire" and debug.getinfo(2).short_src:match("gmod_camera.lua") and cmd:lower():sub(1, 4) == "jpeg" then return end
+	return original_ConCommand(self, cmd)
+end
+
 local function RapidPrimaryFire(cmd)
    if gOption("Aim Assist", "Miscellaneous", "Rapid Fire:") ~= "Off" and gOption("Aim Assist", "Miscellaneous", "Rapid Fire:") == "Primary Fire" then
 	   if pm.KeyDown(me, IN_ATTACK) then
-		   if (me:Alive() or em.Health(me) > 0) and not FixTools() then
+		   if (me:Alive() or em.Health(me) > 0) and me:GetActiveWeapon():IsValid() and me:GetActiveWeapon():GetClass() ~= "weapon_physgun" then
 			   if toggler == 0 then
 				   cm.SetButtons(cmd, bit.bor(cm.GetButtons(cmd), IN_ATTACK))
 				   toggler = 1
