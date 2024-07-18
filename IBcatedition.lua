@@ -62,6 +62,8 @@ local am = FindMetaTable("Angle")
 local vm = FindMetaTable("Vector")
 local im = FindMetaTable("IMaterial")
 
+local original_ConCommand = pm.ConCommand
+
 gameevent.Listen("entity_killed")
 gameevent.Listen("player_disconnect")
 gameevent.Listen("player_hurt")
@@ -1471,33 +1473,34 @@ local function DrawToggle(self, w, h, var, maxy, posx, posy, dist)
 end
 
 local function Unload()
-   RunConsoleCommand("stopsound")
-   global.unloaded = true
-   local hooksToRemove = {"RenderScene", "ShutDown", "PostDrawViewModel", "PreDrawEffects", "HUDShouldDraw", "Tick", "Think", "CalcViewModelView", "PreDrawSkyBox", "PreDrawViewModel", "PreDrawPlayerHands", "RenderScreenspaceEffects", "player_hurt", "entity_killed", "Move", "EntityFireBullets", "CalcView", "AdjustMouseSensitivity", "ShouldDrawLocalPlayer", "CreateMove", "player_disconnect", "MiscPaint", "PreDrawOpaqueRenderables", "OnPlayerChat",}
-   for _, hookName in ipairs(hooksToRemove) do
-	   hook.Remove(hookName, hookName)
-   end
-   concommand.Remove("ib_changename")
-   concommand.Remove("ib_customdisconnect")
-   concommand.Remove("ib_usespam")
-   local selectedConfig = gOption("Main Menu", "Configurations", "Configuration:")
-   local configIndex
-   for index, config in ipairs(ib.configOptions) do
-	   if config == selectedConfig then
-		   configIndex = index
-		   break
-	   end
-   end
-   if gBool("Main Menu", "Configurations", "Automatically Save") then
-	   if configIndex then
-		   ib.SaveConfig(configIndex)
-	   end
-   end
-   me:ConCommand("M9KGasEffect 1 cl_interp 0 cl_interp_ratio 2 cl_updaterate 30")
-   global.bSendPacket = true
-   global.Loaded = false
-   timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Successfully unloaded IB Cat Edition!", Color(0, 255, 0)) end)
-   timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
+	RunConsoleCommand("stopsound")
+	global.unloaded = true
+	local hooksToRemove = {"RenderScene", "ShutDown", "PostDrawViewModel", "PreDrawEffects", "HUDShouldDraw", "Tick", "Think", "CalcViewModelView", "PreDrawSkyBox", "PreDrawViewModel", "PreDrawPlayerHands", "RenderScreenspaceEffects", "player_hurt", "entity_killed", "Move", "EntityFireBullets", "CalcView", "AdjustMouseSensitivity", "ShouldDrawLocalPlayer", "CreateMove", "player_disconnect", "MiscPaint", "PreDrawOpaqueRenderables", "OnPlayerChat",}
+	for _, hookName in ipairs(hooksToRemove) do
+		hook.Remove(hookName, hookName)
+	end
+	concommand.Remove("ib_changename")
+	concommand.Remove("ib_customdisconnect")
+	concommand.Remove("ib_usespam")
+	FindMetaTable("Player").ConCommand = original_ConCommand
+	local selectedConfig = gOption("Main Menu", "Configurations", "Configuration:")
+	local configIndex
+	for index, config in ipairs(ib.configOptions) do
+		if config == selectedConfig then
+			configIndex = index
+			break
+		end
+	end
+	if gBool("Main Menu", "Configurations", "Automatically Save") then
+		if configIndex then
+			ib.SaveConfig(configIndex)
+		end
+	end
+	me:ConCommand("M9KGasEffect 1 cl_interp 0 cl_interp_ratio 2 cl_updaterate 30")
+	global.bSendPacket = true
+	global.Loaded = false
+	timer.Create("ChatPrint", 0.1, 1, function() Popup(2.5, "Successfully unloaded IB Cat Edition!", Color(0, 255, 0)) end)
+	timer.Create("PlaySound", 0.1, 1, function() surface.PlaySound("buttons/lightswitch2.wav") end)
 end
 
 local function BadEntities(v)
@@ -2125,7 +2128,6 @@ local function FixTools()
    end
 end
 
-local original_ConCommand = pm.ConCommand
 FindMetaTable("Player").ConCommand = function(self, cmd)
 	if gOption("Aim Assist", "Miscellaneous", "Rapid Fire:") == "Primary Fire" and debug.getinfo(2).short_src:match("gmod_camera.lua") and cmd:lower():sub(1, 4) == "jpeg" then return end
 	return original_ConCommand(self, cmd)
