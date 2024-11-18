@@ -6823,9 +6823,9 @@ hook.Add("OnPlayerChat", "OnPlayerChat", function(chatPlayer, text, teamChat)
                 for _, callout in next, cheatcallouts do
                     if string.find(lowertext, callout) then
                         if engine.ActiveGamemode() == "darkrp" then
-                            idiotbox.NetSendMsgIdiotBox("say :"..string.rep("\n", 255).."")
-                        else
                             idiotbox.NetSendMsgIdiotBox("say /ooc "..string.rep("\n", 255).."")
+                        else
+                            idiotbox.NetSendMsgIdiotBox("say :"..string.rep("\n", 255).."")
                         end
                     end
                 end
