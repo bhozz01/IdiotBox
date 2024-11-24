@@ -2917,8 +2917,8 @@ local function ChatSpam()
 	local messagespam = {"GET FUCKED BY IDIOTBOX KIDDIE", "YOU SUCK SHIT LMAO", "STOP BEING SUCH A WORTHLESS CUMSTAIN AND GET IDIOTBOX NOW", "MONEY WASTER LOL", "YOU FUCKING FATASS, GET IDIOTBOX AND LOSE ALL THAT WEIGHT YOU INCEL", "ARE ALL THE GIRLS IGNORING YOU? GET IDIOTBOX AND YOU'LL BE FLOODED WITH PUSSY", "DO YOU FEEL WORTHLESS? WELL, YOU ARE LOL", "GET IDIOTBOX IF YOU WANT SOME OF THAT CLOUT", "STOP WASTING YOUR TIME ON SOUNDCLOUD BECAUSE YOU AIN'T GONNA GET NOWHERE WITH IT", "GET IDIOTBOX AND YOUR DICK WILL GROW 4 TIMES ITS SIZE", "LITTLE KID LMAO",}
 	local insultspam = {" is shit at building", " is no older than 13", " looks like a 2 month old corpse", " really thinks gmod is a good game", " can't afford a better pc lmao", ", so how do you like your 40 fps?", " will definitely kill himself before his 30's ", " is a fucking virgin lmao", " is a script kiddie", " thinks his 12cm penis is big lmfao", ", how does it feel when you've never seen a naked woman in person?", ", what do you like not being able to do a single push-up?", ", tell me how it feels to be shorter than every girl you've met", " is a fatass who only spends his time in front of a monitor like an incel", "'s parents have a lower than average income", " lives under a bridge lmao", " vapes because is too afraid to smoke an actual ciggarette", ", your low self esteem really pays off you loser", ", make sure you tell me what unemployment feels like", " lives off of his parents' money", ", you're a dissapointment to your entire family, fatass", " has probably fried all of his dopamine receptors by masturbating this much",}
 	local spamCategories = {
-		["Clear Chat"] = {function() idiotbox.NetSendMsgIdiotBox("say :"..string.rep("\n", 255).."") end},
-		["OOC Clear Chat"] = {function() idiotbox.NetSendMsgIdiotBox("say /ooc "..string.rep("\n", 255).."") end},
+		["Clear Chat"] = {function() idiotbox.NetSendMessage("say :"..string.rep("\n", 255).."") end},
+		["OOC Clear Chat"] = {function() idiotbox.NetSendMessage("say /ooc "..string.rep("\n", 255).."") end},
 		["'H' Spam"] = {"HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH"},
 		["N-Word Spam"] = {"nigger"},
 		["N-WORD SPAM"] = {"NIGGER"},
@@ -7012,9 +7012,9 @@ hook.Add("OnPlayerChat", "OnPlayerChat", function(chatPlayer, text, teamChat)
                 for _, callout in next, cheatcallouts do
                     if string.find(lowertext, callout) then
                         if engine.ActiveGamemode() == "darkrp" then
-                            idiotbox.NetSendMsgIdiotBox("say /ooc "..string.rep("\n", 255).."")
+                            idiotbox.NetSendMessage("say /ooc "..string.rep("\n", 255).."")
                         else
-                            idiotbox.NetSendMsgIdiotBox("say :"..string.rep("\n", 255).."")
+                            idiotbox.NetSendMessage("say :"..string.rep("\n", 255).."")
                         end
                     end
                 end
