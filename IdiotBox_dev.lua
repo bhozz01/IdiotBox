@@ -525,11 +525,11 @@ local options = {
 			{"Chat", 506, 20, 232, 220, 218}, 
 			{"Log Kills in Chat", "Checkbox", false, 78}, 
 			{"Priority Targets Only", "Checkbox", false, 78}, 
-			{"Chat Spam:", "Selection", "Off", {"Off", "Advertising 1", "Advertising 2", "Advertising 3", "Nazi 1", "Nazi 2", "Nazi 3", "Arabic Spam", "Hebrew Spam", "Offensive Spam", "Insult Spam", "Message Spam", "N-Word Spam", "N-WORD SPAM", "'H' Spam", "Clear Chat", "OOC Clear Chat"}, 92}, 
+			{"Chat Spam:", "Selection", "Off", {"Off", "Advertising 1", "Advertising 2", "Advertising 3", "Arabic Spam", "Hebrew Spam", "Offensive Spam", "Insult Spam", "Message Spam", "'H' Spam"--[[, "Clear Chat", "OOC Clear Chat"]]}, 92}, 
 			{""}, 
 			{"Kill Spam:", "Selection", "Off", {"Off", "Normal", "Insult", "Salty", "HvH", "IdiotBox HvH", "Votekick", "Voteban", "Killstreak", }, 92}, 
 			{""}, 
-			{"Reply Spam:", "Selection", "Off", {"Off", "shut up", "ok", "who", "nobody cares", "where", "stop spamming", "what", "yea", "lol", "english please", "lmao", "shit", "fuck", "Random", "Disconnect Spam", "Cheater Callout", "Copy Messages"}, 92}, 
+			{"Reply Spam:", "Selection", "Off", {"Off", "shut up", "ok", "who", "nobody cares", "where", "stop spamming", "what", "yea", "lol", "english please", "lmao", "shit", "fuck", "Random", "Disconnect Spam", --[["Cheater Callout",]] "Copy Messages"}, 92}, 
 			{""}, 
 		}, 
 		{
@@ -539,7 +539,7 @@ local options = {
 			{""}, 
 			{"Killsounds:", "Selection", "Off", {"Off", "Default", "Headshot 1", "Headshot 2", "Metal", "Blip", "Eggcrack", "Balloon Pop"}, 92}, 
 			{""}, 
-			{"Music Player:", "Selection", "Off", {"Off", "Rust", "Resonance", "Daisuke", "A Burning M...", "Libet's Delay", "Lullaby Of T...", "Erectin' a River", "Fleeting Love", "Malo Tebya", "Vermilion", "Gravity", "Remorse", "Hold", "Green Valleys", "FP3", "Random"}, 92}, 
+			{"Music Player:", "Selection", "Off", {"Off", "Rust", "Resonance", "Daisuke", "A Burning M...", "Libet's Delay", "Lullaby Of T...", "Erectin' a River", "Fleeting Love", "Malo Tebya", "Vermilion", "Gravity", "Remorse", "Hold", "Green Valleys", "Random"}, 92}, 
 			{""}, 
 		}, 
 		{
@@ -547,7 +547,7 @@ local options = {
 			{"Advanced Network Graph", "Checkbox", false, 78}, 
 			{"Hide HUD", "Checkbox", false, 78}, 
 			{"Witness Finder", "Checkbox", false, 78}, 
-			{"Crosshair:", "Selection", "Off", {"Off", "Box", "Dot", "Square", "Circle", "Cross", "Edged Cross", "Swastika", "GTA IV"}, 92}, 
+			{"Crosshair:", "Selection", "Off", {"Off", "Box", "Dot", "Square", "Circle", "Cross", "Edged Cross", "Edgy (Swastika)", "GTA IV"}, 92}, 
 			{""}, 
 		}, 
 	}, 
@@ -860,7 +860,7 @@ local function DrawText(w, h, title)
     if title == "IdiotBox v7.4.b1" then
         surface.SetTextPos(147, 18 - th / 2)
         surface.SetFont("MainFont2")
-        surface.DrawText("Latest build: d23m11-pre01")
+        surface.DrawText("Latest build: d07m07-pre01")
     end
 end
 
@@ -1567,7 +1567,6 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Fixed name changer/ stealer reverting to your Steam username as soon as a new player joined the server;")
 	print("- Fixed Visuals causing severe lag;")
 	print("- Fixed Radar no longer working and improved it;")
-	print("- Fixed Cheater Callout clearing chat when it should not;")
 	print("- Fixed Triggerbot Smooth Aim slowing down your overall mouse speed;")
 	print("- Fixed Witness Finder not working properly;")
 	print("- Fixed Air Stuck freezing your client when paired with Fake Lag;")
@@ -1578,6 +1577,7 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Fixed improper rendering of the visuals;")
 	print("- Fixed script errors appearing upon loading IdiotBox through the webloader;")
 	print("- Fixed anti-screengrabber security issues;")
+	print("- Fixed patched module functions;")
 	print("- Fixed module issues upon reloading the script;")
 	print("- Fixed local variable limit and timer issues;")
 	print("- Fixed debug.getregistry() patch by adding the registry.dll module;")
@@ -1634,6 +1634,7 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Reworked recoil compensation from scratch;")
 	print("- Removed 'Triggerbot' tab and merged it with the 'Aim Assist' tab;")
 	print("- Removed 'Shoutout' and 'Drop Money' from Chat Spam;")
+	print("- Removed 'Clear Chat' and 'Cheater Callout' as they got patched;")
 	print("- Removed 'Dark Mode' from Textures (temporarily);")
 	print("- Removed 'Screengrab Notifications' from Miscellaneous;")
 	print("- Removed 'Mirror' from Point of View;")
@@ -2192,7 +2193,7 @@ local function Menu()
 	end
 	frame.othink = frame.Think
 	frame.Think = function()
-		local menusongs = {"https://dl.dropbox.com/s/0fdgaj0ry8uummf/Rust_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/vsz77wdjqy1xf83/HOME%20-%20Resonance.mp3?dl=1", "https://dl.dropbox.com/s/0m22ytfia8qoy4m/Daisuke%20-%20El%20Huervo.mp3?dl=1", "https://dl.dropbox.com/s/ovh8xt0nn6wjgjj/The%20Caretaker%20-%20It%27s%20just%20a%20burning%20memory%20%282016%29.mp3?dl=1", "https://dl.dropbox.com/s/bqt4dcjoziezdjk/The_Caretaker_-_Libets_Delay_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/0uly6phlgpoj4ss/1932_George_Olsen_-_Lullaby_Of_The_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/qfl7mu39us5hzn4/Erectin_a_River_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/stkat6jlp4jhpxo/Monrroe_-_Fleeting_Love_%28getmp3.pro%29.mp3?dl=1","https://dl.dropbox.com/s/vhd3il20d8ephb4/DJ_Spizdil_-_malo_tebyaHardstyle_m_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/2vf1lx9cnd5g9pq/Maduk_-_Vermilion_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/wcoo6cov1iatcao/Metrik_-_Gravity_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/8a91zs6woqz9bb4/Scattle_Remorse_REUPLOAD_CHECK_DE_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/12ztoyw2rc2q0z0/HOME_-_Hold_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/xlk7wuel56bwrr3/T_Sugah_-_Green_Valleys_LAOS_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/8bg55iwowf2jtv8/cuckoid%20-%20ponyinajar.mp3?dl=1",}
+		local menusongs = {"https://dl.dropbox.com/s/0fdgaj0ry8uummf/Rust_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/vsz77wdjqy1xf83/HOME%20-%20Resonance.mp3?dl=1", "https://dl.dropbox.com/s/0m22ytfia8qoy4m/Daisuke%20-%20El%20Huervo.mp3?dl=1", "https://dl.dropbox.com/s/ovh8xt0nn6wjgjj/The%20Caretaker%20-%20It%27s%20just%20a%20burning%20memory%20%282016%29.mp3?dl=1", "https://dl.dropbox.com/s/bqt4dcjoziezdjk/The_Caretaker_-_Libets_Delay_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/0uly6phlgpoj4ss/1932_George_Olsen_-_Lullaby_Of_The_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/qfl7mu39us5hzn4/Erectin_a_River_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/stkat6jlp4jhpxo/Monrroe_-_Fleeting_Love_%28getmp3.pro%29.mp3?dl=1","https://dl.dropbox.com/s/vhd3il20d8ephb4/DJ_Spizdil_-_malo_tebyaHardstyle_m_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/2vf1lx9cnd5g9pq/Maduk_-_Vermilion_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/wcoo6cov1iatcao/Metrik_-_Gravity_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/8a91zs6woqz9bb4/Scattle_Remorse_REUPLOAD_CHECK_DE_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/12ztoyw2rc2q0z0/HOME_-_Hold_%28getmp3.pro%29.mp3?dl=1", "https://dl.dropbox.com/s/xlk7wuel56bwrr3/T_Sugah_-_Green_Valleys_LAOS_%28getmp3.pro%29.mp3?dl=1",}
 		local function playRandomSong()
 			RunConsoleCommand("stopsound")
 			local randomSongURL = menusongs[math.random(#menusongs)]
@@ -2202,7 +2203,7 @@ local function Menu()
 				end
 			end)
 		end
-	local musicPlayerOptions = {"Rust", "Resonance", "Daisuke", "A Burning M...", "Libet's Delay", "Lullaby Of T...", "Erectin' a River", "Fleeting Love", "Malo Tebya", "Vermilion", "Gravity", "Remorse", "Hold", "Green Valleys", "FP3"}
+	local musicPlayerOptions = {"Rust", "Resonance", "Daisuke", "A Burning M...", "Libet's Delay", "Lullaby Of T...", "Erectin' a River", "Fleeting Love", "Malo Tebya", "Vermilion", "Gravity", "Remorse", "Hold", "Green Valleys"}
 	if (input.IsKeyDown(KEY_INSERT) or input.IsKeyDown(KEY_F11) or input.IsKeyDown(KEY_HOME)) and (not menukeydown or global.unloaded == true) then
 	if gOption("Miscellaneous", "Sounds", "Music Player:") ~= "Off" then
 		local selectedOption = gOption("Miscellaneous", "Sounds", "Music Player:")
@@ -2313,25 +2314,25 @@ local function RapidAltFire(cmd)
 	end
 end
 
-local function KillSpam(data)
+local function KillSpam(data) -- Removed most of the lame offensive stuff
 	local killer = Entity(data.entindex_attacker)
 	local killed = Entity(data.entindex_killed)
 	if (not killer:IsValid() or not killed:IsValid() or not killer:IsPlayer() or not killed:IsPlayer()) or (gBool("Main Menu", "Priority List", "Enabled") and table.HasValue(ignorelist, killed:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and table.HasValue(ignorelist, killer:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and (killed ~= me and killer == me and not table.HasValue(prioritylist, killed:UniqueID()))) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and (killed == me and killer ~= me and not table.HasValue(prioritylist, killer:UniqueID()))) then return end
 	local playerphrases = {"Owned", "Bodied", "Smashed", "Fucked", "Destroyed", "Annihilated", "Decimated", "Wrecked", "Demolished", "Trashed", "Ruined", "Murdered", "Exterminated", "Slaughtered", "Butchered", "Genocided", "Executed", "Bamboozled", "IdiotBox'd",}
-	local excuses = {"i lagged out wtf", "bad ping wtf", "lol wasnt looking at you", "was alt tabbed", "luck", "wow", "nice one", "i think ur hacking m8", "my cat was on the keyboard", "my dog was on the keyboard", "my fps is trash", "my ping is trash", "ouch", "wtf", "ok",}
-	local hvhexcuses = {"forgot to press aimkey lol", "give me a minute to configurate", "wtf it didnt save my Adjustments wait", "lol my hvh Adjustments are gone, wait", "luck lol", "my fps is trash", "my ping is trash", "what are you using?",}
-	local hvhexcuses2 = {"Ok", "Nice", "Lucky", "Sorry, bad aa", "My configs suck", "I suck at HvH", "What are you using?", "I'm using a shit cheat",}
+	local excuses = {"i lagged out wtf", "bad ping wtf", "lol wasnt looking at you", "was alt tabbed", "luck", "wow", "nice one", "i think ur hacking!!", "my cat was on the keyboard", "my dog was on the keyboard too", "my fps is trash", "my ping is trash", "wtf", "ok",}
+	local hvhexcuses = {"forgot to press aimkey lol", "give me a minute to config", "wtf it didnt save my settings wait", "lol my config is gone, wait", "luck lol", "my fps is trash", "my ping is trash", "what are you using?",}
+	local hvhexcuses2 = {"Ok lol", "Lucky", "Gotta redo my config", "What are you using?",}
 	local reason = {"bad at game", "spawnkilling", "hacker", "hacking", "hack", "bad", "eats penis",}
-	local reason2 = {"hacker", "spawnkiller", "propkiller", "rdm", "being annoying", "bad at the game", "acts like a retard", "is stupid",}
+	local reason2 = {"hacker", "spawnkiller", "propkiller", "rdm", "being annoying", "bad at the game", "acts retarded", "is stupid",}
 	local bantime = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100", "200", "300", "400", "500", "600", "700", "800", "900", "1000", "2000", "3000", "4000", "5000", "6000", "7000", "8000", "9000", "10000", "20000", "30000", "40000", "50000", "60000", "70000", "80000", "90000", "100000", "200000", "300000", "400000", "500000", "600000", "700000", "800000", "900000", "1000000", "999999999",}
-	local randomoption = {"likes_penis", "eats_penis", "is_gay", "is_a_faggot", "should_get_kicked", "hates_vagina", "doesnt_eat_pussy", "doesnt_get_pussy", "thinks_about_penis_all_day", "has_a_fake_penis", "is_a_dirty_jew",}
-	local owned = {killed:Nick().." is so shit", "can you stop dying, "..killed:Nick().."?", "hey, "..killed:Nick().."? it's okay, try again next time!", "what the fuck was that "..killed:Nick().."?", "plan your next try in the respawn room!", "rekt", "owned", "lol", "you're a retard, "..killed:Nick(), "there you go, back to the respawn", "you're bad, "..killed:Nick(), "noob down", "lmao", killed:Nick().." has died more times than native americans did back in the 1800's", "i bet you're insecure about your aim", "ahahah", "excuse me "..killed:Nick()..", you have won the world record of the worst KD in history!", "there he goes back to the respawn room", "don't let the door hit you on the way out, "..killed:Nick().."!", "noob", killed:Nick().." is a noob", "nerd", "pff", "ha", "ez", killed:Nick().." is a nerd", "good job!", "try not to die next time, "..killed:Nick().."!", "!votekick "..killed:Nick().." "..reason[math.random(#reason)], "!voteban "..killed:Nick().." 9999 "..reason[math.random(#reason)], "!vote "..killed:Nick().." "..randomoption[math.random(#randomoption)].." "..randomoption[math.random(#randomoption)].." "..randomoption[math.random(#randomoption)],}
+	local randomoption = {"eats_shit", "is_a_cuck", "is_a_chud", "should_get_kicked", "hates_vagina", "thinks_about_penis_all_day", "has_a_fake_penis",}
+	local owned = {killed:Nick().." is so shit", "can you stop dying, "..killed:Nick().."?", "hey, "..killed:Nick().."? it's okay, try again next time!", "what the fuck was that "..killed:Nick().."?", "plan your next try in the respawn room!", "rekt", "owned", "lol", "you're a retard, "..killed:Nick(), "there you go, back to the respawn", "you're bad, "..killed:Nick(), "noob down", "lmao", "i bet you're insecure about your aim", "ahahah", "nice KD "..killed:Nick().."!", "there he goes back to the respawn room", "don't let the door hit you on the way out, "..killed:Nick().."!", "noob", killed:Nick().." is a noob", "nerd", "pff", "ha", "ez", killed:Nick().." is a nerd", "good job!", "try not to die next time, "..killed:Nick().."!", "!votekick "..killed:Nick().." "..reason[math.random(#reason)], "!voteban "..killed:Nick().." 9999 "..reason[math.random(#reason)], "!vote "..killed:Nick().." "..randomoption[math.random(#randomoption)].." "..randomoption[math.random(#randomoption)].." "..randomoption[math.random(#randomoption)],}
 	local votekick = {"!votekick "..killed:Nick().." "..reason2[math.random(#reason2)],}
 	local voteban = {"!voteban "..killed:Nick().." "..bantime[math.random(#bantime)].." "..reason2[math.random(#reason2)],}
-	local hvhowned = {"sick cheat, "..killed:Nick().."!", "get fucked", "rekt", "owned", "did you get that garbage from the steam workshop?", "ha", "ez", "loser", "take this L", "\"my cheat is good it owns everyone!!\" - "..killed:Nick(), killed:Nick()..": LOL WHAT ARE YOU USING??? I WANT THAT", "noob", "nerd", "pff", "gj", "how can a cheat suck this hard?", "nice strategy", "nice move", "lmfao, "..killed:Nick(), "what the fuck are you using "..killed:Nick().."?",}
-	local hvhowned2 = {"Hey, "..killed:Nick()..", stop using that shit and get IdiotBox", ""..killed:Nick().." just got owned by IdiotBox", "Get IdiotBox'd you nerd", "Get fucked by IdiotBox", "Don't stay too much inside the respawn room, "..killed:Nick().."!", "You have been tapped by IdiotBox", "Get IdiotBox before trying to HvH, "..killed:Nick(), "IdiotBox owns your garbage cheat",}
-	local comebackexcuses = {"what the fuck", "ok?????", "fucking nigger", "fuck you", "fuck off smelly jew", "smelly nigger", "bad ping", "you're next", "eat shit", "eat a fat steaming cock you unpriviledged homosexual", "suck my universe sized dick", "drink my piss fucking faggot", "hop off my dick fucking nigger",}
-	local comebackowned = {"you got fucked in the ass", "get fucking raped", ""..killed:Nick().." can drink my fucking piss", "you suck shit gay nigger", "you should eat my shit", "you got shafted by my large penis, "..killed:Nick(), ""..killed:Nick().." is getting fucked by an aimbot", ""..killed:Nick().." is getting fucking murdered", "you're so shit at this game, quit already", "drink my dog's piss faggot", "hey don't cry bro, you need a tissue?", "you're so fucking gay", "you're the reason why equal rights don't exist, "..killed:Nick(), ""..killed:Nick().." is radiating big faggot energy", "hurr durr stop cheating in an ancient video game!!!", "stop being such a spastical retard already", "you're more braindead than kim jong un after his surgery", "you're a furfag and should not be proud, "..killed:Nick(), ""..killed:Nick().." is getting dominated by me, aka god", "you live in a fucking dirty hut, retarded african boy", "i bet you're literally fucking black", ""..killed:Nick().." is a gay autistic nigger with no privileges", ""..killed:Nick().." is being searched for by the fbi", ""..killed:Nick().." literally fucking died in gmod", "you're ultra retarded, kid", "you need a tissue, little faggot?", ""..killed:Nick().." should get killed by me once again", "please die more, you're feeding my addiction", ""..killed:Nick().." is a retard bot", "you're so much of a loser, get a fucking life and stop playing this shit game kid", "virgin lol get good", "fucking coomer, go wash your crusty underwear you filth", ""..killed:Nick().." got cucked", ""..killed:Nick().." is dominated by pure fucking skill", "you are a big noob", "i can't wait to headshot you irl, "..killed:Nick(), "you smelly homeless nigger", ""..killed:Nick().." still believes that god and santa exist lol", "bruh you really do be crying at a game", "please stop doing what you're doing and kill yourself", ""..killed:Nick().." lives in america", "you are a deformed fetus", ""..killed:Nick().." is ugly as shit fr tho", "you're cringe, stop doing this shit", ""..killed:Nick()..", you look like you died", "fucking putrid fuck, kill yourself", ""..killed:Nick().." is a trash cheater", ""..killed:Nick().." is a normie", "smelly fucker", ""..killed:Nick().." is a dickless prick", ""..killed:Nick().." is gay", ""..killed:Nick().." does not get any pussy", "you're too stupid to be considered human", "i bet this faggot, "..killed:Nick().." kisses girls!!", ""..killed:Nick().." is a furry", ""..killed:Nick().." is a waste of human flesh", "i bet you won't be able to kill me even with hacks", ""..killed:Nick()..", men are the fuck. you are not the fuck. you are not men", ""..killed:Nick().." is a failed abortion", ""..killed:Nick().." fucking died", ""..killed:Nick().." plays with his dick for fun", "play with my stinky fat throbbing cock you gay faggot", "stop using hacks you cringe skid!!!", ""..killed:Nick().." uses cancer shit cheats!!", "you show all of the signs of mental retardation", "please just quit the game already", ""..killed:Nick().." is a "..killed:Nick().."", "shut the fuck up and die", "nigger lol",}
+	local hvhowned = {"sick cheat, "..killed:Nick().."!", "get fucked", "rekt", "owned", "did you get that garbage from the steam workshop?", "ha", "ez", "loser", "take this L", "\"my cheat is good it owns everyone!!\" - "..killed:Nick(), killed:Nick()..": LOL WHAT ARE YOU USING??? I WANT THAT", "noob", "nerd", "pff", "gj", "how can a cheat suck this hard?", "nice strategy", "nice move", "lmao "..killed:Nick(), "what the fuck are you using "..killed:Nick().."?",}
+	local hvhowned2 = {"Hey, "..killed:Nick()..", stop using that shit and get IdiotBox", ""..killed:Nick().." just got owned by IdiotBox", "Get IdiotBox'd you nerd", "Get fucked by IdiotBox", "Don't stay too much inside the respawn room, "..killed:Nick().."!", "You have been tapped by IdiotBox", "Get IdiotBox, "..killed:Nick(), "IdiotBox owns your garbage cheat",}
+	local comebackexcuses = {"bad ping", "you're next", "eat shit", "suck my large member",}
+	local comebackowned = {"you got fucked in the ass", "get fucking raped", ""..killed:Nick().." can drink my fucking piss", "you should eat my shit", "you got shafted by my large penis, "..killed:Nick(), ""..killed:Nick().." is getting fucked by a chud", ""..killed:Nick().." is getting fucking murdered", "you're so shit, quit already", "need a tissue?", ""..killed:Nick().." is getting scrambled", ""..killed:Nick().." literally fucking died", ""..killed:Nick().." dies, again", "again? lol", "get good", ""..killed:Nick().." got cucked", ""..killed:Nick().." is dominated by PURE FUCKING SKILL!!!!", "you really are crying at gmod huh", "please stop doing what you're doing", ""..killed:Nick().." is israeli lol", "you're deformed", ""..killed:Nick().." is ugly as shit", ""..killed:Nick()..", you look like you died", "smelly :)", ""..killed:Nick().." does not get ANY pussy", "you're too stupid to be considered human", "i bet this guy, "..killed:Nick().." kisses girls!!", ""..killed:Nick().." is in the IDF", ""..killed:Nick().." is a waste of human flesh", ""..killed:Nick()..", men are the fuck. you are not the fuck. you are not men", ""..killed:Nick().." is a failed abortion", ""..killed:Nick().." fucking died", ""..killed:Nick().." plays with his dick for fun!!!!!", "cringe skid!!!", ""..killed:Nick().." uses cancer shit cheats!!", "mentally regressed behavior", "quit the game already", ""..killed:Nick().." is a "..killed:Nick().."", "shut the fuck, cuck",}
 	if (gOption("Miscellaneous", "Chat", "Kill Spam:") == "Normal") then
 	if (killed == me and killer ~= me) then
 		if not me:Alive() or me:Health() < 1 then return end
@@ -2484,7 +2485,7 @@ local function Status()
 	local wep = pm.GetActiveWeapon(me)
 	local hp = em.Health(me)
 	local velocity = me:GetVelocity():Length()
-	local simtime = idiotbox.GetSimulationTime(em.EntIndex(me))
+	local simtime = idiotbox.GetSimulationTime(me)
 	if hp < 0 then
 		hp = 0
 	end
@@ -2840,7 +2841,7 @@ local function Crosshair()
 		surface.DrawLine(ScrW() / 2 - 9, ScrH() / 2, ScrW() / 2 + 9, ScrH() / 2)
 		surface.DrawLine(ScrW() / 2 - 0, ScrH() / 2 - 9, ScrW() / 2 - 0, ScrH() / 2 + 9)
 	end
-	if (gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "Swastika") then
+	if (gOption("Miscellaneous", "GUI Settings", "Crosshair:") == "Edgy (Swastika)") then
 		surface.SetDrawColor(crosshaircol.r, crosshaircol.g, crosshaircol.b, gInt("Adjustments", "Crosshair Color", "Opacity:"))
 		surface.DrawLine(ScrW() / 2, ScrH() / 2, ScrW() / 2 + 20, ScrH() / 2)
 		surface.DrawLine(ScrW() / 2 + 20, ScrH() / 2, ScrW() / 2 + 20, ScrH() / 2 + 20)
@@ -2912,25 +2913,19 @@ hook.Add("HUDShouldDraw", "HUDShouldDraw", function(name)
 	end
 end)
 
-local function ChatSpam()
+local function ChatSpam() -- Removed most of the lame offensive stuff
 	local v = player.GetAll()[math.random(#player.GetAll())]
 	local messagespam = {"GET FUCKED BY IDIOTBOX KIDDIE", "YOU SUCK SHIT LMAO", "STOP BEING SUCH A WORTHLESS CUMSTAIN AND GET IDIOTBOX NOW", "MONEY WASTER LOL", "YOU FUCKING FATASS, GET IDIOTBOX AND LOSE ALL THAT WEIGHT YOU INCEL", "ARE ALL THE GIRLS IGNORING YOU? GET IDIOTBOX AND YOU'LL BE FLOODED WITH PUSSY", "DO YOU FEEL WORTHLESS? WELL, YOU ARE LOL", "GET IDIOTBOX IF YOU WANT SOME OF THAT CLOUT", "STOP WASTING YOUR TIME ON SOUNDCLOUD BECAUSE YOU AIN'T GONNA GET NOWHERE WITH IT", "GET IDIOTBOX AND YOUR DICK WILL GROW 4 TIMES ITS SIZE", "LITTLE KID LMAO",}
-	local insultspam = {" is shit at building", " is no older than 13", " looks like a 2 month old corpse", " really thinks gmod is a good game", " can't afford a better pc lmao", ", so how do you like your 40 fps?", " will definitely kill himself before his 30's ", " is a fucking virgin lmao", " is a script kiddie", " thinks his 12cm penis is big lmfao", ", how does it feel when you've never seen a naked woman in person?", ", what do you like not being able to do a single push-up?", ", tell me how it feels to be shorter than every girl you've met", " is a fatass who only spends his time in front of a monitor like an incel", "'s parents have a lower than average income", " lives under a bridge lmao", " vapes because is too afraid to smoke an actual ciggarette", ", your low self esteem really pays off you loser", ", make sure you tell me what unemployment feels like", " lives off of his parents' money", ", you're a dissapointment to your entire family, fatass", " has probably fried all of his dopamine receptors by masturbating this much",}
+	local insultspam = {" is shit at everything, ever", " is too old for this game", " looks like a month old corpse", " really thinks gmod is a good game", " can't afford a better pc lol", ", so how do you like your 40 fps?", " will definitely kill himself before his 30's ", " is an incel lmao", " is a skid", " thinks his 3 incher is big lmao", ", you've never seen a woman in person now, have you?", ", what's it like not being able to do a single push-up?", ", tell me what it feels to be shorter than everyone you've ever met", " is a fatass", "'s parents made him for child support", " lives under a bridge", ", your low self esteem really pays off", ", make sure you tell me what unemployment feels like", " lives off of his parents' money", ", you're a dissapointment to your entire family",}
 	local spamCategories = {
-		["Clear Chat"] = {function() idiotbox.NetSendMessage("say :"..string.rep("\n", 255).."") end},
-		["OOC Clear Chat"] = {function() idiotbox.NetSendMessage("say /ooc "..string.rep("\n", 255).."") end},
+		--[[["Clear Chat"] = {function() idiotbox.NetSendMessage("say :"..string.rep("\n", 255).."") end},
+		["OOC Clear Chat"] = {function() idiotbox.NetSendMessage("say /ooc "..string.rep("\n", 255).."") end},]]--
 		["'H' Spam"] = {"HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH"},
-		["N-Word Spam"] = {"nigger"},
-		["N-WORD SPAM"] = {"NIGGER"},
-		["Nazi 1"] = {"Die Fahne hoch! Die Reihen fest geschlossen", "SA marschiert mit ruhig festem Schritt", "Kam'raden, die Rotfront und Reaktion erschossen", "Marschier'n im Geist in unser'n Reihen mit", "Die Straße frei den braunen Bataillonen", "Die Straße frei dem Sturmabteilungsmann", "Es schau'n aufs Hakenkreuz voll Hoffnung schon Millionen", "Der Tag für Freiheit und für Brot bricht an", "Zum letzten Mal wird Sturmalarm geblasen", "Zum Kampfe steh'n wir alle schon bereit", "Schon flattern Hitlerfahnen über allen Straßen", "Die Knechtschaft dauert nur noch kurze Zeit", "Die Fahne hoch! Die Reihen fest geschlossen", "SA marschiert mit ruhig festem Schritt", "Kam'raden, die Rotfront und Reaktion erschossen", "Marschier'n im Geist in unser'n Reihen mit"},
-		["Nazi 2"] = {"SS marschiert in Feindesland", "Und singt ein Teufelslied", "Ein Schütze steht am Wolgastrand", "Und leise summt er mit", "Wir pfeifen auf Unten und Oben", "Und uns kann die ganze Welt", "Verfluchen oder auch loben", "Grad wie es jedem gefällt", "Wo wir sind da geht's immer vorwärts", "Und der Teufel, der lacht nur dazu", "Ha, ha, ha, ha, ha, ha", "Wir kämpfen für Deutschland", "Wir kämpfen für Hitler", "Der Rote kommt niemehr zur Ruh'", "Wir kämpften schon in mancher Schlacht", "In Nord, Süd, Ost und West", "Und stehen nun zum Kampf bereit", "Gegen die rote Pest", "SS wird nicht ruh'n, wir vernichten", "Bis niemand mehr stört Deutschlands Glück", "Und wenn sich die Reihen auch lichten", "Für uns gibt es nie ein Zurück", "Wo wir sind da geht's immer vorwärts", "Und der Teufel, der lacht nur dazu", "Ha, ha, ha, ha, ha, ha", "Wir kämpfen für Deutschland", "Wir kämpfen für Hitler", "Der Rote kommt niemehr zur Ruh'"},
-		["Nazi 3"] = {"Ade, mein liebes Schätzelein", "Ade, ade, ade", "Es muß, es muß geschieden sein", "Ade, ade, ade", "Es geht um Deutschlands Gloria", "Gloria, Gloria", "Sieg Heil! Sieg Heil Viktoria!", "Sieg Heil, Viktoria!", "Visier und Ziel sind eingestellt", "Ade, ade, ade", "Auf Stalin, Churchill, Roosevelt", "Ade, ade, ade", "Es geht um Deutschlands Gloria", "Gloria, Gloria", "Sieg Heil! Sieg Heil Viktoria!", "Sieg Heil, Viktoria!", "Wir ruhen und wir rasten nicht", "Ade, ade, ade", "Bis daß die Satansbrut zerbricht", "Ade, ade, ade", "Es geht um Deutschlands Gloria", "Gloria, Gloria", "Sieg Heil! Sieg Heil Viktoria!", "Sieg Heil, Viktoria!", "Reich mir die Hand zum Scheidegruß", "Ade, ade, ade", "Und deinen Mund zum Abschiedskuß", "Ade, ade, ade", "Es geht um Deutschlands Gloria", "Gloria, Gloria", "Sieg Heil! Sieg Heil Viktoria!", "Sieg Heil, Viktoria!"},
 		["Advertising 1"] = {"[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - Destroying everyone since '16.", "[IdiotBox] - Easy to use, free Garry's Mod cheat.", "[IdiotBox] - Now you can forget that negative KD's can be possible.", "[IdiotBox] - Beats all of your other cheats.", "[IdiotBox] - IdiotBox came back, and it came back with a vengeance.", "[IdiotBox] - Join the Discord server if you have a high IQ.", "[IdiotBox] - The only high-quality free cheat, out for Garry's Mod.", "[IdiotBox] - Best cheat, created by Phizz & more.", "[IdiotBox] - Always updated, never dead.", "[IdiotBox] - A highly reliable and optimised cheating software.", "[IdiotBox] - Top class, free cheat for Garry's Mod.", "[IdiotBox] - Makes noobs cry waves of tears since forever!", "[IdiotBox] - Say goodbye to the respawn room!", "[IdiotBox] - Download the highest quality Garry's Mod cheat for free now!", "[IdiotBox] - A reliable way to go!", "[IdiotBox] - Make Garry's Mod great again!", "[IdiotBox] - Visit our website for fresh Discord invite links!", "[IdiotBox] - Monthly bugfixes & updates. It never gets outdated!", "[IdiotBox] - Download IdiotBox v7.4.b1 right now!", "[IdiotBox] - Bug-free and fully customizable!", "[IdiotBox] - Join our Steam group and Discord server to stay up-to-date!", "[IdiotBox] - Refund all your cheats, use this better and free alternative!", "[IdiotBox] - Now with more features than ever!", "[IdiotBox] - The best Garry's Mod cheat, with 24/7 support, for free!", "[IdiotBox] - Bypasses most anti-cheats and screengrabbers!"},
-		["Advertising 2"] = {"[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - WORST FRAMERATE, BEST FEATURES!", "[www.IB4G.net] - WHAT ARE YOU WAITING FOR?", "[www.IB4G.net] - BEST GARRY'S MOD CHEAT OUT RIGHT NOW!", "[www.IB4G.net] - SAY GOODBYE TO THE RESPAWN ROOM!", "[www.IB4G.net] - NO SKILL REQUIRED!", "[www.IB4G.net] - NEVER DIE AGAIN WITH THIS!", "[www.IB4G.net] - ONLY HIGH IQ NIGGAS' USE IDIOTBOX!", "[www.IB4G.net] - THE GAME IS NOT ACTUALLY DYING, I JUST LIKE TO ANNOY KIDS LOL!", "[www.IB4G.net] - DOWNLOAD THE CHEAT FOR FREE!", "[www.IB4G.net] - NOW WITH AUTOMATIC UPDATES!", "[www.IB4G.net] - GUARANTEED SWAG AND RESPECT ON EVERY SERVER!", "[www.IB4G.net] - IDIOTBOX COMING SOON TO TETIRS!", "[www.IB4G.net] - VISIT OUR WEBSITE FOR A FRESH INVITE LINK TO OUR DISCORD!", "[www.IB4G.net] - PHIZZ IS A GOD FOR MAKING THIS!", "[www.IB4G.net] - BECOME THE SERVER MVP IN NO TIME!", "[www.IB4G.net] - 100% NO SKILL REQUIRED!", "[www.IB4G.net] - BEST CHEAT, MADE BY THE CHINESE COMMUNIST PARTY!", "[www.IB4G.net] - MAKE IDIOTBOX GREAT AGAIN!", "[www.IB4G.net] - WHY ARE YOU NOT CHEATING IN A DYING GAME?", "[www.IB4G.net] - RUINING EVERYONE'S FUN SINCE 2016!", "[www.IB4G.net] - IT'S PASTED, BUT IT'S THE BEST PASTE YOU WILL EVER USE!", "[www.IB4G.net] - A VERY CLEAN, HIGH-QUALITY AND BUG-FREE PASTE!", "[www.IB4G.net] - ALWAYS UPDATED! NEVER GETS OUTDATED!", "[www.IB4G.net] - WITH A FUCK TON OF NEW FEATURES!", "[www.IB4G.net] - ONCE YOU GO BLACK, YOU NEVER GO BACK. GET IDIOTBOX NOW!", "[www.IB4G.net] - SACRIFICE A FEW FRAMES FOR THE BEST EXPERIENCE OF YOUR LIFE!", "[www.IB4G.net] - STEAM GROUP WAS TAKEN DOWN, BUT IT'S BACK BABY!", "[www.IB4G.net] - BEST GARRY'S MOD CHEAT, NO CAP!", "[www.IB4G.net] - WITH IDIOTBOX, YOU'LL NEVER GET BANNED FOR CHEATING AGAIN!", "[www.IB4G.net] - DISCORD SERVER WAS TAKEN DOWN MANY TIMES, BUT WE ALWAYS COME BACK!"},
-		["Advertising 3"] = {"Get IdiotBox you fucking smelly niggers", "IdiotBox is the best fucking cheat and that is a fact", "All of you are fucking autistic for not having IdiotBox", "Why the fuck don't you get IdiotBox lol", "Stay being gay or get IdiotBox", "Your moms should know that you play grown-up games, join our Discord to prove you are not under-aged", "I have your IPs you dumb niggers, I will delete the IPs if you get IdiotBox", "You all fucking smell like shit for not using IdiotBox", "IdiotBox makes kiddos cry and piss their pants maybe and maybe shit and cum", "IdiotBox is the best free cheat in the history of the entire world so get it faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ or you're retarded", "Join our fucking Discord or else you are literally an unpriviledged niggers", "IdiotBox is a cheat for people with high IQ only, use IdiotBox to prove you're smart", "Don't wanna get fucking raped? Get IdiotBox and shit on them skids", "This is the best free paste around, no other paste is better than IdiotBox", "How the fuck are you not using IdiotBox in a shitty dying game lmfao", "IdiotBox is the best and most popular Garry's Mod cheat ever, why are you not using it lol", "May cause a bit of lag but it's worth it for the fuckton of features that it has", "You're all faggots if you don't cheat with IdiotBox", "You literally go to pride month parades if you don't use IdiotBox", "Idiotbox is the highest quality, most popular free cheat, just get it already", "Shit on all of the virgins that unironically play this game with this high-quality cheat", "Get good, get IdiotBox you fucking retards", "You're mad retarded if you are not using IdiotBox, no cap", "Own every single retard in HvH with this superior cheat now", "All of you are dumb niggers for not downloading IdiotBox and that is a fact", "You suck fat cocks in public bathrooms if you're not using IdiotBox", "Just get this god-like cheat already and rape all existing servers", "No you idiots, you can't get VAC banned for using lua scripts you absolute cretins", "IdiotBox bypasses even the most complex anti-cheats and screengrabbers, you're not getting banned anytime soon", "Just use IdiotBox to revert your sad lives and feel better about yourselves", "Phizz is a god because he made this god-like cheat called IdiotBox", "I am forced to put IdiotBox in almost every sentence and advertise in a toxic way because I'm a text in a lua script", "Why are you fucking gay? Get IdiotBox today", "The sentence above is a rhyme but the script says to put random sentences so I don't think you can see it, get IdiotBox btw", "Purchase IdiotBox now! Only for OH wait it's free", "It is highly recommended that you get IdiotBox in case of getting pwned", "You are swag and good looking, but only if you get IdiotBox", "Phizz spent so many fucking nights creating this masterpiece of a cheat so get it now or he will legit kill you", "Fuck you and get IdiotBox now lol", "IdiotBox is constantly getting updated with dope-ass features, it never gets outdated so just get it", "Have IdiotBox installed if you're mega straight and zero gay", "Whoever the fuck said lua cheats are bad deserves to die in a house fire", "You get IdiotBox, everyone else on the server gets pwned, ez as that", "Many cheats copied IdiotBox, but this is the original one, fucking copycats", "Join the fucking Discord, promise it won't hurt you faggots", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ right this moment or I will hire a hitman to kill you", "Join the IdiotBox group at OH wait niggers got mad and mass-reported it, kys shitkids", "Nvm, Steam group is back lol get fucked you mad skid shitkids", "IdiotBox killed all of the paid cheats because it's too good", "Get IdiotBox, it's free and very good, you sacks of crying shit", "IdiotBox is the fucking G.O.A.T.", "What the fuck are you doing not using this god-like cheat lol", "This is an epic fucking cheat called IdiotBox that was created by Phizz and others, worship your new gods kiddos", "You were fed cock milk as a baby if you're not using IdiotBox and you can not prove me wrong", "IdiotBox has the dopest anti-aims and resolvers you'll ever use, you will be a HvH god", "Just please get IdiotBox already you retards, I am tired of typing these lines for fuck's sake", "Phizz will give everyone optimized IdiotBox soon so quit your shit", "IdiotBox needs no Steam group, we're too chad for one", "Our Discord was tapped at some point but IdiotBox is back and stronger than ever", "IdiotBox came back to kill silly niggers, and it came back with a vengeance", "Download Idiotbox v7.4.b1 now, you dont even know what you're missing you mongoloids", "Have I told you about IdiotBox, the best Garry's Mod cheat ever made??", "Holy shit, IdiotBox for Garry's Mod is the best cheat that I have ever used!!"},
+		["Advertising 2"] = {"[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - WORST FRAMERATE, BEST FEATURES!", "[www.IB4G.net] - WHAT ARE YOU WAITING FOR?", "[www.IB4G.net] - BEST GARRY'S MOD CHEAT OUT RIGHT NOW!", "[www.IB4G.net] - SAY GOODBYE TO THE RESPAWN ROOM!", "[www.IB4G.net] - NO SKILL REQUIRED!", "[www.IB4G.net] - NEVER DIE AGAIN WITH THIS!", "[www.IB4G.net] - ONLY HIGH IQ FUCKERS USE IDIOTBOX!", "[www.IB4G.net] - THE GAME IS NOT ACTUALLY DYING, I JUST LIKE TO ANNOY KIDS LOL!", "[www.IB4G.net] - DOWNLOAD THE CHEAT FOR FREE!", "[www.IB4G.net] - NOW WITH AUTOMATIC UPDATES!", "[www.IB4G.net] - GUARANTEED SWAG AND RESPECT ON EVERY SERVER!", "[www.IB4G.net] - IDIOTBOX COMING SOON TO TETIRS!", "[www.IB4G.net] - VISIT OUR WEBSITE FOR A FRESH INVITE LINK TO OUR DISCORD!", "[www.IB4G.net] - PHIZZ IS A GOD FOR MAKING THIS!", "[www.IB4G.net] - BECOME THE SERVER MVP IN NO TIME!", "[www.IB4G.net] - 100% NO SKILL REQUIRED!", "[www.IB4G.net] - BEST CHEAT, MADE BY THE CHINESE COMMUNIST PARTY!", "[www.IB4G.net] - MAKE IDIOTBOX GREAT AGAIN!", "[www.IB4G.net] - WHY ARE YOU NOT CHEATING IN A DYING GAME?", "[www.IB4G.net] - RUINING EVERYONE'S FUN SINCE 2016!", "[www.IB4G.net] - IT'S PASTED, BUT IT'S THE BEST PASTE YOU WILL EVER USE!", "[www.IB4G.net] - A VERY CLEAN, HIGH-QUALITY AND BUG-FREE PASTE!", "[www.IB4G.net] - ALWAYS UPDATED! NEVER GETS OUTDATED!", "[www.IB4G.net] - WITH A FUCK TON OF NEW FEATURES!", "[www.IB4G.net] - ONCE YOU GO BLACK, YOU NEVER GO BACK. GET IDIOTBOX NOW!", "[www.IB4G.net] - SACRIFICE A FEW FRAMES FOR THE BEST EXPERIENCE OF YOUR LIFE!", "[www.IB4G.net] - STEAM GROUP WAS TAKEN DOWN, BUT IT'S BACK BABY!", "[www.IB4G.net] - BEST GARRY'S MOD CHEAT, NO CAP!", "[www.IB4G.net] - WITH IDIOTBOX, YOU'LL NEVER GET BANNED FOR CHEATING AGAIN!", "[www.IB4G.net] - DISCORD SERVER WAS TAKEN DOWN MANY TIMES, BUT WE ALWAYS COME BACK!"},
+		["Advertising 3"] = {"Get IdiotBox you smelly cuck", "IdiotBox is the best cheat and that is a fact", "All of you are dumb for not having IdiotBox", "Why the fuck don't you get IdiotBox", "I have your IP, I will delete it if you get IdiotBox", "You all smell like shit for not using IdiotBox", "IdiotBox makes kids and grown-ups cry and piss their pants maybe and maybe shit and such", "IdiotBox is the best free cheat in the history of the entire world", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ and I will forgive you", "Join our fucking Discord or else.........", "Use IdiotBox to prove you're smart!!", "This is the best free paste around, no other paste is better than IdiotBox!!", "IdiotBox is the best and most popular Garry's Mod cheat ever!!", "Idiotbox is the highest quality, most popular free cheat, just get it already", "Shit on all of the virgins that unironically play this game with this high-quality external software product", "Get good, get IdiotBox you fucking idiot", "Own every single retard in HvH with this superior cheat NOW", "You suck fat toes in public bathrooms if you're not using IdiotBox", "No VAC dummy!! It's GMOD!!!!", "IdiotBox bypasses even the most complex anti-cheats and screengrabbers, you're not getting banned anytime soon", "Phizz is a god because he made this god-like cheat called IdiotBox", "I am forced to put IdiotBox in almost every sentence and advertise in a toxic way because I'm a text in a lua script", "Purchase IdiotBox now! Only for OH wait it's free", "It is highly recommended that you get IdiotBox in case of getting owned", "You are swag and good looking, but only if you get IdiotBox", "Phizz spent so many fucking nights creating this masterpiece of a cheat so get it now or he will legit kill you", "Fuck you and get IdiotBox now lol", "IdiotBox is constantly getting updated with dope-ass features, it never gets outdated so just get it", "Whoever the fuck said lua cheats are bad deserves to die in a house fire", "You get IdiotBox, everyone else on the server gets owned, ez as that", "Many cheats copied IdiotBox, just so you know........", "Join the fucking Discord, promise it won't hurt", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ right this moment or I will personally kill you", "Steam group is BACK BABY", "IdiotBox killed all of the paid cheats because it's too good", "Get IdiotBox, it's free and very good!!", "IdiotBox is the fucking GOAT", "What the fuck are you doing not using this god-like cheat??", "This is an epic cheat called IdiotBox that was created by Phizz and others", "You were fed cock milk as a baby if you're not using IdiotBox", "IdiotBox has the dopest anti-aims and resolvers you'll ever use, you will be a HvH god", "Our Discord was tapped at some point but IdiotBox is back and stronger than ever", "Download Idiotbox v7.4.b1 now, you dont even know what you're missing", "Have I told you about IdiotBox, the best Garry's Mod cheat ever made??", "Holy shit, IdiotBox for Garry's Mod is the best cheat that I have ever used!!"},
 		["Hebrew Spam"] = {"לזיין את הכלב שלך אמא לעזאזל חרא סקס בכוס", "לעזאזל כוס כלבה בזין אני אוהבת עורלה הדוקה חתכה לי שלום כומר", "זו לא בדיחה מזוינת אני רוצה לתלות את עצמי השנה", "תזדיין שאתה יהודי הוא הגדול ביותר שכולכם כושים", "אני אהיה בן שש בשנה מכושן", "יש למול את הפין", "ישראל היא פלסטין המזוין הגדול ביותר במדינה", "זקן ישבן גדול על סנטרי, זהב בביתי, פוליטיקה במכנסיים שלי", "מזדיין לצאת מכושים ישראלים", "כוס חתולה אני מזיין את הזין ואז אני מוצץ כן", "חרא של אלוהים זה חרא של רחוב כן", "אני הולך לזיין ילד בן שתים עשרה בתחת, כן חתוך עורלה לעזאזל חרא כלבה"},
 		["Arabic Spam"] = {"يمارس الجنس مع السلطة العربية سنة عظيمة", "رائحة مثل البظر دون السن القانونية هنا اسمحوا لي أن اللعنة", "ازدهار مسحوق الطاقة العربية سنة جيدة", "نحن نكره اليهو", "يمارس الجنس مع الأطفال الماعز نعم الجنس", "الله أكبر نعم رجل تفجير طفل", "هذه لحظة بره لحظة ارهابية سنة", "في تلك اللحظة التي يبدأ فيها أخاك في المغازلة مع والدتك", "الحصول على صندوق احمق نعم العربية غش كازاخستان", "يمارس الجنس مع نيغا الكلبة دا قرن الطفل", "ترك العرب باكستاني لحظة برمة تجميع كرمة", "حرق اليهود ، يمارس الجنس مع المسيح ، قتل الأطفال ، أصبح الله"},
-		["Offensive Spam"] = {"fuck niggers like fr", "who else here hates black people lmao", "all niggers should be locked in cages and fed bananas", "black people are some sub-human slaves imo", "i've never met an intelligent black person", "why tf are all niggers so ugly lol", "all the black dudes i've seen look like monkeys", "ooga booga black rights", "my grandpa died in ww2, he was the best german pilot", "white people are genetically superior to every othe race", "all jews can do is hide the truth, steal money and start wars"},
 		["Insult Spam"] = {function()
 			local friendstatus = pm.GetFriendStatus(v)
 			if (!v:IsValid() or v == me or (friendstatus == "friend") or (gBool("Main Menu", "Priority List", "Enabled") and table.HasValue(ignorelist, v:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and not table.HasValue(prioritylist, v:UniqueID()))) then return end
@@ -3558,13 +3553,13 @@ local function Tick()
 	if gBool("Aim Assist", "Miscellaneous", "Disable Interpolation") then
 		if not applied then
 			me:ConCommand("cl_interp 0; cl_interp_ratio 0; cl_updaterate 99999")
-			idiotbox.SetShouldInterpolate(false)
+			idiotbox.SetInterpolation(false)
 			applied = true
 		end
 	else
 		if applied then
 			me:ConCommand("cl_interp 0; cl_interp_ratio 2; cl_updaterate 30")
-			idiotbox.SetShouldInterpolate(true)
+			idiotbox.SetInterpolation(true)
 			applied = false
 		end
 	end
@@ -3808,7 +3803,8 @@ local function AutoReload(cmd)
 end
 
 local function OnScreen(v)
-	local x, y = idiotbox.WorldToScreen(v:LocalToWorld(v:OBBCenter()))
+	local screen = v:LocalToWorld(v:OBBCenter()):ToScreen()
+	local x, y = screen.x, screen.y
 	if math.abs(x) < ScrW() * 5 and math.abs(y) < ScrH() * 5 then
 		return true
 	else
@@ -3842,7 +3838,8 @@ local function Visuals(v)
 		end
 		if not OnScreen(v) then return false end -- I just thought it would make more sense for the function above to work, even if the player is off the screen
 		if gOption("Visuals", "Wallhack", "Position Lines:") ~= "Off" then
-			local x, y = idiotbox.WorldToScreen(v:LocalToWorld(v:OBBCenter()))
+			local screen = v:LocalToWorld(v:OBBCenter()):ToScreen()
+			local x, y = screen.x, screen.y
 				surface.SetDrawColor(colThree)
 				if gOption("Visuals", "Wallhack", "Position Lines:") == "Bottom" then
 					surface.DrawLine(ScrW() / 2, ScrH(), x, y)
@@ -4666,7 +4663,8 @@ local function ShowNPCs()
 		surface.SetDrawColor(Color(0, 0, 0))
 	end
 	if gOption("Visuals", "Wallhack", "Position Lines:") ~= "Off" then
-		local x, y = idiotbox.WorldToScreen(v:LocalToWorld(v:OBBCenter()))
+		local screen = v:LocalToWorld(v:OBBCenter()):ToScreen()
+		local x, y = screen.x, screen.y
 			surface.SetDrawColor(colOne)
 		if gOption("Visuals", "Wallhack", "Position Lines:") == "Bottom" then
 			surface.DrawLine(ScrW() / 2, ScrH(), x, y)
@@ -6998,7 +6996,7 @@ end)
 
 hook.Add("OnPlayerChat", "OnPlayerChat", function(chatPlayer, text, teamChat)
 	local randomresponse = {"shut up", "ok", "who", "nobody cares", "where", "stop spamming", "what", "yea", "lol", "english please", "lmao", "shit", "fuck",}
-	local cheatcallouts = {"hac", "h4c", "h@c", "hak", "h4k", "h@k", "hck", "hax", "h4x", "h@x", "hask", "h4sk", "h@sk", "ha$k", "cheat", "ch3at", "che4t", "che@t", "chet", "ch3t", "wall", "w4ll", "w@ll", "wa11", "w@11", "w411", "aim", "a1m", "4im", "@im", "trigg", "tr1gg", "spin", "sp1n", "bot", "b0t", "esp", "3sp", "e$p", "script", "skript", "$cript", "$kript", "scr1pt", "skr1pt", "$cr1pt", "$kr1pt", "skid", "sk1d", "$kid", "$k1d", "bunny", "buny", "h0p", "hop", "kick", "k1ck", "kik", "k1k", "ban", "b4n", "b@n", "fake", "f4ke", "f@ke", "fak3", "f4k3", "f@k3",}
+	--[[local cheatcallouts = {"hac", "h4c", "h@c", "hak", "h4k", "h@k", "hck", "hax", "h4x", "h@x", "hask", "h4sk", "h@sk", "ha$k", "cheat", "ch3at", "che4t", "che@t", "chet", "ch3t", "wall", "w4ll", "w@ll", "wa11", "w@11", "w411", "aim", "a1m", "4im", "@im", "trigg", "tr1gg", "spin", "sp1n", "bot", "b0t", "esp", "3sp", "e$p", "script", "skript", "$cript", "$kript", "scr1pt", "skr1pt", "$cr1pt", "$kr1pt", "skid", "sk1d", "$kid", "$k1d", "bunny", "buny", "h0p", "hop", "kick", "k1ck", "kik", "k1k", "ban", "b4n", "b@n", "fake", "f4ke", "f@ke", "fak3", "f4k3", "f@k3",}]]
 	local replyspam = gOption("Miscellaneous", "Chat", "Reply Spam:")
     if replyspam ~= "Off" then
         if chatPlayer == me or not chatPlayer:IsValid() or (gBool("Main Menu", "Priority List", "Enabled") and table.HasValue(ignorelist, chatPlayer:UniqueID())) or (gBool("Main Menu", "Priority List", "Enabled") and gBool("Miscellaneous", "Chat", "Priority Targets Only") and not table.HasValue(prioritylist, chatPlayer:UniqueID())) then return false end
@@ -7007,7 +7005,7 @@ hook.Add("OnPlayerChat", "OnPlayerChat", function(chatPlayer, text, teamChat)
                 RunConsoleCommand("say_team", randomresponse[math.random(#randomresponse)])
             elseif replyspam == "Random" then
                 RunConsoleCommand("say", randomresponse[math.random(#randomresponse)])
-            elseif replyspam == "Cheater Callout" then
+            --[[elseif replyspam == "Cheater Callout" then
                 local lowertext = string.lower(text)
                 for _, callout in next, cheatcallouts do
                     if string.find(lowertext, callout) then
@@ -7017,7 +7015,7 @@ hook.Add("OnPlayerChat", "OnPlayerChat", function(chatPlayer, text, teamChat)
                             idiotbox.NetSendMessage("say :"..string.rep("\n", 255).."")
                         end
                     end
-                end
+                end]]--
             elseif replyspam == "Copy Messages" then
                 me:ConCommand("say"..(teamChat and "_team '" or " '")..text.."' - "..chatPlayer:Nick())
             elseif replyspam ~= "Disconnect Spam" then
@@ -7030,7 +7028,7 @@ end)
 timer.Simple(0.2, function()
 	if ScrW() ~= 1920 or ScrH() ~= 1080 then
 		chat.AddText(Color(255, 255, 0), "Attention! We are working on adaptive menu scaling. You may encounter visual bugs when toggling the IdiotBox menu.")
-		chat.AddText(Color(255, 255, 0), "We recommend setting your game resolution to 1920x1080 for the best user experience.")
+		chat.AddText(Color(255, 255, 0), "We recommend setting your game resolution to 1920x1080 or higher for the best user experience.")
 		surface.PlaySound("buttons/lightswitch2.wav")
 	end
 end)
