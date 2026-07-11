@@ -29,7 +29,7 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "v7.4.b1-pre01"
+local version = "v7.4.b1-pre02"
 
 local menukeydown, frame, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -860,7 +860,7 @@ local function DrawText(w, h, title)
     if title == "IdiotBox v7.4.b1" then
         surface.SetTextPos(147, 18 - th / 2)
         surface.SetFont("MainFont2")
-        surface.DrawText("Latest build: d07m07-pre01")
+        surface.DrawText("Latest build: d11m07-pre02")
     end
 end
 
@@ -2241,10 +2241,10 @@ end
 
 local function ThirdpersonCheck()
 	if gBool("Visuals", "Point of View", "Thirdperson") then
-		if gKey("Visuals", "Point of View", "Thirdperson Key:") and not tppressed then
+		if (!me:IsTyping() && gKey("Visuals", "Point of View", "Thirdperson Key:")) and not tppressed then
 			tppressed = true
 			tptoggle = not tptoggle
-		elseif not gKey("Visuals", "Point of View", "Thirdperson Key:") and tppressed then
+		elseif not (!me:IsTyping() && gKey("Visuals", "Point of View", "Thirdperson Key:")) and tppressed then
 			tppressed = false
 		end
 		if tptoggle then
@@ -2257,10 +2257,10 @@ end
 
 function ib.FreeRoamCheck()
 	if gBool("Miscellaneous", "Free Roaming", "Enabled") then
-		if gKey("Miscellaneous", "Free Roaming", "Toggle Key:") and not ib.frpressed then
+		if (!me:IsTyping() && gKey("Miscellaneous", "Free Roaming", "Toggle Key:")) and not ib.frpressed then
 			ib.frpressed = true
 			ib.frtoggle = not ib.frtoggle
-		elseif not gKey("Miscellaneous", "Free Roaming", "Toggle Key:") and ib.frpressed then
+		elseif not (!me:IsTyping() && gKey("Miscellaneous", "Free Roaming", "Toggle Key:")) and ib.frpressed then
 			ib.frpressed = false
 		end
 		if ib.frtoggle then
@@ -3189,7 +3189,7 @@ end
 
 local function Circle(cmd)
 	local CircleStrafeSpeed = gInt("Miscellaneous", "Movement", "Circle Strafe Speed:")
-	if gKey("Miscellaneous", "Movement", "Circle Strafe Key:") then
+	if (!me:IsTyping() && gKey("Miscellaneous", "Movement", "Circle Strafe Key:")) then
 		circlestrafeval = circlestrafeval + CircleStrafeSpeed
 		if ((circlestrafeval > 0) and ((circlestrafeval / CircleStrafeSpeed) > 361)) then
 			circlestrafeval = 0
@@ -3343,7 +3343,7 @@ local function CircleStrafe(cmd)
         [MOVETYPE_LADDER] = true,
     }
 	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or badmovetypes[me:GetMoveType()] or me:IsFlagSet(1024) then return end
-		if !gKey("Miscellaneous", "Movement", "Circle Strafe Key:") and gOption("Miscellaneous", "Movement", "Auto Strafe:") ~= "Off" then
+		if (!me:IsTyping() && !gKey("Miscellaneous", "Movement", "Circle Strafe Key:")) and gOption("Miscellaneous", "Movement", "Auto Strafe:") ~= "Off" then
 			if (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Legit") then
 				LegitStrafe(cmd)
 			elseif (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Rage") then
@@ -3351,7 +3351,7 @@ local function CircleStrafe(cmd)
 			elseif (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Directional") then
 				DirectionalStrafe(cmd)
 			end
-		elseif gKey("Miscellaneous", "Movement", "Circle Strafe Key:") and gOption("Miscellaneous", "Movement", "Auto Strafe:") ~= "Off" then
+		elseif (!me:IsTyping() && gKey("Miscellaneous", "Movement", "Circle Strafe Key:")) and gOption("Miscellaneous", "Movement", "Auto Strafe:") ~= "Off" then
 		if (cmd:KeyDown(IN_JUMP)) then
 			local shouldautostrafe = Circle(cmd)
 			if (!me:OnGround()) then
@@ -5719,15 +5719,15 @@ local function Aimbot(cmd)
 	end
 	GetTarget()
     aa = false
-	if gBool("Aim Assist", "Aimbot", "Enabled") && gBool("Aim Assist", "Aimbot", "Auto Stop") && aimtarget && gKey("Aim Assist", "Aimbot", "Toggle Key:") && WeaponCanFire() then
+	if gBool("Aim Assist", "Aimbot", "Enabled") && gBool("Aim Assist", "Aimbot", "Auto Stop") && aimtarget && (!me:IsTyping() && gKey("Aim Assist", "Aimbot", "Toggle Key:")) && WeaponCanFire() then
 		cmd:SetForwardMove(0)
 		cmd:SetSideMove(0)
 		cmd:SetUpMove(0)
 	end
-	if gBool("Aim Assist", "Aimbot", "Enabled") && gBool("Aim Assist", "Aimbot", "Auto Crouch") && aimtarget && gKey("Aim Assist", "Aimbot", "Toggle Key:") && WeaponCanFire() then
+	if gBool("Aim Assist", "Aimbot", "Enabled") && gBool("Aim Assist", "Aimbot", "Auto Crouch") && aimtarget && (!me:IsTyping() && gKey("Aim Assist", "Aimbot", "Toggle Key:")) && WeaponCanFire() then
 		cmd:SetButtons(cmd:GetButtons() + IN_DUCK)
 	end
-    if (aimtarget && aimtarget:IsValid() && gKey("Aim Assist", "Aimbot", "Toggle Key:") && WeaponCanFire()) then
+    if (aimtarget && aimtarget:IsValid() && (!me:IsTyping() && gKey("Aim Assist", "Aimbot", "Toggle Key:")) && WeaponCanFire()) then
 	local pos = PredictPos(aimtarget)
 	local ang = (pos - me:EyePos()):Angle()
 	if gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread") then
@@ -5795,7 +5795,7 @@ local function TriggerFilter(hitbox)
 end
 
 local function Triggerbot(cmd)
-	if not gBool("Aim Assist", "Triggerbot", "Enabled") or not me:GetActiveWeapon():IsValid() or not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Triggerbot", "Target Spectators") and gBool("Main Menu", "Miscellaneous", "Spectator Mode"))) or not gKey("Aim Assist", "Triggerbot", "Toggle Key:") or cmd:KeyDown(IN_ATTACK) or FixTools() then return end
+	if not gBool("Aim Assist", "Triggerbot", "Enabled") or not me:GetActiveWeapon():IsValid() or not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Triggerbot", "Target Spectators") and gBool("Main Menu", "Miscellaneous", "Spectator Mode"))) or not (!me:IsTyping() && gKey("Aim Assist", "Triggerbot", "Toggle Key:")) or cmd:KeyDown(IN_ATTACK) or FixTools() then return end
 	local dist = gInt("Aim Assist", "Aim Priorities", "Distance:")
 	local vel = gInt("Aim Assist", "Aim Priorities", "Velocity:")
 	local maxhealth = gInt("Aim Assist", "Aim Priorities", "Max Player Health:") 
@@ -5881,12 +5881,12 @@ local function Triggerbot(cmd)
 			return false
 		end
 	end
-	if gBool("Aim Assist", "Triggerbot", "Enabled") && gBool("Aim Assist", "Triggerbot", "Auto Stop") && gKey("Aim Assist", "Triggerbot", "Toggle Key:") && triggering && WeaponCanFire() then
+	if gBool("Aim Assist", "Triggerbot", "Enabled") && gBool("Aim Assist", "Triggerbot", "Auto Stop") && (!me:IsTyping() && gKey("Aim Assist", "Triggerbot", "Toggle Key:")) && triggering && WeaponCanFire() then
 		cmd:SetForwardMove(0)
 		cmd:SetSideMove(0)
 		cmd:SetUpMove(0)
 	end
-	if gBool("Aim Assist", "Triggerbot", "Enabled") && gBool("Aim Assist", "Triggerbot", "Auto Crouch") && gKey("Aim Assist", "Triggerbot", "Toggle Key:") && triggering && WeaponCanFire() then
+	if gBool("Aim Assist", "Triggerbot", "Enabled") && gBool("Aim Assist", "Triggerbot", "Auto Crouch") && (!me:IsTyping() && gKey("Aim Assist", "Triggerbot", "Toggle Key:")) && triggering && WeaponCanFire() then
 		cmd:SetButtons(cmd:GetButtons() + IN_DUCK)
 	end
 	if (gBool("Aim Assist", "Triggerbot", "Auto Zoom")) then
@@ -6379,10 +6379,10 @@ local function AntiAim(cmd)
 	local wep = pm.GetActiveWeapon(me)
 	if ((gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP) || me:Team() == TEAM_SPECTATOR || triggering || (cm.CommandNumber(cmd) == 0 && !ThirdpersonCheck()) || cm.KeyDown(cmd, 1) || gBool("Visuals", "Point of View", "Custom FoV") && ib.FreeRoamCheck() && !ThirdpersonCheck() || me:WaterLevel() > 1 || (input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable in 'Use' Toggle") && !(me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible())) || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aim Assist", "Aimbot", "Enabled") && gInt("Aim Assist", "Aimbot", "Aim Smoothness:") > 0 || gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && engine.ActiveGamemode() == "terrortown" && wep:IsValid() && wep:GetClass() == "weapon_zm_carry") then return end
 	if gOption("Hack vs. Hack", "Anti-Aim", "Anti-Aim Direction:") == "Manual Switch" then
-	if gKey("Hack vs. Hack", "Anti-Aim", "Switch Key:") and not manualpressed then
+	if (!me:IsTyping() && gKey("Hack vs. Hack", "Anti-Aim", "Switch Key:")) and not manualpressed then
 	manualpressed = true
 	manual = not manual
-	elseif not gKey("Hack vs. Hack", "Anti-Aim", "Switch Key:") and manualpressed then
+	elseif not (!me:IsTyping() && gKey("Hack vs. Hack", "Anti-Aim", "Switch Key:")) and manualpressed then
 	manualpressed = false
 	end	
 	end
@@ -6435,7 +6435,7 @@ hook.Add("PreRender", "PreRender", function() -- S0lum code B)))
 end)
 
 local function FakeLag(cmd)
-	if gBool("Miscellaneous", "Movement", "Air Stuck") and gKey("Miscellaneous", "Movement", "Air Stuck Key:") then return end
+	if gBool("Miscellaneous", "Movement", "Air Stuck") and (!me:IsTyping() && gKey("Miscellaneous", "Movement", "Air Stuck Key:")) then return end
     local curvel = me:GetVelocity():Length2D()
     local dst_per_tick = curvel * engine.TickInterval()
     local chokes = math.ceil(64 / dst_per_tick)
@@ -6468,7 +6468,7 @@ local function PropKill(cmd)
 	elseif (cm.CommandNumber(cmd) == 0 && ThirdpersonCheck()) then
 		return
 	end
-	if gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:") then
+	if (!me:IsTyping() && gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:")) then
 		ox = fa.x - 27
 		if ib.propval < 180 then
 			oy = fa.y + ib.propval
@@ -6641,7 +6641,7 @@ end
 
 hook.Add("AdjustMouseSensitivity", "AdjustMouseSensitivity", function()
 	if me:GetActiveWeapon():IsValid() and me:Alive() and me:Health() > 0 then
-		if not gBool("Aim Assist", "Triggerbot", "Enabled") or not gBool("Aim Assist", "Triggerbot", "Smooth Aim") or not gKey("Aim Assist", "Triggerbot", "Toggle Key:") or not triggering or FixTools() then return end
+		if not gBool("Aim Assist", "Triggerbot", "Enabled") or not gBool("Aim Assist", "Triggerbot", "Smooth Aim") or not (!me:IsTyping() && gKey("Aim Assist", "Triggerbot", "Toggle Key:")) or not triggering or FixTools() then return end
 		return .10
 	end
 end)
@@ -6651,17 +6651,17 @@ hook.Add("ShouldDrawLocalPlayer", "ShouldDrawLocalPlayer", function()
 end)
 
 function ib.AirStuck(cmd)
-	if !gBool("Hack vs. Hack", "Fake Lag", "Enabled") and gBool("Miscellaneous", "Movement", "Air Stuck") and gKey("Miscellaneous", "Movement", "Air Stuck Key:") then
+	if !gBool("Hack vs. Hack", "Fake Lag", "Enabled") and gBool("Miscellaneous", "Movement", "Air Stuck") and (!me:IsTyping() && gKey("Miscellaneous", "Movement", "Air Stuck Key:")) then
 		idiotbox.SetOutSequenceNr(idiotbox.GetOutSequenceNr() + gInt("Miscellaneous", "Movement", "Air Stuck Value:"))
 	end
 end
 
 function ib.LagDesyncCheck()
 	if gBool("Hack vs. Hack", "Fake Lag", "Lag Desync") then
-		if gKey("Hack vs. Hack", "Fake Lag", "Lag Desync Key:") and not ib.desyncpressed then
+		if (!me:IsTyping() && gKey("Hack vs. Hack", "Fake Lag", "Lag Desync Key:")) and not ib.desyncpressed then
 			ib.desyncpressed = true
 			ib.desynctoggle = not ib.desynctoggle
-		elseif not gKey("Hack vs. Hack", "Fake Lag", "Lag Desync Key:") and ib.desyncpressed then
+		elseif not (!me:IsTyping() && gKey("Hack vs. Hack", "Fake Lag", "Lag Desync Key:")) and ib.desyncpressed then
 			ib.desyncpressed = false
 		end
 		if ib.desynctoggle then
@@ -6932,7 +6932,7 @@ hook.Add("MiscPaint", "MiscPaint", function()
 	for k, v in pairs(player.GetAll()) do
 		if not v:IsValid() or (v == me and not em.IsValid(v)) or (gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me then return end
 	end
-	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:") then
+	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && (!me:IsTyping() && gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:")) then
 		ib.PropKillCircle()
 	end
 	if (gBool("Aim Assist", "Triggerbot", "Enabled") and not gBool("Aim Assist", "Aimbot", "Enabled")) then return end
