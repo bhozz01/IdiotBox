@@ -1,4 +1,4 @@
-  //----IdiotBox v7.3.b3----//
+  //----IdiotBox v7.3.b4----//
  //--------By Phizz--------//
 //------------------------//
 
@@ -29,7 +29,7 @@ local allents = ents.GetAll()
 !!FUTURE UPDATE!! ]]--
 
 local folder = "IdiotBox"
-local version = "v7.3.b3"
+local version = "v7.3.b4"
 
 local menukeydown, frame, menuopen, mousedown, candoslider, drawlast, notyetselected, fa, aa, aimtarget, aimignore
 local optimized, manual, manualpressed, tppressed, tptoggle, applied, windowopen, pressed, usespam, displayed, blackscreen, footprints, loopedprops = false
@@ -857,10 +857,10 @@ local function DrawText(w, h, title)
     surface.SetTextColor(menutextcol.r, menutextcol.g, menutextcol.b, gInt("Adjustments", "Others", "Text Opacity:"))
     surface.SetFont("MainFont")
     surface.DrawText(title)
-    if title == "IdiotBox v7.3.b3" then
+    if title == "IdiotBox v7.3.b4" then
         surface.SetTextPos(147, 18 - th / 2)
         surface.SetFont("MainFont2")
-        surface.DrawText("Latest build: July 7th 2026")
+        surface.DrawText("Latest build: July 11th 2026")
     end
 end
 
@@ -1529,7 +1529,7 @@ end
 
 function ib.Changelog() -- Ran out of local variables, again
 	print("===============================================================================================\n\n")
-	print("IdiotBox v7.3.b3 GENERAL BUGFIXES")
+	print("IdiotBox v7.3.b4 GENERAL BUGFIXES")
 	print("")
 	print("Please note: This changelog includes bugfixes from previous updates as well.")
 	print("\n")
@@ -1588,7 +1588,7 @@ function ib.Changelog() -- Ran out of local variables, again
 	print("- Removed calls and variables that had no use;")
 	print("- Removed cloned hooks for better performance.")
 	print("\n")
-	print("IdiotBox v7.3.b3 ADDITIONS & CHANGES")
+	print("IdiotBox v7.3.b4 ADDITIONS & CHANGES")
 	print("")
 	print("Please note: This changelog includes feature changes from previous updates as well.")
 	print("\n")
@@ -2179,7 +2179,7 @@ local function Menu()
 			draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 1, 1, w - 2, h - 2, Color(bgmenucol.r + 55, bgmenucol.g + 55, bgmenucol.b + 55, 255))
 		end
 		draw.RoundedBox(gInt("Adjustments", "Others", "Roundness:"), 2, 2, w - 4, h - 4, Color(bgmenucol.r, bgmenucol.g, bgmenucol.b, 255))
-		DrawText(w, h, "IdiotBox v7.3.b3")
+		DrawText(w, h, "IdiotBox v7.3.b4")
 		DrawTabs(self, w, h)
 		DrawSub(self, w, h)
 		if (drawlast) then
@@ -2241,10 +2241,10 @@ end
 
 local function ThirdpersonCheck()
 	if gBool("Visuals", "Point of View", "Thirdperson") then
-		if gKey("Visuals", "Point of View", "Thirdperson Key:") and not tppressed then
+		if (!me:IsTyping() && gKey("Visuals", "Point of View", "Thirdperson Key:")) and not tppressed then
 			tppressed = true
 			tptoggle = not tptoggle
-		elseif not gKey("Visuals", "Point of View", "Thirdperson Key:") and tppressed then
+		elseif not (!me:IsTyping() && gKey("Visuals", "Point of View", "Thirdperson Key:")) and tppressed then
 			tppressed = false
 		end
 		if tptoggle then
@@ -2257,10 +2257,10 @@ end
 
 function ib.FreeRoamCheck()
 	if gBool("Miscellaneous", "Free Roaming", "Enabled") then
-		if gKey("Miscellaneous", "Free Roaming", "Toggle Key:") and not ib.frpressed then
+		if (!me:IsTyping() && gKey("Miscellaneous", "Free Roaming", "Toggle Key:")) and not ib.frpressed then
 			ib.frpressed = true
 			ib.frtoggle = not ib.frtoggle
-		elseif not gKey("Miscellaneous", "Free Roaming", "Toggle Key:") and ib.frpressed then
+		elseif not (!me:IsTyping() && gKey("Miscellaneous", "Free Roaming", "Toggle Key:")) and ib.frpressed then
 			ib.frpressed = false
 		end
 		if ib.frtoggle then
@@ -2921,9 +2921,9 @@ local function ChatSpam() -- Removed most of the lame offensive stuff
 		--[[["Clear Chat"] = {function() idiotbox.NetSendMessage("say :"..string.rep("\n", 255).."") end},
 		["OOC Clear Chat"] = {function() idiotbox.NetSendMessage("say /ooc "..string.rep("\n", 255).."") end},]]--
 		["'H' Spam"] = {"HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH"},
-		["Advertising 1"] = {"[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - Destroying everyone since '16.", "[IdiotBox] - Easy to use, free Garry's Mod cheat.", "[IdiotBox] - Now you can forget that negative KD's can be possible.", "[IdiotBox] - Beats all of your other cheats.", "[IdiotBox] - IdiotBox came back, and it came back with a vengeance.", "[IdiotBox] - Join the Discord server if you have a high IQ.", "[IdiotBox] - The only high-quality free cheat, out for Garry's Mod.", "[IdiotBox] - Best cheat, created by Phizz & more.", "[IdiotBox] - Always updated, never dead.", "[IdiotBox] - A highly reliable and optimised cheating software.", "[IdiotBox] - Top class, free cheat for Garry's Mod.", "[IdiotBox] - Makes noobs cry waves of tears since forever!", "[IdiotBox] - Say goodbye to the respawn room!", "[IdiotBox] - Download the highest quality Garry's Mod cheat for free now!", "[IdiotBox] - A reliable way to go!", "[IdiotBox] - Make Garry's Mod great again!", "[IdiotBox] - Visit our website for fresh Discord invite links!", "[IdiotBox] - Monthly bugfixes & updates. It never gets outdated!", "[IdiotBox] - Download IdiotBox v7.3.b3 right now!", "[IdiotBox] - Bug-free and fully customizable!", "[IdiotBox] - Join our Steam group and Discord server to stay up-to-date!", "[IdiotBox] - Refund all your cheats, use this better and free alternative!", "[IdiotBox] - Now with more features than ever!", "[IdiotBox] - The best Garry's Mod cheat, with 24/7 support, for free!", "[IdiotBox] - Bypasses most anti-cheats and screengrabbers!"},
+		["Advertising 1"] = {"[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[IdiotBox] - Destroying everyone since '16.", "[IdiotBox] - Easy to use, free Garry's Mod cheat.", "[IdiotBox] - Now you can forget that negative KD's can be possible.", "[IdiotBox] - Beats all of your other cheats.", "[IdiotBox] - IdiotBox came back, and it came back with a vengeance.", "[IdiotBox] - Join the Discord server if you have a high IQ.", "[IdiotBox] - The only high-quality free cheat, out for Garry's Mod.", "[IdiotBox] - Best cheat, created by Phizz & more.", "[IdiotBox] - Always updated, never dead.", "[IdiotBox] - A highly reliable and optimised cheating software.", "[IdiotBox] - Top class, free cheat for Garry's Mod.", "[IdiotBox] - Makes noobs cry waves of tears since forever!", "[IdiotBox] - Say goodbye to the respawn room!", "[IdiotBox] - Download the highest quality Garry's Mod cheat for free now!", "[IdiotBox] - A reliable way to go!", "[IdiotBox] - Make Garry's Mod great again!", "[IdiotBox] - Visit our website for fresh Discord invite links!", "[IdiotBox] - Monthly bugfixes & updates. It never gets outdated!", "[IdiotBox] - Download IdiotBox v7.3.b4 right now!", "[IdiotBox] - Bug-free and fully customizable!", "[IdiotBox] - Join our Steam group and Discord server to stay up-to-date!", "[IdiotBox] - Refund all your cheats, use this better and free alternative!", "[IdiotBox] - Now with more features than ever!", "[IdiotBox] - The best Garry's Mod cheat, with 24/7 support, for free!", "[IdiotBox] - Bypasses most anti-cheats and screengrabbers!"},
 		["Advertising 2"] = {"[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - https://phizzofficial.wixsite.com/idiotbox4gmod/", "[www.IB4G.net] - WORST FRAMERATE, BEST FEATURES!", "[www.IB4G.net] - WHAT ARE YOU WAITING FOR?", "[www.IB4G.net] - BEST GARRY'S MOD CHEAT OUT RIGHT NOW!", "[www.IB4G.net] - SAY GOODBYE TO THE RESPAWN ROOM!", "[www.IB4G.net] - NO SKILL REQUIRED!", "[www.IB4G.net] - NEVER DIE AGAIN WITH THIS!", "[www.IB4G.net] - ONLY HIGH IQ FUCKERS USE IDIOTBOX!", "[www.IB4G.net] - THE GAME IS NOT ACTUALLY DYING, I JUST LIKE TO ANNOY KIDS LOL!", "[www.IB4G.net] - DOWNLOAD THE CHEAT FOR FREE!", "[www.IB4G.net] - NOW WITH AUTOMATIC UPDATES!", "[www.IB4G.net] - GUARANTEED SWAG AND RESPECT ON EVERY SERVER!", "[www.IB4G.net] - IDIOTBOX COMING SOON TO TETIRS!", "[www.IB4G.net] - VISIT OUR WEBSITE FOR A FRESH INVITE LINK TO OUR DISCORD!", "[www.IB4G.net] - PHIZZ IS A GOD FOR MAKING THIS!", "[www.IB4G.net] - BECOME THE SERVER MVP IN NO TIME!", "[www.IB4G.net] - 100% NO SKILL REQUIRED!", "[www.IB4G.net] - BEST CHEAT, MADE BY THE CHINESE COMMUNIST PARTY!", "[www.IB4G.net] - MAKE IDIOTBOX GREAT AGAIN!", "[www.IB4G.net] - WHY ARE YOU NOT CHEATING IN A DYING GAME?", "[www.IB4G.net] - RUINING EVERYONE'S FUN SINCE 2016!", "[www.IB4G.net] - IT'S PASTED, BUT IT'S THE BEST PASTE YOU WILL EVER USE!", "[www.IB4G.net] - A VERY CLEAN, HIGH-QUALITY AND BUG-FREE PASTE!", "[www.IB4G.net] - ALWAYS UPDATED! NEVER GETS OUTDATED!", "[www.IB4G.net] - WITH A FUCK TON OF NEW FEATURES!", "[www.IB4G.net] - ONCE YOU GO BLACK, YOU NEVER GO BACK. GET IDIOTBOX NOW!", "[www.IB4G.net] - SACRIFICE A FEW FRAMES FOR THE BEST EXPERIENCE OF YOUR LIFE!", "[www.IB4G.net] - STEAM GROUP WAS TAKEN DOWN, BUT IT'S BACK BABY!", "[www.IB4G.net] - BEST GARRY'S MOD CHEAT, NO CAP!", "[www.IB4G.net] - WITH IDIOTBOX, YOU'LL NEVER GET BANNED FOR CHEATING AGAIN!", "[www.IB4G.net] - DISCORD SERVER WAS TAKEN DOWN MANY TIMES, BUT WE ALWAYS COME BACK!"},
-		["Advertising 3"] = {"Get IdiotBox you smelly cuck", "IdiotBox is the best cheat and that is a fact", "All of you are dumb for not having IdiotBox", "Why the fuck don't you get IdiotBox", "I have your IP, I will delete it if you get IdiotBox", "You all smell like shit for not using IdiotBox", "IdiotBox makes kids and grown-ups cry and piss their pants maybe and maybe shit and such", "IdiotBox is the best free cheat in the history of the entire world", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ and I will forgive you", "Join our fucking Discord or else.........", "Use IdiotBox to prove you're smart!!", "This is the best free paste around, no other paste is better than IdiotBox!!", "IdiotBox is the best and most popular Garry's Mod cheat ever!!", "Idiotbox is the highest quality, most popular free cheat, just get it already", "Shit on all of the virgins that unironically play this game with this high-quality external software product", "Get good, get IdiotBox you fucking idiot", "Own every single retard in HvH with this superior cheat NOW", "You suck fat toes in public bathrooms if you're not using IdiotBox", "No VAC dummy!! It's GMOD!!!!", "IdiotBox bypasses even the most complex anti-cheats and screengrabbers, you're not getting banned anytime soon", "Phizz is a god because he made this god-like cheat called IdiotBox", "I am forced to put IdiotBox in almost every sentence and advertise in a toxic way because I'm a text in a lua script", "Purchase IdiotBox now! Only for OH wait it's free", "It is highly recommended that you get IdiotBox in case of getting owned", "You are swag and good looking, but only if you get IdiotBox", "Phizz spent so many fucking nights creating this masterpiece of a cheat so get it now or he will legit kill you", "Fuck you and get IdiotBox now lol", "IdiotBox is constantly getting updated with dope-ass features, it never gets outdated so just get it", "Whoever the fuck said lua cheats are bad deserves to die in a house fire", "You get IdiotBox, everyone else on the server gets owned, ez as that", "Many cheats copied IdiotBox, just so you know........", "Join the fucking Discord, promise it won't hurt", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ right this moment or I will personally kill you", "Steam group is BACK BABY", "IdiotBox killed all of the paid cheats because it's too good", "Get IdiotBox, it's free and very good!!", "IdiotBox is the fucking GOAT", "What the fuck are you doing not using this god-like cheat??", "This is an epic cheat called IdiotBox that was created by Phizz and others", "You were fed cock milk as a baby if you're not using IdiotBox", "IdiotBox has the dopest anti-aims and resolvers you'll ever use, you will be a HvH god", "Our Discord was tapped at some point but IdiotBox is back and stronger than ever", "Download Idiotbox v7.3.b3 now, you dont even know what you're missing", "Have I told you about IdiotBox, the best Garry's Mod cheat ever made??", "Holy shit, IdiotBox for Garry's Mod is the best cheat that I have ever used!!"},
+		["Advertising 3"] = {"Get IdiotBox you smelly cuck", "IdiotBox is the best cheat and that is a fact", "All of you are dumb for not having IdiotBox", "Why the fuck don't you get IdiotBox", "I have your IP, I will delete it if you get IdiotBox", "You all smell like shit for not using IdiotBox", "IdiotBox makes kids and grown-ups cry and piss their pants maybe and maybe shit and such", "IdiotBox is the best free cheat in the history of the entire world", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ and I will forgive you", "Join our fucking Discord or else.........", "Use IdiotBox to prove you're smart!!", "This is the best free paste around, no other paste is better than IdiotBox!!", "IdiotBox is the best and most popular Garry's Mod cheat ever!!", "Idiotbox is the highest quality, most popular free cheat, just get it already", "Shit on all of the virgins that unironically play this game with this high-quality external software product", "Get good, get IdiotBox you fucking idiot", "Own every single retard in HvH with this superior cheat NOW", "You suck fat toes in public bathrooms if you're not using IdiotBox", "No VAC dummy!! It's GMOD!!!!", "IdiotBox bypasses even the most complex anti-cheats and screengrabbers, you're not getting banned anytime soon", "Phizz is a god because he made this god-like cheat called IdiotBox", "I am forced to put IdiotBox in almost every sentence and advertise in a toxic way because I'm a text in a lua script", "Purchase IdiotBox now! Only for OH wait it's free", "It is highly recommended that you get IdiotBox in case of getting owned", "You are swag and good looking, but only if you get IdiotBox", "Phizz spent so many fucking nights creating this masterpiece of a cheat so get it now or he will legit kill you", "Fuck you and get IdiotBox now lol", "IdiotBox is constantly getting updated with dope-ass features, it never gets outdated so just get it", "Whoever the fuck said lua cheats are bad deserves to die in a house fire", "You get IdiotBox, everyone else on the server gets owned, ez as that", "Many cheats copied IdiotBox, just so you know........", "Join the fucking Discord, promise it won't hurt", "Download IdiotBox at https://phizzofficial.wixsite.com/idiotbox4gmod/ right this moment or I will personally kill you", "Steam group is BACK BABY", "IdiotBox killed all of the paid cheats because it's too good", "Get IdiotBox, it's free and very good!!", "IdiotBox is the fucking GOAT", "What the fuck are you doing not using this god-like cheat??", "This is an epic cheat called IdiotBox that was created by Phizz and others", "You were fed cock milk as a baby if you're not using IdiotBox", "IdiotBox has the dopest anti-aims and resolvers you'll ever use, you will be a HvH god", "Our Discord was tapped at some point but IdiotBox is back and stronger than ever", "Download Idiotbox v7.3.b4 now, you dont even know what you're missing", "Have I told you about IdiotBox, the best Garry's Mod cheat ever made??", "Holy shit, IdiotBox for Garry's Mod is the best cheat that I have ever used!!"},
 		["Hebrew Spam"] = {"לזיין את הכלב שלך אמא לעזאזל חרא סקס בכוס", "לעזאזל כוס כלבה בזין אני אוהבת עורלה הדוקה חתכה לי שלום כומר", "זו לא בדיחה מזוינת אני רוצה לתלות את עצמי השנה", "תזדיין שאתה יהודי הוא הגדול ביותר שכולכם כושים", "אני אהיה בן שש בשנה מכושן", "יש למול את הפין", "ישראל היא פלסטין המזוין הגדול ביותר במדינה", "זקן ישבן גדול על סנטרי, זהב בביתי, פוליטיקה במכנסיים שלי", "מזדיין לצאת מכושים ישראלים", "כוס חתולה אני מזיין את הזין ואז אני מוצץ כן", "חרא של אלוהים זה חרא של רחוב כן", "אני הולך לזיין ילד בן שתים עשרה בתחת, כן חתוך עורלה לעזאזל חרא כלבה"},
 		["Arabic Spam"] = {"يمارس الجنس مع السلطة العربية سنة عظيمة", "رائحة مثل البظر دون السن القانونية هنا اسمحوا لي أن اللعنة", "ازدهار مسحوق الطاقة العربية سنة جيدة", "نحن نكره اليهو", "يمارس الجنس مع الأطفال الماعز نعم الجنس", "الله أكبر نعم رجل تفجير طفل", "هذه لحظة بره لحظة ارهابية سنة", "في تلك اللحظة التي يبدأ فيها أخاك في المغازلة مع والدتك", "الحصول على صندوق احمق نعم العربية غش كازاخستان", "يمارس الجنس مع نيغا الكلبة دا قرن الطفل", "ترك العرب باكستاني لحظة برمة تجميع كرمة", "حرق اليهود ، يمارس الجنس مع المسيح ، قتل الأطفال ، أصبح الله"},
 		["Insult Spam"] = {function()
@@ -3189,7 +3189,7 @@ end
 
 local function Circle(cmd)
 	local CircleStrafeSpeed = gInt("Miscellaneous", "Movement", "Circle Strafe Speed:")
-	if gKey("Miscellaneous", "Movement", "Circle Strafe Key:") then
+	if (!me:IsTyping() && gKey("Miscellaneous", "Movement", "Circle Strafe Key:")) then
 		circlestrafeval = circlestrafeval + CircleStrafeSpeed
 		if ((circlestrafeval > 0) and ((circlestrafeval / CircleStrafeSpeed) > 361)) then
 			circlestrafeval = 0
@@ -3343,7 +3343,7 @@ local function CircleStrafe(cmd)
         [MOVETYPE_LADDER] = true,
     }
 	if (me:Team() == TEAM_SPECTATOR and not gBool("Main Menu", "Miscellaneous", "Spectator Mode")) or not me:Alive() or me:Health() < 1 or badmovetypes[me:GetMoveType()] or me:IsFlagSet(1024) then return end
-		if !gKey("Miscellaneous", "Movement", "Circle Strafe Key:") and gOption("Miscellaneous", "Movement", "Auto Strafe:") ~= "Off" then
+		if (!me:IsTyping() && !gKey("Miscellaneous", "Movement", "Circle Strafe Key:")) and gOption("Miscellaneous", "Movement", "Auto Strafe:") ~= "Off" then
 			if (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Legit") then
 				LegitStrafe(cmd)
 			elseif (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Rage") then
@@ -3351,7 +3351,7 @@ local function CircleStrafe(cmd)
 			elseif (gOption("Miscellaneous", "Movement", "Auto Strafe:") == "Directional") then
 				DirectionalStrafe(cmd)
 			end
-		elseif gKey("Miscellaneous", "Movement", "Circle Strafe Key:") and gOption("Miscellaneous", "Movement", "Auto Strafe:") ~= "Off" then
+		elseif (!me:IsTyping() && gKey("Miscellaneous", "Movement", "Circle Strafe Key:")) and gOption("Miscellaneous", "Movement", "Auto Strafe:") ~= "Off" then
 		if (cmd:KeyDown(IN_JUMP)) then
 			local shouldautostrafe = Circle(cmd)
 			if (!me:OnGround()) then
@@ -5719,15 +5719,15 @@ local function Aimbot(cmd)
 	end
 	GetTarget()
     aa = false
-	if gBool("Aim Assist", "Aimbot", "Enabled") && gBool("Aim Assist", "Aimbot", "Auto Stop") && aimtarget && gKey("Aim Assist", "Aimbot", "Toggle Key:") && WeaponCanFire() then
+	if gBool("Aim Assist", "Aimbot", "Enabled") && gBool("Aim Assist", "Aimbot", "Auto Stop") && aimtarget && (!me:IsTyping() && gKey("Aim Assist", "Aimbot", "Toggle Key:")) && WeaponCanFire() then
 		cmd:SetForwardMove(0)
 		cmd:SetSideMove(0)
 		cmd:SetUpMove(0)
 	end
-	if gBool("Aim Assist", "Aimbot", "Enabled") && gBool("Aim Assist", "Aimbot", "Auto Crouch") && aimtarget && gKey("Aim Assist", "Aimbot", "Toggle Key:") && WeaponCanFire() then
+	if gBool("Aim Assist", "Aimbot", "Enabled") && gBool("Aim Assist", "Aimbot", "Auto Crouch") && aimtarget && (!me:IsTyping() && gKey("Aim Assist", "Aimbot", "Toggle Key:")) && WeaponCanFire() then
 		cmd:SetButtons(cmd:GetButtons() + IN_DUCK)
 	end
-    if (aimtarget && aimtarget:IsValid() && gKey("Aim Assist", "Aimbot", "Toggle Key:") && WeaponCanFire()) then
+    if (aimtarget && aimtarget:IsValid() && (!me:IsTyping() && gKey("Aim Assist", "Aimbot", "Toggle Key:")) && WeaponCanFire()) then
 	local pos = PredictPos(aimtarget)
 	local ang = (pos - me:EyePos()):Angle()
 	if gBool("Aim Assist", "Miscellaneous", "Remove Bullet Spread") then
@@ -5795,7 +5795,7 @@ local function TriggerFilter(hitbox)
 end
 
 local function Triggerbot(cmd)
-	if not gBool("Aim Assist", "Triggerbot", "Enabled") or not me:GetActiveWeapon():IsValid() or not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Triggerbot", "Target Spectators") and gBool("Main Menu", "Miscellaneous", "Spectator Mode"))) or not gKey("Aim Assist", "Triggerbot", "Toggle Key:") or cmd:KeyDown(IN_ATTACK) or FixTools() then return end
+	if not gBool("Aim Assist", "Triggerbot", "Enabled") or not me:GetActiveWeapon():IsValid() or not me:Alive() or me:Health() < 1 or (me:Team() == TEAM_SPECTATOR and not (gBool("Aim Assist", "Triggerbot", "Target Spectators") and gBool("Main Menu", "Miscellaneous", "Spectator Mode"))) or not (!me:IsTyping() && gKey("Aim Assist", "Triggerbot", "Toggle Key:")) or cmd:KeyDown(IN_ATTACK) or FixTools() then return end
 	local dist = gInt("Aim Assist", "Aim Priorities", "Distance:")
 	local vel = gInt("Aim Assist", "Aim Priorities", "Velocity:")
 	local maxhealth = gInt("Aim Assist", "Aim Priorities", "Max Player Health:") 
@@ -5881,12 +5881,12 @@ local function Triggerbot(cmd)
 			return false
 		end
 	end
-	if gBool("Aim Assist", "Triggerbot", "Enabled") && gBool("Aim Assist", "Triggerbot", "Auto Stop") && gKey("Aim Assist", "Triggerbot", "Toggle Key:") && triggering && WeaponCanFire() then
+	if gBool("Aim Assist", "Triggerbot", "Enabled") && gBool("Aim Assist", "Triggerbot", "Auto Stop") && (!me:IsTyping() && gKey("Aim Assist", "Triggerbot", "Toggle Key:")) && triggering && WeaponCanFire() then
 		cmd:SetForwardMove(0)
 		cmd:SetSideMove(0)
 		cmd:SetUpMove(0)
 	end
-	if gBool("Aim Assist", "Triggerbot", "Enabled") && gBool("Aim Assist", "Triggerbot", "Auto Crouch") && gKey("Aim Assist", "Triggerbot", "Toggle Key:") && triggering && WeaponCanFire() then
+	if gBool("Aim Assist", "Triggerbot", "Enabled") && gBool("Aim Assist", "Triggerbot", "Auto Crouch") && (!me:IsTyping() && gKey("Aim Assist", "Triggerbot", "Toggle Key:")) && triggering && WeaponCanFire() then
 		cmd:SetButtons(cmd:GetButtons() + IN_DUCK)
 	end
 	if (gBool("Aim Assist", "Triggerbot", "Auto Zoom")) then
@@ -6379,10 +6379,10 @@ local function AntiAim(cmd)
 	local wep = pm.GetActiveWeapon(me)
 	if ((gBool("Hack vs. Hack", "Anti-Aim", "Disable in Noclip") && em.GetMoveType(me) == MOVETYPE_NOCLIP) || me:Team() == TEAM_SPECTATOR || triggering || (cm.CommandNumber(cmd) == 0 && !ThirdpersonCheck()) || cm.KeyDown(cmd, 1) || gBool("Visuals", "Point of View", "Custom FoV") && ib.FreeRoamCheck() && !ThirdpersonCheck() || me:WaterLevel() > 1 || (input.IsKeyDown(15) && gBool("Hack vs. Hack", "Anti-Aim", "Disable in 'Use' Toggle") && !(me:IsTyping() or gui.IsGameUIVisible() or gui.IsConsoleVisible())) || em.GetMoveType(me) == MOVETYPE_LADDER || aa || !me:Alive() || me:Health() < 1 || !gBool("Hack vs. Hack", "Anti-Aim", "Enabled") || gBool("Aim Assist", "Aimbot", "Enabled") && gInt("Aim Assist", "Aimbot", "Aim Smoothness:") > 0 || gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && engine.ActiveGamemode() == "terrortown" && wep:IsValid() && wep:GetClass() == "weapon_zm_carry") then return end
 	if gOption("Hack vs. Hack", "Anti-Aim", "Anti-Aim Direction:") == "Manual Switch" then
-	if gKey("Hack vs. Hack", "Anti-Aim", "Switch Key:") and not manualpressed then
+	if (!me:IsTyping() && gKey("Hack vs. Hack", "Anti-Aim", "Switch Key:")) and not manualpressed then
 	manualpressed = true
 	manual = not manual
-	elseif not gKey("Hack vs. Hack", "Anti-Aim", "Switch Key:") and manualpressed then
+	elseif not (!me:IsTyping() && gKey("Hack vs. Hack", "Anti-Aim", "Switch Key:")) and manualpressed then
 	manualpressed = false
 	end	
 	end
@@ -6435,7 +6435,7 @@ hook.Add("PreRender", "PreRender", function() -- S0lum code B)))
 end)
 
 local function FakeLag(cmd)
-	if gBool("Miscellaneous", "Movement", "Air Stuck") and gKey("Miscellaneous", "Movement", "Air Stuck Key:") then return end
+	if gBool("Miscellaneous", "Movement", "Air Stuck") and (!me:IsTyping() && gKey("Miscellaneous", "Movement", "Air Stuck Key:")) then return end
     local curvel = me:GetVelocity():Length2D()
     local dst_per_tick = curvel * engine.TickInterval()
     local chokes = math.ceil(64 / dst_per_tick)
@@ -6468,7 +6468,7 @@ local function PropKill(cmd)
 	elseif (cm.CommandNumber(cmd) == 0 && ThirdpersonCheck()) then
 		return
 	end
-	if gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:") then
+	if (!me:IsTyping() && gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:")) then
 		ox = fa.x - 27
 		if ib.propval < 180 then
 			oy = fa.y + ib.propval
@@ -6641,7 +6641,7 @@ end
 
 hook.Add("AdjustMouseSensitivity", "AdjustMouseSensitivity", function()
 	if me:GetActiveWeapon():IsValid() and me:Alive() and me:Health() > 0 then
-		if not gBool("Aim Assist", "Triggerbot", "Enabled") or not gBool("Aim Assist", "Triggerbot", "Smooth Aim") or not gKey("Aim Assist", "Triggerbot", "Toggle Key:") or not triggering or FixTools() then return end
+		if not gBool("Aim Assist", "Triggerbot", "Enabled") or not gBool("Aim Assist", "Triggerbot", "Smooth Aim") or not (!me:IsTyping() && gKey("Aim Assist", "Triggerbot", "Toggle Key:")) or not triggering or FixTools() then return end
 		return .10
 	end
 end)
@@ -6651,17 +6651,17 @@ hook.Add("ShouldDrawLocalPlayer", "ShouldDrawLocalPlayer", function()
 end)
 
 function ib.AirStuck(cmd)
-	if !gBool("Hack vs. Hack", "Fake Lag", "Enabled") and gBool("Miscellaneous", "Movement", "Air Stuck") and gKey("Miscellaneous", "Movement", "Air Stuck Key:") then
+	if !gBool("Hack vs. Hack", "Fake Lag", "Enabled") and gBool("Miscellaneous", "Movement", "Air Stuck") and (!me:IsTyping() && gKey("Miscellaneous", "Movement", "Air Stuck Key:")) then
 		idiotbox.SetOutSequenceNr(idiotbox.GetOutSequenceNr() + gInt("Miscellaneous", "Movement", "Air Stuck Value:"))
 	end
 end
 
 function ib.LagDesyncCheck()
 	if gBool("Hack vs. Hack", "Fake Lag", "Lag Desync") then
-		if gKey("Hack vs. Hack", "Fake Lag", "Lag Desync Key:") and not ib.desyncpressed then
+		if (!me:IsTyping() && gKey("Hack vs. Hack", "Fake Lag", "Lag Desync Key:")) and not ib.desyncpressed then
 			ib.desyncpressed = true
 			ib.desynctoggle = not ib.desynctoggle
-		elseif not gKey("Hack vs. Hack", "Fake Lag", "Lag Desync Key:") and ib.desyncpressed then
+		elseif not (!me:IsTyping() && gKey("Hack vs. Hack", "Fake Lag", "Lag Desync Key:")) and ib.desyncpressed then
 			ib.desyncpressed = false
 		end
 		if ib.desynctoggle then
@@ -6932,7 +6932,7 @@ hook.Add("MiscPaint", "MiscPaint", function()
 	for k, v in pairs(player.GetAll()) do
 		if not v:IsValid() or (v == me and not em.IsValid(v)) or (gBool("Main Menu", "Panic Mode", "Enabled") && (gOption("Main Menu", "Panic Mode", "Mode:") == "Disable All" || gOption("Main Menu", "Panic Mode", "Mode:") == "Disable Aimbot")) && IsValid(v:GetObserverTarget()) && v:GetObserverTarget() == me then return end
 	end
-	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:") then
+	if gBool("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill") && (!me:IsTyping() && gKey("Main Menu", "Trouble in Terrorist Town Utilities", "Prop Kill Key:")) then
 		ib.PropKillCircle()
 	end
 	if (gBool("Aim Assist", "Triggerbot", "Enabled") and not gBool("Aim Assist", "Aimbot", "Enabled")) then return end
